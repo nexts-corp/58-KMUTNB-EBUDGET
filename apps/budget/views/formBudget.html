@@ -61,6 +61,12 @@
 {{>footer}}
 
 <script src="{{_context_path}}/apps/budget/views/bg140.js"></script>
+<script src="{{_context_path}}/apps/budget/views/bg141.js"></script>
+<script src="{{_context_path}}/apps/budget/views/bg142.js"></script>
+<script src="{{_context_path}}/apps/budget/views/bg143.js"></script>
+<script src="{{_context_path}}/apps/budget/views/bg144.js"></script>
+<script src="{{_context_path}}/apps/budget/views/bg145.js"></script>
+<script src="{{_context_path}}/apps/budget/views/bg146.js"></script>
 <script type="text/javascript">
     $(function(){
         listsForm();
@@ -146,8 +152,9 @@
         
         $("button.add").unbind("click").click(function(){
             var form = $(this).attr("data-form");
-            
-            
+
+            var form = $(this).attr("data-form");
+            eval(form+"Form()");
         });
         
         $("button.edit").unbind("click").click(function(){

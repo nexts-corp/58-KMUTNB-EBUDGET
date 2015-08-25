@@ -1,7 +1,7 @@
-function bg140Form(){
+function bg143Form(){
     var html = '<div class="col-md-12 text-center">'
         + '<h4>'
-            + 'แบบรายละเอียดคำของบประมาณเงินเดือน (ง.140)'
+            + 'แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน (ค่าตอบแทน ใช้สอย และวัสดุ) (ง.143)'
         + '</h4>'
     + '</div>'
 
@@ -131,7 +131,7 @@ function bg140Form(){
                                 
                                 + '<div class="col-md-12 text-right">'
                                     + '<button class="btn btn-primary"><i class="fa fa-plus-circle"></i> เพิ่ม</button>&nbsp;'
-                                    + '<button class="btn btn-default"><i class="fa fa-trash"></i> ยกเลิก</button>'
+                                    + '<button class="btn btn-default"><i class="fa fa-trash"></i> ล้างข้อมูล</button>'
                                 + '</div>'
                             + '</form>'
                         + '</div>'
