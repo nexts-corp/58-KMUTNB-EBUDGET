@@ -1,7 +1,7 @@
 
 {
-    "context_path":"/",
-    "welcome_page":"/api/root/view/index",
+    "context_path":"kmutnb-ebudget/",
+    "welcome_page":"kmutnb-ebudget/api/root/view/index",
     "locale":"th-TH",
     "context": [
         {
