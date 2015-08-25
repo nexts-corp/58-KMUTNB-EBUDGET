@@ -1,0 +1,176 @@
+{{>header}}
+<div role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">คำของบประมาณ</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">การจัดทำคำของบประมาณ</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="tall dashboard">
+    
+    
+
+    <div class="sort-source-wrapper"><!-- button action on header -->
+        <div class="container">
+            <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+                <li class="active">
+                    <button class="btn btn-default back" style="display: none;"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
+                </li>
+            </ul>
+        </div>
+    </div><!-- end button action on header -->
+    
+    <div class="container">
+        <div class="row">
+           
+            <div id="formHome" class="col-md-12">
+                <div id="bidderTable" class="col-md-12"><!-- table shown bidder information list -->
+                    <table id="table" class="table table-bordered table-striped table-condensed mb-none">
+                        <thead>
+                            <tr>
+                                <th class="text-center col-lg-6">รายละเอียดคำของบประมาณ</th>
+                                <th class="text-center col-lg-3">เครื่องมือ</th>
+                                <th class="text-center col-lg-3">สถานะ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bidderBody">
+                            <tr>
+                                <td colspan="3" class="text-center">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!-- end table shown bidder information list -->
+            </div>
+            <div id="formBudget" class="col-md-12" style="display: none;">
+            </div>
+        </div><!--  row  -->
+    </div><!--  container  -->
+</div><!-- main -->
+
+{{>footer}}
+
+<script src="{{_context_path}}/apps/budget/views/bg140.js"></script>
+<script type="text/javascript">
+    $(function(){
+        listsForm();
+        
+        $("button.back").unbind("click").click(function(){
+            toggleShow("home");
+        });
+
+    });
+    
+    function listsForm(){
+        var html = '<tr>'
+                + '<td>1. แบบรายละเอียดคำของบประมาณเงินเดือน (ง.140)</td>'
+                + '<td class="text-center">-</td>'
+                + '<td class="text-center">'
+                    + '<button data-form="bg140" class="btn btn-primary edit" title="แก้ไข"><i class="fa fa-pencil"></i></button>&nbsp;'
+                    + '<button data-form="bg140" class="btn btn-default delete" title="ลบ"><i class="fa fa-trash"></i></button>'
+                + '</td>'
+            + '</tr>'
+            + '<tr>'
+                + '<td>2. แบบรายละเอียดคำของบประมาณค่าจ้างประจำ (ง.141)</td>'
+                + '<td class="text-center">-</td>'
+                + '<td class="text-center">'
+                    + '<button data-form="bg141" class="btn btn-primary edit" title="แก้ไข"><i class="fa fa-pencil"></i></button>&nbsp;'
+                    + '<button data-form="bg141" class="btn btn-default delete" title="ลบ"><i class="fa fa-trash"></i></button>'
+                + '</td>'
+            + '</tr>'
+            + '<tr>'
+                + '<td>3. แบบรายละเอียดคำของบประมาณค่าจ้างชั่วคราว (ง.142)</td>'
+                + '<td class="text-center">-</td>'
+                + '<td class="text-center">'
+                    + '<button data-form="bg142" class="btn btn-primary edit" title="แก้ไข"><i class="fa fa-pencil"></i></button>&nbsp;'
+                    + '<button data-form="bg142" class="btn btn-default delete" title="ลบ"><i class="fa fa-trash"></i></button>'
+                + '</td>'
+            + '</tr>'
+            + '<tr>'
+                + '<td>4. แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน<br>(ค่าตอบแทน ใช้สอย และวัสดุ) (ง.143)</td>'
+                + '<td class="text-center">-</td>'
+                + '<td class="text-center">'
+                    + '<button data-form="bg143" class="btn btn-primary edit" title="แก้ไข"><i class="fa fa-pencil"></i></button>&nbsp;'
+                    + '<button data-form="bg143" class="btn btn-default delete" title="ลบ"><i class="fa fa-trash"></i></button>'
+                + '</td>'
+            + '</tr>'
+            + '<tr>'
+                + '<td>5. แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าสาธารณูปโภค (ง.144)</td>'
+                + '<td class="text-center">-</td>'
+                + '<td class="text-center">'
+                    + '<button data-form="bg144" class="btn btn-primary edit" title="แก้ไข"><i class="fa fa-pencil"></i></button>&nbsp;'
+                    + '<button data-form="bg144" class="btn btn-default delete" title="ลบ"><i class="fa fa-trash"></i></button>'
+                + '</td>'
+            + '</tr>'
+            + '<tr>'
+                + '<td>6. แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าครุภัณฑ์<br>ค่าที่ดิน/สิ่งก่อสร้าง (ง.145)</td>'
+                + '<td class="text-center">-</td>'
+                + '<td class="text-center">'
+                    + '<button data-form="bg145" class="btn btn-success add" title="เพิ่ม"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
+                + '</td>'
+            + '</tr>'
+            + '<tr>'
+                + '<td style="padding-left: 30px;">- คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง</td>'
+                + '<td class="text-center">-</td>'
+                + '<td class="text-center">'
+                    + '<button data-form="" class="btn btn-success add" title="เพิ่ม"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
+                + '</td>'
+            + '</tr>'
+            + '<tr>'
+                + '<td>7. แบบรายละเอียดคำของบประมาณเงินอุดหนุน (ง.146)</td>'
+                + '<td class="text-center">-</td>'
+                + '<td class="text-center">'
+                    + '<button data-form="bg146" class="btn btn-primary edit" title="แก้ไข"><i class="fa fa-pencil"></i></button>&nbsp;'
+                    + '<button data-form="bg146" class="btn btn-default delete" title="ลบ"><i class="fa fa-trash"></i></button>'
+                + '</td>'
+            + '</tr>'
+            + '<tr>'
+                + '<td>8. โครงการที่ตอบสนองยุทธศาสตร์</td>'
+                + '<td class="text-center">-</td>'
+                + '<td class="text-center">'
+                    + '<button data-form="" class="btn btn-success add" title="เพิ่ม"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
+                + '</td>'
+            + '</tr>';
+        
+        $("#bidderBody").html(html);
+        
+        $("button.add").unbind("click").click(function(){
+            var form = $(this).attr("data-form");
+            
+            
+        });
+        
+        $("button.edit").unbind("click").click(function(){
+            toggleShow("budget");
+            
+            var form = $(this).attr("data-form");
+            eval(form+"Form()");
+        });
+        
+        $("button.delete").unbind("click").click(function(){
+            
+        });
+    }
+    
+    function toggleShow(page){
+        if(page == "home"){
+            $("#formHome").show();
+            $("#formBudget, button.back").hide();
+        }
+        else if(page == "budget"){
+            $("#formHome").hide();
+            $("#formBudget, button.back").show();
+        }
+    }
+    
+</script>
