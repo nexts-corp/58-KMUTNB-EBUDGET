@@ -1,4 +1,4 @@
 <?php
-    header("Location: /api/root/view/index");
+    header("Location: /kmutnb-ebudget/api/root/view/index");
     exit();
 ?>
