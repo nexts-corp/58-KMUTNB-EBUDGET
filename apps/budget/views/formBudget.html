@@ -151,7 +151,7 @@
         $("#bidderBody").html(html);
         
         $("button.add").unbind("click").click(function(){
-            var form = $(this).attr("data-form");
+            toggleShow("budget");
 
             var form = $(this).attr("data-form");
             eval(form+"Form()");

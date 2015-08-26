@@ -131,7 +131,7 @@ function bg141Form(){
                                 
                                 + '<div class="col-md-12 text-right">'
                                     + '<button class="btn btn-primary"><i class="fa fa-plus-circle"></i> เพิ่ม</button>&nbsp;'
-                                    + '<button class="btn btn-default"><i class="fa fa-trash"></i> ล้างข้อมูล</button>'
+                                    + '<button class="btn btn-default"><i class="fa fa-trash"></i> ยกเลิก</button>'
                                 + '</div>'
                             + '</form>'
                         + '</div>'
@@ -146,11 +146,10 @@ function bg141Form(){
                 + '<tr>'
                     + '<th class="text-center" rowspan="3" style="vertical-align: middle;">ลำดับที่</th>'
                     + '<th class="text-center" rowspan="3" style="vertical-align: middle;">ชื่อตำแหน่ง</th>'
-                    + '<th class="text-center" colspan="5">อัตราเดิม (ตามบัญชีถือจ่าย ณ ต.ค.57)</th>'
+                    + '<th class="text-center" colspan="4">อัตราเดิม (ตามบัญชีถือจ่าย ณ ต.ค.57)</th>'
                     + '<th class="text-center" rowspan="3" style="vertical-align: middle;">คำชี้แจง</th>'
                 + '</tr>'
                 + '<tr>'
-                    + '<th class="text-center" rowspan="2" style="vertical-align: middle;">ระดับ</th>'
                     + '<th class="text-center" rowspan="2" style="vertical-align: middle;">อัตราเงินเดือน</th>'
                     + '<th class="text-center" colspan="2">จำนวนอัตรา</th>'
                     + '<th class="text-center" rowspan="2" style="vertical-align: middle;">จำนวนเงินทั้งปี</th>'
@@ -168,18 +167,15 @@ function bg141Form(){
                     + '<th class="text-center"></th>'
                     + '<th class="text-center"></th>'
                     + '<th class="text-center"></th>'
-                    + '<th class="text-center"></th>'
                 + '</tr>'
             + '</thead>'
             + '<tbody id="bidderBody">'
                 + '<tr>'
-                    + '<td colspan="8" class="text-center">-</td>'
+                    + '<td colspan="7" class="text-center">-</td>'
                 + '</tr>'
             + '</tbody>'
         + '</table>'
     + '</div>';
     
     $("#formBudget").html(html);
-    
-     
 }
