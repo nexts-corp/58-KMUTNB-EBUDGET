@@ -1,7 +1,7 @@
 
 {
-    "context_path":"/kmutnb-ebudget",
-    "welcome_page":"/api/root/view/index",
+    "context_path":"/kmutnb-ebudget/",
+    "welcome_page":"/kmutnb-ebudget/api/root/view/index",
     "locale":"th-TH",
     "context": [
         {
@@ -25,7 +25,7 @@
                 {"name": "OAUTH2_CLIENT_SECRET","value": "123456"},
                 {"name": "OAUTH2_ACCESS_KEY","value": "code"},
                 {"name": "OAUTH2_AUTH_URL","value": "/kmutnb-ebudget/api/oauth/authen/authorization"},
-                {"name": "OAUTH2_TOKEN_URI","value":"http://localhost:8081/kmutnb-ebudget/api/oauth/authen/authenticate"}
+                {"name": "OAUTH2_TOKEN_URI","value":"http://localhost/kmutnb-ebudget/api/oauth/authen/authenticate"}
        ]
     }
 }

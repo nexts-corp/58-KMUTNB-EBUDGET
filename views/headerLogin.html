@@ -1,46 +1,79 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        {{>js}}
-    </head>
-    <body>
+<head>
 
-        <div class="body">
-            <header id="header" class="colored flat-menu">
-                <div class="header-top">
-                    <div class="container">
+    {{>js}}
 
-                        <nav>
-                            <ul class="nav nav-pills nav-top">
-                                <li class="phone">
-                                    &nbsp;
+</head>
+<div class="body">
+    <header id="header" style="margin-top: -8px;">
+        <div class="container">
+            <div class="logo">
+                <a href="#">
+                    <img alt="Porto" width="400" height="95" data-sticky-width="280" data-sticky-height="50" src="{{_context_path}}/images/mis-logo.png" style="vertical-align: text-middle;">
+                </a>
+            </div>
+            <button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse" data-target=".nav-main-collapse">
+                <i class="fa fa-bars"></i>
+            </button>
+
+
+        </div>
+        <div class="navbar-collapse nav-main-collapse collapse">
+            <div class="container">
+                <nav class="nav-main mega-menu">
+                    <ul class="nav nav-pills nav-main" id="mainMenu">
+                        <li class="dropdown mega-menu-item mega-menu-shop">
+                            <a class="dropdown-toggle mobile-redirect">
+                                <i class="fa fa-lock"></i> เข้าสู่ระบบ
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <div class="mega-menu-content">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <form id="form" method="post" action="{{_context_path}}/api/oauth/authen/authorization">
+                                                    <input type="hidden" name="code" value="{{code}}" />
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <div class="col-md-12">
+                                                                <label>ชื่อผู้ใช้งาน</label>
+                                                                <input type="text" name="username"  value="{{username}}"  class="form-control input-lg req" placeholder="Username" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <div class="col-md-12">
+                                                                <!--<a class="pull-right" href="#">(Lost Password?)</a>-->
+                                                                <label>รหัสผ่าน</label>
+                                                                <input type="password" name="password" value="{{password}}" class="form-control input-lg" placeholder="Password" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" style="margin-top: 20px;">
+                                                        <!--<div class="col-md-6">
+                                                            <span class="remember-box checkbox">
+                                                                <label for="rememberme">
+                                                                    <input type="checkbox" id="rememberme" name="rememberme">Remember Me
+                                                                </label>
+                                                            </span>
+                                                        </div>-->
+                                                        <div class="col-md-12 text-right">
+                                                            <input id="submit" type="submit" value="เข้าใช้งาน" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
+                                                        </div>
+                                                    </div>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </li>
                             </ul>
-                        </nav>
-
-                    </div>
-                </div>
-                <div class="container">
-                    <div class="logo">
-                        <a href="#">
-                            <img alt="Porto" width="222" height="54" data-sticky-width="150" data-sticky-height="40" src="{{_context_path}}/images/DFT.png">
-                        </a>
-                    </div>
-                    <button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse" data-target=".nav-main-collapse">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                </div>
-                <div class="navbar-collapse nav-main-collapse collapse">
-                    <div class="container col-md-12">
-                        <div class="col-md-9" style="float: right;">
-                            <h4 class="text-dark">
-                                <span class="text-bold text-muted">ระบบสารสนเทศเพื่อการบริหารจัดการ <b class="blue">การระบายข้าว</b></span><br>
-                                <span class="text-muted">กองบริหารการค้าข้าว กรมการค้าต่างประเทศ</span><br>
-
-                                <span class="text-muted">Information Management System for Rice.</span>
-                            </h4>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
