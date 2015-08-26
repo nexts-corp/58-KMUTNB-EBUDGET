@@ -67,6 +67,8 @@
 <script src="{{_context_path}}/apps/budget/views/bg144.js"></script>
 <script src="{{_context_path}}/apps/budget/views/bg145.js"></script>
 <script src="{{_context_path}}/apps/budget/views/bg146.js"></script>
+<script src="{{_context_path}}/apps/budget/views/buildingOne.js"></script>
+<script src="{{_context_path}}/apps/budget/views/buildingMore.js"></script>
 <script type="text/javascript">
     $(function(){
         listsForm();
@@ -126,12 +128,21 @@
                 + '</td>'
             + '</tr>'
             + '<tr>'
-                + '<td style="padding-left: 30px;">- คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง</td>'
+                + '<td style="padding-left: 30px;">- คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง 1 ปี</td>'
                 + '<td class="text-center">-</td>'
                 + '<td class="text-center">'
-                    + '<button data-form="" class="btn btn-success add" title="เพิ่ม"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
+                    + '<button data-form="buildingOne" class="btn btn-success add" title="เพิ่ม"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
                 + '</td>'
             + '</tr>'
+            + '<tr>'
+                + '<td style="padding-left: 30px;">- คำชี้แจงรายละเอียดรายการที่ดินและสิ่งก่อสร้าง</td>'
+                + '<td class="text-center">-</td>'
+                + '<td class="text-center">'
+                    + '<button data-form="buildingMore" class="btn btn-success add" title="เพิ่ม"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
+                + '</td>'
+            + '</tr>'
+
+
             + '<tr>'
                 + '<td>7. แบบรายละเอียดคำของบประมาณเงินอุดหนุน (ง.146)</td>'
                 + '<td class="text-center">-</td>'
