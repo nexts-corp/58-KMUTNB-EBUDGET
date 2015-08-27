@@ -2,3 +2,17 @@
 /nbproject
 /logs
 /manifest.server.json
+/vendor/apache/log4php/composer.json
+/vendor/apache/log4php/apigen.neon
+/vendor/apache/log4php/build.xml
+/vendor/apache/log4php/CHANGELOG
+/vendor/apache/log4php/doap_log4php.rdf
+/vendor/apache/log4php/INSTALL
+/vendor/apache/log4php/NOTICE
+/vendor/apache/log4php/LICENSE
+/vendor/apache/log4php/phpdoc.xml
+/vendor/apache/log4php/phpunit.xml
+/vendor/apache/log4php/pom.xml
+/vendor/apache/log4php/README
+/vendor/apache/log4php/package.php
+/vendor/apache/log4php/package-config.php
