@@ -1,7 +1,7 @@
-function bg141Form(){
+function buildingMoreForm(){
     var html = '<div class="col-md-12 text-center">'
         + '<h4>'
-            + 'แบบรายละเอียดคำของบประมาณค่าจ้างประจำ (ง.141)'
+            + 'แบบรายละเอียดคำของบประมาณเงินเดือน (ง.140)'
         + '</h4>'
     + '</div>'
 
@@ -146,10 +146,11 @@ function bg141Form(){
                 + '<tr>'
                     + '<th class="text-center" rowspan="3" style="vertical-align: middle;">ลำดับที่</th>'
                     + '<th class="text-center" rowspan="3" style="vertical-align: middle;">ชื่อตำแหน่ง</th>'
-                    + '<th class="text-center" colspan="4">อัตราเดิม (ตามบัญชีถือจ่าย ณ ต.ค.57)</th>'
+                    + '<th class="text-center" colspan="5">อัตราเดิม (ตามบัญชีถือจ่าย ณ ต.ค.57)</th>'
                     + '<th class="text-center" rowspan="3" style="vertical-align: middle;">คำชี้แจง</th>'
                 + '</tr>'
                 + '<tr>'
+                    + '<th class="text-center" rowspan="2" style="vertical-align: middle;">ระดับ</th>'
                     + '<th class="text-center" rowspan="2" style="vertical-align: middle;">อัตราเงินเดือน</th>'
                     + '<th class="text-center" colspan="2">จำนวนอัตรา</th>'
                     + '<th class="text-center" rowspan="2" style="vertical-align: middle;">จำนวนเงินทั้งปี</th>'
@@ -167,15 +168,17 @@ function bg141Form(){
                     + '<th class="text-center"></th>'
                     + '<th class="text-center"></th>'
                     + '<th class="text-center"></th>'
+                    + '<th class="text-center"></th>'
                 + '</tr>'
             + '</thead>'
             + '<tbody id="bidderBody">'
                 + '<tr>'
-                    + '<td colspan="7" class="text-center">-</td>'
+                    + '<td colspan="8" class="text-center">-</td>'
                 + '</tr>'
             + '</tbody>'
         + '</table>'
     + '</div>';
     
     $("#formBudget").html(html);
+
 }
