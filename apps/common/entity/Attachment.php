@@ -78,6 +78,4 @@ class Attachment extends EntityBase {
         $this->updater = $updater;
     }
 
-
-
 }

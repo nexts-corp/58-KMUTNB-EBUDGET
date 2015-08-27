@@ -4,71 +4,70 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="bg_Affirmative_Centre")
+ * @Table(name="bg_affirmative_centre")
  */
 class AffirmativeCentre extends EntityBase {
- 
+
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="Id")
+     * @Column(type="integer",length=11,name="id")
      * @GeneratedValue
      */
     public $id;
-    
-    /** @Column(type="integer",length=11, name="Plan_Target_Id") */
+
+    /** @Column(type="integer",length=11, name="university_plan_target_id") */
     public $planTargetId;
-    
-    /** @Column(type="integer",length=11, name="Plan_Kpi_Id") */
+
+    /** @Column(type="integer",length=11, name="university_plan_kpi_id") */
     public $planKpiId;
-    
-    /** @Column(type="string",length=100, name="No") */
+
+    /** @Column(type="string",length=100, name="no") */
     public $no;
-    
-    /** @Column(type="text", name="Name") */
+
+    /** @Column(type="text", name="name") */
     public $name;
 
-    /** @Column(type="string",length=100, name="Unit") */
-    public $unit;  
-    
-    /** @Column(type="boolean",length=1, name="Is_Education") */
-    public $isEducation;
-    
-    /** @Column(type="string",length=100, name="Score1") */
-    public $score1;
-    
-    /** @Column(type="string",length=100, name="Score2") */
-    public $score2;  
-    
-    /** @Column(type="string",length=100, name="Score3") */
-    public $score3;    
-    
-    /** @Column(type="string",length=100, name="Score4") */
-    public $score4;     
-    
-    /** @Column(type="string",length=100, name="Score5") */
-    public $score5;  
+    /** @Column(type="string",length=100, name="unit") */
+    public $unit;
 
-    /** @Column(type="string",length=100, name="Weight") */
-    public $weight;  
-    
-    /** @Column(type="boolean",length=1, name="Is_Support") */
+    /** @Column(type="string",length=100, name="score1") */
+    public $score1;
+
+    /** @Column(type="string",length=100, name="score2") */
+    public $score2;
+
+    /** @Column(type="string",length=100, name="score3") */
+    public $score3;
+
+    /** @Column(type="string",length=100, name="score4") */
+    public $score4;
+
+    /** @Column(type="string",length=100, name="score5") */
+    public $score5;
+
+    /** @Column(type="string",length=100, name="weight") */
+    public $weight;
+
+    /** @Column(type="boolean",length=1, name="is_education") */
+    public $isEducation;
+
+    /** @Column(type="boolean",length=1, name="is_support") */
     public $isSupport;
 
-    /** @Column(type="boolean",length=1, name="Is_Service") */
+    /** @Column(type="boolean",length=1, name="is_service") */
     public $isService;
 
-    /** @Column(type="text", name="Remark") */
+    /** @Column(type="text", name="remark") */
     public $remark;
-    
-    /** @Column(type="string",length=100, name="Target") */
+
+    /** @Column(type="string",length=100, name="target") */
     public $target;
 
-    /** @Column(type="string",length=100, name="Creator") */
+    /** @Column(type="string",length=100, name="creator") */
     public $creator;
-    
-    /** @Column(type="string",length=100, name="Updater") */
+
+    /** @Column(type="string",length=100, name="updater") */
     public $updater;
-    
     
     function getId() {
         return $this->id;
@@ -94,10 +93,6 @@ class AffirmativeCentre extends EntityBase {
         return $this->unit;
     }
 
-    function getIsEducation() {
-        return $this->isEducation;
-    }
-
     function getScore1() {
         return $this->score1;
     }
@@ -120,6 +115,10 @@ class AffirmativeCentre extends EntityBase {
 
     function getWeight() {
         return $this->weight;
+    }
+
+    function getIsEducation() {
+        return $this->isEducation;
     }
 
     function getIsSupport() {
@@ -170,10 +169,6 @@ class AffirmativeCentre extends EntityBase {
         $this->unit = $unit;
     }
 
-    function setIsEducation($isEducation) {
-        $this->isEducation = $isEducation;
-    }
-
     function setScore1($score1) {
         $this->score1 = $score1;
     }
@@ -196,6 +191,10 @@ class AffirmativeCentre extends EntityBase {
 
     function setWeight($weight) {
         $this->weight = $weight;
+    }
+
+    function setIsEducation($isEducation) {
+        $this->isEducation = $isEducation;
     }
 
     function setIsSupport($isSupport) {
