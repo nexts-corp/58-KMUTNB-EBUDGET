@@ -4,57 +4,56 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="bg_Affirmative_Result")
+ * @Table(name="bg_affirmative_result")
  */
 class AffirmativeResult extends EntityBase {
-    
+
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="Id")
+     * @Column(type="integer",length=11,name="id")
      * @GeneratedValue
      */
     public $id;
-    
-    /** @Column(type="integer",length=11, name="Affirmative_Target_Id") */
-    public $affirmativeTargetId;
-    
-     /** @Column(type="integer",length=11, name="Interval_Id") */
-    public $intervalId;
-    
-    /** @Column(type="text", name="Detail") */
-    public $detail;
-    
-     /** @Column(type="string",length=100, name="Summand") */
-    public $summand;
-    
-    /** @Column(type="string",length=100, name="Divisor") */
-    public $divisor;
-    
-    /** @Column(type="string",length=100, name="Result") */
-    public $result;
-    
-    /** @Column(type="string",length=100, name="Score") */
-    public $score;
-    
-    /** @Column(type="string",length=100, name="Is_Pass") */
-    public $isPass;
-    
-    /** @Column(type="text", name="Remark") */
-    public $remark;
-    
-    /** @Column(type="string",length=255, name="File_Name") */
-    public $fileName;
-    
-     /** @Column(type="string",length=255, name="File_Path") */
-    public $filePath;   
 
-    /** @Column(type="string",length=100, name="Creator") */
+    /** @Column(type="integer",length=11, name="affirmative_target_id") */
+    public $affirmativeTargetId;
+
+    /** @Column(type="integer",length=11, name="tracking_interval_id") */
+    public $trackingIntervalId;
+
+    /** @Column(type="text", name="detail") */
+    public $detail;
+
+    /** @Column(type="string",length=100, name="summand") */
+    public $summand;
+
+    /** @Column(type="string",length=100, name="divisor") */
+    public $divisor;
+
+    /** @Column(type="string",length=100, name="result") */
+    public $result;
+
+    /** @Column(type="string",length=100, name="score") */
+    public $score;
+
+    /** @Column(type="string",length=100, name="is_pass") */
+    public $isPass;
+
+    /** @Column(type="text", name="remark") */
+    public $remark;
+
+    /** @Column(type="string",length=255, name="file_name") */
+    public $fileName;
+
+    /** @Column(type="string",length=255, name="file_path") */
+    public $filePath;
+
+    /** @Column(type="string",length=100, name="creator") */
     public $creator;
-    
-    /** @Column(type="string",length=100, name="Updater") */
+
+    /** @Column(type="string",length=100, name="updater") */
     public $updater;
-    
-    
+
     function getId() {
         return $this->id;
     }
@@ -63,8 +62,8 @@ class AffirmativeResult extends EntityBase {
         return $this->affirmativeTargetId;
     }
 
-    function getIntervalId() {
-        return $this->intervalId;
+    function getTrackingIntervalId() {
+        return $this->trackingIntervalId;
     }
 
     function getDetail() {
@@ -119,8 +118,8 @@ class AffirmativeResult extends EntityBase {
         $this->affirmativeTargetId = $affirmativeTargetId;
     }
 
-    function setIntervalId($intervalId) {
-        $this->intervalId = $intervalId;
+    function setTrackingIntervalId($trackingIntervalId) {
+        $this->trackingIntervalId = $trackingIntervalId;
     }
 
     function setDetail($detail) {
@@ -167,6 +166,4 @@ class AffirmativeResult extends EntityBase {
         $this->updater = $updater;
     }
 
-
-    
 }

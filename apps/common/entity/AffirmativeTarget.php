@@ -8,76 +8,76 @@ namespace apps\common\entity;
  */
 class AffirmativeTarget extends EntityBase {
 
-     /**
+    /**
      * @Id 
-     * @Column(type="integer",length=11,name="Id")
+     * @Column(type="integer",length=11,name="id")
      * @GeneratedValue
      */
     public $id;
-    
-    /** @Column(type="integer",length=11, name="Org_Faculty_Id") */
-    public $orgFacultyId;
-    
-    /** @Column(type="integer",length=11, name="Plan_Target_Id") */
+
+    /** @Column(type="integer",length=11, name="lk_faculty_id") */
+    public $facultyId;
+
+    /** @Column(type="integer",length=11, name="university_plan_target_id") */
     public $planTargetId;
-    
-    /** @Column(type="integer",length=11, name="Plan_Kpi_Id") */
+
+    /** @Column(type="integer",length=11, name="university_plan_kpi_id") */
     public $planKpiId;
-    
-    /** @Column(type="boolean",length=1, name="Is_Work") */
+
+    /** @Column(type="boolean",length=1, name="is_work") */
     public $isWork;
-    
-    /** @Column(type="string",length=100, name="No") */
+
+    /** @Column(type="string",length=100, name="no") */
     public $no;
-    
-    /** @Column(type="text", name="Name") */
+
+    /** @Column(type="text", name="name") */
     public $name;
-    
-    /** @Column(type="string",length=100, name="Unit") */
+
+    /** @Column(type="string",length=100, name="unit") */
     public $unit;
-    
-    /** @Column(type="string",length=100, name="Weight") */
+
+    /** @Column(type="string",length=100, name="eeight") */
     public $weight;
-    
-    /** @Column(type="string",length=100, name="Target") */
+
+    /** @Column(type="string",length=100, name="target") */
     public $target;
-    
-    /** @Column(type="string",length=100, name="Score1") */
+
+    /** @Column(type="string",length=100, name="score1") */
     public $score1;
-    
-    /** @Column(type="string",length=100, name="Score2") */
-    public $score2;  
-    
-    /** @Column(type="string",length=100, name="Score3") */
-    public $score3;    
-    
-    /** @Column(type="string",length=100, name="Score4") */
-    public $score4;     
-    
-    /** @Column(type="string",length=100, name="Score5") */
+
+    /** @Column(type="string",length=100, name="score2") */
+    public $score2;
+
+    /** @Column(type="string",length=100, name="score3") */
+    public $score3;
+
+    /** @Column(type="string",length=100, name="score4") */
+    public $score4;
+
+    /** @Column(type="string",length=100, name="score5") */
     public $score5;
-    
-    /** @Column(type="text", name="Remark") */
+
+    /** @Column(type="text", name="remark") */
     public $remark;
-    
-    /** @Column(type="boolean",length=1, name="Is_Approve") */
+
+    /** @Column(type="boolean",length=1, name="is_approve") */
     public $isApprove;
-    
-    /** @Column(type="boolean",length=1, name="Ic_Cancel") */
+
+    /** @Column(type="boolean",length=1, name="is_cancel") */
     public $isCancel;
-    
-    /** @Column(type="string",length=100, name="Creator") */
+
+    /** @Column(type="string",length=100, name="creator") */
     public $creator;
-    
-    /** @Column(type="string",length=100, name="Updater") */
+
+    /** @Column(type="string",length=100, name="updater") */
     public $updater;
-    
+
     function getId() {
         return $this->id;
     }
 
-    function getOrgFacultyId() {
-        return $this->orgFacultyId;
+    function getFacultyId() {
+        return $this->facultyId;
     }
 
     function getPlanTargetId() {
@@ -156,8 +156,8 @@ class AffirmativeTarget extends EntityBase {
         $this->id = $id;
     }
 
-    function setOrgFacultyId($orgFacultyId) {
-        $this->orgFacultyId = $orgFacultyId;
+    function setFacultyId($facultyId) {
+        $this->facultyId = $facultyId;
     }
 
     function setPlanTargetId($planTargetId) {
@@ -232,6 +232,4 @@ class AffirmativeTarget extends EntityBase {
         $this->updater = $updater;
     }
 
-
-    
 }
