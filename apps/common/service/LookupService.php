@@ -21,8 +21,8 @@ class LookupService extends CServiceBase implements ILookupService {
         $this->datacontext = new CDataContext();
     }
 
-    public function listBudgetDepartment() {
-        $repo = new entity\OrgDepartment();
+    public function listDepartment() {
+        $repo = new entity\Department();
         $data = $this->datacontext->getObject($repo);
         return $data;
     }

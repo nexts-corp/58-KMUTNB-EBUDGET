@@ -4,7 +4,7 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="bg_Budget_Product")
+ * @Table(name="budget_product")
  */
 class BudgetProduct extends EntityBase {
 
@@ -15,16 +15,22 @@ class BudgetProduct extends EntityBase {
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="Budget_Plan_Id") */
+    /** @Column(type="integer",length=11, name="budget_plan_id") */
     public $budgetPlanId;
 
-    /** @Column(type="string",length=255, name="Name") */
-    public $name;
+    /** @Column(type="string",length=255, name="product_name") */
+    public $productName;
 
-    /** @Column(type="string",length=100, name="Creator") */
+    /** @Column(type="integer",length=11, name="budget_year") */
+    public $budgetYear;
+
+    /** @Column(type="boolean",length=1, name="is_active") */
+    public $isActive;
+
+    /** @Column(type="string",length=100, name="creator") */
     public $creator;
 
-    /** @Column(type="string",length=100, name="Updater") */
+    /** @Column(type="string",length=100, name="updater") */
     public $updater;
 
     function getId() {
@@ -35,8 +41,16 @@ class BudgetProduct extends EntityBase {
         return $this->budgetPlanId;
     }
 
-    function getName() {
-        return $this->name;
+    function getProductName() {
+        return $this->productName;
+    }
+
+    function getBudgetYear() {
+        return $this->budgetYear;
+    }
+
+    function getIsActive() {
+        return $this->isActive;
     }
 
     function getCreator() {
@@ -55,8 +69,16 @@ class BudgetProduct extends EntityBase {
         $this->budgetPlanId = $budgetPlanId;
     }
 
-    function setName($name) {
-        $this->name = $name;
+    function setProductName($productName) {
+        $this->productName = $productName;
+    }
+
+    function setBudgetYear($budgetYear) {
+        $this->budgetYear = $budgetYear;
+    }
+
+    function setIsActive($isActive) {
+        $this->isActive = $isActive;
     }
 
     function setCreator($creator) {

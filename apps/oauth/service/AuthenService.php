@@ -26,6 +26,11 @@ class AuthenService extends CServiceBase implements IAuthenService {
         if ($this->getRequest()->username && $this->getRequest()->password) {
             $username = $this->getRequest()->username;
             $password = $this->getRequest()->password;
+
+
+            header('Location: /kmutnb-ebudget/api/budget/view/formBudget');
+
+
             $check = new \apps\common\entity\User();
             $check->username = $username;
             $check->password = $password;
@@ -83,7 +88,7 @@ class AuthenService extends CServiceBase implements IAuthenService {
 
             $acc = new \th\co\bpg\cde\collection\CJAccount();
             $acc->code = $user[0]->username;
-            $acc->name =$user[0]->name." ".$user[0]->surname;
+            $acc->name = $user[0]->name . " " . $user[0]->surname;
             $acc->role = $user[0]->roleCode;
             $acc->domain = $user[0]->roleCode;
             $acc->resources = array();
