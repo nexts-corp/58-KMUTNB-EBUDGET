@@ -2,7 +2,7 @@
     <div class="container">
         <nav class="nav-main mega-menu">
             <ul class="nav nav-pills nav-main" id="mainMenu">
-                 <li class="dropdown">
+                <li class="dropdown">
                     <a class="dropdown-toggle" href="#">
                         หน้าหลัก
                     </a>
@@ -10,82 +10,99 @@
 
                 <li class="dropdown">
                     <a class="dropdown-toggle" href="#">
-                        การจัดการ
+                        ระบบจัดทำ/จัดสรรงบประมาณ
                         <i class="fa fa-angle-down"></i>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{_context_path}}/api/warehouse/view/warehouseInfo">xxx</a></li>
+                        <li><a href="{{_context_path}}/api/budget/view/formBudget">แบบฟอร์มคำของบประมาณ</a></li>
+                        <!--<li class="dropdown-submenu">
+                            <a href="{{_context_path}}/api/budget/view/formBudget">แบบฟอร์มคำของบประมาณ</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">แบบ ง.140</a></li>
+                                <li><a href="#">แบบ ง.141</a></li>
+                                <li><a href="#">แบบ ง.142</a></li>
+                                <li><a href="#">แบบ ง.143</a></li>
+                                <li><a href="#">แบบ ง.144</a></li>
+                                <li><a href="#">แบบ ง.145</a></li>
+                                <li><a href="#">แบบ ง.146</a></li>
+                            </ul>
+                        </li>-->
+                        <li><a href="{{_context_path}}/api/budget/view/formBudget">แบบฟอร์มคำของบประมาณโครงการที่ตอบสนองยุทธศาสตร์</a></li>
                     </ul>
                 </li>
 
                 <li class="dropdown">
                     <a class="dropdown-toggle" href="#">
-                        คำของบประมาณ 1
+                        ระบบติดตามผลการดำเนินงาน
                         <i class="fa fa-angle-down"></i>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{_context_path}}/api/budget/view/formBudget">จัดทำคำของบประมาณ</a></li>
-                    
+                        <li><a href="{{_context_path}}/api/budget/view/#">รายงานผลการใช้งบประมาณรายจ่ายประจำปี</a></li>
+                        <li><a href="{{_context_path}}/api/budget/view/#">รายงานผลการใช้งบประมาณโครงการที่ตอบสนองยุทธศาสตร์</a></li>
                         <li class="dropdown-submenu">
-                            <a href="#">แบบฟอร์มคำของบประมาณ</a>
+                            <a href="#">ระบบจัดทำตัวชี้วัดคำรับรองการปฏิบัติงาน</a>
                             <ul class="dropdown-menu">
-                                <li><a href="{{_context_path}}/api/budget/view/bg140.html">ง.140</a></li>
-                                <li><a href="{{_context_path}}/api/budget/view/bg140.html">ง.140</a></li>
-                                <li><a href="shop-sidebar.html">ง.141</a></li>
-                                <li><a href="shop-product-full-width.html">ง.142</a></li>
-                                <li><a href="shop-product-sidebar.html">ง.143</a></li>
-                                <li><a href="shop-cart.html">ง.144</a></li>
-                                <li><a href="shop-login.html">ง.145</a></li>
-                                <li><a href="shop-checkout.html">ง.146</a></li>
-                                <li><a href="shop-checkout.html">โครงการที่ตอบสนองยุทธศาสตร์</a></li>
+                                <li><a href="{{_context_path}}/api/performanceKpi/view/createCenter">สร้างตัวชี้วัดส่วนงานภายในมหาวิทยาลัย</a></li>
+                                <li><a href="{{_context_path}}/#">ร่างตัวชี้วัดคำรับรองของส่วนงาน</a></li>
+                                <li><a href="{{_context_path}}/#">จัดทำตัวชี้วัดคำรับรองของส่วนงาน</a></li>
+                                <li><a href="{{_context_path}}/#">รายงานผลตัวชี้วัด</a></li>
                             </ul>
                         </li>
                     </ul>
                 </li>
-                
+
                 <li class="dropdown">
                     <a class="dropdown-toggle" href="#">
-                        คำของบประมาณ 2
+                        ระบบจัดทำรายงาน
                         <i class="fa fa-angle-down"></i>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-submenu">
-                            <a href="#">แบบฟอร์มคำของบประมาณ</a>
+                            <a href="#">รายงานการจัดทำงบประมาณเงินรายได้จากงบประมาณแผ่นดิน 3 มิติ</a>
                             <ul class="dropdown-menu">
-                                <li><a href="shop-full-width.html">ง.140</a></li>
-                                <li><a href="shop-sidebar.html">ง.141</a></li>
-                                <li><a href="shop-product-full-width.html">ง.142</a></li>
-                                <li><a href="shop-product-sidebar.html">ง.143</a></li>
-                                <li><a href="shop-cart.html">ง.144</a></li>
-                                <li><a href="shop-login.html">ง.145</a></li>
-                                <li><a href="shop-checkout.html">ง.146</a></li>
+                                <li><a href="{{_context_path}}/#">แบบ ง.1</a></li>
+                                <li><a href="{{_context_path}}/#">แบบ ง.2</a></li>
+                                <li><a href="{{_context_path}}/#">แบบ ง.2-1</a></li>
+                                <li><a href="{{_context_path}}/#">แบบ ง.2-2</a></li>
+                                <li><a href="{{_context_path}}/#">แบบ ง.3</a></li>
+                                <li><a href="{{_context_path}}/#">แบบ ง.4</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <a href="#">รายงานการจัดทำงบประมาณรายจ่ายเงินรายได้ประจำปี</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">แบบ ร.2</a></li>
+                                <li><a href="#">แบบ ร.2-1</a></li>
+                                <li><a href="#">แบบ ร.2-2</a></li>
+                                <li><a href="#">แบบ ร.3</a></li>
+                                <li><a href="#">แบบ ร.4</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <a href="#">รายงานอื่นๆ</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">รายงานแบบรายละเอียดคำของบประมาณ</a></li>
+                                <li><a href="#">รายงานคำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง</a></li>
+                                <li><a href="#">รายงานตัวชี้วัดคำรับรองการปฏิบัติงาน</a></li>
+                                <li><a href="#">รายงานผลการดำเนินงานตัวชี้วัดคำรับรองการปฏิบัติงาน</a></li>
                             </ul>
                         </li>
                     </ul>
-                </li>
-                
+                </li>               
+
                 <li class="dropdown">
                     <a class="dropdown-toggle" href="#">
-                        ตัวชี้วัดคำรับรองการปฏิบัติงาน
+                        ระบบจัดการข้อมูลเบื้องหลัง
                         <i class="fa fa-angle-down"></i>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{_context_path}}/api/performanceKpi/view/createCenter">ส่วนงานภายในมหาวิทยาลัย</a></li>
-                        <li><a href="{{_context_path}}/api/warehouse/view/warehouseInfo">ร่างตัวชี้วัดคำรับรองของส่วนงาน</a></li>
-                        <li><a href="{{_context_path}}/api/warehouse/view/warehouseInfo">ตัวชี้วัดคำรับรองของส่วนงาน</a></li>
-                        <li><a href="{{_context_path}}/api/warehouse/view/warehouseInfo">แบบรายงานผลของส่วนงาน</a></li>
+                        <li><a href="#">ระบบจัดการผู้ใช้งาน</a></li>
+                        <li><a href="#">ระบบจัดการจัดการแผนพัฒนาการศึกษาระดับอุดมศึกษา</a></li>
+                        <li><a href="#">ระบบจัดการด้านแผนงาน และผลผลิต</a></li>
+                        <li><a href="#">ระบบจัดการด้านประเภทหมวดรายจ่าย</a></li>
                     </ul>
                 </li>
-                
-                <li class="dropdown">
-                    <a class="dropdown-toggle" href="#">
-                        เอกสารรายงาน
-                        <i class="fa fa-angle-down"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{_context_path}}/api/warehouse/view/warehouseInfo">xxx</a></li>
-                    </ul>
-                </li>
+
             </ul>
         </nav>
     </div>
