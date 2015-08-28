@@ -9,10 +9,10 @@
             "contextType": "data",
             "propertys": [
                 {"name": "driver","value": "pdo_mysql"},
-                {"name": "host","value": "202.44.34.67"},
+                {"name": "host","value": "db.codeunbug.com"},
                 {"name": "port","value": "3306"},
-                {"name": "dbname","value": "budget_2557"},
-                {"name": "user","value": "mysqluser"},
+                {"name": "dbname","value": "ebudget"},
+                {"name": "user","value": "ebudget"},
                 {"name": "password","value": "intelenicsdb"}
 
             ]
@@ -25,7 +25,7 @@
                 {"name": "OAUTH2_CLIENT_SECRET","value": "123456"},
                 {"name": "OAUTH2_ACCESS_KEY","value": "code"},
                 {"name": "OAUTH2_AUTH_URL","value": "/kmutnb-ebudget/api/oauth/authen/authorization"},
-                {"name": "OAUTH2_TOKEN_URI","value":"http://localhost/kmutnb-ebudget/api/oauth/authen/authenticate"}
+                {"name": "OAUTH2_TOKEN_URI","value":"http://localhost:8081/kmutnb-ebudget/api/oauth/authen/authenticate"}
        ]
     }
 }
