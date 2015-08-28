@@ -4,9 +4,9 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="budget_product")
+ * @Table(name="lk_campus")
  */
-class BudgetProduct extends EntityBase {
+class LKCampus extends EntityBase {
 
     /**
      * @Id 
@@ -15,14 +15,8 @@ class BudgetProduct extends EntityBase {
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="budget_plan_id") */
-    public $budgetPlanId;
-
-    /** @Column(type="string",length=255, name="product_name") */
-    public $productName;
-
-    /** @Column(type="integer",length=11, name="budget_year") */
-    public $budgetYear;
+    /** @Column(type="string",length=255, name="campas_name") */
+    public $campusName;
 
     /** @Column(type="boolean",length=1, name="is_active") */
     public $isActive;
@@ -37,16 +31,8 @@ class BudgetProduct extends EntityBase {
         return $this->id;
     }
 
-    function getBudgetPlanId() {
-        return $this->budgetPlanId;
-    }
-
-    function getProductName() {
-        return $this->productName;
-    }
-
-    function getBudgetYear() {
-        return $this->budgetYear;
+    function getCampusName() {
+        return $this->campusName;
     }
 
     function getIsActive() {
@@ -65,16 +51,8 @@ class BudgetProduct extends EntityBase {
         $this->id = $id;
     }
 
-    function setBudgetPlanId($budgetPlanId) {
-        $this->budgetPlanId = $budgetPlanId;
-    }
-
-    function setProductName($productName) {
-        $this->productName = $productName;
-    }
-
-    function setBudgetYear($budgetYear) {
-        $this->budgetYear = $budgetYear;
+    function setCampusName($campusName) {
+        $this->campusName = $campusName;
     }
 
     function setIsActive($isActive) {

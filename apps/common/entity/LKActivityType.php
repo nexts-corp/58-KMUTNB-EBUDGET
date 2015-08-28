@@ -4,9 +4,9 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="budget_product")
+ * @Table(name="lk_activity_type")
  */
-class BudgetProduct extends EntityBase {
+class LKActivityType extends EntityBase {
 
     /**
      * @Id 
@@ -15,14 +15,11 @@ class BudgetProduct extends EntityBase {
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="budget_plan_id") */
-    public $budgetPlanId;
+    /** @Column(type="string",length=255, name="activity_type_name") */
+    public $activityTypeName;
 
-    /** @Column(type="string",length=255, name="product_name") */
-    public $productName;
-
-    /** @Column(type="integer",length=11, name="budget_year") */
-    public $budgetYear;
+    /** @Column(type="string",length=100, name="field_name") */
+    public $fieldName;
 
     /** @Column(type="boolean",length=1, name="is_active") */
     public $isActive;
@@ -37,16 +34,12 @@ class BudgetProduct extends EntityBase {
         return $this->id;
     }
 
-    function getBudgetPlanId() {
-        return $this->budgetPlanId;
+    function getActivityTypeName() {
+        return $this->activityTypeName;
     }
 
-    function getProductName() {
-        return $this->productName;
-    }
-
-    function getBudgetYear() {
-        return $this->budgetYear;
+    function getFieldName() {
+        return $this->fieldName;
     }
 
     function getIsActive() {
@@ -65,16 +58,12 @@ class BudgetProduct extends EntityBase {
         $this->id = $id;
     }
 
-    function setBudgetPlanId($budgetPlanId) {
-        $this->budgetPlanId = $budgetPlanId;
+    function setActivityTypeName($activityTypeName) {
+        $this->activityTypeName = $activityTypeName;
     }
 
-    function setProductName($productName) {
-        $this->productName = $productName;
-    }
-
-    function setBudgetYear($budgetYear) {
-        $this->budgetYear = $budgetYear;
+    function setFieldName($fieldName) {
+        $this->fieldName = $fieldName;
     }
 
     function setIsActive($isActive) {

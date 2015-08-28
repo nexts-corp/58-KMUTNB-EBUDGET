@@ -4,33 +4,33 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="bg_Tracking_Approve")
+ * @Table(name="tracking_approve")
  */
 class TrackingApprove extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="Id")
+     * @Column(type="integer",length=11,name="id")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="Tracking_Step_Id") */
+    /** @Column(type="integer",length=11, name="tracking_step_id") */
     public $trackingStepId;
 
-    /** @Column(type="integer",length=11, name="Org_Faculty_Id") */
-    public $orgFacultyId;
+    /** @Column(type="integer",length=11, name="lk_faculty_id") */
+    public $facultyId;
 
-    /** @Column(type="integer",length=11, name="Interval_Id") */
-    public $intervalId;
+    /** @Column(type="integer",length=11, name="lk_tracking_interval_id") */
+    public $trackingIntervalId;
 
-    /** @Column(type="boolean",length=1, name="Tracking_Status_Id") */
+    /** @Column(type="boolean",length=1, name="lk_tracking_status_id") */
     public $trackingStatusId;
 
-    /** @Column(type="string",length=100, name="Creator") */
+    /** @Column(type="string",length=100, name="creator") */
     public $creator;
 
-    /** @Column(type="string",length=100, name="Updater") */
+    /** @Column(type="string",length=100, name="updater") */
     public $updater;
 
     function getId() {
@@ -41,12 +41,12 @@ class TrackingApprove extends EntityBase {
         return $this->trackingStepId;
     }
 
-    function getOrgFacultyId() {
-        return $this->orgFacultyId;
+    function getFacultyId() {
+        return $this->facultyId;
     }
 
-    function getIntervalId() {
-        return $this->intervalId;
+    function getTrackingIntervalId() {
+        return $this->trackingIntervalId;
     }
 
     function getTrackingStatusId() {
@@ -69,12 +69,12 @@ class TrackingApprove extends EntityBase {
         $this->trackingStepId = $trackingStepId;
     }
 
-    function setOrgFacultyId($orgFacultyId) {
-        $this->orgFacultyId = $orgFacultyId;
+    function setFacultyId($facultyId) {
+        $this->facultyId = $facultyId;
     }
 
-    function setIntervalId($intervalId) {
-        $this->intervalId = $intervalId;
+    function setTrackingIntervalId($trackingIntervalId) {
+        $this->trackingIntervalId = $trackingIntervalId;
     }
 
     function setTrackingStatusId($trackingStatusId) {

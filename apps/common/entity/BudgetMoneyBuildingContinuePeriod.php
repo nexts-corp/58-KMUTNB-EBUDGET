@@ -4,9 +4,9 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="budget_product")
+ * @Table(name="budget_money_building_continue_period")
  */
-class BudgetProduct extends EntityBase {
+class BudgetMoneyBuildingContinuePeriod extends EntityBase {
 
     /**
      * @Id 
@@ -15,17 +15,17 @@ class BudgetProduct extends EntityBase {
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="budget_plan_id") */
-    public $budgetPlanId;
-
-    /** @Column(type="string",length=255, name="product_name") */
-    public $productName;
+    /** @Column(type="integer",length=11, name="budget_money_building_id") */
+    public $budgetMoneyBuildingId;
 
     /** @Column(type="integer",length=11, name="budget_year") */
     public $budgetYear;
 
-    /** @Column(type="boolean",length=1, name="is_active") */
-    public $isActive;
+    /** @Column(type="integer",length=11, name="work_no") */
+    public $workNo;
+
+    /** @Column(type="float",length=11, name="budget_amount") */
+    public $budgetAmount;
 
     /** @Column(type="string",length=100, name="creator") */
     public $creator;
@@ -37,20 +37,20 @@ class BudgetProduct extends EntityBase {
         return $this->id;
     }
 
-    function getBudgetPlanId() {
-        return $this->budgetPlanId;
-    }
-
-    function getProductName() {
-        return $this->productName;
+    function getBudgetMoneyBuildingId() {
+        return $this->budgetMoneyBuildingId;
     }
 
     function getBudgetYear() {
         return $this->budgetYear;
     }
 
-    function getIsActive() {
-        return $this->isActive;
+    function getWorkNo() {
+        return $this->workNo;
+    }
+
+    function getBudgetAmount() {
+        return $this->budgetAmount;
     }
 
     function getCreator() {
@@ -65,20 +65,20 @@ class BudgetProduct extends EntityBase {
         $this->id = $id;
     }
 
-    function setBudgetPlanId($budgetPlanId) {
-        $this->budgetPlanId = $budgetPlanId;
-    }
-
-    function setProductName($productName) {
-        $this->productName = $productName;
+    function setBudgetMoneyBuildingId($budgetMoneyBuildingId) {
+        $this->budgetMoneyBuildingId = $budgetMoneyBuildingId;
     }
 
     function setBudgetYear($budgetYear) {
         $this->budgetYear = $budgetYear;
     }
 
-    function setIsActive($isActive) {
-        $this->isActive = $isActive;
+    function setWorkNo($workNo) {
+        $this->workNo = $workNo;
+    }
+
+    function setBudgetAmount($budgetAmount) {
+        $this->budgetAmount = $budgetAmount;
     }
 
     function setCreator($creator) {

@@ -4,7 +4,7 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="bg_Tracking_Step")
+ * @Table(name="tracking_step")
  */
 class TrackingStep extends EntityBase {
 
@@ -15,19 +15,19 @@ class TrackingStep extends EntityBase {
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="Tracking_Group_Id") */
+    /** @Column(type="integer",length=11, name="lk_tracking_group_id") */
     public $trackingGroupId;
 
-    /** @Column(type="string",length=255, name="Step") */
+    /** @Column(type="string",length=255, name="step") */
     public $step;
 
-    /** @Column(type="string",length=100, name="Before_Step_Id") */
+    /** @Column(type="string",length=100, name="before_step_id") */
     public $beforeStepId;
 
-    /** @Column(type="string",length=100, name="Creator") */
+    /** @Column(type="string",length=100, name="creator") */
     public $creator;
 
-    /** @Column(type="string",length=100, name="Updater") */
+    /** @Column(type="string",length=100, name="updater") */
     public $updater;
 
     function getId() {

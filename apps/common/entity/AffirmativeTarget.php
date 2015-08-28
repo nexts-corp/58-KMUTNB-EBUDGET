@@ -4,7 +4,7 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="bg_Affirmative_Result")
+ * @Table(name="affirmative_target")
  */
 class AffirmativeTarget extends EntityBase {
 
@@ -15,14 +15,17 @@ class AffirmativeTarget extends EntityBase {
      */
     public $id;
 
+    /** @Column(type="integer",length=11, name="budget_year") */
+    public $budgetYear;
+
     /** @Column(type="integer",length=11, name="lk_faculty_id") */
     public $facultyId;
 
-    /** @Column(type="integer",length=11, name="university_plan_target_id") */
-    public $planTargetId;
+    /** @Column(type="integer",length=11, name="main_plan_target_id") */
+    public $mainPlanTargetId;
 
-    /** @Column(type="integer",length=11, name="university_plan_kpi_id") */
-    public $planKpiId;
+    /** @Column(type="integer",length=11, name="main_plan_kpi_id") */
+    public $mainPlanKpiId;
 
     /** @Column(type="boolean",length=1, name="is_work") */
     public $isWork;
@@ -76,16 +79,20 @@ class AffirmativeTarget extends EntityBase {
         return $this->id;
     }
 
+    function getBudgetYear() {
+        return $this->budgetYear;
+    }
+
     function getFacultyId() {
         return $this->facultyId;
     }
 
-    function getPlanTargetId() {
-        return $this->planTargetId;
+    function getMainPlanTargetId() {
+        return $this->mainPlanTargetId;
     }
 
-    function getPlanKpiId() {
-        return $this->planKpiId;
+    function getMainPlanKpiId() {
+        return $this->mainPlanKpiId;
     }
 
     function getIsWork() {
@@ -156,16 +163,20 @@ class AffirmativeTarget extends EntityBase {
         $this->id = $id;
     }
 
+    function setBudgetYear($budgetYear) {
+        $this->budgetYear = $budgetYear;
+    }
+
     function setFacultyId($facultyId) {
         $this->facultyId = $facultyId;
     }
 
-    function setPlanTargetId($planTargetId) {
-        $this->planTargetId = $planTargetId;
+    function setMainPlanTargetId($mainPlanTargetId) {
+        $this->mainPlanTargetId = $mainPlanTargetId;
     }
 
-    function setPlanKpiId($planKpiId) {
-        $this->planKpiId = $planKpiId;
+    function setMainPlanKpiId($mainPlanKpiId) {
+        $this->mainPlanKpiId = $mainPlanKpiId;
     }
 
     function setIsWork($isWork) {

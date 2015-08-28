@@ -4,7 +4,7 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="bg_affirmative_centre")
+ * @Table(name="affirmative_centre")
  */
 class AffirmativeCentre extends EntityBase {
 
@@ -15,11 +15,14 @@ class AffirmativeCentre extends EntityBase {
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="university_plan_target_id") */
-    public $planTargetId;
+    /** @Column(type="integer",length=11, name="budget_year") */
+    public $budgetYear;
 
-    /** @Column(type="integer",length=11, name="university_plan_kpi_id") */
-    public $planKpiId;
+    /** @Column(type="integer",length=11, name="main_plan_target_id") */
+    public $mainPlanTargetId;
+
+    /** @Column(type="integer",length=11, name="main_plan_kpi_id") */
+    public $mainPlanKpiId;
 
     /** @Column(type="string",length=100, name="no") */
     public $no;
@@ -68,17 +71,21 @@ class AffirmativeCentre extends EntityBase {
 
     /** @Column(type="string",length=100, name="updater") */
     public $updater;
-    
+
     function getId() {
         return $this->id;
     }
 
-    function getPlanTargetId() {
-        return $this->planTargetId;
+    function getBudgetYear() {
+        return $this->budgetYear;
     }
 
-    function getPlanKpiId() {
-        return $this->planKpiId;
+    function getMainPlanTargetId() {
+        return $this->mainPlanTargetId;
+    }
+
+    function getMainPlanKpiId() {
+        return $this->mainPlanKpiId;
     }
 
     function getNo() {
@@ -149,12 +156,16 @@ class AffirmativeCentre extends EntityBase {
         $this->id = $id;
     }
 
-    function setPlanTargetId($planTargetId) {
-        $this->planTargetId = $planTargetId;
+    function setBudgetYear($budgetYear) {
+        $this->budgetYear = $budgetYear;
     }
 
-    function setPlanKpiId($planKpiId) {
-        $this->planKpiId = $planKpiId;
+    function setMainPlanTargetId($mainPlanTargetId) {
+        $this->mainPlanTargetId = $mainPlanTargetId;
+    }
+
+    function setMainPlanKpiId($mainPlanKpiId) {
+        $this->mainPlanKpiId = $mainPlanKpiId;
     }
 
     function setNo($no) {
@@ -220,6 +231,5 @@ class AffirmativeCentre extends EntityBase {
     function setUpdater($updater) {
         $this->updater = $updater;
     }
-
 
 }

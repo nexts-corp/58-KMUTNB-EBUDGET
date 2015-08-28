@@ -6,11 +6,11 @@ namespace apps\common\entity;
  * @Entity
  * @Table(name="lk_department")
  */
-class Department extends EntityBase {
+class LKDepartment extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="Id")
+     * @Column(type="integer",length=11,name="id")
      * @GeneratedValue
      */
     public $id;

@@ -4,9 +4,9 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="budget_product")
+ * @Table(name="project")
  */
-class BudgetProduct extends EntityBase {
+class Project extends EntityBase {
 
     /**
      * @Id 
@@ -15,11 +15,11 @@ class BudgetProduct extends EntityBase {
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="budget_plan_id") */
-    public $budgetPlanId;
+    /** @Column(type="integer",length=11, name="plan_id") */
+    public $planId;
 
-    /** @Column(type="string",length=255, name="product_name") */
-    public $productName;
+    /** @Column(type="string",length=255, name="plan_name") */
+    public $planName;
 
     /** @Column(type="integer",length=11, name="budget_year") */
     public $budgetYear;
@@ -37,12 +37,12 @@ class BudgetProduct extends EntityBase {
         return $this->id;
     }
 
-    function getBudgetPlanId() {
-        return $this->budgetPlanId;
+    function getPlanId() {
+        return $this->planId;
     }
 
-    function getProductName() {
-        return $this->productName;
+    function getPlanName() {
+        return $this->planName;
     }
 
     function getBudgetYear() {
@@ -65,12 +65,12 @@ class BudgetProduct extends EntityBase {
         $this->id = $id;
     }
 
-    function setBudgetPlanId($budgetPlanId) {
-        $this->budgetPlanId = $budgetPlanId;
+    function setPlanId($planId) {
+        $this->planId = $planId;
     }
 
-    function setProductName($productName) {
-        $this->productName = $productName;
+    function setPlanName($planName) {
+        $this->planName = $planName;
     }
 
     function setBudgetYear($budgetYear) {
@@ -90,3 +90,5 @@ class BudgetProduct extends EntityBase {
     }
 
 }
+
+?>

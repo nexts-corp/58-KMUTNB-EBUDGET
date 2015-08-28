@@ -4,9 +4,9 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="budget_product")
+ * @Table(name="budget_type")
  */
-class BudgetProduct extends EntityBase {
+class BudgetType extends EntityBase {
 
     /**
      * @Id 
@@ -15,14 +15,11 @@ class BudgetProduct extends EntityBase {
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="budget_plan_id") */
-    public $budgetPlanId;
+    /** @Column(type="integer",length=11, name="master_id") */
+    public $masterId;
 
-    /** @Column(type="string",length=255, name="product_name") */
-    public $productName;
-
-    /** @Column(type="integer",length=11, name="budget_year") */
-    public $budgetYear;
+    /** @Column(type="string",length=500, name="budget_type_name") */
+    public $typeName;
 
     /** @Column(type="boolean",length=1, name="is_active") */
     public $isActive;
@@ -37,16 +34,12 @@ class BudgetProduct extends EntityBase {
         return $this->id;
     }
 
-    function getBudgetPlanId() {
-        return $this->budgetPlanId;
+    function getMasterId() {
+        return $this->masterId;
     }
 
-    function getProductName() {
-        return $this->productName;
-    }
-
-    function getBudgetYear() {
-        return $this->budgetYear;
+    function getTypeName() {
+        return $this->typeName;
     }
 
     function getIsActive() {
@@ -65,16 +58,12 @@ class BudgetProduct extends EntityBase {
         $this->id = $id;
     }
 
-    function setBudgetPlanId($budgetPlanId) {
-        $this->budgetPlanId = $budgetPlanId;
+    function setMasterId($masterId) {
+        $this->masterId = $masterId;
     }
 
-    function setProductName($productName) {
-        $this->productName = $productName;
-    }
-
-    function setBudgetYear($budgetYear) {
-        $this->budgetYear = $budgetYear;
+    function setTypeName($typeName) {
+        $this->typeName = $typeName;
     }
 
     function setIsActive($isActive) {
@@ -90,3 +79,5 @@ class BudgetProduct extends EntityBase {
     }
 
 }
+
+?>

@@ -4,9 +4,9 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="budget_plan")
+ * @Table(name="lk_fundgroup")
  */
-class BudgetPlan extends EntityBase {
+class LKFundGroup extends EntityBase {
 
     /**
      * @Id 
@@ -15,31 +15,31 @@ class BudgetPlan extends EntityBase {
      */
     public $id;
 
-    /** @Column(type="string",length=255, name="plan_name") */
-    public $planName;
+    /** @Column(type="integer",length=11, name="master_id") */
+    public $masterId;
 
-    /** @Column(type="integer",length=11, name="budget_year") */
-    public $budgetYear;
+    /** @Column(type="string",length=255, name="fundgroup_name") */
+    public $fundgroupName;
 
     /** @Column(type="boolean",length=1, name="is_active") */
     public $isActive;
 
-    /** @Column(type="string",length=100, name="creator") */
+    /** @Column(type="string",length=100, name="Creator") */
     public $creator;
 
-    /** @Column(type="string",length=100, name="updater") */
+    /** @Column(type="string",length=100, name="Updater") */
     public $updater;
 
     function getId() {
         return $this->id;
     }
 
-    function getPlanName() {
-        return $this->planName;
+    function getMasterId() {
+        return $this->masterId;
     }
 
-    function getBudgetYear() {
-        return $this->budgetYear;
+    function getFundgroupName() {
+        return $this->fundgroupName;
     }
 
     function getIsActive() {
@@ -58,12 +58,12 @@ class BudgetPlan extends EntityBase {
         $this->id = $id;
     }
 
-    function setPlanName($planName) {
-        $this->planName = $planName;
+    function setMasterId($masterId) {
+        $this->masterId = $masterId;
     }
 
-    function setBudgetYear($budgetYear) {
-        $this->budgetYear = $budgetYear;
+    function setFundgroupName($fundgroupName) {
+        $this->fundgroupName = $fundgroupName;
     }
 
     function setIsActive($isActive) {
@@ -79,5 +79,3 @@ class BudgetPlan extends EntityBase {
     }
 
 }
-
-?>

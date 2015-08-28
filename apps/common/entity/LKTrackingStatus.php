@@ -4,22 +4,25 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="bg_Tracking_Group")
+ * @Table(name="lk_tracking_status")
  */
-class TrackingGroup extends EntityBase {
+class LKTrackingStatus extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="Id")
+     * @Column(type="integer",length=11,name="id")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="string",length=255, name="Group") */
-    public $group;
+    /** @Column(type="string",length=100, name="status") */
+    public $status;
 
-    /** @Column(type="string",length=255, name="Description") */
+    /** @Column(type="string",length=255, name="description") */
     public $description;
+
+    /** @Column(type="boolean",length=1, name="is_active") */
+    public $isActive;
 
     /** @Column(type="string",length=100, name="Creator") */
     public $creator;
@@ -31,12 +34,16 @@ class TrackingGroup extends EntityBase {
         return $this->id;
     }
 
-    function getGroup() {
-        return $this->group;
+    function getStatus() {
+        return $this->status;
     }
 
     function getDescription() {
         return $this->description;
+    }
+
+    function getIsActive() {
+        return $this->isActive;
     }
 
     function getCreator() {
@@ -51,12 +58,16 @@ class TrackingGroup extends EntityBase {
         $this->id = $id;
     }
 
-    function setGroup($group) {
-        $this->group = $group;
+    function setStatus($status) {
+        $this->status = $status;
     }
 
     function setDescription($description) {
         $this->description = $description;
+    }
+
+    function setIsActive($isActive) {
+        $this->isActive = $isActive;
     }
 
     function setCreator($creator) {

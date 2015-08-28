@@ -4,39 +4,46 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="bg_Tracking_Status")
+ * @Table(name="lk_tracking_interval")
  */
-class TrackingStatus extends EntityBase {
+class LKTrackingInterval extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="Id")
+     * @Column(type="integer",length=11,name="id")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="string",length=100, name="Status") */
-    public $status;
+    /** @Column(type="integer",length=11, name="interval") */
+    public $interval;
 
-    /** @Column(type="string",length=255, name="Description") */
+    /** @Column(type="string",length=100, name="description") */
     public $description;
 
-    /** @Column(type="string",length=100, name="Creator") */
+    /** @Column(type="boolean",length=1, name="is_active") */
+    public $isActive;
+
+    /** @Column(type="string",length=100, name="creator") */
     public $creator;
 
-    /** @Column(type="string",length=100, name="Updater") */
+    /** @Column(type="string",length=100, name="updater") */
     public $updater;
 
     function getId() {
         return $this->id;
     }
 
-    function getStatus() {
-        return $this->status;
+    function getInterval() {
+        return $this->interval;
     }
 
     function getDescription() {
         return $this->description;
+    }
+
+    function getIsActive() {
+        return $this->isActive;
     }
 
     function getCreator() {
@@ -51,12 +58,16 @@ class TrackingStatus extends EntityBase {
         $this->id = $id;
     }
 
-    function setStatus($status) {
-        $this->status = $status;
+    function setInterval($interval) {
+        $this->interval = $interval;
     }
 
     function setDescription($description) {
         $this->description = $description;
+    }
+
+    function setIsActive($isActive) {
+        $this->isActive = $isActive;
     }
 
     function setCreator($creator) {

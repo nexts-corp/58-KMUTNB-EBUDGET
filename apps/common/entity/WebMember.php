@@ -4,48 +4,48 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="bg_Web_Member")
+ * @Table(name="web_member")
  */
 class WebMember extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="Id")
+     * @Column(type="integer",length=11,name="id")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="string",length=200, name="Username") */
+    /** @Column(type="string",length=200, name="username") */
     public $username;
 
-    /** @Column(type="string",length=200, name="Password") */
+    /** @Column(type="string",length=200, name="password") */
     public $password;
 
-    /** @Column(type="string",length=200, name="Firstname") */
+    /** @Column(type="string",length=200, name="firstname") */
     public $firstname;
 
-    /** @Column(type="string",length=200, name="Lastname") */
+    /** @Column(type="string",length=200, name="lastname") */
     public $lastname;
 
-    /** @Column(type="string",length=200, name="Email") */
+    /** @Column(type="string",length=200, name="email") */
     public $email;
 
-    /** @Column(type="string",length=200, name="Telephone") */
+    /** @Column(type="string",length=200, name="telephone") */
     public $telephone;
 
-    /** @Column(type="integer",length=11, name="Web_Role_Id") */
+    /** @Column(type="integer",length=11, name="web_role_id") */
     public $webRoleId;
 
-    /** @Column(type="integer",length=11, name="Org_Faculty_Id") */
-    public $orgFacultyId;
+    /** @Column(type="integer",length=11, name="lk_faculty_id") */
+    public $facultyId;
 
-    /** @Column(type="integer",length=11, name="Org_Department_Id") */
-    public $orgDepartmentId;
+    /** @Column(type="integer",length=11, name="lk_department_id") */
+    public $departmentId;
 
-    /** @Column(type="string",length=100, name="Creator") */
+    /** @Column(type="string",length=100, name="creator") */
     public $creator;
 
-    /** @Column(type="string",length=100, name="Updater") */
+    /** @Column(type="string",length=100, name="updater") */
     public $updater;
 
     function getId() {
@@ -80,12 +80,12 @@ class WebMember extends EntityBase {
         return $this->webRoleId;
     }
 
-    function getOrgFacultyId() {
-        return $this->orgFacultyId;
+    function getFacultyId() {
+        return $this->facultyId;
     }
 
-    function getOrgDepartmentId() {
-        return $this->orgDepartmentId;
+    function getDepartmentId() {
+        return $this->departmentId;
     }
 
     function getCreator() {
@@ -128,12 +128,12 @@ class WebMember extends EntityBase {
         $this->webRoleId = $webRoleId;
     }
 
-    function setOrgFacultyId($orgFacultyId) {
-        $this->orgFacultyId = $orgFacultyId;
+    function setFacultyId($facultyId) {
+        $this->facultyId = $facultyId;
     }
 
-    function setOrgDepartmentId($orgDepartmentId) {
-        $this->orgDepartmentId = $orgDepartmentId;
+    function setDepartmentId($departmentId) {
+        $this->departmentId = $departmentId;
     }
 
     function setCreator($creator) {

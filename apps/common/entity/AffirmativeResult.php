@@ -4,7 +4,7 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="bg_affirmative_result")
+ * @Table(name="affirmative_result")
  */
 class AffirmativeResult extends EntityBase {
 
@@ -15,10 +15,13 @@ class AffirmativeResult extends EntityBase {
      */
     public $id;
 
+    /** @Column(type="integer",length=11, name="budget_year") */
+    public $budgetYear;
+
     /** @Column(type="integer",length=11, name="affirmative_target_id") */
     public $affirmativeTargetId;
 
-    /** @Column(type="integer",length=11, name="tracking_interval_id") */
+    /** @Column(type="integer",length=11, name="lk_tracking_interval_id") */
     public $trackingIntervalId;
 
     /** @Column(type="text", name="detail") */
@@ -56,6 +59,10 @@ class AffirmativeResult extends EntityBase {
 
     function getId() {
         return $this->id;
+    }
+
+    function getBudgetYear() {
+        return $this->budgetYear;
     }
 
     function getAffirmativeTargetId() {
@@ -112,6 +119,10 @@ class AffirmativeResult extends EntityBase {
 
     function setId($id) {
         $this->id = $id;
+    }
+
+    function setBudgetYear($budgetYear) {
+        $this->budgetYear = $budgetYear;
     }
 
     function setAffirmativeTargetId($affirmativeTargetId) {

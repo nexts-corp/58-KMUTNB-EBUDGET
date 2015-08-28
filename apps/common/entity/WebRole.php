@@ -4,39 +4,39 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="bg_Web_Role")
+ * @Table(name="web_role")
  */
 class WebRole extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="Id")
+     * @Column(type="integer",length=11,name="id")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="string",length=200, name="Role_TH") */
-    public $roleTh;
+    /** @Column(type="string",length=200, name="role") */
+    public $role;
 
-    /** @Column(type="string",length=200, name="Role_EN") */
-    public $roleEn;
+    /** @Column(type="string",length=200, name="description") */
+    public $description;
 
-    /** @Column(type="string",length=100, name="Creator") */
+    /** @Column(type="string",length=100, name="creator") */
     public $creator;
 
-    /** @Column(type="string",length=100, name="Updater") */
+    /** @Column(type="string",length=100, name="updater") */
     public $updater;
 
     function getId() {
         return $this->id;
     }
 
-    function getRoleTh() {
-        return $this->roleTh;
+    function getRole() {
+        return $this->role;
     }
 
-    function getRoleEn() {
-        return $this->roleEn;
+    function getDescription() {
+        return $this->description;
     }
 
     function getCreator() {
@@ -51,12 +51,12 @@ class WebRole extends EntityBase {
         $this->id = $id;
     }
 
-    function setRoleTh($roleTh) {
-        $this->roleTh = $roleTh;
+    function setRole($role) {
+        $this->role = $role;
     }
 
-    function setRoleEn($roleEn) {
-        $this->roleEn = $roleEn;
+    function setDescription($description) {
+        $this->description = $description;
     }
 
     function setCreator($creator) {
