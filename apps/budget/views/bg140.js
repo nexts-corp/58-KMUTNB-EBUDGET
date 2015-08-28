@@ -227,7 +227,7 @@ function bg140Form() {
             + '</div>'
             + '<div id="collapse1One" class="accordion-body collapse in">'
             + '<div class="panel-body">'
-            + '<form>'
+            + '<form onsubmit="return false">'
             + '<div class="form-group">'
             + '<div class="col-md-9">'
             + '<label class="col-md-4 control-label text-right" for="xxx">หมวดรายจ่าย</label>'
@@ -287,7 +287,7 @@ function bg140Form() {
             + '<div class="col-md-9">'
             + '<label class="col-md-4 control-label text-right" for="xxx">จำนวนเงินทั้งปี</label>'
             + '<div class="col-md-8">'
-            + '<input type="text" id="bg5" name="bg5" class="form-control input-sm" required>'
+            + '<input type="text" id="bg6" name="bg6" class="form-control input-sm" required>'
             + '</div>'
             + '</div>'
             + '</div>'
@@ -296,7 +296,7 @@ function bg140Form() {
             + '<div class="col-md-9">'
             + '<label class="col-md-4 control-label text-right" for="xxx">คำชี้แจง</label>'
             + '<div class="col-md-8">'
-            + '<textarea id="bg6" name="bg6" class="form-control input-sm">'
+            + '<textarea id="bg7" name="bg7" class="form-control input-sm">'
             + '</textarea>'
             + '</div>'
             + '</div>'
@@ -321,6 +321,7 @@ function bg140Form() {
             + '<th class="text-center" rowspan="3" style="vertical-align: middle;">ชื่อตำแหน่ง</th>'
             + '<th class="text-center" colspan="5">อัตราเดิม (ตามบัญชีถือจ่าย ณ ต.ค.57)</th>'
             + '<th class="text-center" rowspan="3" style="vertical-align: middle;">คำชี้แจง</th>'
+            + '<th class="text-center" rowspan="3" style="vertical-align: middle;">เครื่องมือ</th>'
             + '</tr>'
             + '<tr>'
             + '<th class="text-center" rowspan="2" style="vertical-align: middle;">ระดับ</th>'
@@ -342,16 +343,21 @@ function bg140Form() {
             + '<th class="text-center"></th>'
             + '<th class="text-center"></th>'
             + '<th class="text-center"></th>'
+            + '<th class="text-center"></th>'
             + '</tr>'
             + '</thead>'
+
             + '<tbody id="bidderBody2">'
             + '<tr>'
-            + '<td colspan="8" class="text-center">-</td>'
+            + '<td colspan="9" class="text-center">-</td>'
             + '</tr>'
             + '</tbody>'
             + '</table>'
             + '</div>';
     $("#formBudget").html(html);
+
+    //$("#listBudgetPlan, #listBudgetProduct, #listDepartment, #listBudgetSource").select2();
+
     fakeBudgetPlan();
     fakeDepartment();
     fakeBudgetSource();
@@ -373,26 +379,34 @@ function bg140Form() {
             $("#listBudgetProduct").append(new Option("- เลือกแผนงาน -", "0"));
         }
     });
-    i = 1;
+    var i = 1;
     $("#addForm").click(function () {
-        var item = "<tr>"
-                + "<td>" + i + "</td>"
+        var item = "<tr id="+i+">"
+                + "<td class='text-center'>" + i + "</td>"
                 + "<td>" + $("#bg1").val() + "</td>"
-                + "<td>" + $("#bg2").val() + "</td>"
+                + "<td class='text-center'>" + $("#bg2").val() + "</td>"
                 + "<td>" + $("#bg3").val() + "</td>"
                 + "<td>" + $("#bg4").val() + "</td>"
-                + "<td>" + $("#bg5").val() + "</td>"
-                + "<td>" + $("#bg6").val() + "</td>"
-                + "<td>" + "</td>"
-                + "</tr>";
+                + "<td class='text-center'>" + $("#bg5").val() + "</td>"
+                + "<td>" +$("#bg6").val()+"</td>"
+                + "<td>" + $("#bg7").val() + "</td>"
+                + "<td class='text-center'><button class='btn btn-default deleteList' data-id='"+i+"'><i class='fa fa-trash'></i></button></td>"
+            + "</tr>";
         //alert(item);
 //        $.get('bg140.js', $('#sample-form').serialize(), function (item) {
 //            $('#bidderTable').html(item);
 //        });
 
         //("#bidderTable").append(item);
-        ("#bidderTable").last().append(item);
+        if(i == 1) $("#bidderBody2").empty();
+
+        $("#bidderBody2").append(item);
         i = i + 1;
+
+        $("button.deleteList").unbind("click").click(function(){
+            var id = $(this).attr("data-id");
+            $("#"+id).hide();
+        });
     });
 
     $("#clearForm").click(function () {
