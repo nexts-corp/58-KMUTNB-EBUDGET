@@ -22,7 +22,7 @@ class LookupService extends CServiceBase implements ILookupService {
     }
 
     public function listDepartment() {
-        $repo = new entity\Department();
+        $repo = new entity\LKDepartment();
         $data = $this->datacontext->getObject($repo);
         return $data;
     }
