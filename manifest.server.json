@@ -1,0 +1,31 @@
+{
+    "context_path":"/kmutnb-ebudget",
+    "test" : "test",
+    "welcome_page":"/kmutnb-ebudget/api/root/view/index",
+    "locale":"th-TH",
+    "context": [
+        {
+            "contextName": "default",
+            "contextType": "data",
+            "propertys": [
+                {"name": "driver","value": "pdo_mysql"},
+                {"name": "host","value": "202.44.34.67"},
+                {"name": "port","value": "3306"},
+                {"name": "dbname","value": "budget_2557"},
+                {"name": "user","value": "mysqluser"},
+                {"name": "password","value": "intelenicsdb"}
+
+            ]
+        }
+    ],
+    "oauth":{
+        "provider":"\\apps\\common\\AuthClient",
+        "propertys": [
+                {"name": "OAUTH2_CLIENT_ID","value": "123456"},
+                {"name": "OAUTH2_CLIENT_SECRET","value": "123456"},
+                {"name": "OAUTH2_ACCESS_KEY","value": "code"},
+                {"name": "OAUTH2_AUTH_URL","value": "/kmutnb-ebudget/api/oauth/authen/authorization"},
+                {"name": "OAUTH2_TOKEN_URI","value":"http://localhost/kmutnb-ebudget/api/oauth/authen/authenticate"}
+       ]
+    }
+}
