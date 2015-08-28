@@ -8,12 +8,12 @@
             "contextName": "default",
             "contextType": "data",
             "propertys": [
-                {"name": "driver","value": "pdo_sqlsrv"},
-                {"name": "host","value": "202.44.34.86"},
-                {"name": "port","value": "1443"},
-                {"name": "dbname","value": "RiceDB"},
-                {"name": "user","value": "riceuser"},
-                {"name": "password","value": "l2ice2015"}
+                {"name": "driver","value": "pdo_mysql"},
+                {"name": "host","value": "202.44.34.67"},
+                {"name": "port","value": "3306"},
+                {"name": "dbname","value": "budget_2557"},
+                {"name": "user","value": "mysqluser"},
+                {"name": "password","value": "intelenicsdb"}
 
             ]
         }
