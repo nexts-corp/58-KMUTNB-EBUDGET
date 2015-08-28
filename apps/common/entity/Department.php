@@ -4,9 +4,9 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="budget_plan")
+ * @Table(name="lk_department")
  */
-class BudgetPlan extends EntityBase {
+class Department extends EntityBase {
 
     /**
      * @Id 
@@ -15,11 +15,14 @@ class BudgetPlan extends EntityBase {
      */
     public $id;
 
-    /** @Column(type="string",length=255, name="plan_name") */
-    public $planName;
+    /** @Column(type="integer",length=11, name="lk_faculty_id") */
+    public $facultyId;
 
-    /** @Column(type="integer",length=11, name="budget_year") */
-    public $budgetYear;
+    /** @Column(type="integer",length=11, name="lk_campus_id") */
+    public $campusId;
+
+    /** @Column(type="string",length=200, name="department_name") */
+    public $deptName;
 
     /** @Column(type="boolean",length=1, name="is_active") */
     public $isActive;
@@ -34,12 +37,16 @@ class BudgetPlan extends EntityBase {
         return $this->id;
     }
 
-    function getPlanName() {
-        return $this->planName;
+    function getFacultyId() {
+        return $this->facultyId;
     }
 
-    function getBudgetYear() {
-        return $this->budgetYear;
+    function getCampusId() {
+        return $this->campusId;
+    }
+
+    function getDeptName() {
+        return $this->deptName;
     }
 
     function getIsActive() {
@@ -58,12 +65,16 @@ class BudgetPlan extends EntityBase {
         $this->id = $id;
     }
 
-    function setPlanName($planName) {
-        $this->planName = $planName;
+    function setFacultyId($facultyId) {
+        $this->facultyId = $facultyId;
     }
 
-    function setBudgetYear($budgetYear) {
-        $this->budgetYear = $budgetYear;
+    function setCampusId($campusId) {
+        $this->campusId = $campusId;
+    }
+
+    function setDeptName($deptName) {
+        $this->deptName = $deptName;
     }
 
     function setIsActive($isActive) {
@@ -79,5 +90,3 @@ class BudgetPlan extends EntityBase {
     }
 
 }
-
-?>

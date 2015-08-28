@@ -10,6 +10,14 @@ namespace apps\common\interfaces;
 interface ILookupService {
 
     /**
+     * @name listDepartment
+     * @uri /listDepartment
+     * @return String[] lists Description
+     * @description รายชื่อหน่วยงาน
+     */
+    public function listDepartment();
+
+    /**
      * @name listBudgetPlan
      * @uri /listBudgetPlan
      * @return String[] lists Description
@@ -25,11 +33,4 @@ interface ILookupService {
      */
     public function listBudgetProduct();
 
-    /**
-     * @name listBudgetDepartment
-     * @uri /listBudgetDepartment
-     * @return String[] lists Description
-     * @description รายชื่อหน่วยงาน
-     */
-    public function listBudgetDepartment();
 }

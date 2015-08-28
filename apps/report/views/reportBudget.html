@@ -1,0 +1,137 @@
+{{>header}}
+
+<div role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">ระบบจัดทำรายงาน</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">รายงานการจัดทำงบประมาณรายจ่ายเงินรายได้ประจำปี</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="tall dashboard">
+
+
+
+    <div class="sort-source-wrapper"><!-- button action on header -->
+        <div class="container">
+            <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+                <li class="active">
+                    <button class="btn btn-default back" style="display: none;"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
+                </li>
+            </ul>
+        </div>
+    </div><!-- end button action on header -->
+
+    <div class="container">
+        <div class="row">
+
+            <div id="formHome" class="col-md-12">
+                <div id="bidderTable" class="col-md-12"><!-- table shown bidder information list -->
+                    <table id="table" class="table table-bordered table-striped table-condensed mb-none">
+                        <thead>
+                            <tr>
+                                <th class="text-center col-lg-10">รายงาน</th>
+                                <th class="text-center col-lg-2"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="bidderBody">
+                            <tr>
+                                <td colspan="3" class="text-center">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!-- end table shown bidder information list -->
+            </div>
+            <div id="formReport" class="col-md-12" style="display: none;">
+            </div>
+        </div><!--  row  -->
+    </div><!--  container  -->
+</div><!-- main -->
+
+{{>footer}}
+
+
+<script type="text/javascript">
+    $(function () {
+        listsForm();
+
+        $("button.back").unbind("click").click(function () {
+            toggleShow("home");
+        });
+
+    });
+
+    function listsForm() {
+        var html = '<tr>'
+                + '<td>1.แบบจำแนกตามแผนงาน/กองทุน/หมวดรายจ่าย (ร. 2)</td>'
+                + '<td class="text-center">'
+                + '<button data-form="bg140" class="btn btn-primary edit" title="แก้ไข"><i class="fa fa-pencil"></i></button>&nbsp;'
+                + '</td>'
+                + '</tr>'
+                + '<tr>'
+                + '<td>2.แบบงบประมาณรายจ่ายเงินรายได้ จำแนกตามหน่วยงาน-ภาควิชา-สาขาวิชา/หมวดรายจ่าย (ร. 2-1)</td>'
+                + '<td class="text-center">'
+                + '<button data-form="bg141" class="btn btn-primary edit" title="แก้ไข"><i class="fa fa-pencil"></i></button>&nbsp;'
+                + '</td>'
+                + '</tr>'
+                + '<tr>'
+                + '<td>3.แบบงบประมาณรายจ่ายเงินรายได้ จำแนกตามหน่วยงาน-ภาควิชา-สาขาวิชา/กองทุน (ร. 2-2)</td>'
+                + '<td class="text-center">'
+                + '<button data-form="bg142" class="btn btn-primary edit" title="แก้ไข"><i class="fa fa-pencil"></i></button>&nbsp;'
+                + '</td>'
+                + '</tr>'
+                + '<tr>'
+                + '<td>4.คำชี้แจงงบประมาณรายจ่ายเงินรายได้ จำแนกตามแผนงาน/กองทุน/หมวดรายจ่าย (ร. 3)</td>'
+                + '<td class="text-center">'
+                + '<button data-form="bg143" class="btn btn-primary edit" title="แก้ไข"><i class="fa fa-pencil"></i></button>&nbsp;'
+                + '</td>'
+                + '</tr>'
+                + '<tr>'
+                + '<td>5.แผน/ผล การใช้จ่ายงบประมาณรายจ่ายเงินรายได้ (ร. 4)</td>'
+                + '<td class="text-center">'
+                + '<button data-form="bg144" class="btn btn-primary edit" title="แก้ไข"><i class="fa fa-pencil"></i></button>&nbsp;'
+                + '</td>'
+                + '</tr>';
+
+        $("#bidderBody").html(html);
+
+        $("button.add").unbind("click").click(function () {
+            toggleShow("budget");
+
+            var form = $(this).attr("data-form");
+            eval(form + "Form()");
+        });
+
+        $("button.edit").unbind("click").click(function () {
+            toggleShow("budget");
+
+            var form = $(this).attr("data-form");
+            eval(form + "Form()");
+        });
+
+        $("button.delete").unbind("click").click(function () {
+
+        });
+    }
+
+    function toggleShow(page) {
+        if (page == "home") {
+            $("#formHome").show();
+            $("#formReport, button.back").hide();
+        }
+        else if (page == "budget") {
+            $("#formHome").hide();
+            $("#formReport, button.back").show();
+        }
+    }
+</script>
