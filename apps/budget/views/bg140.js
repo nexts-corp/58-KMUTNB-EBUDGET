@@ -178,7 +178,7 @@ function bg140Form() {
             + '</h4>'
             + '</div>'
 
-            + '<form>'
+            + '<form onsubmit="return false;">'
             + '<div class="form-group">'
             + '<div class="col-md-4">'
             + '<label class="col-md-4 control-label text-right" for="xxx">แผนงาน</label>'
