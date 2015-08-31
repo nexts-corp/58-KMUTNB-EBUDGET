@@ -2,16 +2,16 @@
 <div role="main" class="main">
     <section class="page-top none-margin">
         <div class="container">
-            <!--<div class="row">
+            <div class="row">
                 <div class="col-md-12">
                     <ul class="breadcrumb">
                         <li class="active">ตัวชี้วัดคำรับรองการปฏิบัติงาน</li>
                     </ul>
                 </div>
-            </div>-->
+            </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="none-padding">ตัวชี้วัดคำรับรองการปฏิบัติงาน</h1>
+                    <h1 class="none-padding">ส่วนงานภายในมหาวิทยาลัย</h1>
                 </div>
             </div>
         </div>
@@ -77,34 +77,73 @@
 <script type="text/javascript">
     $(function () {
         listsCenter();
+
+        $("button.back").unbind("click").click(function () {
+            toggleShow("home");
+        });
     });
 
     function listsCenter(){
         var html = '<tr>'
             + '<td class="text-center">1</td>'
-            + '<td>ตัวชี้วัดคำรับรองการปฏิบัติงานส่วนงานภายในมหาวิทยาลัย</td>'
+            + '<td>ตัวชี้วัดคำรับรองการปฏิบัติงานส่วนงานภายในมหาวิทยาลัย (2559)</td>'
             + '<td class="text-center">-</td>'
-            + '<td class="text-center"><button class="btn btn-primary add" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
-        + '</tr>'
-        + '<tr>'
-            + '<td class="text-center">1</td>'
-            + '<td>ร่างตัวชี้วัดคำรับรองของส่วนงาน</td>'
-            + '<td class="text-center">-</td>'
-            + '<td class="text-center"><button class="btn btn-primary add" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
-        + '</tr>'
-        + '<tr>'
-            + '<td class="text-center">1</td>'
-            + '<td>จัดทำตัวชี้วัดคำรับรองของส่วนงาน</td>'
-            + '<td class="text-center">-</td>'
-            + '<td class="text-center"><button class="btn btn-primary add" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
-        + '</tr>'
-        + '<tr>'
-            + '<td class="text-center">1</td>'
-            + '<td>รายงานผลตัวชี้วัด</td>'
-            + '<td class="text-center">-</td>'
-            + '<td class="text-center"><button class="btn btn-primary add" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
+            + '<td class="text-center"><button class="btn btn-primary add" title="เพิ่มข้อมูล"><i class="fa fa-plus-circle"></i></button></td>'
         + '</tr>';
 
         $("#homeBody").html(html);
+
+        $("button.add").unbind("click").click(function(){
+            toggleShow("form");
+
+            centerForm();
+        });
+    }
+
+    function centerForm(){
+        var menu = '<li class="active">'
+                + '<a href="#all" data-toggle="tab"><i class="fa fa-star"></i> ทั้งหมด</a>'
+            + '</li>'
+            + '<li>'
+                + '<a href="#recent11" data-toggle="tab">Recent</a>'
+            + '</li>';
+
+        $("#tabMenu").html(menu);
+
+        var content = '<div id="all" class="tab-pane active">'
+            + '<table class="table table-bordered table-striped table-condensed">'
+                + '<thead>'
+                    + '<tr>'
+                        + '<th class="text-center col-lg-5" style="vertical-align: middle;">ตัวชี้วัดคำรับรอง ปี 2558</th>'
+                        + '<th class="text-center col-lg-1" style="vertical-align: middle;">หน่วยนับ</th>'
+                        + '<th class="text-center col-lg-2" style="vertical-align: middle;">ประเภทส่วนงานที่ต้องดำเนินการ</th>'
+                        + '<th class="text-center col-lg-2" style="vertical-align: middle;">หมายเหตุ</th>'
+                        + '<th class="text-center col-lg-2" style="vertical-align: middle;">เครื่องมือ</th>'
+                    + '</tr>'
+                + '</thead>'
+                + '<tbody id="contentBody">'
+                    + '<tr>'
+                        + '<td colspan="5" class="text-center">-</td>'
+                    + '</tr>'
+                + '</tbody>'
+            + '</table>'
+        + '</div>'
+        + '<div id="recent11" class="tab-pane">'
+                + '<p>Recent</p>'
+                + '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>'
+            + '</div>';
+
+        $("#tabContent").html(content);
+    }
+
+    function toggleShow(page) {
+        if (page == "home") {
+            $("#homeDiv").show();
+            $("#formDiv, button.back").hide();
+        }
+        else if (page == "form") {
+            $("#homeDiv").hide();
+            $("#formDiv, button.back").show();
+        }
     }
 </script>

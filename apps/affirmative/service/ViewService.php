@@ -8,47 +8,19 @@ use th\co\bpg\cde\collection\CJViewType;
 use apps\affirmative\interfaces\IViewService;
 
 class ViewService extends CServiceBase implements IViewService {
-    
     public function home() {
-        $view = new CJView("formBudget", CJViewType::HTML_VIEW_ENGINE);
+        $view = new CJView("home", CJViewType::HTML_VIEW_ENGINE);
         return $view;
     }
-    
-    public function bg140() {
-        $view = new CJView("bg140", CJViewType::HTML_VIEW_ENGINE);
+
+    public function homeAdmin() {
+        $view = new CJView("homeAdmin", CJViewType::HTML_VIEW_ENGINE);
         return $view;
     }
-    
-    public function bg141() {
-        $view = new CJView("bg141", CJViewType::HTML_VIEW_ENGINE);
+
+    public function center() {
+        $view = new CJView("center", CJViewType::HTML_VIEW_ENGINE);
         return $view;
     }
-    
-    public function bg142() {
-        $view = new CJView("bg142", CJViewType::HTML_VIEW_ENGINE);
-        return $view;
-    }
-    
-    public function bg143() {
-        $view = new CJView("bg143", CJViewType::HTML_VIEW_ENGINE);
-        return $view;
-    }
-    
-    public function bg144() {
-        $view = new CJView("bg144", CJViewType::HTML_VIEW_ENGINE);
-        return $view;
-    }
-    
-    public function bg145() {
-        $view = new CJView("bg145", CJViewType::HTML_VIEW_ENGINE);
-        return $view;
-    }
-    
-    public function bg146() {
-        $view = new CJView("bg146", CJViewType::HTML_VIEW_ENGINE);
-        return $view;
-    }
-    
-    
 
 }
