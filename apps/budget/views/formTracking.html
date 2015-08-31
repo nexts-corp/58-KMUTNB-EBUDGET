@@ -1,16 +1,169 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+{{>header}}
+<div role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">{{#i18n}}trackingBudget{{/i18n}}</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="tall dashboard">
+
+    <div class="sort-source-wrapper"><!-- button action on header -->
+        <div class="container">
+            <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+                <li class="active">
+                    <button class="btn btn-default back" style="display: none;"><i > ย้อนกลับ</i></button>
+                </li>
+            </ul>
+        </div>
+    </div><!-- end button action on header -->
+    <div class="container">
+
+        <div id="formTracking" class="col-md-12">
+            <div class="form-group">
+                <label class="col-md-2 control-label text-right">{{#i18n}}expensesType{{/i18n}}</label>
+                <div class="col-md-4">
+                    <select id="expenses-select" class="form-control input-sm" required>
+                        <option value="0">- เลือกประเภทรายจ่าย -</option>
+                        <option value="1">เงินรายได้</option>
+                        <option value="2">เงินงบประมาณแผ่นดิน</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label text-right">{{#i18n}}quarter{{/i18n}}</label>
+                <div class="col-md-4">
+                    <select id="quarter-select" class="form-control input-sm" required>
+                        <option value="0">- เลือกไตรมาส -</option>
+                        <option value="1">ไตรมาสที่ 1</option>
+                        <option value="2">ไตรมาสที่ 2</option>
+                        <option value="3">ไตรมาสที่ 3</option>
+                        <option value="4">ไตรมาสที่ 4</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="bidderTable" class="col-md-12"><!-- table shown bidder information list -->
+                <table id="table" class="table table-bordered table-striped table-condensed mb-none">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-lg-5">{{#i18n}}expensesType{{/i18n}}</th>
+                            <th class="text-center col-lg-3">{{#i18n}}expensesPlan{{/i18n}}</th>
+                            <th class="text-center col-lg-4">{{#i18n}}expensesResult{{/i18n}}</th>
+                        </tr>
+                    </thead>
+                    <tbody id="budgetBody">
+                        <tr>
+                            <td colspan="3" ><b>1. งบบุคลากร</b></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 2em ;vertical-align:middle">เงินเดือน</td>
+                            <td class="text-center"></td>
+                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 2em ;vertical-align:middle">ค่าจ้างประจำ</td>
+                            <td class="text-center"></td>
+                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 2em ;vertical-align:middle">ค่าตอบแทนพนักงานราชการ</td>
+                            <td class="text-center"></td>
+                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" ><b>2. เงินอุดหนุนทั่วไป</b></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="padding-left: 2em ;vertical-align:middle"><b>2.1 เงินอุดหนุนเป็นค่าใช้จ่ายบุคลากร</b></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 4em ;vertical-align:middle">เงินเดือน</td>
+                            <td class="text-center"></td>
+                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 4em ;vertical-align:middle">ค่าจ้างชั่วคราว</td>
+                            <td class="text-center"></td>
+                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="padding-left: 2em ;vertical-align:middle"><b>2.2 เงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน</b></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 4em ;vertical-align:middle">ค่าตอบแทน</td>
+                            <td class="text-center"></td>
+                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 4em ;vertical-align:middle">ค่าใช้สอย</td>
+                            <td class="text-center"></td>
+                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 4em ;vertical-align:middle">ค่าวัสดุ</td>
+                            <td class="text-center"></td>
+                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 4em ;vertical-align:middle">ค่าสาธารณูปโภค</td>
+                            <td class="text-center"></td>
+                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 2em ;vertical-align:middle"><b>2.3 เงินอุดหนุนเป็นค่าครุภัณฑ์</b></td>
+                            <td class="text-center"></td>
+                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 2em ;vertical-align:middle"><b>2.4 เงินอุดหนุนเป็นค่าที่ดิน/สิ่งก่อสร้าง</b></td>
+                            <td class="text-center"></td>
+                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 2em ;vertical-align:middle"><b>2.5 เงินอุดหนุนอื่นๆ</b></td>
+                            <td class="text-center"></td>
+                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">{{#i18n}}total{{/i18n}}</td>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div><!-- end table shown bidder information list -->
+            <div class="col-md-12" style="padding: 12px;"></div>
+            <div class="col-md-12 text-right">
+                <button class="btn btn-success"><i class="fa fa-save"> บันทึก</i></button>
+                <button class="btn btn-default"><i class="fa fa-trash"> ล้างข้อมูล</i></button>
+            </div>
+        </div>
+    </div><!--container-->
+</div><!--main-->
+{{>footer}}
+
+<script type="text/javascript">
+
+    $(function () {
+        EDexpenses_select();
+        $("#expenses-select").change(function () {
+            EDexpenses_select();
+        });
+    });
+
+    function EDexpenses_select() {
+
+        if ($("#expenses-select").val() == 0) {
+            $("#quarter-select").prop("disabled", true);
+        } else {
+            $("#quarter-select").prop("disabled", false);
+        }
+    }
+
+</script>
+

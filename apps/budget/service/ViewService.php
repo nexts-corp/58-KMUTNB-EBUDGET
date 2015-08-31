@@ -48,7 +48,10 @@ class ViewService extends CServiceBase implements IViewService {
         $view = new CJView("bg146", CJViewType::HTML_VIEW_ENGINE);
         return $view;
     }
-    
-    
+
+    public function formTracking() {
+        $view = new CJView("formTracking", CJViewType::HTML_VIEW_ENGINE);
+        return $view;
+    }
 
 }
