@@ -1,0 +1,117 @@
+{{>header}}
+<div role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">ระบบจัดทำรายงาน</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">จัดทำรายงาน</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="tall dashboard">
+
+    <div class="sort-source-wrapper"><!-- button action on header -->
+        <div class="container">
+            <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+                <li class="active">
+                    <button class="btn btn-default back" style="display: none;"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
+                </li>
+            </ul>
+        </div>
+    </div><!-- end button action on header -->
+
+    <div class="container">
+        <div class="row">
+            <form>
+                <div class="form-group">
+                    <div class="col-md-5">
+                        <label class="col-md-4 control-label text-right" >ปีงบประมาณ</label>
+                        <div class="col-md-8"><select id="year-select"  class="form-control input-sm" ></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-5">
+                        <label class="col-md-4 control-label text-right" >ประเภทรายงาน</label>
+                        <div class="col-md-8">
+                            <select id="reportType-select" class="form-control input-sm" >
+                                <option value="0">- เลือกประเภทรายงาน -</option>
+                                <option value="1">รายงานการจัดทำงบประมาณเงินรายได้จากงบประมาณแผ่นดิน 3 มิติ</option>
+                                <option value="2">รายงานการจัดทำงบประมาณรายจ่ายเงินรายได้ประจำปี</option>
+                                <option value="3">รายงานอื่นๆ</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-5">
+                        <label class="col-md-4 control-label text-right" >แบบรายงาน</label>
+                        <div class="col-md-8"><select id="report-select" class="form-control input-sm"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-7 text-right">
+                        <button class="btn btn-success"><i class="fa "></i>เรียกดูรายงาน</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div> <!-- container -->
+</div> <!-- main -->
+
+<script type="text/javascript">
+
+    $(function () {
+        getYear();
+        $("#reportType-select").change(function () {
+            initReportFormList($("#reportType-select").val());
+        });
+    });
+
+    var listReportsG1 = ["ง. 1", "ง. 2", "ง. 2-1", "ง. 2-2", "ง. 3", "ง. 4"];
+    var listReportsG2 = ["ร. 1", "ร. 2-1", "ร. 2-2", "ร. 3", "ร. 4"];
+    var listReportsG3 = ["ง. 140", "ง. 141", "ง. 142", "ง. 143", "ง. 144", "ง. 145", "ง. 146", "รายงานแบบรายละเอียดคำของบประมาณ", "รายงานคำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง", "รายงานตัวชี้วัดคำรับรองการปฏิบัติงาน", "รายงานผลการดำเนินงานตัวชี้วัดคำรับรองการปฏิบัติงาน"];
+
+    function getYear() {
+
+        var myDate = new Date();
+        var year = myDate.getFullYear();
+        var select = '<option value="0">- เลือกปีงบประมาณ -</option>';
+        for (var i = year - 10; i < year + 1; i++) {
+            var yearBudha = 543 + i;
+            select += '<option value="' + yearBudha + '">' + yearBudha + '</option>';
+        }
+        $('#year-select').html(select);
+    }
+
+    function initReportFormList(reportType) {
+        
+        var select = '';
+        var list;
+        if (reportType == '1') {
+            list = this.listReportsG1;
+        } else if (reportType == '2') {
+            list = this.listReportsG2;
+        } else if (reportType == '3') {
+            list = this.listReportsG3;
+        } else {
+            list = [];
+            select += '<option value="0">- กรุณาเลือกประเภทรายงาน -</option>';
+        }
+
+        for (var i = 0; i < list.length; i++) {
+
+            select += '<option value="' + (i + 1) + '">' + list[i] + '</option>';
+        }
+        $('#report-select').html(select);
+    }
+</script>
