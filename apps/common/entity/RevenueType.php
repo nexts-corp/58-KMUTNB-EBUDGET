@@ -4,9 +4,9 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="project")
+ * @Table(name="revenue_type")
  */
-class Project extends EntityBase {
+class RevenueType extends EntityBase {
 
     /**
      * @Id 
@@ -15,14 +15,11 @@ class Project extends EntityBase {
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="plan_id") */
-    public $planId;
+    /** @Column(type="integer",length=11, name="master_id") */
+    public $masterId;
 
-    /** @Column(type="string",length=255, name="plan_name") */
-    public $planName;
-
-    /** @Column(type="integer",length=11, name="budget_year") */
-    public $budgetYear;
+    /** @Column(type="string",length=500, name="revenue_type_name") */
+    public $typeName;
 
     /** @Column(type="boolean",length=1, name="is_active") */
     public $isActive;
@@ -37,16 +34,12 @@ class Project extends EntityBase {
         return $this->id;
     }
 
-    function getPlanId() {
-        return $this->planId;
+    function getMasterId() {
+        return $this->masterId;
     }
 
-    function getPlanName() {
-        return $this->planName;
-    }
-
-    function getBudgetYear() {
-        return $this->budgetYear;
+    function getTypeName() {
+        return $this->typeName;
     }
 
     function getIsActive() {
@@ -65,16 +58,12 @@ class Project extends EntityBase {
         $this->id = $id;
     }
 
-    function setPlanId($planId) {
-        $this->planId = $planId;
+    function setMasterId($masterId) {
+        $this->masterId = $masterId;
     }
 
-    function setPlanName($planName) {
-        $this->planName = $planName;
-    }
-
-    function setBudgetYear($budgetYear) {
-        $this->budgetYear = $budgetYear;
+    function setTypeName($typeName) {
+        $this->typeName = $typeName;
     }
 
     function setIsActive($isActive) {

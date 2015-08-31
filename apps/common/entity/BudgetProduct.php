@@ -21,6 +21,9 @@ class BudgetProduct extends EntityBase {
     /** @Column(type="string",length=255, name="product_name") */
     public $productName;
 
+    /** @Column(type="integer",length=11, name="type") */
+    public $type;
+
     /** @Column(type="integer",length=11, name="budget_year") */
     public $budgetYear;
 
@@ -43,6 +46,10 @@ class BudgetProduct extends EntityBase {
 
     function getProductName() {
         return $this->productName;
+    }
+
+    function getType() {
+        return $this->type;
     }
 
     function getBudgetYear() {
@@ -71,6 +78,10 @@ class BudgetProduct extends EntityBase {
 
     function setProductName($productName) {
         $this->productName = $productName;
+    }
+
+    function setType($type) {
+        $this->type = $type;
     }
 
     function setBudgetYear($budgetYear) {

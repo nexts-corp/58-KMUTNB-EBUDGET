@@ -4,9 +4,9 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="plan")
+ * @Table(name="revenue_plan")
  */
-class Plan extends EntityBase {
+class RevenuePlan extends EntityBase {
 
     /**
      * @Id 
