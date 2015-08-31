@@ -11,7 +11,7 @@
                 {"name": "driver","value": "pdo_mysql"},
                 {"name": "host","value": "db.codeunbug.com"},
                 {"name": "port","value": "3306"},
-                {"name": "dbname","value": "ebudget"},
+                {"name": "dbname","value": "kmutnb_ebudget"},
                 {"name": "user","value": "ebudget"},
                 {"name": "password","value": "intelenicsdb"}
 
