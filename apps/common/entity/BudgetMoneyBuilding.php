@@ -37,7 +37,13 @@ class BudgetMoneyBuilding extends EntityBase {
     public $budgetYear;
 
     /** @Column(type="integer",length=11, name="form_type") */
-    public $form_type;
+    public $formType;
+
+    /** @Column(type="string",length=2, name="money_type_code") */
+    public $moneyTypeCode;
+
+    /** @Column(type="integer",length=11, name="money_type_id") */
+    public $moneyTypeId;
 
     /** @Column(type="text", name="name") */
     public $name;
@@ -134,8 +140,16 @@ class BudgetMoneyBuilding extends EntityBase {
         return $this->budgetYear;
     }
 
-    function getForm_type() {
-        return $this->form_type;
+    function getFormType() {
+        return $this->formType;
+    }
+
+    function getMoneyTypeCode() {
+        return $this->moneyTypeCode;
+    }
+
+    function getMoneyTypeId() {
+        return $this->moneyTypeId;
     }
 
     function getName() {
@@ -254,8 +268,16 @@ class BudgetMoneyBuilding extends EntityBase {
         $this->budgetYear = $budgetYear;
     }
 
-    function setForm_type($form_type) {
-        $this->form_type = $form_type;
+    function setFormType($formType) {
+        $this->formType = $formType;
+    }
+
+    function setMoneyTypeCode($moneyTypeCode) {
+        $this->moneyTypeCode = $moneyTypeCode;
+    }
+
+    function setMoneyTypeId($moneyTypeId) {
+        $this->moneyTypeId = $moneyTypeId;
     }
 
     function setName($name) {
