@@ -84,9 +84,9 @@
     function getYear() {
 
         var myDate = new Date();
-        var year = myDate.getFullYear();
+        var year = 2014; //myDate.getFullYear();
         var select = '<option value="0">- เลือกปีงบประมาณ -</option>';
-        for (var i = year - 10; i < year + 1; i++) {
+        for (var i = year; i <= year + 2; i++) {
             var yearBudha = 543 + i;
             select += '<option value="' + yearBudha + '">' + yearBudha + '</option>';
         }
@@ -94,7 +94,7 @@
     }
 
     function initReportFormList(reportType) {
-        
+
         var select = '';
         var list;
         if (reportType == '1') {

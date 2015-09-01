@@ -22,7 +22,7 @@ interface IViewService {
      * @description รายงานการจัดทำงบประมาณรายจ่ายเงินรายได้ประจำปี
      */
     public function reportBudget();
-    
+
     /**
      * @name reports
      * @uri /reports
