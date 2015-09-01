@@ -23,25 +23,63 @@ class ProductionPlanService extends CServiceBase implements IProductionPlanServi
         return $view;
     }
     
-    public function fetchPlan($year) {
-        $lists=new BudgetPlan();
-        $lists->setBudgetYear($year);
-        return $this->datacontext->getObject($lists);
+    public function fetchPlan($year,$budget) {
+        $sql="SELECT plan FROM apps\\common\\entity\\BudgetPlan plan WHERE plan.budgetYear=:budgetYear AND plan.isActive=1 ORDER BY plan.id";
+        return $this->datacontext->getObject($sql,array("budgetYear"=>$year,""=>dfsdf));
     }
     
-    public function SavePlan($data){
+    public function SavePlan($data,$com){
         
         $lists=new BudgetPlan();
         $lists->setBudgetYear($data->budgetYear);
         $lists->setPlanName($data->planName);
+        $lists->setIsActive(1);
+        
         
         if(!$this->datacontext->getObject($lists)){
-            $this->datacontext->saveObject($data);
+            
+            if($com=="add"){
+                $this->datacontext->saveObject($data);
+            }else if($com=="update"){
+                $this->datacontext->updateObject($data);
+            }
+            
             return $data;
         }else{
-            return "exist";
+            if($com=="update"){
+                $lists->setId($data->id);
+                if($this->datacontext->getObject($lists)){
+                    return $data;
+                }else{
+                    return "exist";
+                }
+            }else{
+                return "exist";
+            }
         }
         
+        
+    }
+    
+    
+    
+    public function delPlan($data){
+        
+        $lists=new BudgetPlan();
+        $lists->setId($data->id);
+        $lists->setIsActive(0);
+        
+        return $this->datacontext->updateObject($lists);
+        
+    }
+    
+    public function unDelPlan($data){
+        
+        $lists=new BudgetPlan();
+        $lists->setId($data->id);
+        $lists->setIsActive(1);
+        
+        return $this->datacontext->updateObject($lists);
         
     }
     
