@@ -21,6 +21,9 @@ class RevenueType extends EntityBase {
     /** @Column(type="string",length=500, name="revenue_type_name") */
     public $typeName;
 
+    /** @Column(type="integer",length=11, name="budget_year") */
+    public $budgetYear;
+
     /** @Column(type="boolean",length=1, name="is_active") */
     public $isActive;
 
@@ -40,6 +43,10 @@ class RevenueType extends EntityBase {
 
     function getTypeName() {
         return $this->typeName;
+    }
+
+    function getBudgetYear() {
+        return $this->budgetYear;
     }
 
     function getIsActive() {
@@ -64,6 +71,10 @@ class RevenueType extends EntityBase {
 
     function setTypeName($typeName) {
         $this->typeName = $typeName;
+    }
+
+    function setBudgetYear($budgetYear) {
+        $this->budgetYear = $budgetYear;
     }
 
     function setIsActive($isActive) {

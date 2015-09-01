@@ -71,15 +71,6 @@ interface IViewService {
      */ 
     public function bg146();
     
-    /**
-     * @name saveBidderPayment
-     * @uri /saveBidderPayment
-     * @param apps\common\entity\BidderPayment bidderPayment Description
-     * @return boolean save Description
-     * @description รายชื่อธนาคาร
-     * @authen true
-     * @resource 1001
-     */
-    public function saveBg140();
+
     
 }

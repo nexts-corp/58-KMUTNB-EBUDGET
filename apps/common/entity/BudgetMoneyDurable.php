@@ -55,10 +55,10 @@ class BudgetMoneyDurable extends EntityBase {
     public $price;
 
     /** @Column(type="float", name="total_price") */
-    public $total_price;
+    public $totalPrice;
 
     /** @Column(type="integer",length=11, name="total_needed") */
-    public $total_needed;
+    public $totalNeeded;
 
     /** @Column(type="boolean",length=1, name="is_available") */
     public $isAvailable;
@@ -135,11 +135,11 @@ class BudgetMoneyDurable extends EntityBase {
     }
 
     function getTotal_price() {
-        return $this->total_price;
+        return $this->totalPrice;
     }
 
     function getTotal_needed() {
-        return $this->total_needed;
+        return $this->totalNeeded;
     }
 
     function getIsAvailable() {
@@ -223,11 +223,11 @@ class BudgetMoneyDurable extends EntityBase {
     }
 
     function setTotal_price($total_price) {
-        $this->total_price = $total_price;
+        $this->totalPrice = $total_price;
     }
 
     function setTotal_needed($total_needed) {
-        $this->total_needed = $total_needed;
+        $this->totalNeeded = $total_needed;
     }
 
     function setIsAvailable($isAvailable) {
