@@ -9,6 +9,7 @@ use apps\bginfo\interfaces\IProductionPlanService;
 use th\co\bpg\cde\data\CDataContext;
 
 use apps\common\entity\BudgetPlan;
+use apps\common\entity\RevenuePlan;
 
 class ProductionPlanService extends CServiceBase implements IProductionPlanService {
     
@@ -19,43 +20,65 @@ class ProductionPlanService extends CServiceBase implements IProductionPlanServi
     }
     
     public function viewPlan() {
-        $view = new CJView("viewPlan", CJViewType::HTML_VIEW_ENGINE);
+        $view = new CJView("ProductionPlan/viewPlan", CJViewType::HTML_VIEW_ENGINE);
         return $view;
     }
     
     public function fetchPlan($year,$budget) {
-        $sql="SELECT plan FROM apps\\common\\entity\\BudgetPlan plan WHERE plan.budgetYear=:budgetYear AND plan.isActive=1 ORDER BY plan.id";
-        return $this->datacontext->getObject($sql,array("budgetYear"=>$year,""=>dfsdf));
+        $sql="SELECT plan FROM apps\\common\\entity\\".$budget."Plan plan WHERE plan.budgetYear=:budgetYear AND plan.isActive=1 ORDER BY plan.id";
+        return $this->datacontext->getObject($sql,array("budgetYear"=>$year));
     }
     
-    public function SavePlan($data,$com){
+    
+    public function insertPlan($data,$budget){
+        if($budget=="Budget"){
+            $lists = new BudgetPlan();
+        }else if($budget=="Revenue"){
+            $lists = new RevenuePlan();
+        }
         
-        $lists=new BudgetPlan();
         $lists->setBudgetYear($data->budgetYear);
         $lists->setPlanName($data->planName);
         $lists->setIsActive(1);
         
-        
         if(!$this->datacontext->getObject($lists)){
-            
-            if($com=="add"){
-                $this->datacontext->saveObject($data);
-            }else if($com=="update"){
-                $this->datacontext->updateObject($data);
-            }
-            
-            return $data;
+            $this->datacontext->saveObject($lists);
+            return $lists;
         }else{
-            if($com=="update"){
-                $lists->setId($data->id);
-                if($this->datacontext->getObject($lists)){
-                    return $data;
-                }else{
-                    return "exist";
-                }
-            }else{
-                return "exist";
+            return "exist";
+        }
+    }
+    
+    public function updatePlan($data,$budget){
+        
+        if($budget=="Budget"){
+            $lists = new BudgetPlan();
+        }else if($budget=="Revenue"){
+            $lists = new RevenuePlan();
+        }
+        
+        
+        $lists->setBudgetYear($data->budgetYear);
+        $lists->setPlanName($data->planName);
+        $lists->setIsActive(1);
+        
+        $chNotExist = false;
+        if(!$this->datacontext->getObject($lists)){
+            $lists->setId($data->id);
+            $chNotExist = true;
+            
+        }else{
+            $lists->setId($data->id);
+            if($this->datacontext->getObject($lists)){
+                $chNotExist = true;
             }
+        }
+        
+        if($chNotExist){
+            $this->datacontext->updateObject($lists);
+            return $lists;
+        }else{
+            return "exist";
         }
         
         
@@ -63,25 +86,20 @@ class ProductionPlanService extends CServiceBase implements IProductionPlanServi
     
     
     
-    public function delPlan($data){
+    public function deletePlan($data,$budget){
         
-        $lists=new BudgetPlan();
+        if($budget=="Budget"){
+            $lists=new BudgetPlan();
+        }else if($budget=="Revenue"){
+            $lists=new RevenuePlan();
+        }
+        
         $lists->setId($data->id);
         $lists->setIsActive(0);
         
         return $this->datacontext->updateObject($lists);
         
     }
-    
-    public function unDelPlan($data){
-        
-        $lists=new BudgetPlan();
-        $lists->setId($data->id);
-        $lists->setIsActive(1);
-        
-        return $this->datacontext->updateObject($lists);
-        
-    }
-    
+
 
 }
