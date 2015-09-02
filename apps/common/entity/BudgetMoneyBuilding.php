@@ -15,35 +15,12 @@ class BudgetMoneyBuilding extends EntityBase {
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="budget_plan_id") */
-    public $budgetPlanId;
-
-    /** @Column(type="integer",length=11, name="budget_product_id") */
-    public $budgetProductId;
-
-    /** @Column(type="integer",length=11, name="lk_fundgroup_id") */
-    public $fundgroupId;
-
-    /** @Column(type="integer",length=11, name="lk_department_id") */
-    public $departmentId;
-
-    /** @Column(type="integer",length=11, name="budget_source") */
-    public $budgetSource;
-
-    /** @Column(type="integer",length=11, name="attachment_id") */
-    public $attachmentId;
-
+  
     /** @Column(type="integer",length=11, name="budget_year") */
     public $budgetYear;
 
-    /** @Column(type="integer",length=11, name="form_type") */
-    public $formType;
-
-    /** @Column(type="string",length=2, name="money_type_code") */
-    public $moneyTypeCode;
-
-    /** @Column(type="integer",length=11, name="money_type_id") */
-    public $moneyTypeId;
+    /** @Column(type="integer",length=11, name="budget_money_durable_id") */
+    public $budgetMoneyDurableId;
 
     /** @Column(type="text", name="name") */
     public $name;
@@ -140,16 +117,8 @@ class BudgetMoneyBuilding extends EntityBase {
         return $this->budgetYear;
     }
 
-    function getFormType() {
-        return $this->formType;
-    }
-
-    function getMoneyTypeCode() {
-        return $this->moneyTypeCode;
-    }
-
-    function getMoneyTypeId() {
-        return $this->moneyTypeId;
+    function getBudgetMoneyDurableId() {
+        return $this->budgetMoneyDurableId;
     }
 
     function getName() {
@@ -268,16 +237,8 @@ class BudgetMoneyBuilding extends EntityBase {
         $this->budgetYear = $budgetYear;
     }
 
-    function setFormType($formType) {
-        $this->formType = $formType;
-    }
-
-    function setMoneyTypeCode($moneyTypeCode) {
-        $this->moneyTypeCode = $moneyTypeCode;
-    }
-
-    function setMoneyTypeId($moneyTypeId) {
-        $this->moneyTypeId = $moneyTypeId;
+    function setBudgetMoneyDurableId($budgetMoneyDurableId) {
+        $this->budgetMoneyDurableId = $budgetMoneyDurableId;
     }
 
     function setName($name) {

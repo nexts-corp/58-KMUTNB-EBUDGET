@@ -18,6 +18,9 @@ class RevenuePlan extends EntityBase {
     /** @Column(type="text", name="plan_name") */
     public $planName;
 
+    /** @Column(type="integer",length=11, name="budget_year") */
+    public $budgetYear;
+    
     /** @Column(type="boolean",length=1, name="is_active") */
     public $isActive;
 
