@@ -12,8 +12,8 @@
                 {"name": "host","value": "db.codeunbug.com"},
                 {"name": "port","value": "3306"},
                 {"name": "dbname","value": "kmutnb_ebudget"},
-                {"name": "user","value": "ebudget"},
-                {"name": "password","value": "intelenicsdb"}
+                {"name": "user","value": "kmutnb_ebudget"},
+                {"name": "password","value": "7R2TuLHtDq9ftHMV"}
 
             ]
         }

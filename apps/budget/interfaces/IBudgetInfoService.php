@@ -4,7 +4,7 @@ namespace apps\budget\interfaces;
 
 /**
  * @name RequestBudgetService
- * @uri /view
+ * @uri /budgetInfo
  * @description RequestBudgetService
  */
 interface IRequestBudgetService {
@@ -90,10 +90,24 @@ interface IRequestBudgetService {
      * @name saveBgBuilding
      * @uri /saveBgBuilding
      * @param apps\common\entity\BudgetMoneyBuilding building Description
+     * @param apps\common\entity\BudgetMoneyBuildingOneyear oneyear Description
      * @return boolean save Description
-     * @description คำขอแบบ ง.145 - สิ่งก่อสร้าง
+     * @description คำขอแบบ ง.145 - สิ่งก่อสร้าง 1 ปี
      * @authen true
      * @resource 1001
      */
-    public function saveBgBuilding($building);
+    public function saveBgBuildingOneyear($building, $oneyear);
+    
+        /**
+     * @name saveBgBuilding
+     * @uri /saveBgBuilding
+     * @param apps\common\entity\BudgetMoneyBuilding building Description
+     * @param apps\common\entity\BudgetMoneyBuildingContinuePeriod period Description
+     * @param apps\common\entity\BudgetMoneyBuildingContinueList list Description
+     * @return boolean save Description
+     * @description คำขอแบบ ง.145 - สิ่งก่อสร้าง ต่อเนื่อง
+     * @authen true
+     * @resource 1001
+     */
+    public function saveBgBuildingContinue($building, $period, $list);
 }

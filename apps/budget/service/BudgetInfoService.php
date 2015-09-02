@@ -5,9 +5,9 @@ namespace apps\budget\service;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
-use apps\budget\interfaces\IRequestBudgetService;
+use apps\budget\interfaces\IBudgetInfoService;
 
-class RequestBudgetService extends CServiceBase implements IRequestBudgetService {
+class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
 
     public $datacontext;
     public $logger;
@@ -16,7 +16,7 @@ class RequestBudgetService extends CServiceBase implements IRequestBudgetService
 
     public function __construct() {
         $this->logger = \Logger::getLogger("root");
-        $this->datacontext = new CDataContext("default");
+        $this->datacontext = new CDataContext(NULL);
     }
 
     public function saveBg140($budget140) {
@@ -267,49 +267,6 @@ class RequestBudgetService extends CServiceBase implements IRequestBudgetService
         return $return;
     }
 
-    public function saveBgBuilding($building) {
-        $return = true;
-
-        $budget = new \apps\common\entity\BudgetMoneyBuilding();
-        $budget->budgetPlanId = $building->budgetPlanId;
-        $budget->budgetProductId = $building->budgetProductId;
-        $budget->fundgroupId = $building->fundgroupId;
-        $budget->departmentId = $building->departmentId;
-        $budget->budgetSource = $building->budgetSource;
-        $budget->attachmentId = $building->attachmentId;
-        $budget->budgetYear = $building->budgetYear;
-        $budget->formType = 145;
-        $budget->moneyTypeCode = $building->moneyTypeCode;
-        $budget->moneyTypeId = $building->moneyTypeId;
-        $budget->name = $building->name;
-        $budget->qty = $building->qty;
-        $budget->price = $building->price;
-        $budget->totalPrice = $building->totalPrice;
-        $budget->totalNeeded = $building->totalNeeded;
-        $budget->isAvailable = $building->isAvailable;
-        $budget->qtyWorkable = $building->qtyWorkable;
-        $budget->qtyUnworkable = $building->qtyUnworkable;
-        $budget->remark = $building->remark;
-
-        $sql = "SELECT Id"
-                . " FROM " . $this->ent . "\\BudgetMoneyBuilding bg"
-                . " WHERE bg.id = :budgetId";
-        $param = array(
-            "budgetId" => $budget->id
-        );
-
-        $dataBudget = $this->datacontext->getObject($sql, $param);
-        $budget->id = $dataBudget[0]["id"];
-
-        if ($this->datacontext->saveObject($budget)) {
-            $return = true;
-        } else {
-            $return = $this->datacontext->getLastMessage();
-        }
-
-        return $return;
-    }
-
     public function saveBg146($budget146) {
         $return = true;
 
@@ -332,6 +289,103 @@ class RequestBudgetService extends CServiceBase implements IRequestBudgetService
 
         $sql = "SELECT Id"
                 . " FROM " . $this->ent . "\\BudgetMoneyOperating bg"
+                . " WHERE bg.id = :budgetId";
+        $param = array(
+            "budgetId" => $budget->id
+        );
+
+        $dataBudget = $this->datacontext->getObject($sql, $param);
+        $budget->id = $dataBudget[0]["id"];
+
+        if ($this->datacontext->saveObject($budget)) {
+            $return = true;
+        } else {
+            $return = $this->datacontext->getLastMessage();
+        }
+
+        return $return;
+    }
+
+    public function saveBgBuildingOneyear($building, $oneyear) {
+        $return = true;
+
+        $budget = new \apps\common\entity\BudgetMoneyBuilding();
+        $budget->id = $building->id;
+        $dataBudget = $this->datacontext->getObject($budget);
+        if (count($dataBudget) == 0) {
+            if (!$this->datacontext->saveObject($building)) {
+                $return $this->datacontext->getLastMessage();
+            }
+        } else {
+            $dataBudget[0]->budgetYear = $building->budgetYear;
+            $dataBudget[0]->budgetMoneyDurableId = $building->budgetMoneyDurableId;
+            $dataBudget[0]->name = $building->name;
+            $dataBudget[0]->place = $building->place;
+            $dataBudget[0]->reason = $building->reason;
+            $dataBudget[0]->budgetArchitecture = $building->budgetArchitecture;
+            $dataBudget[0]->budgetStructural = $building->budgetStructural;
+            $dataBudget[0]->budgetElectricalCommunication = $building->budgetElectricalCommunication;
+            $dataBudget[0]->budgetSanitation = $building->budgetSanitation;
+            $dataBudget[0]->budgetVentilate = $building->budgetVentilate;
+            $dataBudget[0]->budgetElevators = $building->budgetElevators;
+            $dataBudget[0]->totalBudget = $building->totalBudget;
+            $dataBudget[0]->area = $building->area;
+            $dataBudget[0]->expectedResult = $building->expectedResult;
+            $dataBudget[0]->objective = $building->objective;
+            $dataBudget[0]->goal = $building->goal;
+            $dataBudget[0]->timeDesign = $building->timeDesign;
+            $dataBudget[0]->timeComparePrices = $building->timeComparePrices;
+            $dataBudget[0]->timeSignContract = $building->timeSignContract;
+            $dataBudget[0]->timeOperating = $building->timeOperating;
+            $dataBudget[0]->remark = $building->remark;
+            $dataBudget[0]->dateUpdated = $building->dateUpdated;
+            
+            if(!$this->datacontext->updateObject($dataBudget[0])){
+                $return = $this->datacontext->getLastMessage();
+            }
+        }
+
+        $budget2 = new \apps\common\entity\BudgetMoneyBuilding();
+        $budget2->id=$building->id;
+        $dataBudget2 = $this->datacontext->getObject($budget2);
+        
+        $oneyear->budgetMoneyBuildingId = $this->$dataBudget2[0]->id;
+        
+        if(!$this->datacontext->saveObject($oneyear)){
+            $return = $this->datacontext->getLastMessage();
+        }
+        
+        return $return;           
+    }
+
+    public function saveBgBuildingContinue($building, $period, $list) {
+        $return = true;
+
+        $budget = new \apps\common\entity\BudgetMoneyBuilding();
+        $budget->budgetYear = $building->budgetYear;
+        $budget->budgetMoneyDurableId = $building->budgetMoneyDurableId;
+        $budget->name = $building->name;
+        $budget->place = $building->place;
+        $budget->reason = $building->reason;
+        $budget->budgetArchitecture = $building->budgetArchitecture;
+        $budget->budgetStructural = $building->budgetStructural;
+        $budget->budgetElectricalCommunication = $building->budgetElectricalCommunication;
+        $budget->budgetSanitation = $building->budgetSanitation;
+        $budget->budgetVentilate = $building->budgetVentilate;
+        $budget->budgetElevators = $building->budgetElevators;
+        $budget->totalBudget = $building->totalBudget;
+        $budget->area = $building->area;
+        $budget->expectedResult = $building->expectedResult;
+        $budget->objective = $building->objective;
+        $budget->goal = $building->goal;
+        $budget->timeDesign = $building->timeDesign;
+        $budget->timeComparePrices = $building->timeComparePrices;
+        $budget->timeSignContract = $building->timeSignContract;
+        $budget->timeOperating = $building->timeOperating;
+        $budget->remark = $building->remark;
+
+        $sql = "SELECT Id"
+                . " FROM " . $this->ent . "\\BudgetMoneyBuilding bg"
                 . " WHERE bg.id = :budgetId";
         $param = array(
             "budgetId" => $budget->id
