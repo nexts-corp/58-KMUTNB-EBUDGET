@@ -18,6 +18,9 @@ class BudgetPlan extends EntityBase {
     /** @Column(type="string",length=255, name="plan_name") */
     public $planName;
 
+    /** @Column(type="integer",length=11, name="gl_code") */
+    public $glCode;
+
     /** @Column(type="integer",length=11, name="budget_year") */
     public $budgetYear;
 
@@ -36,6 +39,10 @@ class BudgetPlan extends EntityBase {
 
     function getPlanName() {
         return $this->planName;
+    }
+
+    function getGlCode() {
+        return $this->glCode;
     }
 
     function getBudgetYear() {
@@ -60,6 +67,10 @@ class BudgetPlan extends EntityBase {
 
     function setPlanName($planName) {
         $this->planName = $planName;
+    }
+
+    function setGlCode($glCode) {
+        $this->glCode = $glCode;
     }
 
     function setBudgetYear($budgetYear) {

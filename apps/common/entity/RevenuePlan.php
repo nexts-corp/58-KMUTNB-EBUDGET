@@ -18,9 +18,12 @@ class RevenuePlan extends EntityBase {
     /** @Column(type="text", name="plan_name") */
     public $planName;
 
+    /** @Column(type="integer",length=11, name="gl_code") */
+    public $glCode;
+
     /** @Column(type="integer",length=11, name="budget_year") */
     public $budgetYear;
-    
+
     /** @Column(type="boolean",length=1, name="is_active") */
     public $isActive;
 
@@ -36,6 +39,14 @@ class RevenuePlan extends EntityBase {
 
     function getPlanName() {
         return $this->planName;
+    }
+
+    function getGlCode() {
+        return $this->glCode;
+    }
+
+    function getBudgetYear() {
+        return $this->budgetYear;
     }
 
     function getIsActive() {
@@ -56,6 +67,14 @@ class RevenuePlan extends EntityBase {
 
     function setPlanName($planName) {
         $this->planName = $planName;
+    }
+
+    function setGlCode($glCode) {
+        $this->glCode = $glCode;
+    }
+
+    function setBudgetYear($budgetYear) {
+        $this->budgetYear = $budgetYear;
     }
 
     function setIsActive($isActive) {
