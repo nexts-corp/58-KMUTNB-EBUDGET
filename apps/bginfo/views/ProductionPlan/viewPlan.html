@@ -1,0 +1,75 @@
+{{>header}}
+<div role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">{{#i18n}}bgi.bginfo{{/i18n}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">{{#i18n}}bgi.planService{{/i18n}}</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr class="tall dashboard">
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="selectYear">{{#i18n}}bgi.budgetYear{{/i18n}}</label>
+                <div class="col-md-8">
+                    <select id="selectYear" name="selectYear" class="form-control input-sm selChange" required="">
+                        <option value="">- เลือกปีงบประมาณ -</option>
+                        <option value="2558">2558</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="selectBudget">งบประมาณ</label>
+                <div class="col-md-8">
+                    <select id="selectBudget" name="selectBudget" class="form-control input-sm selChange" required="">
+                        <option value="">- เลือกประเภทประมาณ -</option>
+                        <option value="Revenue">งบประมาณแผ่นดิน</option>
+                        <option value="Budget">งบประมาณเงินรายได้</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+
+        <div id="formHome" class="col-md-12">
+            <div id="bidderTable" class="col-md-12"><!-- table shown bidder information list -->
+                <table id="table" class="table table-bordered table-striped table-condensed mb-none">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-lg-1">ลำดับ</th>
+                            <th class="text-center col-lg-8">แผนงาน</th>
+                            <th class="text-center col-lg-3">จัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tdtable">
+                        <tr>
+                            <td colspan="3" class="text-center">ปีงบประมาณ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div><!-- end table shown bidder information list -->
+        </div>
+        <div id="formBudget" class="col-md-12" style="display: none;">
+        </div>
+    </div><!--  row  -->
+    
+</div><!--  container  -->
+
+{{>footer}}
+<script src="{{_context_path}}/apps/bginfo/views/ProductionPlan/js/viewPlan.js"></script>
