@@ -18,9 +18,25 @@
     </section>
 </div>
 <hr class="tall dashboard">
+<div class="sort-source-wrapper"><!-- button action on header -->
+    <div class="container">
+        <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+            <li class="active">
+                <button class="btn btn-default back" style="display: none;" get-form="campus"><i
+                        class="fa fa-angle-double-left">ย้อนกลับ</i></button>
+            </li>
+        </ul>
+    </div>
+</div><!-- end button action on header -->
 <div class="container">
     <div class="row">
-        <div id="formHome" class="col-md-12">
+        <div id="formCampus" class="col-md-12">
+            <!-- Table Content -->
+        </div>
+        <div id="formFaculty" class="col-md-12">
+            <!-- Table Content -->
+        </div>
+        <div id="formDepartment" class="col-md-12">
             <!-- Table Content -->
         </div>
     </div>
@@ -36,6 +52,7 @@
     </div>
 </div>
 <!-- Modal -->
+
 {{>footer}}
 
 <script type="text/javascript">
@@ -43,6 +60,12 @@
     $(document).ready(function () {
 
         showTableCampus(); //default page
+
+        $("button.back").unbind("click").click(function () {
+            var page = $(this).attr("get-form")
+            toggleShow(page);
+        });
+
 
         function showTableCampus() {
 
@@ -76,7 +99,7 @@
                         html += '<td class="text-center">' + (i + 1) + '</td>';
                         html += '   <td>' + data.listsCampus[i].campusName + '</td>';
                         html += '   <td class="text-center">';
-                        html += '       <button id="bt-getC"  class="btn btn-primary" ><i class="fa fa-search"> เรียกดูคณะ</i></button>';
+                        html += '       <button id="bt-getC"  class="btn btn-primary" ><i class="fa fa-search"> คณะ</i></button>';
                         html += '       <button id="bt-editC"  class="btn btn-warning" ><i class="fa fa-pencil"></i> แก้ไข</button>';
                         html += '       <button id="bt-deleteC"  class="btn btn-default" ><i class="fa fa-trash"> ลบ</i></button>';
                         html += '   </td>';
@@ -93,7 +116,8 @@
                 html += '   </table>';
                 html += '</div>';
 
-                $("#formHome").empty().html(html);
+                $("#formCampus").empty().html(html);
+                toggleShow("campus");
 
                 $(document).off('click', '#bt-getC');
                 $(document).off('click', '#bt-editC');//clear event hadler
@@ -120,7 +144,9 @@
                     var index = $(this).closest('td').parent()[0].sectionRowIndex;
                     modalRemoveCampus(data.listsCampus[index]);
                 });
+
             }); //end $get
+
         }
 
         function showTableFaculty(dataCampus) {
@@ -128,7 +154,7 @@
             var html = '';
             html += '<div class="col-md-12">';
             html += '   <div class="form-group">';
-            html += '       <label class="col-md-5 control-label" id="label-level"><h5>ข้อมูลคณะภายในวิทยาเขต' + dataCampus.campusName + '</h5></label>';
+            html += '       <label class="col-md-5 control-label" id="label-level"><h5>ข้อมูลคณะภายในวิทยาเขต ' + dataCampus.campusName + '</h5></label>';
             html += '       <div class="col-md-7">';
             html += '           <button id="addFaculty-btn" data-form="add" class="btn btn-success add pull-right control-label" title="เพิ่มข้อมูลคณะ"><i class="fa fa-plus-circle"></i> เพิ่มข้อมูลคณะ</button>';
             html += '       </div>';
@@ -171,7 +197,9 @@
                 html += '   </table>';
                 html += '</div>';
 
-                $("#formHome").empty().html(html);
+                $("#formFaculty").empty().html(html);
+                $('button.back').attr('get-form', 'campus');
+                toggleShow("faculty");
 
                 $(document).off('click', '#bt-getF');
                 $(document).off('click', '#bt-editF');//clear event hadler
@@ -208,7 +236,7 @@
             var html = '';
             html += '<div class="col-md-12">';
             html += '   <div class="form-group">';
-            html += '       <label class="col-md-5 control-label" id="label-level"><h5>ข้อมูลหน่วยงานภายในคณะ' + dataFaculty.facultyName + '</h5></label>';
+            html += '       <label class="col-md-5 control-label" id="label-level"><h5>ข้อมูลหน่วยงานภายในคณะ ' + dataFaculty.facultyName + '</h5></label>';
             html += '       <div class="col-md-7">';
             html += '           <button id="addDepartment-btn" data-form="add" class="btn btn-success add pull-right control-label" title="เพิ่มข้อมูลหน่วยงาน"><i class="fa fa-plus-circle"></i> เพิ่มข้อมูลหน่วยงาน</button>';
             html += '       </div>';
@@ -234,8 +262,8 @@
                         html += '<td class="text-center">' + (i + 1) + '</td>';
                         html += '   <td>' + data.listsDepartment[i].deptName + '</td>';
                         html += '   <td class="text-center">';
-                        html += '       <button ref-id="bt-editD"  class="btn btn-warning" ><i class="fa fa-pencil"></i> แก้ไข</button>';
-                        html += '       <button ref-id="bt-deleteD"  class="btn btn-default"><i class="fa fa-trash"> ลบ</i></button>';
+                        html += '       <button id="bt-editD"  class="btn btn-warning" ><i class="fa fa-pencil"></i> แก้ไข</button>';
+                        html += '       <button id="bt-deleteD"  class="btn btn-default"><i class="fa fa-trash"> ลบ</i></button>';
                         html += '   </td>';
                         html += '</tr>';
                     }
@@ -250,7 +278,9 @@
                 html += '   </table>';
                 html += '</div>';
 
-                $("#formHome").empty().html(html);
+                $("#formDepartment").empty().html(html);
+                $('button.back').attr('get-form', 'faculty');
+                toggleShow("department");
 
                 $(document).off('click', '#bt-editD');//clear event hadler
                 $(document).off('click', '#bt-deleteD');
@@ -274,12 +304,14 @@
 
         /*Campus*/
         function modalAddCampus() {
+
             var html = '';
+            html += '<form  id="add-cF" role="form" onsubmit="return false">';
             html += '<div class="modal-header">';
-            html += '   <button type="button" class="close" data-dismiss="modal"></button>';
+            html += '   <button type="button" class="close" data-dismiss="modal">x</button>';
             html += '   <h4 class="modal-title"><i class="fa fa-plus-circle"></i>  เพิ่มข้อมูลวิทยาเขต</h4>';
             html += '</div>';
-            html += '<div class="modal-body">';
+            html += '<div class="modal-body" >';
             html += '   <div class="col-md-12">';
             html += '       <div class="form-group">';
             html += '           <label class="col-md-3 control-label">ชื่อวิทยาเขต</label>';
@@ -292,32 +324,40 @@
             html += '<br>';
             html += '<div class="modal-footer">';
             html += '   <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>';
-            html += '   <button id="modal-btnCampus" type="button" class="btn btn-success" data-dismiss="modal">ตกลง</button>';
+            html += '   <button id="modal-btnCampus"  class="btn btn-success" type="submit" >ตกลง</button>';
             html += '</div>';
+            html += '</form>';
 
             $(".modal-content").html(html);
+
             centerModal();
             resetModal();
+
             $("#modal-block").modal(); //trigger modal
             $("#modal-btnCampus").click(function () {
 
-                var obj = {campus: {campusName: $("#iCampus").val(), isActive: 1, creator: 'ทดสอบ'}};
-                $.post("{{_context_path}}/api/bginfo/Department/insertCampus", JSON.stringify(obj), function (data) {
-                    if (data.rsp) {
-                        showTableCampus();// refresh table
-                        alert("เพิ่มเรียบร้อย");
-                    } else {
-                        alert("เพิ่มไม่สำเร็จ");
-                    }
-                });
+                var inputText = $("#iCampus").val();
+                if (inputText.length > 0) {
+
+                    var obj = {campus: {campusName: inputText, isActive: 1, creator: 'ทดสอบ'}};
+                    $.post("{{_context_path}}/api/bginfo/Department/insertCampus", JSON.stringify(obj), function (data) {
+                        if (data.rsp) {
+                            showTableCampus();// refresh table
+                            $('#modal-block').modal('hide');
+                        } else {
+                            alert("เพิ่มไม่สำเร็จ");
+                        }
+                    });
+                }
             });
         }
 
         function modalEditCampus(dataCampus) {
 
             var html = '';
+            html += '<form  id="edit-cF" role="form" onsubmit="return false">';
             html += '<div class="modal-header">';
-            html += '   <button type="button" class="close" data-dismiss="modal"></button>';
+            html += '   <button type="button" class="close" data-dismiss="modal">x</button>';
             html += '   <h4 class="modal-title"><i class="fa fa-plus-circle"></i>  แก้ไขมูลวิทยาเขต</h4>';
             html += '</div>';
             html += '<div class="modal-body">';
@@ -325,7 +365,7 @@
             html += '       <div class="form-group">';
             html += '           <label class="col-md-3 control-label">ชื่อวิทยาเขต</label>';
             html += '           <div class="col-md-9">';
-            html += '               <input type="text" id="iCampus" name="iCampus" class="form-control input-sm" required="" value=' + dataCampus.campusName + '>';
+            html += '               <input type="text" id="iCampus" name="iCampus" class="form-control input-sm" required="" value="' + dataCampus.campusName + '">';
             html += '           </div>';
             html += '       </div>';
             html += '   </div>';
@@ -333,33 +373,39 @@
             html += '<br>';
             html += '<div class="modal-footer">';
             html += '   <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>';
-            html += '   <button id="modal-btnCampus" type="button" class="btn btn-success" data-dismiss="modal">ตกลง</button>';
+            html += '   <button id="modal-btnCampus" type="submit" class="btn btn-success">ตกลง</button>';
             html += '</div>';
+            html += '</form>';
+
             $(".modal-content").html(html);
+
             centerModal();
             resetModal();
+
             $("#modal-block").modal(); //trigger modal
             $("#modal-btnCampus").click(function () {
+                var inputText = $("#iCampus").val();
+                if (inputText.length > 0) {
 
-                var obj = {campus: {id: dataCampus.id, campusName: $("#iCampus").val(), isActive: 1, updater: 'ทดสอบ'}};
+                    var obj = {campus: {id: dataCampus.id, campusName: inputText, isActive: 1, updater: 'ทดสอบ'}};
 
-                $.post("{{_context_path}}/api/bginfo/Department/editCampus", JSON.stringify(obj), function (data) {
-                    if (data.rsp) {
-                        showTableCampus();// refresh table
-                        alert("แก้ไขเรียบร้อย");
-                    } else {
-                        alert("แก้ไขไม่สำเร็จ");
-                    }
-                });
+                    $.post("{{_context_path}}/api/bginfo/Department/editCampus", JSON.stringify(obj), function (data) {
+                        if (data.rsp) {
+                            showTableCampus();// refresh table
+                            $('#modal-block').modal('hide');
+                        } else {
+                            alert("แก้ไขไม่สำเร็จ");
+                        }
+                    });
+                }
             });
-
         }
 
         function modalRemoveCampus(dataCampus) {
 
             var html = '';
             html += '<div class="modal-header">';
-            html += '   <button type="button" class="close" data-dismiss="modal"></button>';
+            html += '   <button type="button" class="close" data-dismiss="modal">x</button>';
             html += '   <h4 class="modal-title"><i class="fa fa-plus-circle"></i>  ลบข้อมูลวิทยาเขต</h4>';
             html += '</div>';
             html += '<div class="modal-body">';
@@ -372,7 +418,7 @@
             html += '<br>';
             html += '<div class="modal-footer">';
             html += '   <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>';
-            html += '   <button id="modal-btnCampus" type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-trash"> ตกลง</i></button>';
+            html += '   <button id="modal-btnCampus" type="button" class="btn btn-danger" ><i class="fa fa-trash"> ตกลง</i></button>';
             html += '</div>';
             $(".modal-content").html(html);
             centerModal();
@@ -385,7 +431,7 @@
                 $.post("{{_context_path}}/api/bginfo/Department/removeCampus", JSON.stringify(obj), function (data) {
                     if (data.rsp) {
                         showTableCampus();// refresh table
-                        alert("ลบเรียบร้อย");
+                        $('#modal-block').modal('hide');
                     } else {
                         alert("ลบไม่สำเร็จ");
                     }
@@ -398,21 +444,22 @@
         function modalAddFaculty(dataCampus) {
 
             var html = '';
+            html += '<form  id="add-fF" role="form" onsubmit="return false">';
             html += '<div class="modal-header">';
-            html += '   <button type="button" class="close" data-dismiss="modal"></button>';
+            html += '   <button type="button" class="close" data-dismiss="modal">x</button>';
             html += '   <h4 class="modal-title"><i class="fa fa-plus-circle"></i>  เพิ่มข้อมูลคณะภายในวิทยาเขต' + dataCampus.campusName + '</h4>';
             html += '</div>';
             html += '<div class="modal-body">';
             html += '   <div class="col-md-12">';
-            html += '       <div class="form-group">';
+            html += '       <div class="form-group ">';
             html += '           <label class="col-md-3 control-label">ข้อมูลกิจกรรม</label>';
             html += '           <div class="col-md-9">';
             html += '               <select id="select-activity" name="select-activity" class="input-sm form-control" required="">';
-            html += '                   <option value="0">- เลือกกิจกรรม -</option>';
-            html += '                   <option value="1">จัดการศึกษา </option>';
-            html += '                   <option value="2">สนับสนุนการจัดการศึกษา</option>';
-            html += '                   <option value="3">บริการวิชาการ</option>';
+
             html += '               </select>';
+            html += '           </div>';
+            html += '           <div class="validate-error col-md-12 text-danger" style="display: none">';
+            html += '             <label class="control-label pull-right padding-right"><i class="fa fa-exclamation"></i> กรุณาเลือกกิจกรรม</label>';
             html += '           </div>';
             html += '       </div>';
             html += '   </div>';
@@ -428,25 +475,28 @@
             html += '   </div>';
             html += '</div>';
             html += '<br>';
+            html += '<br>';
             html += '<div class="modal-footer">';
             html += '   <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>';
-            html += '   <button id="modal-btnFaculty" type="button" class="btn btn-success" data-dismiss="modal">ตกลง</button>';
+            html += '   <button id="modal-btnFaculty" type="submit" class="btn btn-success" >ตกลง</button>';
             html += '</div>';
+            html += '</form>';
 
-//        $.get("{{_context_path}}/api/bginfo/Department/fetchActivityType", function (data) {
-//            var htmlActivityType = '<option value="0">- เลือกกิจกรรม -</option>';
-//
-//            if (data != null && data.listsActivityType.length > 0) {
-//
-//                for (var i = 0; i < data.listsActivityType.length; i++) {
-//
-//                    htmlActivityType += '<option value="' + data[i].id + '">' + data[i].activityTypeName + '</option>';
-//                }
-//            } else {
-//                alert("ไม่พบข้อมูล");
-//            }
-//            $("#select-activity").html(htmlActivityType);
-//        }); โหลดข้อมุลกิจกรรมจาก service
+            $.get("{{_context_path}}/api/bginfo/Department/fetchActivityType", function (data) {
+
+                var htmlActivityType = '<option value="0">- เลือกกิจกรรม -</option>';
+
+                if (data != null && data.listsActivityType.length > 0) {
+
+                    for (var i = 0; i < data.listsActivityType.length; i++) {
+
+                        htmlActivityType += '<option value="' + data.listsActivityType[i].id + '">' + data.listsActivityType[i].activityTypeName + '</option>';
+                    }
+                } else {
+                    htmlActivityType += '<option value="0">ไม่พบกิจกรรม</option>';
+                }
+                $("#select-activity").html(htmlActivityType);
+            });
 
             $(".modal-content").html(html);
 
@@ -455,32 +505,44 @@
             $("#modal-block").modal(); //trigger modal
             $("#modal-btnFaculty").click(function () {
 
-                var obj = {
-                    faculty: {
-                        campusId: dataCampus.id,
-                        facultyName: $("#iFaculty").val(),
-                        isActive: 1,
-                        creator: 'ทดสอบ',
-                        activityTypeId: $("#select-activity").val()
-                    }
-                };
+                var inputText = $("#iFaculty").val();
+                var combobox = $("#select-activity").val();
+                if (inputText.length > 0 && combobox > 0) {
+                    var obj = {
+                        faculty: {
+                            campusId: dataCampus.id,
+                            facultyName: inputText,
+                            isActive: 1,
+                            creator: 'ทดสอบ',
+                            activityTypeId: $("#select-activity").val()
+                        }
+                    };
 
-                $.post("{{_context_path}}/api/bginfo/Department/insertFaculty", JSON.stringify(obj), function (data) {
-                    if (data.rsp) {
-                        showTableFaculty(dataCampus);// refresh table
-                        alert("เพิ่มเรียบร้อย");
-                    } else {
-                        alert("เพิ่มไม่สำเร็จ");
-                    }
-                });
+                    $.post("{{_context_path}}/api/bginfo/Department/insertFaculty", JSON.stringify(obj), function (data) {
+                        if (data.rsp) {
+                            showTableFaculty(dataCampus);// refresh table
+                            $('#modal-block').modal('hide');
+                        } else {
+                            alert("เพิ่มไม่สำเร็จ");
+                        }
+                    });
+                } else if (combobox == 0) {
+                    $("#select-activity").parent().addClass("has-error");
+                    $(".validate-error").show(10);
+                }
+            });
+            $("#select-activity").change(function () {
+                $("#select-activity").parent().removeClass("has-error")
+                $(".validate-error").hide(10);
             });
         }
 
         function modalEditFaculty(dataFaculty, dataCampus) {
 
             var html = '';
+            html += '<form  id="edit-fF" role="form" onsubmit="return false">';
             html += '<div class="modal-header">';
-            html += '   <button type="button" class="close" data-dismiss="modal"></button>';
+            html += '   <button type="button" class="close" data-dismiss="modal">x</button>';
             html += '   <h4 class="modal-title"><i class="fa fa-plus-circle"></i>  แก้ไขข้อมูลคณะ</h4>';
             html += '</div>';
             html += '<div class="modal-body">';
@@ -489,11 +551,11 @@
             html += '           <label class="col-md-3 control-label">ข้อมูลกิจกรรม</label>';
             html += '           <div class="col-md-9">';
             html += '               <select id="select-activity" name="select-activity" class="input-sm form-control" required="">';
-            html += '                   <option value="0">- เลือกกิจกรรม -</option>';
-            html += '                   <option value="1">จัดการศึกษา </option>';
-            html += '                   <option value="2">สนับสนุนการจัดการศึกษา</option>';
-            html += '                   <option value="3">บริการวิชาการ</option>';
+
             html += '               </select>';
+            html += '           </div>';
+            html += '           <div class="validate-error col-md-12 text-danger" style="display: none">';
+            html += '             <label class="control-label pull-right padding-right"><i class="fa fa-exclamation"></i> กรุณาเลือกกิจกรรม</label>';
             html += '           </div>';
             html += '       </div>';
             html += '   </div>';
@@ -503,7 +565,7 @@
             html += '       <div class="form-group">';
             html += '           <label class="col-md-3 control-label">ชื่อคณะ</label>';
             html += '           <div class="col-md-9">';
-            html += '               <input type="text" id="iFaculty" name="iFaculty" class="form-control input-sm" required="" value=' + dataFaculty.facultyName + '>';
+            html += '               <input type="text" id="iFaculty" name="iFaculty" class="form-control input-sm" required="" value="' + dataFaculty.facultyName + '">';
             html += '           </div>';
             html += '       </div>';
             html += '   </div>';
@@ -511,44 +573,71 @@
             html += '<br>';
             html += '<div class="modal-footer">';
             html += '   <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>';
-            html += '   <button id="modal-btnFaculty" type="button" class="btn btn-success" data-dismiss="modal">ตกลง</button>';
+            html += '   <button id="modal-btnFaculty" type="submit" class="btn btn-success" >ตกลง</button>';
             html += '</div>';
+            html += '</form>';
+
+            $.get("{{_context_path}}/api/bginfo/Department/fetchActivityType", function (data) {
+
+                var htmlActivityType = '<option value="0">- เลือกกิจกรรม -</option>';
+
+                if (data != null && data.listsActivityType.length > 0) {
+
+                    for (var i = 0; i < data.listsActivityType.length; i++) {
+
+                        htmlActivityType += '<option value="' + data.listsActivityType[i].id + '">' + data.listsActivityType[i].activityTypeName + '</option>';
+                    }
+                } else {
+                    htmlActivityType += '<option value="0">ไม่พบกิจกรรม</option>';
+                }
+                $("#select-activity").html(htmlActivityType).val(dataFaculty.activityTypeId);
+
+            });
 
             $(".modal-content").html(html);
+//          $("#select-activity option[value='" + dataFaculty.activityTypeId + "']").attr("selected", "selected");
             centerModal();
             resetModal();
-            $("#select-activity option[value='" + dataFaculty.activityTypeId + "']").attr("selected", "selected");
             $("#modal-block").modal(); //trigger modal
             $("#modal-btnFaculty").click(function () {
-                        var obj = {
-                            faculty: {
-                                id: dataFaculty.id,
-                                campusId: dataCampus.id,
-                                facultyName: $("#iFaculty").val(),
-                                activityTypeId: $("#select-activity").val(),
-                                isActive: 1,
-                                updater: 'ทดสอบ'
-                            }
-                        };
+                var inputText = $("#iFaculty").val();
+                var combobox = $("#select-activity").val();
+                if (inputText.length > 0 && combobox > 0) {
+                    var obj = {
+                        faculty: {
+                            id: dataFaculty.id,
+                            campusId: dataCampus.id,
+                            facultyName: inputText,
+                            activityTypeId: $("#select-activity").val(),
+                            isActive: 1,
+                            updater: 'ทดสอบ'
+                        }
+                    };
 
-                        $.post("{{_context_path}}/api/bginfo/Department/editFaculty", JSON.stringify(obj), function (data) {
-                            if (data.rsp) {
-                                showTableFaculty(dataCampus);// refresh table
-                                alert("แก้ไขเรียบร้อย");
-                            } else {
-                                alert("แก้ไขไม่สำเร็จ");
-                            }
-                        });
-                    }
-            );
-
+                    $.post("{{_context_path}}/api/bginfo/Department/editFaculty", JSON.stringify(obj), function (data) {
+                        if (data.rsp) {
+                            showTableFaculty(dataCampus);// refresh table
+                            $('#modal-block').modal('hide');
+                        } else {
+                            alert("แก้ไขไม่สำเร็จ");
+                        }
+                    });
+                } else if (combobox == 0) {
+                    $("#select-activity").parent().addClass("has-error");
+                    $(".validate-error").show(10);
+                }
+            });
+            $("#select-activity").change(function () {
+                $("#select-activity").parent().removeClass("has-error")
+                $(".validate-error").hide(10);
+            });
         }
 
         function modalRemoveFaculty(dataFaculty, dataCampus) {
 
             var html = '';
             html += '<div class="modal-header">';
-            html += '   <button type="button" class="close" data-dismiss="modal"></button>';
+            html += '   <button type="button" class="close" data-dismiss="modal">x</button>';
             html += '   <h4 class="modal-title"><i class="fa fa-plus-circle"></i>  ลบมูลคณะ</h4>';
             html += '</div>';
             html += '<div class="modal-body">';
@@ -561,7 +650,7 @@
             html += '<br>';
             html += '<div class="modal-footer">';
             html += '   <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>';
-            html += '   <i id="modal-btnFaculty" type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-trash"> ตกลง</i></button>';
+            html += '   <i id="modal-btnFaculty" type="button" class="btn btn-danger" ><i class="fa fa-trash"> ตกลง</i></button>';
             html += '</div>';
 
             $(".modal-content").html(html);
@@ -581,7 +670,7 @@
                         $.post("{{_context_path}}/api/bginfo/Department/removeFaculty", JSON.stringify(obj), function (data) {
                             if (data.rsp) {
                                 showTableFaculty(dataCampus);// refresh table
-                                alert("ลบเรียบร้อย");
+                                $('#modal-block').modal('hide');
                             } else {
                                 alert("ลบไม่สำเร็จ");
                             }
@@ -595,8 +684,9 @@
         function modalAddDepartment(dataFaculty) {
 
             var html = '';
+            html += '<form  id="add-dF" role="form" onsubmit="return false">';
             html += '<div class="modal-header">';
-            html += '   <button type="button" class="close" data-dismiss="modal"></button>';
+            html += '   <button type="button" class="close" data-dismiss="modal">x</button>';
             html += '   <h4 class="modal-title"><i class="fa fa-plus-circle"></i>  เพิ่มข้อมูลหน่วยงานภายในคณะ' + dataFaculty.facultyName + '</h4>';
             html += '</div>';
             html += '<div class="modal-body">';
@@ -612,41 +702,45 @@
             html += '<br>';
             html += '<div class="modal-footer">';
             html += '   <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>';
-            html += '   <button id="modal-btnDept" type="button" class="btn btn-success" data-dismiss="modal">ตกลง</button>';
+            html += '   <button id="modal-btnDept" type="submit" class="btn btn-success" >ตกลง</button>';
             html += '</div>';
+            html += '</form>';
 
             $(".modal-content").html(html);
             centerModal();
             resetModal();
             $("#modal-block").modal(); //trigger modal
             $("#modal-btnDept").click(function () {
+                var inputText = $("#iDept").val();
+                if (inputText.length > 0) {
+                    var obj = {
+                        department: {
+                            facultyId: dataFaculty.id,
+                            campusId: dataFaculty.campusId,
+                            deptName: inputText,
+                            isActive: 1,
+                            creator: "ทดสอบ"
+                        }
+                    };
 
-                var obj = {
-                    department: {
-                        facultyId: dataFaculty.id,
-                        campusId: dataFaculty.campusId,
-                        deptName: $("#iDept").val(),
-                        isActive: 1,
-                        creator: "ทดสอบ"
-                    }
-                };
-
-                $.post("{{_context_path}}/api/bginfo/Department/insertDeaprtment", JSON.stringify(obj), function (data) {
-                    if (data.rsp) {
-                        showTableDepartment(dataFaculty);// refresh table
-                        alert("เพิ่มเรียบร้อย");
-                    } else {
-                        alert("เพิ่มไม่สำเร็จ");
-                    }
-                });
+                    $.post("{{_context_path}}/api/bginfo/Department/insertDeaprtment", JSON.stringify(obj), function (data) {
+                        if (data.rsp) {
+                            showTableDepartment(dataFaculty);// refresh table
+                            $('#modal-block').modal('hide');
+                        } else {
+                            alert("เพิ่มไม่สำเร็จ");
+                        }
+                    });
+                }
             });
         }
 
         function modalEditDepartment(dataDept, dataFaculty) {
 
             var html = '';
+            html += '<form  id="edit-dF" role="form" onsubmit="return false">';
             html += '<div class="modal-header">';
-            html += '   <button type="button" class="close" data-dismiss="modal"></button>';
+            html += '   <button type="button" class="close" data-dismiss="modal">x</button>';
             html += '   <h4 class="modal-title"><i class="fa fa-plus-circle"></i>  แก้ไขข้อมูลหน่วยงาน</h4>';
             html += '</div>';
             html += '<div class="modal-body">';
@@ -662,34 +756,37 @@
             html += '<br>';
             html += '<div class="modal-footer">';
             html += '   <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>';
-            html += '   <button id="modal-btnDept" type="button" class="btn btn-success" data-dismiss="modal">ตกลง</button>';
+            html += '   <button id="modal-btnDept" type="button" class="btn btn-success" >ตกลง</button>';
             html += '</div>';
+            html += '</html>';
 
             $(".modal-content").html(html);
             centerModal();
             resetModal();
             $("#modal-block").modal(); //trigger modal
             $("#modal-btnDept").click(function () {
+                var inputText = $("#iDept").val();
+                if (inputText.length > 0) {
+                    var obj = {
+                        department: {
+                            facultyId: dataDept.facultyId,
+                            campusId: dataDept.campusId,
+                            id: dataDept.id,
+                            deptName: inputText,
+                            isActive: 1,
+                            creator: "ทดสอบ"
+                        }
+                    };
 
-                var obj = {
-                    department: {
-                        facultyId: dataDept.facultyId,
-                        campusId: dataDept.campusId,
-                        id: dataDept.id,
-                        deptName: $("#iDept").val(),
-                        isActive: 1,
-                        creator: "ทดสอบ"
-                    }
-                };
-
-                $.post("{{_context_path}}/api/bginfo/Department/editDeaprtment", JSON.stringify(obj), function (data) {
-                    if (data.rsp) {
-                        showTableDepartment(dataFaculty);// refresh table
-                        alert("แก้ไขเรียบร้อย");
-                    } else {
-                        alert("แก้ไขไม่สำเร็จ");
-                    }
-                });
+                    $.post("{{_context_path}}/api/bginfo/Department/editDeaprtment", JSON.stringify(obj), function (data) {
+                        if (data.rsp) {
+                            showTableDepartment(dataFaculty);// refresh table
+                            $('#modal-block').modal('hide');
+                        } else {
+                            alert("แก้ไขไม่สำเร็จ");
+                        }
+                    });
+                }
             });
         }
 
@@ -697,7 +794,7 @@
 
             var html = '';
             html += '<div class="modal-header">';
-            html += '   <button type="button" class="close" data-dismiss="modal"></button>';
+            html += '   <button type="button" class="close" data-dismiss="modal">x</button>';
             html += '   <h4 class="modal-title"><i class="fa fa-plus-circle"></i>  ลบมูลคณะ</h4>';
             html += '</div>';
             html += '<div class="modal-body">';
@@ -710,7 +807,7 @@
             html += '<br>';
             html += '<div class="modal-footer">';
             html += '   <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>';
-            html += '   <i id="modal-btnFaculty" type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-trash"> ตกลง</i></button>';
+            html += '   <i id="modal-btnFaculty" type="button" class="btn btn-danger"><i class="fa fa-trash"> ตกลง</i></button>';
             html += '</div>';
 
             $(".modal-content").html(html);
@@ -730,7 +827,7 @@
                         $.post("{{_context_path}}/api/bginfo/Department/removeDeaprtment", JSON.stringify(obj), function (data) {
                             if (data.rsp) {
                                 showTableDepartment(dataFaculty);// refresh table
-                                alert("ลบเรียบร้อย");
+                                $('#modal-block').modal('hide');
                             } else {
                                 alert("ลบไม่สำเร็จ");
                             }
@@ -740,6 +837,27 @@
 
         }
 
+        function toggleShow(page) {
+
+            if (page == "campus") {
+                $("#formCampus").show();
+                $("button.back").hide();
+                $("#formFaculty, button.back").hide();
+                $("#formDepartment, button.back").hide();
+            }
+            else if (page == "faculty") {
+                $('button.back').attr('get-form', 'campus');
+                $("#formCampus, button.back").hide();
+                $("#formDepartment, button.back").hide();
+                $("#formFaculty, button.back").show();
+
+            } else if (page == "department") {
+                $('button.back').attr('get-form', 'faculty');
+                $("#formFaculty, button.back").hide();
+                $("#formCampus, button.back").hide();
+                $("#formDepartment, button.back").show();
+            }
+        }
 
         /*setting  modal*/
         function resetModal() {
