@@ -73,18 +73,21 @@ myApp.controller('tableController', function($scope,$http) {
     };
     
     $scope.insertPlan = function(year,name,bugget) {
+        if(name!==""){
+            $http.get("insertPlan/"+year+"/"+name+"/"+bugget).success(function(response) {
+                if(response.reqInsertPlan!=="exist"){
 
-        $http.get("insertPlan/"+year+"/"+name+"/"+bugget).success(function(response) {
-            if(response.reqInsertPlan!=="exist"){
-                
-                //console.log(JSON.stringify($scope.data, null, 4));
-                $scope.data.push(response.reqInsertPlan);
-                $("#modal-plan").modal('hide');
-                
-            }else{
-                $scope.txtPlanAddClass.push('has-error');
-            }
-        });
+                    //console.log(JSON.stringify($scope.data, null, 4));
+                    $scope.data.push(response.reqInsertPlan);
+                    $("#modal-plan").modal('hide');
+
+                }else{
+                    $scope.txtPlanAddClass.push('has-error');
+                }
+            });
+        }else{
+            $scope.txtPlanAddClass.push('has-error');
+        }
     };
     
     
@@ -97,18 +100,22 @@ myApp.controller('tableController', function($scope,$http) {
     }
     
     $scope.updatePlan = function(year,id, name, bugget) {
-        $http.get("updatePlan/"+year+"/"+id+"/"+name+"/"+bugget).success(function(response) {
-            
-            if(response.reqUpdatePlan!=="exist"){
-                $scope.data[$scope.findIndexObject($scope.data,"id",id)].planName=name;
-                $("#modal-plan").modal('hide');
-            }else{
-                $scope.txtPlanAddClass.push('has-error');
-            }
-            
-        });
-        console.log($scope.findIndexObject($scope.data,"id",id));
-        //console.log(year+"/"+id+"/"+name+"/"+bugget);
+        if(name!==""){
+            $http.get("updatePlan/"+year+"/"+id+"/"+name+"/"+bugget).success(function(response) {
+
+                if(response.reqUpdatePlan!=="exist"){
+                    $scope.data[$scope.findIndexObject($scope.data,"id",id)].planName=name;
+                    $("#modal-plan").modal('hide');
+                }else{
+                    $scope.txtPlanAddClass.push('has-error');
+                }
+
+            });
+            console.log($scope.findIndexObject($scope.data,"id",id));
+            //console.log(year+"/"+id+"/"+name+"/"+bugget);
+        }else{
+            $scope.txtPlanAddClass.push('has-error')
+        }
     };
     
     $scope.deletePlan = function(index,id,bugget) {
@@ -175,36 +182,43 @@ myApp.controller('tableController', function($scope,$http) {
     
     
     $scope.insertProduct = function(year,plainId,name,type,bugget) {
+        if(name!==""){
+            $http.get("insertProduct/"+year+"/"+plainId+"/"+name+"/"+type+"/"+bugget).success(function(response) {
+                if(response.reqInsertProduct!=="exist"){
 
-        $http.get("insertProduct/"+year+"/"+plainId+"/"+name+"/"+type+"/"+bugget).success(function(response) {
-            if(response.reqInsertProduct!=="exist"){
-                
-                //console.log(JSON.stringify($scope.data, null, 4));
-                $scope.dataProduct.push(response.reqInsertProduct);
-                $("#modal-product").modal('hide');
-                
-            }else{
-                $scope.txtProductAddClass.push('has-error');
-            }
-        });
+                    //console.log(JSON.stringify($scope.data, null, 4));
+                    $scope.dataProduct.push(response.reqInsertProduct);
+                    $("#modal-product").modal('hide');
+
+                }else{
+                    $scope.txtProductAddClass.push('has-error');
+                }
+            });
+        }else{
+            $scope.txtProductAddClass.push('has-error');
+        }
     };
     
     
     $scope.updateProduct = function(year,id, name, type, bugget) {
-        $http.get("updateProduct/"+year+"/"+id+"/"+name+"/"+type+"/"+bugget).success(function(response) {
-            
-            if(response.reqUpdateProduct!=="exist"){
-                $scope.dataProduct[$scope.findIndexObject($scope.dataProduct,"id",id)].productName=name;
-                $scope.dataProduct[$scope.findIndexObject($scope.dataProduct,"id",id)].type=type;
-                $("#modal-product").modal('hide');
-            }else{
-                $scope.txtProductAddClass.push('has-error');
-            }
-            
-        });
-        
-        console.log($scope.findIndexObject($scope.data,"id",id));
-        console.log(year+"/"+id+"/"+name+"/"+bugget);
+        if(name!==""){
+            $http.get("updateProduct/"+year+"/"+id+"/"+name+"/"+type+"/"+bugget).success(function(response) {
+
+                if(response.reqUpdateProduct!=="exist"){
+                    $scope.dataProduct[$scope.findIndexObject($scope.dataProduct,"id",id)].productName=name;
+                    $scope.dataProduct[$scope.findIndexObject($scope.dataProduct,"id",id)].type=type;
+                    $("#modal-product").modal('hide');
+                }else{
+                    $scope.txtProductAddClass.push('has-error');
+                }
+
+            });
+
+            console.log($scope.findIndexObject($scope.data,"id",id));
+            console.log(year+"/"+id+"/"+name+"/"+bugget);
+        }else{
+            $scope.txtProductAddClass.push('has-error');
+        }
     };
     
     $scope.deleteProduct = function(index,id,bugget) {
