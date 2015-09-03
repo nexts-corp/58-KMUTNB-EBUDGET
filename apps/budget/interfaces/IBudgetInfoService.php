@@ -55,13 +55,13 @@ interface IBudgetInfoService {
     public function saveBg144($budget144);
 
     /**
-     * @name saveBg145Durable
-     * @uri /saveBg145Durable
+     * @name saveBg145
+     * @uri /saveBg145
      * @param apps\common\entity\BudgetMoneyDurable budget145 Description
      * @return boolean save Description
      * @description คำขอแบบ ง.145 - ครุภัณฑ์
      */
-    public function saveBg145Durable($budget145);
+    public function saveBg145($budget145);
 
     /**
      * @name saveBg146
@@ -73,25 +73,23 @@ interface IBudgetInfoService {
     public function saveBg146($budget146);
 
     /**
-     * @name saveBgBuildingOneyear
-     * @uri /saveBgBuildingOneyear
-     * @param int durableId BudgetMoneyDurable
-     * @param apps\common\entity\BudgetMoneyBuilding building Description1
-     * @param apps\common\entity\BudgetMoneyBuildingOneyear oneyear Description2
-     * @return boolean save BudgetMoneyDurable Description1 Description2
+     * @name saveBgBuilding1Year
+     * @uri /saveBgBuilding1Year
+     * @param apps\common\entity\BudgetMoneyBuilding building Description
+     * @param apps\common\entity\BudgetMoneyBuildingOneyear[] oneyear Description
+     * @return boolean save BudgetMoneyDurable Description
      * @description คำขอแบบ ง.145 - สิ่งก่อสร้าง 1 ปี
      */
-    public function saveBgBuildingOneyear($durableId, $building, $oneyear);
+    public function saveBgBuilding1Year($building, $oneyear);
 
     /**
      * @name saveBgBuildingContinue
      * @uri /saveBgBuildingContinue
-     * @param int durableId BudgetMoneyDurable
      * @param apps\common\entity\BudgetMoneyBuilding building Description
      * @param apps\common\entity\BudgetMoneyBuildingContinuePeriod period Description
      * @param apps\common\entity\BudgetMoneyBuildingContinueList list Description
      * @return boolean save Description
      * @description คำขอแบบ ง.145 - สิ่งก่อสร้าง ต่อเนื่อง
      */
-    public function saveBgBuildingContinue($durableId, $building, $period, $list);
+    public function saveBgBuildingContinue($building, $period, $list);
 }
