@@ -8,13 +8,6 @@ namespace apps\bginfo\interfaces;
  */
 interface IProductionPlanService {
    
-    /**
-     * @name testView
-     * @uri /testView
-     * @description testView
-     */ 
-    public function testView();
-    
     
     /**
      * @name viewPlan
@@ -33,30 +26,72 @@ interface IProductionPlanService {
      */ 
     public function fetchPlan($year,$budget);
     
+    /**
+     * @name fetchProduct
+     * @uri /fetchProduct
+     * @param int planId รหัสแผนงาน
+     * @param String budget ประเภทงบประมาณ
+     * @return String[] listsProduct
+     * @description ดึงข้อมูลแผนงาน
+     */ 
+    public function fetchProduct($planId,$budget);
+    
     
     
     /**
      * @name insertPlan
      * @uri /insertPlan
      * @param String year ปีแผนงาน
-     * @param String data ชื่อแผนงาน
+     * @param String name ชื่อแผนงาน
      * @param String budget ประเภทงบประมาณ
      * @return String reqInsertPlan
      * @description เพิ่มข้อมูลแผนงาน
      */ 
-    public function insertPlan($year,$data,$budget);
+    public function insertPlan($year,$name,$budget);
     
+    /**
+     * @name insertProduct
+     * @uri /insertProduct
+     * @param String year ปีแผนงาน
+     * @param String planID รหัสแผนงาน
+     * @param String type โครงการหรือแผนงาน
+     * @param String name ชื่อผลผลิตโครงการ
+     * @param String budget ประเภทงบประมาณ
+     * @return String reqInsertProduct
+     * @description เพิ่มข้อมูลผลผลิตโครงการ
+     */ 
+    public function insertProduct($year,$planId,$type,$name,$budget);
     
     
     /**
      * @name updatePlan
      * @uri /updatePlan
+     * @param String year ปีแผนงาน
+     * @param String id รหัสแผนงาน
      * @param String name ชื่อแผนงาน
      * @param String budget ประเภทงบประมาณ
      * @return String reqUpdatePlan
      * @description แก้ไขข้อมูลแผนงาน
      */ 
-    public function updatePlan($name,$budget);
+    public function updatePlan($year,$id,$name,$budget);
+    
+    
+    /**
+     * @name updateProduct
+     * @uri /updateProduct
+     * @param String year ปีแผนงาน
+     * @param String id รหัสผลผลิตและโครงการ
+     * @param String name ชื่อผลผลิตและโครงการ
+     * @param String type โครงการหรือแผนงาน
+     * @param String budget ประเภทงบประมาณ
+     * @return String reqUpdateProduct
+     * @description แก้ไขข้อมูลผลผลิตและโครงการ
+     */ 
+    public function updateProduct($year,$id,$name,$type,$budget);
+    
+    
+    
+    
     
     /**
      * @name deletePlan
@@ -67,5 +102,16 @@ interface IProductionPlanService {
      * @description ลบข้อมูลแผนงาน
      */ 
     public function deletePlan($id,$budget);
+    
+    /**
+     * @name deleteProduct
+     * @uri /deleteProduct
+     * @param String id รหัสแผนงาน
+     * @param String budget ประเภทงบประมาณ
+     * @return String reqDeleteProduct
+     * @description ลบข้อมูลแผนงาน
+     */ 
+    public function deleteProduct($id,$budget);
+    
 
 }
