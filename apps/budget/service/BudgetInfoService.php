@@ -8,6 +8,7 @@ use apps\budget\interfaces\IBudgetInfoService;
 use apps\common\entity\BudgetMoneySalary;
 use apps\common\entity\BudgetMoneyOperating;
 use apps\common\entity\BudgetMoneyUtility;
+use apps\common\entity\BudgetMoneyDurable;
 use apps\common\entity\BudgetMoneyBuilding;
 use apps\common\entity\BudgetMoneyBuildingOneyear;
 use apps\common\entity\BudgetMoneyBuildingContinueList;
@@ -482,7 +483,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                 $return = $this->datacontext->getLastMessage();
             }
         }
-        
+
         foreach ($list as $key => $value) {
             $dataCont = new BudgetMoneyBuildingContinueList();
             $dataCont->id = $list[$key]->id;
@@ -521,6 +522,172 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
             if (!$this->datacontext->saveObject($dataCont)) {
                 $return = $this->datacontext->getLastMessage();
             }
+        }
+
+        return $return;
+    }
+
+    public function deleteBg140($budget140) {
+        $return = true;
+
+        $bg = new BudgetMoneySalary();
+        $bg->id = $budget140;
+        $dataBg = $this->datacontext->getObject($bg);
+
+        if (!$this->datacontext->removeObject($dataBg) {
+            $return = $this->datacontext->getLastMessage();
+        }
+
+        return $return;
+    }
+
+    public function deleteBg141($budget141) {
+        $return = true;
+
+        $bg = new BudgetMoneySalary();
+        $bg->id = $budget141;
+        $dataBg = $this->datacontext->getObject($bg);
+
+        if (!$this->datacontext->removeObject($dataBg) {
+            $return = $this->datacontext->getLastMessage();
+        }
+
+        return $return;
+    }
+
+    public function deleteBg142($budget142) {
+        $return = true;
+
+        $bg = new BudgetMoneySalary();
+        $bg->id = $budget142;
+        $dataBg = $this->datacontext->getObject($bg);
+
+        if (!$this->datacontext->removeObject($dataBg) {
+            $return = $this->datacontext->getLastMessage();
+        }
+
+        return $return;
+    }
+
+    public function deleteBg143($budget143) {
+        $return = true;
+
+        $bg = new BudgetMoneyOperating();
+        $bg->id = $budget143;
+        $dataBg = $this->datacontext->getObject($bg);
+
+        if (!$this->datacontext->removeObject($dataBg) {
+            $return = $this->datacontext->getLastMessage();
+        }
+
+        return $return;
+    }
+
+    public function deleteBg144($budget144) {
+        $return = true;
+
+        $bg = new BudgetMoneyUtility();
+        $bg->id = $budget144;
+        $dataBg = $this->datacontext->getObject($bg);
+
+        if (!$this->datacontext->removeObject($dataBg) {
+            $return = $this->datacontext->getLastMessage();
+        }
+
+        return $return;
+    }
+
+    public function deleteBg145($budget145) {
+        $return = true;
+
+        $buildingList = new BudgetMoneyBuilding();
+        $buildingList->budgetMoneyDurableId = $budget145;
+        $dataBuildingList = $this->datacontext->getObject($buildingList);
+        foreach ($dataBuildingList as $key => $value) {
+            /* 1 year */
+            $durable = new BudgetMoneyBuildingOneyear();
+            $durable->budgetMoneyBuildingId = $dataBuildingList[$key]->id;
+            $dataDurable = $this->datacontext->getObject($durable);
+            if (!$this->datacontext->removeObject($dataDurable) {
+                $return = $this->datacontext->getLastMessage();
+            }
+            /* continue list */
+            $durable = new BudgetMoneyBuildingContinueList();
+            $durable->budgetMoneyBuildingId = $dataBuildingList[$key]->id;
+            $dataDurable = $this->datacontext->getObject($durable);
+            if (!$this->datacontext->removeObject($dataDurable) {
+                $return = $this->datacontext->getLastMessage();
+            }
+            /* continue period */
+            $durable = new BudgetMoneyBuildingContinuePeriod();
+            $durable->budgetMoneyBuildingId = $dataBuildingList[$key]->id;
+            $dataDurable = $this->datacontext->getObject($durable);
+            if (!$this->datacontext->removeObject($dataDurable) {
+                $return = $this->datacontext->getLastMessage();
+            }
+
+            /* Building */
+            if (!$this->datacontext->removeObject($dataBuildingList[$key]) {
+                $return = $this->datacontext->getLastMessage();
+            }
+        }
+
+        $bg = new BudgetMoneyDurable();
+        $bg->id = $budget145;
+        $dataBg = $this->datacontext->getObject($bg);
+
+        if (!$this->datacontext->removeObject($dataBg) {
+            $return = $this->datacontext->getLastMessage();
+        }
+
+        return $return;
+    }
+
+    public function deleteBg146($budget146) {
+        $return = true;
+
+        $bg = new BudgetMoneyOperating();
+        $bg->id = $budget146;
+        $dataBg = $this->datacontext->getObject($bg);
+
+        if (!$this->datacontext->removeObject($dataBg) {
+            $return = $this->datacontext->getLastMessage();
+        }
+
+        return $return;
+    }
+
+    public function deleteBgBuilding($building) {
+        $return = true;
+
+        /* 1 year */
+        $durable = new BudgetMoneyBuildingOneyear();
+        $durable->budgetMoneyBuildingId = $building;
+        $dataDurable = $this->datacontext->getObject($durable);
+        if (!$this->datacontext->removeObject($dataDurable) {
+            $return = $this->datacontext->getLastMessage();
+        }
+        /* continue list */
+        $durable = new BudgetMoneyBuildingContinueList();
+        $durable->budgetMoneyBuildingId = $building;
+        $dataDurable = $this->datacontext->getObject($durable);
+        if (!$this->datacontext->removeObject($dataDurable) {
+            $return = $this->datacontext->getLastMessage();
+        }
+        /* continue period */
+        $durable = new BudgetMoneyBuildingContinuePeriod();
+        $durable->budgetMoneyBuildingId = $building;
+        $dataDurable = $this->datacontext->getObject($durable);
+        if (!$this->datacontext->removeObject($dataDurable) {
+            $return = $this->datacontext->getLastMessage();
+        }
+
+        /* Building */
+        $bd = new BudgetMoneyBuilding();
+        $bd->id = $building;
+        $dataBd = $this->datacontext->getObject($bd);
+        if (!$this->datacontext->removeObject($dataBd) {
+            $return = $this->datacontext->getLastMessage();
         }
 
         return $return;
