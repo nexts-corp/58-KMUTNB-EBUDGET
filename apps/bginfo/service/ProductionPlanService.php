@@ -22,8 +22,8 @@ class ProductionPlanService extends CServiceBase implements IProductionPlanServi
     }
     
 
-    public function viewPlan() {
-        $view = new CJView("ProductionPlan/viewPlan", CJViewType::HTML_VIEW_ENGINE);
+    public function viewManage() {
+        $view = new CJView("ProductionPlan/manage", CJViewType::HTML_VIEW_ENGINE);
         return $view;
     }
     
