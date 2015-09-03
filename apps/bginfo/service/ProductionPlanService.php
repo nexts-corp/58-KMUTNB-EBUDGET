@@ -19,10 +19,16 @@ class ProductionPlanService extends CServiceBase implements IProductionPlanServi
         $this->datacontext = new CDataContext();
     }
     
+    public function testView() {
+        $view = new CJView("ProductionPlan/viewNK", CJViewType::HTML_VIEW_ENGINE);
+        return $view;
+    }
+    
     public function viewPlan() {
         $view = new CJView("ProductionPlan/viewPlan", CJViewType::HTML_VIEW_ENGINE);
         return $view;
     }
+    
     
     public function fetchPlan($year,$budget) {
         $sql="SELECT plan FROM apps\\common\\entity\\".$budget."Plan plan WHERE plan.budgetYear=:budgetYear AND plan.isActive=1 ORDER BY plan.id";
@@ -30,15 +36,15 @@ class ProductionPlanService extends CServiceBase implements IProductionPlanServi
     }
     
     
-    public function insertPlan($data,$budget){
+    public function insertPlan($year,$name,$budget){
         if($budget=="Budget"){
             $lists = new BudgetPlan();
         }else if($budget=="Revenue"){
             $lists = new RevenuePlan();
         }
         
-        $lists->setBudgetYear($data->budgetYear);
-        $lists->setPlanName($data->planName);
+        $lists->setBudgetYear($year);
+        $lists->setPlanName($name);
         $lists->setIsActive(1);
         
         if(!$this->datacontext->getObject($lists)){
@@ -86,7 +92,7 @@ class ProductionPlanService extends CServiceBase implements IProductionPlanServi
     
     
     
-    public function deletePlan($data,$budget){
+    public function deletePlan($id,$budget){
         
         if($budget=="Budget"){
             $lists=new BudgetPlan();
@@ -94,12 +100,14 @@ class ProductionPlanService extends CServiceBase implements IProductionPlanServi
             $lists=new RevenuePlan();
         }
         
-        $lists->setId($data->id);
+        $lists->setId($id);
         $lists->setIsActive(0);
         
         return $this->datacontext->updateObject($lists);
-        
-    }
 
+    }
+    
+    
+    
 
 }

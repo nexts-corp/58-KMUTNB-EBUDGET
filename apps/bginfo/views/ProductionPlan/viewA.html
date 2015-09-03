@@ -1,0 +1,198 @@
+{{>header}}
+<div role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">{{#i18n}}bgi.bginfo{{/i18n}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">{{#i18n}}bgi.planService{{/i18n}}</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr class="tall dashboard">
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="selectYear">{{#i18n}}bgi.budgetYear{{/i18n}}</label>
+                <div class="col-md-8">
+                    <select id="selectYear" name="selectYear" class="form-control input-sm selChange" required="">
+                        <option value="">- เลือกปีงบประมาณ -</option>
+                        <option value="2558">2558</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="selectBudget">งบประมาณ</label>
+                <div class="col-md-8">
+                    <select id="selectBudget" name="selectBudget" class="form-control input-sm selChange" required="">
+                        <option value="">- เลือกประเภทประมาณ -</option>
+                        <option value="Revenue">งบประมาณแผ่นดิน</option>
+                        <option value="Budget">งบประมาณเงินรายได้</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+
+        <div id="formHome" class="col-md-12">
+            <div id="bidderTable" class="col-md-12"><!-- table shown bidder information list -->
+                <table id="table" class="table table-bordered table-striped table-condensed mb-none">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-lg-1">ลำดับ</th>
+                            <th class="text-center col-lg-8">แผนงาน</th>
+                            <th class="text-center col-lg-3">จัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tdtable">
+                        <tr>   
+                            <td class="text-center"></td>  
+                            <td class="text-center">   
+                                <div class="form-group">      
+                                    <input class="form-control" ref-id="txtPlanAdd" placeholder="ชื่อแผนงาน" type="text">     
+                                </div> 
+                            </td>  
+                            <td class="text-center">    
+                                <button ref-id="btnSave" class="btn btn-success"><i class="fa fa-plus"></i> เพิ่ม</button>   
+                            </td>
+                        </tr>
+                        <tr row-id="1">   
+                            <td class="text-center">
+                                1
+                            </td> 
+                            <td>      
+                                แผนงานจัดการศึกษาระดับอุดมศึกษา      
+                            </td>   
+                            <td class="text-center">    
+                                <button ref-id="btnEdit" class="btn btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>    
+                                <button ref-id="btnUpdate" class="btn btn-success" style="display:none;"><i class="fa fa-floppy-o"></i> แก้ไข</button>   
+                                <button ref-id="btnDel" class="btn btn-danger"><i class="fa fa-trash-o "></i> ลบ</button> 
+                                <button ref-id="btnUnDel" class="btn btn-danger" style="display:none;"><i class="fa fa-undo"></i> ยกเลิก</button>
+                            </td>
+                        </tr>
+                        <tr row-id="2">   
+                            <td class="text-center">
+                                2
+                            </td> 
+                            <td>      
+                                แผนงานวิจัย       
+                            </td>   
+                            <td class="text-center">    
+                                <button ref-id="btnEdit" class="btn btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>    
+                                <button ref-id="btnUpdate" class="btn btn-success" style="display:none;"><i class="fa fa-floppy-o"></i> แก้ไข</button>   
+                                <button ref-id="btnDel" class="btn btn-danger"><i class="fa fa-trash-o "></i> ลบ</button> 
+                                <button ref-id="btnUnDel" class="btn btn-danger" style="display:none;"><i class="fa fa-undo"></i> ยกเลิก</button>
+                            </td>
+                        </tr>
+                        <tr row-id="3">   
+                            <td class="text-center">3</td> 
+                            <td>
+                                <div class="form-group">  
+                                    <input class="form-control" value="แผนงานบริการวิชาการแก่สังคม   " ref-id="txtPlanEdit" placeholder="แก้ไขชื่อแผนงาน" type="text">
+                                </div>
+                            </td>   
+                            <td class="text-center">      
+                                <button style="display: none;" ref-id="btnEdit" class="btn btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>    
+                                <button ref-id="btnUpdate" class="btn btn-success" style=""><i class="fa fa-floppy-o"></i> แก้ไข</button>    
+                                <button style="display: none;" ref-id="btnDel" class="btn btn-danger"><i class="fa fa-trash-o "></i> ลบ</button> 
+                                <button ref-id="btnUnDel" class="btn btn-danger" style="display:none;"><i class="fa fa-undo"></i> ยกเลิก</button> 
+                            </td>
+                        </tr>
+                        <tr row-id="4">   
+                            <td class="text-center">
+                                4
+                            </td> 
+                            <td>      
+                                แผนงานบริหารการศึกษา      
+                            </td>   
+                            <td class="text-center">    
+                                <button ref-id="btnEdit" class="btn btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>    
+                                <button ref-id="btnUpdate" class="btn btn-success" style="display:none;"><i class="fa fa-floppy-o"></i> แก้ไข</button>   
+                                <button ref-id="btnDel" class="btn btn-danger"><i class="fa fa-trash-o "></i> ลบ</button> 
+                                <button ref-id="btnUnDel" class="btn btn-danger" style="display:none;"><i class="fa fa-undo"></i> ยกเลิก</button>
+                            </td>
+                        </tr>
+                        <tr row-id="5">   
+                            <td class="text-center">
+                                5
+                            </td> 
+                            <td>      
+                                <div class="row">
+                                    <div class="col-md-12">แผนงานทำนุบำรุงศิลปวัฒนธรรม</div>
+                                </div><br>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <select class="form-control"><option value="1">ผลผลิต</option><option value="2">โครงการ</option></select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" ref-id="txtPlanAdd" placeholder="แผนงาน/ผลผลิต">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button ref-id="btnEdit" class="btn btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>    
+                                        <button ref-id="btnUpdate" class="btn btn-success" style="display:none;"><i class="fa fa-floppy-o"></i> แก้ไข</button>   
+                                        <button ref-id="btnDel" class="btn btn-danger"><i class="fa fa-trash-o "></i> ลบ</button> 
+                                        <button ref-id="btnUnDel" class="btn btn-danger" style="display:none;"><i class="fa fa-undo"></i> ยกเลิก</button>
+                                    </div>
+                                </div><br>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <select class="form-control"><option value="1">ผลผลิต</option><option value="2">โครงการ</option></select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" ref-id="txtPlanAdd" placeholder="แผนงาน/ผลผลิต">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button ref-id="btnSave" class="btn btn-success"><i class="fa fa-plus"></i> เพิ่ม</button>   
+                                    </div>
+                                </div>
+                            </td>   
+                            <td class="text-center">    
+                                <button ref-id="btnEdit" class="btn btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>    
+                                <button ref-id="btnUpdate" class="btn btn-success" style="display:none;"><i class="fa fa-floppy-o"></i> แก้ไข</button>   
+                                <button ref-id="btnDel" class="btn btn-danger"><i class="fa fa-trash-o "></i> ลบ</button> 
+                                <button ref-id="btnUnDel" class="btn btn-danger" style="display:none;"><i class="fa fa-undo"></i> ยกเลิก</button>
+                            </td>
+                        </tr>
+                        <tr row-id="6">   
+                            <td class="text-center">
+                                6
+                            </td> 
+                            <td>      
+                                แผนงานทั่วไป      
+                            </td>   
+                            <td class="text-center">    
+                                <button ref-id="btnEdit" class="btn btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>    
+                                <button ref-id="btnUpdate" class="btn btn-success" style="display:none;"><i class="fa fa-floppy-o"></i> แก้ไข</button>   
+                                <button ref-id="btnDel" class="btn btn-danger"><i class="fa fa-trash-o "></i> ลบ</button> 
+                                <button ref-id="btnUnDel" class="btn btn-danger" style="display:none;"><i class="fa fa-undo"></i> ยกเลิก</button>
+                            </td>
+                        </tr>
+                    </tbody>    
+                </table>
+            </div><!-- end table shown bidder information list -->
+        </div>
+        <div id="formBudget" class="col-md-12" style="display: none;">
+        </div>
+    </div><!--  row  -->
+
+</div><!--  container  -->
+
+{{>footer}}
+<script src="{{_context_path}}/apps/bginfo/views/ProductionPlan/js/viewA.js"></script>

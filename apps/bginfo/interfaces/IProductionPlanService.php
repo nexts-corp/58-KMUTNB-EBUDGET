@@ -8,6 +8,13 @@ namespace apps\bginfo\interfaces;
  */
 interface IProductionPlanService {
    
+    /**
+     * @name testView
+     * @uri /testView
+     * @description testView
+     */ 
+    public function testView();
+    
     
     /**
      * @name viewPlan
@@ -31,33 +38,34 @@ interface IProductionPlanService {
     /**
      * @name insertPlan
      * @uri /insertPlan
-     * @param String data ข้อมูลที่กรอกเข้ามา
+     * @param String year ปีแผนงาน
+     * @param String data ชื่อแผนงาน
      * @param String budget ประเภทงบประมาณ
      * @return String reqInsertPlan
      * @description เพิ่มข้อมูลแผนงาน
      */ 
-    public function insertPlan($data,$budget);
+    public function insertPlan($year,$data,$budget);
     
     
     
     /**
      * @name updatePlan
      * @uri /updatePlan
-     * @param String data ข้อมูลที่กรอกเข้ามา
+     * @param String name ชื่อแผนงาน
      * @param String budget ประเภทงบประมาณ
      * @return String reqUpdatePlan
      * @description แก้ไขข้อมูลแผนงาน
      */ 
-    public function updatePlan($data,$budget);
+    public function updatePlan($name,$budget);
     
     /**
      * @name deletePlan
      * @uri /deletePlan
-     * @param String data ข้อมูลที่กรอกเข้ามา
+     * @param String id รหัสแผนงาน
      * @param String budget ประเภทงบประมาณ
      * @return String reqDeletePlan
      * @description ลบข้อมูลแผนงาน
      */ 
-    public function deletePlan($data,$budget);
+    public function deletePlan($id,$budget);
 
 }
