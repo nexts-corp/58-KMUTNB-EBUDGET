@@ -15,6 +15,24 @@ class BudgetMoneyBuilding extends EntityBase {
      */
     public $id;
 
+    /** @Column(type="integer",length=11, name="budget_plan_id") */
+    public $budgetPlanId;
+
+    /** @Column(type="integer",length=11, name="budget_product_id") */
+    public $budgetProductId;
+
+    /** @Column(type="integer",length=11, name="lk_fundgroup_id") */
+    public $fundgroupId;
+
+    /** @Column(type="integer",length=11, name="lk_department_id") */
+    public $departmentId;
+
+    /** @Column(type="integer",length=11, name="budget_source") */
+    public $budgetSource;
+
+    /** @Column(type="integer",length=11, name="attachment_id") */
+    public $attachmentId;
+
     /** @Column(type="integer",length=11, name="budget_year") */
     public $budgetYear;
 
@@ -86,6 +104,30 @@ class BudgetMoneyBuilding extends EntityBase {
 
     function getId() {
         return $this->id;
+    }
+
+    function getBudgetPlanId() {
+        return $this->budgetPlanId;
+    }
+
+    function getBudgetProductId() {
+        return $this->budgetProductId;
+    }
+
+    function getFundgroupId() {
+        return $this->fundgroupId;
+    }
+
+    function getDepartmentId() {
+        return $this->departmentId;
+    }
+
+    function getBudgetSource() {
+        return $this->budgetSource;
+    }
+
+    function getAttachmentId() {
+        return $this->attachmentId;
     }
 
     function getBudgetYear() {
@@ -182,6 +224,30 @@ class BudgetMoneyBuilding extends EntityBase {
 
     function setId($id) {
         $this->id = $id;
+    }
+
+    function setBudgetPlanId($budgetPlanId) {
+        $this->budgetPlanId = $budgetPlanId;
+    }
+
+    function setBudgetProductId($budgetProductId) {
+        $this->budgetProductId = $budgetProductId;
+    }
+
+    function setFundgroupId($fundgroupId) {
+        $this->fundgroupId = $fundgroupId;
+    }
+
+    function setDepartmentId($departmentId) {
+        $this->departmentId = $departmentId;
+    }
+
+    function setBudgetSource($budgetSource) {
+        $this->budgetSource = $budgetSource;
+    }
+
+    function setAttachmentId($attachmentId) {
+        $this->attachmentId = $attachmentId;
     }
 
     function setBudgetYear($budgetYear) {

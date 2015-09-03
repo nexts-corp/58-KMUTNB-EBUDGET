@@ -3,11 +3,11 @@
 namespace apps\budget\interfaces;
 
 /**
- * @name RequestBudgetService
+ * @name BudgetInfoService
  * @uri /budgetInfo
- * @description RequestBudgetService
+ * @description BudgetInfoService
  */
-interface IRequestBudgetService {
+interface IBudgetInfoService {
 
     /**
      * @name saveBg140
@@ -15,8 +15,6 @@ interface IRequestBudgetService {
      * @param apps\common\entity\BudgetMoneySalary budget140 Description
      * @return boolean save Description
      * @description คำขอแบบ ง.140
-     * @authen true
-     * @resource 1001
      */
     public function saveBg140($budget140);
 
@@ -26,8 +24,6 @@ interface IRequestBudgetService {
      * @param apps\common\entity\BudgetMoneySalary budget141 Description
      * @return boolean save Description
      * @description คำขอแบบ ง.141
-     * @authen true
-     * @resource 1001
      */
     public function saveBg141($budget141);
 
@@ -37,8 +33,6 @@ interface IRequestBudgetService {
      * @param apps\common\entity\BudgetMoneySalary budget142 Description
      * @return boolean save Description
      * @description คำขอแบบ ง.142
-     * @authen true
-     * @resource 1001
      */
     public function saveBg142($budget142);
 
@@ -48,8 +42,6 @@ interface IRequestBudgetService {
      * @param apps\common\entity\BudgetMoneyOperating budget143 Description
      * @return boolean save Description
      * @description คำขอแบบ ง.143
-     * @authen true
-     * @resource 1001
      */
     public function saveBg143($budget143);
 
@@ -59,8 +51,6 @@ interface IRequestBudgetService {
      * @param apps\common\entity\BudgetMoneyUtility budget144 Description
      * @return boolean save Description
      * @description คำขอแบบ ง.144
-     * @authen true
-     * @resource 1001
      */
     public function saveBg144($budget144);
 
@@ -70,8 +60,6 @@ interface IRequestBudgetService {
      * @param apps\common\entity\BudgetMoneyDurable budget145 Description
      * @return boolean save Description
      * @description คำขอแบบ ง.145 - ครุภัณฑ์
-     * @authen true
-     * @resource 1001
      */
     public function saveBg145Durable($budget145);
 
@@ -81,33 +69,29 @@ interface IRequestBudgetService {
      * @param apps\common\entity\BudgetMoneyOperating budget146 Description
      * @return boolean save Description
      * @description คำขอแบบ ง.146
-     * @authen true
-     * @resource 1001
      */
     public function saveBg146($budget146);
 
     /**
-     * @name saveBgBuilding
-     * @uri /saveBgBuilding
-     * @param apps\common\entity\BudgetMoneyBuilding building Description
-     * @param apps\common\entity\BudgetMoneyBuildingOneyear oneyear Description
-     * @return boolean save Description
+     * @name saveBgBuildingOneyear
+     * @uri /saveBgBuildingOneyear
+     * @param int durableId BudgetMoneyDurable
+     * @param apps\common\entity\BudgetMoneyBuilding building Description1
+     * @param apps\common\entity\BudgetMoneyBuildingOneyear oneyear Description2
+     * @return boolean save BudgetMoneyDurable Description1 Description2
      * @description คำขอแบบ ง.145 - สิ่งก่อสร้าง 1 ปี
-     * @authen true
-     * @resource 1001
      */
-    public function saveBgBuildingOneyear($building, $oneyear);
-    
-        /**
-     * @name saveBgBuilding
-     * @uri /saveBgBuilding
+    public function saveBgBuildingOneyear($durableId, $building, $oneyear);
+
+    /**
+     * @name saveBgBuildingContinue
+     * @uri /saveBgBuildingContinue
+     * @param int durableId BudgetMoneyDurable
      * @param apps\common\entity\BudgetMoneyBuilding building Description
      * @param apps\common\entity\BudgetMoneyBuildingContinuePeriod period Description
      * @param apps\common\entity\BudgetMoneyBuildingContinueList list Description
      * @return boolean save Description
      * @description คำขอแบบ ง.145 - สิ่งก่อสร้าง ต่อเนื่อง
-     * @authen true
-     * @resource 1001
      */
-    public function saveBgBuildingContinue($building, $period, $list);
+    public function saveBgBuildingContinue($durableId, $building, $period, $list);
 }
