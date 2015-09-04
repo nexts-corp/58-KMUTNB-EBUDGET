@@ -282,8 +282,8 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
             $dataBudget[0]->formType = $budget145->formType;
             $dataBudget[0]->moneyTypeCode = $budget145->moneyTypeCode;
             $dataBudget[0]->moneyTypeId = $budget145->moneyTypeId;
-
             $dataBudget[0]->name = $budget145->name;
+            $dataBudget[0]->desc = $budget145->desc;
             $dataBudget[0]->qty = $budget145->qty;
             $dataBudget[0]->price = $budget145->price;
             $dataBudget[0]->totalPrice = $budget145->totalPrice;
@@ -691,6 +691,51 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
         }
 
         return $return;
+    }
+
+    public function selectBg140($bgForm) {
+        $return = true;
+
+        $sql = "SELECT"
+                . " * "
+                . " FROM " . $this->ent . "\\BudgetMoneySalary salary "
+                . " JOIN " . $this->ent . "\\RevenueType rvType "
+                . " WITH salary.moneyTypeId = rvType.id"
+                . " JOIN " . $this->ent . "\\BudgetType bgType "
+                . " WITH salary.moneyTypeId = bgType.id"
+                . " WHERE salary.budgetYear =:budgetYear "
+                . " AND salary.budgetYear =:budgetYear AND ";
+        $param = array(
+            "statusKeyword" => $this->getStatus()->keyword
+        );
+        $dataBidder = $this->datacontext->getObject($sql, $param); //get bidder in auction Lastest
+        return $dataBidder;
+
+        return $return;
+    }
+
+    public function selectBg141($bgForm) {
+        
+    }
+
+    public function selectBg142($bgForm) {
+        
+    }
+
+    public function selectBg143($bgForm) {
+        
+    }
+
+    public function selectBg144($bgForm) {
+        
+    }
+
+    public function selectBg145($bgForm) {
+        
+    }
+
+    public function selectBg146($bgForm) {
+        
     }
 
 }

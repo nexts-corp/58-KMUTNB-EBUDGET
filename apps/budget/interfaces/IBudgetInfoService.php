@@ -165,4 +165,66 @@ interface IBudgetInfoService {
      */
     public function deleteBgBuilding($building);
 
+    /**
+     * @name selectBg140
+     * @uri /selectBg140
+     * @param apps\budget\model\BudgetForm bgForm Description
+     * @return apps\common\entity\BudgetMoneySalary select Description
+     * @description แบบ ง.140
+     */
+    public function selectBg140($bgForm);
+
+    /**
+     * @name selectBg141
+     * @uri /selectBg141
+     * @param apps\budget\model\BudgetForm bgForm Description
+     * @return apps\common\entity\BudgetMoneySalary select Description
+     * @description แบบ ง.141
+     */
+    public function selectBg141($bgForm);
+
+    /**
+     * @name selectBg142
+     * @uri /selectBg142
+     * @param apps\budget\model\BudgetForm bgForm Description
+     * @return apps\common\entity\BudgetMoneySalary select Description
+     * @description แบบ ง.142
+     */
+    public function selectBg142($bgForm);
+
+    /**
+     * @name selectBg143
+     * @uri /selectBg143
+     * @param apps\budget\model\BudgetForm bgForm Description
+     * @return apps\common\entity\BudgetMoneyOperating select Description
+     * @description แบบ ง.143
+     */
+    public function selectBg143($bgForm);
+
+    /**
+     * @name selectBg144
+     * @uri /selectBg144
+     * @param apps\budget\model\BudgetForm bgForm Description
+     * @return apps\common\entity\BudgetMoneyUtility select Description
+     * @description แบบ ง.144
+     */
+    public function selectBg144($bgForm);
+
+    /**
+     * @name selectBg145
+     * @uri /selectBg145
+     * @param apps\budget\model\BudgetForm bgForm Description
+     * @return apps\common\entity\BudgetMoneyDurable select Description
+     * @description แบบ ง.145
+     */
+    public function selectBg145($bgForm);
+
+    /**
+     * @name selectBg146
+     * @uri /selectBg146
+     * @param apps\budget\model\BudgetForm bgForm Description
+     * @return apps\common\entity\BudgetMoneyOperating select Description
+     * @description แบบ ง.146
+     */
+    public function selectBg146($bgForm);
 }

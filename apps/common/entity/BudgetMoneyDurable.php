@@ -47,6 +47,8 @@ class BudgetMoneyDurable extends EntityBase {
 
     /** @Column(type="text", name="durable_name") */
     public $name;
+    /** @Column(type="text", name="durable_desc") */
+    public $desc;
 
     /** @Column(type="integer",length=11, name="qty") */
     public $qty;
@@ -124,6 +126,10 @@ class BudgetMoneyDurable extends EntityBase {
 
     function getName() {
         return $this->name;
+    }
+    
+    function getDesc() {
+        return $this->desc;
     }
 
     function getQty() {
@@ -212,6 +218,9 @@ class BudgetMoneyDurable extends EntityBase {
 
     function setName($name) {
         $this->name = $name;
+    }
+    function setDesc($desc) {
+        $this->desc = $desc;
     }
 
     function setQty($qty) {
