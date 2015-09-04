@@ -534,7 +534,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
         $bg->id = $budget140;
         $dataBg = $this->datacontext->getObject($bg);
 
-        if (!$this->datacontext->removeObject($dataBg) {
+        if (!$this->datacontext->removeObject($dataBg)) {
             $return = $this->datacontext->getLastMessage();
         }
 
@@ -548,7 +548,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
         $bg->id = $budget141;
         $dataBg = $this->datacontext->getObject($bg);
 
-        if (!$this->datacontext->removeObject($dataBg) {
+        if (!$this->datacontext->removeObject($dataBg)) {
             $return = $this->datacontext->getLastMessage();
         }
 
@@ -562,7 +562,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
         $bg->id = $budget142;
         $dataBg = $this->datacontext->getObject($bg);
 
-        if (!$this->datacontext->removeObject($dataBg) {
+        if (!$this->datacontext->removeObject($dataBg)) {
             $return = $this->datacontext->getLastMessage();
         }
 
@@ -576,7 +576,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
         $bg->id = $budget143;
         $dataBg = $this->datacontext->getObject($bg);
 
-        if (!$this->datacontext->removeObject($dataBg) {
+        if (!$this->datacontext->removeObject($dataBg)) {
             $return = $this->datacontext->getLastMessage();
         }
 
@@ -590,7 +590,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
         $bg->id = $budget144;
         $dataBg = $this->datacontext->getObject($bg);
 
-        if (!$this->datacontext->removeObject($dataBg) {
+        if (!$this->datacontext->removeObject($dataBg)) {
             $return = $this->datacontext->getLastMessage();
         }
 
@@ -608,26 +608,26 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
             $durable = new BudgetMoneyBuildingOneyear();
             $durable->budgetMoneyBuildingId = $dataBuildingList[$key]->id;
             $dataDurable = $this->datacontext->getObject($durable);
-            if (!$this->datacontext->removeObject($dataDurable) {
+            if (!$this->datacontext->removeObject($dataDurable)) {
                 $return = $this->datacontext->getLastMessage();
             }
             /* continue list */
             $durable = new BudgetMoneyBuildingContinueList();
             $durable->budgetMoneyBuildingId = $dataBuildingList[$key]->id;
             $dataDurable = $this->datacontext->getObject($durable);
-            if (!$this->datacontext->removeObject($dataDurable) {
+            if (!$this->datacontext->removeObject($dataDurable)) {
                 $return = $this->datacontext->getLastMessage();
             }
             /* continue period */
             $durable = new BudgetMoneyBuildingContinuePeriod();
             $durable->budgetMoneyBuildingId = $dataBuildingList[$key]->id;
             $dataDurable = $this->datacontext->getObject($durable);
-            if (!$this->datacontext->removeObject($dataDurable) {
+            if (!$this->datacontext->removeObject($dataDurable)) {
                 $return = $this->datacontext->getLastMessage();
             }
 
             /* Building */
-            if (!$this->datacontext->removeObject($dataBuildingList[$key]) {
+            if (!$this->datacontext->removeObject($dataBuildingList[$key])) {
                 $return = $this->datacontext->getLastMessage();
             }
         }
@@ -636,7 +636,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
         $bg->id = $budget145;
         $dataBg = $this->datacontext->getObject($bg);
 
-        if (!$this->datacontext->removeObject($dataBg) {
+        if (!$this->datacontext->removeObject($dataBg)) {
             $return = $this->datacontext->getLastMessage();
         }
 
@@ -650,7 +650,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
         $bg->id = $budget146;
         $dataBg = $this->datacontext->getObject($bg);
 
-        if (!$this->datacontext->removeObject($dataBg) {
+        if (!$this->datacontext->removeObject($dataBg)) {
             $return = $this->datacontext->getLastMessage();
         }
 
@@ -664,21 +664,21 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
         $durable = new BudgetMoneyBuildingOneyear();
         $durable->budgetMoneyBuildingId = $building;
         $dataDurable = $this->datacontext->getObject($durable);
-        if (!$this->datacontext->removeObject($dataDurable) {
+        if (!$this->datacontext->removeObject($dataDurable)) {
             $return = $this->datacontext->getLastMessage();
         }
         /* continue list */
         $durable = new BudgetMoneyBuildingContinueList();
         $durable->budgetMoneyBuildingId = $building;
         $dataDurable = $this->datacontext->getObject($durable);
-        if (!$this->datacontext->removeObject($dataDurable) {
+        if (!$this->datacontext->removeObject($dataDurable)) {
             $return = $this->datacontext->getLastMessage();
         }
         /* continue period */
         $durable = new BudgetMoneyBuildingContinuePeriod();
         $durable->budgetMoneyBuildingId = $building;
         $dataDurable = $this->datacontext->getObject($durable);
-        if (!$this->datacontext->removeObject($dataDurable) {
+        if (!$this->datacontext->removeObject($dataDurable)) {
             $return = $this->datacontext->getLastMessage();
         }
 
@@ -686,7 +686,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
         $bd = new BudgetMoneyBuilding();
         $bd->id = $building;
         $dataBd = $this->datacontext->getObject($bd);
-        if (!$this->datacontext->removeObject($dataBd) {
+        if (!$this->datacontext->removeObject($dataBd)) {
             $return = $this->datacontext->getLastMessage();
         }
 
