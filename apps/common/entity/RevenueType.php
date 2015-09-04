@@ -15,11 +15,14 @@ class RevenueType extends EntityBase {
      */
     public $id;
 
+    /** @Column(type="string",length=500, name="type_name") */
+    public $typeName;
+
     /** @Column(type="integer",length=11, name="master_id") */
     public $masterId;
 
-    /** @Column(type="string",length=500, name="revenue_type_name") */
-    public $typeName;
+    /** @Column(type="integer",length=11, name="gl_code") */
+    public $glCode;
 
     /** @Column(type="integer",length=11, name="budget_year") */
     public $budgetYear;
@@ -37,12 +40,16 @@ class RevenueType extends EntityBase {
         return $this->id;
     }
 
+    function getTypeName() {
+        return $this->typeName;
+    }
+
     function getMasterId() {
         return $this->masterId;
     }
 
-    function getTypeName() {
-        return $this->typeName;
+    function getGlCode() {
+        return $this->glCode;
     }
 
     function getBudgetYear() {
@@ -65,12 +72,16 @@ class RevenueType extends EntityBase {
         $this->id = $id;
     }
 
+    function setTypeName($typeName) {
+        $this->typeName = $typeName;
+    }
+
     function setMasterId($masterId) {
         $this->masterId = $masterId;
     }
 
-    function setTypeName($typeName) {
-        $this->typeName = $typeName;
+    function setGlCode($glCode) {
+        $this->glCode = $glCode;
     }
 
     function setBudgetYear($budgetYear) {
