@@ -10,11 +10,11 @@ interface IProductionPlanService {
    
     
     /**
-     * @name viewPlan
-     * @uri /viewPlan
+     * @name manage
+     * @uri /manage
      * @description หน้าจัดการแผนงาน
      */ 
-    public function viewPlan();
+    public function viewManage();
     
     /**
      * @name fetchPlan
