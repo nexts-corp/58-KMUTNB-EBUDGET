@@ -15,20 +15,23 @@ class BudgetMoneyDurable extends EntityBase {
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="budget_plan_id") */
-    public $budgetPlanId;
+    /** @Column(type="string",length=2, name="money_type_code") */
+    public $moneyTypeCode;
 
-    /** @Column(type="integer",length=11, name="budget_product_id") */
-    public $budgetProductId;
+    /** @Column(type="integer",length=11, name="money_type_id") */
+    public $moneyTypeId;
+
+    /** @Column(type="integer",length=11, name="plan_id") */
+    public $planId;
+
+    /** @Column(type="integer",length=11, name="product_id") */
+    public $productId;
 
     /** @Column(type="integer",length=11, name="lk_fundgroup_id") */
     public $fundgroupId;
 
     /** @Column(type="integer",length=11, name="lk_department_id") */
     public $departmentId;
-
-    /** @Column(type="integer",length=11, name="budget_source") */
-    public $budgetSource;
 
     /** @Column(type="integer",length=11, name="attachment_id") */
     public $attachmentId;
@@ -39,14 +42,9 @@ class BudgetMoneyDurable extends EntityBase {
     /** @Column(type="integer",length=11, name="form_type") */
     public $formType;
 
-    /** @Column(type="string",length=2, name="money_type_code") */
-    public $moneyTypeCode;
-
-    /** @Column(type="integer",length=11, name="money_type_id") */
-    public $moneyTypeId;
-
     /** @Column(type="text", name="durable_name") */
     public $name;
+
     /** @Column(type="text", name="durable_desc") */
     public $desc;
 
@@ -84,12 +82,20 @@ class BudgetMoneyDurable extends EntityBase {
         return $this->id;
     }
 
-    function getBudgetPlanId() {
-        return $this->budgetPlanId;
+    function getMoneyTypeCode() {
+        return $this->moneyTypeCode;
     }
 
-    function getBudgetProductId() {
-        return $this->budgetProductId;
+    function getMoneyTypeId() {
+        return $this->moneyTypeId;
+    }
+
+    function getPlanId() {
+        return $this->planId;
+    }
+
+    function getProductId() {
+        return $this->productId;
     }
 
     function getFundgroupId() {
@@ -98,10 +104,6 @@ class BudgetMoneyDurable extends EntityBase {
 
     function getDepartmentId() {
         return $this->departmentId;
-    }
-
-    function getBudgetSource() {
-        return $this->budgetSource;
     }
 
     function getAttachmentId() {
@@ -116,18 +118,10 @@ class BudgetMoneyDurable extends EntityBase {
         return $this->formType;
     }
 
-    function getMoneyTypeCode() {
-        return $this->moneyTypeCode;
-    }
-
-    function getMoneyTypeId() {
-        return $this->moneyTypeId;
-    }
-
     function getName() {
         return $this->name;
     }
-    
+
     function getDesc() {
         return $this->desc;
     }
@@ -140,11 +134,11 @@ class BudgetMoneyDurable extends EntityBase {
         return $this->price;
     }
 
-    function getTotal_price() {
+    function getTotalPrice() {
         return $this->totalPrice;
     }
 
-    function getTotal_needed() {
+    function getTotalNeeded() {
         return $this->totalNeeded;
     }
 
@@ -176,12 +170,20 @@ class BudgetMoneyDurable extends EntityBase {
         $this->id = $id;
     }
 
-    function setBudgetPlanId($budgetPlanId) {
-        $this->budgetPlanId = $budgetPlanId;
+    function setMoneyTypeCode($moneyTypeCode) {
+        $this->moneyTypeCode = $moneyTypeCode;
     }
 
-    function setBudgetProductId($budgetProductId) {
-        $this->budgetProductId = $budgetProductId;
+    function setMoneyTypeId($moneyTypeId) {
+        $this->moneyTypeId = $moneyTypeId;
+    }
+
+    function setPlanId($planId) {
+        $this->planId = $planId;
+    }
+
+    function setProductId($productId) {
+        $this->productId = $productId;
     }
 
     function setFundgroupId($fundgroupId) {
@@ -190,10 +192,6 @@ class BudgetMoneyDurable extends EntityBase {
 
     function setDepartmentId($departmentId) {
         $this->departmentId = $departmentId;
-    }
-
-    function setBudgetSource($budgetSource) {
-        $this->budgetSource = $budgetSource;
     }
 
     function setAttachmentId($attachmentId) {
@@ -208,17 +206,10 @@ class BudgetMoneyDurable extends EntityBase {
         $this->formType = $formType;
     }
 
-    function setMoneyTypeCode($moneyTypeCode) {
-        $this->moneyTypeCode = $moneyTypeCode;
-    }
-
-    function setMoneyTypeId($moneyTypeId) {
-        $this->moneyTypeId = $moneyTypeId;
-    }
-
     function setName($name) {
         $this->name = $name;
     }
+
     function setDesc($desc) {
         $this->desc = $desc;
     }
@@ -231,12 +222,12 @@ class BudgetMoneyDurable extends EntityBase {
         $this->price = $price;
     }
 
-    function setTotal_price($total_price) {
-        $this->totalPrice = $total_price;
+    function setTotalPrice($totalPrice) {
+        $this->totalPrice = $totalPrice;
     }
 
-    function setTotal_needed($total_needed) {
-        $this->totalNeeded = $total_needed;
+    function setTotalNeeded($totalNeeded) {
+        $this->totalNeeded = $totalNeeded;
     }
 
     function setIsAvailable($isAvailable) {

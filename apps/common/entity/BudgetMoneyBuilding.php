@@ -15,29 +15,14 @@ class BudgetMoneyBuilding extends EntityBase {
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="budget_plan_id") */
-    public $budgetPlanId;
-
-    /** @Column(type="integer",length=11, name="budget_product_id") */
-    public $budgetProductId;
-
-    /** @Column(type="integer",length=11, name="lk_fundgroup_id") */
-    public $fundgroupId;
-
-    /** @Column(type="integer",length=11, name="lk_department_id") */
-    public $departmentId;
-
-    /** @Column(type="integer",length=11, name="budget_source") */
-    public $budgetSource;
+    /** @Column(type="integer",length=11, name="budget_money_durable_id") */
+    public $budgetMoneyDurableId;
 
     /** @Column(type="integer",length=11, name="attachment_id") */
     public $attachmentId;
 
     /** @Column(type="integer",length=11, name="budget_year") */
     public $budgetYear;
-
-    /** @Column(type="integer",length=11, name="budget_money_durable_id") */
-    public $budgetMoneyDurableId;
 
     /** @Column(type="text", name="name") */
     public $name;
@@ -106,24 +91,8 @@ class BudgetMoneyBuilding extends EntityBase {
         return $this->id;
     }
 
-    function getBudgetPlanId() {
-        return $this->budgetPlanId;
-    }
-
-    function getBudgetProductId() {
-        return $this->budgetProductId;
-    }
-
-    function getFundgroupId() {
-        return $this->fundgroupId;
-    }
-
-    function getDepartmentId() {
-        return $this->departmentId;
-    }
-
-    function getBudgetSource() {
-        return $this->budgetSource;
+    function getBudgetMoneyDurableId() {
+        return $this->budgetMoneyDurableId;
     }
 
     function getAttachmentId() {
@@ -132,10 +101,6 @@ class BudgetMoneyBuilding extends EntityBase {
 
     function getBudgetYear() {
         return $this->budgetYear;
-    }
-
-    function getBudgetMoneyDurableId() {
-        return $this->budgetMoneyDurableId;
     }
 
     function getName() {
@@ -226,24 +191,8 @@ class BudgetMoneyBuilding extends EntityBase {
         $this->id = $id;
     }
 
-    function setBudgetPlanId($budgetPlanId) {
-        $this->budgetPlanId = $budgetPlanId;
-    }
-
-    function setBudgetProductId($budgetProductId) {
-        $this->budgetProductId = $budgetProductId;
-    }
-
-    function setFundgroupId($fundgroupId) {
-        $this->fundgroupId = $fundgroupId;
-    }
-
-    function setDepartmentId($departmentId) {
-        $this->departmentId = $departmentId;
-    }
-
-    function setBudgetSource($budgetSource) {
-        $this->budgetSource = $budgetSource;
+    function setBudgetMoneyDurableId($budgetMoneyDurableId) {
+        $this->budgetMoneyDurableId = $budgetMoneyDurableId;
     }
 
     function setAttachmentId($attachmentId) {
@@ -252,10 +201,6 @@ class BudgetMoneyBuilding extends EntityBase {
 
     function setBudgetYear($budgetYear) {
         $this->budgetYear = $budgetYear;
-    }
-
-    function setBudgetMoneyDurableId($budgetMoneyDurableId) {
-        $this->budgetMoneyDurableId = $budgetMoneyDurableId;
     }
 
     function setName($name) {
