@@ -16,7 +16,7 @@ class BudgetMoneyBuildingOneyear extends EntityBase {
     public $id;
 
     /** @Column(type="integer",length=11, name="budget_money_building_id") */
-    public $budgetMoneyBuildingId;
+    public $buildingId;
 
     /** @Column(type="integer",length=11, name="order") */
     public $order;

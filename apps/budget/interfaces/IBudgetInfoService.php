@@ -10,67 +10,40 @@ namespace apps\budget\interfaces;
 interface IBudgetInfoService {
 
     /**
-     * @name saveBg140
-     * @uri /saveBg140
-     * @param apps\common\entity\BudgetMoneySalary budget140 Description
+     * @name saveBgSalary
+     * @uri /saveBgSalary
+     * @param apps\common\entity\BudgetMoneySalary budget Description
      * @return boolean save Description
-     * @description เพิ่ม/แก้ไขคำขอแบบ ง.140
+     * @description เพิ่ม/แก้ไขคำขอแบบ ง.140-ง.142
      */
-    public function saveBg140($budget140);
+    public function saveBgSalary($budget);
 
     /**
-     * @name saveBg141
-     * @uri /saveBg141
-     * @param apps\common\entity\BudgetMoneySalary budget141 Description
+     * @name saveBgOperating
+     * @uri /saveBgOperating
+     * @param apps\common\entity\BudgetMoneyOperating budget Description
      * @return boolean save Description
-     * @description เพิ่ม/แก้ไขคำขอแบบ ง.141
+     * @description เพิ่ม/แก้ไขคำขอแบบ ง.143, ง.146
      */
-    public function saveBg141($budget141);
+    public function saveBgOperating($budget);
 
     /**
-     * @name saveBg142
-     * @uri /saveBg142
-     * @param apps\common\entity\BudgetMoneySalary budget142 Description
-     * @return boolean save Description
-     * @description เพิ่ม/แก้ไขคำขอแบบ ง.142
-     */
-    public function saveBg142($budget142);
-
-    /**
-     * @name saveBg143
-     * @uri /saveBg143
-     * @param apps\common\entity\BudgetMoneyOperating budget143 Description
-     * @return boolean save Description
-     * @description เพิ่ม/แก้ไขคำขอแบบ ง.143
-     */
-    public function saveBg143($budget143);
-
-    /**
-     * @name saveBg144
-     * @uri /saveBg144
-     * @param apps\common\entity\BudgetMoneyUtility budget144 Description
+     * @name saveBgUtility
+     * @uri /saveBgUtility
+     * @param apps\common\entity\BudgetMoneyUtility budget Description
      * @return boolean save Description
      * @description เพิ่ม/แก้ไขคำขอแบบ ง.144
      */
-    public function saveBg144($budget144);
+    public function saveBgUtility($budget);
 
     /**
-     * @name saveBg145
-     * @uri /saveBg145
-     * @param apps\common\entity\BudgetMoneyDurable budget145 Description
+     * @name saveBgDurable
+     * @uri /saveBgDurable
+     * @param apps\common\entity\BudgetMoneyDurable budget Description
      * @return boolean save Description
      * @description เพิ่ม/แก้ไขคำขอแบบ ง.145 - ครุภัณฑ์
      */
-    public function saveBg145($budget145);
-
-    /**
-     * @name saveBg146
-     * @uri /saveBg146
-     * @param apps\common\entity\BudgetMoneyOperating budget146 Description
-     * @return boolean save Description
-     * @description เพิ่ม/แก้ไขคำขอแบบ ง.146
-     */
-    public function saveBg146($budget146);
+    public function saveBgDurable($budget);
 
     /**
      * @name saveBgBuilding1Year
@@ -169,7 +142,7 @@ interface IBudgetInfoService {
      * @name selectBg140
      * @uri /selectBg140
      * @param apps\budget\model\BudgetForm bgForm Description
-     * @return apps\common\entity\BudgetMoneySalary select Description
+     * @return apps\common\entity\BudgetMoneySalary[] select Description
      * @description แบบ ง.140
      */
     public function selectBg140($bgForm);
@@ -178,7 +151,7 @@ interface IBudgetInfoService {
      * @name selectBg141
      * @uri /selectBg141
      * @param apps\budget\model\BudgetForm bgForm Description
-     * @return apps\common\entity\BudgetMoneySalary select Description
+     * @return apps\common\entity\BudgetMoneySalary[] select Description
      * @description แบบ ง.141
      */
     public function selectBg141($bgForm);
@@ -187,7 +160,7 @@ interface IBudgetInfoService {
      * @name selectBg142
      * @uri /selectBg142
      * @param apps\budget\model\BudgetForm bgForm Description
-     * @return apps\common\entity\BudgetMoneySalary select Description
+     * @return apps\common\entity\BudgetMoneySalary[] select Description
      * @description แบบ ง.142
      */
     public function selectBg142($bgForm);
@@ -196,7 +169,7 @@ interface IBudgetInfoService {
      * @name selectBg143
      * @uri /selectBg143
      * @param apps\budget\model\BudgetForm bgForm Description
-     * @return apps\common\entity\BudgetMoneyOperating select Description
+     * @return apps\common\entity\BudgetMoneyOperating[] select Description
      * @description แบบ ง.143
      */
     public function selectBg143($bgForm);
@@ -205,7 +178,7 @@ interface IBudgetInfoService {
      * @name selectBg144
      * @uri /selectBg144
      * @param apps\budget\model\BudgetForm bgForm Description
-     * @return apps\common\entity\BudgetMoneyUtility select Description
+     * @return apps\common\entity\BudgetMoneyUtility[] select Description
      * @description แบบ ง.144
      */
     public function selectBg144($bgForm);
@@ -214,7 +187,7 @@ interface IBudgetInfoService {
      * @name selectBg145
      * @uri /selectBg145
      * @param apps\budget\model\BudgetForm bgForm Description
-     * @return apps\common\entity\BudgetMoneyDurable select Description
+     * @return apps\common\entity\BudgetMoneyDurable[] select Description
      * @description แบบ ง.145
      */
     public function selectBg145($bgForm);
@@ -223,7 +196,7 @@ interface IBudgetInfoService {
      * @name selectBg146
      * @uri /selectBg146
      * @param apps\budget\model\BudgetForm bgForm Description
-     * @return apps\common\entity\BudgetMoneyOperating select Description
+     * @return apps\common\entity\BudgetMoneyOperating[] select Description
      * @description แบบ ง.146
      */
     public function selectBg146($bgForm);

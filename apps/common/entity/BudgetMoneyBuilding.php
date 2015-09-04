@@ -16,7 +16,7 @@ class BudgetMoneyBuilding extends EntityBase {
     public $id;
 
     /** @Column(type="integer",length=11, name="budget_money_durable_id") */
-    public $budgetMoneyDurableId;
+    public $durableId;
 
     /** @Column(type="integer",length=11, name="attachment_id") */
     public $attachmentId;
