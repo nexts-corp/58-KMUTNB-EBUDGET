@@ -48,7 +48,7 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
             ."WHERE nIssue.mainPlanTypeId = :typeId "
             ."ORDER BY nIssue.id,nTarget.id";
         
-        /*$dataIAT = $this->datacontext->getObject($sql,array("typeId"=>$pData->mainPlanTypeId));
+        $dataIAT = $this->datacontext->getObject($sql,array("typeId"=>$pData->mainPlanTypeId));
         
     
         $dataList = null;
@@ -81,8 +81,8 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
 
         }
         
-        return $dataList;*/
-        return $this->datacontext->getObject($sql,array("typeId"=>$pData->mainPlanTypeId));
+        return $dataList;
+        //return $this->datacontext->getObject($sql,array("typeId"=>$pData->mainPlanTypeId));
         
         
     }

@@ -92,16 +92,24 @@
                                         <button class="btn btn-default""><i class="fa fa-trash-o "></i> ลบ</button> 
                                     </td>
                                 </tr>
-                                <tr ng-repeat-start="list in dataIssueAndTarget">   
-                                    <td class="text-center">{[$index+1]}</td> 
-                                    <td>{[list.nameIssue]}</td>   
+                                
+                                <tr ng-repeat="listT in list.target" style="background-color:#F1F1F1;">   
                                     <td class="text-center">
-                                        <button ng-click="modal('add','target',null,null,$index,list.idIssue)" class="btn btn-success""><i class="fa fa-plus-circle"></i> เป้าประสงค์</button> 
-                                        <button ng-click="modal('edit','issue',list.idIssue,list.nameIssue)" class="btn btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>    
+                                    </td> 
+                                    <td> 
+                                        <div class="row">
+                                            <div class="col-sm-1">{[$parent.$index+1]}.{[$index+1]}</div>
+                                            <div class="col-sm-11">{[listT.nameTarget]}</div>
+                                        </div> 
+                                    </td>   
+                                    <td class="text-center">
+                                        <button ng-click="pageKpiAndStrategy(listT.idTarget)" class="btn btn-primary""><i class="fa fa-cog"></i> ตัวชี้วัด / กลยุทธ์</button> 
+                                        <button ng-click="modal('edit','target',listT.idTarget,listT.nameTarget)" class="btn btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>    
                                         <button class="btn btn-default""><i class="fa fa-trash-o "></i> ลบ</button> 
                                     </td>
                                 </tr>
-  
+                                
+                                <tr ng-show="0" ng-repeat-end><td>repeat end</td></tr>
   
                         </tbody>
                     </table>
