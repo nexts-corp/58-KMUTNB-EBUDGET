@@ -97,7 +97,7 @@ myApp.controller('tableController', function($scope,$http) {
                 return i;
             }
         }
-    }
+    };
     
     $scope.updatePlan = function(year,id, name, bugget) {
         if(name!==""){

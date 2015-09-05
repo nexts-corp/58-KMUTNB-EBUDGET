@@ -32,7 +32,79 @@ interface IEduDevPlanService {
      */ 
     public function fetchIssueAndTarget($pData);
     
+    /**
+     * @name fetchKpi
+     * @uri /fetchKpi
+     * @param apps\common\entity\MainPlanKpi pData Description
+     * @description ดึงข้อมูลตัวชี้วัด
+     * @return apps\common\entity\MainPlanKpi dataList
+     */ 
+    public function fetchKpi($pData);
     
+    
+    /**
+     * @name fetchStrategy
+     * @uri /fetchStrategy
+     * @param apps\common\entity\MainPlanStrategy pData Description
+     * @description ดึงข้อมูลตัวชี้วัด
+     * @return apps\common\entity\MainPlanStrategy dataList
+     */ 
+    public function fetchStrategy($pData);
+    
+    
+    
+    
+    /**
+     * @name saveKpi
+     * @uri /saveKpi
+     * @param apps\common\entity\MainPlanKpi pData Description
+     * @description บันทึกข้อมูลตัวชี้วัด
+     * @return apps\common\entity\MainPlanKpi dataList
+     */ 
+    public function saveKpi($pData);
+    
+    /**
+     * @name saveStrategy
+     * @uri /saveStrategy
+     * @param apps\common\entity\MainPlanStrategy pData Description
+     * @description บันทึกข้อมูลกลยุทธ์
+     * @return apps\common\entity\MainPlanStrategy dataList
+     */ 
+    public function saveStrategy($pData);
+    
+    /**
+     * @name saveTarget
+     * @uri /saveTarget
+     * @param apps\common\entity\MainPlanTarget pData Description
+     * @description บันทึกข้อมูลเป้าประสงค์
+     * @return apps\common\entity\MainPlanTarget dataList
+     */ 
+    public function saveTarget($pData);
+    
+    
+    
+    
+    
+    
+    
+    
+    /**
+     * @name delKpi
+     * @uri /delKpi
+     * @param apps\common\entity\MainPlanKpi pData Description
+     * @description ลบข้อมูลตัวชี้วัด
+     * @return apps\common\entity\MainPlanKpi dataList
+     */ 
+    public function delKpi($pData);
+    
+    /**
+     * @name delStrategy
+     * @uri /delStrategy
+     * @param apps\common\entity\MainPlanStrategy pData Description
+     * @description ลบข้อมูลกลยุทธ
+     * @return apps\common\entity\MainPlanStrategy dataList
+     */ 
+    public function delStrategy($pData);
     
 
 }
