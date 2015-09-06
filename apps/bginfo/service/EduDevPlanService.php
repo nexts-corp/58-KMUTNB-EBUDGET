@@ -70,7 +70,6 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
                 $j++;
                 $k = 0;
                 $idIssueOld = $idIssueNew;
-                
             }
             
             if($dataIAT[$i]["idTarget"]!=""){
@@ -140,6 +139,17 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
         
     }
     
+    public function saveIssue($pData) {
+        
+        if($pData->id==null){ 
+            $this->datacontext->saveObject($pData);
+        }else{
+            $this->datacontext->updateObject($pData);
+        }
+        return $pData;
+        
+    }
+    
     
     
     
@@ -149,6 +159,14 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
         return $pData;
     }
     public function delStrategy($pData) {
+        $this->datacontext->removeObject($pData);
+        return $pData;
+    }
+    public function delTarget($pData) {
+        $this->datacontext->removeObject($pData);
+        return $pData;
+    }
+    public function delIssue($pData) {
         $this->datacontext->removeObject($pData);
         return $pData;
     }

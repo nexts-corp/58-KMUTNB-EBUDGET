@@ -66,14 +66,13 @@ myApp.controller('mainController', function($scope,$http) {
    
     
     
-    $scope.modal = function(action,type,editId,editName,arrayIndex,refId) {
+    $scope.modal = function(action,type,editId,editName,arrayIndex,issueId) {
         $scope.action = action;
         $scope.type = type;
         $scope.textName = editName;
         $scope.idEdit = editId;
-        
         $scope.arrayIndex = arrayIndex;
-        $scope.refId = refId;
+        $scope.issueId = issueId;
         
         $scope.centerModal();
         $("#modal").modal();
@@ -89,8 +88,7 @@ myApp.controller('mainController', function($scope,$http) {
     };
     
     $scope.fetchIssueAndTarget = function() {
-        
-        var sendData = {pData:{mainPlanTypeId:$scope.selectPlan}};
+        var sendData = {pData:{mainPlanTypeId:$scope.selectType}};
         $http.post("fetchIssueAndTarget",sendData).then(function(response) {
             //console.log(JSON.stringify(response.data.dataList, null, 4));
             $scope.dataIssueAndTarget = response.data.dataList;
@@ -132,8 +130,11 @@ myApp.controller('mainController', function($scope,$http) {
             pData.mainPlanTargetId = $scope.targetId;
             pData.strategyName = $scope.textName;
         }else if($scope.type==="target"){
-            pData.mainPlanIssueId = $scope.refId;
+            pData.mainPlanIssueId = $scope.issueId;
             pData.targetName = $scope.textName;
+        }else if($scope.type==="issue"){
+            pData.mainPlanTypeId = $scope.selectType;
+            pData.issueName = $scope.textName;
         }
         
         var sendData = {pData:pData};
@@ -156,10 +157,28 @@ myApp.controller('mainController', function($scope,$http) {
                     $scope.dataStrategy[$scope.findIndexObject($scope.dataStrategy,"id",$scope.idEdit)].strategyName=$scope.textName;
                 }
             }else if($scope.type==="target"){
+                var arrayTarget = {idTarget:response.data.dataList.id,nameTarget:response.data.dataList.targetName};
                 if($scope.action==="add"){
-                    $scope.dataIssueAndTarget[$scope.arrayIndex].target.push(response.data.dataList);
+                    //console.log(JSON.stringify(response.data.dataList.targetName, null, 4));
+                    if($scope.dataIssueAndTarget[$scope.arrayIndex].hasOwnProperty('target')){
+                        $scope.dataIssueAndTarget[$scope.arrayIndex].target.push(arrayTarget);  
+                        console.log($scope.dataIssueAndTarget[$scope.arrayIndex].target);
+                    }else{
+                        var arrayTarget = [{idTarget:response.data.dataList.id,nameTarget:response.data.dataList.targetName}];
+                        $scope.dataIssueAndTarget[$scope.arrayIndex].target = arrayTarget;
+                    }
+                    
                 }else if($scope.action==="edit"){
-                    $scope.dataIssueAndTarget[$scope.findIndexObject($scope.dataStrategy,"id",$scope.idEdit)].strategyName=$scope.textName;
+                    $scope.dataIssueAndTarget[$scope.arrayIndex].target[$scope.findIndexObject($scope.dataIssueAndTarget[$scope.arrayIndex].target,"idTarget",$scope.idEdit)].nameTarget=$scope.textName;
+                }
+            }else if($scope.type==="issue"){
+                var arrayIssue = {idIssue:response.data.dataList.id,nameIssue:response.data.dataList.issueName};
+                if($scope.action==="add"){
+                    console.log(JSON.stringify(arrayIssue, null, 4));
+                    //console.log(JSON.stringify($scope.dataIssue, null, 4));
+                    $scope.dataIssueAndTarget.push(arrayIssue);
+                }else if($scope.action==="edit"){
+                    $scope.dataIssueAndTarget[$scope.findIndexObject($scope.dataIssueAndTarget,"idIssue",$scope.idEdit)].nameIssue=$scope.textName;
                 }
             }
             
@@ -171,15 +190,19 @@ myApp.controller('mainController', function($scope,$http) {
     
     
     
-    $scope.delData = function(type,delId){
+    $scope.delData = function(type,delId,arrayIndex){
         
         if(confirm("ยืนยันการลบข้อมูล")){
             var sendData = {pData:{id:delId}};
             $http.post("del"+$scope.firstLetterUpperCase(type),sendData).then(function(response) {
-                if($scope.type==="kpi"){
+                if(type==="kpi"){
                     $scope.dataKpi.splice($scope.findIndexObject($scope.dataKpi,"id",response.data.dataList.id), 1);
-                }else if($scope.type==="strategy"){
+                }else if(type==="strategy"){
                     $scope.dataStrategy.splice($scope.findIndexObject($scope.dataStrategy,"id",response.data.dataList.id), 1);
+                }else if(type==="target"){
+                    $scope.dataIssueAndTarget[arrayIndex].target.splice($scope.findIndexObject($scope.dataIssueAndTarget[arrayIndex].target,"idTarget",response.data.dataList.id), 1);
+                }else if(type==="issue"){
+                    $scope.dataIssueAndTarget.splice($scope.findIndexObject($scope.dataIssueAndTarget,"idIssue",response.data.dataList.id), 1);
                 }
                 
             });

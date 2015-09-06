@@ -81,6 +81,15 @@ interface IEduDevPlanService {
      */ 
     public function saveTarget($pData);
     
+    /**
+     * @name saveIssue
+     * @uri /saveIssue
+     * @param apps\common\entity\MainPlanIssue pData Description
+     * @description บันทึกข้อมูลประเด็นยุทธศาสตร์
+     * @return apps\common\entity\MainPlanIssue dataList
+     */ 
+    public function saveIssue($pData);
+    
     
     
     
@@ -105,6 +114,24 @@ interface IEduDevPlanService {
      * @return apps\common\entity\MainPlanStrategy dataList
      */ 
     public function delStrategy($pData);
+    
+    /**
+     * @name delTarget
+     * @uri /delTarget
+     * @param apps\common\entity\MainPlanTarget pData Description
+     * @description ลบข้อมูลเป้าประสงค์
+     * @return apps\common\entity\MainPlanTarget dataList
+     */ 
+    public function delTarget($pData);
+    
+    /**
+     * @name delIssue
+     * @uri /delIssue
+     * @param apps\common\entity\MainPlanIssue pData Description
+     * @description ลบข้อมูลประเด็นยุทธศาสตร์
+     * @return apps\common\entity\MainPlanIssue dataList
+     */ 
+    public function delIssue($pData);
     
 
 }

@@ -34,7 +34,7 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label">แผนกลยุทธ์</label>
                     <div class="col-md-8">
-                        <select ng-model="selectPlan" ng-init="selectPlan = 'udf'" ng-change="fetchIssueAndTarget()" class="form-control input-sm">
+                        <select ng-model="selectType" ng-init="selectType = 'udf'" ng-change="fetchIssueAndTarget()" class="form-control input-sm">
                             <option value="udf">- เลือกแผนกลยุทธ์ -</option>
                             <option ng-repeat="mpt in dataType | orderBy:'id'" value="{[mpt.id]}">{[ mpt.planTypeName ]}</option>
                         </select>
@@ -50,7 +50,7 @@
                 <div class="form-group"> <br>
                     <label id="label-level" class="col-md-2 control-label"></label>   
                     <div class="col-md-10">         
-                        <button ng-click="modal('add','issue')" class="btn btn-success add pull-right control-label"><i class="fa fa-plus-circle"></i> ประเด็นยุทธศาสตร์</button>      
+                        <button ng-click="modal('add','issue')" ng-show="selectType!='udf'" class="btn btn-success add pull-right control-label"><i class="fa fa-plus-circle"></i> ประเด็นยุทธศาสตร์</button>      
                     </div>  
                 </div>
             </div>
@@ -89,7 +89,7 @@
                                     <td class="text-center">
                                         <button ng-click="modal('add','target',null,null,$index,list.idIssue)" class="btn btn-success""><i class="fa fa-plus-circle"></i> เป้าประสงค์</button> 
                                         <button ng-click="modal('edit','issue',list.idIssue,list.nameIssue)" class="btn btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>    
-                                        <button class="btn btn-default""><i class="fa fa-trash-o "></i> ลบ</button> 
+                                        <button ng-click="delData('issue',list.idIssue)" class="btn btn-default""><i class="fa fa-trash-o "></i> ลบ</button> 
                                     </td>
                                 </tr>
                                 
@@ -104,8 +104,8 @@
                                     </td>   
                                     <td class="text-center">
                                         <button ng-click="pageKpiAndStrategy(listT.idTarget)" class="btn btn-primary""><i class="fa fa-cog"></i> ตัวชี้วัด / กลยุทธ์</button> 
-                                        <button ng-click="modal('edit','target',listT.idTarget,listT.nameTarget)" class="btn btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>    
-                                        <button class="btn btn-default""><i class="fa fa-trash-o "></i> ลบ</button> 
+                                        <button ng-click="modal('edit','target',listT.idTarget,listT.nameTarget,$parent.$index)" class="btn btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>    
+                                        <button ng-click="delData('target',listT.idTarget,$parent.$index)" class="btn btn-default"><i class="fa fa-trash-o "></i> ลบ</button> 
                                     </td>
                                 </tr>
                                 
