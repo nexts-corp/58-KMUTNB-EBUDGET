@@ -10,9 +10,9 @@ myApp.controller('mainController', function($scope,$http) {
     
     
     $scope.init = function () {
-        $scope.selectYear = 2558;
+        //$scope.selectYear = 2558;
         $scope.idLevel  = [];
-        $scope.fetchBudgetType(0,"start");
+        //$scope.fetchBudgetType(0,"start");
     };
     
     

@@ -10,6 +10,7 @@ myApp.controller('mainController', function($scope,$http) {
     
     
     $scope.init = function () {
+        //$scope.dataIssueAndTarget = {}; 
         $scope.pageLevel = 1;
         $scope.fetchType();
     };
@@ -91,7 +92,12 @@ myApp.controller('mainController', function($scope,$http) {
         var sendData = {pData:{mainPlanTypeId:$scope.selectType}};
         $http.post("fetchIssueAndTarget",sendData).then(function(response) {
             //console.log(JSON.stringify(response.data.dataList, null, 4));
-            $scope.dataIssueAndTarget = response.data.dataList;
+            if(response.data.dataList!==null){
+                $scope.dataIssueAndTarget = response.data.dataList;
+            }else{
+                $scope.dataIssueAndTarget = [];
+                //console.log($scope.dataIssueAndTarget);
+            }
         });
 
     };
@@ -174,9 +180,10 @@ myApp.controller('mainController', function($scope,$http) {
             }else if($scope.type==="issue"){
                 var arrayIssue = {idIssue:response.data.dataList.id,nameIssue:response.data.dataList.issueName};
                 if($scope.action==="add"){
-                    console.log(JSON.stringify(arrayIssue, null, 4));
+                    //console.log(JSON.stringify(arrayIssue, null, 4));
                     //console.log(JSON.stringify($scope.dataIssue, null, 4));
                     $scope.dataIssueAndTarget.push(arrayIssue);
+                    //console.log(JSON.stringify($scope.dataIssueAndTarget, null, 4));
                 }else if($scope.action==="edit"){
                     $scope.dataIssueAndTarget[$scope.findIndexObject($scope.dataIssueAndTarget,"idIssue",$scope.idEdit)].nameIssue=$scope.textName;
                 }
