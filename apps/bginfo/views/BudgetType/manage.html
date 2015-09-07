@@ -34,7 +34,7 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label">ปีงบประมาณ</label>
                     <div class="col-md-8">
-                        <select ng-model="selectYear" ng-init="selectYear = '2558'" ng-change="fetchBudgetType(0,'start')" class="form-control input-sm">
+                        <select ng-model="selectYear" ng-init="selectYear = 'udf'" ng-change="fetchBudgetType(0,'start')" class="form-control input-sm">
                             <option value="udf">- เลือกปีงบประมาณ -</option>
                             <option value="2558">2558</option>
                         </select>
@@ -49,7 +49,7 @@
                 <div class="form-group"> <br>
                     <label id="label-level" class="col-md-2 control-label"></label>   
                     <div class="col-md-10">         
-                        <button ng-click="modal('add')" ng-show="selectType!='udf'" class="btn btn-success add pull-right control-label"><i class="fa fa-plus-circle"></i> ด้านประเภทหมวดรายจ่าย</button>      
+                        <button ng-click="modal('add')" ng-show="selectType!='udf'" class="btn btn-success add pull-right control-label"><i class="fa fa-plus-circle"></i> ประเภทหมวดรายจ่าย</button>      
                     </div>  
                 </div>
             </div>
