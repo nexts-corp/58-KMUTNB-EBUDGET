@@ -45,10 +45,10 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
             ."FROM ".$this->pathEnt."\\MainPlanIssue nIssue "
             ."LEFT JOIN ".$this->pathEnt."\\MainPlanTarget nTarget "
             ."WITH nIssue.id = nTarget.mainPlanIssueId "
-            ."WHERE nIssue.mainPlanTypeId = :typeId "
+            ."WHERE nIssue.mainPlanTypeId = :typeId AND nIssue.budgetYear = :budgetYear "
             ."ORDER BY nIssue.id,nTarget.id";
         
-        $dataIAT = $this->datacontext->getObject($sql,array("typeId"=>$pData->mainPlanTypeId));
+        $dataIAT = $this->datacontext->getObject($sql,array("typeId"=>$pData->mainPlanTypeId,"budgetYear"=>$pData->budgetYear));
         
     
         $dataList = null;

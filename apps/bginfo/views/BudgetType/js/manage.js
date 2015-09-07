@@ -14,10 +14,16 @@ myApp.controller('mainController', function($scope,$http) {
         $scope.idLevel  = [];
         $scope.nameLevel  = [];
         $scope.nametextLevel  = "";
+        
+        $scope.fetchBudgetYear();
         //$scope.fetchBudgetType(0,"start");
     };
     
-    
+    $scope.fetchBudgetYear = function(){
+        $http.post("../../common/lookup/listBudgetYear",{table:"budgetType"}).then(function(response) {
+            $scope.dataBudgetYear = response.data.lists;
+        });
+    };
     
     
     $scope.findIndexObject = function(obj, attr, value){

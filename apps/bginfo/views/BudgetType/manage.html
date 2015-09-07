@@ -36,7 +36,7 @@
                     <div class="col-md-8">
                         <select ng-model="selectYear" ng-init="selectYear = 'udf'" ng-change="fetchBudgetType(0,'start')" ng-disabled="idLevel.length>1" class="form-control input-sm">
                             <option value="udf">- เลือกปีงบประมาณ -</option>
-                            <option value="2558">2558</option>
+                            <option ng-repeat="list in dataBudgetYear" value="{[list.year]}">{[list.year]}</option>
                         </select>
                     </div>
                 </div>

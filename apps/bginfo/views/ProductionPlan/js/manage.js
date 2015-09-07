@@ -8,15 +8,29 @@ myApp.config(function($interpolateProvider) {
 
 myApp.controller('tableController', function($scope,$http) {
     
-    $scope.data = {};
-    $scope.dataProduct = {};
     
-    $scope.txtPlanAddClass = [];
-    $scope.txtProductAddClass = [];
-    $scope.idPlanEdit = "";
     
-    $scope.manageLV = 1;
-    $scope.refIdPlan = "";
+    $scope.init = function(){
+        $scope.data = {};
+        $scope.dataProduct = {};
+
+        $scope.txtPlanAddClass = [];
+        $scope.txtProductAddClass = [];
+        $scope.idPlanEdit = "";
+
+        $scope.manageLV = 1;
+        $scope.refIdPlan = "";
+
+        $scope.fetchBudgetYear();
+    };
+    
+    
+    $scope.fetchBudgetYear = function(){
+        $http.post("../../common/lookup/listBudgetYear",{table:"budgetType"}).then(function(response) {
+            $scope.dataBudgetYear = response.data.lists;
+        });
+    };
+    
     
     
     $scope.backButton = function() {

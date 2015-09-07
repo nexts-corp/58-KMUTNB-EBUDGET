@@ -13,9 +13,15 @@ myApp.controller('mainController', function($scope,$http) {
         $scope.dataIssueAndTarget = []; 
         $scope.pageLevel = 1;
         $scope.fetchType();
+        
+        $scope.fetchBudgetYear();
     };
     
-    
+    $scope.fetchBudgetYear = function(){
+        $http.post("../../common/lookup/listBudgetYear",{table:"budgetType"}).then(function(response) {
+            $scope.dataBudgetYear = response.data.lists;
+        });
+    };
     
     
     
@@ -88,17 +94,20 @@ myApp.controller('mainController', function($scope,$http) {
         });
     };
     
+    $scope.checkHaveData = function(){
+        if($scope.dataIssueAndTarget === null){
+            
+        }
+    };
+    
     $scope.fetchIssueAndTarget = function() {
         $scope.dataIssueAndTarget = 0;
-        var sendData = {pData:{mainPlanTypeId:$scope.selectType}};
+        var sendData = {pData:{mainPlanTypeId:$scope.selectType,budgetYear:$scope.selectYear}};
+        
         $http.post("fetchIssueAndTarget",sendData).then(function(response) {
-            //console.log(JSON.stringify(response.data.dataList, null, 4));
-            if(response.data.dataList!==null){
-                $scope.dataIssueAndTarget = response.data.dataList;
-            }else{
-                $scope.dataIssueAndTarget = [];
-                //console.log($scope.dataIssueAndTarget.length);
-            }
+ 
+            $scope.dataIssueAndTarget = response.data.dataList;
+            
         });
 
     };
@@ -142,6 +151,10 @@ myApp.controller('mainController', function($scope,$http) {
         }else if($scope.type==="issue"){
             pData.mainPlanTypeId = $scope.selectType;
             pData.issueName = $scope.textName;
+        }
+        
+        if($scope.action==="add"){
+            pData.budgetYear = $scope.selectYear;
         }
         
         var sendData = {pData:pData};

@@ -32,5 +32,15 @@ interface ILookupService {
      * @description รายชื่อผลผลิต
      */
     public function listBudgetProduct();
+    
+    
+    /**
+     * @name listBudgetYear
+     * @uri /listBudgetYear
+     * @param String table Description
+     * @return String[] lists Description
+     * @description ช่วงปีงบประมาณของตารางต่างๆ
+     */
+    public function listBudgetYear($table);
 
 }

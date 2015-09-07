@@ -1,5 +1,5 @@
 {{> header}}
-<div ng-app="viewPlan" ng-controller="tableController">
+<div ng-app="viewPlan" ng-controller="tableController" data-ng-init="init()">
     <div role="main" class="main">
         <section class="page-top none-margin">
             <div class="container">
@@ -36,7 +36,7 @@
                     <div class="col-md-8">
                         <select id="selectYear" name="selectYear" ng-model="selectYear" ng-init="selectYear = 'udf'" class="form-control input-sm selChange" ng-change="selectChange()" ng-disabled="manageLV == 2">
                             <option value="udf">- เลือกปีงบประมาณ -</option>
-                            <option value="2558">2558</option>
+                            <option ng-repeat="list in dataBudgetYear" value="{[list.year]}">{[list.year]}</option>
                         </select>
                     </div>
                 </div>
