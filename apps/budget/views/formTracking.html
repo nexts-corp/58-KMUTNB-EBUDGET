@@ -16,16 +16,18 @@
         <div class="container">
             <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
                 <li class="active">
-                    <button class="btn btn-default back" style="display: none;"><i > ย้อนกลับ</i></button>
+                    <button class="btn btn-default back" style="display: none;"><i> ย้อนกลับ</i></button>
                 </li>
             </ul>
         </div>
-    </div><!-- end button action on header -->
+    </div>
+    <!-- end button action on header -->
     <div class="container">
 
         <div id="formTracking" class="col-md-12">
             <div class="form-group">
                 <label class="col-md-2 control-label text-right">{{#i18n}}expensesType{{/i18n}}</label>
+
                 <div class="col-md-4">
                     <select id="expenses-select" class="form-control input-sm" required>
                         <option value="0">- เลือกประเภทรายจ่าย -</option>
@@ -33,9 +35,15 @@
                         <option value="2">เงินงบประมาณแผ่นดิน</option>
                     </select>
                 </div>
+                <div id="warning-expenses" class="col-md-3" style="display: none"><label
+                        class="control-label text-danger">
+                    <i class="fa fa-exclamation"></i>
+                    กรุณาเลือกประเภทรายจ่าย</label>
+                </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label text-right">{{#i18n}}quarter{{/i18n}}</label>
+
                 <div class="col-md-4">
                     <select id="quarter-select" class="form-control input-sm" required>
                         <option value="0">- เลือกไตรมาส -</option>
@@ -45,125 +53,168 @@
                         <option value="4">ไตรมาสที่ 4</option>
                     </select>
                 </div>
+                <div id="warning-quarter" class="col-md-2" style="display: none"><label
+                        class="control-label text-danger">
+                    <i class="fa fa-exclamation"></i>
+                    กรุณาเลือกไตรมาส</label>
+                </div>
+                <button class="btn btn-warning col-md-1" id="get-form">{{#i18n}}ok{{/i18n}}</button>
             </div>
-
             <div id="bidderTable" class="col-md-12"><!-- table shown bidder information list -->
                 <table id="table" class="table table-bordered table-striped table-condensed mb-none">
                     <thead>
-                        <tr>
-                            <th class="text-center col-lg-5">{{#i18n}}expensesType{{/i18n}}</th>
-                            <th class="text-center col-lg-3">{{#i18n}}expensesPlan{{/i18n}}</th>
-                            <th class="text-center col-lg-4">{{#i18n}}expensesResult{{/i18n}}</th>
-                        </tr>
+                    <tr>
+                        <th class="text-center col-lg-4" id="title-tb">{{#i18n}}expensesType{{/i18n}}</th>
+                        <th class="text-center col-lg-3">{{#i18n}}expensesPlan{{/i18n}}</th>
+                        <th class="text-center col-lg-3">{{#i18n}}expensesResult{{/i18n}}</th>
+                        <th class="text-center col-lg-2">ร้อยละจ่ายจริง</th>
+                    </tr>
                     </thead>
                     <tbody id="budgetBody">
-                        <tr>
-                            <td colspan="3" ><b>1. งบบุคลากร</b></td>
-                        </tr>
-                        <tr>
-                            <td style="padding-left: 2em ;vertical-align:middle">เงินเดือน</td>
-                            <td class="text-center"></td>
-                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
-                        </tr>
-                        <tr>
-                            <td style="padding-left: 2em ;vertical-align:middle">ค่าจ้างประจำ</td>
-                            <td class="text-center"></td>
-                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
-                        </tr>
-                        <tr>
-                            <td style="padding-left: 2em ;vertical-align:middle">ค่าตอบแทนพนักงานราชการ</td>
-                            <td class="text-center"></td>
-                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" ><b>2. เงินอุดหนุนทั่วไป</b></td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" style="padding-left: 2em ;vertical-align:middle"><b>2.1 เงินอุดหนุนเป็นค่าใช้จ่ายบุคลากร</b></td>
-                        </tr>
-                        <tr>
-                            <td style="padding-left: 4em ;vertical-align:middle">เงินเดือน</td>
-                            <td class="text-center"></td>
-                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
-                        </tr>
-                        <tr>
-                            <td style="padding-left: 4em ;vertical-align:middle">ค่าจ้างชั่วคราว</td>
-                            <td class="text-center"></td>
-                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" style="padding-left: 2em ;vertical-align:middle"><b>2.2 เงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน</b></td>
-                        </tr>
-                        <tr>
-                            <td style="padding-left: 4em ;vertical-align:middle">ค่าตอบแทน</td>
-                            <td class="text-center"></td>
-                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
-                        </tr>
-                        <tr>
-                            <td style="padding-left: 4em ;vertical-align:middle">ค่าใช้สอย</td>
-                            <td class="text-center"></td>
-                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
-                        </tr>
-                        <tr>
-                            <td style="padding-left: 4em ;vertical-align:middle">ค่าวัสดุ</td>
-                            <td class="text-center"></td>
-                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
-                        </tr>
-                        <tr>
-                            <td style="padding-left: 4em ;vertical-align:middle">ค่าสาธารณูปโภค</td>
-                            <td class="text-center"></td>
-                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
-                        </tr>
-                        <tr>
-                            <td style="padding-left: 2em ;vertical-align:middle"><b>2.3 เงินอุดหนุนเป็นค่าครุภัณฑ์</b></td>
-                            <td class="text-center"></td>
-                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
-                        </tr>
-                        <tr>
-                            <td style="padding-left: 2em ;vertical-align:middle"><b>2.4 เงินอุดหนุนเป็นค่าที่ดิน/สิ่งก่อสร้าง</b></td>
-                            <td class="text-center"></td>
-                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
-                        </tr>
-                        <tr>
-                            <td style="padding-left: 2em ;vertical-align:middle"><b>2.5 เงินอุดหนุนอื่นๆ</b></td>
-                            <td class="text-center"></td>
-                            <td class="text-center"><textarea class="form-control" rows="4"></textarea></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">{{#i18n}}total{{/i18n}}</td>
-                            <td class="text-center"></td>
-                            <td class="text-center"></td>
-                        </tr>
+                    <tr>
+                        <td colspan="4" class="text-center">ไม่พบข้อมูล</td>
+                    </tr>
+                    <!-- to do content-->
                     </tbody>
                 </table>
-            </div><!-- end table shown bidder information list -->
+            </div>
+            <!-- end table shown bidder information list -->
             <div class="col-md-12" style="padding: 12px;"></div>
             <div class="col-md-12 text-right">
                 <button class="btn btn-success"><i class="fa fa-save"> บันทึก</i></button>
                 <button class="btn btn-default"><i class="fa fa-trash"> ล้างข้อมูล</i></button>
             </div>
         </div>
-    </div><!--container-->
+    </div>
+    <!--container-->
 </div><!--main-->
 {{>footer}}
 
 <script type="text/javascript">
 
-    $(function () {
-        EDexpenses_select();
-        $("#expenses-select").change(function () {
-            EDexpenses_select();
+    $(document).ready(function () {
+
+        $("#get-form").click(function () {
+
+            var budgetType = $("#expenses-select").val();
+            var quarter = $("#quarter-select").val();
+
+            if (budgetType == 0) {
+                $("#expenses-select").parent().addClass("has-error");
+                $("#warning-expenses").show(10);
+            } else if (quarter == 0) {
+                $("#quarter-select").parent().addClass("has-error");
+                $("#warning-quarter").show(10);
+            } else if (budgetType > 0 && quarter > 0) {
+                var textSelected = $("#expenses-select").find('option:selected').text();
+                showTableContent(budgetType, textSelected);
+            }
         });
+
+        $("#expenses-select").change(function () {
+            $("#expenses-select").parent().removeClass("has-error")
+            $("#warning-expenses").hide(10);
+        });
+        $("#quarter-select").change(function () {
+            $("#quarter-select").parent().removeClass("has-error")
+            $("#warning-quarter").hide(10);
+        });
+
+        $(function () {
+            EDexpenses_select();
+            $("#expenses-select").change(function () {
+                EDexpenses_select();
+            });
+        });
+
+        function EDexpenses_select() {
+
+            if ($("#expenses-select").val() == 0) {
+                $("#quarter-select").prop("disabled", true);
+            } else {
+                $("#quarter-select").prop("disabled", false);
+            }
+        }
+
+        function showTableContent(budgetType, budgetName) {
+            var html = '';
+
+            $.get("{{_context_path}}/api/budget/budgetTracking/getInfoTracking", {budgetType: budgetType}, function (data) {
+
+                if (data != null && data.listTracking.length > 0) {
+
+                    for (var i = 0; i < data.listTracking.length; i++) {
+                        //lvl1
+                        html += checkShowLv1(data.listTracking[i], i);
+                        for (var y = 0; y < data.listTracking[i].list.length; y++) {
+                            //lvl2
+                            html += checkShowLv2(data.listTracking[i].list[y], i, y);
+                            for (var z = 0; z < data.listTracking[i].list[y].list2.length; z++) {
+                                //lvl3
+                                html += '<tr><td style="padding-left: 4em ;vertical-align:middle">' + (i + 1) + '.' + (y + 1) + '.' + (z + 1) + ' ' + data.listTracking[i].list[y].list2[z].typeName + '</td>';
+                                html += '<td class="text-center"></td>';
+                                html += '<td class="text-center"><textarea class="form-control" rows="3"></textarea></td>';
+                                html += '<td class="text-center"></td></tr>';
+                            }
+                        }
+                    }
+                    html += '<tr>';
+                    html += '  <td class="text-center"><b>รวม</b></td>';
+                    html += '<td class="text-center"></td>';
+                    html += '<td class="text-center"></td>';
+                    html += '<td class="text-center"></td>';
+                    html += '</tr>';
+                } else {
+
+                    html += '<tr>';
+                    html += '  <td colspan="4" class="text-center">ไม่พบข้อมูล</td>';
+                    html += '</tr>';
+                }
+                $("#budgetBody").html(html);
+                $("#title-tb").html(budgetName);
+            });
+        }
+
+        function checkShowLv1(obj, i) {
+
+            var html = '';
+
+            if (obj.list.length > 0) { //have lvl2
+
+                html += '<tr><td style="vertical-align:middle"><b>' + (i + 1) + '. ' + obj.typeName + '</b></td>';
+                html += '<td class="text-center" colspan="3"></td>';
+            }
+            else {
+                html += '<tr><td style="vertical-align:middle"><b>' + (i + 1) + '. ' + obj.typeName + '</b></td>';
+                html += '<td class="text-center"></td>';
+                html += '<td class="text-center"><textarea class="form-control" rows="3"></textarea></td>';
+                html += '<td class="text-center"></td></tr>';
+            }
+
+            return html;
+        }
+
+        function checkShowLv2(obj, i, y) {
+
+            var html = '';
+
+            if (obj.list2.length > 0) { //have lvl3
+
+                html += '<tr><td style="padding-left: 2em ;vertical-align:middle"><b>' + (i + 1) + '.' + (y + 1) + ' ' + obj.typeName + '</b></td>';
+                html += '<td class="text-center" colspan="3"></td>';
+            }
+            else {
+                html += '<tr><td style="padding-left: 2em ;vertical-align:middle">' + (i + 1) + '.' + (y + 1) + ' ' + obj.typeName + '</td>';
+                html += '<td class="text-center"></td>';
+                html += '<td class="text-center"><textarea class="form-control" rows="3"></textarea></td>';
+                html += '<td class="text-center"></td></tr>';
+            }
+
+            return html;
+        }
+
     });
 
-    function EDexpenses_select() {
-
-        if ($("#expenses-select").val() == 0) {
-            $("#quarter-select").prop("disabled", true);
-        } else {
-            $("#quarter-select").prop("disabled", false);
-        }
-    }
 
 </script>
 
