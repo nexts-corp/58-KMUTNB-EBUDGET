@@ -10,14 +10,10 @@ myApp.controller('mainController', function($scope,$http) {
     
     
     $scope.init = function () {
-        //$scope.dataIssueAndTarget = {}; 
+        $scope.dataIssueAndTarget = []; 
         $scope.pageLevel = 1;
         $scope.fetchType();
     };
-    
-    
-    
-    
     
     
     
@@ -50,15 +46,19 @@ myApp.controller('mainController', function($scope,$http) {
    
    
     $scope.pageIssueAndTarget = function(){
-         $scope.pageLevel = 1;
+        $scope.pageLevel = 1;
     };
    
-   $scope.pageKpiAndStrategy = function(targetId){
-       //console.log(targetId);
+   $scope.pageKpiAndStrategy = function(targetId,issueName,targetName){
+       console.log(targetName);
        $scope.dataKpi = {};
        $scope.dataStrategy = {};
        $scope.fetchKpi(targetId);
        $scope.fetchStrategy(targetId);
+       
+       $scope.issueLabel = issueName;
+       $scope.targetLabel = targetName;
+       
        $scope.targetId = targetId;
        $scope.pageLevel = 2;
    };
@@ -89,6 +89,7 @@ myApp.controller('mainController', function($scope,$http) {
     };
     
     $scope.fetchIssueAndTarget = function() {
+        $scope.dataIssueAndTarget = 0;
         var sendData = {pData:{mainPlanTypeId:$scope.selectType}};
         $http.post("fetchIssueAndTarget",sendData).then(function(response) {
             //console.log(JSON.stringify(response.data.dataList, null, 4));
@@ -96,7 +97,7 @@ myApp.controller('mainController', function($scope,$http) {
                 $scope.dataIssueAndTarget = response.data.dataList;
             }else{
                 $scope.dataIssueAndTarget = [];
-                //console.log($scope.dataIssueAndTarget);
+                //console.log($scope.dataIssueAndTarget.length);
             }
         });
 
