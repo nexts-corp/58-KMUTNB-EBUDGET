@@ -7,11 +7,13 @@ myApp.config(function($interpolateProvider) {
 
 
 myApp.controller('mainController', function($scope,$http) {
-    
-    
+
     $scope.init = function () {
         //$scope.selectYear = 2558;
+        $scope.dataBudgetType = [];
         $scope.idLevel  = [];
+        $scope.nameLevel  = [];
+        $scope.nametextLevel  = "";
         //$scope.fetchBudgetType(0,"start");
     };
     
@@ -55,17 +57,36 @@ myApp.controller('mainController', function($scope,$http) {
     };
 
    
+    $scope.soitTextName = function(){
+        var text="ลำดับชั้นประเภทหมวดรายจ่าย : ";
+        var check = 0;
+        for(var i = 0; i < $scope.nameLevel.length; i += 1) {
+            if(i>0){
+                text += " > ";
+            }
+            text += $scope.nameLevel[i];
+            check = 1;
+        }
+        
+        if(!check){ text=""; }
+        $scope.nametextLevel = text;
+    };
     
-    
-    $scope.fetchBudgetType = function(masterId,action) {
+    $scope.fetchBudgetType = function(masterId,action,name) {
+        $scope.dataBudgetType = 0;
+        
         if(action==="start"){
             $scope.idLevel = [masterId];
+            $scope.nameLevel  = [];
         }if(action==="next"){
             if(!$scope.findValueArray($scope.idLevel,masterId)){
                $scope.idLevel.push(masterId); 
+               $scope.nameLevel.push(name);
             }
         }else if(action==="back"){
             $scope.idLevel.splice($scope.idLevel.length-1, 1);
+            $scope.nameLevel.splice($scope.nameLevel.length-1,1);
+            
         }
         
         $scope.masterId = masterId;
@@ -74,6 +95,7 @@ myApp.controller('mainController', function($scope,$http) {
         $http.post("fetchBudgetType",sendData).then(function(response) {
             //console.log(JSON.stringify(response.data.dataList, null, 4));
             $scope.dataBudgetType = response.data.dataList;
+            $scope.soitTextName();
         });
     };
     
@@ -111,6 +133,7 @@ myApp.controller('mainController', function($scope,$http) {
             });
         }
     };
+    
     
     
 });

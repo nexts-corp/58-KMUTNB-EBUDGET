@@ -34,7 +34,7 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label">ปีงบประมาณ</label>
                     <div class="col-md-8">
-                        <select ng-model="selectYear" ng-init="selectYear = 'udf'" ng-change="fetchBudgetType(0,'start')" class="form-control input-sm">
+                        <select ng-model="selectYear" ng-init="selectYear = 'udf'" ng-change="fetchBudgetType(0,'start')" ng-disabled="idLevel.length>1" class="form-control input-sm">
                             <option value="udf">- เลือกปีงบประมาณ -</option>
                             <option value="2558">2558</option>
                         </select>
@@ -47,9 +47,9 @@
 
             <div class="col-md-12"> 
                 <div class="form-group"> <br>
-                    <label id="label-level" class="col-md-2 control-label"></label>   
-                    <div class="col-md-10">         
-                        <button ng-click="modal('add')" ng-show="selectType!='udf'" class="btn btn-success add pull-right control-label"><i class="fa fa-plus-circle"></i> ประเภทหมวดรายจ่าย</button>      
+                    <label id="label-level" class="col-md-10 control-label">{[nametextLevel]}</label>   
+                    <div class="col-md-2">         
+                        <button ng-click="modal('add')" ng-show="selectYear!='udf'" class="btn btn-success add pull-right control-label"><i class="fa fa-plus-circle"></i> ประเภทหมวดรายจ่าย</button>      
                     </div>  
                 </div>
             </div>
@@ -65,20 +65,28 @@
                         <thead>
                             <tr>
                                 <th class="text-center col-lg-1">ลำดับ</th>
-                                <th class="text-center col-lg-8">ด้านประเภทหมวดรายจ่าย</th>
+                                <th class="text-center col-lg-8">ประเภทหมวดรายจ่าย</th>
                                 <th class="text-center col-lg-3">จัดการ</th>
                             </tr>
                         </thead>
                         <tbody>
-                                <tr ng-repeat="list in dataBudgetType | orderBy:'id'">   
-                                    <td class="text-center">{[$index+1]}</td> 
-                                    <td>{[list.typeName]}</td>   
-                                    <td class="text-center">
-                                        <button ng-click="fetchBudgetType(list.id,'next')" class="btn btn-primary""><i class="fa fa-cog"></i> จัดการ</button>
-                                        <button ng-click="modal('edit',list.id,list.typeName)" class="btn btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>    
-                                        <button ng-click="delData(list.id)" class="btn btn-default"><i class="fa fa-trash-o "></i> ลบ</button> 
-                                    </td>
-                                </tr>
+                            
+                            <tr ng-show="selectYear == 'udf' && dataBudgetType.length==0">
+                                <td colspan="3" class="text-center" style="background-color: #f9f9f9">กรุณาเลือกปีงบประมาณ</td>
+                            </tr>
+                            <tr ng-show="selectYear != 'udf' && dataBudgetType.length==0">
+                                <td colspan="3" class="text-center" style="background-color: #f9f9f9">ไม่พบข้อมูล</td>
+                            </tr>
+                            
+                            <tr ng-repeat="list in dataBudgetType | orderBy:'id'">   
+                                <td class="text-center">{[$index+1]}</td> 
+                                <td>{[list.typeName]}</td>   
+                                <td class="text-center">
+                                    <button ng-click="fetchBudgetType(list.id,'next',list.typeName)" class="btn btn-primary""><i class="fa fa-cog"></i> จัดการ</button>
+                                    <button ng-click="modal('edit',list.id,list.typeName)" class="btn btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>    
+                                    <button ng-click="delData(list.id)" class="btn btn-default"><i class="fa fa-trash-o "></i> ลบ</button> 
+                                </td>
+                            </tr>
                                 
                                 
   
@@ -89,7 +97,9 @@
             </div>
         </div>
 
-
+        
+        
+        
     </div><!--  container  -->
     
     
@@ -123,8 +133,6 @@
             </div>
         </div>
     </div>
-    
-    
 </div>
 
 
