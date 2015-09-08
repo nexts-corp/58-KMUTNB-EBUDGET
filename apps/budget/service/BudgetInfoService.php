@@ -640,7 +640,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
 
     public function selectBg143($bgForm) {
         $sql = "SELECT"
-                . " * "
+                . " oper.name, oper.budgetRequest, oper.budgetReceive, oper.budgetHistory, oper.remark "
                 . " FROM " . $this->ent . "\\BudgetMoneyOperating oper "
                 . " JOIN " . $this->ent . "\\RevenueType rvType "
                 . " WITH oper.moneyTypeId = rvType.id"
@@ -656,11 +656,12 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
         $param = array(
             "budgetYear" => $bgForm->budgetYear,
             "formType" => 143,
+            "moneyTypeCode" => $bgForm->moneyTypeCode,
+            "moneyTypeId" => $bgForm->moneyTypeId,
             "fundgroupId" => $bgForm->fundgroupId,
             "departmentId" => $bgForm->departmentId,
             "planId" => $bgForm->planId,
-            "productId" => $bgForm->productId,
-            "moneyTypeId" => $bgForm->moneyTypeId
+            "productId" => $bgForm->productId
         );
         $dataBg = $this->datacontext->getObject($sql, $param); //get list of form
         return $dataBg;
@@ -668,7 +669,8 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
 
     public function selectBg144($bgForm) {
         $sql = "SELECT"
-                . " * "
+                . " util.id, util.name, util.budgetRequest, util.budgetHistory, "
+                . " util.nonbudgetRequest, util.nonbudgetHistory, util.remark"
                 . " FROM " . $this->ent . "\\BudgetMoneyUtility util "
                 . " JOIN " . $this->ent . "\\RevenueType rvType "
                 . " WITH util.moneyTypeId = rvType.id"
@@ -676,19 +678,21 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                 . " WITH util.moneyTypeId = bgType.id"
                 . " WHERE util.budgetYear =:budgetYear "
                 . " AND util.formType =:formType "
+                . " AND util.moneyTypeCode =:moneyTypeCode "
+                . " AND util.moneyTypeId =:moneyTypeId "
                 . " AND util.fundgroupId =:fundgroupId "
                 . " AND util.departmentId =:departmentId "
                 . " AND util.planId =:planId "
-                . " AND util.productId =:productId "
-                . " AND util.moneyTypeId =:moneyTypeId ";
+                . " AND util.productId =:productId ";
         $param = array(
             "budgetYear" => $bgForm->budgetYear,
             "formType" => 144,
+            "moneyTypeCode" => $bgForm->moneyTypeCode,
+            "moneyTypeId" => $bgForm->moneyTypeId,
             "fundgroupId" => $bgForm->fundgroupId,
             "departmentId" => $bgForm->departmentId,
             "planId" => $bgForm->planId,
-            "productId" => $bgForm->productId,
-            "moneyTypeId" => $bgForm->moneyTypeId
+            "productId" => $bgForm->productId
         );
         $dataBg = $this->datacontext->getObject($sql, $param); //get list of form
         return $dataBg;
@@ -696,27 +700,30 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
 
     public function selectBg145($bgForm) {
         $sql = "SELECT"
-                . " * "
-                . " FROM " . $this->ent . "\\BudgetMoneyDurable dura "
+                . " dur.id, dur.name, dur.desc, dur.qty, dur.price, dur.totalPrice, "
+                . " dur.totalNeeded, dur.isAvailable, dur.qtyWorkable, dur.qtyUnworkable, dur.remark  "
+                . " FROM " . $this->ent . "\\BudgetMoneyDurable dur "
                 . " JOIN " . $this->ent . "\\RevenueType rvType "
-                . " WITH dura.moneyTypeId = rvType.id"
+                . " WITH dur.moneyTypeId = rvType.id"
                 . " JOIN " . $this->ent . "\\BudgetType bgType "
-                . " WITH dura.moneyTypeId = bgType.id"
-                . " WHERE dura.budgetYear =:budgetYear "
-                . " AND dura.formType =:formType "
-                . " AND dura.fundgroupId =:fundgroupId "
-                . " AND dura.departmentId =:departmentId "
-                . " AND dura.planId =:planId "
-                . " AND dura.productId =:productId "
-                . " AND dura.moneyTypeId =:moneyTypeId ";
+                . " WITH dur.moneyTypeId = bgType.id"
+                . " WHERE dur.budgetYear =:budgetYear "
+                . " AND dur.formType =:formType "
+                . " AND dur.moneyTypeCode =:moneyTypeCode "
+                . " AND dur.moneyTypeId =:moneyTypeId "
+                . " AND dur.fundgroupId =:fundgroupId "
+                . " AND dur.departmentId =:departmentId "
+                . " AND dur.planId =:planId "
+                . " AND dur.productId =:productId ";
         $param = array(
             "budgetYear" => $bgForm->budgetYear,
             "formType" => 145,
+            "moneyTypeCode" => $bgForm->moneyTypeCode,
+            "moneyTypeId" => $bgForm->moneyTypeId,
             "fundgroupId" => $bgForm->fundgroupId,
             "departmentId" => $bgForm->departmentId,
             "planId" => $bgForm->planId,
-            "productId" => $bgForm->productId,
-            "moneyTypeId" => $bgForm->moneyTypeId
+            "productId" => $bgForm->productId
         );
         $dataBg = $this->datacontext->getObject($sql, $param); //get list of form
         return $dataBg;
@@ -740,11 +747,12 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
         $param = array(
             "budgetYear" => $bgForm->budgetYear,
             "formType" => 146,
+            "moneyTypeCode" => $bgForm->moneyTypeCode,
+            "moneyTypeId" => $bgForm->moneyTypeId,
             "fundgroupId" => $bgForm->fundgroupId,
             "departmentId" => $bgForm->departmentId,
             "planId" => $bgForm->planId,
-            "productId" => $bgForm->productId,
-            "moneyTypeId" => $bgForm->moneyTypeId
+            "productId" => $bgForm->productId
         );
         $dataBg = $this->datacontext->getObject($sql, $param); //get list of form
         return $dataBg;
