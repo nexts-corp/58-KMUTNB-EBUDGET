@@ -201,7 +201,7 @@ interface IBudgetInfoService {
      */
     public function selectBg146($bgForm);
     
-    /*
+    /**
      * @name selectBuilding
      * @uri /selectBuilding
      * @param int durableId Description

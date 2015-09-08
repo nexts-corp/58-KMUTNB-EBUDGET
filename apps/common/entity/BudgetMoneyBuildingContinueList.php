@@ -16,7 +16,7 @@ class BudgetMoneyBuildingContinueList extends EntityBase {
     public $id;
 
     /** @Column(type="integer",length=11, name="budget_money_building_id") */
-    public $budgetMoneyBuildingId;
+    public $buildingId;
 
     /** @Column(type="integer",length=11, name="floor_no") */
     public $floorNo;
@@ -41,7 +41,7 @@ class BudgetMoneyBuildingContinueList extends EntityBase {
     }
 
     function getBudgetMoneyBuildingId() {
-        return $this->budgetMoneyBuildingId;
+        return $this->buildingId;
     }
 
     function getFloorNo() {
@@ -73,7 +73,7 @@ class BudgetMoneyBuildingContinueList extends EntityBase {
     }
 
     function setBudgetMoneyBuildingId($budgetMoneyBuildingId) {
-        $this->budgetMoneyBuildingId = $budgetMoneyBuildingId;
+        $this->buildingId = $budgetMoneyBuildingId;
     }
 
     function setFloorNo($floorNo) {

@@ -762,29 +762,21 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
 
     public function selectBuilding($durableId) {
         $sql = "SELECT"
-                . " * "
+                . " bu.id, bu.name, bu.place, bu.reason, bu.budgetArchitecture, bu.budgetStructural, bu.budgetElectricalCommunication, "
+                . " bu.budgetSanitation, bu.budgetVentilate, bu.budgetElevators, bu.totalBudget, bu.area, bu.expectedResult, bu.objective, "
+                . " bu.goal, bu.timeDesign, bu.timeComparePrices, bu.timeSignContract, bu.timeOperating, bu.remark "
                 . " FROM " . $this->ent . "\\BudgetMoneyBuilding bu "
                 . " JOIN " . $this->ent . "\\BudgetMoneyDurable dur "
-                . " WITH bu.durableId = dur.id"
-                . " LEFT JOIN " . $this->ent . "\\BudgetType bgType "
-                . " WITH oper.moneyTypeId = bgType.id"
-                . " WHERE oper.budgetYear =:budgetYear "
-                . " AND oper.formType =:formType ";
-//                . " AND oper.moneyTypeCode =:moneyTypeCode "
-//                . " AND oper.fundgroupId =:fundgroupId "
-//                . " AND oper.departmentId =:departmentId "
-//                . " AND oper.planId =:planId "
-//                . " AND oper.productId =:productId "
-//                . " AND oper.moneyTypeId =:moneyTypeId ";
+                . " WITH bu.durableId = dur.id "
+                . " LEFT JOIN " . $this->ent . "\\BudgetMoneyBuildingOneyear oneyear "
+                . " WITH oneyear.buildingId = bu.id "
+                . " LEFT JOIN " . $this->ent . "\\BudgetMoneyBuildingContinueList conlist "
+                . " WITH conlist.buildingId = bu.id "
+                . " LEFT JOIN " . $this->ent . "\\BudgetMoneyBuildingContinuePeriod conperiod "
+                . " WITH conperiod.buildingId = bu.id "
+                . " WHERE bu.durableId =:durableId ";
         $param = array(
-            "budgetYear" => $bgForm->budgetYear,
-            "formType" => 146,
-            "moneyTypeCode" => $bgForm->moneyTypeCode,
-            "moneyTypeId" => $bgForm->moneyTypeId,
-            "fundgroupId" => $bgForm->fundgroupId,
-            "departmentId" => $bgForm->departmentId,
-            "planId" => $bgForm->planId,
-            "productId" => $bgForm->productId
+            "durableId" => $durableId
         );
         $dataBg = $this->datacontext->getObject($sql, $param); //get list of form
         return $dataBg;

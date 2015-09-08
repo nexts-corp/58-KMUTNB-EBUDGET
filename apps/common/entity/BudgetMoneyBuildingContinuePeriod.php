@@ -16,7 +16,7 @@ class BudgetMoneyBuildingContinuePeriod extends EntityBase {
     public $id;
 
     /** @Column(type="integer",length=11, name="budget_money_building_id") */
-    public $budgetMoneyBuildingId;
+    public $buildingId;
 
     /** @Column(type="integer",length=11, name="budget_year") */
     public $budgetYear;
@@ -38,7 +38,7 @@ class BudgetMoneyBuildingContinuePeriod extends EntityBase {
     }
 
     function getBudgetMoneyBuildingId() {
-        return $this->budgetMoneyBuildingId;
+        return $this->buildingId;
     }
 
     function getBudgetYear() {
@@ -66,7 +66,7 @@ class BudgetMoneyBuildingContinuePeriod extends EntityBase {
     }
 
     function setBudgetMoneyBuildingId($budgetMoneyBuildingId) {
-        $this->budgetMoneyBuildingId = $budgetMoneyBuildingId;
+        $this->buildingId = $budgetMoneyBuildingId;
     }
 
     function setBudgetYear($budgetYear) {
