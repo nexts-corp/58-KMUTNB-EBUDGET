@@ -15,7 +15,7 @@ class Year extends EntityBase {
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="budget_money_durable_id") */
+    /** @Column(type="integer",length=11, name="budget_year") */
     public $year;
 
     /** @Column(type="boolean",length=1, name="is_active") */
