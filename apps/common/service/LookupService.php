@@ -21,8 +21,31 @@ class LookupService extends CServiceBase implements ILookupService {
         $this->datacontext = new CDataContext();
     }
 
-    public function listDepartment() {
+    
+    public function listFaculty() {
+        $repo = new entity\LKFaculty();
+        $repo->setIsActive(1);
+        $data = $this->datacontext->getObject($repo);
+        return $data;
+    }
+    
+    public function listDepartment($facultyId) {
         $repo = new entity\LKDepartment();
+        $repo->setIsActive(1);
+        $repo->setFacultyId($facultyId);
+        $data = $this->datacontext->getObject($repo);
+        return $data;
+    }
+    
+    public function listFundgroup() {
+        $repo = new entity\LKFundGroup();
+        $repo->setMasterId(0);
+        $data = $this->datacontext->getObject($repo);
+        return $data;
+    }
+    
+    public function listRevenuePlan() {
+        $repo = new entity\RevenuePlan();
         $data = $this->datacontext->getObject($repo);
         return $data;
     }
@@ -32,6 +55,7 @@ class LookupService extends CServiceBase implements ILookupService {
         $data = $this->datacontext->getObject($repo);
         return $data;
     }
+    
 
     public function listBudgetProduct() {
         $repo = new entity\BudgetProduct();
@@ -39,19 +63,30 @@ class LookupService extends CServiceBase implements ILookupService {
         return $data;
     }
     
+    
+    
+    /* ยังมีบางระบบใช้อยู่ เมื่อเสร็จจะลบออก */
     public function listBudgetYear($table) {
         $sql="select max(t.budgetYear) AS fmax,min(t.budgetYear) AS fmin from ".$this->ent."\\".$table." t";
         $data = $this->datacontext->getObject($sql);
-        
         $list = null;
         $k = 0;
         for($i=$data[0]["fmin"]-1;$i<$data[0]["fmax"]+3;$i++){
-            
             $list[$k]["year"]=$i;
             $k++;
-            
         }
-        
+        return $list;
+    }
+    
+    public function listYear() {
+        $sql="select max(y.year) AS fmax,min(y.year) AS fmin from ".$this->ent."\\Year y";
+        $data = $this->datacontext->getObject($sql);
+        $list = null;
+        $k = 0;
+        for($i=(int) $data[0]["fmin"];$i<(int) $data[0]["fmax"]+2;$i++){
+            $list[$k]["year"]=$i;
+            $k++;
+        }
         return $list;
     }
 

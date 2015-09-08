@@ -12,7 +12,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="none-padding">รายงานการจัดทำงบประมาณเงินรายได้จากงบประมาณแผ่นดิน 3 มิติ</h1>
+                    <h1 class="none-padding">รายงานการจัดทำงบประมาณรายจ่ายเงินรายได้ประจำปี</h1>
                 </div>
             </div>
         </div>
@@ -72,19 +72,7 @@
                         </div>
                     </div>
                     
-                    <div ng-show="reportId=='ง.1'" class="col-md-4">
-                        <div class="form-group">
-                            <label>การจำแนกรายงาน</label>
-                            <select ng-model="selectClassReport" ng-init="selectClassReport='udf'" class="form-control">
-                                <option value="udf">- เลือกการจำแนกรายงาน -</option>
-                                <option ng-repeat="list in dataListClassReport" value="{[list.id]}">{[list.name]}</option>
-                            </select>
-                        </div>
-                    </div>
-                   
-                    
-                 
-                    <div ng-show="reportId=='ง.2' || reportId=='ง.2-1' || reportId=='ง.2-2' || reportId=='ง.3'" class="col-md-4">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label>ภาควิชา</label>
                             <select ng-model="selectFaculty" ng-init="selectFaculty = 'udf'" ng-change="cmListDepartment(selectFaculty)" class="form-control">
@@ -93,7 +81,7 @@
                             </select>
                         </div>
                     </div>
-                    <div ng-show="reportId=='ง.2' || reportId=='ง.2-1' || reportId=='ง.2-2' || reportId=='ง.3'" class="col-md-4">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label>หน่วยงาน</label>
                             <select class="form-control" ng-model="selectDepartment" ng-init="selectDepartment = 'udf'">
@@ -102,17 +90,26 @@
                             </select>
                         </div>
                     </div>
-                    
-                    <div ng-show="reportId=='ง.2' || reportId=='ง.2-1' || reportId=='ง.2-2'" class="col-md-4">
+                    <div ng-show="reportId=='ร.3' || reportId=='ร.4'" class="col-md-4">
                         <div class="form-group">
                             <label>แผนงาน</label>
                             <select ng-model="selectPlan" ng-init="selectPlan = 'udf'" class="form-control">
                                 <option value="udf">- เลือกแผนงาน -</option>
-                                <option ng-repeat="list in cmDataListBudgetPlan" value="{[list.id]}">{[list.planName]}</option>
+                                <option ng-repeat="list in cmDataListRevenuePlan" value="{[list.id]}">{[list.planName]}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div ng-show="reportId=='ร.3' || reportId=='ร.4'" class="col-md-4">
+                        <div class="form-group">
+                            <label>กองทุน</label>
+                            <select ng-model="selectPlan" ng-init="selectPlan = 'udf'" class="form-control">
+                                <option value="udf">- เลือกกองทุน -</option>
+                                <option ng-repeat="list in cmDataListFundgroup" value="{[list.id]}">{[list.planName]}</option>
                             </select>
                         </div>
                     </div>
                 </div>
+                <br>
                 <div class="row">
                     <div class="col-md-6"></div>
                     <div class="col-md-6" style="text-align: right;"><button type="button" class="btn btn-success"><i class="fa fa-search"></i> เรีกยดู</button></div>
@@ -126,4 +123,4 @@
 </div><!-- main -->
 
 {{> footer}}
-<script src="{{_context_path}}/apps/report/views/report3D/js/report3D.js"></script>
+<script src="{{_context_path}}/apps/report/views/reportBudget/js/reportBudget.js"></script>
