@@ -61,14 +61,6 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
             }
         }
 
-        /*
-          if ($this->datacontext->saveObject($budget140)) {
-          $return = true;
-          } else {
-          $return = $this->datacontext->getLastMessage();
-          }
-         */
-
         return $return;
     }
 
