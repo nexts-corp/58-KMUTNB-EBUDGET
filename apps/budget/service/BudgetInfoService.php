@@ -547,7 +547,8 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
 
     public function selectBg140($bgForm) {
         $sql = "SELECT"
-                . " * "
+                . " salary.id, salary.positionName, salary.rateNo, salary.rateSalary, "
+                . " salary.positionOccupy, salary.totalSalary, salary.remark "
                 . " FROM " . $this->ent . "\\BudgetMoneySalary salary "
                 . " JOIN " . $this->ent . "\\RevenueType rvType "
                 . " WITH salary.moneyTypeId = rvType.id"
@@ -555,19 +556,21 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                 . " WITH salary.moneyTypeId = bgType.id"
                 . " WHERE salary.budgetYear =:budgetYear "
                 . " AND salary.formType =:formType "
+                . " AND salary.moneyTypeCode =:moneyTypeCode "
+                . " AND salary.moneyTypeId =:moneyTypeId "
                 . " AND salary.fundgroupId =:fundgroupId "
                 . " AND salary.departmentId =:departmentId "
                 . " AND salary.planId =:planId "
-                . " AND salary.productId =:productId "
-                . " AND salary.moneyTypeId =:moneyTypeId ";
+                . " AND salary.productId =:productId ";
         $param = array(
             "budgetYear" => $bgForm->budgetYear,
             "formType" => 140,
+            "moneyTypeCode" => $bgForm->moneyTypeCode,
+            "moneyTypeId" => $bgForm->moneyTypeId,
             "fundgroupId" => $bgForm->fundgroupId,
             "departmentId" => $bgForm->departmentId,
             "planId" => $bgForm->planId,
-            "productId" => $bgForm->productId,
-            "moneyTypeId" => $bgForm->moneyTypeId
+            "productId" => $bgForm->productId
         );
         $dataBg = $this->datacontext->getObject($sql, $param); //get list of form
         return $dataBg;
@@ -575,7 +578,8 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
 
     public function selectBg141($bgForm) {
         $sql = "SELECT"
-                . " * "
+                . " salary.id, salary.positionName, salary.rateNo, salary.rateSalary, "
+                . " salary.positionOccupy, salary.totalSalary, salary.remark "
                 . " FROM " . $this->ent . "\\BudgetMoneySalary salary "
                 . " JOIN " . $this->ent . "\\RevenueType rvType "
                 . " WITH salary.moneyTypeId = rvType.id"
@@ -583,19 +587,21 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                 . " WITH salary.moneyTypeId = bgType.id"
                 . " WHERE salary.budgetYear =:budgetYear "
                 . " AND salary.formType =:formType "
+                . " AND salary.moneyTypeCode =:moneyTypeCode "
+                . " AND salary.moneyTypeId =:moneyTypeId "
                 . " AND salary.fundgroupId =:fundgroupId "
                 . " AND salary.departmentId =:departmentId "
                 . " AND salary.planId =:planId "
-                . " AND salary.productId =:productId "
-                . " AND salary.moneyTypeId =:moneyTypeId ";
+                . " AND salary.productId =:productId ";
         $param = array(
             "budgetYear" => $bgForm->budgetYear,
             "formType" => 141,
+            "moneyTypeCode" => $bgForm->moneyTypeCode,
+            "moneyTypeId" => $bgForm->moneyTypeId,
             "fundgroupId" => $bgForm->fundgroupId,
             "departmentId" => $bgForm->departmentId,
             "planId" => $bgForm->planId,
-            "productId" => $bgForm->productId,
-            "moneyTypeId" => $bgForm->moneyTypeId
+            "productId" => $bgForm->productId
         );
         $dataBg = $this->datacontext->getObject($sql, $param); //get list of form
         return $dataBg;
@@ -603,7 +609,8 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
 
     public function selectBg142($bgForm) {
         $sql = "SELECT"
-                . " * "
+                . " salary.id, salary.positionName, salary.rateNo, salary.rateSalary, "
+                . " salary.positionOccupy, salary.totalSalary, salary.remark "
                 . " FROM " . $this->ent . "\\BudgetMoneySalary salary "
                 . " JOIN " . $this->ent . "\\RevenueType rvType "
                 . " WITH salary.moneyTypeId = rvType.id"
@@ -611,19 +618,21 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                 . " WITH salary.moneyTypeId = bgType.id"
                 . " WHERE salary.budgetYear =:budgetYear "
                 . " AND salary.formType =:formType "
+                . " AND salary.moneyTypeCode =:moneyTypeCode "
+                . " AND salary.moneyTypeId =:moneyTypeId "
                 . " AND salary.fundgroupId =:fundgroupId "
                 . " AND salary.departmentId =:departmentId "
                 . " AND salary.planId =:planId "
-                . " AND salary.productId =:productId "
-                . " AND salary.moneyTypeId =:moneyTypeId ";
+                . " AND salary.productId =:productId ";
         $param = array(
             "budgetYear" => $bgForm->budgetYear,
             "formType" => 142,
+            "moneyTypeCode" => $bgForm->moneyTypeCode,
+            "moneyTypeId" => $bgForm->moneyTypeId,
             "fundgroupId" => $bgForm->fundgroupId,
             "departmentId" => $bgForm->departmentId,
             "planId" => $bgForm->planId,
-            "productId" => $bgForm->productId,
-            "moneyTypeId" => $bgForm->moneyTypeId
+            "productId" => $bgForm->productId
         );
         $dataBg = $this->datacontext->getObject($sql, $param); //get list of form
         return $dataBg;

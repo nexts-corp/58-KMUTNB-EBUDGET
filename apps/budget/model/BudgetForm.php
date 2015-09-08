@@ -15,8 +15,8 @@ namespace apps\budget\model;
  */
 class BudgetForm {
 
-    public $budgetPlanId;
-    public $budgetProductId;
+    public $planId;
+    public $productId;
     public $fundgroupId;
     public $departmentId;
     public $budgetSource;
@@ -25,11 +25,11 @@ class BudgetForm {
     public $moneyTypeId;
 
     function getBudgetPlanId() {
-        return $this->budgetPlanId;
+        return $this->planId;
     }
 
     function getBudgetProductId() {
-        return $this->budgetProductId;
+        return $this->productId;
     }
 
     function getFundgroupId() {
@@ -57,11 +57,11 @@ class BudgetForm {
     }
 
     function setBudgetPlanId($budgetPlanId) {
-        $this->budgetPlanId = $budgetPlanId;
+        $this->planId = $budgetPlanId;
     }
 
     function setBudgetProductId($budgetProductId) {
-        $this->budgetProductId = $budgetProductId;
+        $this->productId = $budgetProductId;
     }
 
     function setFundgroupId($fundgroupId) {
