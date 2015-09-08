@@ -581,9 +581,9 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                 . " salary.id, salary.positionName, salary.rateNo, salary.rateSalary, "
                 . " salary.positionOccupy, salary.totalSalary, salary.remark "
                 . " FROM " . $this->ent . "\\BudgetMoneySalary salary "
-                . " JOIN " . $this->ent . "\\RevenueType rvType "
+                . " LEFT JOIN " . $this->ent . "\\RevenueType rvType "
                 . " WITH salary.moneyTypeId = rvType.id"
-                . " JOIN " . $this->ent . "\\BudgetType bgType "
+                . " LEFT JOIN " . $this->ent . "\\BudgetType bgType "
                 . " WITH salary.moneyTypeId = bgType.id"
                 . " WHERE salary.budgetYear =:budgetYear "
                 . " AND salary.formType =:formType "
@@ -612,9 +612,9 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                 . " salary.id, salary.positionName, salary.rateNo, salary.rateSalary, "
                 . " salary.positionOccupy, salary.totalSalary, salary.remark "
                 . " FROM " . $this->ent . "\\BudgetMoneySalary salary "
-                . " JOIN " . $this->ent . "\\RevenueType rvType "
+                . " LEFT JOIN " . $this->ent . "\\RevenueType rvType "
                 . " WITH salary.moneyTypeId = rvType.id"
-                . " JOIN " . $this->ent . "\\BudgetType bgType "
+                . " LEFT JOIN " . $this->ent . "\\BudgetType bgType "
                 . " WITH salary.moneyTypeId = bgType.id"
                 . " WHERE salary.budgetYear =:budgetYear "
                 . " AND salary.formType =:formType "
@@ -640,14 +640,15 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
 
     public function selectBg143($bgForm) {
         $sql = "SELECT"
-                . " oper.name, oper.budgetRequest, oper.budgetReceive, oper.budgetHistory, oper.remark "
+                . " oper.id, oper.name, oper.budgetRequest, oper.budgetReceive, oper.budgetHistory, oper.remark "
                 . " FROM " . $this->ent . "\\BudgetMoneyOperating oper "
-                . " JOIN " . $this->ent . "\\RevenueType rvType "
+                . " LEFT JOIN " . $this->ent . "\\RevenueType rvType "
                 . " WITH oper.moneyTypeId = rvType.id"
-                . " JOIN " . $this->ent . "\\BudgetType bgType "
+                . " LEFT JOIN " . $this->ent . "\\BudgetType bgType "
                 . " WITH oper.moneyTypeId = bgType.id"
                 . " WHERE oper.budgetYear =:budgetYear "
                 . " AND oper.formType =:formType "
+                . " AND oper.moneyTypeCode =:moneyTypeCode "
                 . " AND oper.fundgroupId =:fundgroupId "
                 . " AND oper.departmentId =:departmentId "
                 . " AND oper.planId =:planId "
@@ -672,9 +673,9 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                 . " util.id, util.name, util.budgetRequest, util.budgetHistory, "
                 . " util.nonbudgetRequest, util.nonbudgetHistory, util.remark"
                 . " FROM " . $this->ent . "\\BudgetMoneyUtility util "
-                . " JOIN " . $this->ent . "\\RevenueType rvType "
+                . " LEFT JOIN " . $this->ent . "\\RevenueType rvType "
                 . " WITH util.moneyTypeId = rvType.id"
-                . " JOIN " . $this->ent . "\\BudgetType bgType "
+                . " LEFT JOIN " . $this->ent . "\\BudgetType bgType "
                 . " WITH util.moneyTypeId = bgType.id"
                 . " WHERE util.budgetYear =:budgetYear "
                 . " AND util.formType =:formType "
@@ -703,9 +704,9 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                 . " dur.id, dur.name, dur.desc, dur.qty, dur.price, dur.totalPrice, "
                 . " dur.totalNeeded, dur.isAvailable, dur.qtyWorkable, dur.qtyUnworkable, dur.remark  "
                 . " FROM " . $this->ent . "\\BudgetMoneyDurable dur "
-                . " JOIN " . $this->ent . "\\RevenueType rvType "
+                . " LEFT JOIN " . $this->ent . "\\RevenueType rvType "
                 . " WITH dur.moneyTypeId = rvType.id"
-                . " JOIN " . $this->ent . "\\BudgetType bgType "
+                . " LEFT JOIN " . $this->ent . "\\BudgetType bgType "
                 . " WITH dur.moneyTypeId = bgType.id"
                 . " WHERE dur.budgetYear =:budgetYear "
                 . " AND dur.formType =:formType "
@@ -731,19 +732,50 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
 
     public function selectBg146($bgForm) {
         $sql = "SELECT"
-                . " * "
+                . " oper.id, oper.name, oper.budgetRequest, oper.budgetReceive, oper.budgetHistory, oper.remark "
                 . " FROM " . $this->ent . "\\BudgetMoneyOperating oper "
-                . " JOIN " . $this->ent . "\\RevenueType rvType "
+                . " LEFT JOIN " . $this->ent . "\\RevenueType rvType "
                 . " WITH oper.moneyTypeId = rvType.id"
-                . " JOIN " . $this->ent . "\\BudgetType bgType "
+                . " LEFT JOIN " . $this->ent . "\\BudgetType bgType "
                 . " WITH oper.moneyTypeId = bgType.id"
                 . " WHERE oper.budgetYear =:budgetYear "
                 . " AND oper.formType =:formType "
+                . " AND oper.moneyTypeCode =:moneyTypeCode "
                 . " AND oper.fundgroupId =:fundgroupId "
                 . " AND oper.departmentId =:departmentId "
                 . " AND oper.planId =:planId "
                 . " AND oper.productId =:productId "
                 . " AND oper.moneyTypeId =:moneyTypeId ";
+        $param = array(
+            "budgetYear" => $bgForm->budgetYear,
+            "formType" => 146,
+            "moneyTypeCode" => $bgForm->moneyTypeCode,
+            "moneyTypeId" => $bgForm->moneyTypeId,
+            "fundgroupId" => $bgForm->fundgroupId,
+            "departmentId" => $bgForm->departmentId,
+            "planId" => $bgForm->planId,
+            "productId" => $bgForm->productId
+        );
+        $dataBg = $this->datacontext->getObject($sql, $param); //get list of form
+        return $dataBg;
+    }
+
+    public function selectBuilding($durableId) {
+        $sql = "SELECT"
+                . " * "
+                . " FROM " . $this->ent . "\\BudgetMoneyBuilding bu "
+                . " JOIN " . $this->ent . "\\BudgetMoneyDurable dur "
+                . " WITH bu.durableId = dur.id"
+                . " LEFT JOIN " . $this->ent . "\\BudgetType bgType "
+                . " WITH oper.moneyTypeId = bgType.id"
+                . " WHERE oper.budgetYear =:budgetYear "
+                . " AND oper.formType =:formType ";
+//                . " AND oper.moneyTypeCode =:moneyTypeCode "
+//                . " AND oper.fundgroupId =:fundgroupId "
+//                . " AND oper.departmentId =:departmentId "
+//                . " AND oper.planId =:planId "
+//                . " AND oper.productId =:productId "
+//                . " AND oper.moneyTypeId =:moneyTypeId ";
         $param = array(
             "budgetYear" => $bgForm->budgetYear,
             "formType" => 146,

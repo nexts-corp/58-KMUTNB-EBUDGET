@@ -200,4 +200,13 @@ interface IBudgetInfoService {
      * @description แบบ ง.146
      */
     public function selectBg146($bgForm);
+    
+    /*
+     * @name selectBuilding
+     * @uri /selectBuilding
+     * @param int durableId Description
+     * @return apps\common\entity\BudgetMoneyBuilding[] select Description
+     * @description คำชี้แจงแบบก่อสร้าง
+     */
+    public function selectBuilding($durableId);
 }
