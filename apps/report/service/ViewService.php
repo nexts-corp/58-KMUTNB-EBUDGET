@@ -10,7 +10,7 @@ use apps\report\interfaces\IViewService;
 class ViewService extends CServiceBase implements IViewService {
 
     public function report3D() {
-        $view = new CJView("report3D", CJViewType::HTML_VIEW_ENGINE);
+        $view = new CJView("report3D/report3D", CJViewType::HTML_VIEW_ENGINE);
         return $view;
     }
 

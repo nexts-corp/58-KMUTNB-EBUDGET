@@ -1,0 +1,68 @@
+{{>header}}
+
+<div role="main" class="main" ng-app="report3D" ng-controller="mainController" data-ng-init="init()">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">ระบบจัดทำรายงาน</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">รายงานการจัดทำงบประมาณเงินรายได้จากงบประมาณแผ่นดิน 3 มิติ</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="tall dashboard">
+
+
+
+    <div class="sort-source-wrapper"><!-- button action on header -->
+        <div class="container">
+            <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+                <li class="active">
+                    <button class="btn btn-default" ng-show="page!='home'" ng-click="pages('home')"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
+                </li>
+            </ul>
+        </div>
+    </div><!-- end button action on header -->
+
+    <div class="container">
+        <div class="row">
+
+            <div ng-show="page=='home'" class="col-md-12">
+                <div id="bidderTable" class="col-md-12"><!-- table shown bidder information list -->
+                    <table class="table table-bordered table-striped table-condensed mb-none" id="table">
+                        <thead>
+                            <tr>
+                                <th class="text-center col-lg-1">ลำดับ</th>
+                                <th class="text-center col-lg-9">รายงาน</th>
+                                <th class="text-center col-lg-2">จัดการ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="list in dataListReport">
+                                <td class="text-center">{[$index+1]}</td>
+                                <td>{[list.name]}</td>
+                                <td class="text-center">
+                                    <button ng-click="pages('budget')" class="btn btn-primary" title="แก้ไข"><i class="fa fa-pencil"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!-- end table shown bidder information list -->
+            </div>
+            <div ng-show="page=='budget'" class="col-md-12">
+                1
+            </div>
+        </div><!--  row  -->
+    </div><!--  container  -->
+</div><!-- main -->
+
+{{>footer}}
+<script src="{{_context_path}}/apps/report/views/report3D/js/report3D.js"></script>
