@@ -8,15 +8,6 @@ commonApp.config(function($interpolateProvider) {
 
 commonApp.controller('cmListController',function($scope,$http){
     
-    
-    $scope.cmInit = function(){
-        $scope.cmListYear();
-        $scope.cmListFaculty();
-        $scope.cmListFundgroup();
-        $scope.cmRevenuePlan();
-        $scope.cmBudgetPlan();
-    };
-    
     $scope.cmListYear = function(){
         $http.post("../../common/lookup/listYear",{}).then(function(response) {
             $scope.cmDataListYear = response.data.lists;
@@ -53,7 +44,4 @@ commonApp.controller('cmListController',function($scope,$http){
         });
     };
     
-    
-    
-    $scope.cmInit();
 });          
