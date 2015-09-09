@@ -15,8 +15,8 @@ class BudgetProduct extends EntityBase {
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="budget_plan_id") */
-    public $budgetPlanId;
+    /** @Column(type="integer",length=11, name="plan_id") */
+    public $planId;
 
     /** @Column(type="string",length=255, name="product_name") */
     public $productName;
@@ -41,7 +41,7 @@ class BudgetProduct extends EntityBase {
     }
 
     function getBudgetPlanId() {
-        return $this->budgetPlanId;
+        return $this->planId;
     }
 
     function getProductName() {
@@ -73,7 +73,7 @@ class BudgetProduct extends EntityBase {
     }
 
     function setBudgetPlanId($budgetPlanId) {
-        $this->budgetPlanId = $budgetPlanId;
+        $this->planId = $budgetPlanId;
     }
 
     function setProductName($productName) {
