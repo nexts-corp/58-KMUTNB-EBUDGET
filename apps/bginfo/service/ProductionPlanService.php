@@ -36,7 +36,7 @@ class ProductionPlanService extends CServiceBase implements IProductionPlanServi
     }
     
     public function fetchProduct($planId,$budget) {
-        $sql="SELECT product FROM apps\\common\\entity\\".$budget."Product product WHERE product.budgetPlanId=:planId AND product.isActive=1 ORDER BY product.id";
+        $sql="SELECT product FROM apps\\common\\entity\\".$budget."Product product WHERE product.planId=:planId AND product.isActive=1 ORDER BY product.id";
         return $this->datacontext->getObject($sql,array("planId"=>$planId));
     }
     
@@ -72,7 +72,7 @@ class ProductionPlanService extends CServiceBase implements IProductionPlanServi
         
         $lists->setBudgetYear($year);
         $lists->setProductName($name);
-        $lists->setBudgetPlanId($planId);
+        $lists->setPlanId($planId);
         $lists->setType($type);
         $lists->setIsActive(1);
         

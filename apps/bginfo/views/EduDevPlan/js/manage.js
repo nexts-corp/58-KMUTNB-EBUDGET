@@ -1,26 +1,14 @@
-var myApp = angular.module('EduDevPlan', []);
+var myApp = angular.module('EduDevPlan', ['commonApp']);
 
-myApp.config(function($interpolateProvider) {
-  $interpolateProvider.startSymbol('{[');
-  $interpolateProvider.endSymbol(']}');
-});
-
-
-myApp.controller('mainController', function($scope,$http) {
-    
+myApp.controller('mainController', function($scope,$http,$controller) {
+    $controller('cmListController', {$scope: $scope});
     
     $scope.init = function () {
+        $scope.cmListYear();
+        
         $scope.dataIssueAndTarget = []; 
         $scope.pageLevel = 1;
         $scope.fetchType();
-        
-        $scope.fetchBudgetYear();
-    };
-    
-    $scope.fetchBudgetYear = function(){
-        $http.post("../../common/lookup/listBudgetYear",{table:"budgetType"}).then(function(response) {
-            $scope.dataBudgetYear = response.data.lists;
-        });
     };
     
     

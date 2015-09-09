@@ -63,16 +63,6 @@ interface ILookupService {
     
     
     /**
-     * @name listBudgetYear
-     * @uri /listBudgetYear
-     * @param String table Description
-     * @return String[] lists Description
-     * @description ช่วงปีงบประมาณของตารางต่างๆยังมีบางระบบใช้อยู่ถ้าเสร็จจะลบออก
-     */
-    public function listBudgetYear($table);
-    
-    
-    /**
      * @name listYear
      * @uri /listYear
      * @return String[] lists Description

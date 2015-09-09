@@ -64,20 +64,6 @@ class LookupService extends CServiceBase implements ILookupService {
     }
     
     
-    
-    /* ยังมีบางระบบใช้อยู่ เมื่อเสร็จจะลบออก */
-    public function listBudgetYear($table) {
-        $sql="select max(t.budgetYear) AS fmax,min(t.budgetYear) AS fmin from ".$this->ent."\\".$table." t";
-        $data = $this->datacontext->getObject($sql);
-        $list = null;
-        $k = 0;
-        for($i=$data[0]["fmin"]-1;$i<$data[0]["fmax"]+3;$i++){
-            $list[$k]["year"]=$i;
-            $k++;
-        }
-        return $list;
-    }
-    
     public function listYear() {
         $sql="select max(y.year) AS fmax,min(y.year) AS fmin from ".$this->ent."\\Year y";
         $data = $this->datacontext->getObject($sql);

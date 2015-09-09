@@ -36,70 +36,69 @@ class RevenueProduct extends EntityBase {
     /** @Column(type="string",length=100, name="updater") */
     public $updater;
 
-}
 
-function getId() {
-    return $this->id;
-}
+    function getId() {
+        return $this->id;
+    }
 
-function getPlanId() {
-    return $this->planId;
-}
+    function getPlanId() {
+        return $this->planId;
+    }
 
-function getProductName() {
-    return $this->productName;
-}
+    function getProductName() {
+        return $this->productName;
+    }
 
-function getType() {
-    return $this->type;
-}
+    function getType() {
+        return $this->type;
+    }
 
-function getBudgetYear() {
-    return $this->budgetYear;
-}
+    function getBudgetYear() {
+        return $this->budgetYear;
+    }
 
-function getIsActive() {
-    return $this->isActive;
-}
+    function getIsActive() {
+        return $this->isActive;
+    }
 
-function getCreator() {
-    return $this->creator;
-}
+    function getCreator() {
+        return $this->creator;
+    }
 
-function getUpdater() {
-    return $this->updater;
-}
+    function getUpdater() {
+        return $this->updater;
+    }
 
-function setId($id) {
-    $this->id = $id;
-}
+    function setId($id) {
+        $this->id = $id;
+    }
 
-function setPlanId($planId) {
-    $this->planId = $planId;
-}
+    function setPlanId($planId) {
+        $this->planId = $planId;
+    }
 
-function setProductName($productName) {
-    $this->productName = $productName;
-}
+    function setProductName($productName) {
+        $this->productName = $productName;
+    }
 
-function setType($type) {
-    $this->type = $type;
-}
+    function setType($type) {
+        $this->type = $type;
+    }
 
-function setBudgetYear($budgetYear) {
-    $this->budgetYear = $budgetYear;
-}
+    function setBudgetYear($budgetYear) {
+        $this->budgetYear = $budgetYear;
+    }
 
-function setIsActive($isActive) {
-    $this->isActive = $isActive;
-}
+    function setIsActive($isActive) {
+        $this->isActive = $isActive;
+    }
 
-function setCreator($creator) {
-    $this->creator = $creator;
-}
+    function setCreator($creator) {
+        $this->creator = $creator;
+    }
 
-function setUpdater($updater) {
-    $this->updater = $updater;
-}
+    function setUpdater($updater) {
+        $this->updater = $updater;
+    }
 
-?>
+}

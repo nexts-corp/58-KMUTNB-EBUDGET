@@ -40,7 +40,7 @@ class BudgetProduct extends EntityBase {
         return $this->id;
     }
 
-    function getBudgetPlanId() {
+    function getPlanId() {
         return $this->planId;
     }
 
@@ -72,8 +72,8 @@ class BudgetProduct extends EntityBase {
         $this->id = $id;
     }
 
-    function setBudgetPlanId($budgetPlanId) {
-        $this->planId = $budgetPlanId;
+    function setPlanId($planId) {
+        $this->planId = $planId;
     }
 
     function setProductName($productName) {

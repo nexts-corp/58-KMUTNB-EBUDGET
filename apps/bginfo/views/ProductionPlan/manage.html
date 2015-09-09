@@ -34,9 +34,9 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="selectYear">{{#i18n}}bgi.budgetYear{{/i18n}}</label>
                     <div class="col-md-8">
-                        <select id="selectYear" name="selectYear" ng-model="selectYear" ng-init="selectYear = 'udf'" class="form-control input-sm selChange" ng-change="selectChange()" ng-disabled="manageLV == 2">
+                        <select ng-model="selectYear" ng-init="selectYear = 'udf'" class="form-control input-sm selChange" ng-change="selectChange()" ng-disabled="manageLV == 2">
                             <option value="udf">- เลือกปีงบประมาณ -</option>
-                            <option ng-repeat="list in dataBudgetYear" value="{[list.year]}">{[list.year]}</option>
+                            <option ng-repeat="list in cmDataListYear" value="{[list.year]}">{[list.year]}</option>
                         </select>
                     </div>
                 </div>
@@ -105,7 +105,7 @@
                                     {[ list.planName ]}     
                                 </td>   
                                 <td class="text-center">
-                                    <button class="btn btn-primary" ng-click="manageProduction(list.id, list.planName, selectBudget)"><i class="fa fa-search"></i> จัดการผลผลิต / โครงการ</button>
+                                    <button class="btn btn-primary" ng-click="manageProduction(list.id, list.planName, selectBudget)"><i class="fa fa-cog"></i> จัดการผลผลิต / โครงการ</button>
                                     <button class="btn btn-warning" ng-click="modalPlan('edit', list.id, list.planName)"><i class="fa fa-pencil"></i> แก้ไข</button>    
                                     <button class="btn btn-default" ng-click="deletePlan($index, list.id, selectBudget)"><i class="fa fa-trash-o "></i> ลบ</button> 
                                 </td>

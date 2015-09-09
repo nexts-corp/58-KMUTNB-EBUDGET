@@ -1,16 +1,14 @@
-var myApp = angular.module('viewPlan', []);
-
-myApp.config(function($interpolateProvider) {
-  $interpolateProvider.startSymbol('{[');
-  $interpolateProvider.endSymbol(']}');
-});
+var myApp = angular.module('viewPlan', ['commonApp']);
 
 
-myApp.controller('tableController', function($scope,$http) {
-    
+myApp.controller('tableController', function($scope,$http,$controller) {
+    $controller('cmListController', {$scope: $scope});
     
     
     $scope.init = function(){
+        
+        $scope.cmListYear();
+        
         $scope.data = {};
         $scope.dataProduct = {};
 
@@ -21,15 +19,15 @@ myApp.controller('tableController', function($scope,$http) {
         $scope.manageLV = 1;
         $scope.refIdPlan = "";
 
-        $scope.fetchBudgetYear();
+        
     };
     
     
-    $scope.fetchBudgetYear = function(){
+    /*$scope.fetchBudgetYear = function(){
         $http.post("../../common/lookup/listBudgetYear",{table:"budgetType"}).then(function(response) {
             $scope.dataBudgetYear = response.data.lists;
         });
-    };
+    };*/
     
     
     
@@ -45,8 +43,8 @@ myApp.controller('tableController', function($scope,$http) {
     $scope.selectChange = function() {
 
         if($scope.selectYear!=="udf" && $scope.selectBudget!=="udf"){
-
-            $http.get("fetchPlan/2558/"+$scope.selectBudget).success(function(response) {
+            
+            $http.get("fetchPlan/"+$scope.selectYear+"/"+$scope.selectBudget).success(function(response) {
                 $scope.data = response.listsPlan;
             });
             
@@ -128,7 +126,7 @@ myApp.controller('tableController', function($scope,$http) {
             console.log($scope.findIndexObject($scope.data,"id",id));
             //console.log(year+"/"+id+"/"+name+"/"+bugget);
         }else{
-            $scope.txtPlanAddClass.push('has-error')
+            $scope.txtPlanAddClass.push('has-error');
         }
     };
     
@@ -161,7 +159,12 @@ myApp.controller('tableController', function($scope,$http) {
         
         
         $http.get("fetchProduct/"+planId+"/"+bugget).success(function(response) {
-            $scope.dataProduct=response.listsProduct;
+            if(response.listsProduct!==null){
+                $scope.dataProduct=response.listsProduct;
+            }else{
+                $scope.dataProduct=[];
+            }
+            
         });
     };
     
