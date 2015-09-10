@@ -23,5 +23,5 @@ interface IAffirmativeInfoService {
      * @return String[] lists Description
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
-    public function listPlan($budgetYear);
+    public function listPlan();
 }

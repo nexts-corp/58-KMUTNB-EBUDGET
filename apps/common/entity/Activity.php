@@ -35,6 +35,8 @@ class Activity extends EntityBase {
 
     /** @Column(type="string",length=100, name="updater") */
     public $updater;
+    
+    //public $xxx;
 
     function getId() {
         return $this->id;

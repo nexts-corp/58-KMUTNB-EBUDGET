@@ -22,8 +22,11 @@ class AffirmativeInfoService extends CServiceBase implements IAffirmativeInfoSer
         
     }
 
-    public function listPlan($budgetYear) {
-        
+    public function listPlan() {
+       // $data = $this->getResponse()->add("x1","dddd");
+       $obj=new \apps\common\entity\Activity();
+       $obj->xx="xxxx";
+        return $obj;
     }
 
 }
