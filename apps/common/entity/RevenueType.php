@@ -4,9 +4,9 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="project")
+ * @Table(name="revenue_type")
  */
-class Project extends EntityBase {
+class RevenueType extends EntityBase {
 
     /**
      * @Id 
@@ -15,11 +15,14 @@ class Project extends EntityBase {
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="plan_id") */
-    public $planId;
+    /** @Column(type="string",length=500, name="type_name") */
+    public $typeName;
 
-    /** @Column(type="string",length=255, name="plan_name") */
-    public $planName;
+    /** @Column(type="integer",length=11, name="master_id") */
+    public $masterId;
+
+    /** @Column(type="integer",length=11, name="gl_code") */
+    public $glCode;
 
     /** @Column(type="integer",length=11, name="budget_year") */
     public $budgetYear;
@@ -37,12 +40,16 @@ class Project extends EntityBase {
         return $this->id;
     }
 
-    function getPlanId() {
-        return $this->planId;
+    function getTypeName() {
+        return $this->typeName;
     }
 
-    function getPlanName() {
-        return $this->planName;
+    function getMasterId() {
+        return $this->masterId;
+    }
+
+    function getGlCode() {
+        return $this->glCode;
     }
 
     function getBudgetYear() {
@@ -65,12 +72,16 @@ class Project extends EntityBase {
         $this->id = $id;
     }
 
-    function setPlanId($planId) {
-        $this->planId = $planId;
+    function setTypeName($typeName) {
+        $this->typeName = $typeName;
     }
 
-    function setPlanName($planName) {
-        $this->planName = $planName;
+    function setMasterId($masterId) {
+        $this->masterId = $masterId;
+    }
+
+    function setGlCode($glCode) {
+        $this->glCode = $glCode;
     }
 
     function setBudgetYear($budgetYear) {

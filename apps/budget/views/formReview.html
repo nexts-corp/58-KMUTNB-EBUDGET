@@ -1,0 +1,359 @@
+{{>header}}
+<div role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">{{#i18n}}trackingBudget{{/i18n}}</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="tall dashboard">
+
+    <div class="sort-source-wrapper"><!-- button action on header -->
+        <div class="container">
+            <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+                <li class="active">
+                    <button class="btn btn-default back" style="display: none;"><i> ย้อนกลับ</i></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- end button action on header -->
+    <div class="container">
+
+        <div id="formTracking" class="col-md-12">
+            <div class="form-group">
+                <label class="col-md-2 control-label text-right">{{#i18n}}budgetType{{/i18n}}</label>
+
+                <div class="col-md-4">
+                    <select id="expenses-select" class="form-control input-sm" required>
+                        <option value="0">- เลือกประเภทงบประมาณ -</option>
+                        <option value="1">เงินรายได้</option>
+                        <option value="2">เงินงบประมาณแผ่นดิน</option>
+                    </select>
+                </div>
+                <div id="warning-expenses" class="col-md-3" style="display: none"><label
+                        class="control-label text-danger">
+                    <i class="fa fa-exclamation"></i>
+                    กรุณาเลือกประเภทงบประมาณ</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label text-right">ปี พ.ศ. </label>
+
+                <div class="col-md-4">
+                    <select id="year-select" class="form-control input-sm" required>
+
+                    </select>
+                </div>
+                <div id="warning-year" class="col-md-2" style="display: none"><label
+                        class="control-label text-danger">
+                    <i class="fa fa-exclamation"></i> กรุณาเลือกปี</label>
+                </div>
+                <div class="col-md-1">
+                    <button class="btn btn-warning col-md-12" id="get-form">{{#i18n}}ok{{/i18n}}</button>
+                </div>
+            </div>
+
+            <div id="bidderTable" class="col-md-12"><!-- table shown bidder information list -->
+                <table id="table" class="table table-bordered table-striped table-condensed mb-none">
+                    <thead>
+                    <tr>
+                        <th rowspan="2" class="text-center" width="20%" id="title-tb">{{#i18n}}budgetType{{/i18n}}</th>
+                        <th colspan="2" class="text-center" width="13%">รวม</th>
+                        <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter1{{/i18n}}</th>
+                        <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter2{{/i18n}}</th>
+                        <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter3{{/i18n}}</th>
+                        <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter4{{/i18n}}</th>
+                        <th rowspan="2" class="text-center" width="15%">{{#i18n}}total{{/i18n}}</th>
+                    </tr>
+                    <tr>
+                        <th class="text-center" width="6.5%">{{#i18n}}expensesPlan{{/i18n}}</th>
+                        <th class="text-center" width="6.5%">{{#i18n}}expensesResult{{/i18n}}</th>
+                        <th class="text-center" width="6.5%">{{#i18n}}expensesPlan{{/i18n}}</th>
+                        <th class="text-center" width="6.5%">{{#i18n}}expensesResult{{/i18n}}</th>
+                        <th class="text-center" width="6.5%">{{#i18n}}expensesPlan{{/i18n}}</th>
+                        <th class="text-center" width="6.5%">{{#i18n}}expensesResult{{/i18n}}</th>
+                        <th class="text-center" width="6.5%">{{#i18n}}expensesPlan{{/i18n}}</th>
+                        <th class="text-center" width="6.5%">{{#i18n}}expensesResult{{/i18n}}</th>
+                        <th class="text-center" width="6.5%">{{#i18n}}expensesPlan{{/i18n}}</th>
+                        <th class="text-center" width="6.5%">{{#i18n}}expensesResult{{/i18n}}</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="budgetBody">
+                    <tr>
+                        <td colspan="20" class="text-center">ไม่พบข้อมูล</td>
+                    </tr>
+                    <!-- to do content-->
+                    </tbody>
+                </table>
+            </div>
+            <!-- end table shown bidder information list -->
+            <div class="col-md-12" style="padding: 12px;"></div>
+            <div class="col-md-12 text-right">
+                <button class="btn btn-success"><i class="fa fa-save"> บันทึก</i></button>
+                <button class="btn btn-default"><i class="fa fa-trash"> ล้างข้อมูล</i></button>
+            </div>
+        </div>
+    </div>
+    <!--container-->
+</div><!--main-->
+{{>footer}}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        iniYear();
+        function iniYear() {
+            var html = '<option value="0">- เลือกปี พ.ศ. -</option>';
+            $.get("{{_context_path}}/api/common/lookup/listYear", function (data) {
+                for (var i = 0; i < data.lists.length; i++) {
+
+                    html += '<option value="' + data.lists[i].year + '">' + data.lists[i].year + '</option>';
+                }
+                $("#year-select").html(html);
+            });
+        }
+
+        $("#get-form").click(function () {
+
+            var budgetType = $("#expenses-select").val();
+            var year = $("#year-select").val();
+
+            if (budgetType == 0) {
+                $("#expenses-select").parent().addClass("has-error");
+                $("#warning-expenses").show(10);
+            } else if (year == 0) {
+                $("#year-select").parent().addClass("has-error");
+                $("#warning-year").show(10);
+            } else if (budgetType > 0) {
+                $(this).attr("disabled", true);
+                var textSelected = $("#expenses-select").find('option:selected').text();
+                showTableContent(textSelected, budgetType, year);
+            }
+        });
+
+        $("#expenses-select").change(function () {
+            $("#expenses-select").parent().removeClass("has-error")
+            $("#warning-expenses").hide(10);
+        });
+
+        $("#year-select").change(function () {
+            $("#year-select").parent().removeClass("has-error")
+            $("#warning-year").hide(10);
+        });
+
+        $(function () {
+            EDexpenses_select();
+            $("#expenses-select").change(function () {
+                EDexpenses_select();
+            });
+        });
+
+        function EDexpenses_select() {
+            if ($("#expenses-select").val() == 0) {
+                $("#quarter-select").prop("disabled", true);
+            } else {
+                $("#quarter-select").prop("disabled", false);
+            }
+        }
+
+        function showTableContent(budgetName, budgetType, year) {
+            var html = '';
+
+            $.get("{{_context_path}}/api/budget/budgetReview/getReview", {
+                budgetType: budgetType,
+                year: year
+            }, function (data) {
+
+                if (data != null && data.listTracking.length > 0) {
+
+                    for (var i = 0; i < data.listTracking.length; i++) {
+                        //lvl1
+                        html += checkShowLv1(data.listTracking[i]);
+                        for (var y = 0; y < data.listTracking[i].list.length; y++) {
+                            //lvl2
+                            html += checkShowLv2(data.listTracking[i].list[y]);
+                            for (var z = 0; z < data.listTracking[i].list[y].list2.length; z++) {
+                                //lvl3
+                                html += checkShowLv3(data.listTracking[i].list[y].list2[z]);
+                                for (var x = 0; x < data.listTracking[i].list[y].list2[z].list3.length; x++) {
+                                    //lvl4
+                                    var obj = data.listTracking[i].list[y].list2[z].list3[x];
+                                    var total = getTotal(obj);
+                                    html += '<tr><td style="padding-left: 4em ;vertical-align:middle">' + obj.type_name + '</td>';
+                                    html += '<td class="text-center"></td>';
+                                    html += '<td class="text-center"></td>';
+                                    html += '<td class="text-center">' + obj.budget_quater1_plan + '</td>';
+                                    html += '<td class="text-center">' + obj.budget_quater1_used + '</td>';
+                                    html += '<td class="text-center">' + obj.budget_quater2_plan + '</td>';
+                                    html += '<td class="text-center">' + obj.budget_quater2_used + '</td>';
+                                    html += '<td class="text-center">' + obj.budget_quater3_plan + '</td>';
+                                    html += '<td class="text-center">' + obj.budget_quater3_used + '</td>';
+                                    html += '<td class="text-center">' + obj.budget_quater4_plan + '</td>';
+                                    html += '<td class="text-center">' + obj.budget_quater4_used + '</td>';
+                                    html += '<td class="text-center">' + (total).formatMoney(2, '.', ',') + '</td></tr>';
+                                }//end lvl4
+                            }//end lvl3
+                        }//end lvl2
+                    }//end lvl1
+                    html += '<tr>';
+                    html += '  <td class="text-center"><b>รวม</b></td>';
+                    html += '<td class="text-center"></td>';
+                    html += '<td class="text-center"></td>';
+                    html += '<td class="text-center"></td>';
+                    html += '<td class="text-center"></td>';
+                    html += '<td class="text-center"></td>';
+                    html += '<td class="text-center"></td>';
+                    html += '<td class="text-center"></td>';
+                    html += '<td class="text-center"></td>';
+                    html += '<td class="text-center"></td>';
+                    html += '<td class="text-center"></td>';
+                    html += '<td class="text-center"></td>';
+                    html += '</tr>';
+                } else {
+
+                    html += '<tr>';
+                    html += '  <td colspan="100" class="text-center">ไม่พบข้อมูล</td>';
+                    html += '</tr>';
+                }
+                $("#budgetBody").html(html);
+                $("#title-tb").html(budgetName);
+                $("#get-form").attr("disabled", false);
+            });
+        }
+
+        function checkShowLv1(obj) {
+
+            var html = '';
+
+            if (obj.list.length > 0) { //have lvl2
+
+                html += '<tr><td style="vertical-align:middle"><b>' + obj.type_name + '</b></td>';
+                html += '<td class="text-center" colspan="100"></td>';
+            }
+            else {
+                var total = getTotal(obj);
+                html += '<tr><td style="vertical-align:middle"><b>' + obj.type_name + '</b></td>';
+                html += '<td class="text-center"></td>';
+                html += '<td class="text-center"></td>';
+                html += '<td class="text-center">' + obj.budget_quater1_plan + '</td>';
+                html += '<td class="text-center">' + obj.budget_quater1_used + '</td>';
+                html += '<td class="text-center">' + obj.budget_quater2_plan + '</td>';
+                html += '<td class="text-center">' + obj.budget_quater2_used + '</td>';
+                html += '<td class="text-center">' + obj.budget_quater3_plan + '</td>';
+                html += '<td class="text-center">' + obj.budget_quater3_used + '</td>';
+                html += '<td class="text-center">' + obj.budget_quater4_plan + '</td>';
+                html += '<td class="text-center">' + obj.budget_quater4_used + '</td>';
+                html += '<td class="text-center">' + (total).formatMoney(2, '.', ',') + '</td></tr>';
+            }
+
+            return html;
+        }
+
+        function checkShowLv2(obj) {
+
+            var html = '';
+
+            if (obj.list2.length > 0) { //have lvl3
+
+                html += '<tr><td style="padding-left: 1em ;vertical-align:middle"><b>' + obj.type_name + '</b></td>';
+                html += '<td class="text-center" colspan="100"></td>';
+            }
+            else {
+                var total = getTotal(obj);
+                html += '<tr><td style="padding-left: 1em ;vertical-align:middle">' + obj.type_name + '</td>';
+                html += '<td class="text-center"></td>';
+                html += '<td class="text-center"></td>';
+                html += '<td class="text-center">' + obj.budget_quater1_plan + '</td>';
+                html += '<td class="text-center">' + obj.budget_quater1_used + '</td>';
+                html += '<td class="text-center">' + obj.budget_quater2_plan + '</td>';
+                html += '<td class="text-center">' + obj.budget_quater2_used + '</td>';
+                html += '<td class="text-center">' + obj.budget_quater3_plan + '</td>';
+                html += '<td class="text-center">' + obj.budget_quater3_used + '</td>';
+                html += '<td class="text-center">' + obj.budget_quater4_plan + '</td>';
+                html += '<td class="text-center">' + obj.budget_quater4_used + '</td>';
+                html += '<td class="text-center">' + (total).formatMoney(2, '.', ',') + '</td></tr>';
+            }
+
+            return html;
+        }
+
+        function checkShowLv3(obj) {
+
+            var html = '';
+
+            if (obj.list3.length > 0) { //have lvl4
+
+                html += '<tr><td style="padding-left: 2em ;vertical-align:middle"><b>' + obj.type_name + '</b></td>';
+                html += '<td class="text-center" colspan="100"></td>';
+            }
+            else {
+                var total = getTotal(obj);
+                html += '<tr><td style="padding-left: 2em ;vertical-align:middle">' + obj.type_name + '</td>';
+                html += '<td class="text-center"></td>';
+                html += '<td class="text-center"></td>';
+                html += '<td class="text-center">' + (obj.budget_quater1_plan) + '</td>';
+                html += '<td class="text-center">' + (obj.budget_quater1_used) + '</td>';
+                html += '<td class="text-center">' + (obj.budget_quater2_plan) + '</td>';
+                html += '<td class="text-center">' + (obj.budget_quater2_used) + '</td>';
+                html += '<td class="text-center">' + (obj.budget_quater3_plan) + '</td>';
+                html += '<td class="text-center">' + (obj.budget_quater3_used) + '</td>';
+                html += '<td class="text-center">' + (obj.budget_quater4_plan) + '</td>';
+                html += '<td class="text-center">' + (obj.budget_quater4_used) + '</td>';
+                html += '<td class="text-center">' + (total).formatMoney(2, '.', ',') + '</td></tr>';
+            }
+            return html;
+        }
+
+        function getTotal(data) {
+            var total = 0;
+
+            if (data.budget_quater1_plan != ' ') {
+                total += parseFloat(data.budget_quater1_plan);
+            }
+            if (data.budget_quater1_used != ' ') {
+                total += parseFloat(data.budget_quater1_used);
+            }
+            if (data.budget_quater2_plan != ' ') {
+                total += parseFloat(data.budget_quater2_plan);
+            }
+            if (data.budget_quater2_used != ' ') {
+                total += parseFloat(data.budget_quater1_used);
+            }
+            if (data.budget_quater3_plan != ' ') {
+                total += parseFloat(data.budget_quater3_plan);
+            }
+            if (data.budget_quater3_used != ' ') {
+                total += parseFloat(data.budget_quater1_used);
+            }
+            if (data.budget_quater4_plan != ' ') {
+                total += parseFloat(data.budget_quater4_plan);
+            }
+            if (data.budget_quater4_used != ' ') {
+                total += parseFloat(data.budget_quater1_used);
+            }
+
+            return total;
+        }
+
+        Number.prototype.formatMoney = function (c, d, t) {
+            var n = this,
+                    c = isNaN(c = Math.abs(c)) ? 2 : c,
+                    d = d == undefined ? "." : d,
+                    t = t == undefined ? "," : t,
+                    s = n < 0 ? "-" : "",
+                    i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+                    j = (j = i.length) > 3 ? j % 3 : 0;
+            return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+        };
+
+    });
+
+
+</script>
+

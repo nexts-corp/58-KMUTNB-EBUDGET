@@ -6,7 +6,7 @@ namespace apps\common\entity;
  * @Entity
  * @Table(name="budget_money_operating")
  */
-class BudgetMoneyDurable extends EntityBase {
+class BudgetMoneyOperating extends EntityBase {
 
     /**
      * @Id 
@@ -15,20 +15,23 @@ class BudgetMoneyDurable extends EntityBase {
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="budget_plan_id") */
-    public $budgetPlanId;
+    /** @Column(type="string",length=2, name="money_type_code") */
+    public $moneyTypeCode;
 
-    /** @Column(type="integer",length=11, name="budget_product_id") */
-    public $budgetProductId;
+    /** @Column(type="integer",length=11, name="money_type_id") */
+    public $moneyTypeId;
+
+    /** @Column(type="integer",length=11, name="plan_id") */
+    public $planId;
+
+    /** @Column(type="integer",length=11, name="product_id") */
+    public $productId;
 
     /** @Column(type="integer",length=11, name="lk_fundgroup_id") */
     public $fundgroupId;
 
     /** @Column(type="integer",length=11, name="lk_department_id") */
     public $departmentId;
-
-    /** @Column(type="integer",length=11, name="budget_source") */
-    public $budgetSource;
 
     /** @Column(type="integer",length=11, name="attachment_id") */
     public $attachmentId;
@@ -37,7 +40,7 @@ class BudgetMoneyDurable extends EntityBase {
     public $budgetYear;
 
     /** @Column(type="integer",length=11, name="form_type") */
-    public $form_type;
+    public $formType;
 
     /** @Column(type="text", name="operating_name") */
     public $name;
@@ -64,12 +67,20 @@ class BudgetMoneyDurable extends EntityBase {
         return $this->id;
     }
 
-    function getBudgetPlanId() {
-        return $this->budgetPlanId;
+    function getMoneyTypeCode() {
+        return $this->moneyTypeCode;
     }
 
-    function getBudgetProductId() {
-        return $this->budgetProductId;
+    function getMoneyTypeId() {
+        return $this->moneyTypeId;
+    }
+
+    function getPlanId() {
+        return $this->planId;
+    }
+
+    function getProductId() {
+        return $this->productId;
     }
 
     function getFundgroupId() {
@@ -80,10 +91,6 @@ class BudgetMoneyDurable extends EntityBase {
         return $this->departmentId;
     }
 
-    function getBudgetSource() {
-        return $this->budgetSource;
-    }
-
     function getAttachmentId() {
         return $this->attachmentId;
     }
@@ -92,8 +99,8 @@ class BudgetMoneyDurable extends EntityBase {
         return $this->budgetYear;
     }
 
-    function getForm_type() {
-        return $this->form_type;
+    function getFormType() {
+        return $this->formType;
     }
 
     function getName() {
@@ -128,12 +135,20 @@ class BudgetMoneyDurable extends EntityBase {
         $this->id = $id;
     }
 
-    function setBudgetPlanId($budgetPlanId) {
-        $this->budgetPlanId = $budgetPlanId;
+    function setMoneyTypeCode($moneyTypeCode) {
+        $this->moneyTypeCode = $moneyTypeCode;
     }
 
-    function setBudgetProductId($budgetProductId) {
-        $this->budgetProductId = $budgetProductId;
+    function setMoneyTypeId($moneyTypeId) {
+        $this->moneyTypeId = $moneyTypeId;
+    }
+
+    function setPlanId($planId) {
+        $this->planId = $planId;
+    }
+
+    function setProductId($productId) {
+        $this->productId = $productId;
     }
 
     function setFundgroupId($fundgroupId) {
@@ -144,10 +159,6 @@ class BudgetMoneyDurable extends EntityBase {
         $this->departmentId = $departmentId;
     }
 
-    function setBudgetSource($budgetSource) {
-        $this->budgetSource = $budgetSource;
-    }
-
     function setAttachmentId($attachmentId) {
         $this->attachmentId = $attachmentId;
     }
@@ -156,8 +167,8 @@ class BudgetMoneyDurable extends EntityBase {
         $this->budgetYear = $budgetYear;
     }
 
-    function setForm_type($form_type) {
-        $this->form_type = $form_type;
+    function setFormType($formType) {
+        $this->formType = $formType;
     }
 
     function setName($name) {

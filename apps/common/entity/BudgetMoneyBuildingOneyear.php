@@ -16,7 +16,7 @@ class BudgetMoneyBuildingOneyear extends EntityBase {
     public $id;
 
     /** @Column(type="integer",length=11, name="budget_money_building_id") */
-    public $budgetMoneyBuildingId;
+    public $buildingId;
 
     /** @Column(type="integer",length=11, name="order") */
     public $order;
@@ -28,10 +28,10 @@ class BudgetMoneyBuildingOneyear extends EntityBase {
     public $area;
 
     /** @Column(type="float", name="unit_price") */
-    public $unit_price;
+    public $unitPrice;
 
     /** @Column(type="float", name="total_price") */
-    public $total_price;
+    public $totalPrice;
 
     /** @Column(type="string",length=100, name="creator") */
     public $creator;
@@ -59,12 +59,12 @@ class BudgetMoneyBuildingOneyear extends EntityBase {
         return $this->area;
     }
 
-    function getUnit_price() {
-        return $this->unit_price;
+    function getUnitPrice() {
+        return $this->unitPrice;
     }
 
-    function getTotal_price() {
-        return $this->total_price;
+    function getTotalPrice() {
+        return $this->totalPrice;
     }
 
     function getCreator() {
@@ -95,12 +95,12 @@ class BudgetMoneyBuildingOneyear extends EntityBase {
         $this->area = $area;
     }
 
-    function setUnit_price($unit_price) {
-        $this->unit_price = $unit_price;
+    function setUnitPrice($unitPrice) {
+        $this->unitPrice = $unitPrice;
     }
 
-    function setTotal_price($total_price) {
-        $this->total_price = $total_price;
+    function setTotalPrice($totalPrice) {
+        $this->totalPrice = $totalPrice;
     }
 
     function setCreator($creator) {

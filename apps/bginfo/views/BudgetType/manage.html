@@ -1,0 +1,142 @@
+{{> header}}
+<div ng-app="EduDevPlan" ng-controller="mainController" data-ng-init="init()">
+    <div role="main" class="main">
+        <section class="page-top none-margin">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="breadcrumb">
+                            <li class="active">ระบบจัดการข้อมูลเบื้องหลัง</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="none-padding">ระบบจัดการด้านประเภทหมวดรายจ่าย</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <hr class="tall dashboard">
+        <div class="sort-source-wrapper"><!-- button action on header -->
+            <div class="container">
+                <ul data-option-key="filter" data-sort-id="portfolio" class="nav nav-pills sort-source menu-top pull-right">
+                    <li class="active">
+                        <button ng-click="back()" ng-show="idLevel.length>1" class="btn btn-default back"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="col-md-4 control-label">ปีงบประมาณ</label>
+                    <div class="col-md-8">
+                        <select ng-model="selectYear" ng-init="selectYear = 'udf'" ng-change="fetchBudgetType(0,'start')" ng-disabled="idLevel.length>1" class="form-control input-sm">
+                            <option value="udf">- เลือกปีงบประมาณ -</option>
+                            <option ng-repeat="list in cmDataListYear" value="{[list.year]}">{[list.year]}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-md-12"> 
+                <div class="form-group"> <br>
+                    <label id="label-level" class="col-md-10 control-label">{[nametextLevel]}</label>   
+                    <div class="col-md-2">         
+                        <button ng-click="modal('add')" ng-show="selectYear!='udf'" class="btn btn-success add pull-right control-label"><i class="fa fa-plus-circle"></i> ประเภทหมวดรายจ่าย</button>      
+                    </div>  
+                </div>
+            </div>
+            
+        </div>
+        <br>
+        <div class="row">
+            <div id="formHome" class="col-md-12">
+                <div id="bidderTable" class="col-md-12"><!-- table shown bidder information list -->
+
+
+                    <table class="table table-bordered table-condensed mb-none">
+                        <thead>
+                            <tr>
+                                <th class="text-center col-lg-1">ลำดับ</th>
+                                <th class="text-center col-lg-8">ประเภทหมวดรายจ่าย</th>
+                                <th class="text-center col-lg-3">จัดการ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr ng-show="selectYear == 'udf' && dataBudgetType.length==0">
+                                <td colspan="3" class="text-center" style="background-color: #f9f9f9">กรุณาเลือกปีงบประมาณ</td>
+                            </tr>
+                            <tr ng-show="selectYear != 'udf' && dataBudgetType.length==0">
+                                <td colspan="3" class="text-center" style="background-color: #f9f9f9">ไม่พบข้อมูล</td>
+                            </tr>
+                            
+                            <tr ng-repeat="list in dataBudgetType | orderBy:'id'">   
+                                <td class="text-center">{[$index+1]}</td> 
+                                <td>{[list.typeName]}</td>   
+                                <td class="text-center">
+                                    <button ng-click="fetchBudgetType(list.id,'next',list.typeName)" class="btn btn-primary""><i class="fa fa-cog"></i> จัดการ</button>
+                                    <button ng-click="modal('edit',list.id,list.typeName)" class="btn btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>    
+                                    <button ng-click="delData(list.id)" class="btn btn-default"><i class="fa fa-trash-o "></i> ลบ</button> 
+                                </td>
+                            </tr>
+                                
+                                
+  
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+        
+        
+        
+    </div><!--  container  -->
+    
+    
+    <div id="modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header"> 
+                    <button data-dismiss="modal" class="close" type="button"></button>  
+                    <h4 class="modal-title">
+                        <i ng-show="action == 'add'" class="fa fa-plus-circle"></i>
+                        <span ng-show="action == 'add'">เพิ่ม</span>
+                        <i ng-show="action == 'edit'" class="fa fa-pencil"></i>
+                        <span ng-show="action == 'edit'">แก้ไข</span>
+                        <span>ประเภทแหล่งเงิน</span>
+
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12">   
+                        <div class="form-group" ng-class="">      
+                            <textarea ng-model="textName" class="form-control" rows="3"></textarea> 
+                        </div>  
+                    </div>
+                    <br><br>
+                </div>
+                <br><br>
+                <div class="modal-footer">  
+                    <button data-dismiss="modal" class="btn btn-default" type="button">ยกเลิก</button> 
+                    <button ng-click="saveData()" class="btn btn-success" type="button" >บันทึก</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{{> footer}}
+<script src="{{_context_path}}/apps/bginfo/views/BudgetType/js/manage.js"></script>

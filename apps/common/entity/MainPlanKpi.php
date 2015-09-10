@@ -15,8 +15,8 @@ class MainPlanKpi extends EntityBase {
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="main_plan_type_id") */
-    public $mainPlanTypeId;
+    /** @Column(type="integer",length=11, name="main_plan_target_id") */
+    public $mainPlanTargetId;
 
     /** @Column(type="text", name="kpi_name") */
     public $kpiName;
@@ -34,8 +34,8 @@ class MainPlanKpi extends EntityBase {
         return $this->id;
     }
 
-    function getMainPlanTypeId() {
-        return $this->mainPlanTypeId;
+    function getMainPlanTargetId() {
+        return $this->mainPlanTargetId;
     }
 
     function getKpiName() {
@@ -58,8 +58,8 @@ class MainPlanKpi extends EntityBase {
         $this->id = $id;
     }
 
-    function setMainPlanTypeId($mainPlanTypeId) {
-        $this->mainPlanTypeId = $mainPlanTypeId;
+    function setMainPlanTargetId($mainPlanTargetId) {
+        $this->mainPlanTargetId = $mainPlanTargetId;
     }
 
     function setKpiName($kpiName) {

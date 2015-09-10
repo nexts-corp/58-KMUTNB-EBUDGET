@@ -1,0 +1,254 @@
+{{> header}}
+<div ng-app="viewPlan" ng-controller="tableController" data-ng-init="init()">
+    <div role="main" class="main">
+        <section class="page-top none-margin">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="breadcrumb">
+                            <li class="active">{{#i18n}}bgi.bginfo{{/i18n}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="none-padding">จัดการข้อมูลแผนงานและผลผลิต</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <hr class="tall dashboard">
+        <div class="sort-source-wrapper" ng-show="manageLV != 1"><!-- button action on header -->
+            <div class="container">
+                <ul data-option-key="filter" data-sort-id="portfolio" class="nav nav-pills sort-source menu-top pull-right">
+                    <li class="active">
+                        <button ng-click="backButton()" class="btn btn-default back"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="selectYear">{{#i18n}}bgi.budgetYear{{/i18n}}</label>
+                    <div class="col-md-8">
+                        <select ng-model="selectYear" ng-init="selectYear = 'udf'" class="form-control input-sm selChange" ng-change="selectChange()" ng-disabled="manageLV == 2">
+                            <option value="udf">- เลือกปีงบประมาณ -</option>
+                            <option ng-repeat="list in cmDataListYear" value="{[list.year]}">{[list.year]}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="selectBudget">งบประมาณ</label>
+                    <div class="col-md-8">
+                        <select id="selectBudget" name="selectBudget" ng-model="selectBudget" ng-init="selectBudget = 'udf'" class="form-control input-sm selChange" ng-change="selectChange()" ng-disabled="manageLV == 2">
+                            <option value="udf">- เลือกประเภทประมาณ -</option>
+                            <option value="Revenue">งบประมาณแผ่นดิน</option>
+                            <option value="Budget">งบประมาณเงินรายได้</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="selectYear != 'udf' && selectBudget != 'udf'">
+
+
+            <div class="col-md-12" ng-show="manageLV == 1"> 
+                <div class="form-group"> <br>
+                    <label id="label-level" class="col-md-2 control-label"></label>   
+                    <div class="col-md-10">         
+                        <button title="เพิ่มแผนงาน" ng-click="modalPlan('add')" class="btn btn-success add pull-right control-label" data-form="add" id="addCampus-btn"><i class="fa fa-plus-circle"></i> เพิ่มแผนงาน</button>      
+                    </div>  
+                </div>
+            </div>
+
+
+            <div class="col-md-12" ng-show="manageLV == 2"> 
+                <div class="form-group"> <br>
+                    <label id="label-level" class="col-md-8 control-label">{[planName]}</label>   
+                    <div class="col-md-4">
+
+                        <button title="เพิ่มผลผลิต / โครงการ" ng-click="modalProduct('add')" class="btn btn-success add pull-right control-label" data-form="add" id="addCampus-btn"><i class="fa fa-plus-circle"></i> เพิ่มผลผลิต / โครงการ</button>      
+                    </div>  
+                </div>
+            </div>
+
+
+        </div>
+        <br>
+        <div class="row">
+            <div id="formHome" class="col-md-12">
+                <div id="bidderTable" class="col-md-12"><!-- table shown bidder information list -->
+
+
+                    <table ng-show="manageLV == 1" id="table" class="table table-bordered table-striped table-condensed mb-none">
+                        <thead>
+                            <tr>
+                                <th class="text-center col-lg-1">ลำดับ</th>
+                                <th class="text-center col-lg-7">แผนงาน</th>
+                                <th class="text-center col-lg-4">จัดการ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tdtable">
+                            <tr ng-show="selectYear == 'udf' || selectBudget == 'udf'">
+                                <td colspan="3" class="text-center">กรุณาเลือกปีงบประมาณและงบประมาณ</td>
+                            </tr>
+                            <tr ng-repeat="list in data" ng-show="selectYear != 'udf' && selectBudget != 'udf'">   
+                                <td class="text-center">
+                                    {[$index+1]}
+                                </td> 
+                                <td>      
+                                    {[ list.planName ]}     
+                                </td>   
+                                <td class="text-center">
+                                    <button class="btn btn-primary" ng-click="manageProduction(list.id, list.planName, selectBudget)"><i class="fa fa-cog"></i> จัดการผลผลิต / โครงการ</button>
+                                    <button class="btn btn-warning" ng-click="modalPlan('edit', list.id, list.planName)"><i class="fa fa-pencil"></i> แก้ไข</button>    
+                                    <button class="btn btn-default" ng-click="deletePlan($index, list.id, selectBudget)"><i class="fa fa-trash-o "></i> ลบ</button> 
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+
+                    <table ng-show="manageLV == 2" id="table" class="table table-bordered table-striped table-condensed mb-none">
+                        <thead>
+                            <tr>
+                                <th class="text-center col-lg-1">ลำดับ</th>
+                                <th class="text-center col-lg-1">ประเภท</th>
+                                <th class="text-center col-lg-8">ผลผลิต / โครงการ</th>
+                                <th class="text-center col-lg-2">จัดการ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tdtable">
+                            <tr ng-repeat="list in dataProduct">  
+                                <td class="text-center">
+                                    {[$index+1]}
+                                </td> 
+                                <td class="text-center">
+                                    <span ng-show="list.type==1">ผลผลิต</span>
+                                    <span ng-show="list.type==2">โครงการ</span>
+                                </td>
+                                <td>      
+                                    {[ list.productName ]}     
+                                </td>   
+                                <td class="text-center">
+                                    <button class="btn btn-warning" ng-click="modalProduct('edit', list.id, list.type, list.productName)"><i class="fa fa-pencil"></i> แก้ไข</button>    
+                                    <button class="btn btn-default" ng-click="deleteProduct($index, list.id, selectBudget)"><i class="fa fa-trash-o "></i> ลบ</button> 
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+
+                </div><!-- end table shown bidder information list -->
+            </div>
+            <div id="formBudget" class="col-md-12" style="display: none;">
+            </div>
+        </div><!--  row  -->
+
+
+
+
+
+
+
+
+
+
+
+        <div id="modal-plan" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header"> 
+                        <button data-dismiss="modal" class="close" type="button"></button>  
+                        <h4 class="modal-title">
+                            <i ng-show="labelAddEdit == 1" class="fa fa-plus-circle"></i>
+                            <i ng-show="labelAddEdit == 2" class="fa fa-pencil"></i>  
+                            <span ng-show="labelAddEdit == 1">เพิ่ม</span>
+                            <span ng-show="labelAddEdit == 2">แก้ไข</span>
+                            <span>แผนงาน</span>
+                        </h4>
+                    </div>
+                    <div class="modal-body">  
+                        <div class="col-md-12">   
+                            <div class="form-group" ng-class="txtPlanAddClass">      
+                                <label class="col-md-3 control-label">แผนงาน</label>    
+                                <div class="col-md-9">         
+                                    <input type="text" ng-model="txtPlanAdd" class="form-control input-sm" name="iCampus" id="iCampus">     
+                                </div>   
+                            </div>  
+                        </div>
+                    </div>
+                    <br>
+                    <div class="modal-footer">  
+                        <button data-dismiss="modal" class="btn btn-default" type="button">ยกเลิก</button> 
+                        <button ng-show="labelAddEdit == 1" ng-click="insertPlan(selectYear, txtPlanAdd, selectBudget)" class="btn btn-success" type="button" >เพิ่ม</button>
+                        <button ng-show="labelAddEdit == 2" ng-click="updatePlan(selectYear, idPlanEdit, txtPlanAdd, selectBudget)" class="btn btn-success" type="button" >บันทึก</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div id="modal-product" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header"> 
+                        <button data-dismiss="modal" class="close" type="button"></button>  
+                        <h4 class="modal-title">
+                            <i ng-show="labelAddEdit == 1" class="fa fa-plus-circle"></i>
+                            <i ng-show="labelAddEdit == 2" class="fa fa-pencil"></i>  
+                            <span ng-show="labelAddEdit == 1">เพิ่ม</span>
+                            <span ng-show="labelAddEdit == 2">แก้ไข</span>
+                            <span>ผลผลิต / โครงการ</span>
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-12">   
+                            <div class="form-group" ng-class="txtProductAddClass">      
+                                <label class="col-md-4 control-label"></label>    
+                                <div class="col-md-8">         
+                                    <select ng-model="selectProductPlan" ng-init="selectProductPlan = '1'" class="form-control input-sm">
+                                        <option value="1">ผลผลิต</option>
+                                        <option value="2">โครงการ</option>
+                                    </select>
+                                </div>   
+                            </div>  
+                        </div>
+                        <br><br>
+                        <div class="col-md-12">   
+                            <div class="form-group" ng-class="txtProductAddClass">      
+                                <label class="col-md-4 control-label">ผลผลิต / โครงการ</label>    
+                                <div class="col-md-8">         
+                                    <input type="text" ng-model="txtProduct" class="form-control input-sm">     
+                                </div>   
+                            </div>  
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="modal-footer">  
+                        <button data-dismiss="modal" class="btn btn-default" type="button">ยกเลิก</button> 
+                        <button ng-show="labelAddEdit == 1" ng-click="insertProduct(selectYear, refIdPlan, txtProduct, selectProductPlan, selectBudget)" class="btn btn-success" type="button" >เพิ่ม</button>
+                        <button ng-show="labelAddEdit == 2" ng-click="updateProduct(selectYear, idProductEdit, txtProduct, selectProductPlan, selectBudget)" class="btn btn-success" type="button" >บันทึก</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div><!--  container  -->
+</div>
+
+
+
+
+{{> footer}}
+<script src="{{_context_path}}/apps/bginfo/views/ProductionPlan/js/manage.js"></script>

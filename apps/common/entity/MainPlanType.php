@@ -21,6 +21,9 @@ class MainPlanType extends EntityBase {
     /** @Column(type="string",length=255, name="plan_type_code") */
     public $planTypeCode;
 
+    /** @Column(type="integer",length=11, name="budget_year") */
+    public $budgetYear;
+
     /** @Column(type="boolean",length=1, name="is_normal") */
     public $isNormal;
 
@@ -43,6 +46,10 @@ class MainPlanType extends EntityBase {
 
     function getPlanTypeCode() {
         return $this->planTypeCode;
+    }
+    
+    function getBudgetYear() {
+        return $this->budgetYear;
     }
 
     function getIsNormal() {

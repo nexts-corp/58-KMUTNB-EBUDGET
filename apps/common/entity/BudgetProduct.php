@@ -15,11 +15,14 @@ class BudgetProduct extends EntityBase {
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="budget_plan_id") */
-    public $budgetPlanId;
+    /** @Column(type="integer",length=11, name="plan_id") */
+    public $planId;
 
     /** @Column(type="string",length=255, name="product_name") */
     public $productName;
+
+    /** @Column(type="integer",length=11, name="type") */
+    public $type;
 
     /** @Column(type="integer",length=11, name="budget_year") */
     public $budgetYear;
@@ -37,12 +40,16 @@ class BudgetProduct extends EntityBase {
         return $this->id;
     }
 
-    function getBudgetPlanId() {
-        return $this->budgetPlanId;
+    function getPlanId() {
+        return $this->planId;
     }
 
     function getProductName() {
         return $this->productName;
+    }
+
+    function getType() {
+        return $this->type;
     }
 
     function getBudgetYear() {
@@ -65,12 +72,16 @@ class BudgetProduct extends EntityBase {
         $this->id = $id;
     }
 
-    function setBudgetPlanId($budgetPlanId) {
-        $this->budgetPlanId = $budgetPlanId;
+    function setPlanId($planId) {
+        $this->planId = $planId;
     }
 
     function setProductName($productName) {
         $this->productName = $productName;
+    }
+
+    function setType($type) {
+        $this->type = $type;
     }
 
     function setBudgetYear($budgetYear) {
