@@ -174,17 +174,17 @@
 
                     for (var i = 0; i < data.listTracking.length; i++) {
                         //lvl1
-                        html += checkShowLv1(data.listTracking[i], i);
+                        html += checkShowLv1(data.listTracking[i]);
                         for (var y = 0; y < data.listTracking[i].list.length; y++) {
                             //lvl2
-                            html += checkShowLv2(data.listTracking[i].list[y], i, y);
+                            html += checkShowLv2(data.listTracking[i].list[y]);
                             for (var z = 0; z < data.listTracking[i].list[y].list2.length; z++) {
                                 //lvl3
-                                html += checkShowLv3(data.listTracking[i].list[y].list2[z], i, y, z);
+                                html += checkShowLv3(data.listTracking[i].list[y].list2[z]);
                                 for (var x = 0; x < data.listTracking[i].list[y].list2[z].list3.length; x++) {
                                     //lvl4
                                     var obj = data.listTracking[i].list[y].list2[z].list3[x];
-                                    var total = (obj.budget_quater1_plan+obj.budget_quater2_plan+obj.budget_quater3_plan+obj.budget_quater4_plan+budget_quater1_used+budget_quater2_used+budget_quater3_used+budget_quater4_used);
+                                    var total = getTotal(obj);
                                     html += '<tr><td style="padding-left: 4em ;vertical-align:middle">' + obj.type_name + '</td>';
                                     html += '<td class="text-center"></td>';
                                     html += '<td class="text-center"></td>';
@@ -196,7 +196,7 @@
                                     html += '<td class="text-center">' + obj.budget_quater3_used + '</td>';
                                     html += '<td class="text-center">' + obj.budget_quater4_plan + '</td>';
                                     html += '<td class="text-center">' + obj.budget_quater4_used + '</td>';
-                                    html += '<td class="text-center">'+total+'</td></tr>';
+                                    html += '<td class="text-center">' + (total).formatMoney(2, '.', ',') + '</td></tr>';
                                 }//end lvl4
                             }//end lvl3
                         }//end lvl2
@@ -218,7 +218,7 @@
                 } else {
 
                     html += '<tr>';
-                    html += '  <td colspan="3" class="text-center">ไม่พบข้อมูล</td>';
+                    html += '  <td colspan="100" class="text-center">ไม่พบข้อมูล</td>';
                     html += '</tr>';
                 }
                 $("#budgetBody").html(html);
@@ -227,7 +227,7 @@
             });
         }
 
-        function checkShowLv1(obj, i) {
+        function checkShowLv1(obj) {
 
             var html = '';
 
@@ -237,7 +237,7 @@
                 html += '<td class="text-center" colspan="100"></td>';
             }
             else {
-                var total = (obj.budget_quater1_plan+obj.budget_quater2_plan+obj.budget_quater3_plan+obj.budget_quater4_plan+budget_quater1_used+budget_quater2_used+budget_quater3_used+budget_quater4_used);
+                var total = getTotal(obj);
                 html += '<tr><td style="vertical-align:middle"><b>' + obj.type_name + '</b></td>';
                 html += '<td class="text-center"></td>';
                 html += '<td class="text-center"></td>';
@@ -249,13 +249,13 @@
                 html += '<td class="text-center">' + obj.budget_quater3_used + '</td>';
                 html += '<td class="text-center">' + obj.budget_quater4_plan + '</td>';
                 html += '<td class="text-center">' + obj.budget_quater4_used + '</td>';
-                html += '<td class="text-center">'+total+'</td></tr>';
+                html += '<td class="text-center">' + (total).formatMoney(2, '.', ',') + '</td></tr>';
             }
 
             return html;
         }
 
-        function checkShowLv2(obj, i, y) {
+        function checkShowLv2(obj) {
 
             var html = '';
 
@@ -265,7 +265,7 @@
                 html += '<td class="text-center" colspan="100"></td>';
             }
             else {
-                var total = (obj.budget_quater1_plan+obj.budget_quater2_plan+obj.budget_quater3_plan+obj.budget_quater4_plan+budget_quater1_used+budget_quater2_used+budget_quater3_used+budget_quater4_used);
+                var total = getTotal(obj);
                 html += '<tr><td style="padding-left: 1em ;vertical-align:middle">' + obj.type_name + '</td>';
                 html += '<td class="text-center"></td>';
                 html += '<td class="text-center"></td>';
@@ -277,13 +277,13 @@
                 html += '<td class="text-center">' + obj.budget_quater3_used + '</td>';
                 html += '<td class="text-center">' + obj.budget_quater4_plan + '</td>';
                 html += '<td class="text-center">' + obj.budget_quater4_used + '</td>';
-                html += '<td class="text-center">'+total+'</td></tr>';
+                html += '<td class="text-center">' + (total).formatMoney(2, '.', ',') + '</td></tr>';
             }
 
             return html;
         }
 
-        function checkShowLv3(obj, i, y, z) {
+        function checkShowLv3(obj) {
 
             var html = '';
 
@@ -293,23 +293,64 @@
                 html += '<td class="text-center" colspan="100"></td>';
             }
             else {
-                var total = (obj.budget_quater1_plan+obj.budget_quater2_plan+obj.budget_quater3_plan+obj.budget_quater4_plan+budget_quater1_used+budget_quater2_used+budget_quater3_used+budget_quater4_used);
+                var total = getTotal(obj);
                 html += '<tr><td style="padding-left: 2em ;vertical-align:middle">' + obj.type_name + '</td>';
                 html += '<td class="text-center"></td>';
                 html += '<td class="text-center"></td>';
-                html += '<td class="text-center">' + obj.budget_quater1_plan + '</td>';
-                html += '<td class="text-center">' + obj.budget_quater1_used + '</td>';
-                html += '<td class="text-center">' + obj.budget_quater2_plan + '</td>';
-                html += '<td class="text-center">' + obj.budget_quater2_used + '</td>';
-                html += '<td class="text-center">' + obj.budget_quater3_plan + '</td>';
-                html += '<td class="text-center">' + obj.budget_quater3_used + '</td>';
-                html += '<td class="text-center">' + obj.budget_quater4_plan + '</td>';
-                html += '<td class="text-center">' + obj.budget_quater4_used + '</td>';
-                html += '<td class="text-center">'+total+'</td></tr>';
+                html += '<td class="text-center">' + (obj.budget_quater1_plan) + '</td>';
+                html += '<td class="text-center">' + (obj.budget_quater1_used) + '</td>';
+                html += '<td class="text-center">' + (obj.budget_quater2_plan) + '</td>';
+                html += '<td class="text-center">' + (obj.budget_quater2_used) + '</td>';
+                html += '<td class="text-center">' + (obj.budget_quater3_plan) + '</td>';
+                html += '<td class="text-center">' + (obj.budget_quater3_used) + '</td>';
+                html += '<td class="text-center">' + (obj.budget_quater4_plan) + '</td>';
+                html += '<td class="text-center">' + (obj.budget_quater4_used) + '</td>';
+                html += '<td class="text-center">' + (total).formatMoney(2, '.', ',') + '</td></tr>';
             }
-
             return html;
         }
+
+        function getTotal(data) {
+            var total = 0;
+
+            if (data.budget_quater1_plan != ' ') {
+                total += parseFloat(data.budget_quater1_plan);
+            }
+            if (data.budget_quater1_used != ' ') {
+                total += parseFloat(data.budget_quater1_used);
+            }
+            if (data.budget_quater2_plan != ' ') {
+                total += parseFloat(data.budget_quater2_plan);
+            }
+            if (data.budget_quater2_used != ' ') {
+                total += parseFloat(data.budget_quater1_used);
+            }
+            if (data.budget_quater3_plan != ' ') {
+                total += parseFloat(data.budget_quater3_plan);
+            }
+            if (data.budget_quater3_used != ' ') {
+                total += parseFloat(data.budget_quater1_used);
+            }
+            if (data.budget_quater4_plan != ' ') {
+                total += parseFloat(data.budget_quater4_plan);
+            }
+            if (data.budget_quater4_used != ' ') {
+                total += parseFloat(data.budget_quater1_used);
+            }
+
+            return total;
+        }
+
+        Number.prototype.formatMoney = function (c, d, t) {
+            var n = this,
+                    c = isNaN(c = Math.abs(c)) ? 2 : c,
+                    d = d == undefined ? "." : d,
+                    t = t == undefined ? "," : t,
+                    s = n < 0 ? "-" : "",
+                    i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+                    j = (j = i.length) > 3 ? j % 3 : 0;
+            return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+        };
 
     });
 
