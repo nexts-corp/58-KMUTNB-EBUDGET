@@ -32,26 +32,6 @@
     <div class="container">
         <div class="row">
 
-            <div id="homeDiv" class="col-md-12">
-                <div class="col-md-12"><!-- table shown bidder information list -->
-                    <table id="homeTable" class="table table-bordered table-striped table-condensed mb-none">
-                        <thead>
-                            <tr>
-                                <th class="text-center col-lg-1">ลำดับที่</th>
-                                <th class="text-center col-lg-6">รายละเอียด</th>
-                                <th class="text-center col-lg-3">สถานะ</th>
-                                <th class="text-center col-lg-2">เครื่องมือ</th>
-                            </tr>
-                        </thead>
-                        <tbody id="homeBody">
-                            <tr>
-                                <td colspan="4" class="text-center">-</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div><!-- end table shown bidder information list -->
-            </div>
-
             <div id="formDiv" class="col-md-12">
                 <div class="row">
                     <div class="col-md-12">
@@ -76,64 +56,70 @@
 
 <script type="text/javascript">
     $(function () {
-        listsCenter();
+        centerForm();
 
         $("button.back").unbind("click").click(function () {
             toggleShow("home");
         });
     });
 
-    function listsCenter(){
-        var html = '<tr>'
-            + '<td class="text-center">1</td>'
-            + '<td>ตัวชี้วัดคำรับรองการปฏิบัติงานส่วนงานภายในมหาวิทยาลัย (2559)</td>'
-            + '<td class="text-center">-</td>'
-            + '<td class="text-center"><button class="btn btn-primary add" title="เพิ่มข้อมูล"><i class="fa fa-plus-circle"></i></button></td>'
-        + '</tr>';
-
-        $("#homeBody").html(html);
-
-        $("button.add").unbind("click").click(function(){
-            toggleShow("form");
-
-            centerForm();
-        });
-    }
-
     function centerForm(){
-        var menu = '<li class="active">'
+        var datas = callAjax("{{_context_path}}/api/affirmative/center/listsAll", "post", {}, "json");
+        if(typeof datas !== "undefined" && datas !== null){
+            var menu = '<li class="active">'
                 + '<a href="#all" data-toggle="tab"><i class="fa fa-star"></i> ทั้งหมด</a>'
-            + '</li>'
-            + '<li>'
-                + '<a href="#recent11" data-toggle="tab">Recent</a>'
             + '</li>';
 
-        $("#tabMenu").html(menu);
-
-        var content = '<div id="all" class="tab-pane active">'
-            + '<table class="table table-bordered table-striped table-condensed">'
-                + '<thead>'
-                    + '<tr>'
-                        + '<th class="text-center col-lg-5" style="vertical-align: middle;">ตัวชี้วัดคำรับรอง ปี 2558</th>'
-                        + '<th class="text-center col-lg-1" style="vertical-align: middle;">หน่วยนับ</th>'
-                        + '<th class="text-center col-lg-2" style="vertical-align: middle;">ประเภทส่วนงานที่ต้องดำเนินการ</th>'
-                        + '<th class="text-center col-lg-2" style="vertical-align: middle;">หมายเหตุ</th>'
-                        + '<th class="text-center col-lg-2" style="vertical-align: middle;">เครื่องมือ</th>'
-                    + '</tr>'
-                + '</thead>'
-                + '<tbody id="contentBody">'
-                    + '<tr>'
-                        + '<td colspan="5" class="text-center">-</td>'
-                    + '</tr>'
-                + '</tbody>'
-            + '</table>'
-        + '</div>'
-        + '<div id="recent11" class="tab-pane">'
-                + '<p>Recent</p>'
-                + '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitat.</p>'
+            var content = '<div id="all" class="tab-pane active">'
+                + '<table class="table table-bordered table-striped table-condensed">'
+                    + '<thead>'
+                        + '<tr>'
+                            + '<th class="text-center col-lg-5" style="vertical-align: middle;">ตัวชี้วัดคำรับรอง ปี 2558</th>'
+                            + '<th class="text-center col-lg-1" style="vertical-align: middle;">หน่วยนับ</th>'
+                            + '<th class="text-center col-lg-2" style="vertical-align: middle;">ประเภทส่วนงานที่ต้องดำเนินการ</th>'
+                            + '<th class="text-center col-lg-2" style="vertical-align: middle;">หมายเหตุ</th>'
+                            + '<th class="text-center col-lg-2" style="vertical-align: middle;">เครื่องมือ</th>'
+                        + '</tr>'
+                    + '</thead>'
+                    + '<tbody id="allBody">'
+                        + '<tr>'
+                            + '<td colspan="5" class="text-center">-</td>'
+                        + '</tr>'
+                    + '</tbody>'
+                + '</table>'
             + '</div>';
 
-        $("#tabContent").html(content);
+            $.each(datas["lists"], function(key1, value1){
+                menu += '<li>'
+                    + '<a href="#tab'+value1["typeId"]+'" data-toggle="tab">'+value1["planTypeName"]+'</a>'
+                + '</li>';
+
+                content += '<div id="tab'+value1["typeId"]+'" class="tab-pane">'
+                    + '<table class="table table-bordered table-striped table-condensed">'
+                        + '<thead>'
+                            + '<tr>'
+                                + '<th class="text-center col-lg-5" style="vertical-align: middle;">ตัวชี้วัดคำรับรอง ปี 2558</th>'
+                                + '<th class="text-center col-lg-1" style="vertical-align: middle;">หน่วยนับ</th>'
+                                + '<th class="text-center col-lg-2" style="vertical-align: middle;">ประเภทส่วนงานที่ต้องดำเนินการ</th>'
+                                + '<th class="text-center col-lg-2" style="vertical-align: middle;">หมายเหตุ</th>'
+                                + '<th class="text-center col-lg-2" style="vertical-align: middle;">เครื่องมือ</th>'
+                            + '</tr>'
+                        + '</thead>'
+                        + '<tbody id="tab'+value1["typeId"]+'Body">'
+                            + '<tr>'
+                                + '<td colspan="4" class="text-bold"><u>'+value1["planTypeName"]+'</u></td>'
+                            + '</tr>';
+                            $.each(value1, function(key2, value2){
+
+                            });
+                        content += '</tbody>'
+                    + '</table>'
+                + '</div>';
+            });
+
+            $("#tabMenu").html(menu);
+            $("#tabContent").html(content);
+        }
     }
 
     function toggleShow(page) {

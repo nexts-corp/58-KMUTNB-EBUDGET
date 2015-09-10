@@ -19,8 +19,10 @@ class AdminService extends CServiceBase implements IAdminService{
     }
     
     public function listsDraft(){
-        $sql = "SELECT * FROM lk_faculty";
-        $data = $this->datacontext->pdoQuery($sql);
+        $sql = "SELECT"
+                ." fc"
+            . " FROM ".$this->ent."\\LKFaculty fc";
+        $data = $this->datacontext->getObject($sql);
 
         return $data;
     }
