@@ -102,7 +102,7 @@ class BudgetTrackingService extends CServiceBase implements IBudgetTrackingServi
 
         foreach ($objBudget as $rowOBJ) {
 
-            if ($rowOBJ["id"] != '' && $rowOBJ["budgetType"] != '' && $rowOBJ["valuePlan"] != '' && $rowOBJ["valueUsed"] != '' && $rowOBJ["quater"] != '' && $rowOBJ["year"] != '') {
+            if ($rowOBJ["id"] != '' && $rowOBJ["budgetType"] != '' && $rowOBJ["quater"] != '' && $rowOBJ["year"] != '' && $rowOBJ["valuePlan"] != 'head' && $rowOBJ["valueUsed"] != 'head') {
                 //GET ID
                 $tracking = new TrackingBudget();
                 $tracking->setMoneyTypeId($rowOBJ["id"]);

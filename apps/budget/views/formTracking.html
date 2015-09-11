@@ -140,8 +140,8 @@
             //Iterate all td's in second column
             $('#table tbody tr').each(function () {
 
-                var valuePlan = toUnNumberFormat($(this).find("td").eq(1).find("input").val());
-                var valueUsed = toUnNumberFormat($(this).find("td").eq(2).find("input").val());
+                var valuePlan = toUnNumberFormat($(this).find("td").eq(1).find("input").val()); // if null = "" blank
+                var valueUsed = toUnNumberFormat($(this).find("td").eq(2).find("input").val()); // if null = "" blank
                 var quater = $(this).attr("quater");
                 var year = $(this).attr("year");
                 var budgetType = $("#expenses-select").val();
@@ -155,7 +155,7 @@
                 };
                 lists.push(listValue);
             });
-
+//            console.log(lists);
             $.post("{{_context_path}}/api/budget/budgetTracking/saveTracking", {objBudget: lists}, function (data) {
                 console.log(data.status);
                 if (data.status == true) {
@@ -214,22 +214,6 @@
             e.preventDefault();
             $(this).val(toNumberFormat($(this).val()));
         });
-
-        $(function () {
-            EDexpenses_select();
-            $("#expenses-select").change(function () {
-                EDexpenses_select();
-            });
-        });
-
-        function EDexpenses_select() {
-
-            if ($("#expenses-select").val() == 0) {
-                $("#quarter-select").prop("disabled", true);
-            } else {
-                $("#quarter-select").prop("disabled", false);
-            }
-        }
 
         function showTableContent(budgetName, budgetType, quater, year) {
             var html = '';
@@ -351,9 +335,12 @@
         }
 
         function toUnNumberFormat(value) {
-            if (value === ' ' || value === '' || value === undefined) {
-                return " ";
-            } else {
+            if (value === ' ' || value === '') {
+                return "";
+            } else if (value === undefined) {
+                return "head"; //หัวข้อ
+            }
+            else {
                 return parseFloat(value.replace(/[^0-9-.]/g, ''));
             }
         }

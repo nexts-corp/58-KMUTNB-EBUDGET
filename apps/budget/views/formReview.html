@@ -46,7 +46,7 @@
 
                 <div class="col-md-4">
                     <select id="year-select" class="form-control input-sm" required>
-
+                        <option value="0">- เลือกปี พ.ศ. -</option>
                     </select>
                 </div>
                 <div id="warning-year" class="col-md-2" style="display: none"><label
@@ -62,13 +62,17 @@
                 <table id="table" class="table table-bordered table-striped table-condensed mb-none">
                     <thead>
                     <tr>
-                        <th rowspan="2" class="text-center" width="20%" id="title-tb">{{#i18n}}budgetType{{/i18n}}</th>
-                        <th colspan="2" class="text-center" width="13%">รวม</th>
+                        <th rowspan="2" class="text-center" width="22%" id="title-tb" style="vertical-align: middle">
+                            {{#i18n}}budgetType{{/i18n}}
+                        </th>
+                        <th colspan="2" class="text-center" width="13%">{{#i18n}}total{{/i18n}}</th>
                         <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter1{{/i18n}}</th>
                         <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter2{{/i18n}}</th>
                         <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter3{{/i18n}}</th>
                         <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter4{{/i18n}}</th>
-                        <th rowspan="2" class="text-center" width="15%">{{#i18n}}total{{/i18n}}</th>
+                        <th rowspan="2" class="text-center" width="13%" style="vertical-align: middle">
+                            {{#i18n}}total{{/i18n}}
+                        </th>
                     </tr>
                     <tr>
                         <th class="text-center" width="6.5%">{{#i18n}}expensesPlan{{/i18n}}</th>
@@ -96,7 +100,6 @@
             <div class="col-md-12" style="padding: 12px;"></div>
             <div class="col-md-12 text-right">
                 <button class="btn btn-success"><i class="fa fa-save"> บันทึก</i></button>
-                <button class="btn btn-default"><i class="fa fa-trash"> ล้างข้อมูล</i></button>
             </div>
         </div>
     </div>
@@ -107,6 +110,8 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+        var total_quater1_plan = 0, total_quater1_used = 0, total_quater2_plan = 0, total_quater2_used = 0, total_quater3_plan = 0, total_quater3_used = 0, total_quater4_plan = 0,
+                total_quater4_used = 0, total_plan = 0, total_used = 0;
         iniYear();
         function iniYear() {
             var html = '<option value="0">- เลือกปี พ.ศ. -</option>';
@@ -120,6 +125,9 @@
         }
 
         $("#get-form").click(function () {
+
+            total_quater1_plan = 0, total_quater1_used = 0, total_quater2_plan = 0, total_quater2_used = 0, total_quater3_plan = 0, total_quater3_used = 0, total_quater4_plan = 0,
+                    total_quater4_used = 0, total_plan = 0, total_used = 0;
 
             var budgetType = $("#expenses-select").val();
             var year = $("#year-select").val();
@@ -147,21 +155,6 @@
             $("#warning-year").hide(10);
         });
 
-        $(function () {
-            EDexpenses_select();
-            $("#expenses-select").change(function () {
-                EDexpenses_select();
-            });
-        });
-
-        function EDexpenses_select() {
-            if ($("#expenses-select").val() == 0) {
-                $("#quarter-select").prop("disabled", true);
-            } else {
-                $("#quarter-select").prop("disabled", false);
-            }
-        }
-
         function showTableContent(budgetName, budgetType, year) {
             var html = '';
 
@@ -185,35 +178,41 @@
                                     //lvl4
                                     var obj = data.listTracking[i].list[y].list2[z].list3[x];
                                     var total = getTotal(obj);
+                                    var plan = getTotalPlan(obj);
+                                    var used = getTotalUsed(obj);
+                                    total_plan += plan;
+                                    total_used += used;
                                     html += '<tr><td style="padding-left: 4em ;vertical-align:middle">' + obj.type_name + '</td>';
-                                    html += '<td class="text-center"></td>';
-                                    html += '<td class="text-center"></td>';
-                                    html += '<td class="text-center">' + obj.budget_quater1_plan + '</td>';
-                                    html += '<td class="text-center">' + obj.budget_quater1_used + '</td>';
-                                    html += '<td class="text-center">' + obj.budget_quater2_plan + '</td>';
-                                    html += '<td class="text-center">' + obj.budget_quater2_used + '</td>';
-                                    html += '<td class="text-center">' + obj.budget_quater3_plan + '</td>';
-                                    html += '<td class="text-center">' + obj.budget_quater3_used + '</td>';
-                                    html += '<td class="text-center">' + obj.budget_quater4_plan + '</td>';
-                                    html += '<td class="text-center">' + obj.budget_quater4_used + '</td>';
-                                    html += '<td class="text-center">' + (total).formatMoney(2, '.', ',') + '</td></tr>';
+                                    html += '<td class="text-right">' + toNumberFormat(plan) + '</td>';
+                                    html += '<td class="text-right">' + toNumberFormat(used) + '</td>';
+                                    html += '<td class="text-right">' + toNumberFormat(obj.budget_quater1_plan) + '</td>';
+                                    html += '<td class="text-right">' + toNumberFormat(obj.budget_quater1_used) + '</td>';
+                                    html += '<td class="text-right">' + toNumberFormat(obj.budget_quater2_plan) + '</td>';
+                                    html += '<td class="text-right">' + toNumberFormat(obj.budget_quater2_used) + '</td>';
+                                    html += '<td class="text-right">' + toNumberFormat(obj.budget_quater3_plan) + '</td>';
+                                    html += '<td class="text-right">' + toNumberFormat(obj.budget_quater3_used) + '</td>';
+                                    html += '<td class="text-right">' + toNumberFormat(obj.budget_quater4_plan) + '</td>';
+                                    html += '<td class="text-right">' + toNumberFormat(obj.budget_quater4_used) + '</td>';
+                                    html += '<td class="text-right">' + toNumberFormat(total) + '</td></tr>';
+                                    getTotalColumn(obj);
                                 }//end lvl4
                             }//end lvl3
                         }//end lvl2
                     }//end lvl1
+                    var sumTotal = total_quater1_plan + total_quater1_used + total_quater2_plan + total_quater2_used + total_quater3_plan + total_quater3_used + total_quater4_plan + total_quater4_used;
                     html += '<tr>';
                     html += '  <td class="text-center"><b>รวม</b></td>';
-                    html += '<td class="text-center"></td>';
-                    html += '<td class="text-center"></td>';
-                    html += '<td class="text-center"></td>';
-                    html += '<td class="text-center"></td>';
-                    html += '<td class="text-center"></td>';
-                    html += '<td class="text-center"></td>';
-                    html += '<td class="text-center"></td>';
-                    html += '<td class="text-center"></td>';
-                    html += '<td class="text-center"></td>';
-                    html += '<td class="text-center"></td>';
-                    html += '<td class="text-center"></td>';
+                    html += '<td class="text-right"><b>' + toNumberFormat(total_plan) + '</b></td>';
+                    html += '<td class="text-right"><b>' + toNumberFormat(total_used) + '</b></td>';
+                    html += '<td class="text-right"><b>' + toNumberFormat(total_quater1_plan) + '</b></td>';
+                    html += '<td class="text-right"><b>' + toNumberFormat(total_quater1_used) + '</b></td>';
+                    html += '<td class="text-right"><b>' + toNumberFormat(total_quater2_plan) + '</b></td>';
+                    html += '<td class="text-right"><b>' + toNumberFormat(total_quater2_used) + '</b></td>';
+                    html += '<td class="text-right"><b>' + toNumberFormat(total_quater3_plan) + '</b></td>';
+                    html += '<td class="text-right"><b>' + toNumberFormat(total_quater3_used) + '</b></td>';
+                    html += '<td class="text-right"><b>' + toNumberFormat(total_quater4_plan) + '</b></td>';
+                    html += '<td class="text-right"><b>' + toNumberFormat(total_quater4_used) + '</b></td>';
+                    html += '<td class="text-right"><b>' + toNumberFormat(sumTotal) + '</b></td>';
                     html += '</tr>';
                 } else {
 
@@ -238,20 +237,24 @@
             }
             else {
                 var total = getTotal(obj);
+                var plan = getTotalPlan(obj);
+                var used = getTotalUsed(obj);
+                total_plan += plan;
+                total_used += used;
                 html += '<tr><td style="vertical-align:middle"><b>' + obj.type_name + '</b></td>';
-                html += '<td class="text-center"></td>';
-                html += '<td class="text-center"></td>';
-                html += '<td class="text-center">' + obj.budget_quater1_plan + '</td>';
-                html += '<td class="text-center">' + obj.budget_quater1_used + '</td>';
-                html += '<td class="text-center">' + obj.budget_quater2_plan + '</td>';
-                html += '<td class="text-center">' + obj.budget_quater2_used + '</td>';
-                html += '<td class="text-center">' + obj.budget_quater3_plan + '</td>';
-                html += '<td class="text-center">' + obj.budget_quater3_used + '</td>';
-                html += '<td class="text-center">' + obj.budget_quater4_plan + '</td>';
-                html += '<td class="text-center">' + obj.budget_quater4_used + '</td>';
-                html += '<td class="text-center">' + (total).formatMoney(2, '.', ',') + '</td></tr>';
+                html += '<td class="text-right">' + toNumberFormat(plan) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(used) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater1_plan) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater1_used) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater2_plan) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater2_used) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater3_plan) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater3_used) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater4_plan) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater4_used) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(total) + '</td></tr>';
             }
-
+            getTotalColumn(obj);
             return html;
         }
 
@@ -266,20 +269,24 @@
             }
             else {
                 var total = getTotal(obj);
+                var plan = getTotalPlan(obj);
+                var used = getTotalUsed(obj);
+                total_plan += plan;
+                total_used += used;
                 html += '<tr><td style="padding-left: 1em ;vertical-align:middle">' + obj.type_name + '</td>';
-                html += '<td class="text-center"></td>';
-                html += '<td class="text-center"></td>';
-                html += '<td class="text-center">' + obj.budget_quater1_plan + '</td>';
-                html += '<td class="text-center">' + obj.budget_quater1_used + '</td>';
-                html += '<td class="text-center">' + obj.budget_quater2_plan + '</td>';
-                html += '<td class="text-center">' + obj.budget_quater2_used + '</td>';
-                html += '<td class="text-center">' + obj.budget_quater3_plan + '</td>';
-                html += '<td class="text-center">' + obj.budget_quater3_used + '</td>';
-                html += '<td class="text-center">' + obj.budget_quater4_plan + '</td>';
-                html += '<td class="text-center">' + obj.budget_quater4_used + '</td>';
-                html += '<td class="text-center">' + (total).formatMoney(2, '.', ',') + '</td></tr>';
+                html += '<td class="text-right">' + toNumberFormat(plan) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(used) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater1_plan) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater1_used) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater2_plan) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater2_used) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater3_plan) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater3_used) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater4_plan) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater4_used) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(total) + '</td></tr>';
             }
-
+            getTotalColumn(obj);
             return html;
         }
 
@@ -294,19 +301,26 @@
             }
             else {
                 var total = getTotal(obj);
+                var plan = getTotalPlan(obj);
+                var used = getTotalUsed(obj);
+                total_plan += plan;
+                total_used += used;
                 html += '<tr><td style="padding-left: 2em ;vertical-align:middle">' + obj.type_name + '</td>';
-                html += '<td class="text-center"></td>';
-                html += '<td class="text-center"></td>';
-                html += '<td class="text-center">' + (obj.budget_quater1_plan) + '</td>';
-                html += '<td class="text-center">' + (obj.budget_quater1_used) + '</td>';
-                html += '<td class="text-center">' + (obj.budget_quater2_plan) + '</td>';
-                html += '<td class="text-center">' + (obj.budget_quater2_used) + '</td>';
-                html += '<td class="text-center">' + (obj.budget_quater3_plan) + '</td>';
-                html += '<td class="text-center">' + (obj.budget_quater3_used) + '</td>';
-                html += '<td class="text-center">' + (obj.budget_quater4_plan) + '</td>';
-                html += '<td class="text-center">' + (obj.budget_quater4_used) + '</td>';
-                html += '<td class="text-center">' + (total).formatMoney(2, '.', ',') + '</td></tr>';
+                html += '<td class="text-right">' + toNumberFormat(plan) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(used) + '</td>';
+                html += '<td class="text-right">' + (toNumberFormat(obj.budget_quater1_plan)) + '</td>';
+                html += '<td class="text-right">' + (toNumberFormat(obj.budget_quater1_used)) + '</td>';
+                html += '<td class="text-right">' + (toNumberFormat(obj.budget_quater2_plan)) + '</td>';
+                html += '<td class="text-right">' + (toNumberFormat(obj.budget_quater2_used)) + '</td>';
+                html += '<td class="text-right">' + (toNumberFormat(obj.budget_quater3_plan)) + '</td>';
+                html += '<td class="text-right">' + (toNumberFormat(obj.budget_quater3_used)) + '</td>';
+                html += '<td class="text-right">' + (toNumberFormat(obj.budget_quater4_plan)) + '</td>';
+                html += '<td class="text-right">' + (toNumberFormat(obj.budget_quater4_used)) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(total) + '</td></tr>';
             }
+
+            getTotalColumn(obj);
+
             return html;
         }
 
@@ -323,34 +337,131 @@
                 total += parseFloat(data.budget_quater2_plan);
             }
             if (data.budget_quater2_used != ' ') {
-                total += parseFloat(data.budget_quater1_used);
+                total += parseFloat(data.budget_quater2_used);
             }
             if (data.budget_quater3_plan != ' ') {
                 total += parseFloat(data.budget_quater3_plan);
             }
             if (data.budget_quater3_used != ' ') {
-                total += parseFloat(data.budget_quater1_used);
+                total += parseFloat(data.budget_quater3_used);
             }
             if (data.budget_quater4_plan != ' ') {
                 total += parseFloat(data.budget_quater4_plan);
             }
             if (data.budget_quater4_used != ' ') {
-                total += parseFloat(data.budget_quater1_used);
+                total += parseFloat(data.budget_quater4_used);
             }
 
             return total;
         }
 
-        Number.prototype.formatMoney = function (c, d, t) {
-            var n = this,
-                    c = isNaN(c = Math.abs(c)) ? 2 : c,
-                    d = d == undefined ? "." : d,
-                    t = t == undefined ? "," : t,
-                    s = n < 0 ? "-" : "",
-                    i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
-                    j = (j = i.length) > 3 ? j % 3 : 0;
-            return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
-        };
+
+        function getTotalColumn(obj) {
+
+            if (obj.budget_quater1_plan != ' ') {
+                total_quater1_plan += parseFloat(obj.budget_quater1_plan);
+            }
+            if (obj.budget_quater1_used != ' ') {
+                total_quater1_used += parseFloat(obj.budget_quater1_used);
+            }
+            if (obj.budget_quater2_plan != ' ') {
+                total_quater2_plan += parseFloat(obj.budget_quater2_plan);
+            }
+            if (obj.budget_quater2_used != ' ') {
+                total_quater2_used += parseFloat(obj.budget_quater2_used);
+            }
+            if (obj.budget_quater3_plan != ' ') {
+                total_quater3_plan += parseFloat(obj.budget_quater3_plan);
+            }
+            if (obj.budget_quater3_used != ' ') {
+                total_quater3_used += parseFloat(obj.budget_quater3_used);
+            }
+            if (obj.budget_quater4_plan != ' ') {
+                total_quater4_plan += parseFloat(obj.budget_quater4_plan);
+            }
+            if (obj.budget_quater4_used != ' ') {
+                total_quater4_used += parseFloat(obj.budget_quater4_used);
+            }
+
+        }
+
+        function getTotalPlan(data) {
+            var total = 0;
+
+            if (data.budget_quater1_plan != ' ') {
+                total += parseFloat(data.budget_quater1_plan);
+            }
+
+            if (data.budget_quater2_plan != ' ') {
+                total += parseFloat(data.budget_quater2_plan);
+            }
+
+            if (data.budget_quater3_plan != ' ') {
+                total += parseFloat(data.budget_quater3_plan);
+            }
+
+            if (data.budget_quater4_plan != ' ') {
+                total += parseFloat(data.budget_quater4_plan);
+            }
+
+
+            return total;
+        }
+
+        function getTotalUsed(data) {
+
+            var total = 0;
+
+            if (data.budget_quater1_used != ' ') {
+                total += parseFloat(data.budget_quater1_used);
+            }
+
+            if (data.budget_quater2_used != ' ') {
+                total += parseFloat(data.budget_quater2_used);
+            }
+
+            if (data.budget_quater3_used != ' ') {
+                total += parseFloat(data.budget_quater3_used);
+            }
+
+            if (data.budget_quater4_used != ' ') {
+                total += parseFloat(data.budget_quater4_used);
+            }
+
+            return total;
+        }
+
+        function toNumberFormat(value) {
+
+            if (value === ' ' || value === '' || value === undefined || value == 0) {
+
+                return '';
+            } else {
+
+                Number.prototype.formatMoney = function (c, d, t) {
+                    var n = this,
+                            c = isNaN(c = Math.abs(c)) ? 2 : c,
+                            d = d == undefined ? "." : d,
+                            t = t == undefined ? "," : t,
+                            s = n < 0 ? "-" : "",
+                            i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+                            j = (j = i.length) > 3 ? j % 3 : 0;
+                    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+                };
+
+                return (parseFloat(value)).formatMoney(2, '.', ',');
+            }
+        }
+
+        function toNumber(value) {
+            var money = 0;
+            try {
+                money = parseFloat(value);
+            } catch (err) {
+                return 0;
+            }
+            return money;
+        }
 
     });
 
