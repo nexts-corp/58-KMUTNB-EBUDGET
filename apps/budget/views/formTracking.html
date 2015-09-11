@@ -46,7 +46,7 @@
 
                 <div class="col-md-4">
                     <select id="year-select" class="form-control input-sm" required>
-
+                        <option value="0">- เลือกปี พ.ศ. -</option>
                     </select>
                 </div>
                 <div id="warning-year" class="col-md-2" style="display: none"><label
@@ -99,7 +99,6 @@
                         class="fa fa-spinner fa-spin"></i><b> กำลังบันทึก...</b></div>
                 <div class="col-md-3">
                     <button class="btn btn-success" id="bt-save"><i class="fa fa-save"> บันทึก</i></button>
-                    <button class="btn btn-default"><i class="fa fa-trash"> ล้างข้อมูล</i></button>
                 </div>
             </div>
         </div>
@@ -108,9 +107,17 @@
 </div><!--main-->
 {{>footer}}
 
+<style type="text/css">
+    input {
+        text-align: right;
+    }
+</style>
+
 <script type="text/javascript">
 
     $(document).ready(function () {
+
+        $("#bt-save").attr("disabled", true);
         iniYear();
         function iniYear() {
 
@@ -133,14 +140,8 @@
             //Iterate all td's in second column
             $('#table tbody tr').each(function () {
 
-                var valuePlan = $(this).find("td").eq(1).find("input").val();
-                var valueUsed = $(this).find("td").eq(2).find("input").val();
-                if (valuePlan === undefined) {
-                    valuePlan = "";
-                }
-                if (valueUsed === undefined) {
-                    valueUsed = "";
-                }
+                var valuePlan = toUnNumberFormat($(this).find("td").eq(1).find("input").val());
+                var valueUsed = toUnNumberFormat($(this).find("td").eq(2).find("input").val());
                 var quater = $(this).attr("quater");
                 var year = $(this).attr("year");
                 var budgetType = $("#expenses-select").val();
@@ -209,6 +210,11 @@
             $("#warning-year").hide(10);
         });
 
+        $(document).on("blur", ".tinput", function (e) {
+            e.preventDefault();
+            $(this).val(toNumberFormat($(this).val()));
+        });
+
         $(function () {
             EDexpenses_select();
             $("#expenses-select").change(function () {
@@ -249,8 +255,8 @@
                                     //lvl4
                                     var obj = data.listTracking[i].list[y].list2[z].list3[x];
                                     html += '<tr row-id="' + obj.id + '" quater="' + quater + '" year="' + year + '"><td style="padding-left: 6em ;vertical-align:middle">' + (i + 1) + '.' + (y + 1) + '.' + (z + 1) + '.' + (x + 1) + ' ' + obj.type_name + '</td>';
-                                    html += '<td class="text-center"><input type="number" class="form-control input-sm" value="' + obj.budget_quater_plan + '"></td>';
-                                    html += '<td class="text-center"><input type="number" class="form-control input-sm" value="' + obj.budget_quater_used + '"></td></tr>';
+                                    html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_plan) + '"></td>';
+                                    html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_used) + '"></td></tr>';
                                 }//end lvl4
                             }//end lvl3
                         }//end lvl2
@@ -263,6 +269,7 @@
                 }
                 $("#budgetBody").html(html);
                 $("#title-tb").html(budgetName);
+                $("#bt-save").attr("disabled", false);
                 $("#get-form").attr("disabled", false);
             });
         }
@@ -277,8 +284,8 @@
             }
             else {
                 html += '<tr row-id="' + obj.id + '" quater="' + quater + '" year="' + year + '"><td style="vertical-align:middle"><b>' + (i + 1) + '. ' + obj.type_name + '</b></td>';
-                html += '<td class="text-center"><input type="number" class="form-control input-sm" value="' + obj.budget_quater_plan + '"></td>';
-                html += '<td class="text-center"><input type="number" class="form-control input-sm" value="' + obj.budget_quater_used + '"></td></tr>';
+                html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_plan) + '"></td>';
+                html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_used) + '"></td></tr>';
             }
 
             return html;
@@ -295,8 +302,8 @@
             }
             else {
                 html += '<tr row-id="' + obj.id + '" quater="' + quater + '" year="' + year + '"><td style="padding-left: 2em ;vertical-align:middle">' + (i + 1) + '.' + (y + 1) + ' ' + obj.type_name + '</td>';
-                html += '<td class="text-center"><input type="number" class="form-control input-sm" value="' + obj.budget_quater_plan + '"></td>';
-                html += '<td class="text-center"><input type="number" class="form-control input-sm" value="' + obj.budget_quater_used + '"></td></tr>';
+                html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_plan) + '"></td>';
+                html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_used) + '"></td></tr>';
             }
 
             return html;
@@ -313,12 +320,44 @@
             }
             else {
                 html += '<tr row-id="' + obj.id + '" quater="' + quater + '" year="' + year + '"><td style="padding-left: 4em ;vertical-align:middle">' + (i + 1) + '.' + (y + 1) + '.' + (z + 1) + ' ' + obj.type_name + '</td>';
-                html += '<td class="text-center"><input type="number" class="form-control input-sm" value="' + obj.budget_quater_plan + '"></td>';
-                html += '<td class="text-center"><input type="number" class="form-control input-sm" value="' + obj.budget_quater_used + '"></td></tr>';
+                html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_plan) + '"></td>';
+                html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_used) + '"></td></tr>';
             }
 
             return html;
         }
+
+        function toNumberFormat(value) {
+
+            if (value === ' ' || value === '' || value === undefined) {
+
+                return '';
+            } else {
+
+                Number.prototype.formatMoney = function (c, d, t) {
+                    var n = this,
+                            c = isNaN(c = Math.abs(c)) ? 2 : c,
+                            d = d == undefined ? "." : d,
+                            t = t == undefined ? "," : t,
+                            s = n < 0 ? "-" : "",
+                            i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+                            j = (j = i.length) > 3 ? j % 3 : 0;
+                    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+                };
+                console.log((parseFloat(value)).formatMoney(2, '.', ','));
+
+                return (parseFloat(value)).formatMoney(2, '.', ',');
+            }
+        }
+
+        function toUnNumberFormat(value) {
+            if (value === ' ' || value === '' || value === undefined) {
+                return " ";
+            } else {
+                return parseFloat(value.replace(/[^0-9-.]/g, ''));
+            }
+        }
+
 
     });
 
