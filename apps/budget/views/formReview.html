@@ -37,21 +37,21 @@
                 </div>
                 <div id="warning-expenses" class="col-md-3" style="display: none"><label
                         class="control-label text-danger">
-                    <i class="fa fa-exclamation"></i>
-                    กรุณาเลือกประเภทงบประมาณ</label>
+                        <i class="fa fa-exclamation"></i>
+                        กรุณาเลือกประเภทงบประมาณ</label>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-2 control-label text-right">ปี พ.ศ. </label>
+                <label class="col-md-2 control-label text-right">{{#i18n}}budgetYear{{/i18n}}</label>
 
                 <div class="col-md-4">
                     <select id="year-select" class="form-control input-sm" required>
-                        <option value="0">- เลือกปี พ.ศ. -</option>
+                        <option value="0">- เลือกปีงบประมาณ -</option>
                     </select>
                 </div>
                 <div id="warning-year" class="col-md-2" style="display: none"><label
                         class="control-label text-danger">
-                    <i class="fa fa-exclamation"></i> กรุณาเลือกปี</label>
+                        <i class="fa fa-exclamation"></i> กรุณาเลือกปี</label>
                 </div>
                 <div class="col-md-1">
                     <button class="btn btn-warning col-md-12" id="get-form">{{#i18n}}ok{{/i18n}}</button>
@@ -68,7 +68,7 @@
                                                                                   data-toggle="collapse"
                                                                                   data-parent="#accordion"
                                                                                   href="#collapse1One">
-                                <i class="fa fa-plus-circle"></i> จัดการรายการ</a></h4></div>
+                                        <i class="fa fa-plus-circle"></i> จัดการรายการ</a></h4></div>
                             <div id="collapse1One" class="accordion-body collapse in">
                                 <div class="panel-body">
                                     <form onsubmit="return false">
@@ -78,20 +78,20 @@
                                                 <div class="col-md-8"><select id="listBudgetSource"
                                                                               name="listBudgetSource"
                                                                               class="form-control input-sm" required="">
-                                                    <option value="0">- เลือกหมวดรายจ่าย -</option>
-                                                    <option value="0">งบบุคลากร - เงินเดือน</option>
-                                                    <option value="0">งบบุคลากร - ค่าจ้างประจำ</option>
-                                                    <option value="0">งบบุคลากร - ค่าตอบแทนพนักงานราชการ</option>
-                                                    <option value="0">งบเงินอุดหนุนทั่วไป - เงินเดือน</option>
-                                                    <option value="0">งบเงินอุดหนุนทั่วไป - ค่าจ้างชั่วคราว</option>
-                                                    <option value="0">งบเงินอุดหนุนทั่วไป - ค่าตอบแทน</option>
-                                                    <option value="0">งบเงินอุดหนุนทั่วไป - ค่าใช้สอย</option>
-                                                    <option value="0">งบเงินอุดหนุนทั่วไป - ค่าวัสดุ</option>
-                                                    <option value="0">งบเงินอุดหนุนทั่วไป - ค่าสาธารณูปโภค</option>
-                                                    <option value="0">เงินอุดหนุนเป็นค่าครุภัณฑ์</option>
-                                                    <option value="0">เงินอุดหนุนเป็นค่าที่ดิน/สิ่งก่อสร้าง</option>
-                                                    <option value="0">เงินอุดหนุนอื่นๆ</option>
-                                                </select></div>
+                                                        <option value="0">- เลือกหมวดรายจ่าย -</option>
+                                                        <option value="0">งบบุคลากร - เงินเดือน</option>
+                                                        <option value="0">งบบุคลากร - ค่าจ้างประจำ</option>
+                                                        <option value="0">งบบุคลากร - ค่าตอบแทนพนักงานราชการ</option>
+                                                        <option value="0">งบเงินอุดหนุนทั่วไป - เงินเดือน</option>
+                                                        <option value="0">งบเงินอุดหนุนทั่วไป - ค่าจ้างชั่วคราว</option>
+                                                        <option value="0">งบเงินอุดหนุนทั่วไป - ค่าตอบแทน</option>
+                                                        <option value="0">งบเงินอุดหนุนทั่วไป - ค่าใช้สอย</option>
+                                                        <option value="0">งบเงินอุดหนุนทั่วไป - ค่าวัสดุ</option>
+                                                        <option value="0">งบเงินอุดหนุนทั่วไป - ค่าสาธารณูปโภค</option>
+                                                        <option value="0">เงินอุดหนุนเป็นค่าครุภัณฑ์</option>
+                                                        <option value="0">เงินอุดหนุนเป็นค่าที่ดิน/สิ่งก่อสร้าง</option>
+                                                        <option value="0">เงินอุดหนุนอื่นๆ</option>
+                                                    </select></div>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -100,12 +100,12 @@
 
                                                 <div class="col-md-8"><select id="quarter-select"
                                                                               class="form-control input-sm" required>
-                                                    <option value="0">- เลือกไตรมาส -</option>
-                                                    <option value="1">ไตรมาสที่ 1</option>
-                                                    <option value="2">ไตรมาสที่ 2</option>
-                                                    <option value="3">ไตรมาสที่ 3</option>
-                                                    <option value="4">ไตรมาสที่ 4</option>
-                                                </select>
+                                                        <option value="0">- เลือกไตรมาส -</option>
+                                                        <option value="1">ไตรมาสที่ 1</option>
+                                                        <option value="2">ไตรมาสที่ 2</option>
+                                                        <option value="3">ไตรมาสที่ 3</option>
+                                                        <option value="4">ไตรมาสที่ 4</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -141,44 +141,44 @@
                 <!-- manage list-->
                 <table id="table" class="table table-bordered table-striped table-condensed mb-none">
                     <thead>
-                    <tr>
-                        <th rowspan="2" class="text-center" width="22%" id="title-tb"
-                            style="vertical-align: middle; min-width:170px">
-                            {{#i18n}}budgetType{{/i18n}}
-                        </th>
-                        <th colspan="2" class="text-center" width="13%">{{#i18n}}total{{/i18n}}</th>
-                        <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter1{{/i18n}}</th>
-                        <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter2{{/i18n}}</th>
-                        <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter3{{/i18n}}</th>
-                        <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter4{{/i18n}}</th>
-                        <th rowspan="2" class="text-center" width="13%" style="vertical-align: middle">
-                            {{#i18n}}total{{/i18n}}
-                        </th>
-                    </tr>
-                    <tr>
-                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
-                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
-                        </th>
-                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
-                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
-                        </th>
-                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
-                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
-                        </th>
-                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
-                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
-                        </th>
-                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
-                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
-                        </th>
-                    </tr>
+                        <tr>
+                            <th rowspan="2" class="text-center" width="22%" id="title-tb"
+                                style="vertical-align: middle; min-width:170px">
+                                {{#i18n}}budgetType{{/i18n}}
+                            </th>
+                            <th colspan="2" class="text-center" width="13%">{{#i18n}}total{{/i18n}}</th>
+                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter1{{/i18n}}</th>
+                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter2{{/i18n}}</th>
+                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter3{{/i18n}}</th>
+                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter4{{/i18n}}</th>
+                            <th rowspan="2" class="text-center" width="13%" style="vertical-align: middle">
+                                {{#i18n}}total{{/i18n}}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
+                            </th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
+                            </th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
+                            </th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
+                            </th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
+                            </th>
+                        </tr>
                     </thead>
 
                     <tbody id="budgetBody">
-                    <tr>
-                        <td colspan="20" class="text-center">ไม่พบข้อมูล</td>
-                    </tr>
-                    <!-- to do content-->
+                        <tr>
+                            <td colspan="20" class="text-center">ไม่พบข้อมูล</td>
+                        </tr>
+                        <!-- to do content-->
                     </tbody>
                 </table>
             </div>
