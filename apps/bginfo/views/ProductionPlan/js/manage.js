@@ -1,34 +1,22 @@
-var myApp = angular.module('viewPlan', ['commonApp']);
+var myApp = angular.module('viewPlan', []);
+
+myApp.config(function($interpolateProvider) {
+  $interpolateProvider.startSymbol('{[');
+  $interpolateProvider.endSymbol(']}');
+});
 
 
-myApp.controller('tableController', function($scope,$http,$controller) {
-    $controller('cmListController', {$scope: $scope});
+myApp.controller('tableController', function($scope,$http) {
     
+    $scope.data = {};
+    $scope.dataProduct = {};
     
-    $scope.init = function(){
-        
-        $scope.cmListYear();
-        
-        $scope.data = {};
-        $scope.dataProduct = {};
-
-        $scope.txtPlanAddClass = [];
-        $scope.txtProductAddClass = [];
-        $scope.idPlanEdit = "";
-
-        $scope.manageLV = 1;
-        $scope.refIdPlan = "";
-
-        
-    };
+    $scope.txtPlanAddClass = [];
+    $scope.txtProductAddClass = [];
+    $scope.idPlanEdit = "";
     
-    
-    /*$scope.fetchBudgetYear = function(){
-        $http.post("../../common/lookup/listBudgetYear",{table:"budgetType"}).then(function(response) {
-            $scope.dataBudgetYear = response.data.lists;
-        });
-    };*/
-    
+    $scope.manageLV = 1;
+    $scope.refIdPlan = "";
     
     
     $scope.backButton = function() {
@@ -43,8 +31,8 @@ myApp.controller('tableController', function($scope,$http,$controller) {
     $scope.selectChange = function() {
 
         if($scope.selectYear!=="udf" && $scope.selectBudget!=="udf"){
-            
-            $http.get("fetchPlan/"+$scope.selectYear+"/"+$scope.selectBudget).success(function(response) {
+
+            $http.get("fetchPlan/2558/"+$scope.selectBudget).success(function(response) {
                 $scope.data = response.listsPlan;
             });
             
@@ -109,7 +97,7 @@ myApp.controller('tableController', function($scope,$http,$controller) {
                 return i;
             }
         }
-    };
+    }
     
     $scope.updatePlan = function(year,id, name, bugget) {
         if(name!==""){
@@ -126,7 +114,7 @@ myApp.controller('tableController', function($scope,$http,$controller) {
             console.log($scope.findIndexObject($scope.data,"id",id));
             //console.log(year+"/"+id+"/"+name+"/"+bugget);
         }else{
-            $scope.txtPlanAddClass.push('has-error');
+            $scope.txtPlanAddClass.push('has-error')
         }
     };
     
@@ -159,12 +147,7 @@ myApp.controller('tableController', function($scope,$http,$controller) {
         
         
         $http.get("fetchProduct/"+planId+"/"+bugget).success(function(response) {
-            if(response.listsProduct!==null){
-                $scope.dataProduct=response.listsProduct;
-            }else{
-                $scope.dataProduct=[];
-            }
-            
+            $scope.dataProduct=response.listsProduct;
         });
     };
     

@@ -19,14 +19,49 @@ class AffirmativeInfoService extends CServiceBase implements IAffirmativeInfoSer
     }
 
     public function listMainType($budgetYear) {
+        $sql = "SELECT"
+                . " planType.id, planType.planTypeCode, planType.planTypeName"
+                . " FROM " . $this->ent . "\\MainPlanType planType "
+                . " WHERE budgetYear =:budgetYear, isActive=:isActive";
+        $param = array(
+            "budgetYear" => $budgetYear,
+            "isActive" => 1
+        );
+        $data = $this->datacontext->getObject($sql, $param); //get list of form
+        return $data;
+    }
+
+    public function listMainIssue($typeId) {
         
     }
 
-    public function listPlan() {
-       // $data = $this->getResponse()->add("x1","dddd");
-       $obj=new \apps\common\entity\Activity();
-       $obj->xx="xxxx";
-        return $obj;
+    public function listMainKpi($targetId) {
+        
+    }
+
+    public function listMainStrategy($targetId) {
+        
+    }
+
+    public function listMainTarget($issueId) {
+        
+    }
+
+    public function listMainPlan($budgetYear) {
+//        $obj = new \apps\common\entity\Activity();
+//        $obj->xx = "xxxx";
+//        return $obj;
+
+        $sql = "SELECT"
+                . " planType.id, planType.planTypeCode, planType.planTypeName"
+                . " FROM " . $this->ent . "\\MainPlanType planType "
+                . " WHERE budgetYear =:budgetYear, isActive=:isActive";
+        $param = array(
+            "budgetYear" => $budgetYear,
+            "isActive" => 1
+        );
+        $data = $this->datacontext->getObject($sql, $param); //get list of form
+        return $data;
     }
 
 }
