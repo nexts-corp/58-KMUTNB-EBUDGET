@@ -46,7 +46,7 @@
 
                 <div class="col-md-4">
                     <select id="year-select" class="form-control input-sm" required>
-
+                        <option value="0">- เลือกปี พ.ศ. -</option>
                     </select>
                 </div>
                 <div id="warning-year" class="col-md-2" style="display: none"><label
@@ -75,7 +75,7 @@
                 </div>
             </div>
 
-            <div id="bidderTable" class="col-md-12"><!-- table shown bidder information list -->
+            <div id="trackingTable" class="col-md-12"><!-- table shown bidder information list -->
                 <table id="table" class="table table-bordered table-striped table-condensed mb-none">
                     <thead>
                     <tr>
@@ -95,8 +95,11 @@
             <!-- end table shown bidder information list -->
             <div class="col-md-12" style="padding: 12px;"></div>
             <div class="col-md-12 text-right">
-                <button class="btn btn-success"><i class="fa fa-save"> บันทึก</i></button>
-                <button class="btn btn-default"><i class="fa fa-trash"> ล้างข้อมูล</i></button>
+                <div id="saving-div" class="col-md-9 text-right" style="visibility: hidden"><i
+                        class="fa fa-spinner fa-spin"></i><b> กำลังบันทึก...</b></div>
+                <div class="col-md-3">
+                    <button class="btn btn-success" id="bt-save"><i class="fa fa-save"> บันทึก</i></button>
+                </div>
             </div>
         </div>
     </div>
@@ -104,9 +107,17 @@
 </div><!--main-->
 {{>footer}}
 
+<style type="text/css">
+    input {
+        text-align: right;
+    }
+</style>
+
 <script type="text/javascript">
 
     $(document).ready(function () {
+
+        $("#bt-save").attr("disabled", true);
         iniYear();
         function iniYear() {
 
@@ -118,8 +129,50 @@
                 }
                 $("#year-select").html(html);
             });
-
         }
+
+        $("#bt-save").click(function () {
+
+            $("#trackingTable input").attr("disabled", true);
+            $(this).attr("disabled", true);
+            $("#saving-div").css('visibility', 'visible');
+            var lists = [];
+            //Iterate all td's in second column
+            $('#table tbody tr').each(function () {
+
+                var valuePlan = toUnNumberFormat($(this).find("td").eq(1).find("input").val()); // if null = "" blank
+                var valueUsed = toUnNumberFormat($(this).find("td").eq(2).find("input").val()); // if null = "" blank
+                var quater = $(this).attr("quater");
+                var year = $(this).attr("year");
+                var budgetType = $("#expenses-select").val();
+                var listValue = {
+                    id: $(this).attr("row-id"),
+                    budgetType: budgetType,
+                    valuePlan: valuePlan,
+                    valueUsed: valueUsed,
+                    quater: quater,
+                    year: year
+                };
+                lists.push(listValue);
+            });
+//            console.log(lists);
+            $.post("{{_context_path}}/api/budget/budgetTracking/saveTracking", {objBudget: lists}, function (data) {
+                console.log(data.status);
+                if (data.status == true) {
+
+                    $("#saving-div").css('visibility', 'hidden');
+                    $("#bt-save").attr("disabled", false);
+                    $("#trackingTable input").attr("disabled", false);
+                } else {
+
+                    $("#saving-div").css('visibility', 'hidden');
+                    $("#bt-save").attr("disabled", false);
+                    $("#trackingTable input").attr("disabled", false);
+                    alert("ไม่สามารถบันทึกข้อมูลได้");
+                }
+            });
+
+        });
 
         $("#get-form").click(function () {
 
@@ -157,21 +210,10 @@
             $("#warning-year").hide(10);
         });
 
-        $(function () {
-            EDexpenses_select();
-            $("#expenses-select").change(function () {
-                EDexpenses_select();
-            });
+        $(document).on("blur", ".tinput", function (e) {
+            e.preventDefault();
+            $(this).val(toNumberFormat($(this).val()));
         });
-
-        function EDexpenses_select() {
-
-            if ($("#expenses-select").val() == 0) {
-                $("#quarter-select").prop("disabled", true);
-            } else {
-                $("#quarter-select").prop("disabled", false);
-            }
-        }
 
         function showTableContent(budgetName, budgetType, quater, year) {
             var html = '';
@@ -182,31 +224,27 @@
                 year: year
             }, function (data) {
 
-                if (data != null && data.listTracking.length > 0) {
+                if (data.listTracking != null && data.listTracking.length > 0) {
 
                     for (var i = 0; i < data.listTracking.length; i++) {
                         //lvl1
-                        html += checkShowLv1(data.listTracking[i], i);
+                        html += checkShowLv1(data.listTracking[i], i, quater, year);
                         for (var y = 0; y < data.listTracking[i].list.length; y++) {
                             //lvl2
-                            html += checkShowLv2(data.listTracking[i].list[y], i, y);
+                            html += checkShowLv2(data.listTracking[i].list[y], i, y, quater, year);
                             for (var z = 0; z < data.listTracking[i].list[y].list2.length; z++) {
                                 //lvl3
-                                html += checkShowLv3(data.listTracking[i].list[y].list2[z], i, y, z);
+                                html += checkShowLv3(data.listTracking[i].list[y].list2[z], i, y, z, quater, year);
                                 for (var x = 0; x < data.listTracking[i].list[y].list2[z].list3.length; x++) {
                                     //lvl4
-                                    html += '<tr><td style="padding-left: 6em ;vertical-align:middle">' + (i + 1) + '.' + (y + 1) + '.' + (z + 1) + '.' + (x + 1) + ' ' + data.listTracking[i].list[y].list2[z].list3[x].type_name + '</td>';
-                                    html += '<td class="text-center"><input type="text" class="form-control input-sm" value="' + data.listTracking[i].list[y].list2[z].list3[x].budget_quater_plan + '"></td>';
-                                    html += '<td class="text-center"><input type="text" class="form-control input-sm" value="' + data.listTracking[i].list[y].list2[z].list3[x].budget_quater_used + '"></td></tr>';
+                                    var obj = data.listTracking[i].list[y].list2[z].list3[x];
+                                    html += '<tr row-id="' + obj.id + '" quater="' + quater + '" year="' + year + '"><td style="padding-left: 6em ;vertical-align:middle">' + (i + 1) + '.' + (y + 1) + '.' + (z + 1) + '.' + (x + 1) + ' ' + obj.type_name + '</td>';
+                                    html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_plan) + '"></td>';
+                                    html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_used) + '"></td></tr>';
                                 }//end lvl4
                             }//end lvl3
                         }//end lvl2
                     }//end lvl1
-                    html += '<tr>';
-                    html += '  <td class="text-center"><b>รวม</b></td>';
-                    html += '<td class="text-center"></td>';
-                    html += '<td class="text-center"></td>';
-                    html += '</tr>';
                 } else {
 
                     html += '<tr>';
@@ -215,63 +253,98 @@
                 }
                 $("#budgetBody").html(html);
                 $("#title-tb").html(budgetName);
+                $("#bt-save").attr("disabled", false);
                 $("#get-form").attr("disabled", false);
             });
         }
 
-        function checkShowLv1(obj, i) {
+        function checkShowLv1(obj, i, quater, year) {
 
             var html = '';
-
             if (obj.list.length > 0) { //have lvl2
 
-                html += '<tr><td style="vertical-align:middle"><b>' + (i + 1) + '. ' + obj.type_name + '</b></td>';
+                html += '<tr row-id="' + obj.id + '" quater="' + quater + '" year="' + year + '"><td style="vertical-align:middle"><b>' + (i + 1) + '. ' + obj.type_name + '</b></td>';
                 html += '<td class="text-center" colspan="3"></td>';
             }
             else {
-                html += '<tr><td style="vertical-align:middle"><b>' + (i + 1) + '. ' + obj.type_name + '</b></td>';
-                html += '<td class="text-center"><input type="text" class="form-control input-sm" value="' + obj.budget_quater_plan + '"></td>';
-                html += '<td class="text-center"><input type="text" class="form-control input-sm" value="' + obj.budget_quater_used + '"></td></tr>';
+                html += '<tr row-id="' + obj.id + '" quater="' + quater + '" year="' + year + '"><td style="vertical-align:middle"><b>' + (i + 1) + '. ' + obj.type_name + '</b></td>';
+                html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_plan) + '"></td>';
+                html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_used) + '"></td></tr>';
             }
 
             return html;
         }
 
-        function checkShowLv2(obj, i, y) {
+        function checkShowLv2(obj, i, y, quater, year) {
 
             var html = '';
 
             if (obj.list2.length > 0) { //have lvl3
 
-                html += '<tr><td style="padding-left: 2em ;vertical-align:middle"><b>' + (i + 1) + '.' + (y + 1) + ' ' + obj.type_name + '</b></td>';
+                html += '<tr row-id="' + obj.id + '" quater="' + quater + '" year="' + year + '"><td style="padding-left: 2em ;vertical-align:middle"><b>' + (i + 1) + '.' + (y + 1) + ' ' + obj.type_name + '</b></td>';
                 html += '<td class="text-center" colspan="3"></td>';
             }
             else {
-                html += '<tr><td style="padding-left: 2em ;vertical-align:middle">' + (i + 1) + '.' + (y + 1) + ' ' + obj.type_name + '</td>';
-                html += '<td class="text-center"><input type="text" class="form-control input-sm" value="' + obj.budget_quater_plan + '"></td>';
-                html += '<td class="text-center"><input type="text" class="form-control input-sm" value="' + obj.budget_quater_used + '"></td></tr>';
+                html += '<tr row-id="' + obj.id + '" quater="' + quater + '" year="' + year + '"><td style="padding-left: 2em ;vertical-align:middle">' + (i + 1) + '.' + (y + 1) + ' ' + obj.type_name + '</td>';
+                html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_plan) + '"></td>';
+                html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_used) + '"></td></tr>';
             }
 
             return html;
         }
 
-        function checkShowLv3(obj, i, y, z) {
+        function checkShowLv3(obj, i, y, z, quater, year) {
 
             var html = '';
 
             if (obj.list3.length > 0) { //have lvl4
 
-                html += '<tr><td style="padding-left: 4em ;vertical-align:middle"><b>' + (i + 1) + '.' + (y + 1) + '.' + (z + 1) + '' + obj.type_name + '</b></td>';
+                html += '<tr row-id="' + obj.id + '" quater="' + quater + '" year="' + year + '"><td style="padding-left: 4em ;vertical-align:middle"><b>' + (i + 1) + '.' + (y + 1) + '.' + (z + 1) + '' + obj.type_name + '</b></td>';
                 html += '<td class="text-center" colspan="3"></td>';
             }
             else {
-                html += '<tr><td style="padding-left: 4em ;vertical-align:middle">' + (i + 1) + '.' + (y + 1) + '.' + (z + 1) + ' ' + obj.type_name + '</td>';
-                html += '<td class="text-center"><input type="text" class="form-control input-sm" value="' + obj.budget_quater_plan + '"></td>';
-                html += '<td class="text-center"><input type="text" class="form-control input-sm" value="' + obj.budget_quater_used + '"></td></tr>';
+                html += '<tr row-id="' + obj.id + '" quater="' + quater + '" year="' + year + '"><td style="padding-left: 4em ;vertical-align:middle">' + (i + 1) + '.' + (y + 1) + '.' + (z + 1) + ' ' + obj.type_name + '</td>';
+                html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_plan) + '"></td>';
+                html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_used) + '"></td></tr>';
             }
 
             return html;
         }
+
+        function toNumberFormat(value) {
+
+            if (value === ' ' || value === '' || value === undefined) {
+
+                return '';
+            } else {
+
+                Number.prototype.formatMoney = function (c, d, t) {
+                    var n = this,
+                            c = isNaN(c = Math.abs(c)) ? 2 : c,
+                            d = d == undefined ? "." : d,
+                            t = t == undefined ? "," : t,
+                            s = n < 0 ? "-" : "",
+                            i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+                            j = (j = i.length) > 3 ? j % 3 : 0;
+                    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+                };
+
+                return (toUnNumberFormat(value)).formatMoney(2, '.', ',');
+            }
+        }
+
+
+        function toUnNumberFormat(value) {
+            if (value === ' ' || value === '') {
+                return "";
+            } else if (value === undefined) {
+                return "head"; //หัวข้อ
+            }
+            else {
+                return parseFloat(value.replace(/[^0-9-.]/g, ''));
+            }
+        }
+
 
     });
 
