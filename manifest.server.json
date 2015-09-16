@@ -13,7 +13,8 @@
                 {"name": "port","value": "3306"},
                 {"name": "dbname","value": "kmutnb_ebudget"},
                 {"name": "user","value": "admin"},
-                {"name": "password","value": "intelenicsdb"}
+                {"name": "password","value": "intelenicsdb"},
+                {"name": "charset","value": "utf8"}
 
             ]
         },
