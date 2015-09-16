@@ -8,6 +8,19 @@
             "contextName": "default",
             "contextType": "data",
             "propertys": [
+                {"name": "driver","value": "pdo_mysql"},
+                {"name": "host","value": "db.codeunbug.com"},
+                {"name": "port","value": "3306"},
+                {"name": "dbname","value": "kmutnb-ebudget"},
+                {"name": "user","value": "admin"},
+                {"name": "password","value": "intelenicsdb"}
+
+            ]
+        },
+        {
+            "contextName": "sqlserver",
+            "contextType": "data",
+            "propertys": [
                 {"name": "driver","value": "pdo_sqlsrv"},
                 {"name": "host","value": "202.44.34.86"},
                 {"name": "port","value": "1443"},
