@@ -4,22 +4,22 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="attachment")
+ * @Table(name="ATTACHMENT")
  */
 class Attachment extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="id")
+     * @Column(type="integer",length=11,name="ATTACHMENTID")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="string",length=500, name="path") */
-    public $path;
+    /** @Column(type="string",length=300, name="ATTACHMENTDESCRIPTION") */
+    public $desc;
 
-    /** @Column(type="string",length=10, name="ext") */
-    public $ext;
+    /** @Column(type="string",length=10, name="PATH") */
+    public $path;
 
     /** @Column(type="text", name="remark") */
     public $remark;
