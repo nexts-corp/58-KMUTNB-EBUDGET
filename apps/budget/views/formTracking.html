@@ -26,7 +26,7 @@
 
         <div id="formTracking" class="col-md-12">
             <div class="form-group">
-                    <label class="col-md-2 control-label text-right">{{#i18n}}budgetType{{/i18n}}</label>
+                <label class="col-md-2 control-label text-right">{{#i18n}}budgetType{{/i18n}}</label>
 
                 <div class="col-md-4">
                     <select id="expenses-select" class="form-control input-sm" required>
@@ -93,17 +93,19 @@
                 </table>
             </div>
             <!-- end table shown bidder information list -->
-            <div class="col-md-12" style="padding: 12px;"></div>
-            <div class="col-md-12 text-right">
-                <div id="saving-div" class="col-md-9 text-right" style="visibility: hidden"><i
-                        class="fa fa-spinner fa-spin"></i><b> กำลังบันทึก...</b></div>
-                <div class="col-md-3">
-                    <button class="btn btn-success" id="bt-save"><i class="fa fa-save"> บันทึก</i></button>
-                </div>
+            <div class="col-md-12 text-right" style="padding: 12px;">
+                <label id="saving-div" style="display:none;"><i class="fa fa-spinner fa-spin"></i><b>
+                    กำลังบันทึก...</b></label>
+                <label id="status-ico" class="text-success" style="display: none"><i class="fa fa-check">
+                    บันทึกเรียร้อย</i>
+                </label>
+
+                <button class="btn btn-success" id="bt-save"><i class="fa fa-save"> บันทึก</i></button>
             </div>
         </div>
     </div>
-    <!--container-->
+</div>
+<!--container-->
 </div><!--main-->
 {{>footer}}
 
@@ -135,7 +137,7 @@
 
             $("#trackingTable input").attr("disabled", true);
             $(this).attr("disabled", true);
-            $("#saving-div").css('visibility', 'visible');
+            $("#saving-div").show(10);
             var lists = [];
             //Iterate all td's in second column
             $('#table tbody tr').each(function () {
@@ -160,12 +162,13 @@
                 console.log(data.status);
                 if (data.status == true) {
 
-                    $("#saving-div").css('visibility', 'hidden');
+                    $("#saving-div").hide(10);
                     $("#bt-save").attr("disabled", false);
                     $("#trackingTable input").attr("disabled", false);
+                    $("#status-ico").show(10).delay(2500).fadeOut();
                 } else {
 
-                    $("#saving-div").css('visibility', 'hidden');
+                    $("#saving-div").hide(10);
                     $("#bt-save").attr("disabled", false);
                     $("#trackingTable input").attr("disabled", false);
                     alert("ไม่สามารถบันทึกข้อมูลได้");
@@ -239,8 +242,8 @@
                                     //lvl4
                                     var obj = data.listTracking[i].list[y].list2[z].list3[x];
                                     html += '<tr row-id="' + obj.id + '" quater="' + quater + '" year="' + year + '"><td style="padding-left: 6em ;vertical-align:middle">' + (i + 1) + '.' + (y + 1) + '.' + (z + 1) + '.' + (x + 1) + ' ' + obj.type_name + '</td>';
-                                    html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_plan) + '"></td>';
-                                    html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_used) + '"></td></tr>';
+                                    html += '<td class="text-right"><input pattern="[0-9]*"  class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_plan) + '"></td>';
+                                    html += '<td class="text-right"><input pattern="[0-9]*"  class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_used) + '"></td></tr>';
                                 }//end lvl4
                             }//end lvl3
                         }//end lvl2
@@ -268,8 +271,8 @@
             }
             else {
                 html += '<tr row-id="' + obj.id + '" quater="' + quater + '" year="' + year + '"><td style="vertical-align:middle"><b>' + (i + 1) + '. ' + obj.type_name + '</b></td>';
-                html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_plan) + '"></td>';
-                html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_used) + '"></td></tr>';
+                html += '<td class="text-right"><input pattern="[0-9]*"  class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_plan) + '"></td>';
+                html += '<td class="text-right"><input pattern="[0-9]*"  class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_used) + '"></td></tr>';
             }
 
             return html;
@@ -286,8 +289,8 @@
             }
             else {
                 html += '<tr row-id="' + obj.id + '" quater="' + quater + '" year="' + year + '"><td style="padding-left: 2em ;vertical-align:middle">' + (i + 1) + '.' + (y + 1) + ' ' + obj.type_name + '</td>';
-                html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_plan) + '"></td>';
-                html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_used) + '"></td></tr>';
+                html += '<td class="text-right"><input pattern="[0-9]*"  class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_plan) + '"></td>';
+                html += '<td class="text-right"><input pattern="[0-9]*"  class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_used) + '"></td></tr>';
             }
 
             return html;
@@ -304,8 +307,8 @@
             }
             else {
                 html += '<tr row-id="' + obj.id + '" quater="' + quater + '" year="' + year + '"><td style="padding-left: 4em ;vertical-align:middle">' + (i + 1) + '.' + (y + 1) + '.' + (z + 1) + ' ' + obj.type_name + '</td>';
-                html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_plan) + '"></td>';
-                html += '<td class="text-right"><input pattern="[0-9]* type="number" class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_used) + '"></td></tr>';
+                html += '<td class="text-right"><input pattern="[0-9]*"  class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_plan) + '"></td>';
+                html += '<td class="text-right"><input pattern="[0-9]*"  class="form-control input-sm tinput" value="' + toNumberFormat(obj.budget_quater_used) + '"></td></tr>';
             }
 
             return html;

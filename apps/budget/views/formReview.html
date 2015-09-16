@@ -37,8 +37,8 @@
                 </div>
                 <div id="warning-expenses" class="col-md-3" style="display: none"><label
                         class="control-label text-danger">
-                        <i class="fa fa-exclamation"></i>
-                        กรุณาเลือกประเภทงบประมาณ</label>
+                    <i class="fa fa-exclamation"></i>
+                    กรุณาเลือกประเภทงบประมาณ</label>
                 </div>
             </div>
             <div class="form-group">
@@ -51,13 +51,12 @@
                 </div>
                 <div id="warning-year" class="col-md-2" style="display: none"><label
                         class="control-label text-danger">
-                        <i class="fa fa-exclamation"></i> กรุณาเลือกปี</label>
+                    <i class="fa fa-exclamation"></i> กรุณาเลือกปี</label>
                 </div>
                 <div class="col-md-1">
                     <button class="btn btn-warning col-md-12" id="get-form">{{#i18n}}ok{{/i18n}}</button>
                 </div>
             </div>
-
 
             <div id="bidderTable" class="col-md-12"><!-- table shown bidder information list -->
                 <!-- manage list-->
@@ -68,65 +67,61 @@
                                                                                   data-toggle="collapse"
                                                                                   data-parent="#accordion"
                                                                                   href="#collapse1One">
-                                        <i class="fa fa-plus-circle"></i> จัดการรายการ</a></h4></div>
-                            <div id="collapse1One" class="accordion-body collapse in">
+                                <i class="fa fa-plus-circle"></i> จัดการรายการ</a></h4></div>
+                            <div class="accordion-body collapse in">
                                 <div class="panel-body">
                                     <form onsubmit="return false">
                                         <div class="form-group">
                                             <div class="col-md-9"><label class="col-md-4 control-label text-right">หมวดรายจ่าย</label>
 
-                                                <div class="col-md-8"><select id="listBudgetSource"
-                                                                              name="listBudgetSource"
-                                                                              class="form-control input-sm" required="">
-                                                        <option value="0">- เลือกหมวดรายจ่าย -</option>
-                                                        <option value="0">งบบุคลากร - เงินเดือน</option>
-                                                        <option value="0">งบบุคลากร - ค่าจ้างประจำ</option>
-                                                        <option value="0">งบบุคลากร - ค่าตอบแทนพนักงานราชการ</option>
-                                                        <option value="0">งบเงินอุดหนุนทั่วไป - เงินเดือน</option>
-                                                        <option value="0">งบเงินอุดหนุนทั่วไป - ค่าจ้างชั่วคราว</option>
-                                                        <option value="0">งบเงินอุดหนุนทั่วไป - ค่าตอบแทน</option>
-                                                        <option value="0">งบเงินอุดหนุนทั่วไป - ค่าใช้สอย</option>
-                                                        <option value="0">งบเงินอุดหนุนทั่วไป - ค่าวัสดุ</option>
-                                                        <option value="0">งบเงินอุดหนุนทั่วไป - ค่าสาธารณูปโภค</option>
-                                                        <option value="0">เงินอุดหนุนเป็นค่าครุภัณฑ์</option>
-                                                        <option value="0">เงินอุดหนุนเป็นค่าที่ดิน/สิ่งก่อสร้าง</option>
-                                                        <option value="0">เงินอุดหนุนอื่นๆ</option>
-                                                    </select></div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-md-9"><label
-                                                    class="col-md-4 control-label text-right">ไตรมาศที่</label>
+                                                <div class="col-md-8">
+                                                    <select id="listExpenses" name="listExpenses"
+                                                            class="form-control input-sm" required="">
 
-                                                <div class="col-md-8"><select id="quarter-select"
-                                                                              class="form-control input-sm" required>
-                                                        <option value="0">- เลือกไตรมาส -</option>
-                                                        <option value="1">ไตรมาสที่ 1</option>
-                                                        <option value="2">ไตรมาสที่ 2</option>
-                                                        <option value="3">ไตรมาสที่ 3</option>
-                                                        <option value="4">ไตรมาสที่ 4</option>
+                                                        <option value="0">- เลือกประเภทรายจ่าย -</option>
+
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <div class="col-md-9"><label class="col-md-4 control-label text-right">แผนการใช้งาน</label>
+                                            <div class="col-md-9"><label class="col-md-4 control-label text-right">{{#i18n}}quarter{{/i18n}}</label>
 
-                                                <div class="col-md-8"><input type="number" id="plan-input" name="bg1"
-                                                                             class="form-control input-sm" required="">
+                                                <div class="col-md-8">
+                                                    <select id="quarter-select" class="form-control input-sm"
+                                                            required="">
+                                                        <option value="0">- เลือกไตรมาส -</option>
+                                                        <option value="1">{{#i18n}}quarter1{{/i18n}}</option>
+                                                        <option value="2">{{#i18n}}quarter2{{/i18n}}</option>
+                                                        <option value="3">{{#i18n}}quarter3{{/i18n}}</option>
+                                                        <option value="4">{{#i18n}}quarter4{{/i18n}}</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <div class="col-md-9"><label class="col-md-4 control-label text-right">ผลการใช้งาน</label>
+                                            <div class="col-md-9"><label class="col-md-4 control-label text-right">{{#i18n}}expensesPlan{{/i18n}}</label>
 
-                                                <div class="col-md-8"><input type="number" id="used-input" name="bg1"
-                                                                             class="form-control input-sm" required="">
+                                                <div class="col-md-8">
+                                                    <input id="plan-input" class="form-control input-sm">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-9"><label class="col-md-4 control-label text-right">{{#i18n}}expensesResult{{/i18n}}</label>
+
+                                                <div class="col-md-8">
+                                                    <input id="used-input" class="form-control input-sm">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-12 text-right">
-                                            <button class="btn btn-success"><i class="fa fa-save"> บันทึก</i></button>
+                                            <label id="status-ico" style="display: none" class="text-success"><i
+                                                    class="fa fa-check"> บันทึกเรียร้อย</i> </label>
+                                            <label id="saving-ico" style="display: none"><i
+                                                    class="fa fa-spinner fa-spin"></i> กำลังบันทึก</label>
+                                            <button id="btn-save" class="btn btn-success "><i class="fa fa-save">
+                                                บันทึก</i></button>
                                             &nbsp;
                                             <button id="clearForm" class="btn btn-default"><i class="fa fa-trash"></i>
                                                 ยกเลิก
@@ -141,49 +136,47 @@
                 <!-- manage list-->
                 <table id="table" class="table table-bordered table-striped table-condensed mb-none">
                     <thead>
-                        <tr>
-                            <th rowspan="2" class="text-center" width="22%" id="title-tb"
-                                style="vertical-align: middle; min-width:170px">
-                                {{#i18n}}budgetType{{/i18n}}
-                            </th>
-                            <th colspan="2" class="text-center" width="13%">{{#i18n}}total{{/i18n}}</th>
-                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter1{{/i18n}}</th>
-                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter2{{/i18n}}</th>
-                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter3{{/i18n}}</th>
-                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter4{{/i18n}}</th>
-                            <th rowspan="2" class="text-center" width="13%" style="vertical-align: middle">
-                                {{#i18n}}total{{/i18n}}
-                            </th>
-                        </tr>
-                        <tr>
-                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
-                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
-                            </th>
-                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
-                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
-                            </th>
-                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
-                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
-                            </th>
-                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
-                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
-                            </th>
-                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
-                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
-                            </th>
-                        </tr>
+                    <tr>
+                        <th rowspan="2" class="text-center" width="22%" id="title-tb"
+                            style="vertical-align: middle; min-width:170px">
+                            {{#i18n}}budgetType{{/i18n}}
+                        </th>
+                        <th colspan="2" class="text-center" width="13%">{{#i18n}}total{{/i18n}}</th>
+                        <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter1{{/i18n}}</th>
+                        <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter2{{/i18n}}</th>
+                        <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter3{{/i18n}}</th>
+                        <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter4{{/i18n}}</th>
+                        <th rowspan="2" class="text-center" width="13%" style="vertical-align: middle">
+                            {{#i18n}}total{{/i18n}}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
+                        </th>
+                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
+                        </th>
+                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
+                        </th>
+                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
+                        </th>
+                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
+                        </th>
+                    </tr>
                     </thead>
 
                     <tbody id="budgetBody">
-                        <tr>
-                            <td colspan="20" class="text-center">ไม่พบข้อมูล</td>
-                        </tr>
-                        <!-- to do content-->
+                    <tr>
+                        <td colspan="20" class="text-center">เลือกประเภทงบประมาณ และ ปีงบประมาณ</td>
+                    </tr>
+                    <!-- to do content-->
                     </tbody>
                 </table>
             </div>
-            <!-- end table shown bidder information list -->
-            <div class="col-md-12" style="padding: 12px;"></div>
 
         </div>
         <!--container-->
@@ -193,11 +186,14 @@
 
     <script type="text/javascript">
 
+
         $(document).ready(function () {
-            var total_quater1_plan = 0, total_quater1_used = 0, total_quater2_plan = 0, total_quater2_used = 0, total_quater3_plan = 0, total_quater3_used = 0, total_quater4_plan = 0,
-                    total_quater4_used = 0, total_plan = 0, total_used = 0;
+            var total_quater1_plan = 0, total_quater1_used = 0, total_quater2_plan = 0, total_quater2_used = 0, total_quater3_plan = 0, total_quater3_used = 0, total_quater4_plan = 0, total_quater4_used = 0, total_plan = 0, total_used = 0;
+            var dataTable = null;
+
             iniYear();
             function iniYear() {
+
                 var html = '<option value="0">- เลือกปี พ.ศ. -</option>';
                 $.get("{{_context_path}}/api/common/lookup/listYear", function (data) {
                     for (var i = 0; i < data.lists.length; i++) {
@@ -210,8 +206,9 @@
 
             $("#get-form").click(function () {
 
-                total_quater1_plan = 0, total_quater1_used = 0, total_quater2_plan = 0, total_quater2_used = 0, total_quater3_plan = 0, total_quater3_used = 0, total_quater4_plan = 0,
-                        total_quater4_used = 0, total_plan = 0, total_used = 0;
+                total_quater1_plan = 0, total_quater1_used = 0, total_quater2_plan = 0, total_quater2_used = 0, total_quater3_plan = 0, total_quater3_used = 0, total_quater4_plan = 0, total_quater4_used = 0, total_plan = 0, total_used = 0;
+                resetPanel();
+                disablePanel();
 
                 var budgetType = $("#expenses-select").val();
                 var year = $("#year-select").val();
@@ -226,6 +223,7 @@
                     $(this).attr("disabled", true);
                     var textSelected = $("#expenses-select").find('option:selected').text();
                     showTableContent(textSelected, budgetType, year);
+                    getExpensesList(budgetType);
                 }
             });
 
@@ -239,6 +237,104 @@
                 $("#warning-year").hide(10);
             });
 
+            $("#btn-save").click(function () {
+                $("#btn-save").attr("disabled", true);
+                $("#saving-ico").show(10);
+                var planValue = toUnNumberFormat($("#plan-input").val());
+                var usedValue = toUnNumberFormat($("#used-input").val());
+                var expendsID = $("#listExpenses").val();
+                var budgetType = $("#expenses-select").val();
+                var year = $("#year-select").val();
+                var quater = $("#quarter-select").val();
+                var objArr = [{
+                    valuePlan: planValue,
+                    valueUsed: usedValue,
+                    id: expendsID,
+                    budgetType: budgetType,
+                    quater: quater,
+                    year: year
+                }];
+                if (budgetType != 0 && quater != 0 && expendsID != 0) {
+                    $.post("{{_context_path}}/api/budget/budgetTracking/saveTracking/", {objBudget: objArr}, function (data) {
+                        if (data.status == true) {
+                            showTableContent($("#expenses-select option:selected").text(), budgetType, year);//refresh table
+                            $("#saving-ico").hide(10);
+                            $("#btn-save").attr("disabled", false);
+                            $("#status-ico").show(10).delay(2500).fadeOut();
+
+                        } else {
+                            alert("ไม่สามารถบันทึกได้");
+                        }
+                    });
+                }
+            });
+
+            $("#quarter-select").change(function () {
+                getPlanAndUsedClient();
+            });
+            $("#listExpenses").change(function () {
+                getPlanAndUsedClient();
+            });
+            $("#clearForm").click(function () {
+                resetPanel();
+            });
+
+            $(document).on("blur", "input", function (e) {
+                e.preventDefault();
+                $(this).val(toNumberFormat($(this).val()));
+            });
+
+            function getPlanAndUsedClient() {
+
+                var expendsID = $("#listExpenses").val();
+                var quarter = $("#quarter-select").val();
+                var result;
+                for (var i = 0; i < dataTable.listTracking.length; i++) {
+                    if (dataTable.listTracking[i].id == expendsID) {
+
+                        result = getBudgetQuater(dataTable.listTracking[i], quarter);
+                    }
+                    for (var y = 0; y < dataTable.listTracking[i].list.length; y++) {
+                        if (dataTable.listTracking[i].list[y].id == expendsID) {
+
+                            result = getBudgetQuater(dataTable.listTracking[i].list[y], quarter);
+                        }
+                        for (var z = 0; z < dataTable.listTracking[i].list[y].list2.length; z++) {
+                            if (dataTable.listTracking[i].list[y].list2[z].id == expendsID) {
+
+                                result = getBudgetQuater(dataTable.listTracking[i].list[y].list2[z], quarter);
+                            }
+                            for (var x = 0; x < dataTable.listTracking[i].list[y].list2[z].list3.length; x++) {
+
+                                if (dataTable.listTracking[i].list[y].list2[z].list3[x].id == expendsID) {
+
+                                    result = getBudgetQuater(dataTable.listTracking[i].list[y].list2[z].list3[x], quarter);
+                                }
+                            }
+                        }
+                    }
+                }
+                $("#plan-input").val(toNumberFormat(result[0]));
+                $("#used-input").val(toNumberFormat(result[1]));
+
+            }
+
+
+            function getBudgetQuater(data, quater) {
+
+                if (quater == 1) {
+                    return [data.budget_quater1_plan, data.budget_quater1_used];
+                } else if (quater == 2) {
+                    return [data.budget_quater2_plan, data.budget_quater2_used];
+                } else if (quater == 3) {
+                    return [data.budget_quater3_plan, data.budget_quater3_used];
+                } else if (quater == 4) {
+                    return [data.budget_quater4_plan, data.budget_quater4_used];
+                }
+
+                return ["", ""];
+            }
+
             function showTableContent(budgetName, budgetType, year) {
                 var html = '';
 
@@ -248,7 +344,7 @@
                 }, function (data) {
 
                     if (data != null && data.listTracking.length > 0) {
-
+                        dataTable = data;
                         for (var i = 0; i < data.listTracking.length; i++) {
                             //lvl1
                             html += checkShowLv1(data.listTracking[i]);
@@ -309,7 +405,6 @@
                     $("#budgetBody").html(html);
                     $("#title-tb").html(budgetName);
                     $("#get-form").attr("disabled", false);
-
                 });
             }
 
@@ -442,7 +537,6 @@
                 return total;
             }
 
-
             function getTotalColumn(obj) {
 
                 if (obj.budget_quater1_plan != ' ') {
@@ -519,6 +613,7 @@
             }
 
             function toNumberFormat(value) {
+                value += ''; //to string
 
                 if (value === ' ' || value === '' || value === undefined || value == 0) {
 
@@ -536,18 +631,73 @@
                         return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
                     };
 
-                    return (parseFloat(value)).formatMoney(2, '.', ',');
+                    return (toUnNumberFormat(value)).formatMoney(2, '.', ',');
                 }
             }
 
-            function toNumber(value) {
-                var money = 0;
-                try {
-                    money = parseFloat(value);
-                } catch (err) {
-                    return 0;
+
+            function toUnNumberFormat(value) {
+
+                if (value === ' ' || value === '' || value === undefined) {
+                    return "";
+                } else {
+
+                    return parseFloat(value.replace(/[^0-9-.]/g, ''));
                 }
-                return money;
+            }
+
+            function getExpensesList(budgetType) {
+
+                $.get("{{_context_path}}/api/budget/budgetReview/getCatagory/", {budgetType: budgetType}, function (data) {
+
+                    var html = '<option value="0">- เลือกประเภทรายจ่าย -</option>';
+
+                    for (var i = 0; i < data.listCatagory.length; i++) {
+
+                        var topic = data.listCatagory[i].typeName;
+                        if (data.listCatagory[i].list.length == 0) {
+                            html += '<option value="' + data.listCatagory[i].id + '">' + topic + '</option>';
+                        }
+
+                        for (var y = 0; y < data.listCatagory[i].list.length; y++) {
+
+                            if (data.listCatagory[i].list[y].list2.length == 0) {
+                                html += '<option value="' + data.listCatagory[i].list[y].id + '">' + topic + ' - ' + data.listCatagory[i].list[y].typeName + '</option>';
+                            }
+
+                            for (var z = 0; z < data.listCatagory[i].list[y].list2.length; z++) {
+
+                                html += '<option value="' + data.listCatagory[i].list[y].list2[z].id + '">' + topic + ' - ' + data.listCatagory[i].list[y].typeName + ' - ' + data.listCatagory[i].list[y].list2[z].typeName + '</option>';
+                            }
+                        }
+                    }
+
+                    $("#listExpenses").html(html);
+                    enablePanel();
+                });
+            }
+
+            function disablePanel() {
+
+                $("#listExpenses").attr("disabled", true);
+                $("#quarter-select").attr("disabled", true);
+                $("#plan-input").attr("disabled", true);
+                $("#used-input").attr("disabled", true);
+            }
+
+            function enablePanel() {
+                //event cancel
+                $("#listExpenses").attr("disabled", false);
+                $("#quarter-select").attr("disabled", false);
+                $("#plan-input").attr("disabled", false);
+                $("#used-input").attr("disabled", false);
+            }
+
+            function resetPanel() {
+                $("#listExpenses").val(0);
+                $("#quarter-select").val(0);
+                $("#plan-input").val("");
+                $("#used-input").val("");
             }
 
         });

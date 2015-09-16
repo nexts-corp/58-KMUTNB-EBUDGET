@@ -19,4 +19,13 @@ interface IBudgetReviewService
      */
     public function getReview($budgetType, $year);
 
+    /**
+     * @name getCatagory
+     * @uri /getCatagory
+     * @param String budgetType Description ประเภทงบประมาณ
+     * @return String[] listCatagory
+     * @description ข้อมูลcatagoryหมวดรายจ่าย
+     */
+    public function getCatagory($budgetType);
+
 }
