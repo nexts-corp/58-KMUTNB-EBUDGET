@@ -4,9 +4,9 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="PLANMAPPING")
+ * @Table(name="MAPPINGPLAN")
  */
-class PlanMapping extends EntityBase {
+class MappingPlan extends EntityBase {
 
     /**
      * @Id 
