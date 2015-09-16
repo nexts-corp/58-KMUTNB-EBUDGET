@@ -6,6 +6,7 @@ myApp.controller('tableController', function($scope,$http,$controller) {
     
     
     $scope.init = function(){
+        $("[ng-app]").show();
         
         $scope.cmListYear();
         

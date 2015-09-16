@@ -6,6 +6,7 @@ myApp.controller('mainController', function($scope,$http,$controller) {
     
     
     $scope.init = function () {
+        $("[ng-app]").show();
         
         $scope.page = "home";
         //$scope.reportId = 'ง.2';

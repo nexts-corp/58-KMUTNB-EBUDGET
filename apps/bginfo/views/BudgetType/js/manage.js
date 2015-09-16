@@ -4,6 +4,9 @@ myApp.controller('mainController', function($scope,$http,$controller) {
     $controller('cmListController', {$scope: $scope});
 
     $scope.init = function () {
+        
+        $("[ng-app]").show();
+        
         $scope.cmListYear();
         
         $scope.dataBudgetType = [];
