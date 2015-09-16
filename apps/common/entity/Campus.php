@@ -18,6 +18,9 @@ class Campus extends EntityBase {
     /** @Column(type="string",length=255, name="CAMPUSNAME") */
     public $campusName;
 
+    /** @Column(type="string",length=1, name="CAMPUSSTATUS") */
+    public $campusStatus;
+
     /** @Column(type="string",length=20, name="creator") */
     public $creator;
 
@@ -30,6 +33,10 @@ class Campus extends EntityBase {
 
     function getCampusName() {
         return $this->campusName;
+    }
+
+    function getCampusStatus() {
+        return $this->campusStatus;
     }
 
     function getCreator() {
@@ -46,6 +53,10 @@ class Campus extends EntityBase {
 
     function setCampusName($campusName) {
         $this->campusName = $campusName;
+    }
+
+    function setCampusStatus($campusStatus) {
+        $this->campusStatus = $campusStatus;
     }
 
     function setCreator($creator) {

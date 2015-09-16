@@ -2,72 +2,61 @@
 
 namespace apps\bginfo\service;
 
-use apps\common\entity\LKActivityType;
 use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use th\co\bpg\cde\core\CServiceBase;
 use apps\bginfo\interfaces\IDepartmentService;
-use apps\common\entity\LKCampus;
 use th\co\bpg\cde\data\CDataContext;
-use apps\common\entity\LKFaculty;
-use apps\common\entity\LKDepartment;
+use apps\common\entity\ActivityType;
+use apps\common\entity\Campus;
+use apps\common\entity\Department;
 
-class DepartmentService extends CServiceBase implements IDepartmentService
-{
+class DepartmentService extends CServiceBase implements IDepartmentService {
 
     public $datacontext;
 
-    function __construct()
-    {
+    function __construct() {
 
         $this->datacontext = new CDataContext();
     }
 
-    public function viewDepartment()
-    {
+    public function viewDepartment() {
 
         $view = new CJView("viewDepartment", CJViewType::HTML_VIEW_ENGINE);
         return $view;
     }
 
-    public function fetchCampus()
-    {
-
-        $obj = new LKCampus();
-        $obj->setIsActive("1");
+    public function fetchCampus() {
+        $obj = new Campus();
+        $obj->setCampusStatus("Y");
         return $this->datacontext->getObject($obj);
     }
 
-    public function fetchDepartment($idFaculty)
-    {
-        $obj = new LKDepartment();
-        $obj->setFacultyId($idFaculty);
-        $obj->setIsActive("1");
+    public function fetchDepartment($idFaculty) {
+        $obj = new Department();
+        $obj->setMasterId($idFaculty);
+        $obj->setDeptStatus("Y");
         return $this->datacontext->getObject($obj);
     }
 
-    public function fetchFaculty($idCampus)
-    {
-        $obj = new LKFaculty();
+    public function fetchFaculty($idCampus) {
+        $obj = new Department();
         $obj->setCampusId($idCampus);
-        $obj->setIsActive("1");
+        $obj->setMasterId(0);
+        $obj->setDeptStatus("Y");
         return $this->datacontext->getObject($obj);
     }
 
-    public function fetchActivityType()
-    {
-
-        $obj = new LKActivityType();
+    public function fetchActivityType() {
+        $obj = new ActivityType();
+        $obj->setActTypeStatus("Y");
         return $this->datacontext->getObject($obj);
     }
 
-
-    public function insertCampus($campus)
-    {
-
-        $data = new LKCampus();
+    public function insertCampus($campus) {
+        $data = new Campus();
         $data->setCampusName($campus->campusName);
-        $data->setIsActive($campus->isActive);
+        $data->setCampusStatus($campus->isActive);
         $data->setCreator($campus->creator);
 
         if ($this->datacontext->saveObject($data)) {
@@ -76,10 +65,8 @@ class DepartmentService extends CServiceBase implements IDepartmentService
         return false;
     }
 
-    public function editCampus($campus)
-    {
-
-        $data = new LKCampus();
+    public function editCampus($campus) {
+        $data = new Campus();
         $data->setId($campus->id);
         $data->setCampusName($campus->campusName);
         if ($this->datacontext->updateObject($data)) {
@@ -88,19 +75,17 @@ class DepartmentService extends CServiceBase implements IDepartmentService
         return false;
     }
 
-    public function removeCampus($campus)
-    {
-        $data = new LKCampus();
+    public function removeCampus($campus) {
+        $data = new Campus();
         $data->setId($campus->id);
-        $data->setIsActive($campus->isActive);
+        $data->setCampusStatus($campus->isActive);
         if ($this->datacontext->updateObject($data)) {
             return true;
         }
         return false;
     }
 
-    public function insertFaculty($faculty)
-    {
+    public function insertFaculty($faculty) {
         $data = new LKFaculty();
         $data->setFacultyName($faculty->facultyName);
         $data->setCampusId($faculty->campusId);
@@ -114,8 +99,7 @@ class DepartmentService extends CServiceBase implements IDepartmentService
         return false;
     }
 
-    public function editFaculty($faculty)
-    {
+    public function editFaculty($faculty) {
 
         $data = new LKFaculty();
         $data->setId($faculty->id);
@@ -131,9 +115,7 @@ class DepartmentService extends CServiceBase implements IDepartmentService
         return false;
     }
 
-
-    public function removeFaculty($faculty)
-    {
+    public function removeFaculty($faculty) {
         $data = new LKFaculty();
         $data->setId($faculty->id);
         $data->setIsActive($faculty->isActive);
@@ -143,8 +125,7 @@ class DepartmentService extends CServiceBase implements IDepartmentService
         return false;
     }
 
-    public function insertDeaprtment($department)
-    {
+    public function insertDeaprtment($department) {
         $data = new LKDepartment();
         $data->setIsActive($department->isActive);
         $data->setFacultyId($department->facultyId);
@@ -158,8 +139,7 @@ class DepartmentService extends CServiceBase implements IDepartmentService
         return false;
     }
 
-    public function editDeaprtment($department)
-    {
+    public function editDeaprtment($department) {
         $data = new LKDepartment();
         $data->setId($department->id);
         $data->setIsActive($department->isActive);
@@ -172,11 +152,9 @@ class DepartmentService extends CServiceBase implements IDepartmentService
             return true;
         }
         return false;
-
     }
 
-    public function removeDeaprtment($department)
-    {
+    public function removeDeaprtment($department) {
         $data = new LKDepartment();
         $data->setId($department->id);
         $data->setIsActive($department->isActive);
@@ -184,8 +162,6 @@ class DepartmentService extends CServiceBase implements IDepartmentService
             return true;
         }
         return false;
-
     }
-
 
 }
