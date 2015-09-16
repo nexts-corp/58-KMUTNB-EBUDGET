@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d330a3383f75598eb7967923d9231d15",
+    "hash": "a3068b66f3d1ff20a0c5f064abf47148",
+    "content-hash": "08e82ab9f1c1a4f0c4a566bb8e2e0e43",
     "packages": [
         {
             "name": "apache/log4php",
@@ -38,16 +39,16 @@
         },
         {
             "name": "bpg/cde",
-            "version": "3.5.3.x-dev",
+            "version": "3.5.5.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/intelegram/CDE4PHP.git",
-                "reference": "267814195e35a41c87d5cdcc468ad06cdac63f43"
+                "reference": "c53cfd406a8ab4c570a5be78065cd5402150deb0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/intelegram/CDE4PHP/zipball/267814195e35a41c87d5cdcc468ad06cdac63f43",
-                "reference": "267814195e35a41c87d5cdcc468ad06cdac63f43",
+                "url": "https://api.github.com/repos/intelegram/CDE4PHP/zipball/c53cfd406a8ab4c570a5be78065cd5402150deb0",
+                "reference": "c53cfd406a8ab4c570a5be78065cd5402150deb0",
                 "shasum": ""
             },
             "require": {
@@ -66,20 +67,20 @@
                 }
             ],
             "description": "changdao engine for php",
-            "time": "2015-08-23 14:25:59"
+            "time": "2015-09-15 10:58:02"
         },
         {
             "name": "doctrine/annotations",
-            "version": "v1.2.6",
+            "version": "v1.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "f4a91702ca3cd2e568c3736aa031ed00c3752af4"
+                "reference": "f25c8aab83e0c3e976fd7d19875f198ccf2f7535"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/f4a91702ca3cd2e568c3736aa031ed00c3752af4",
-                "reference": "f4a91702ca3cd2e568c3736aa031ed00c3752af4",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/f25c8aab83e0c3e976fd7d19875f198ccf2f7535",
+                "reference": "f25c8aab83e0c3e976fd7d19875f198ccf2f7535",
                 "shasum": ""
             },
             "require": {
@@ -134,20 +135,20 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2015-06-17 12:21:22"
+            "time": "2015-08-31 12:32:49"
         },
         {
             "name": "doctrine/cache",
-            "version": "v1.4.1",
+            "version": "v1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "c9eadeb743ac6199f7eec423cb9426bc518b7b03"
+                "reference": "8c434000f420ade76a07c64cbe08ca47e5c101ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/c9eadeb743ac6199f7eec423cb9426bc518b7b03",
-                "reference": "c9eadeb743ac6199f7eec423cb9426bc518b7b03",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/8c434000f420ade76a07c64cbe08ca47e5c101ca",
+                "reference": "8c434000f420ade76a07c64cbe08ca47e5c101ca",
                 "shasum": ""
             },
             "require": {
@@ -204,7 +205,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2015-04-15 00:11:59"
+            "time": "2015-08-31 12:36:41"
         },
         {
             "name": "doctrine/collections",
@@ -274,16 +275,16 @@
         },
         {
             "name": "doctrine/common",
-            "version": "v2.5.0",
+            "version": "v2.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/common.git",
-                "reference": "cd8daf2501e10c63dced7b8b9b905844316ae9d3"
+                "reference": "0009b8f0d4a917aabc971fb089eba80e872f83f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/common/zipball/cd8daf2501e10c63dced7b8b9b905844316ae9d3",
-                "reference": "cd8daf2501e10c63dced7b8b9b905844316ae9d3",
+                "url": "https://api.github.com/repos/doctrine/common/zipball/0009b8f0d4a917aabc971fb089eba80e872f83f9",
+                "reference": "0009b8f0d4a917aabc971fb089eba80e872f83f9",
                 "shasum": ""
             },
             "require": {
@@ -343,7 +344,7 @@
                 "persistence",
                 "spl"
             ],
-            "time": "2015-04-02 19:55:44"
+            "time": "2015-08-31 13:00:22"
         },
         {
             "name": "doctrine/dbal",
@@ -738,16 +739,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v2.7.3",
+            "version": "v2.7.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console.git",
-                "reference": "d6cf02fe73634c96677e428f840704bfbcaec29e"
+                "reference": "9ff9032151186bd66ecee727d728f1319f52d1d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/d6cf02fe73634c96677e428f840704bfbcaec29e",
-                "reference": "d6cf02fe73634c96677e428f840704bfbcaec29e",
+                "url": "https://api.github.com/repos/symfony/Console/zipball/9ff9032151186bd66ecee727d728f1319f52d1d8",
+                "reference": "9ff9032151186bd66ecee727d728f1319f52d1d8",
                 "shasum": ""
             },
             "require": {
@@ -791,7 +792,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2015-07-28 15:18:12"
+            "time": "2015-09-03 11:40:38"
         }
     ],
     "packages-dev": [],

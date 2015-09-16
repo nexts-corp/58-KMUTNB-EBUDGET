@@ -4,13 +4,13 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="lk_fundgroup")
+ * @Table(name="3D_FUNDGROUP")
  */
-class LKFundGroup extends EntityBase {
+class FundGroup extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="id")
+     * @Column(type="integer",length=11,name="FUNDGROUPID")
      * @GeneratedValue
      */
     public $id;
@@ -18,16 +18,13 @@ class LKFundGroup extends EntityBase {
     /** @Column(type="integer",length=11, name="master_id") */
     public $masterId;
 
-    /** @Column(type="string",length=255, name="fundgroup_name") */
+    /** @Column(type="string",length=255, name="FUNDGROUPNAME") */
     public $fundgroupName;
 
-    /** @Column(type="boolean",length=1, name="is_active") */
-    public $isActive;
-
-    /** @Column(type="string",length=100, name="Creator") */
+    /** @Column(type="string",length=20, name="Creator") */
     public $creator;
 
-    /** @Column(type="string",length=100, name="Updater") */
+    /** @Column(type="string",length=20, name="Updater") */
     public $updater;
 
     function getId() {
@@ -40,10 +37,6 @@ class LKFundGroup extends EntityBase {
 
     function getFundgroupName() {
         return $this->fundgroupName;
-    }
-
-    function getIsActive() {
-        return $this->isActive;
     }
 
     function getCreator() {
@@ -64,10 +57,6 @@ class LKFundGroup extends EntityBase {
 
     function setFundgroupName($fundgroupName) {
         $this->fundgroupName = $fundgroupName;
-    }
-
-    function setIsActive($isActive) {
-        $this->isActive = $isActive;
     }
 
     function setCreator($creator) {

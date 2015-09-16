@@ -4,27 +4,24 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="web_role")
+ * @Table(name="ROLE")
  */
-class WebRole extends EntityBase {
+class Role extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="id")
+     * @Column(type="integer",length=11,name="ROLEID")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="string",length=200, name="role") */
+    /** @Column(type="string",length=50, name="ROLENAME") */
     public $role;
 
-    /** @Column(type="string",length=200, name="description") */
-    public $description;
-
-    /** @Column(type="string",length=100, name="creator") */
+    /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
 
-    /** @Column(type="string",length=100, name="updater") */
+    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
     public $updater;
 
     function getId() {
@@ -33,10 +30,6 @@ class WebRole extends EntityBase {
 
     function getRole() {
         return $this->role;
-    }
-
-    function getDescription() {
-        return $this->description;
     }
 
     function getCreator() {
@@ -53,10 +46,6 @@ class WebRole extends EntityBase {
 
     function setRole($role) {
         $this->role = $role;
-    }
-
-    function setDescription($description) {
-        $this->description = $description;
     }
 
     function setCreator($creator) {

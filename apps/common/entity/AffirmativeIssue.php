@@ -4,22 +4,22 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="AFFIRMATIVETARGET")
+ * @Table(name="AFFIRMATIVEISSUE")
  */
-class AffirmativeTarget extends EntityBase {
+class AffirmativeIssue extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="AFFIRMATIVETARGETID")
+     * @Column(type="integer",length=11,name="AFFIRMATIVEISSUEID")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="text", name="AFFIRMATIVETARGETNAME") */
-    public $targetName;
+    /** @Column(type="text", name="AFFIRMATIVEISSUENAME") */
+    public $issueName;
 
-    /** @Column(type="integer",length=11, name="AFFIRMATIVEISSUEID") */
-    public $issueId;
+    /** @Column(type="integer",length=11, name="AFFIRMATIVETYPEID") */
+    public $typeId;
 
     /** @Column(type="integer",length=11, name="SEQ") */
     public $seq;
@@ -34,12 +34,12 @@ class AffirmativeTarget extends EntityBase {
         return $this->id;
     }
 
-    function getTargetName() {
-        return $this->targetName;
+    function getIssueName() {
+        return $this->issueName;
     }
 
-    function getIssueId() {
-        return $this->issueId;
+    function getTypeId() {
+        return $this->typeId;
     }
 
     function getSeq() {
@@ -58,12 +58,12 @@ class AffirmativeTarget extends EntityBase {
         $this->id = $id;
     }
 
-    function setTargetName($targetName) {
-        $this->targetName = $targetName;
+    function setIssueName($issueName) {
+        $this->issueName = $issueName;
     }
 
-    function setIssueId($issueId) {
-        $this->issueId = $issueId;
+    function setTypeId($typeId) {
+        $this->typeId = $typeId;
     }
 
     function setSeq($seq) {

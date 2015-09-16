@@ -4,22 +4,22 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="AFFIRMATIVETARGET")
+ * @Table(name="AFFIRMATIVEKPI")
  */
-class AffirmativeTarget extends EntityBase {
+class AffirmativeKpi extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="AFFIRMATIVETARGETID")
+     * @Column(type="integer",length=11,name="AFFIRMATIVEKPIID")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="text", name="AFFIRMATIVETARGETNAME") */
-    public $targetName;
+    /** @Column(type="text", name="AFFIRMATIVEKPINAME") */
+    public $kpiName;
 
-    /** @Column(type="integer",length=11, name="AFFIRMATIVEISSUEID") */
-    public $issueId;
+    /** @Column(type="integer",length=11, name="AFFIRMATIVETARGETID") */
+    public $targetId;
 
     /** @Column(type="integer",length=11, name="SEQ") */
     public $seq;
@@ -34,12 +34,12 @@ class AffirmativeTarget extends EntityBase {
         return $this->id;
     }
 
-    function getTargetName() {
-        return $this->targetName;
+    function getKpiName() {
+        return $this->kpiName;
     }
 
-    function getIssueId() {
-        return $this->issueId;
+    function getTargetId() {
+        return $this->targetId;
     }
 
     function getSeq() {
@@ -58,12 +58,12 @@ class AffirmativeTarget extends EntityBase {
         $this->id = $id;
     }
 
-    function setTargetName($targetName) {
-        $this->targetName = $targetName;
+    function setKpiName($kpiName) {
+        $this->kpiName = $kpiName;
     }
 
-    function setIssueId($issueId) {
-        $this->issueId = $issueId;
+    function setTargetId($targetId) {
+        $this->targetId = $targetId;
     }
 
     function setSeq($seq) {

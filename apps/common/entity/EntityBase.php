@@ -9,12 +9,12 @@ namespace apps\common\entity;
 class EntityBase {
 
     /**
-     * @column(name="Date_Created",type="datetime")
+     * @column(name="CREATEDATETIME",type="datetime")
      */
     public $dateCreated;
 
     /**
-     * @column(name="Date_Updated",type="datetime")
+     * @column(name="LASTUPDATEDATETIME",type="datetime")
      */
     public $dateUpdated;
 

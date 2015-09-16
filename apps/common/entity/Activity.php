@@ -4,39 +4,43 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="activity")
+ * @Table(name="3D_ACTIVITY")
  */
 class Activity extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="id")
+     * @Column(type="integer",length=11,name="ACTIVITYID")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="project_id") */
+    /** @Column(type="integer",length=11, name="PROJECTID") */
     public $projectId;
 
-    /** @Column(type="integer",length=11, name="lk_department_id") */
+    /** @Column(type="string", length=100, name="ACTIVITYNAME") */
+    public $actName;
+
+    /** @Column(type="integer",length=11, name="DEPARTMENTID") */
     public $departmentId;
 
-    /** @Column(type="text", name="activity_name") */
-    public $activityName;
+    /** @Column(type="string",length=1, name="ACTIVITYSTATUS") */
+    public $actStatus;
 
-    /** @Column(type="integer",length=11, name="budget_year") */
-    public $budgetYear;
+    /** @Column(type="string",length=1, name="ACTIVITYTYPE") */
+    public $actType;
 
-    /** @Column(type="boolean",length=1, name="is_active") */
-    public $isActive;
+    /** @Column(type="integer",length=11, name="ACTIVITYLEVEL") */
+    public $actLevel;
 
-    /** @Column(type="string",length=100, name="creator") */
+    /** @Column(type="string",length=1, name="RECEIVE_ACT") */
+    public $receiveAct;
+
+    /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
 
-    /** @Column(type="string",length=100, name="updater") */
+    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
     public $updater;
-    
-    //public $xxx;
 
     function getId() {
         return $this->id;
@@ -46,20 +50,28 @@ class Activity extends EntityBase {
         return $this->projectId;
     }
 
-    function getDepartmentId() {
-        return $this->departmentId;
-    }
-
     function getActivityName() {
         return $this->activityName;
     }
 
-    function getBudgetYear() {
-        return $this->budgetYear;
+    function getDepartmentId() {
+        return $this->departmentId;
     }
 
-    function getIsActive() {
-        return $this->isActive;
+    function getActivityStatus() {
+        return $this->activityStatus;
+    }
+
+    function getActivityType() {
+        return $this->activityType;
+    }
+
+    function getActivityLevel() {
+        return $this->activityLevel;
+    }
+
+    function getReceiveActivity() {
+        return $this->receiveActivity;
     }
 
     function getCreator() {
@@ -78,20 +90,28 @@ class Activity extends EntityBase {
         $this->projectId = $projectId;
     }
 
-    function setDepartmentId($departmentId) {
-        $this->departmentId = $departmentId;
-    }
-
     function setActivityName($activityName) {
         $this->activityName = $activityName;
     }
 
-    function setBudgetYear($budgetYear) {
-        $this->budgetYear = $budgetYear;
+    function setDepartmentId($departmentId) {
+        $this->departmentId = $departmentId;
     }
 
-    function setIsActive($isActive) {
-        $this->isActive = $isActive;
+    function setActivityStatus($activityStatus) {
+        $this->activityStatus = $activityStatus;
+    }
+
+    function setActivityType($activityType) {
+        $this->activityType = $activityType;
+    }
+
+    function setActivityLevel($activityLevel) {
+        $this->activityLevel = $activityLevel;
+    }
+
+    function setReceiveActivity($receiveActivity) {
+        $this->receiveActivity = $receiveActivity;
     }
 
     function setCreator($creator) {
