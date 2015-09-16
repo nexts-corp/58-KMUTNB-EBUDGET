@@ -13,8 +13,8 @@
                 {"name": "port","value": "1443"},
                 {"name": "dbname","value": "EBudget"},
                 {"name": "user","value": "ebudget"},
-                {"name": "password","value": "ebudget"}
-
+                {"name": "password","value": "ebudget"},
+                {"name": "charset","value": "utf8"}
             ]
         }
     ],
