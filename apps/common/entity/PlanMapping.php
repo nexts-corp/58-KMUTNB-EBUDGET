@@ -4,22 +4,22 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="BUDGETPLAN")
+ * @Table(name="PLANMAPPING")
  */
-class BudgetPlan extends EntityBase {
+class PlanMapping extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="BUDGETPLANID")
+     * @Column(type="integer",length=11,name="PLANMAPPINGID")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="string",length=500, name="BUDGETPLANNAME") */
-    public $planName;
+    /** @Column(type="integer",length=11, name="PLANID") */
+    public $planId;
 
-    /** @Column(type="integer",length=11, name="BUDGETPERIODID") */
-    public $periodId;
+    /** @Column(type="integer",length=11, name="BUDGETPROJECTID") */
+    public $budgetProjectId;
 
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
@@ -31,12 +31,12 @@ class BudgetPlan extends EntityBase {
         return $this->id;
     }
 
-    function getPlanName() {
-        return $this->planName;
+    function getPlanId() {
+        return $this->planId;
     }
 
-    function getPeriodId() {
-        return $this->periodId;
+    function getBudgetProjectId() {
+        return $this->budgetProjectId;
     }
 
     function getCreator() {
@@ -51,12 +51,12 @@ class BudgetPlan extends EntityBase {
         $this->id = $id;
     }
 
-    function setPlanName($planName) {
-        $this->planName = $planName;
+    function setPlanId($planId) {
+        $this->planId = $planId;
     }
 
-    function setPeriodId($periodId) {
-        $this->periodId = $periodId;
+    function setBudgetProjectId($budgetProjectId) {
+        $this->budgetProjectId = $budgetProjectId;
     }
 
     function setCreator($creator) {

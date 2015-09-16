@@ -4,22 +4,22 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="BUDGETPLAN")
+ * @Table(name="AFFIRMATIVETYPE")
  */
-class BudgetPlan extends EntityBase {
+class AffirmativeType extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="BUDGETPLANID")
+     * @Column(type="integer",length=11,name="AFFIRMATIVETYPEID")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="string",length=500, name="BUDGETPLANNAME") */
-    public $planName;
+    /** @Column(type="string",length=300, name="AFFIRMATIVETYPENAME") */
+    public $typeName;
 
     /** @Column(type="integer",length=11, name="BUDGETPERIODID") */
-    public $periodId;
+    public $budgetperiodId;
 
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
@@ -31,12 +31,12 @@ class BudgetPlan extends EntityBase {
         return $this->id;
     }
 
-    function getPlanName() {
-        return $this->planName;
+    function getTypeName() {
+        return $this->typeName;
     }
 
-    function getPeriodId() {
-        return $this->periodId;
+    function getBudgetperiodId() {
+        return $this->budgetperiodId;
     }
 
     function getCreator() {
@@ -51,12 +51,12 @@ class BudgetPlan extends EntityBase {
         $this->id = $id;
     }
 
-    function setPlanName($planName) {
-        $this->planName = $planName;
+    function setTypeName($typeName) {
+        $this->typeName = $typeName;
     }
 
-    function setPeriodId($periodId) {
-        $this->periodId = $periodId;
+    function setBudgetperiodId($budgetperiodId) {
+        $this->budgetperiodId = $budgetperiodId;
     }
 
     function setCreator($creator) {
@@ -68,5 +68,3 @@ class BudgetPlan extends EntityBase {
     }
 
 }
-
-?>

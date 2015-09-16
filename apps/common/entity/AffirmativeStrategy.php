@@ -4,22 +4,22 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="AFFIRMATIVETARGET")
+ * @Table(name="AFFIRMATIVESTRATEGY")
  */
-class AffirmativeTarget extends EntityBase {
+class AffirmativeStrategy extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="AFFIRMATIVETARGETID")
+     * @Column(type="integer",length=11,name="AFFIRMATIVESTRATEGYID")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="text", name="AFFIRMATIVETARGETNAME") */
-    public $targetName;
+    /** @Column(type="text", name="AFFIRMATIVESTRATEGYNAME") */
+    public $strategyName;
 
-    /** @Column(type="integer",length=11, name="AFFIRMATIVEISSUEID") */
-    public $issueId;
+    /** @Column(type="integer",length=11, name="AFFIRMATIVETARGETID") */
+    public $targetId;
 
     /** @Column(type="integer",length=11, name="SEQ") */
     public $seq;
@@ -34,12 +34,12 @@ class AffirmativeTarget extends EntityBase {
         return $this->id;
     }
 
-    function getTargetName() {
-        return $this->targetName;
+    function getStrategyName() {
+        return $this->strategyName;
     }
 
-    function getIssueId() {
-        return $this->issueId;
+    function getTargetId() {
+        return $this->targetId;
     }
 
     function getSeq() {
@@ -58,12 +58,12 @@ class AffirmativeTarget extends EntityBase {
         $this->id = $id;
     }
 
-    function setTargetName($targetName) {
-        $this->targetName = $targetName;
+    function setStrategyName($strategyName) {
+        $this->strategyName = $strategyName;
     }
 
-    function setIssueId($issueId) {
-        $this->issueId = $issueId;
+    function setTargetId($targetId) {
+        $this->targetId = $targetId;
     }
 
     function setSeq($seq) {

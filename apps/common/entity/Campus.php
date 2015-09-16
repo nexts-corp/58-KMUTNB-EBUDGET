@@ -4,27 +4,24 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="lk_campus")
+ * @Table(name="3D_CAMPUS")
  */
-class LKCampus extends EntityBase {
+class Campus extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="id")
+     * @Column(type="integer",length=11,name="CAMPUSID")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="string",length=255, name="campas_name") */
+    /** @Column(type="string",length=255, name="CAMPUSNAME") */
     public $campusName;
 
-    /** @Column(type="boolean",length=1, name="is_active") */
-    public $isActive;
-
-    /** @Column(type="string",length=100, name="creator") */
+    /** @Column(type="string",length=20, name="creator") */
     public $creator;
 
-    /** @Column(type="string",length=100, name="updater") */
+    /** @Column(type="string",length=20, name="updater") */
     public $updater;
 
     function getId() {
@@ -33,10 +30,6 @@ class LKCampus extends EntityBase {
 
     function getCampusName() {
         return $this->campusName;
-    }
-
-    function getIsActive() {
-        return $this->isActive;
     }
 
     function getCreator() {
@@ -53,10 +46,6 @@ class LKCampus extends EntityBase {
 
     function setCampusName($campusName) {
         $this->campusName = $campusName;
-    }
-
-    function setIsActive($isActive) {
-        $this->isActive = $isActive;
     }
 
     function setCreator($creator) {

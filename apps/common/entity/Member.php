@@ -4,48 +4,45 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="web_member")
+ * @Table(name="MEMBER")
  */
-class WebMember extends EntityBase {
+class Member extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="id")
+     * @Column(type="integer",length=11,name="MEMBERID")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="string",length=200, name="username") */
+    /** @Column(type="string",length=100, name="USERNAME") */
     public $username;
 
-    /** @Column(type="string",length=200, name="password") */
+    /** @Column(type="string",length=100, name="PASSWORD") */
     public $password;
 
-    /** @Column(type="string",length=200, name="firstname") */
+    /** @Column(type="integer",length=11, name="DEPARTMENTID") */
+    public $deptId;
+
+    /** @Column(type="string",length=200, name="FIRSTNAME") */
     public $firstname;
 
-    /** @Column(type="string",length=200, name="lastname") */
+    /** @Column(type="string",length=200, name="LASTNAME") */
     public $lastname;
 
-    /** @Column(type="string",length=200, name="email") */
+    /** @Column(type="string",length=200, name="EMAIL") */
     public $email;
 
-    /** @Column(type="string",length=200, name="telephone") */
+    /** @Column(type="string",length=200, name="TELEPHONE") */
     public $telephone;
 
-    /** @Column(type="integer",length=11, name="web_role_id") */
-    public $webRoleId;
+    /** @column(name="LASTLOGIN",type="datetime") */
+    public $lastLogin;
 
-    /** @Column(type="integer",length=11, name="lk_faculty_id") */
-    public $facultyId;
-
-    /** @Column(type="integer",length=11, name="lk_department_id") */
-    public $departmentId;
-
-    /** @Column(type="string",length=100, name="creator") */
+    /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
 
-    /** @Column(type="string",length=100, name="updater") */
+    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
     public $updater;
 
     function getId() {
@@ -58,6 +55,10 @@ class WebMember extends EntityBase {
 
     function getPassword() {
         return $this->password;
+    }
+
+    function getDeptId() {
+        return $this->deptId;
     }
 
     function getFirstname() {
@@ -76,16 +77,8 @@ class WebMember extends EntityBase {
         return $this->telephone;
     }
 
-    function getWebRoleId() {
-        return $this->webRoleId;
-    }
-
-    function getFacultyId() {
-        return $this->facultyId;
-    }
-
-    function getDepartmentId() {
-        return $this->departmentId;
+    function getLastLogin() {
+        return $this->lastLogin;
     }
 
     function getCreator() {
@@ -108,6 +101,10 @@ class WebMember extends EntityBase {
         $this->password = $password;
     }
 
+    function setDeptId($deptId) {
+        $this->deptId = $deptId;
+    }
+
     function setFirstname($firstname) {
         $this->firstname = $firstname;
     }
@@ -124,16 +121,8 @@ class WebMember extends EntityBase {
         $this->telephone = $telephone;
     }
 
-    function setWebRoleId($webRoleId) {
-        $this->webRoleId = $webRoleId;
-    }
-
-    function setFacultyId($facultyId) {
-        $this->facultyId = $facultyId;
-    }
-
-    function setDepartmentId($departmentId) {
-        $this->departmentId = $departmentId;
+    function setLastLogin($lastLogin) {
+        $this->lastLogin = $lastLogin;
     }
 
     function setCreator($creator) {
