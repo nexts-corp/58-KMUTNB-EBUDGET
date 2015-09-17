@@ -8,8 +8,7 @@ namespace apps\common\interfaces;
  * @description Lookup
  */
 interface ILookupService {
-    
-    
+
     /**
      * @name listFaculty
      * @uri /listFaculty
@@ -26,9 +25,7 @@ interface ILookupService {
      * @description รายชื่อหน่วยงาน
      */
     public function listDepartment($facultyId);
-    
-    
-    
+
     /**
      * @name listFundgroup
      * @uri /listFundgroup
@@ -44,7 +41,7 @@ interface ILookupService {
      * @description รายชื่อแผนงานงบประมาณ
      */
     public function listRevenuePlan();
-    
+
     /**
      * @name listBudgetPlan
      * @uri /listBudgetPlan
@@ -60,8 +57,15 @@ interface ILookupService {
      * @description รายชื่อผลผลิต
      */
     public function listBudgetProduct();
-    
-    
+
+    /**
+     * @name listBudgetYear
+     * @uri /listBudgetYear
+     * @return String[] lists Description
+     * @description รายการปีงบประมาณ
+     */
+    public function listBudgetYear();
+
     /**
      * @name listYear
      * @uri /listYear
@@ -69,5 +73,4 @@ interface ILookupService {
      * @description รายการปีงบประมาณ
      */
     public function listYear();
-
 }

@@ -12,8 +12,21 @@
                 {"name": "host","value": "db.codeunbug.com"},
                 {"name": "port","value": "3306"},
                 {"name": "dbname","value": "kmutnb_ebudget"},
-                {"name": "user","value": "kmutnb_ebudget"},
-                {"name": "password","value": "7R2TuLHtDq9ftHMV"}
+                {"name": "user","value": "admin"},
+                {"name": "password","value": "intelenicsdb"},
+                {"name": "charset","value": "utf8"}
+            ]
+        },
+        {
+            "contextName": "sqlserver",
+            "contextType": "data",
+            "propertys": [
+                {"name": "driver","value": "pdo_sqlsrv"},
+                {"name": "host","value": "202.44.34.86"},
+                {"name": "port","value": "1443"},
+                {"name": "dbname","value": "EBudget"},
+                {"name": "user","value": "ebudget"},
+                {"name": "password","value": "ebudget"}
 
             ]
         }

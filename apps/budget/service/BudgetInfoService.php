@@ -29,35 +29,61 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
     public function saveBgSalary($budget) {
         $return = true;
 
-        $bg = new BudgetMoneySalary();
-        $bg->id = $budget->id;
-        $dataBudget = $this->datacontext->getObject($bg);
-        if (count($dataBudget) == 0) {
-            if (!$this->datacontext->saveObject($budget)) {
-                $return = $this->datacontext->getLastMessage();
-            }
-        } else {
-            $dataBudget[0]->moneyTypeCode = $budget->moneyTypeCode;
-            $dataBudget[0]->moneyTypeId = $budget->moneyTypeId;
-            $dataBudget[0]->planId = $budget->planId;
-            $dataBudget[0]->productId = $budget->productId;
-            $dataBudget[0]->fundgroupId = $budget->fundgroupId;
-            $dataBudget[0]->departmentId = $budget->departmentId;
-            $dataBudget[0]->attachmentId = $budget->attachmentId;
-            $dataBudget[0]->budgetYear = $budget->budgetYear;
-            $dataBudget[0]->formType = $budget->formType;
-            $dataBudget[0]->positionName = $budget->positionName;
-            $dataBudget[0]->positionOccupy = $budget->positionOccupy;
-            $dataBudget[0]->positionVacancy = $budget->positionVacancy;
-            $dataBudget[0]->rateNo = $budget->rateNo;
-            $dataBudget[0]->rateSalary = $budget->rateSalary;
-            $dataBudget[0]->totalSalary = $budget->totalSalary;
-            $dataBudget[0]->remark = $budget->remark;
-            $dataBudget[0]->updater = $budget->updater;
-            $dataBudget[0]->dateUpdated = $budget->dateUpdated;
+        $budgetYear = $budget[0]->budgetYear;
+        $formType = $budget[0]->formType;
+        $moneyTypeCode = $budget[0]->moneyTypeCode;
+        $moneyTypeId = $budget[0]->moneyTypeId;
+        $fundgroupId = $budget[0]->fundgroupId;
+        $departmentId = $budget[0]->departmentId;
+        $planId = $budget[0]->planId;
+        $productId = $budget[0]->productId;
 
-            if (!$this->datacontext->updateObject($dataBudget[0])) {
-                $return = $this->datacontext->getLastMessage();
+        $sql = "delete from " . $this->ent . "\\BudgetMoneySalary " .
+                " where budgetYear =:budgetYear and formType =:formType and moneyTypeCode =:moneyTypeCode and moneyTypeId =: moneyTypeId " .
+                " and fundgroupId =:fundgroupId and departmentId =:departmentId and planId =:planId and productId =:productId ";
+        $param = array(
+            "budgetYear" => $budgetYear,
+            "formType" => $formType,
+            "moneyTypeCode" => $moneyTypeCode,
+            "moneyTypeId" => $moneyTypeId,
+            "fundgroupId" => $fundgroupId,
+            "departmentId" => $departmentId,
+            "planId" => $planId,
+            "productId" => $productId
+        );
+        $data = $this->datacontext->pdoQuery($sql, $params);
+
+        foreach ($budget as $key => $value) {
+            $bg = new BudgetMoneySalary();
+            $bg->id = $budget->id;
+            $dataBudget = $this->datacontext->getObject($bg);
+            if (count($dataBudget) == 0) {
+                if (!$this->datacontext->saveObject($budget[$key])) {
+                    $return = $this->datacontext->getLastMessage();
+                }
+            } else {
+                $dataBudget[$key]->moneyTypeCode = $budget->moneyTypeCode;
+                $dataBudget[$key]->moneyTypeId = $budget->moneyTypeId;
+                $dataBudget[$key]->planId = $budget->planId;
+                $dataBudget[$key]->productId = $budget->productId;
+                $dataBudget[$key]->fundgroupId = $budget->fundgroupId;
+                $dataBudget[$key]->departmentId = $budget->departmentId;
+                $dataBudget[$key]->attachmentId = $budget->attachmentId;
+                $dataBudget[$key]->budgetYear = $budget->budgetYear;
+                $dataBudget[$key]->formType = $budget->formType;
+                $dataBudget[$key]->positionName = $budget->positionName;
+                $dataBudget[$key]->positionOccupy = $budget->positionOccupy;
+                $dataBudget[$key]->positionVacancy = $budget->positionVacancy;
+                $dataBudget[$key]->rateNo = $budget->rateNo;
+                $dataBudget[$key]->rateSalary = $budget->rateSalary;
+                $dataBudget[$key]->totalSalary = $budget->totalSalary;
+                $dataBudget[$key]->remark = $budget->remark;
+                $dataBudget[$key]->updater = $budget->updater;
+                $dataBudget[$key]->dateUpdated = $budget->dateUpdated;
+
+                if (!$this->datacontext->updateObject($dataBudget[$key])) {
+                    $return = $this->datacontext->getLastMessage();
+                }
             }
         }
 
@@ -67,43 +93,61 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
     public function saveBgOperating($budget) {
         $return = true;
 
-        $bg = new BudgetMoneyOperating();
-        $bg->id = $budget->id;
-        $dataBudget = $this->datacontext->getObject($bg);
-        if (count($dataBudget) == 0) {
-            if (!$this->datacontext->saveObject($budget)) {
-                $return = $this->datacontext->getLastMessage();
-            }
-        } else {
-            $dataBudget[0]->moneyTypeCode = $budget->moneyTypeCode;
-            $dataBudget[0]->moneyTypeId = $budget->moneyTypeId;
-            $dataBudget[0]->planId = $budget->planId;
-            $dataBudget[0]->productId = $budget->productId;
-            $dataBudget[0]->fundgroupId = $budget->fundgroupId;
-            $dataBudget[0]->departmentId = $budget->departmentId;
-            $dataBudget[0]->attachmentId = $budget->attachmentId;
-            $dataBudget[0]->budgetYear = $budget->budgetYear;
-            $dataBudget[0]->formType = $budget->formType;
-            $dataBudget[0]->name = $budget->name;
-            $dataBudget[0]->budgetRequest = $budget->budgetRequest;
-            $dataBudget[0]->budgetReceive = $budget->budgetReceive;
-            $dataBudget[0]->budgetHistory = $budget->budgetHistory;
-            $dataBudget[0]->remark = $budget->remark;
-            $dataBudget[0]->updater = $budget->updater;
-            $dataBudget[0]->dateUpdated = $budget->dateUpdated;
+        $budgetYear = $budget[0]->budgetYear;
+        $formType = $budget[0]->formType;
+        $moneyTypeCode = $budget[0]->moneyTypeCode;
+        $moneyTypeId = $budget[0]->moneyTypeId;
+        $fundgroupId = $budget[0]->fundgroupId;
+        $departmentId = $budget[0]->departmentId;
+        $planId = $budget[0]->planId;
+        $productId = $budget[0]->productId;
 
-            if (!$this->datacontext->updateObject($dataBudget[0])) {
-                $return = $this->datacontext->getLastMessage();
+        $sql = "delete from " . $this->ent . "\\BudgetMoneyOperating " .
+                " where budgetYear =:budgetYear and formType =:formType and moneyTypeCode =:moneyTypeCode and moneyTypeId =: moneyTypeId " .
+                " and fundgroupId =:fundgroupId and departmentId =:departmentId and planId =:planId and productId =:productId ";
+        $param = array(
+            "budgetYear" => $budgetYear,
+            "formType" => $formType,
+            "moneyTypeCode" => $moneyTypeCode,
+            "moneyTypeId" => $moneyTypeId,
+            "fundgroupId" => $fundgroupId,
+            "departmentId" => $departmentId,
+            "planId" => $planId,
+            "productId" => $productId
+        );
+        $data = $this->datacontext->pdoQuery($sql, $params);
+
+        foreach ($budget as $key => $value) {
+            $bg = new BudgetMoneyOperating();
+            $bg->id = $budget->id;
+            $dataBudget = $this->datacontext->getObject($bg);
+            if (count($dataBudget) == 0) {
+                if (!$this->datacontext->saveObject($budget[$key])) {
+                    $return = $this->datacontext->getLastMessage();
+                }
+            } else {
+                $dataBudget[$key]->moneyTypeCode = $budget->moneyTypeCode;
+                $dataBudget[$key]->moneyTypeId = $budget->moneyTypeId;
+                $dataBudget[$key]->planId = $budget->planId;
+                $dataBudget[$key]->productId = $budget->productId;
+                $dataBudget[$key]->fundgroupId = $budget->fundgroupId;
+                $dataBudget[$key]->departmentId = $budget->departmentId;
+                $dataBudget[$key]->attachmentId = $budget->attachmentId;
+                $dataBudget[$key]->budgetYear = $budget->budgetYear;
+                $dataBudget[$key]->formType = $budget->formType;
+                $dataBudget[$key]->name = $budget->name;
+                $dataBudget[$key]->budgetRequest = $budget->budgetRequest;
+                $dataBudget[$key]->budgetReceive = $budget->budgetReceive;
+                $dataBudget[$key]->budgetHistory = $budget->budgetHistory;
+                $dataBudget[$key]->remark = $budget->remark;
+                $dataBudget[$key]->updater = $budget->updater;
+                $dataBudget[$key]->dateUpdated = $budget->dateUpdated;
+
+                if (!$this->datacontext->updateObject($dataBudget[$key])) {
+                    $return = $this->datacontext->getLastMessage();
+                }
             }
         }
-
-        /*
-          if ($this->datacontext->saveObject($budget143)) {
-          $return = true;
-          } else {
-          $return = $this->datacontext->getLastMessage();
-          }
-         */
 
         return $return;
     }
@@ -111,43 +155,62 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
     public function saveBgUtility($budget) {
         $return = true;
 
-        $bg = new BudgetMoneyUtility();
-        $bg->id = $budget->id;
-        $dataBudget = $this->datacontext->getObject($bg);
-        if (count($dataBudget) == 0) {
-            if (!$this->datacontext->saveObject($budget)) {
-                $return = $this->datacontext->getLastMessage();
-            }
-        } else {
-            $dataBudget[0]->moneyTypeCode = $budget->moneyTypeCode;
-            $dataBudget[0]->moneyTypeId = $budget->moneyTypeId;
-            $dataBudget[0]->planId = $budget->planId;
-            $dataBudget[0]->productId = $budget->productId;
-            $dataBudget[0]->fundgroupId = $budget->fundgroupId;
-            $dataBudget[0]->departmentId = $budget->departmentId;
-            $dataBudget[0]->attachmentId = $budget->attachmentId;
-            $dataBudget[0]->budgetYear = $budget->budgetYear;
-            $dataBudget[0]->name = $budget->name;
-            $dataBudget[0]->budgetRequest = $budget->budgetRequest;
-            $dataBudget[0]->budgetHistory = $budget->budgetHistory;
-            $dataBudget[0]->nonbudgetRequest = $budget->nonbudgetRequest;
-            $dataBudget[0]->nonbudgetHistory = $budget->nonbudgetHistory;
-            $dataBudget[0]->remark = $budget->remark;
-            $dataBudget[0]->updater = $budget->updater;
-            $dataBudget[0]->dateUpdated = $budget->dateUpdated;
+        $budgetYear = $budget[0]->budgetYear;
+        $formType = $budget[0]->formType;
+        $moneyTypeCode = $budget[0]->moneyTypeCode;
+        $moneyTypeId = $budget[0]->moneyTypeId;
+        $fundgroupId = $budget[0]->fundgroupId;
+        $departmentId = $budget[0]->departmentId;
+        $planId = $budget[0]->planId;
+        $productId = $budget[0]->productId;
 
-            if (!$this->datacontext->updateObject($dataBudget[0])) {
-                $return = $this->datacontext->getLastMessage();
+        $sql = "delete from " . $this->ent . "\\BudgetMoneyUtility " .
+                " where budgetYear =:budgetYear and formType =:formType and moneyTypeCode =:moneyTypeCode and moneyTypeId =: moneyTypeId " .
+                " and fundgroupId =:fundgroupId and departmentId =:departmentId and planId =:planId and productId =:productId ";
+        $param = array(
+            "budgetYear" => $budgetYear,
+            "formType" => $formType,
+            "moneyTypeCode" => $moneyTypeCode,
+            "moneyTypeId" => $moneyTypeId,
+            "fundgroupId" => $fundgroupId,
+            "departmentId" => $departmentId,
+            "planId" => $planId,
+            "productId" => $productId
+        );
+        $data = $this->datacontext->pdoQuery($sql, $params);
+
+        foreach ($budget as $key => $value) {
+
+            $bg = new BudgetMoneyUtility();
+            $bg->id = $budget->id;
+            $dataBudget = $this->datacontext->getObject($bg);
+            if (count($dataBudget) == 0) {
+                if (!$this->datacontext->saveObject($budget[$key])) {
+                    $return = $this->datacontext->getLastMessage();
+                }
+            } else {
+                $dataBudget[$key]->moneyTypeCode = $budget->moneyTypeCode;
+                $dataBudget[$key]->moneyTypeId = $budget->moneyTypeId;
+                $dataBudget[$key]->planId = $budget->planId;
+                $dataBudget[$key]->productId = $budget->productId;
+                $dataBudget[$key]->fundgroupId = $budget->fundgroupId;
+                $dataBudget[$key]->departmentId = $budget->departmentId;
+                $dataBudget[$key]->attachmentId = $budget->attachmentId;
+                $dataBudget[$key]->budgetYear = $budget->budgetYear;
+                $dataBudget[$key]->name = $budget->name;
+                $dataBudget[$key]->budgetRequest = $budget->budgetRequest;
+                $dataBudget[$key]->budgetHistory = $budget->budgetHistory;
+                $dataBudget[$key]->nonbudgetRequest = $budget->nonbudgetRequest;
+                $dataBudget[$key]->nonbudgetHistory = $budget->nonbudgetHistory;
+                $dataBudget[$key]->remark = $budget->remark;
+                $dataBudget[$key]->updater = $budget->updater;
+                $dataBudget[$key]->dateUpdated = $budget->dateUpdated;
+
+                if (!$this->datacontext->updateObject($dataBudget[$key])) {
+                    $return = $this->datacontext->getLastMessage();
+                }
             }
         }
-
-        /*
-          if ($this->datacontext->saveObject($budget144)) {
-          $return = true;
-          } else {
-          $return = $this->datacontext->getLastMessage();
-          }
-         */
 
         return $return;
     }
@@ -155,53 +218,124 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
     public function saveBgDurable($budget) {
         $return = true;
 
-        $bg = new BudgetMoneyDurable();
-        $bg->id = $budget->id;
-        $dataBudget = $this->datacontext->getObject($bg);
-        if (count($dataBudget) == 0) {
-            if (!$this->datacontext->saveObject($budget)) {
-                $return = $this->datacontext->getLastMessage();
-            }
-        } else {
-            $dataBudget[0]->moneyTypeCode = $budget->moneyTypeCode;
-            $dataBudget[0]->moneyTypeId = $budget->moneyTypeId;
-            $dataBudget[0]->planId = $budget->planId;
-            $dataBudget[0]->productId = $budget->productId;
-            $dataBudget[0]->fundgroupId = $budget->fundgroupId;
-            $dataBudget[0]->departmentId = $budget->departmentId;
-            $dataBudget[0]->attachmentId = $budget->attachmentId;
-            $dataBudget[0]->budgetYear = $budget->budgetYear;
-            $dataBudget[0]->name = $budget->name;
-            $dataBudget[0]->desc = $budget->desc;
-            $dataBudget[0]->qty = $budget->qty;
-            $dataBudget[0]->price = $budget->price;
-            $dataBudget[0]->totalPrice = $budget->totalPrice;
-            $dataBudget[0]->totalNeeded = $budget->totalNeeded;
-            $dataBudget[0]->isAvailable = $budget->isAvailable;
-            $dataBudget[0]->qtyWorkable = $budget->qtyWorkable;
-            $dataBudget[0]->qtyUnworkable = $budget->qtyUnworkable;
-            $dataBudget[0]->remark = $budget->remark;
-            $dataBudget[0]->updater = $budget->updater;
-            $dataBudget[0]->dateUpdated = $budget->dateUpdated;
+        $budgetYear = $budget[0]->budgetYear;
+        $formType = $budget[0]->formType;
+        $moneyTypeCode = $budget[0]->moneyTypeCode;
+        $moneyTypeId = $budget[0]->moneyTypeId;
+        $fundgroupId = $budget[0]->fundgroupId;
+        $departmentId = $budget[0]->departmentId;
+        $planId = $budget[0]->planId;
+        $productId = $budget[0]->productId;
 
-            if (!$this->datacontext->updateObject($dataBudget[0])) {
-                $return = $this->datacontext->getLastMessage();
-            }
+        $sql = " select id from " . $this->ent . "\\BudgetMoneyDurable " .
+                " where budgetYear =:budgetYear and formType =:formType and moneyTypeCode =:moneyTypeCode and moneyTypeId =: moneyTypeId " .
+                " and fundgroupId =:fundgroupId and departmentId =:departmentId and planId =:planId and productId =:productId ";
+        $param = array(
+            "budgetYear" => $budgetYear,
+            "formType" => $formType,
+            "moneyTypeCode" => $moneyTypeCode,
+            "moneyTypeId" => $moneyTypeId,
+            "fundgroupId" => $fundgroupId,
+            "departmentId" => $departmentId,
+            "planId" => $planId,
+            "productId" => $productId
+        );
+        $data = $this->datacontext->pdoQuery($sql, $param);
+
+        foreach ($data as $key => $value) {
+            $sqlDel = " delete from " . $this->ent . "\\BudgetMoneyBuildingOneyear " .
+                    " where buildingId =:buildingId ";
+            $param2 = array("buildingId" => $data[$key]->id);
+            $data = $this->datacontext->pdoQuery($sqlDel, $param);
         }
 
-        /*
-          if ($this->datacontext->saveObject($budget145)) {
-          $return = true;
-          } else {
-          $return = $this->datacontext->getLastMessage();
-          }
-         */
+        $sql = "delete from " . $this->ent . "\\BudgetMoneyDurable " .
+                " where budgetYear =:budgetYear and formType =:formType and moneyTypeCode =:moneyTypeCode and moneyTypeId =: moneyTypeId " .
+                " and fundgroupId =:fundgroupId and departmentId =:departmentId and planId =:planId and productId =:productId ";
+        $param = array(
+            "budgetYear" => $budgetYear,
+            "formType" => $formType,
+            "moneyTypeCode" => $moneyTypeCode,
+            "moneyTypeId" => $moneyTypeId,
+            "fundgroupId" => $fundgroupId,
+            "departmentId" => $departmentId,
+            "planId" => $planId,
+            "productId" => $productId
+        );
+        $data = $this->datacontext->pdoQuery($sql, $params);
+
+        foreach ($budget as $key => $value) {
+            $bg = new BudgetMoneyDurable();
+            $bg->id = $budget->id;
+            $dataBudget = $this->datacontext->getObject($bg);
+            if (count($dataBudget) == 0) {
+                if (!$this->datacontext->saveObject($budget[$key])) {
+                    $return = $this->datacontext->getLastMessage();
+                }
+            } else {
+                $dataBudget[$key]->moneyTypeCode = $budget->moneyTypeCode;
+                $dataBudget[$key]->moneyTypeId = $budget->moneyTypeId;
+                $dataBudget[$key]->planId = $budget->planId;
+                $dataBudget[$key]->productId = $budget->productId;
+                $dataBudget[$key]->fundgroupId = $budget->fundgroupId;
+                $dataBudget[$key]->departmentId = $budget->departmentId;
+                $dataBudget[$key]->attachmentId = $budget->attachmentId;
+                $dataBudget[$key]->budgetYear = $budget->budgetYear;
+                $dataBudget[$key]->name = $budget->name;
+                $dataBudget[$key]->desc = $budget->desc;
+                $dataBudget[$key]->qty = $budget->qty;
+                $dataBudget[$key]->price = $budget->price;
+                $dataBudget[$key]->totalPrice = $budget->totalPrice;
+                $dataBudget[$key]->totalNeeded = $budget->totalNeeded;
+                $dataBudget[$key]->isAvailable = $budget->isAvailable;
+                $dataBudget[$key]->qtyWorkable = $budget->qtyWorkable;
+                $dataBudget[$key]->qtyUnworkable = $budget->qtyUnworkable;
+                $dataBudget[$key]->remark = $budget->remark;
+                $dataBudget[$key]->updater = $budget->updater;
+                $dataBudget[$key]->dateUpdated = $budget->dateUpdated;
+
+                if (!$this->datacontext->updateObject($dataBudget[$key])) {
+                    $return = $this->datacontext->getLastMessage();
+                }
+            }
+        }
 
         return $return;
     }
 
     public function saveBgBuilding1Year($building, $oneyear) {
         $return = true;
+
+        $budgetYear = $budget[0]->budgetYear;
+        $formType = $budget[0]->formType;
+        $moneyTypeCode = $budget[0]->moneyTypeCode;
+        $moneyTypeId = $budget[0]->moneyTypeId;
+        $fundgroupId = $budget[0]->fundgroupId;
+        $departmentId = $budget[0]->departmentId;
+        $planId = $budget[0]->planId;
+        $productId = $budget[0]->productId;
+
+        $sql = " select id from " . $this->ent . "\\BudgetMoneyDurable " .
+                " where budgetYear =:budgetYear and formType =:formType and moneyTypeCode =:moneyTypeCode and moneyTypeId =:moneyTypeId " .
+                " and fundgroupId =:fundgroupId and departmentId =:departmentId and planId =:planId and productId =:productId ";
+        $param = array(
+            "budgetYear" => $budgetYear,
+            "formType" => $formType,
+            "moneyTypeCode" => $moneyTypeCode,
+            "moneyTypeId" => $moneyTypeId,
+            "fundgroupId" => $fundgroupId,
+            "departmentId" => $departmentId,
+            "planId" => $planId,
+            "productId" => $productId
+        );
+        $data = $this->datacontext->pdoQuery($sql, $param);
+
+        foreach ($data as $key => $value) {
+            $sqlDel = " delete from " . $this->ent . "\\BudgetMoneyBuildingOneyear " .
+                    " where buildingId =:buildingId ";
+            $param2 = array("buildingId" => $data[$key]->id);
+            $data = $this->datacontext->pdoQuery($sqlDel, $param);
+        }
 
         $data = new BudgetMoneyBuilding();
         $data->id = $building->id;
@@ -277,6 +411,44 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
     public function saveBgBuildingContinue($building, $period, $list) {
         $return = true;
 
+         $budgetYear = $budget[0]->budgetYear;
+        $formType = $budget[0]->formType;
+        $moneyTypeCode = $budget[0]->moneyTypeCode;
+        $moneyTypeId = $budget[0]->moneyTypeId;
+        $fundgroupId = $budget[0]->fundgroupId;
+        $departmentId = $budget[0]->departmentId;
+        $planId = $budget[0]->planId;
+        $productId = $budget[0]->productId;
+
+        $sql = " select id from " . $this->ent . "\\BudgetMoneyDurable " .
+                " where budgetYear =:budgetYear and formType =:formType and moneyTypeCode =:moneyTypeCode and moneyTypeId =: moneyTypeId " .
+                " and fundgroupId =:fundgroupId and departmentId =:departmentId and planId =:planId and productId =:productId ";
+        $param = array(
+            "budgetYear" => $budgetYear,
+            "formType" => $formType,
+            "moneyTypeCode" => $moneyTypeCode,
+            "moneyTypeId" => $moneyTypeId,
+            "fundgroupId" => $fundgroupId,
+            "departmentId" => $departmentId,
+            "planId" => $planId,
+            "productId" => $productId
+        );
+        $data = $this->datacontext->pdoQuery($sql, $param);
+        
+        foreach ($data as $key => $value) {
+            $sqlDel = " delete from " . $this->ent . "\\BudgetMoneyBuildingContinueList " .
+                    " where buildingId =:buildingId ";
+            $param2 = array("buildingId" => $data[$key]->id);
+            $data = $this->datacontext->pdoQuery($sqlDel, $param);
+        }
+        
+         foreach ($data as $key => $value) {
+            $sqlDel = " delete from " . $this->ent . "\\BudgetMoneyBuildingContinuePeriod " .
+                    " where buildingId =:buildingId ";
+            $param2 = array("buildingId" => $data[$key]->id);
+            $data = $this->datacontext->pdoQuery($sqlDel, $param);
+        }        
+        
         $dataBuilding = new BudgetMoneyBuilding();
         $dataBuilding->id = $building->id;
         $dataBuilding = $this->datacontext->getObject($dataBuilding);

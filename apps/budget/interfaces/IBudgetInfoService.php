@@ -12,7 +12,7 @@ interface IBudgetInfoService {
     /**
      * @name saveBgSalary
      * @uri /saveBgSalary
-     * @param apps\common\entity\BudgetMoneySalary budget Description
+     * @param apps\common\entity\BudgetMoneySalary[] budget Description
      * @return boolean save Description
      * @description เพิ่ม/แก้ไขคำขอแบบ ง.140-ง.142
      */
@@ -21,7 +21,7 @@ interface IBudgetInfoService {
     /**
      * @name saveBgOperating
      * @uri /saveBgOperating
-     * @param apps\common\entity\BudgetMoneyOperating budget Description
+     * @param apps\common\entity\BudgetMoneyOperating[] budget Description
      * @return boolean save Description
      * @description เพิ่ม/แก้ไขคำขอแบบ ง.143, ง.146
      */
@@ -30,7 +30,7 @@ interface IBudgetInfoService {
     /**
      * @name saveBgUtility
      * @uri /saveBgUtility
-     * @param apps\common\entity\BudgetMoneyUtility budget Description
+     * @param apps\common\entity\BudgetMoneyUtility[] budget Description
      * @return boolean save Description
      * @description เพิ่ม/แก้ไขคำขอแบบ ง.144
      */
@@ -39,7 +39,7 @@ interface IBudgetInfoService {
     /**
      * @name saveBgDurable
      * @uri /saveBgDurable
-     * @param apps\common\entity\BudgetMoneyDurable budget Description
+     * @param apps\common\entity\BudgetMoneyDurable[] budget Description
      * @return boolean save Description
      * @description เพิ่ม/แก้ไขคำขอแบบ ง.145 - ครุภัณฑ์
      */

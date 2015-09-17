@@ -23,4 +23,13 @@ interface IBudgetTrackingService
     public function getInfoTracking($budgetType, $quater, $year);
 
 
+    /**
+     * @name saveTracking
+     * @uri /saveTracking
+     * @param String[] objBudget Description ข้อมูลการติดตาม jsonArrOBJECT
+     * @return boolean status
+     * @description บันทึกข้อมูลการติดตาม
+     */
+    public function saveTracking($objBudget);
+
 }

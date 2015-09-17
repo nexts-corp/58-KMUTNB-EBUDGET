@@ -452,14 +452,14 @@
             html += '<div class="modal-body">';
             html += '   <div class="col-md-12">';
             html += '       <div class="form-group ">';
-            html += '           <label class="col-md-3 control-label">ข้อมูลกิจกรรม</label>';
+            html += '           <label class="col-md-3 control-label">ประเภทส่วนงาน</label>';
             html += '           <div class="col-md-9">';
             html += '               <select id="select-activity" name="select-activity" class="input-sm form-control" required="">';
 
             html += '               </select>';
             html += '           </div>';
             html += '           <div class="validate-error col-md-12 text-danger" style="display: none">';
-            html += '             <label class="control-label pull-right padding-right"><i class="fa fa-exclamation"></i> กรุณาเลือกกิจกรรม</label>';
+            html += '             <label class="control-label pull-right padding-right"><i class="fa fa-exclamation"></i> กรุณาเลือกประเภทส่วนงาน</label>';
             html += '           </div>';
             html += '       </div>';
             html += '   </div>';
@@ -484,7 +484,7 @@
 
             $.get("{{_context_path}}/api/bginfo/Department/fetchActivityType", function (data) {
 
-                var htmlActivityType = '<option value="0">- เลือกกิจกรรม -</option>';
+                var htmlActivityType = '<option value="0">- เลือกประเภทส่วนงาน -</option>';
 
                 if (data != null && data.listsActivityType.length > 0) {
 
@@ -493,7 +493,7 @@
                         htmlActivityType += '<option value="' + data.listsActivityType[i].id + '">' + data.listsActivityType[i].activityTypeName + '</option>';
                     }
                 } else {
-                    htmlActivityType += '<option value="0">ไม่พบกิจกรรม</option>';
+                    htmlActivityType += '<option value="0">ไม่ประเภทส่วนงาน</option>';
                 }
                 $("#select-activity").html(htmlActivityType);
             });
