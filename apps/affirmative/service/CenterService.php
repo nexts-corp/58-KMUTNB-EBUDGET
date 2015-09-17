@@ -30,7 +30,8 @@ class CenterService extends CServiceBase implements ICenterService{
         ." FROM ".$this->ent."\\MainPlanTarget pg"
         ." INNER JOIN ".$this->ent."\\MainPlanIssue pi WITH pi.id = pg.mainPlanIssueId"
         ." INNER JOIN ".$this->ent."\\MainPlanType pt WITH pt.id=pi.mainPlanTypeId"
-        ." LEFT JOIN ".$this->ent."\\AffirmativeCentre ac WITH ac.mainPlanTargetId=pg.id";
+        ." LEFT JOIN ".$this->ent."\\AffirmativeCentre ac WITH ac.mainPlanTargetId=pg.id"
+        ." ORDER BY typeId, issueId, targetId, ac.no ASC";
 
         $data = $this->datacontext->getObject($sql);
 
@@ -43,7 +44,7 @@ class CenterService extends CServiceBase implements ICenterService{
             $issueKey[$val["issueId"]] = $val["issueName"];
             $targetKey[$val["targetId"]] = $val["targetName"];
 
-            $group[$val["typeId"]][$val["issueId"]][$val["issueId"]][] = array(
+            $group[$val["typeId"]][$val["issueId"]][$val["targetId"]][] = array(
                 "id" => $val["id"],
                 "mainPlanKpiId" => $val["mainPlanKpiId"],
                 "no" => $val["no"],
@@ -68,11 +69,13 @@ class CenterService extends CServiceBase implements ICenterService{
             foreach($type as $key2 => $issue){
                 $targetArr = [];
 
-                foreach($type as $key3 => $target){
+                foreach($issue as $key3 => $target){
                     $kpiArr = [];
 
                     foreach($target as $key4 => $kpi){
-                        $kpiArr[] = $kpi;
+                        if($kpi["id"] != null){
+                            $kpiArr[] = $kpi;
+                        }
                     }
                     $targetArr[] = array(
                         "targetId" => $key3,
@@ -94,5 +97,20 @@ class CenterService extends CServiceBase implements ICenterService{
             );
         }
         return $result;
+    }
+
+    public function listsKPI($mainPlanKpi){
+        $sql = "SELECT"
+            ." pk"
+        ." FROM ".$this->ent."\\MainPlanKpi pk"
+        ." WHERE pk.mainPlanTargetId = :targetId";
+
+        $param = array(
+            "targetId" => $mainPlanKpi->mainPlanTargetId
+        );
+
+        $data = $this->datacontext->getObject($sql, $param);
+
+        return $data;
     }
 } 

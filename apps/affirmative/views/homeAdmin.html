@@ -52,78 +52,11 @@
                 </div><!-- end table shown bidder information list -->
             </div>
 
-            <div id="bidderModal" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"><!-- delete bidder info form -->
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">ลบข้อมูล : ผู้เสนอซื้อ</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-condensed mb-none">
-                                    <tbody>
-                                    <tr>
-                                        <td>คิวที่</td><td class="text-left"><div id="queueDel"></div></td>
-                                    </tr>
-                                    <tr>
-                                        <td>เลขผู้เสียภาษี</td><td class="text-left"><div id="taxIdDel"></div></td>
-                                    </tr>
-                                    <tr>
-                                        <td>ชื่อผู้เสนอซื้อ</td><td class="text-left"><div id="bidderNameDel"></div></td>
-                                    </tr>
-                                    <tr>
-                                        <td>ชื่อผู้ยื่น</td><td class="text-left"><div id="agentNameDel"></div></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                            <button type="button" id="confirmDelete" class="btn btn-primary" data-dismiss="modal">ยืนยันการลบ</button>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- end delete bidder info form -->
-
-            <div id="listsDepartment" aria-labelledby="Label" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"><!-- lists department -->
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">รายชื่อหน่วยงาน</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-condensed mb-none">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center">หน่วยงาน</th>
-                                            <th class="text-center">สถานะ</th>
-                                            <th class="text-center">เครื่องมือ</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="departmentBody">
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">ปิด</button>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- end modal -->
-
         </div><!--  row  -->
     </div><!--  container  -->
 </div><!-- main -->
 
 {{>footer}}
-
-<script src="{{_context_path}}/apps/budget/views/bg140.js"></script>
 
 <script type="text/javascript">
     $(function () {
@@ -135,25 +68,25 @@
             + '<td class="text-center">1</td>'
             + '<td>ตัวชี้วัดคำรับรองการปฏิบัติงานส่วนงานภายในมหาวิทยาลัย</td>'
             + '<td class="text-center">-</td>'
-            + '<td class="text-center"><button id="center" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
+            + '<td class="text-center"><button id="center" class="btn btn-primary" title="จัดทำ"><i class="fa fa-cog"></i> จัดทำ</button></td>'
         + '</tr>'
         + '<tr>'
             + '<td class="text-center">2</td>'
             + '<td>ร่างตัวชี้วัดคำรับรองของส่วนงาน</td>'
             + '<td class="text-center">-</td>'
-            + '<td class="text-center"><button id="draft" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
+            + '<td class="text-center"><button id="draft" class="btn btn-primary" title="จัดทำ"><i class="fa fa-cog"></i> จัดทำ</button></td>'
         + '</tr>'
         + '<tr>'
             + '<td class="text-center">3</td>'
             + '<td>จัดทำตัวชี้วัดคำรับรองของส่วนงาน</td>'
             + '<td class="text-center">-</td>'
-            + '<td class="text-center"><button id="create" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
+            + '<td class="text-center"><button id="create" class="btn btn-primary" title="จัดทำ"><i class="fa fa-cog"></i> จัดทำ</button></td>'
         + '</tr>'
         + '<tr>'
             + '<td class="text-center">4</td>'
             + '<td>รายงานผลตัวชี้วัด</td>'
             + '<td class="text-center">-</td>'
-            + '<td class="text-center"><button class="btn btn-primary manage" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
+            + '<td class="text-center"><button class="btn btn-primary manage" title="จัดทำ"><i class="fa fa-cog"></i> จัดทำ</button></td>'
         + '</tr>';
 
         $("#homeBody").html(html);

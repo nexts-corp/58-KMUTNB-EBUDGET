@@ -32,7 +32,7 @@
     <div class="container">
         <div class="row">
 
-            <div id="formDiv" class="col-md-12">
+            <div id="homeDiv" class="col-md-12">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="tabs">
@@ -46,6 +46,88 @@
                     </div>
                 </div>
             </div>
+
+            <div id="formDiv" class="col-md-12" style="display: none;"><!-- form -->
+                <form id="form" class="form-horizontal form-bordered form-validation" onsubmit="return(false)">
+                    <div class="col-xs-12">
+                        <section class="panel">
+                            <header class="panel-heading">
+                                <div class="panel-actions">
+                                    <a href="#" class="fa fa-caret-up"></a>
+                                </div>
+                                <h2 class="panel-title">ตัวชี้วัดคำรับรองการปฏิบัติงาน</h2>
+                            </header>
+
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="queue">ตัวชี้วัด</label>
+                                    <div class="col-md-6">
+                                        <select type="text" class="form-control input-sm" name="queue" id="queue" required></select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label req" for="bidderName">ลำดับที่</label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control input-sm" name="bidderName" id="bidderName" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label req" for="agentName">ตัวชี้วัดคำรับรอง</label>
+                                    <div class="col-md-6">
+                                        <textarea class="form-control input-sm" name="agentName" id="agentName" required></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label req" for="agentName">หน่วยนับ</label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control input-sm" name="agentName" id="agentName" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label req" for="agentName">ประเภทส่วนงาน</label>
+                                    <div class="col-md-6">
+                                        <div class="checkbox-custom checkbox-primary">
+                                            <input type="checkbox" checked="" id="checkboxExample1">
+                                            <label for="checkboxExample1">จัดการศึกษา</label>
+                                        </div>
+                                        <div class="checkbox-custom checkbox-primary">
+                                            <input type="checkbox" checked="" id="checkboxExample1">
+                                            <label for="checkboxExample1">สนับสนุนการศึกษา</label>
+                                        </div>
+                                        <div class="checkbox-custom checkbox-primary">
+                                            <input type="checkbox" checked="" id="checkboxExample1">
+                                            <label for="checkboxExample1">บริการวิชาการ</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label req" for="agentName">หมายเหตุ</label>
+                                    <div class="col-md-6">
+                                        <textarea class="form-control input-sm" name="agentName" id="agentName" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div><!-- col-xs-12 -->
+
+                    <div id="loading" class="col-xs-12" style="text-align: center;"></div>
+                    <ul class="nav nav-pills sort-source secundary pull-right" data-sort-id="portfolio" data-option-key="filter">
+                        <li data-option-value="*" class="">
+                            <button id="submit" class="btn btn-success save"><i class="fa fa-save"></i> บันทึก</button>
+                        </li>
+                        <li data-option-value=".websites" class="padding-left">
+                            <button type="button" class="btn btn-default cancel"><i class="fa fa-trash"></i> ยกเลิก</button>
+                        </li>
+                    </ul>
+
+                </form>
+            </div><!-- end bidder info form -->
+
         </div><!--  row  -->
     </div><!--  container  -->
 </div><!-- main -->
@@ -64,24 +146,26 @@
     });
 
     function centerForm(){
+        var contentArr = {};
+
         var datas = callAjax("{{_context_path}}/api/affirmative/center/listsAll", "post", {}, "json");
         if(typeof datas !== "undefined" && datas !== null){
             var menu = '<li class="active">'
-                + '<a href="#all" data-toggle="tab"><i class="fa fa-star"></i> ทั้งหมด</a>'
+                + '<a href="#taball" data-toggle="tab"><i class="fa fa-star"></i> ทั้งหมด</a>'
             + '</li>';
 
-            var content = '<div id="all" class="tab-pane active">'
-                + '<table class="table table-bordered table-striped table-condensed">'
+            var content = '<div id="taball" class="tab-pane active">'
+                + '<table class="table table-hover table-bordered">'
                     + '<thead>'
                         + '<tr>'
                             + '<th class="text-center col-lg-5" style="vertical-align: middle;">ตัวชี้วัดคำรับรอง ปี 2558</th>'
-                            + '<th class="text-center col-lg-1" style="vertical-align: middle;">หน่วยนับ</th>'
+                            + '<th class="text-center col-lg-2" style="vertical-align: middle;">หน่วยนับ</th>'
                             + '<th class="text-center col-lg-2" style="vertical-align: middle;">ประเภทส่วนงานที่ต้องดำเนินการ</th>'
                             + '<th class="text-center col-lg-2" style="vertical-align: middle;">หมายเหตุ</th>'
-                            + '<th class="text-center col-lg-2" style="vertical-align: middle;">เครื่องมือ</th>'
+                            + '<th class="text-center col-lg-1" style="vertical-align: middle;">เครื่องมือ</th>'
                         + '</tr>'
                     + '</thead>'
-                    + '<tbody id="allBody">'
+                    + '<tbody>'
                         + '<tr>'
                             + '<td colspan="5" class="text-center">-</td>'
                         + '</tr>'
@@ -95,30 +179,80 @@
                 + '</li>';
 
                 content += '<div id="tab'+value1["typeId"]+'" class="tab-pane">'
-                    + '<table class="table table-bordered table-striped table-condensed">'
+                    + '<table class="table table-hover table-bordered">'
                         + '<thead>'
                             + '<tr>'
                                 + '<th class="text-center col-lg-5" style="vertical-align: middle;">ตัวชี้วัดคำรับรอง ปี 2558</th>'
-                                + '<th class="text-center col-lg-1" style="vertical-align: middle;">หน่วยนับ</th>'
+                                + '<th class="text-center col-lg-2" style="vertical-align: middle;">หน่วยนับ</th>'
                                 + '<th class="text-center col-lg-2" style="vertical-align: middle;">ประเภทส่วนงานที่ต้องดำเนินการ</th>'
                                 + '<th class="text-center col-lg-2" style="vertical-align: middle;">หมายเหตุ</th>'
-                                + '<th class="text-center col-lg-2" style="vertical-align: middle;">เครื่องมือ</th>'
+                                + '<th class="text-center col-lg-1" style="vertical-align: middle;">เครื่องมือ</th>'
                             + '</tr>'
                         + '</thead>'
-                        + '<tbody id="tab'+value1["typeId"]+'Body">'
+                        + '<tbody>'
                             + '<tr>'
-                                + '<td colspan="4" class="text-bold"><u>'+value1["planTypeName"]+'</u></td>'
-                            + '</tr>';
-                            $.each(value1, function(key2, value2){
-
-                            });
-                        content += '</tbody>'
+                                + '<td colspan="5" class="text-center">-</td>'
+                            + '</tr>'
+                        + '</tbody>'
                     + '</table>'
                 + '</div>';
+
+                contentArr["tab"+value1["typeId"]] = '<tr>'
+                    + '<td colspan="5" class="text-bold"><u>ตัวชี้วัด '+value1["planTypeName"]+'</u></td>'
+                + '</tr>';
+
+                $.each(value1["issue"], function(key2, value2){
+                    contentArr["tab"+value1["typeId"]] += '<tr>'
+                        + '<td colspan="5" class="text-bold">ประเด็นยุทธศาสตร์ที่ '+value2["issueName"]+'</td>'
+                    + '</tr>';
+
+                    $.each(value2["target"], function(key3, value3){
+                        contentArr["tab"+value1["typeId"]] += '<tr>'
+                            + '<td colspan="4">เป้าประสงค์ที่ '+value3["targetName"]+'</td>'
+                            + '<td class="text-center"><button class="btn btn-primary add" data-tid="'+value3["targetId"]+'"><i class="fa fa-plus-circle"></i></button></td>'
+                        + '</tr>';
+
+                        $.each(value3["kpi"], function(key4, value4){
+                            var org = [];
+                            if(value4["isEducation"] == "1") org.push("- จัดการศึกษา");
+                            if(value4["isSupport"] == "1") org.push("- สนับสนุนการศึกษา");
+                            if(value4["isService"] == "1") org.push("- บริการวิชาการ");
+
+                            contentArr["tab"+value1["typeId"]] += '<tr>'
+                                + '<td style="padding-left: 20px;">'+value4["no"]+' '+value4["name"]+'</td>'
+                                + '<td class="center">'+value4["unit"]+'</td>'
+                                + '<td>'+org.join('<br>')+'</td>'
+                                + '<td>'+value4["remark"]+'</td>'
+                                + '<td class="text-center">'
+                                    + '<div class="btn-group">'
+                                        + '<button type="button" class="btn btn-sm btn-warning"><i class="fa fa-pencil"></i></button>'
+                                        + '<button type="button" class="btn btn-sm btn-default"><i class="fa fa-trash"></i></button>'
+                                    + '</div>'
+                                + '</td>'
+                            + '</tr>';
+                        });
+                    });
+                });
             });
 
             $("#tabMenu").html(menu);
             $("#tabContent").html(content);
+
+            var contentAll = '';
+            $.each(contentArr, function(key, value){
+                contentAll += value
+                $("#"+key+" tbody").html(value);
+            });
+
+            $("#taball tbody").html(contentAll);
+
+            $("button.add").unbind().click(function(){
+                toggleShow("form");
+
+                var tid = $(this).attr("data-tid");
+
+
+            });
         }
     }
 
