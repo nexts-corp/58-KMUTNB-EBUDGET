@@ -19,13 +19,12 @@
 
     <hr class="tall dashboard">
 
-
-
     <div class="sort-source-wrapper"><!-- button action on header -->
         <div class="container">
             <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
                 <li class="active">
-                    <button class="btn btn-default back" style="display: none;"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
+                    <button id="addForm" class="btn btn-success"><i class="fa fa-plus-circle"> เพิ่มคำขอ</i></button>
+                    <button id="backHome" class="btn btn-default" style="display: none;"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
                 </li>
             </ul>
         </div>
@@ -44,7 +43,7 @@
                                 <th class="text-center col-lg-3">สถานะ</th>
                             </tr>
                         </thead>
-                        <tbody id="bidderBody">
+                        <tbody>
                             <tr>
                                 <td colspan="3" class="text-center">-</td>
                             </tr>
@@ -72,181 +71,176 @@
 <script src="{{_context_path}}/apps/budget/views/project.js"></script>
 <script type="text/javascript">
 $(function () {
-    listsForm();
+    listsFormSaved();
 
 
-    $("button.back").unbind("click").click(function () {
+    $("#addForm").unbind("click").click(function () {
+        toggleShow("budget");
+    });
+
+    $("#backHome").unbind("click").click(function () {
         toggleShow("home");
     });
 
 });
 
-function listsForm() {
+function listsFormSaved() {
     var html = '<tr>'
-            + '<td>1. แบบรายละเอียดคำของบประมาณเงินเดือน (ง.140)</td>'
-            + '<td class="text-center">-</td>'
-            + '<td class="text-center">'
+        + '<td>1. แบบรายละเอียดคำของบประมาณเงินเดือน (ง.140)</td>'
+        + '<td class="text-center">-</td>'
+        + '<td class="text-center">'
             + '<button data-form="bg140" class="btn btn-primary edit" title="แก้ไข"><i class="fa fa-pencil"></i></button>&nbsp;'
             + '<button data-form="bg140" class="btn btn-default delete" title="ลบ"><i class="fa fa-trash"></i></button>'
-            + '</td>'
-            + '</tr>'
-            + '<tr>'
-            + '<td>2. แบบรายละเอียดคำของบประมาณค่าจ้างประจำ (ง.141)</td>'
-            + '<td class="text-center">-</td>'
-            + '<td class="text-center">'
+        + '</td>'
+    + '</tr>'
+    + '<tr>'
+        + '<td>2. แบบรายละเอียดคำของบประมาณค่าจ้างประจำ (ง.141)</td>'
+        + '<td class="text-center">-</td>'
+        + '<td class="text-center">'
             + '<button data-form="bg141" class="btn btn-primary edit" title="แก้ไข"><i class="fa fa-pencil"></i></button>&nbsp;'
             + '<button data-form="bg141" class="btn btn-default delete" title="ลบ"><i class="fa fa-trash"></i></button>'
-            + '</td>'
-            + '</tr>'
-            + '<tr>'
-            + '<td>3. แบบรายละเอียดคำของบประมาณค่าจ้างชั่วคราว (ง.142)</td>'
-            + '<td class="text-center">-</td>'
-            + '<td class="text-center">'
+        + '</td>'
+    + '</tr>'
+    + '<tr>'
+        + '<td>3. แบบรายละเอียดคำของบประมาณค่าจ้างชั่วคราว (ง.142)</td>'
+        + '<td class="text-center">-</td>'
+        + '<td class="text-center">'
             + '<button data-form="bg142" class="btn btn-primary edit" title="แก้ไข"><i class="fa fa-pencil"></i></button>&nbsp;'
             + '<button data-form="bg142" class="btn btn-default delete" title="ลบ"><i class="fa fa-trash"></i></button>'
-            + '</td>'
-            + '</tr>'
-            + '<tr>'
-            + '<td>4. แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน<br>(ค่าตอบแทน ใช้สอย และวัสดุ) (ง.143)</td>'
-            + '<td class="text-center">-</td>'
-            + '<td class="text-center">'
+        + '</td>'
+    + '</tr>'
+    + '<tr>'
+        + '<td>4. แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน<br>(ค่าตอบแทน ใช้สอย และวัสดุ) (ง.143)</td>'
+        + '<td class="text-center">-</td>'
+        + '<td class="text-center">'
             + '<button data-form="bg143" class="btn btn-primary edit" title="แก้ไข"><i class="fa fa-pencil"></i></button>&nbsp;'
             + '<button data-form="bg143" class="btn btn-default delete" title="ลบ"><i class="fa fa-trash"></i></button>'
-            + '</td>'
-            + '</tr>'
-            + '<tr>'
-            + '<td>5. แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าสาธารณูปโภค (ง.144)</td>'
-            + '<td class="text-center">-</td>'
-            + '<td class="text-center">'
+        + '</td>'
+    + '</tr>'
+    + '<tr>'
+        + '<td>5. แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าสาธารณูปโภค (ง.144)</td>'
+        + '<td class="text-center">-</td>'
+        + '<td class="text-center">'
             + '<button data-form="bg144" class="btn btn-primary edit" title="แก้ไข"><i class="fa fa-pencil"></i></button>&nbsp;'
             + '<button data-form="bg144" class="btn btn-default delete" title="ลบ"><i class="fa fa-trash"></i></button>'
-            + '</td>'
-            + '</tr>'
-            + '<tr>'
-            + '<td>6. แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าครุภัณฑ์<br>ค่าที่ดิน/สิ่งก่อสร้าง (ง.145)</td>'
-            + '<td class="text-center">-</td>'
-            + '<td class="text-center">'
+        + '</td>'
+    + '</tr>'
+    + '<tr>'
+        + '<td>6. แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าครุภัณฑ์<br>ค่าที่ดิน/สิ่งก่อสร้าง (ง.145)</td>'
+        + '<td class="text-center">-</td>'
+        + '<td class="text-center">'
             + '<button data-form="bg145" class="btn btn-success add" title="เพิ่ม"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
-            + '</td>'
-            + '</tr>'
-            + '<tr>'
-            + '<td style="padding-left: 30px;">- คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง 1 ปี</td>'
-            + '<td class="text-center">-</td>'
-            + '<td class="text-center">'
+        + '</td>'
+    + '</tr>'
+    + '<tr>'
+        + '<td style="padding-left: 30px;">- คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง 1 ปี</td>'
+        + '<td class="text-center">-</td>'
+        + '<td class="text-center">'
             + '<button data-form="buildingOne" class="btn btn-success add" title="เพิ่ม"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
-            + '</td>'
-            + '</tr>'
-            + '<tr>'
-            + '<td style="padding-left: 30px;">- คำชี้แจงรายละเอียดรายการที่ดินและสิ่งก่อสร้าง</td>'
-            + '<td class="text-center">-</td>'
-            + '<td class="text-center">'
+        + '</td>'
+    + '</tr>'
+    + '<tr>'
+        + '<td style="padding-left: 30px;">- คำชี้แจงรายละเอียดรายการที่ดินและสิ่งก่อสร้าง</td>'
+        + '<td class="text-center">-</td>'
+        + '<td class="text-center">'
             + '<button data-form="buildingMore" class="btn btn-success add" title="เพิ่ม"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
-            + '</td>'
-            + '</tr>'
-
-
-            + '<tr>'
-            + '<td>7. แบบรายละเอียดคำของบประมาณเงินอุดหนุน (ง.146)</td>'
-            + '<td class="text-center">-</td>'
-            + '<td class="text-center">'
+        + '</td>'
+    + '</tr>'
+    + '<tr>'
+        + '<td>7. แบบรายละเอียดคำของบประมาณเงินอุดหนุน (ง.146)</td>'
+        + '<td class="text-center">-</td>'
+        + '<td class="text-center">'
             + '<button data-form="bg146" class="btn btn-primary edit" title="แก้ไข"><i class="fa fa-pencil"></i></button>&nbsp;'
             + '<button data-form="bg146" class="btn btn-default delete" title="ลบ"><i class="fa fa-trash"></i></button>'
-            + '</td>'
-            + '</tr>'
-            + '<tr>'
-            + '<td>8. โครงการที่ตอบสนองยุทธศาสตร์</td>'
-            + '<td class="text-center">-</td>'
-            + '<td class="text-center">'
+        + '</td>'
+    + '</tr>'
+    + '<tr>'
+        + '<td>8. โครงการที่ตอบสนองยุทธศาสตร์</td>'
+        + '<td class="text-center">-</td>'
+        + '<td class="text-center">'
             + '<button data-form="project" class="btn btn-success add" title="เพิ่ม"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
-            + '</td>'
-            + '</tr>';
+        + '</td>'
+    + '</tr>';
 
-    $("#bidderBody").html(html);
+    $("#table tbody").html(html);
 
-    $("button.add").unbind("click").click(function () {
-        toggleShow("budget");
+}
 
-        var form = $(this).attr("data-form");
-        eval(form + "Form()");
-    });
+function formBudget(){
+    var html = '<section class="panel panel-featured panel-featured-success">'
+            + '<div class="panel-heading">'
+                + '<h2 class="panel-title">แบบฟอร์มคำของบประมาณ</h2>'
+            + '</div>'
+            + '<div class="panel-body">'
+                + '<form id="form" onsubmit="return false;">'
+                    + '<div class="form-group">'
+                        + '<label class="col-md-3 control-label text-right" for="xxx">ปีงบประมาณ : </label>'
+                        + '<div class="col-md-6">'
+                            + '<select id="listBudgetPlan" name="listBudgetPlan" class="form-control input-sm" required></select>'
+                        + '</div>'
+                    + '</div>'
 
-    $("button.edit").unbind("click").click(function () {
-        toggleShow("budget");
+                    + '<div class="form-group">'
+                        + '<label class="col-md-3 control-label text-right" for="xxx">แหล่งเงิน : </label>'
+                        + '<div class="col-md-6">'
+                            + '<select id="listBudgetPlan" name="listBudgetPlan" class="form-control input-sm" required></select>'
+                        + '</div>'
+                    + '</div>'
 
-        var form = $(this).attr("data-form");
-        eval(form + "Form()");
-    });
+                    + '<div class="form-group">'
+                        + '<label class="col-md-3 control-label text-right" for="xxx">แผนงาน : </label>'
+                        + '<div class="col-md-6">'
+                            + '<select id="listBudgetPlan" name="listBudgetPlan" class="form-control input-sm" required></select>'
+                        + '</div>'
+                    + '</div>'
 
-    $("button.delete").unbind("click").click(function () {
+                    + '<div class="form-group">'
+                        + '<label class="col-md-3 control-label text-right" for="xxx">ผลผลิต/โครงการ : </label>'
+                        + '<div class="col-md-6">'
+                            + '<select id="listBudgetPlan" name="listBudgetPlan" class="form-control input-sm" required></select>'
+                        + '</div>'
+                    + '</div>'
 
+                    + '<div class="form-group">'
+                        + '<label class="col-md-3 control-label text-right" for="xxx">แผนงาน 3 มิติ : </label>'
+                        + '<div class="col-md-6">'
+                            + '<select id="listBudgetPlan" name="listBudgetPlan" class="form-control input-sm" required></select>'
+                        + '</div>'
+                    + '</div>'
+
+                    + '<div class="form-group">'
+                        + '<label class="col-md-3 control-label text-right" for="xxx">กองทุน : </label>'
+                        + '<div class="col-md-6">'
+                            + '<select id="listBudgetPlan" name="listBudgetPlan" class="form-control input-sm" required></select>'
+                        + '</div>'
+                    + '</div>'
+
+                    + '<div class="col-md-12 text-right">'
+                        + '<button id="showForm" class="btn btn-success"><i class="fa fa-list"></i> เลือกฟอร์ม</button>&nbsp;'
+                        + '<button id="clearForm" class="btn btn-default"><i class="fa fa-trash"></i> ยกเลิก</button>'
+                    + '</div>'
+                + '</form>'
+            + '</div>'
+        + '</section>';
+
+    $("#formBudget").html(html);
+
+    $("#showForm").unbind("click").click(function(){
+        $("#form select").each(fo)
     });
 }
 
 function toggleShow(page) {
     if (page == "home") {
-        $("#formHome").show();
-        $("#formBudget, button.back").hide();
+        $("#formBudget, #backHome").hide();
+        $("#formHome, #addForm").show();
     }
     else if (page == "budget") {
-        $("#formHome").hide();
-        $("#formBudget, button.back").show();
+        $("#formHome, #addForm").hide();
+        $("#formBudget, #backHome").show();
+
+        formBudget();
     }
 }
 
-function showBudgetPlan() {
-    var dataSet = [];
-    var listBudgetPlan = {};
-    var datas = callAjax("{{_context_path}}/api/common/lookup/listBudgetPlan", "post", {}, "json");
-    if (typeof datas !== 'undefined' && datas !== null) {
-        $.each(datas["lists"], function (key, value) {
-            dataSet.push(value);
-
-            listBudgetPlan[value["queue"]] = value["queue"];
-        });
-
-        $("#listBudgetPlan").empty();
-        //$("#listBudgetPlan").append('<option value="" selected="selected">ทั้งหมด</option>');
-        $.each(listBudgetPlan, function (key, value) {
-            $("#listBudgetPlan").append('<option value="' + value + '">' + value + '</option>');
-        });
-    }
-}
-
-function showBudgetProduct() {
-    var dataSet = [];
-    var listBudgetProduct = {};
-    var datas = callAjax("{{_context_path}}/api/common/lookup/listBudgetProduct", "post", {}, "json");
-    if (typeof datas !== 'undefined' && datas !== null) {
-        $.each(datas["lists"], function (key, value) {
-            dataSet.push(value);
-
-            listBudgetProduct[value["queue"]] = value["queue"];
-        });
-
-        $("#listBudgetProduct").empty();
-        //$("#listBudgetPlan").append('<option value="" selected="selected">ทั้งหมด</option>');
-        $.each(listBudgetProduct, function (key, value) {
-            $("#listBudgetProduct").append('<option value="' + value + '">' + value + '</option>');
-        });
-    }
-}
-
-function showDepartment() {
-    var dataSet = [];
-    var listDepartment = {};
-    var datas = callAjax("{{_context_path}}/api/common/lookup/listDepartment", "post", {}, "json");
-    if (typeof datas !== 'undefined' && datas !== null) {
-        $.each(datas["lists"], function (key, value) {
-            dataSet.push(value);
-
-            listDepartment[value["queue"]] = value["queue"];
-        });
-
-        $("#listDepartment").empty();
-        //$("#listBudgetPlan").append('<option value="" selected="selected">ทั้งหมด</option>');
-        $.each(listBudgetProduct, function (key, value) {
-            $("#listDepartment").append('<option value="' + value + '">' + value + '</option>');
-        });
-    }
-}
 </script>
