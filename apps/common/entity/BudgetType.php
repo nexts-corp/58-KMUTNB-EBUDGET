@@ -21,6 +21,12 @@ class BudgetType extends EntityBase {
     /** @Column(type="integer",length=11, name="MASTERID") */
     public $masterId;
 
+    /** @Column(type="integer",length=11, name="LEVELID") */
+    public $level;
+
+    /** @Column(type="integer",length=11, name="BUDGETFORM") */
+    public $budgetForm;
+
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
 
@@ -37,6 +43,14 @@ class BudgetType extends EntityBase {
 
     function getMasterId() {
         return $this->masterId;
+    }
+
+    function getLevel() {
+        return $this->level;
+    }
+
+    function getBudgetForm() {
+        return $this->budgetForm;
     }
 
     function getCreator() {
@@ -57,6 +71,14 @@ class BudgetType extends EntityBase {
 
     function setMasterId($masterId) {
         $this->masterId = $masterId;
+    }
+
+    function setLevel($level) {
+        $this->level = $level;
+    }
+
+    function setBudgetForm($budgetForm) {
+        $this->budgetForm = $budgetForm;
     }
 
     function setCreator($creator) {
