@@ -10,7 +10,7 @@ class MappingPlan extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="PLANMAPPINGID")
+     * @Column(type="integer",length=11,name="MAPPINGPLANID")
      * @GeneratedValue
      */
     public $id;
