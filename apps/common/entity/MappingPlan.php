@@ -9,17 +9,28 @@ namespace apps\common\entity;
 class MappingPlan extends EntityBase {
 
     /**
-     * @Id 
-     * @Column(type="integer",length=11,name="MAPPINGPLANID")
-     * @GeneratedValue
+     * @Id
+     * @Column(type="integer",length=11, name="BUDGETPERIODID") 
      */
-    public $id;
+    public $budgetperiodId;
 
-    /** @Column(type="integer",length=11, name="PLANID") */
+    /**
+     * @Id
+     * @Column(type="integer",length=11, name="BUDGETPROJECTID") 
+     */
+    public $budgetProjectId;
+
+    /**
+     * @Id 
+     * @Column(type="integer",length=11, name="PLANID") 
+     */
     public $planId;
 
-    /** @Column(type="integer",length=11, name="BUDGETPROJECTID") */
-    public $budgetProjectId;
+    /**
+     * @Id
+     * @Column(type="integer",length=11, name="FUNDGROUPID") 
+     */
+    public $fundgroupId;
 
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
@@ -27,16 +38,20 @@ class MappingPlan extends EntityBase {
     /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
     public $updater;
 
-    function getId() {
-        return $this->id;
+    function getBudgetperiodId() {
+        return $this->budgetperiodId;
+    }
+
+    function getBudgetProjectId() {
+        return $this->budgetProjectId;
     }
 
     function getPlanId() {
         return $this->planId;
     }
 
-    function getBudgetProjectId() {
-        return $this->budgetProjectId;
+    function getFundgroupId() {
+        return $this->fundgroupId;
     }
 
     function getCreator() {
@@ -47,16 +62,20 @@ class MappingPlan extends EntityBase {
         return $this->updater;
     }
 
-    function setId($id) {
-        $this->id = $id;
+    function setBudgetperiodId($budgetperiodId) {
+        $this->budgetperiodId = $budgetperiodId;
+    }
+
+    function setBudgetProjectId($budgetProjectId) {
+        $this->budgetProjectId = $budgetProjectId;
     }
 
     function setPlanId($planId) {
         $this->planId = $planId;
     }
 
-    function setBudgetProjectId($budgetProjectId) {
-        $this->budgetProjectId = $budgetProjectId;
+    function setFundgroupId($fundgroupId) {
+        $this->fundgroupId = $fundgroupId;
     }
 
     function setCreator($creator) {
