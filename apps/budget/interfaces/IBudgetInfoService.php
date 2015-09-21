@@ -66,15 +66,6 @@ interface IBudgetInfoService {
     public function listBudgetType146();
 
     /**
-     * @name saveBgSalary
-     * @uri /saveBgSalary
-     * @param apps\common\entity\BudgetMoneySalary[] budget Description
-     * @return boolean save Description
-     * @description เพิ่ม/แก้ไขคำขอแบบ ง.140-ง.142
-     */
-    public function saveBgSalary($budget);
-
-    /**
      * @name saveBgOperating
      * @uri /saveBgOperating
      * @param apps\common\entity\BudgetMoneyOperating[] budget Description

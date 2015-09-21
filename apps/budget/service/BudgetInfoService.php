@@ -544,6 +544,9 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
         return $return;
     }
 
+    
+    
+    
     public function deleteBg140($budget140) {
         $return = true;
 
@@ -710,6 +713,11 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
         return $return;
     }
 
+    
+    
+    
+    
+    
     public function selectBg140($bgForm) {
         $sql = "SELECT"
                 . " salary.id, salary.positionName, salary.rateNo, salary.rateSalary, "
@@ -947,6 +955,10 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
         return $dataBg;
     }
 
+    
+    
+    
+    
     public function listBudgetType140() {
         $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
@@ -1163,5 +1175,6 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
 
         return $list1;
     }
+
 
 }
