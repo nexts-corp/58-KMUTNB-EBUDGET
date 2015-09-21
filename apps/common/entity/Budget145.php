@@ -72,6 +72,9 @@ class Budget145 extends EntityBase {
     /** @Column(type="float", name="REMARK") */
     public $remark;
 
+    /** @Column(type="integer",length=11, name="REFID") */
+    public $refId;
+
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
 
@@ -156,6 +159,10 @@ class Budget145 extends EntityBase {
 
     function getRemark() {
         return $this->remark;
+    }
+
+    function getRefId() {
+        return $this->refId;
     }
 
     function getCreator() {
@@ -244,6 +251,10 @@ class Budget145 extends EntityBase {
 
     function setRemark($remark) {
         $this->remark = $remark;
+    }
+
+    function setRefId($refId) {
+        $this->refId = $refId;
     }
 
     function setCreator($creator) {
