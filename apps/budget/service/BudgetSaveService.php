@@ -25,140 +25,311 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         $this->datacontext = new CDataContext(NULL);
     }
 
-    public function saveBudget140($budget) {
-        $return = true;
+    public function insertBudget140($budget) {
+        $return = array();
 
         foreach ($budget as $key => $value) {
-            $bg = new Budget140();
-            $bg->id = $budget[$key]->id;
-            if (!$this->datacontext->getObject($bg)) {
-                $this->datacontext->saveObject($budget[$key]);
-                $return = $this->datacontext->getLastMessage();
+            $budget[$key]->bgStatus = "Y";
+            if (!$this->datacontext->saveObject($value)) {
+                $return[$key]["result"] = false;
+                $return[$key]["msg"] = $this->datacontext->getLastMessage();
             } else {
-                $bg->setBgStatus('N');
-                $bg->setRefId($budget[$key]->id);
-                $this->datacontext->saveObject($bg);
-                $return = $this->datacontext->getLastMessage();
+                $return[$key]["result"] = true;
+                $return[$key]["id"] = $budget[$key]->id;
+            }
+        }
+
+        return $return;
+
+        /*
+          foreach ($budget as $key => $value) {
+          $bg = new Budget140();
+          $bg->budgetPeriodId = $budget[$key]->budgetPeriodId;
+          $bg->budgetTypeId = $budget[$key]->budgetTypeId;
+          $bg->budgetTypeCode = $budget[$key]->budgetTypeCode;
+          $bg->deptId = $budget[$key]->deptId;
+          $bg->planId = $budget[$key]->planId;
+          $bg->projectId = $budget[$key]->projectId;
+          $bg->fundgroupId = $budget[$key]->fundgroupId;
+          $bg->activityId = $budget[$key]->activityId;
+          $bg->positionName = $budget[$key]->positionName;
+          $bg->occupy = $budget[$key]->occupy;
+          $bg->vacancy = $budget[$key]->vacancy;
+          $bg->rateNo = $budget[$key]->rateNo;
+          $bg->salary = $budget[$key]->salary;
+          $bg->salaryTotal = $budget[$key]->salaryTotal;
+          $bg->remark = $budget[$key]->remark;
+          $bg->creator = $budget[$key]->creator;
+          if (!$this->datacontext->saveObject($bg)) {
+          $return[$key]["result"] = false;
+          $return[$key]["msg"] = $this->datacontext->getLastMessage();
+          } else {
+          $return[$key]["result"] = true;
+          $return[$key]["id"] = $this->datacontext->las();
+          }
+          }
+
+          return $return;
+         */
+    }
+
+    public function updateBudget140($budget) {
+        $return = array();
+
+        foreach ($budget as $key => $value) {
+            $refId = $value->getId();
+            $sql = " UPDATE BUDGET140 SET BUDGETSTATUS = 'N' WHERE ID = $refId";
+            $this->datacontext->pdoQuery($sql);
+
+            $value->setId(NULL);
+            $value->setRefId($refId);
+            $value->setBgStatus("Y");
+            if (!$this->datacontext->saveObject($value)) {
+                $return[$key]["result"] = false;
+                $return[$key]["msg"] = $this->datacontext->getLastMessage();
+            } else {
+                $return[$key]["result"] = true;
+                $return[$key]["id"] = $budget[$key]->id;
             }
         }
 
         return $return;
     }
 
-    public function saveBudget141($budget) {
-         $return = true;
+    public function insertBudget141($budget) {
+        $return = array();
 
         foreach ($budget as $key => $value) {
-            $bg = new Budget140();
-            $bg->id = $budget[$key]->id;
-            if (!$this->datacontext->getObject($bg)) {
-                $this->datacontext->saveObject($budget[$key]);
-                $return = $this->datacontext->getLastMessage();
+            $budget[$key]->bgStatus = "Y";
+            if (!$this->datacontext->saveObject($value)) {
+                $return[$key]["result"] = false;
+                $return[$key]["msg"] = $this->datacontext->getLastMessage();
             } else {
-                $bg->setBgStatus('N');
-                $bg->setRefId($budget[$key]->id);
-                $this->datacontext->saveObject($bg);
-                $return = $this->datacontext->getLastMessage();
+                $return[$key]["result"] = true;
+                $return[$key]["id"] = $budget[$key]->id;
             }
         }
 
         return $return;
     }
 
-    public function saveBudget142($budget) {
-         $return = true;
+    public function updateBudget141($budget) {
+        $return = array();
 
         foreach ($budget as $key => $value) {
-            $bg = new Budget140();
-            $bg->id = $budget[$key]->id;
-            if (!$this->datacontext->getObject($bg)) {
-                $this->datacontext->saveObject($budget[$key]);
-                $return = $this->datacontext->getLastMessage();
+            $refId = $value->getId();
+            $sql = " UPDATE BUDGET141 SET BUDGETSTATUS = 'N' WHERE ID = $refId";
+            $this->datacontext->pdoQuery($sql);
+
+            $value->setId(NULL);
+            $value->setRefId($refId);
+            $value->setBgStatus("Y");
+            if (!$this->datacontext->saveObject($value)) {
+                $return[$key]["result"] = false;
+                $return[$key]["msg"] = $this->datacontext->getLastMessage();
             } else {
-                $bg->setBgStatus('N');
-                $bg->setRefId($budget[$key]->id);
-                $this->datacontext->saveObject($bg);
-                $return = $this->datacontext->getLastMessage();
+                $return[$key]["result"] = true;
+                $return[$key]["id"] = $budget[$key]->id;
             }
         }
 
         return $return;
     }
 
-    public function saveBudget143($budget) {
-         $return = true;
+    public function insertBudget142($budget) {
+        $return = array();
 
         foreach ($budget as $key => $value) {
-            $bg = new Budget143();
-            $bg->id = $budget[$key]->id;
-            if (!$this->datacontext->getObject($bg)) {
-                $this->datacontext->saveObject($budget[$key]);
-                $return = $this->datacontext->getLastMessage();
+            $budget[$key]->bgStatus = "Y";
+            if (!$this->datacontext->saveObject($value)) {
+                $return[$key]["result"] = false;
+                $return[$key]["msg"] = $this->datacontext->getLastMessage();
             } else {
-                $bg->setBgStatus('N');
-                $bg->setRefId($budget[$key]->id);
-                $this->datacontext->saveObject($bg);
-                $return = $this->datacontext->getLastMessage();
+                $return[$key]["result"] = true;
+                $return[$key]["id"] = $budget[$key]->id;
             }
         }
 
         return $return;
     }
 
-    public function saveBudget144($budget) {
-         $return = true;
+    public function updateBudget142($budget) {
+        $return = array();
 
         foreach ($budget as $key => $value) {
-            $bg = new Budget144();
-            $bg->id = $budget[$key]->id;
-            if (!$this->datacontext->getObject($bg)) {
-                $this->datacontext->saveObject($budget[$key]);
-                $return = $this->datacontext->getLastMessage();
+            $refId = $value->getId();
+            $sql = " UPDATE BUDGET142 SET BUDGETSTATUS = 'N' WHERE ID = $refId";
+            $this->datacontext->pdoQuery($sql);
+
+            $value->setId(NULL);
+            $value->setRefId($refId);
+            $value->setBgStatus("Y");
+            if (!$this->datacontext->saveObject($value)) {
+                $return[$key]["result"] = false;
+                $return[$key]["msg"] = $this->datacontext->getLastMessage();
             } else {
-                $bg->setBgStatus('N');
-                $bg->setRefId($budget[$key]->id);
-                $this->datacontext->saveObject($bg);
-                $return = $this->datacontext->getLastMessage();
+                $return[$key]["result"] = true;
+                $return[$key]["id"] = $budget[$key]->id;
             }
         }
 
         return $return;
     }
 
-    public function saveBudget145($budget) {
-         $return = true;
+    public function insertBudget143($budget) {
+        $return = array();
 
         foreach ($budget as $key => $value) {
-            $bg = new Budget145();
-            $bg->id = $budget[$key]->id;
-            if (!$this->datacontext->getObject($bg)) {
-                $this->datacontext->saveObject($budget[$key]);
-                $return = $this->datacontext->getLastMessage();
+            $budget[$key]->bgStatus = "Y";
+            if (!$this->datacontext->saveObject($value)) {
+                $return[$key]["result"] = false;
+                $return[$key]["msg"] = $this->datacontext->getLastMessage();
             } else {
-                $bg->setBgStatus('N');
-                $bg->setRefId($budget[$key]->id);
-                $this->datacontext->saveObject($bg);
-                $return = $this->datacontext->getLastMessage();
+                $return[$key]["result"] = true;
+                $return[$key]["id"] = $budget[$key]->id;
             }
         }
 
         return $return;
     }
 
-    public function saveBudget146($budget) {
-         $return = true;
+    public function updateBudget143($budget) {
+        $return = array();
 
         foreach ($budget as $key => $value) {
-            $bg = new Budget146();
-            $bg->id = $budget[$key]->id;
-            if (!$this->datacontext->getObject($bg)) {
-                $this->datacontext->saveObject($budget[$key]);
-                $return = $this->datacontext->getLastMessage();
+            $refId = $value->getId();
+            $sql = " UPDATE BUDGET143 SET BUDGETSTATUS = 'N' WHERE ID = $refId";
+            $this->datacontext->pdoQuery($sql);
+
+            $value->setId(NULL);
+            $value->setRefId($refId);
+            $value->setBgStatus("Y");
+            if (!$this->datacontext->saveObject($value)) {
+                $return[$key]["result"] = false;
+                $return[$key]["msg"] = $this->datacontext->getLastMessage();
             } else {
-                $bg->setBgStatus('N');
-                $bg->setRefId($budget[$key]->id);
-                $this->datacontext->saveObject($bg);
-                $return = $this->datacontext->getLastMessage();
+                $return[$key]["result"] = true;
+                $return[$key]["id"] = $budget[$key]->id;
+            }
+        }
+
+        return $return;
+    }
+
+    public function insertBudget144($budget) {
+        $return = array();
+
+        foreach ($budget as $key => $value) {
+            $budget[$key]->bgStatus = "Y";
+            if (!$this->datacontext->saveObject($value)) {
+                $return[$key]["result"] = false;
+                $return[$key]["msg"] = $this->datacontext->getLastMessage();
+            } else {
+                $return[$key]["result"] = true;
+                $return[$key]["id"] = $budget[$key]->id;
+            }
+        }
+
+        return $return;
+    }
+
+    public function updateBudget144($budget) {
+        $return = array();
+
+        foreach ($budget as $key => $value) {
+            $refId = $value->getId();
+            $sql = " UPDATE BUDGET144 SET BUDGETSTATUS = 'N' WHERE ID = $refId";
+            $this->datacontext->pdoQuery($sql);
+
+            $value->setId(NULL);
+            $value->setRefId($refId);
+            $value->setBgStatus("Y");
+            if (!$this->datacontext->saveObject($value)) {
+                $return[$key]["result"] = false;
+                $return[$key]["msg"] = $this->datacontext->getLastMessage();
+            } else {
+                $return[$key]["result"] = true;
+                $return[$key]["id"] = $budget[$key]->id;
+            }
+        }
+
+        return $return;
+    }
+
+    public function insertBudget145($budget) {
+        $return = array();
+
+        foreach ($budget as $key => $value) {
+            $budget[$key]->bgStatus = "Y";
+            if (!$this->datacontext->saveObject($value)) {
+                $return[$key]["result"] = false;
+                $return[$key]["msg"] = $this->datacontext->getLastMessage();
+            } else {
+                $return[$key]["result"] = true;
+                $return[$key]["id"] = $budget[$key]->id;
+            }
+        }
+
+        return $return;
+    }
+
+    public function updateBudget145($budget) {
+        $return = array();
+
+        foreach ($budget as $key => $value) {
+            $refId = $value->getId();
+            $sql = " UPDATE BUDGET145 SET BUDGETSTATUS = 'N' WHERE ID = $refId";
+            $this->datacontext->pdoQuery($sql);
+
+            $value->setId(NULL);
+            $value->setRefId($refId);
+            $value->setBgStatus("Y");
+            if (!$this->datacontext->saveObject($value)) {
+                $return[$key]["result"] = false;
+                $return[$key]["msg"] = $this->datacontext->getLastMessage();
+            } else {
+                $return[$key]["result"] = true;
+                $return[$key]["id"] = $budget[$key]->id;
+            }
+        }
+
+        return $return;
+    }
+
+    public function insertBudget146($budget) {
+        $return = array();
+
+        foreach ($budget as $key => $value) {
+            $budget[$key]->bgStatus = "Y";
+            if (!$this->datacontext->saveObject($value)) {
+                $return[$key]["result"] = false;
+                $return[$key]["msg"] = $this->datacontext->getLastMessage();
+            } else {
+                $return[$key]["result"] = true;
+                $return[$key]["id"] = $budget[$key]->id;
+            }
+        }
+
+        return $return;
+    }
+
+    public function updateBudget146($budget) {
+        $return = array();
+
+        foreach ($budget as $key => $value) {
+            $refId = $value->getId();
+            $sql = " UPDATE BUDGET146 SET BUDGETSTATUS = 'N' WHERE ID = $refId";
+            $this->datacontext->pdoQuery($sql);
+
+            $value->setId(NULL);
+            $value->setRefId($refId);
+            $value->setBgStatus("Y");
+            if (!$this->datacontext->saveObject($value)) {
+                $return[$key]["result"] = false;
+                $return[$key]["msg"] = $this->datacontext->getLastMessage();
+            } else {
+                $return[$key]["result"] = true;
+                $return[$key]["id"] = $budget[$key]->id;
             }
         }
 
