@@ -1,12 +1,13 @@
 <?php
 
-namespace apps\common\entity;
+namespace apps\common\entity\L3D;
+use apps\common\entity\EntityBase;
 
 /**
  * @Entity
- * @Table(name="3D_PLAN")
+ * @Table(name="L3D_PLAN")
  */
-class Period extends EntityBase {
+class Plan extends EntityBase {
 
     /**
      * @Id 

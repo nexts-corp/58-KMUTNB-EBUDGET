@@ -1,10 +1,11 @@
 <?php
 
-namespace apps\common\entity;
+namespace apps\common\entity\L3D;
+use apps\common\entity\EntityBase;
 
 /**
  * @Entity
- * @Table(name="3D_FUNDGROUP")
+ * @Table(name="L3D_FUNDGROUP")
  */
 class FundGroup extends EntityBase {
 
@@ -15,24 +16,18 @@ class FundGroup extends EntityBase {
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="master_id") */
-    public $masterId;
-
     /** @Column(type="string",length=255, name="FUNDGROUPNAME") */
     public $fundgroupName;
 
-    /** @Column(type="string",length=20, name="Creator") */
+    /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
 
-    /** @Column(type="string",length=20, name="Updater") */
+    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
     public $updater;
+
 
     function getId() {
         return $this->id;
-    }
-
-    function getMasterId() {
-        return $this->masterId;
     }
 
     function getFundgroupName() {

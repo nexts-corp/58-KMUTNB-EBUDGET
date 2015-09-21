@@ -1,10 +1,11 @@
 <?php
 
-namespace apps\common\entity;
+namespace apps\common\entity\L3D;
+use apps\common\entity\EntityBase;
 
 /**
  * @Entity
- * @Table(name="3D_BUDGETGROUP")
+ * @Table(name="L3D_BUDGETGROUP")
  */
 class BudgetGroup extends EntityBase {
 

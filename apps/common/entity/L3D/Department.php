@@ -1,10 +1,11 @@
 <?php
 
-namespace apps\common\entity;
+namespace apps\common\entity\L3D;
+use apps\common\entity\EntityBase;
 
 /**
  * @Entity
- * @Table(name="3D_DEPARTMENT")
+ * @Table(name="L3D_DEPARTMENT")
  */
 class Department extends EntityBase {
 
@@ -33,10 +34,10 @@ class Department extends EntityBase {
     /** @Column(type="integer",length=11, name="CAMPUSID") */
     public $campusId;
 
-    /** @Column(type="string",length=20, name="creator") */
+    /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
 
-    /** @Column(type="string",length=20, name="updater") */
+    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
     public $updater;
 
     function getId() {

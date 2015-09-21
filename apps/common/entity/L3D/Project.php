@@ -1,17 +1,20 @@
 <?php
 
-namespace apps\common\entity;
+namespace apps\common\entity\L3D;
+use apps\common\entity\EntityBase;
 
 /**
  * @Entity
- * @Table(name="3D_PROJECT")
+ * @Table(name="L3D_PROJECT")
  */
 class Project extends EntityBase {
 
     /** @Column(type="integer",length=11,name="PLANID") */
     public $planId;
 
-    /** @Column(type="integer",length=11,name="PROJECTID") */
+    /**
+     * @Id
+     * @Column(type="integer",length=11,name="PROJECTID") */
     public $projectId;
 
     /** @Column(type="string",length=250, name="PROJECTNAME") */

@@ -1,10 +1,11 @@
 <?php
 
-namespace apps\common\entity;
+namespace apps\common\entity\L3D;
+use apps\common\entity\EntityBase;
 
 /**
  * @Entity
- * @Table(name="3D_ACCOUNT")
+ * @Table(name="L3D_ACCOUNT")
  */
 class Account extends EntityBase {
 
@@ -74,6 +75,8 @@ class Account extends EntityBase {
 
     /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
     public $updater;
+
+
 
     function getId() {
         return $this->id;
@@ -151,13 +154,6 @@ class Account extends EntityBase {
         return $this->accOwner;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
 
     function setId($id) {
         $this->id = $id;
@@ -235,11 +231,25 @@ class Account extends EntityBase {
         $this->accOwner = $accOwner;
     }
 
-    function setCreator($creator) {
+    public function getCreator()
+    {
+        return $this->creator;
+    }
+
+
+    public function setCreator($creator)
+    {
         $this->creator = $creator;
     }
 
-    function setUpdater($updater) {
+    public function getUpdater()
+    {
+        return $this->updater;
+    }
+
+
+    public function setUpdater($updater)
+    {
         $this->updater = $updater;
     }
 
