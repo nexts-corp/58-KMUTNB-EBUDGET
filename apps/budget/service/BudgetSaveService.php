@@ -30,19 +30,18 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
         foreach ($budget as $key => $value) {
             $bg = new Budget140();
-            $bg->setId($budget[$key]->id);
-            $bg->setBgStatus('N');
-            if (!$this->datacontext->updateObject($bg)) {
+            $bg->id = $budget[$key]->id;
+            if (!$this->datacontext->getObject($bg)) {
+                $this->datacontext->saveObject($budget[$key]);
                 $return = $this->datacontext->getLastMessage();
-                return $return;
-            }
-
-            $budget[$key]->refId = $budget[$key]->id;
-            $budget[$key]->bgStatus = 'Y';
-            if (!$this->datacontext->saveObject($budget[$key])) {
+            } else {
+                $bg->setBgStatus('N');
+                $bg->setRefId($budget[$key]->id);
+                $this->datacontext->saveObject($bg);
                 $return = $this->datacontext->getLastMessage();
             }
         }
+
         return $return;
     }
 
