@@ -5,6 +5,7 @@ namespace apps\budget\service;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
 use apps\budget\interfaces\IBudgetInfoService;
+use apps\common\entity\BudgetType;
 use apps\common\entity\BudgetMoneySalary;
 use apps\common\entity\BudgetMoneyOperating;
 use apps\common\entity\BudgetMoneyUtility;
@@ -411,7 +412,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
     public function saveBgBuildingContinue($building, $period, $list) {
         $return = true;
 
-         $budgetYear = $budget[0]->budgetYear;
+        $budgetYear = $budget[0]->budgetYear;
         $formType = $budget[0]->formType;
         $moneyTypeCode = $budget[0]->moneyTypeCode;
         $moneyTypeId = $budget[0]->moneyTypeId;
@@ -434,21 +435,21 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
             "productId" => $productId
         );
         $data = $this->datacontext->pdoQuery($sql, $param);
-        
+
         foreach ($data as $key => $value) {
             $sqlDel = " delete from " . $this->ent . "\\BudgetMoneyBuildingContinueList " .
                     " where buildingId =:buildingId ";
             $param2 = array("buildingId" => $data[$key]->id);
             $data = $this->datacontext->pdoQuery($sqlDel, $param);
         }
-        
-         foreach ($data as $key => $value) {
+
+        foreach ($data as $key => $value) {
             $sqlDel = " delete from " . $this->ent . "\\BudgetMoneyBuildingContinuePeriod " .
                     " where buildingId =:buildingId ";
             $param2 = array("buildingId" => $data[$key]->id);
             $data = $this->datacontext->pdoQuery($sqlDel, $param);
-        }        
-        
+        }
+
         $dataBuilding = new BudgetMoneyBuilding();
         $dataBuilding->id = $building->id;
         $dataBuilding = $this->datacontext->getObject($dataBuilding);
@@ -543,6 +544,9 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
         return $return;
     }
 
+    
+    
+    
     public function deleteBg140($budget140) {
         $return = true;
 
@@ -709,6 +713,11 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
         return $return;
     }
 
+    
+    
+    
+    
+    
     public function selectBg140($bgForm) {
         $sql = "SELECT"
                 . " salary.id, salary.positionName, salary.rateNo, salary.rateSalary, "
@@ -945,5 +954,227 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
         $dataBg = $this->datacontext->getObject($sql, $param); //get list of form
         return $dataBg;
     }
+
+    
+    
+    
+    
+    public function listBudgetType140() {
+        $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
+                . " FROM " . $this->ent . "\\BudgetType typ "
+                . " WHERE typ.masterId = '10000000' and typ.form140 = true ";
+        $list1 = $this->datacontext->getObject($sql1);
+
+        foreach ($list1 as $key => $value) {
+            $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
+                    . " FROM " . $this->ent . "\\BudgetType typ "
+                    . " WHERE typ.masterId = :masterId ";
+            $param2 = array(
+                "masterId" => $list1[$key]["id"]
+            );
+            $list2 = $this->datacontext->getObject($sql2, $param2);
+            $list1[$key]["lv2"] = $list2;
+
+            foreach ($list2 as $key => $value) {
+                $sql3 = " SELECT typ.id, typ.typeName, typ.masterId "
+                        . " FROM " . $this->ent . "\\BudgetType typ "
+                        . " WHERE typ.masterId = :masterId ";
+                $param3 = array(
+                    "masterId" => $list2[$key]["id"]
+                );
+                $list3 = $this->datacontext->getObject($sql3, $param3);
+                $list2[$key]["lv3"] = $list3;
+            }
+        }
+
+        return $list1;
+    }
+
+    public function listBudgetType141() {
+        $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
+                . " FROM " . $this->ent . "\\BudgetType typ "
+                . " WHERE typ.masterId = '20100000' and typ.form141 = true ";
+        $list1 = $this->datacontext->getObject($sql1);
+
+        foreach ($list1 as $key => $value) {
+            $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
+                    . " FROM " . $this->ent . "\\BudgetType typ "
+                    . " WHERE typ.masterId = :masterId ";
+            $param2 = array(
+                "masterId" => $list1[$key]["id"]
+            );
+            $list2 = $this->datacontext->getObject($sql2, $param2);
+            $list1[$key]["lv2"] = $list2;
+
+            foreach ($list2 as $key => $value) {
+                $sql3 = " SELECT typ.id, typ.typeName, typ.masterId "
+                        . " FROM " . $this->ent . "\\BudgetType typ "
+                        . " WHERE typ.masterId = :masterId ";
+                $param3 = array(
+                    "masterId" => $list2[$key]["id"]
+                );
+                $list3 = $this->datacontext->getObject($sql3, $param3);
+                $list2[$key]["lv3"] = $list3;
+            }
+        }
+
+        return $list1;
+    }
+
+    public function listBudgetType142() {
+        $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
+                . " FROM " . $this->ent . "\\BudgetType typ "
+                . " WHERE typ.masterId = '20100000' and typ.form142 = true ";
+        $list1 = $this->datacontext->getObject($sql1);
+
+        foreach ($list1 as $key => $value) {
+            $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
+                    . " FROM " . $this->ent . "\\BudgetType typ "
+                    . " WHERE typ.masterId = :masterId ";
+            $param2 = array(
+                "masterId" => $list1[$key]["id"]
+            );
+            $list2 = $this->datacontext->getObject($sql2, $param2);
+            $list1[$key]["lv2"] = $list2;
+
+            foreach ($list2 as $key => $value) {
+                $sql3 = " SELECT typ.id, typ.typeName, typ.masterId "
+                        . " FROM " . $this->ent . "\\BudgetType typ "
+                        . " WHERE typ.masterId = :masterId ";
+                $param3 = array(
+                    "masterId" => $list2[$key]["id"]
+                );
+                $list3 = $this->datacontext->getObject($sql3, $param3);
+                $list2[$key]["lv3"] = $list3;
+            }
+        }
+
+        return $list1;
+    }
+
+    public function listBudgetType143() {
+        $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
+                . " FROM " . $this->ent . "\\BudgetType typ "
+                . " WHERE typ.masterId = '20000000' and typ.form143 = true ";
+        $list1 = $this->datacontext->getObject($sql1);
+
+        foreach ($list1 as $key => $value) {
+            $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
+                    . " FROM " . $this->ent . "\\BudgetType typ "
+                    . " WHERE typ.masterId = :masterId ";
+            $param2 = array(
+                "masterId" => $list1[$key]["id"]
+            );
+            $list2 = $this->datacontext->getObject($sql2, $param2);
+            $list1[$key]["lv2"] = $list2;
+
+            foreach ($list2 as $key => $value) {
+                $sql3 = " SELECT typ.id, typ.typeName, typ.masterId "
+                        . " FROM " . $this->ent . "\\BudgetType typ "
+                        . " WHERE typ.masterId = :masterId ";
+                $param3 = array(
+                    "masterId" => $list2[$key]["id"]
+                );
+                $list3 = $this->datacontext->getObject($sql3, $param3);
+                $list2[$key]["lv3"] = $list3;
+            }
+        }
+
+        return $list1;
+    }
+
+    public function listBudgetType144() {
+        $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
+                . " FROM " . $this->ent . "\\BudgetType typ "
+                . " WHERE typ.masterId = '20200000' and typ.form144 = true ";
+        $list1 = $this->datacontext->getObject($sql1);
+
+        foreach ($list1 as $key => $value) {
+            $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
+                    . " FROM " . $this->ent . "\\BudgetType typ "
+                    . " WHERE typ.masterId = :masterId ";
+            $param2 = array(
+                "masterId" => $list1[$key]["id"]
+            );
+            $list2 = $this->datacontext->getObject($sql2, $param2);
+            $list1[$key]["lv2"] = $list2;
+
+            foreach ($list2 as $key => $value) {
+                $sql3 = " SELECT typ.id, typ.typeName, typ.masterId "
+                        . " FROM " . $this->ent . "\\BudgetType typ "
+                        . " WHERE typ.masterId = :masterId ";
+                $param3 = array(
+                    "masterId" => $list2[$key]["id"]
+                );
+                $list3 = $this->datacontext->getObject($sql3, $param3);
+                $list2[$key]["lv3"] = $list3;
+            }
+        }
+
+        return $list1;
+    }
+
+    public function listBudgetType145() {
+        $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
+                . " FROM " . $this->ent . "\\BudgetType typ "
+                . " WHERE typ.masterId = '20300000' and typ.form145 = true ";
+        $list1 = $this->datacontext->getObject($sql1);
+
+        foreach ($list1 as $key => $value) {
+            $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
+                    . " FROM " . $this->ent . "\\BudgetType typ "
+                    . " WHERE typ.masterId = :masterId ";
+            $param2 = array(
+                "masterId" => $list1[$key]["id"]
+            );
+            $list2 = $this->datacontext->getObject($sql2, $param2);
+            $list1[$key]["lv2"] = $list2;
+
+            foreach ($list2 as $key => $value) {
+                $sql3 = " SELECT typ.id, typ.typeName, typ.masterId "
+                        . " FROM " . $this->ent . "\\BudgetType typ "
+                        . " WHERE typ.masterId = :masterId ";
+                $param3 = array(
+                    "masterId" => $list2[$key]["id"]
+                );
+                $list3 = $this->datacontext->getObject($sql3, $param3);
+                $list2[$key]["lv3"] = $list3;
+            }
+        }
+
+        return $list1;
+    }
+
+    public function listBudgetType146() {
+        $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
+                . " FROM " . $this->ent . "\\BudgetType typ "
+                . " WHERE typ.masterId = '20500000' and typ.form146 = true ";
+        $list1 = $this->datacontext->getObject($sql1);
+
+        foreach ($list1 as $key => $value) {
+            $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
+                    . " FROM " . $this->ent . "\\BudgetType typ "
+                    . " WHERE typ.masterId = :masterId ";
+            $param2 = array(
+                "masterId" => $list1[$key]["id"]
+            );
+            $list2 = $this->datacontext->getObject($sql2, $param2);
+            $list1[$key]["lv2"] = $list2;
+
+            foreach ($list2 as $key => $value) {
+                $sql3 = " SELECT typ.id, typ.typeName, typ.masterId "
+                        . " FROM " . $this->ent . "\\BudgetType typ "
+                        . " WHERE typ.masterId = :masterId ";
+                $param3 = array(
+                    "masterId" => $list2[$key]["id"]
+                );
+                $list3 = $this->datacontext->getObject($sql3, $param3);
+                $list2[$key]["lv3"] = $list3;
+            }
+        }
+
+        return $list1;
+    }
+
 
 }

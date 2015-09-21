@@ -24,8 +24,26 @@ class BudgetType extends EntityBase {
     /** @Column(type="integer",length=11, name="LEVELID") */
     public $level;
 
-    /** @Column(type="integer",length=11, name="BUDGETFORM") */
-    public $budgetForm;
+    /** @Column(type="boolean", name="FORM140") */
+    public $form140;
+
+    /** @Column(type="boolean", name="FORM141") */
+    public $form141;
+
+    /** @Column(type="boolean", name="FORM142") */
+    public $form142;
+
+    /** @Column(type="boolean", name="FORM143") */
+    public $form143;
+
+    /** @Column(type="boolean", name="FORM144") */
+    public $form144;
+
+    /** @Column(type="boolean", name="FORM145") */
+    public $form145;
+
+    /** @Column(type="boolean", name="FORM146") */
+    public $form146;
 
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
@@ -49,8 +67,32 @@ class BudgetType extends EntityBase {
         return $this->level;
     }
 
-    function getBudgetForm() {
-        return $this->budgetForm;
+    function getForm140() {
+        return $this->form140;
+    }
+
+    function getForm141() {
+        return $this->form141;
+    }
+
+    function getForm142() {
+        return $this->form142;
+    }
+
+    function getForm143() {
+        return $this->form143;
+    }
+
+    function getForm144() {
+        return $this->form144;
+    }
+
+    function getForm145() {
+        return $this->form145;
+    }
+
+    function getForm146() {
+        return $this->form146;
     }
 
     function getCreator() {
@@ -77,8 +119,32 @@ class BudgetType extends EntityBase {
         $this->level = $level;
     }
 
-    function setBudgetForm($budgetForm) {
-        $this->budgetForm = $budgetForm;
+    function setForm140($form140) {
+        $this->form140 = $form140;
+    }
+
+    function setForm141($form141) {
+        $this->form141 = $form141;
+    }
+
+    function setForm142($form142) {
+        $this->form142 = $form142;
+    }
+
+    function setForm143($form143) {
+        $this->form143 = $form143;
+    }
+
+    function setForm144($form144) {
+        $this->form144 = $form144;
+    }
+
+    function setForm145($form145) {
+        $this->form145 = $form145;
+    }
+
+    function setForm146($form146) {
+        $this->form146 = $form146;
     }
 
     function setCreator($creator) {
