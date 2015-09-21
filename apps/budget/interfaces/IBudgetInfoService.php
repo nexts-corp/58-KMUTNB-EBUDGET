@@ -10,6 +10,62 @@ namespace apps\budget\interfaces;
 interface IBudgetInfoService {
 
     /**
+     * @name listBudgetType140
+     * @uri /listBudgetType140
+     * @return apps\common\entity\BudgetType[] list Description
+     * @description เลือกประเภทรายจ่ายของฟอร์ม
+     */
+    public function listBudgetType140();
+
+    /**
+     * @name listBudgetType141
+     * @uri /listBudgetType141
+     * @return apps\common\entity\BudgetType[] list Description
+     * @description เลือกประเภทรายจ่ายของฟอร์ม
+     */
+    public function listBudgetType141();
+
+    /**
+     * @name listBudgetType142
+     * @uri /listBudgetType142
+     * @return apps\common\entity\BudgetType[] list Description
+     * @description เลือกประเภทรายจ่ายของฟอร์ม
+     */
+    public function listBudgetType142();
+
+    /**
+     * @name listBudgetType143
+     * @uri /listBudgetType143
+     * @return apps\common\entity\BudgetType[] list Description
+     * @description เลือกประเภทรายจ่ายของฟอร์ม
+     */
+    public function listBudgetType143();
+
+    /**
+     * @name listBudgetType144
+     * @uri /listBudgetType144
+     * @return apps\common\entity\BudgetType[] list Description
+     * @description เลือกประเภทรายจ่ายของฟอร์ม
+     */
+    public function listBudgetType144();
+
+    /**
+     * @name listBudgetType145
+     * @uri /listBudgetType145
+     * @return apps\common\entity\BudgetType[] list Description
+     * @description เลือกประเภทรายจ่ายของฟอร์ม
+     */
+    public function listBudgetType145();
+
+    /**
+     * @name listBudgetType146
+     * @uri /listBudgetType146
+     * @return apps\common\entity\BudgetType[] list Description
+     * @description เลือกประเภทรายจ่ายของฟอร์ม
+     */
+    public function listBudgetType146();
+
+    /**
      * @name saveBgSalary
      * @uri /saveBgSalary
      * @param apps\common\entity\BudgetMoneySalary[] budget Description
@@ -200,7 +256,7 @@ interface IBudgetInfoService {
      * @description แบบ ง.146
      */
     public function selectBg146($bgForm);
-    
+
     /**
      * @name selectBuilding
      * @uri /selectBuilding
