@@ -66,6 +66,9 @@ class Budget142 extends EntityBase {
     /** @Column(type="integer",length=11, name="REFID") */
     public $refId;
 
+    /** @Column(type="string",length=1, name="BUDGETSTATUS") */
+    public $bgStatus;
+
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
 
@@ -142,6 +145,10 @@ class Budget142 extends EntityBase {
 
     function getRefId() {
         return $this->refId;
+    }
+
+    function getBgStatus() {
+        return $this->bgStatus;
     }
 
     function getCreator() {
@@ -222,6 +229,10 @@ class Budget142 extends EntityBase {
 
     function setRefId($refId) {
         $this->refId = $refId;
+    }
+
+    function setBgStatus($bgStatus) {
+        $this->bgStatus = $bgStatus;
     }
 
     function setCreator($creator) {
