@@ -47,27 +47,129 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
     }
 
     public function saveBudget141($budget) {
-        
+        $return = true;
+
+        foreach ($budget as $key => $value) {
+            $bg = new Budget141();
+            $bg->setId($budget[$key]->id);
+            $bg->setBgStatus('N');
+            if (!$this->datacontext->updateObject($bg)) {
+                $return = $this->datacontext->getLastMessage();
+                return $return;
+            }
+
+            $budget[$key]->refId = $budget[$key]->id;
+            $budget[$key]->bgStatus = 'Y';
+            if (!$this->datacontext->saveObject($budget[$key])) {
+                $return = $this->datacontext->getLastMessage();
+            }
+        }
+        return $return;
     }
 
     public function saveBudget142($budget) {
-        
+        $return = true;
+
+        foreach ($budget as $key => $value) {
+            $bg = new Budget142();
+            $bg->setId($budget[$key]->id);
+            $bg->setBgStatus('N');
+            if (!$this->datacontext->updateObject($bg)) {
+                $return = $this->datacontext->getLastMessage();
+                return $return;
+            }
+
+            $budget[$key]->refId = $budget[$key]->id;
+            $budget[$key]->bgStatus = 'Y';
+            if (!$this->datacontext->saveObject($budget[$key])) {
+                $return = $this->datacontext->getLastMessage();
+            }
+        }
+        return $return;
     }
 
     public function saveBudget143($budget) {
-        
+        $return = true;
+
+        foreach ($budget as $key => $value) {
+            $bg = new Budget143();
+            $bg->setId($budget[$key]->id);
+            $bg->setBgStatus('N');
+            if (!$this->datacontext->updateObject($bg)) {
+                $return = $this->datacontext->getLastMessage();
+                return $return;
+            }
+
+            $budget[$key]->refId = $budget[$key]->id;
+            $budget[$key]->bgStatus = 'Y';
+            if (!$this->datacontext->saveObject($budget[$key])) {
+                $return = $this->datacontext->getLastMessage();
+            }
+        }
+        return $return;
     }
 
     public function saveBudget144($budget) {
-        
+        $return = true;
+
+        foreach ($budget as $key => $value) {
+            $bg = new Budget144();
+            $bg->setId($budget[$key]->id);
+            $bg->setBgStatus('N');
+            if (!$this->datacontext->updateObject($bg)) {
+                $return = $this->datacontext->getLastMessage();
+                return $return;
+            }
+
+            $budget[$key]->refId = $budget[$key]->id;
+            $budget[$key]->bgStatus = 'Y';
+            if (!$this->datacontext->saveObject($budget[$key])) {
+                $return = $this->datacontext->getLastMessage();
+            }
+        }
+        return $return;
     }
 
     public function saveBudget145($budget) {
-        
+        $return = true;
+
+        foreach ($budget as $key => $value) {
+            $bg = new Budget145();
+            $bg->setId($budget[$key]->id);
+            $bg->setBgStatus('N');
+            if (!$this->datacontext->updateObject($bg)) {
+                $return = $this->datacontext->getLastMessage();
+                return $return;
+            }
+
+            $budget[$key]->refId = $budget[$key]->id;
+            $budget[$key]->bgStatus = 'Y';
+            if (!$this->datacontext->saveObject($budget[$key])) {
+                $return = $this->datacontext->getLastMessage();
+            }
+        }
+        return $return;
     }
 
     public function saveBudget146($budget) {
-        
+        $return = true;
+
+        foreach ($budget as $key => $value) {
+            $bg = new Budget146();
+            $bg->setId($budget[$key]->id);
+            $bg->setBgStatus('N');
+            if (!$this->datacontext->updateObject($bg)) {
+                $return = $this->datacontext->getLastMessage();
+                return $return;
+            }
+
+            $budget[$key]->refId = $budget[$key]->id;
+            $budget[$key]->bgStatus = 'Y';
+            if (!$this->datacontext->saveObject($budget[$key])) {
+                $return = $this->datacontext->getLastMessage();
+            }
+        }
+        return $return;
     }
 
 }
