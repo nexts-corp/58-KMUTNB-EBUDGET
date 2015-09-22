@@ -6,7 +6,7 @@ namespace apps\common\entity;
  * @Entity
  * @Table(name="BUDGETPROJECT")
  */
-class BudgetProduct extends EntityBase {
+class BudgetProject extends EntityBase {
 
     /**
      * @Id 
@@ -22,7 +22,7 @@ class BudgetProduct extends EntityBase {
     public $projectName;
 
     /** @Column(type="string",length=1, name="BUDGETPROJECTTYPE") */
-    public $projecttype;
+    public $projectType;
 
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
