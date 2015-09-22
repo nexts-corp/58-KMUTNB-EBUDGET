@@ -1,10 +1,11 @@
 <?php
 
-namespace apps\common\entity;
+namespace apps\common\entity\L3D;
+use apps\common\entity\EntityBase;
 
 /**
  * @Entity
- * @Table(name="3D_ACTIVITY")
+ * @Table(name="L3D_ACTIVITY")
  */
 class Activity extends EntityBase {
 

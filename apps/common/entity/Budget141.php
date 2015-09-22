@@ -21,16 +21,16 @@ class Budget141 extends EntityBase {
     /** @Column(type="integer",length=11, name="BUDGETTYPEID") */
     public $budgetTypeId;
 
-    /** @Column(type="string",length=1 name="BUDGETTYPECODE") */
+    /** @Column(type="string",length=1, name="BUDGETTYPECODE") */
     public $budgetTypeCode;
 
     /** @Column(type="integer",length=11, name="DEPARTMENTID") */
     public $deptId;
 
-    /** @Column(type="integer",length=11, name="3D_PLANID") */
+    /** @Column(type="integer",length=11, name="L3D_PLANID") */
     public $planId;
 
-    /** @Column(type="integer",length=11, name="3D_PROJECTID") */
+    /** @Column(type="integer",length=11, name="L3D_PROJECTID") */
     public $projectId;
 
     /** @Column(type="integer",length=11, name="FUNDGROUPID") */
@@ -42,7 +42,7 @@ class Budget141 extends EntityBase {
     /** @Column(type="integer",length=11, name="ATTACHMENTID") */
     public $attachmentId;
 
-    /** @Column(type="string",length=500 name="POSITIONNAME") */
+    /** @Column(type="string",length=500, name="POSITIONNAME") */
     public $positionName;
 
     /** @Column(type="integer",length=11, name="POSITIONOCCUPIED") */
@@ -51,7 +51,7 @@ class Budget141 extends EntityBase {
     /** @Column(type="integer",length=11, name="POSITIONVACANCY") */
     public $vacancy;
 
-    /** @Column(type="string",length=300 name="RATENO") */
+    /** @Column(type="string",length=300, name="RATENO") */
     public $rateNo;
 
     /** @Column(type="float", name="SALARYPERMONTH") */

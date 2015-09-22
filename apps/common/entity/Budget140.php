@@ -21,16 +21,16 @@ class Budget140 extends EntityBase {
     /** @Column(type="integer",length=11, name="BUDGETTYPEID") */
     public $budgetTypeId;
 
-    /** @Column(type="string",length=1 name="BUDGETTYPECODE") */
+    /** @Column(type="string",length=1, name="BUDGETTYPECODE") */
     public $budgetTypeCode;
 
     /** @Column(type="integer",length=11, name="DEPARTMENTID") */
     public $deptId;
 
-    /** @Column(type="integer",length=11, name="3D_PLANID") */
+    /** @Column(type="integer",length=11, name="L3D_PLANID") */
     public $planId;
 
-    /** @Column(type="integer",length=11, name="3D_PROJECTID") */
+    /** @Column(type="integer",length=11, name="L3D_PROJECTID") */
     public $projectId;
 
     /** @Column(type="integer",length=11, name="FUNDGROUPID") */
@@ -42,7 +42,7 @@ class Budget140 extends EntityBase {
     /** @Column(type="integer",length=11, name="ATTACHMENTID") */
     public $attachmentId;
 
-    /** @Column(type="string",length=500 name="POSITIONNAME") */
+    /** @Column(type="string",length=500, name="POSITIONNAME") */
     public $positionName;
 
     /** @Column(type="integer",length=11, name="POSITIONOCCUPIED") */
@@ -51,7 +51,7 @@ class Budget140 extends EntityBase {
     /** @Column(type="integer",length=11, name="POSITIONVACANCY") */
     public $vacancy;
 
-    /** @Column(type="string",length=300 name="RATENO") */
+    /** @Column(type="string",length=300, name="RATENO") */
     public $rateNo;
 
     /** @Column(type="float", name="SALARYPERMONTH") */
@@ -60,8 +60,11 @@ class Budget140 extends EntityBase {
     /** @Column(type="float", name="SALARYTOTAL") */
     public $salaryTotal;
 
-    /** @Column(type="float", name="REMARK") */
+    /** @Column(type="text", name="REMARK") */
     public $remark;
+
+    /** @Column(type="integer",length=11, name="REFID") */
+    public $refId;
 
     /** @Column(type="string",length=1, name="BUDGETSTATUS") */
     public $bgStatus;
@@ -138,6 +141,10 @@ class Budget140 extends EntityBase {
 
     function getRemark() {
         return $this->remark;
+    }
+
+    function getRefId() {
+        return $this->refId;
     }
 
     function getBgStatus() {
@@ -218,6 +225,10 @@ class Budget140 extends EntityBase {
 
     function setRemark($remark) {
         $this->remark = $remark;
+    }
+
+    function setRefId($refId) {
+        $this->refId = $refId;
     }
 
     function setBgStatus($bgStatus) {

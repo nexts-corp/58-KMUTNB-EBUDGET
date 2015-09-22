@@ -10,65 +10,128 @@ namespace apps\budget\interfaces;
 interface IBudgetSaveService {
 
     /**
-     * @name saveBudget140
-     * @uri /saveBudget140
-     * @param apps\common\entity\Budget140[] budget Description
-     * @return boolean save Description
-     * @description เพิ่ม/แก้ไขคำขอแบบ ง.140
+     * @name insertBudget140
+     * @uri /insertBudget140
+     * @param apps\common\entity\Budget140 budget Description
+     * @return boolean result Description
+     * @description เพิ่มคำขอแบบ ง.140
      */
-    public function saveBudget140($budget);
+    public function insertBudget140($budget);
 
     /**
-     * @name saveBudget141
-     * @uri /saveBudget141
-     * @param apps\common\entity\Budget141[] budget Description
-     * @return boolean save Description
-     * @description เพิ่ม/แก้ไขคำขอแบบ ง.141
+     * @name updateBudget140
+     * @uri /updateBudget140
+     * @param apps\common\entity\Budget140 budget Description
+     * @return boolean result Description
+     * @description แก้ไขคำขอแบบ ง.140
      */
-    public function saveBudget141($budget);
+    public function updateBudget140($budget);
 
     /**
-     * @name saveBudget142
-     * @uri /saveBudget142
-     * @param apps\common\entity\Budget142[] budget Description
-     * @return boolean save Description
-     * @description เพิ่ม/แก้ไขคำขอแบบ ง.142
+     * @name insertBudget141
+     * @uri /insertBudget141
+     * @param apps\common\entity\Budget141 budget Description
+     * @return boolean result Description
+     * @description เพิ่มคำขอแบบ ง.141
      */
-    public function saveBudget142($budget);
+    public function insertBudget141($budget);
 
     /**
-     * @name saveBudget143
-     * @uri /saveBudget143
-     * @param apps\common\entity\Budget143[] budget Description
-     * @return boolean save Description
-     * @description เพิ่ม/แก้ไขคำขอแบบ ง.143
+     * @name updateBudget141
+     * @uri /updateBudget141
+     * @param apps\common\entity\Budget141 budget Description
+     * @return boolean result Description
+     * @description แก้ไขคำขอแบบ ง.141
      */
-    public function saveBudget143($budget);
+    public function updateBudget141($budget);
 
     /**
-     * @name saveBudget144
-     * @uri /saveBudget144
-     * @param apps\common\entity\Budget144[] budget Description
-     * @return boolean save Description
-     * @description เพิ่ม/แก้ไขคำขอแบบ ง.144
+     * @name insertBudget142
+     * @uri /insertBudget142
+     * @param apps\common\entity\Budget142 budget Description
+     * @return boolean result Description
+     * @description เพิ่มคำขอแบบ ง.142
      */
-    public function saveBudget144($budget);
+    public function insertBudget142($budget);
 
     /**
-     * @name saveBudget145
-     * @uri /saveBudget145
-     * @param apps\common\entity\Budget145[] budget Description
-     * @return boolean save Description
-     * @description เพิ่ม/แก้ไขคำขอแบบ ง.145
+     * @name updateBudget142
+     * @uri /updateBudget142
+     * @param apps\common\entity\Budget142 budget Description
+     * @return boolean result Description
+     * @description แก้ไขคำขอแบบ ง.142
      */
-    public function saveBudget145($budget);
+    public function updateBudget142($budget);
 
     /**
-     * @name saveBudget146
-     * @uri /saveBudget146
-     * @param apps\common\entity\Budget146[] budget Description
-     * @return boolean save Description
-     * @description เพิ่ม/แก้ไขคำขอแบบ ง.146
+     * @name insertBudget143
+     * @uri /insertBudget143
+     * @param apps\common\entity\Budget143 budget Description
+     * @return boolean result Description
+     * @description เพิ่มคำขอแบบ ง.143
      */
-    public function saveBudget146($budget);
+    public function insertBudget143($budget);
+
+    /**
+     * @name updateBudget143
+     * @uri /updateBudget143
+     * @param apps\common\entity\Budget143 budget Description
+     * @return boolean result Description
+     * @description แก้ไขคำขอแบบ ง.143
+     */
+    public function updateBudget143($budget);
+
+    /**
+     * @name insertBudget144
+     * @uri /insertBudget144
+     * @param apps\common\entity\Budget144 budget Description
+     * @return boolean result Description
+     * @description เพิ่มคำขอแบบ ง.144
+     */
+    public function insertBudget144($budget);
+
+    /**
+     * @name updateBudget144
+     * @uri /updateBudget144
+     * @param apps\common\entity\Budget144 budget Description
+     * @return boolean result Description
+     * @description แก้ไขคำขอแบบ ง.144
+     */
+    public function updateBudget144($budget);
+
+    /**
+     * @name insertBudget145
+     * @uri /insertBudget145
+     * @param apps\common\entity\Budget145 budget Description
+     * @return boolean result Description
+     * @description เพิ่มคำขอแบบ ง.145
+     */
+    public function insertBudget145($budget);
+
+    /**
+     * @name updateBudget145
+     * @uri /updateBudget145
+     * @param apps\common\entity\Budget145 budget Description
+     * @return boolean result Description
+     * @description แก้ไขคำขอแบบ ง.145
+     */
+    public function updateBudget145($budget);
+
+    /**
+     * @name insertBudget146
+     * @uri /insertBudget146
+     * @param apps\common\entity\Budget146 budget Description
+     * @return boolean result Description
+     * @description เพิ่มคำขอแบบ ง.146
+     */
+    public function insertBudget146($budget);
+
+    /**
+     * @name updateBudget146
+     * @uri /updateBudget146
+     * @param apps\common\entity\Budget146 budget Description
+     * @return boolean result Description
+     * @description แก้ไขคำขอแบบ ง.146
+     */
+    public function updateBudget146($budget);
 }

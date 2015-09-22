@@ -21,16 +21,16 @@ class Budget145 extends EntityBase {
     /** @Column(type="integer",length=11, name="BUDGETTYPEID") */
     public $budgetTypeId;
 
-    /** @Column(type="string",length=1 name="BUDGETTYPECODE") */
+    /** @Column(type="string",length=1, name="BUDGETTYPECODE") */
     public $budgetTypeCode;
 
     /** @Column(type="integer",length=11, name="DEPARTMENTID") */
     public $deptId;
 
-    /** @Column(type="integer",length=11, name="3D_PLANID") */
+    /** @Column(type="integer",length=11, name="L3D_PLANID") */
     public $planId;
 
-    /** @Column(type="integer",length=11, name="3D_PROJECTID") */
+    /** @Column(type="integer",length=11, name="L3D_PROJECTID") */
     public $projectId;
 
     /** @Column(type="integer",length=11, name="FUNDGROUPID") */
@@ -42,7 +42,7 @@ class Budget145 extends EntityBase {
     /** @Column(type="integer",length=11, name="ATTACHMENTID") */
     public $attachmentId;
 
-    /** @Column(type="string",length=300 name="DURABLENAME") */
+    /** @Column(type="string",length=300, name="DURABLENAME") */
     public $durableName;
 
     /** @Column(type="text", name="DURABLEDESC") */
@@ -51,13 +51,13 @@ class Budget145 extends EntityBase {
     /** @Column(type="integer",length=11, name="QTY") */
     public $qty;
 
-    /** @Column(type="string",length=300 name="UNIT") */
+    /** @Column(type="string",length=300, name="UNIT") */
     public $unit;
 
-    /** @Column(type="string",length=18 name="PRICE") */
+    /** @Column(type="string",length=18, name="PRICE") */
     public $price;
 
-    /** @Column(type="string",length=18 name="TOTALPRICE") */
+    /** @Column(type="string",length=18, name="TOTALPRICE") */
     public $totalPrice;
 
     /** @Column(type="integer",length=11, name="NUMNEEDED") */

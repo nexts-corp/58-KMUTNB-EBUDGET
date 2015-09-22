@@ -21,16 +21,16 @@ class Budget143 extends EntityBase {
     /** @Column(type="integer",length=11, name="BUDGETTYPEID") */
     public $budgetTypeId;
 
-    /** @Column(type="string",length=1 name="BUDGETTYPECODE") */
+    /** @Column(type="string",length=1, name="BUDGETTYPECODE") */
     public $budgetTypeCode;
 
     /** @Column(type="integer",length=11, name="DEPARTMENTID") */
     public $deptId;
 
-    /** @Column(type="integer",length=11, name="3D_PLANID") */
+    /** @Column(type="integer",length=11, name="L3D_PLANID") */
     public $planId;
 
-    /** @Column(type="integer",length=11, name="3D_PROJECTID") */
+    /** @Column(type="integer",length=11, name="L3D_PROJECTID") */
     public $projectId;
 
     /** @Column(type="integer",length=11, name="FUNDGROUPID") */
@@ -42,19 +42,19 @@ class Budget143 extends EntityBase {
     /** @Column(type="integer",length=11, name="ATTACHMENTID") */
     public $attachmentId;
 
-    /** @Column(type="string",length=300 name="OPERATINGNAME") */
+    /** @Column(type="string",length=300, name="OPERATINGNAME") */
     public $operName;
 
     /** @Column(type="text", name="OPERATINGDESC") */
     public $operDesc;
 
-    /** @Column(type="string",length=18 name="BUDGETREQUEST") */
+    /** @Column(type="string",length=18, name="BUDGETREQUEST") */
     public $bgRequest;
 
-    /** @Column(type="string",length=18 name="BUDGETRECEIVE") */
+    /** @Column(type="string",length=18, name="BUDGETRECEIVE") */
     public $bgReceive;
 
-    /** @Column(type="string",length=18 name="BUDGETHISTORY") */
+    /** @Column(type="string",length=18, name="BUDGETHISTORY") */
     public $bgHistory;
 
     /** @Column(type="float", name="REMARK") */

@@ -8,15 +8,23 @@ namespace apps\common\interfaces;
  * @description Lookup
  */
 interface ILookupService {
-    
-    
+
+    /**
+     * @name listCampus
+     * @uri /listCampus
+     * @return String[] lists Description
+     * @description วิทยาเขต
+     */
+    public function listCampus();
+
     /**
      * @name listFaculty
      * @uri /listFaculty
+     * @param String campusId
      * @return String[] lists Description
      * @description รายชื่อภาควิชา
      */
-    public function listFaculty();
+    public function listFaculty($campusId);
 
     /**
      * @name listDepartment
@@ -26,9 +34,7 @@ interface ILookupService {
      * @description รายชื่อหน่วยงาน
      */
     public function listDepartment($facultyId);
-    
-    
-    
+
     /**
      * @name listFundgroup
      * @uri /listFundgroup
@@ -38,30 +44,23 @@ interface ILookupService {
     public function listFundgroup();
 
     /**
-     * @name listRevenuePlan
-     * @uri /listRevenuePlan
-     * @return String[] lists Description
-     * @description รายชื่อแผนงานงบประมาณ
-     */
-    public function listRevenuePlan();
-    
-    /**
      * @name listBudgetPlan
      * @uri /listBudgetPlan
+     * @param int budgetYear 
      * @return String[] lists Description
      * @description รายชื่อแผน
      */
-    public function listBudgetPlan();
+    public function listBudgetPlan($budgetYear);
 
     /**
-     * @name listBudgetProduct
-     * @uri /listBudgetProduct
+     * @name listBudgetProject
+     * @uri /listBudgetProject
+     * @param int planId 
      * @return String[] lists Description
-     * @description รายชื่อผลผลิต
+     * @description รายชื่อผลผลิต/โครงการ
      */
-    public function listBudgetProduct();
-    
-    
+    public function listBudgetProject($planId);
+
     /**
      * @name listYear
      * @uri /listYear
@@ -69,5 +68,4 @@ interface ILookupService {
      * @description รายการปีงบประมาณ
      */
     public function listYear();
-
 }

@@ -17,3 +17,9 @@
 /vendor/apache/log4php/package.php
 /vendor/apache/log4php/package-config.php
 /vendor
+.idea/workspace.xml
+.idea/vcs.xml
+.idea/kmutnb-ebudget.iml
+.idea/misc.xml
+.idea/.name
+.idea/modules.xml
