@@ -4,31 +4,37 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="budget_money_building_continue_list")
+ * @Table(name="BUILDINGDETAIL")
  */
-class BudgetMoneyBuildingContinueList extends EntityBase {
+class BuildingDetail extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="id")
+     * @Column(type="integer",length=11,name="BUILDINGDETAILID")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="budget_money_building_id") */
+    /** @Column(type="integer",length=11, name="BUILDINGID") */
     public $buildingId;
 
-    /** @Column(type="integer",length=11, name="floor_no") */
+    /** @Column(type="string",length=1000, name="FLOORNO") */
     public $floorNo;
 
-    /** @Column(type="string",length=500, name="floor_desc") */
+    /** @Column(type="text", name="FLOOORDESC") */
     public $floorDesc;
 
-    /** @Column(type="integer",length=11, name="order") */
-    public $order;
+    /** @Column(type="integer",length=11, name="BUILDINGTYPE") */
+    public $typeId;
 
-    /** @Column(type="string",length=500, name="area") */
+    /** @Column(type="string",length=100, name="AREA") */
     public $area;
+
+    /** @Column(type="string",length=18, name="COSTPERUNIT") */
+    public $costUnit;
+
+    /** @Column(type="string",length=18, name="COSTTOTAL") */
+    public $costTotal;
 
     /** @Column(type="string",length=100, name="creator") */
     public $creator;
@@ -40,7 +46,7 @@ class BudgetMoneyBuildingContinueList extends EntityBase {
         return $this->id;
     }
 
-    function getBudgetMoneyBuildingId() {
+    function getBuildingId() {
         return $this->buildingId;
     }
 
@@ -52,12 +58,20 @@ class BudgetMoneyBuildingContinueList extends EntityBase {
         return $this->floorDesc;
     }
 
-    function getOrder() {
-        return $this->order;
+    function getTypeId() {
+        return $this->typeId;
     }
 
     function getArea() {
         return $this->area;
+    }
+
+    function getCostUnit() {
+        return $this->costUnit;
+    }
+
+    function getCostTotal() {
+        return $this->costTotal;
     }
 
     function getCreator() {
@@ -72,8 +86,8 @@ class BudgetMoneyBuildingContinueList extends EntityBase {
         $this->id = $id;
     }
 
-    function setBudgetMoneyBuildingId($budgetMoneyBuildingId) {
-        $this->buildingId = $budgetMoneyBuildingId;
+    function setBuildingId($buildingId) {
+        $this->buildingId = $buildingId;
     }
 
     function setFloorNo($floorNo) {
@@ -84,12 +98,20 @@ class BudgetMoneyBuildingContinueList extends EntityBase {
         $this->floorDesc = $floorDesc;
     }
 
-    function setOrder($order) {
-        $this->order = $order;
+    function setTypeId($typeId) {
+        $this->typeId = $typeId;
     }
 
     function setArea($area) {
         $this->area = $area;
+    }
+
+    function setCostUnit($costUnit) {
+        $this->costUnit = $costUnit;
+    }
+
+    function setCostTotal($costTotal) {
+        $this->costTotal = $costTotal;
     }
 
     function setCreator($creator) {
