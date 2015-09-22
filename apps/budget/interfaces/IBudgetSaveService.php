@@ -28,6 +28,15 @@ interface IBudgetSaveService {
     public function updateBudget140($budget);
 
     /**
+     * @name deleteBudget140
+     * @uri /deleteBudget140
+     * @param int budgetId Description
+     * @return boolean result Description
+     * @description ลบคำขอแบบ ง.140
+     */
+    public function deleteBudget140($budgetId);
+
+    /**
      * @name insertBudget141
      * @uri /insertBudget141
      * @param apps\common\entity\Budget141 budget Description
@@ -44,6 +53,15 @@ interface IBudgetSaveService {
      * @description แก้ไขคำขอแบบ ง.141
      */
     public function updateBudget141($budget);
+
+    /**
+     * @name deleteBudget141
+     * @uri /deleteBudget141
+     * @param int budgetId Description
+     * @return boolean result Description
+     * @description ลบคำขอแบบ ง.141
+     */
+    public function deleteBudget141($budgetId);
 
     /**
      * @name insertBudget142
@@ -64,6 +82,15 @@ interface IBudgetSaveService {
     public function updateBudget142($budget);
 
     /**
+     * @name deleteBudget142
+     * @uri /deleteBudget142
+     * @param int budgetId Description
+     * @return boolean result Description
+     * @description ลบคำขอแบบ ง.142
+     */
+    public function deleteBudget142($budgetId);
+
+    /**
      * @name insertBudget143
      * @uri /insertBudget143
      * @param apps\common\entity\Budget143 budget Description
@@ -80,6 +107,15 @@ interface IBudgetSaveService {
      * @description แก้ไขคำขอแบบ ง.143
      */
     public function updateBudget143($budget);
+
+    /**
+     * @name deleteBudget143
+     * @uri /deleteBudget143
+     * @param int budgetId Description
+     * @return boolean result Description
+     * @description ลบคำขอแบบ ง.143
+     */
+    public function deleteBudget143($budgetId);
 
     /**
      * @name insertBudget144
@@ -100,6 +136,15 @@ interface IBudgetSaveService {
     public function updateBudget144($budget);
 
     /**
+     * @name deleteBudget144
+     * @uri /deleteBudget144
+     * @param int budgetId Description
+     * @return boolean result Description
+     * @description ลบคำขอแบบ ง.144
+     */
+    public function deleteBudget144($budgetId);
+
+    /**
      * @name insertBudget145
      * @uri /insertBudget145
      * @param apps\common\entity\Budget145 budget Description
@@ -118,6 +163,15 @@ interface IBudgetSaveService {
     public function updateBudget145($budget);
 
     /**
+     * @name deleteBudget145
+     * @uri /deleteBudget145
+     * @param int budgetId Description
+     * @return boolean result Description
+     * @description ลบคำขอแบบ ง.145
+     */
+    public function deleteBudget145($budgetId);
+
+    /**
      * @name insertBudget146
      * @uri /insertBudget146
      * @param apps\common\entity\Budget146 budget Description
@@ -134,4 +188,13 @@ interface IBudgetSaveService {
      * @description แก้ไขคำขอแบบ ง.146
      */
     public function updateBudget146($budget);
+
+    /**
+     * @name deleteBudget146
+     * @uri /deleteBudget146
+     * @param int budgetId Description
+     * @return boolean result Description
+     * @description ลบคำขอแบบ ง.146
+     */
+    public function deleteBudget146($budgetId);
 }

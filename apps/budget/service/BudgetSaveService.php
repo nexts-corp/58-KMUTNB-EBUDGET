@@ -336,4 +336,95 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
+    public function deleteBudget140($budgetId) {
+        $result = true;
+
+        $repo = new Budget140();
+        $repo->setId($budgetId);
+        $repo->setCampusStatus("N");
+
+        if (!$this->datacontext->updateObject($repo)) {
+            $return = $this->datacontext->getLastMessage();
+        }
+        return $result;
+    }
+
+    public function deleteBudget141($budgetId) {
+        $result = true;
+
+        $repo = new Budget141();
+        $repo->setId($budgetId);
+        $repo->setCampusStatus("N");
+
+        if (!$this->datacontext->updateObject($repo)) {
+            $return = $this->datacontext->getLastMessage();
+        }
+        return $result;
+    }
+
+    public function deleteBudget142($budgetId) {
+        $result = true;
+
+        $repo = new Budget142();
+        $repo->setId($budgetId);
+        $repo->setCampusStatus("N");
+
+        if (!$this->datacontext->updateObject($repo)) {
+            $return = $this->datacontext->getLastMessage();
+        }
+        return $result;
+    }
+
+    public function deleteBudget143($budgetId) {
+        $result = true;
+
+        $repo = new Budget143();
+        $repo->setId($budgetId);
+        $repo->setCampusStatus("N");
+
+        if (!$this->datacontext->updateObject($repo)) {
+            $return = $this->datacontext->getLastMessage();
+        }
+        return $result;
+    }
+
+    public function deleteBudget144($budgetId) {
+        $result = true;
+
+        $repo = new Budget144();
+        $repo->setId($budgetId);
+        $repo->setCampusStatus("N");
+
+        if (!$this->datacontext->updateObject($repo)) {
+            $return = $this->datacontext->getLastMessage();
+        }
+        return $result;
+    }
+
+    public function deleteBudget145($budgetId) {
+        $result = true;
+
+        $repo = new Budget145();
+        $repo->setId($budgetId);
+        $repo->setCampusStatus("N");
+
+        if (!$this->datacontext->updateObject($repo)) {
+            $return = $this->datacontext->getLastMessage();
+        }
+        return $result;
+    }
+
+    public function deleteBudget146($budgetId) {
+        $result = true;
+
+        $repo = new Budget146();
+        $repo->setId($budgetId);
+        $repo->setCampusStatus("N");
+
+        if (!$this->datacontext->updateObject($repo)) {
+            $return = $this->datacontext->getLastMessage();
+        }
+        return $result;
+    }
+
 }
