@@ -23,8 +23,9 @@
         <div class="container">
             <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
                 <li class="active">
-                    <button id="addForm" class="btn btn-success"><i class="fa fa-plus-circle"> เพิ่มคำขอ</i></button>
-                    <button id="backHome" class="btn btn-default" style="display: none;"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
+                    <button class="btn btn-success goChoice"><i class="fa fa-plus-circle"> เพิ่มคำขอ</i></button>
+                    <button class="btn btn-default backHome" style="display: none;"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
+                    <button class="btn btn-default backChoice" style="display: none;"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
                 </li>
             </ul>
         </div>
@@ -33,232 +34,262 @@
     <div class="container">
         <div class="row">
 
-            <div id="formHome" class="col-md-12">
-                <div id="bidderTable" class="col-md-12"><!-- table shown bidder information list -->
-                    <table id="table" class="table table-bordered table-striped table-condensed mb-none">
-                        <thead>
-                            <tr>
-                                <th class="text-center col-lg-6">รายละเอียดคำของบประมาณ</th>
-                                <th class="text-center col-lg-3">สถานะ</th>
-                                <th class="text-center col-lg-3">เครื่องมือ</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td colspan="3" class="text-center">-</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div><!-- end table shown bidder information list -->
+            <div id="divHome" class="col-md-12">
+                <table id="table" class="table table-bordered table-striped table-condensed mb-none">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-lg-6">รายละเอียดคำของบประมาณ</th>
+                            <th class="text-center col-lg-3">สถานะ</th>
+                            <th class="text-center col-lg-3">เครื่องมือ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="3" class="text-center">-</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div id="formBudget" class="col-md-12" style="display: none;">
+
+            <div id="divChoice" class="col-md-12" style="display: none;">
+                <section class="panel panel-featured panel-featured-success">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">แบบฟอร์มคำของบประมาณ</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div id="panel1">
+                            <form id="formChoice" onsubmit="return false;">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label text-right" for="budgetPeriodId">ปีงบประมาณ : </label>
+                                    <div class="col-md-6">
+                                        <select id="budgetPeriodId" name="budgetPeriodId" class="form-control input-sm" required>
+                                            <option value="">เลือก</option>
+                                            <option value="1">1</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label text-right" for="budgetTypeId">แหล่งเงิน : </label>
+                                    <div class="col-md-6">
+                                        <select id="budgetTypeId" name="budgetTypeId" class="form-control input-sm" required>
+                                            <option value="">เลือก</option>
+                                            <option value="1">1</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label text-right" for="planId">แผนงาน : </label>
+                                    <div class="col-md-6">
+                                        <select id="planId" name="planId" class="form-control input-sm" required>
+                                            <option value="">เลือก</option>
+                                            <option value="1">1</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label text-right" for="projectId">ผลผลิต/โครงการ : </label>
+                                    <div class="col-md-6">
+                                        <select id="projectId" name="projectId" class="form-control input-sm" required>
+                                            <option value="">เลือก</option>
+                                            <option value="1">1</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label text-right" for="budgetPlanId">แผนงาน 3 มิติ : </label>
+                                    <div class="col-md-6">
+                                        <select id="budgetPlanId" name="budgetPlanId" class="form-control input-sm" required>
+                                            <option value="">เลือก</option>
+                                            <option value="1">1</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label text-right" for="fundgroupId">กองทุน : </label>
+                                    <div class="col-md-6">
+                                        <select id="fundgroupId" name="fundgroupId" class="form-control input-sm" required>
+                                            <option value="">เลือก</option>
+                                            <option value="1">1</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <div id="panel2" style="margin-top: 20px;">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2" class="text-center">แบบฟอร์มคำของบประมาณ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
             </div>
+
+            <div id="divForm" class="col-md-12" style="display: none;"></div>
+
         </div><!--  row  -->
     </div><!--  container  -->
 </div><!-- main -->
 
 {{>footer}}
 
-<script src="{{_context_path}}/apps/budget/views/bg140.js"></script>
-<script src="{{_context_path}}/apps/budget/views/bg141.js"></script>
-<script src="{{_context_path}}/apps/budget/views/bg142.js"></script>
-<script src="{{_context_path}}/apps/budget/views/bg143.js"></script>
-<script src="{{_context_path}}/apps/budget/views/bg144.js"></script>
-<script src="{{_context_path}}/apps/budget/views/bg145.js"></script>
-<script src="{{_context_path}}/apps/budget/views/bg146.js"></script>
-<script src="{{_context_path}}/apps/budget/views/buildingOne.js"></script>
-<script src="{{_context_path}}/apps/budget/views/buildingMore.js"></script>
-<script src="{{_context_path}}/apps/budget/views/project.js"></script>
-
-<link rel="stylesheet" href="{{_context_path}}/asset/vendor/jquery-treetable/css/jquery.treetable.css" type="text/css"/>
-<script type="text/javascript" src="{{_context_path}}/asset/vendor/jquery-treetable/jquery.treetable.js"></script>
+<script type="text/javascript">
+    var js_context_path = "{{_context_path}}";
+</script>
 
 <script type="text/javascript">
-$(function () {
-    listsFormSaved();
+    var isForm = 0;
 
-
-    $("#addForm").unbind("click").click(function () {
-        toggleShow("budget");
-    });
-
-    $("#backHome").unbind("click").click(function () {
+    $(function(){
+        listsFormSaved();
         toggleShow("home");
+
+        // button action
+        $("button.goChoice").unbind("click").click(function(){
+            toggleShow("choice");
+        });
+
+        $("button.backHome").unbind("click").click(function(){
+            toggleShow("home");
+        });
+
+        $("button.backChoice").unbind("click").click(function(){
+            toggleShow("choice");
+        });
     });
 
-});
+    function listsFormSaved(){
+        var html = '<tr>'
+            + '<td>1. แบบรายละเอียดคำของบประมาณเงินเดือน (ง.140)</td>'
+            + '<td class="text-center">-</td>'
+            + '<td class="text-center">'
+                + '<button data-form="bg140" class="btn btn-warning edit" title="แก้ไข"><i class="fa fa-pencil"></i> แก้ไข</button>&nbsp;'
+                + '<button data-form="bg140" class="btn btn-default delete" title="ลบ"><i class="fa fa-trash"></i> ลบ</button>'
+            + '</td>'
+        + '</tr>';
 
-function listsFormSaved() {
-    var html = '<tr>'
-        + '<td>1. แบบรายละเอียดคำของบประมาณเงินเดือน (ง.140)</td>'
-        + '<td class="text-center">-</td>'
-        + '<td class="text-center">'
-            + '<button data-form="bg140" class="btn btn-warning edit" title="แก้ไข"><i class="fa fa-pencil"></i> แก้ไข</button>&nbsp;'
-            + '<button data-form="bg140" class="btn btn-default delete" title="ลบ"><i class="fa fa-trash"></i> ลบ</button>'
-        + '</td>'
-    + '</tr>'
-    + '<tr>'
-        + '<td>2. แบบรายละเอียดคำของบประมาณค่าจ้างประจำ (ง.141)</td>'
-        + '<td class="text-center">-</td>'
-        + '<td class="text-center">'
-            + '<button data-form="bg141" class="btn btn-warning edit" title="แก้ไข"><i class="fa fa-pencil"></i> แก้ไข</button>&nbsp;'
-            + '<button data-form="bg141" class="btn btn-default delete" title="ลบ"><i class="fa fa-trash"></i> ลบ</button>'
-        + '</td>'
-    + '</tr>';
+        $("#table tbody").html(html);
+    }
 
-    $("#table tbody").html(html);
-}
+    function listsForm(){
+        if(isForm == 0){
+            var formArr = [
+                {
+                    form: "bg140",
+                    name: "แบบรายละเอียดคำของบประมาณเงินเดือน (ง.140)"
+                },
+                {
+                    form: "bg141",
+                    name: "แบบรายละเอียดคำของบประมาณค่าจ้างประจำ (ง.141)"
+                },
+                {
+                    form: "bg142",
+                    name: "แบบรายละเอียดคำของบประมาณค่าจ้างชั่วคราว (ง.142)"
+                },
+                {
+                    form: "bg143",
+                    name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน (ค่าตอบแทน ใช้สอย และวัสดุ) (ง.143)"
+                },
+                {
+                    form: "bg144",
+                    name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าสาธารณูปโภค (ง.144)"
+                },
+                {
+                    form: "bg145",
+                    name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าครุภัณฑ์ ค่าที่ดิน/สิ่งก่อสร้าง (ง.145)"
+                },
+                {
+                    form: "bg146",
+                    name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุน (ง.146)"
+                },
+                {
+                    form: "buildingOne",
+                    name: "คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง 1 ปี"
+                },
+                {
+                    form: "buildingMore",
+                    name: "คำชี้แจงรายละเอียดรายการที่ดินและสิ่งก่อสร้าง"
+                },
+                {
+                    form: "project",
+                    name: "โครงการที่ตอบสนองยุทธศาสตร์"
+                }
+            ];
+            var html = '';
 
-function formBudget(){
-    var html = '<section class="panel panel-featured panel-featured-success">'
-            + '<div class="panel-heading">'
-                + '<h2 class="panel-title">แบบฟอร์มคำของบประมาณ</h2>'
-            + '</div>'
-            + '<div class="panel-body">'
-                + '<div id="panel1">'
-                    + '<form id="form" onsubmit="return false;">'
-                        + '<div class="form-group">'
-                            + '<label class="col-md-3 control-label text-right" for="xxx">ปีงบประมาณ : </label>'
-                            + '<div class="col-md-6">'
-                                + '<select id="listBudgetPlan" name="listBudgetPlan" class="form-control input-sm" required></select>'
-                            + '</div>'
-                        + '</div>'
+            $.each(formArr, function(key, value){
+                html += '<tr>'
+                    + '<td class="col-md-11">- '+value["name"]+'</td>'
+                    + '<td class="col-md-1">'
+                        + '<button class="btn btn-success form" data-form="'+value["form"]+'" disabled="disabled"><i class="fa fa-plus-circle"></i> จัดทำ</button>'
+                    + '</td>'
+                + '</tr>';
+            });
 
-                        + '<div class="form-group">'
-                            + '<label class="col-md-3 control-label text-right" for="xxx">แหล่งเงิน : </label>'
-                            + '<div class="col-md-6">'
-                                + '<select id="listBudgetPlan" name="listBudgetPlan" class="form-control input-sm" required></select>'
-                            + '</div>'
-                        + '</div>'
+            $("#panel2 table tbody").html(html);
 
-                        + '<div class="form-group">'
-                            + '<label class="col-md-3 control-label text-right" for="xxx">แผนงาน : </label>'
-                            + '<div class="col-md-6">'
-                                + '<select id="listBudgetPlan" name="listBudgetPlan" class="form-control input-sm" required></select>'
-                            + '</div>'
-                        + '</div>'
+            $("#formChoice select").change(function(){
+                var valid = true;
 
-                        + '<div class="form-group">'
-                            + '<label class="col-md-3 control-label text-right" for="xxx">ผลผลิต/โครงการ : </label>'
-                            + '<div class="col-md-6">'
-                                + '<select id="listBudgetPlan" name="listBudgetPlan" class="form-control input-sm" required></select>'
-                            + '</div>'
-                        + '</div>'
-
-                        + '<div class="form-group">'
-                            + '<label class="col-md-3 control-label text-right" for="xxx">แผนงาน 3 มิติ : </label>'
-                            + '<div class="col-md-6">'
-                                + '<select id="listBudgetPlan" name="listBudgetPlan" class="form-control input-sm" required></select>'
-                            + '</div>'
-                        + '</div>'
-
-                        + '<div class="form-group">'
-                            + '<label class="col-md-3 control-label text-right" for="xxx">กองทุน : </label>'
-                            + '<div class="col-md-6">'
-                                + '<select id="listBudgetPlan" name="listBudgetPlan" class="form-control input-sm" required></select>'
-                            + '</div>'
-                        + '</div>'
-
-                        + '<div class="col-md-12 text-right">'
-                            + '<button id="showForm" class="btn btn-primary"><i class="fa fa-list"></i> เลือกฟอร์ม</button>&nbsp;'
-                            + '<button id="clearForm" class="btn btn-default"><i class="fa fa-trash"></i> ยกเลิก</button>'
-                        + '</div>'
-                    + '</form>'
-                + '</div>'
-                + '<div id="panel2" style="display: none;"></div>'
-            + '</div>'
-        + '</section>';
-
-    $("#formBudget").html(html);
-
-    $("#showForm").unbind("click").click(function(){
-        var formArr = [
-            {
-                form: "bg140",
-                name: "แบบรายละเอียดคำของบประมาณเงินเดือน (ง.140)"
-            },
-            {
-                form: "bg141",
-                name: "แบบรายละเอียดคำของบประมาณค่าจ้างประจำ (ง.141)"
-            },
-            {
-                form: "bg142",
-                name: "แบบรายละเอียดคำของบประมาณค่าจ้างชั่วคราว (ง.142)"
-            },
-            {
-                form: "bg143",
-                name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน (ค่าตอบแทน ใช้สอย และวัสดุ) (ง.143)"
-            },
-            {
-                form: "bg144",
-                name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าสาธารณูปโภค (ง.144)"
-            },
-            {
-                form: "bg145",
-                name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าครุภัณฑ์ ค่าที่ดิน/สิ่งก่อสร้าง (ง.145)"
-            },
-            {
-                form: "bg146",
-                name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุน (ง.146)"
-            },
-            {
-                form: "buildingOne",
-                name: "คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง 1 ปี"
-            },
-            {
-                form: "buildingMore",
-                name: "คำชี้แจงรายละเอียดรายการที่ดินและสิ่งก่อสร้าง"
-            },
-            {
-                form: "project",
-                name: "โครงการที่ตอบสนองยุทธศาสตร์"
-            }
-        ];
-        var html2 = '<table  class="table table-hover">'
-                + '<thead>'
-                    + '<tr>'
-                        + '<th colspan="2" class="text-center">แบบฟอร์มคำของบประมาณ</th>'
-                    + '</tr>'
-                + '</thead>'
-                + '<tbody>';
-
-                $.each(formArr, function(key, value){
-                    html2 += '<tr>'
-                        + '<td class="col-md-11">- '+value["name"]+'</td>'
-                        + '<td class="col-md-1"><button class="btn btn-success form" data-form="'+value["form"]+'"><i class="fa fa-plus-circle"></i> จัดทำ</button></td>'
-                    + '</tr>';
+                $("#formChoice select").each(function(){
+                    if($(this).val() == ""){
+                        valid = false;
+                    }
                 });
 
-                html += '</tbody>'
-            + '</table>';
+                if(valid == true){
+                    $("button.form").removeAttr("disabled", "disabled");
+                }
+                else{
+                    $("button.form").attr("disabled", "disabled");
+                }
+            });
 
-        $("#panel1").hide();
-        $("#panel2").empty().html(html2).show();
-
-        $("button.form").unbind("click").click(function(){
-            var form = $(this).attr("data-form");
-            eval(form + "Form()");
-        });
-    });
-
-    $("#clearForm").unbind("click").click(function(){
-        $("#form select").each(function(){
-            $(this).val('');
-        });
-    });
-}
-
-function toggleShow(page) {
-    if (page == "home") {
-        $("#formBudget, #backHome").hide();
-        $("#formHome, #addForm").show();
+            isForm = 1;
+        }
     }
-    else if (page == "budget") {
-        $("#formHome, #addForm").hide();
-        $("#formBudget, #backHome").show();
 
-        formBudget();
+    function toggleShow(option){
+        if(option == "home"){
+            // panel show and hide
+            $("#divChoice, #divForm").hide();
+            $("#divHome").show();
+
+            // button show and hide
+            $("button.backHome, button.backChoice").hide();
+            $("button.goChoice").show();
+        }
+        else if(option == "choice"){
+            // panel show and hide
+            $("#divHome, #divForm").hide();
+            $("#divChoice").show();
+
+            // button show and hide
+            $("button.goChoice, button.backChoice").hide();
+            $("button.backHome").show();
+
+            listsForm();
+        }
+        else if(option == "form"){
+            // panel show and hide
+            $("#divHome, #divChoice").hide();
+            $("#divForm").show();
+
+            // button show and hide
+            $("button.goChoice, button.backHome").hide();
+            $("button.backChoice").show();
+        }
     }
-}
-
 </script>
