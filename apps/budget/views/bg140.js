@@ -177,7 +177,7 @@ function bg140Detail(param){
         if(typeof datas !== "undefined" && datas !== null){
             var html = '';
             var pCount = 0;
-            $.each(datas["list"], function(key, value){
+            $.each(datas["budget"], function(key, value){
                 html += '<tr data-tt-id="'+value["id"]+'">'
                     + '<td class="text-center"></td>'
                     + '<td class="text-bold">'+(++pCount)+'. '+value["typeName"]+'</td>'
@@ -210,28 +210,26 @@ function bg140Detail(param){
 
                     typeNameArr[value2["id"]] = value2["typeName"];
 
-                    if(typeof value2["budget"] !== "undefined"){
-                        $.each(value2["budget"], function(key3, value3){
-                            html += '<tr data-tt-id="list'+value3["id"]+'" data-tt-parent-id="'+value2["id"]+'">'
-                                + '<td class="text-center"></td>'
-                                + '<td>'+value3["positionName"]+'</td>'
-                                + '<td>'+value3["occupy"]+'</td>'
-                                + '<td>'+value3["vacancy"]+'</td>'
-                                + '<td>'+value3["rateNo"]+'</td>'
-                                + '<td>'+value3["salary"]+'</td>'
-                                + '<td>'+value3["salaryTotal"]+'</td>'
-                                + '<td>'+value3["remark"]+'</td>'
-                                + '<td>'
-                                    + '<div class="btn-group">'
-                                        + '<button class="btn btn-sm btn-warning editList"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                        + '<button class="btn btn-sm btn-default deleteList"><i class="fa fa-trash"></i> ลบ</button>'
-                                    + '</div>'
-                                + '</td>'
-                            + '</tr>';
+                    $.each(value2["budget"], function(key3, value3){
+                        html += '<tr data-tt-id="list'+value3["id"]+'" data-tt-parent-id="'+value2["id"]+'">'
+                            + '<td class="text-center"></td>'
+                            + '<td>'+value3["positionName"]+'</td>'
+                            + '<td>'+value3["occupy"]+'</td>'
+                            + '<td>'+value3["vacancy"]+'</td>'
+                            + '<td>'+value3["rateNo"]+'</td>'
+                            + '<td>'+value3["salary"]+'</td>'
+                            + '<td>'+value3["salaryTotal"]+'</td>'
+                            + '<td>'+value3["remark"]+'</td>'
+                            + '<td>'
+                                + '<div class="btn-group">'
+                                    + '<button class="btn btn-sm btn-warning editList" data-pid="'+value2["id"]+'" data-id="'+value3["id"]+'"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                    + '<button class="btn btn-sm btn-default deleteList"  data-pid="'+value2["id"]+'" data-id="'+value3["id"]+'"><i class="fa fa-trash"></i> ลบ</button>'
+                                + '</div>'
+                            + '</td>'
+                        + '</tr>';
 
-                            list140Arr[value3["id"]] = value3;
-                        });
-                    }
+                        list140Arr[value3["id"]] = value3;
+                    });
                 });
             });
 
@@ -269,67 +267,74 @@ function bg140Detail(param){
                             isValid = false;
                     });
                     if(isValid){
-                        param["budgetTypeId"] = parentId;
-                        $("#form input").each(function(){
+                        var fParam = param;
+                        fParam["budgetTypeId"] = parentId;
+                        $("#form input, #form textarea").each(function(){
                             var name = $(this).attr("name");
                             var val = $(this).val();
 
-                            param[name] = val;
+                            fParam[name] = val;
                         });
 
                         var fdata = [];
-                        fdata.push(param);
+                        fdata.push(fParam);
                         var dataJSON = JSON.stringify({budget: fdata});
                         var dataJSONEN = encodeURIComponent(dataJSON);
 
-                        bg140Insert(parentId, dataJSONEN);
+                        bg140Insert(parentId, param, dataJSONEN);
                     }
                 });
             });
 
-            // when you press to edit button
-            $("button.editList").unbind("click").click(function(){
-                //var parentId = $(this).attr("data-id");
-
-                // reset form for new insert
-                $("#modalHead").empty().html(typeNameArr[parentId]);
-                $("#loadingForm").html('');
-                $("#form").trigger('reset');
-                $("#panelForm").modal("show");
-
-                $("#form input").each(function(){
-                    var fid = $(this).attr("id");
-                    $("#"+fid).val(list140Arr[""])
-                });
-                $("button.save").unbind("click").click(function(){
-                    var isValid = true;
-                    $('#form input[required]').each(function() {
-                        if($(this).val() == "" && !$(this).prop("disabled"))
-                            isValid = false;
-                    });
-                    if(isValid){
-                        param["budgetTypeId"] = parentId;
-                        $("#form input").each(function(){
-                            var name = $(this).attr("name");
-                            var val = $(this).val();
-
-                            param[name] = val;
-                        });
-
-                        var fdata = [];
-                        fdata.push(param);
-                        var dataJSON = JSON.stringify({budget: fdata});
-                        var dataJSONEN = encodeURIComponent(dataJSON);
-
-                        bg140Insert(parentId, dataJSONEN);
-                    }
-                });
-            });
+            bg140Action(param);
         }
     }, 100);
 }
 
-function bg140Insert(parentId, dataJSONEN){
+function bg140Action(param){
+    // when you press to edit button
+    $("button.editList").unbind("click").click(function(){
+        var parentId = $(this).attr("data-pid");
+        var id = $(this).attr("data-id");
+
+        // reset form for new insert
+        $("#modalHead").empty().html(typeNameArr[parentId]);
+        $("#loadingForm").html('');
+        $("#form").trigger('reset');
+        $("#panelForm").modal("show");
+
+        $("#form input, #form textarea").each(function(){
+            var fid = $(this).attr("id");
+            $("#"+fid).val(list140Arr[id][fid]);
+        });
+        $("button.save").unbind("click").click(function(){
+            var isValid = true;
+            $('#form input[required]').each(function() {
+                if($(this).val() == "" && !$(this).prop("disabled"))
+                    isValid = false;
+            });
+            if(isValid){
+                var fParam = param;
+                fParam["budgetTypeId"] = parentId;
+                fParam["id"] = id;
+                $("#form input, #form textarea").each(function(){
+                    var name = $(this).attr("name");
+                    var val = $(this).val();
+
+                    fParam[name] = val;
+                });
+
+                var fdata = [];
+                fdata.push(fParam);
+                var dataJSON = JSON.stringify({budget: fdata});
+                var dataJSONEN = encodeURIComponent(dataJSON);
+
+                bg140Edit(id, parentId, param, dataJSONEN);
+            }
+        });
+    });
+}
+function bg140Insert(parentId, param, dataJSONEN){
     $("#loadingForm").html("Loading...");
 
     setTimeout(function(){
@@ -358,8 +363,8 @@ function bg140Insert(parentId, dataJSONEN){
                     + '<td>'+$("#salaryTotal").val()+'</td>'
                     + '<td>'
                         + '<div class="btn-group">'
-                            + '<button class="btn btn-sm btn-warning editList"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                            + '<button class="btn btn-sm btn-default deleteList"><i class="fa fa-trash"></i> ลบ</button>'
+                            + '<button class="btn btn-sm btn-warning editList" data-pid="'+parentId+'" data-id="'+data["id"]+'"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                            + '<button class="btn btn-sm btn-default deleteList" data-pid="'+parentId+'" data-id="'+data["id"]+'"><i class="fa fa-trash"></i> ลบ</button>'
                         + '</div>'
                     + '</td>'
                 + '</tr>';
@@ -371,9 +376,63 @@ function bg140Insert(parentId, dataJSONEN){
                     id: data["id"]
                 }
 
-                $("#form input").each(function(){
+                $("#form input, #form textarea").each(function(){
                     list140Arr[data["id"]][$(this).attr("name")] = $(this).val();
                 });
+
+                bg140Action(param);
+            }
+            else{
+                $("#loadingForm").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
+            }
+        }
+    }, 500);
+}
+
+function bg140Edit(id, parentId, param, dataJSONEN){
+    $("#loadingForm").html("Loading...");
+
+    setTimeout(function(){
+        var datas = callAjax(js_context_path+"/api/budget/budgetSave/updateBudget140", "post", dataJSONEN, "json");
+        if(typeof datas !== "undefined" && datas !== null){
+            var data = datas["result"][0];
+            if(data["result"] == true){
+                $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
+
+                // insert node in branch
+                var positionName = $("#positionName").val();
+                var rateNo = $("#rateNo").val();
+                var salary = $("#salary").val();
+                var occupy = $("#occupy").val();
+                var vacancy = $("#vacancy").val();
+                var salaryTotal = $("#salaryTotal").val();
+                var remark = $("#remark").val();
+
+                var input = '<td></td>'
+                + '<td>'+$("#positionName").val()+'</td>'
+                + '<td>'+$("#rateNo").val()+'</td>'
+                + '<td>'+$("#rateNo").val()+'</td>'
+                + '<td>'+$("#salary").val()+'</td>'
+                + '<td>'+$("#occupy").val()+'</td>'
+                + '<td>'+$("#vacancy").val()+'</td>'
+                + '<td>'+$("#salaryTotal").val()+'</td>'
+                + '<td>'
+                    + '<div class="btn-group">'
+                        + '<button class="btn btn-sm btn-warning editList" data-pid="'+parentId+'" data-id="'+id+'"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                        + '<button class="btn btn-sm btn-default deleteList" data-pid="'+parentId+'" data-id="'+id+'"><i class="fa fa-trash"></i> ลบ</button>'
+                    + '</div>'
+                + '</td>';
+
+                //var node = $("#table140").treetable("node", parentId);
+                //$("#table140 ").treetable("loadBranch", node, input);
+
+                $('tr[data-tt-id="'+id+'"]').html(input);
+
+                $("#form input, #form textarea").each(function(){
+                    list140Arr[id][$(this).attr("name")] = $(this).val();
+                });
+
+                bg140Action(param);
             }
             else{
                 $("#loadingForm").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
