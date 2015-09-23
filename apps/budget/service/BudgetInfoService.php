@@ -5,6 +5,7 @@ namespace apps\budget\service;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
 use apps\budget\interfaces\IBudgetInfoService;
+use apps\budget\model\BudgetFilter;
 use apps\common\entity;
 
 class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
@@ -236,7 +237,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
         return $list1;
     }
 
-    public function viewBudget140($param) {
+    public function viewBudget140($param) {        
         $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
                 . " WHERE typ.masterId = '10000000' and typ.form140 = true ";
@@ -255,14 +256,14 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
             foreach ($list2 as $key2 => $value2) {
                 $sql3 = " select bg.id, bg.positionName, bg.occupy, bg.vacancy, bg.rateNo, bg.salary, bg.salaryTotal, bg.remark "
                         . " from " . $this->ent . "\\Budget140 bg "
-                        . " where bg.bgStatus = :bgStatus and "
-                        . " bg.budgetTypeId = :budgetTypeId and "
-                        . " bg.budgetPeriodId = :budgetPeriodId and "
-                        . " bg.budgetTypeCode = :budgetTypeCode and "
-                        . " bg.planId = :planId and "
-                        . " bg.projectId = :projectId and "
-                        . " bg.fundgroupId = :fundgroupId and "
-                        . " bg.deptId = :deptId";
+                        . " where bg.bgStatus = :bgStatus "
+                        . " and bg.budgetTypeId = :budgetTypeId "
+                        . " and bg.budgetPeriodId = :budgetPeriodId and "
+                        . " and bg.budgetTypeCode = :budgetTypeCode "
+                        . " and bg.planId = :planId "
+                        . " and bg.projectId = :projectId "
+                        . " and bg.fundgroupId = :fundgroupId "
+                        . " and bg.deptId = :deptId";
                 $param3 = array(
                     "bgStatus" => "Y",
                     "budgetTypeId" => $value2["id"],
@@ -271,7 +272,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                     "planId" => $param->planId,
                     "projectId" => $param->projectId,
                     "fundgroupId" => $param->fundgroupId,
-                    "deptId" => $param->departmentId
+                    "deptId" => $param->deptId
                 );
                 $list3 = $this->datacontext->getObject($sql3, $param3);
                 //$list2[$key]["budget"] = $list3;
@@ -329,7 +330,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                     "planId" => $param->planId,
                     "projectId" => $param->projectId,
                     "fundgroupId" => $param->fundgroupId,
-                    "deptId" => $param->departmentId
+                    "deptId" => $param->deptId
                 );
                 $list3 = $this->datacontext->getObject($sql3, $param3);
                 $list1[$key1]["lv2"][$key2]["budget"] = $list3;
@@ -374,7 +375,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                     "planId" => $param->planId,
                     "projectId" => $param->projectId,
                     "fundgroupId" => $param->fundgroupId,
-                    "deptId" => $param->departmentId
+                    "deptId" => $param->deptId
                 );
                 $list3 = $this->datacontext->getObject($sql3, $param3);
                 $list1[$key1]["lv2"][$key2]["budget"] = $list3;
@@ -419,7 +420,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                     "planId" => $param->planId,
                     "projectId" => $param->projectId,
                     "fundgroupId" => $param->fundgroupId,
-                    "deptId" => $param->departmentId
+                    "deptId" => $param->deptId
                 );
                 $list3 = $this->datacontext->getObject($sql3, $param3);
                 $list1[$key1]["lv2"][$key2]["budget"] = $list3;
@@ -465,7 +466,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                     "planId" => $param->planId,
                     "projectId" => $param->projectId,
                     "fundgroupId" => $param->fundgroupId,
-                    "deptId" => $param->departmentId
+                    "deptId" => $param->deptId
                 );
                 $list3 = $this->datacontext->getObject($sql3, $param3);
                 $list1[$key1]["lv2"][$key2]["budget"] = $list3;
@@ -511,7 +512,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                     "planId" => $param->planId,
                     "projectId" => $param->projectId,
                     "fundgroupId" => $param->fundgroupId,
-                    "deptId" => $param->departmentId
+                    "deptId" => $param->deptId
                 );
                 $list3 = $this->datacontext->getObject($sql3, $param3);
                 //$list2[$key]["budget"] = $list3;
@@ -557,7 +558,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                     "planId" => $param->planId,
                     "projectId" => $param->projectId,
                     "fundgroupId" => $param->fundgroupId,
-                    "deptId" => $param->departmentId
+                    "deptId" => $param->deptId
                 );
                 $list3 = $this->datacontext->getObject($sql3, $param3);
                 //$list2[$key]["budget"] = $list3;
