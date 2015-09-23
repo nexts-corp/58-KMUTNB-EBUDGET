@@ -30,6 +30,15 @@ function bg140Form(param) {
 
         + '</div>'
 
+        + '<div class="form-group">'
+
+            + '<div class="col-md-6">'
+                + '<label class="col-md-4 control-label text-right">หน่วยงาน : </label>'
+                + '<div class="col-md-6">'+departmentArr[param["departmentId"]]+'</div>'
+            + '</div>'
+
+        + '</div>'
+
         + '<section class="panel">'
             + '<div class="panel-body">'
                 + '<div class="col-md-12 text-right">'
