@@ -1,4 +1,4 @@
-var typeNameArr = [];
+var typeName140Arr = [];
 var list140Arr = [];
 
 function bg140Form(param) {
@@ -262,7 +262,7 @@ function bg140Detail(param){
                         + '</td>'
                     + '</tr>';
 
-                    typeNameArr[value2["id"]] = value2["typeName"];
+                    typeName140Arr[value2["id"]] = value2["typeName"];
 
                     $.each(value2["budget"], function(key3, value3){
                         html += '<tr data-tt-id="list'+value3["id"]+'" data-tt-parent-id="'+value2["id"]+'">'
@@ -309,7 +309,7 @@ function bg140Detail(param){
                 var parentId = $(this).attr("data-pid");
 
                 // reset form for new insert
-                $("#modalHead").empty().html(typeNameArr[parentId]);
+                $("#modalHead").empty().html(typeName140Arr[parentId]);
                 $("#loadingForm").html('');
                 $("#form").trigger('reset');
                 $("#panelForm").modal("show");
@@ -352,7 +352,7 @@ function bg140Action(param){
         var id = $(this).attr("data-id");
 
         // reset form for new insert
-        $("#modalHead").empty().html(typeNameArr[parentId]);
+        $("#modalHead").empty().html(typeName140Arr[parentId]);
         $("#loadingForm").html('');
         $("#form").trigger('reset');
         $("#panelForm").modal("show");
