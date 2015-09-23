@@ -69,7 +69,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label text-right" for="budgetTypeCode">แหล่งเงิน : </label>
+                                    <label class="col-md-3 control-label text-right req" for="budgetTypeCode">แหล่งเงิน : </label>
                                     <div class="col-md-6">
                                         <select id="budgetTypeCode" name="budgetTypeCode" class="form-control input-sm" required>
                                             <option value="">เลือก</option>
@@ -123,9 +123,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label text-right req" for="departmentId">สาขา : </label>
+                                    <label class="col-md-3 control-label text-right req" for="deptId">สาขา : </label>
                                     <div class="col-md-6">
-                                        <select id="departmentId" name="departmentId" class="form-control input-sm" required>
+                                        <select id="deptId" name="deptId" class="form-control input-sm" required>
                                             <option value="">เลือก</option>
                                         </select>
                                     </div>
@@ -169,18 +169,19 @@
 <script type="text/javascript">
     var isForm = 0;
 
-    var budgetPeriodArr = [];
-    var planArr = [];
-    var projectArr = [];
-    var fundgroupArr = [];
-    var facultyArr = [];
-    var departmentArr = [];
+    var budgetPeriodArr = {};
+    var budgetTypeArr = {};
+    var planArr = {};
+    var projectArr = {};
+    var fundgroupArr = {};
+    var facultyArr = {};
+    var departmentArr = {};
 
     $(function(){
         listsFormSaved();
         toggleShow("home");
 
-        $("#budgetPeriodId, #budgetTypeCode, #planId, #projectId, #fundgroupId, #facultyId, #departmentId").select2().trigger("change");
+        $("#budgetPeriodId, #budgetTypeCode, #planId, #projectId, #fundgroupId, #facultyId, #deptId").select2().trigger("change");
 
         // choice changed
         $("#budgetPeriodId").change(function(){
@@ -298,6 +299,7 @@
             });
 
             listsBudgetPeriod();
+            listsBudgetType();
             listsFundgroup();
             listsFaculty();
 
@@ -338,9 +340,9 @@
         var datas = callAjax("{{_context_path}}/api/common/lookup/listBudgetSource", "post", {}, "json");
         if(typeof datas !== "undefined" && datas !== null){
             $.each(datas["lists"], function(key, value){
-                html += '<option value="'+value["code"]+'">'+value["year"]+'</option>'
+                html += '<option value="'+value["id"]+'">'+value["name"]+'</option>'
 
-                budgetPeriodArr[value["year"]] = value["year"];
+                budgetTypeArr[value["id"]] = value["name"];
             });
         }
 
@@ -423,7 +425,7 @@
             });
         }
 
-        $("#departmentId").html(html).trigger("change");
+        $("#deptId").html(html).trigger("change");
     }
 
     function toggleShow(option){
