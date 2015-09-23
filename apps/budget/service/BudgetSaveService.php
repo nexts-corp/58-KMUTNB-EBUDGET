@@ -33,9 +33,11 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
             if (!$this->datacontext->saveObject($value)) {
                 $return[$key]["result"] = false;
                 $return[$key]["msg"] = $this->datacontext->getLastMessage();
+                //array_push($return, array("result" => false, "msg" => $this->datacontext->getLastMessage()));
             } else {
                 $return[$key]["result"] = true;
                 $return[$key]["id"] = $budget[$key]->id;
+                //array_push($return, array("result" => true, "id" => $budget[$key]->id));
             }
         }
 
