@@ -151,6 +151,11 @@
 <script type="text/javascript">
     var isForm = 0;
 
+    var budgetPeriodArr = [];
+    var planArr = [];
+    var projectArr = [];
+    var fundgroupArr = [];
+
     $(function(){
         listsFormSaved();
         toggleShow("home");
@@ -294,6 +299,8 @@
         if(typeof datas !== "undefined" && datas !== null){
             $.each(datas["lists"], function(key, value){
                 html += '<option value="'+value["year"]+'">'+value["year"]+'</option>'
+
+                budgetPeriodArr[value["year"]] = value["year"];
             });
         }
 
@@ -308,6 +315,8 @@
             if(typeof datas !== "undefined" && datas !== null){
                 $.each(datas["lists"], function(key, value){
                     html += '<option value="'+value["id"]+'">'+value["name"]+'</option>'
+
+                    planArr[value["id"]] = value["name"];
                 });
             }
         }
@@ -323,6 +332,8 @@
             if(typeof datas !== "undefined" && datas !== null){
                 $.each(datas["lists"], function(key, value){
                     html += '<option value="'+value["id"]+'">'+value["name"]+'</option>'
+
+                    projectArr[value["id"]] = value["name"];
                 });
             }
         }
@@ -337,6 +348,8 @@
         if(typeof datas !== "undefined" && datas !== null){
             $.each(datas["lists"], function(key, value){
                 html += '<option value="'+value["id"]+'">'+value["name"]+'</option>'
+
+                fundgroupArr[value["id"]] = value["name"];
             });
         }
 

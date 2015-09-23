@@ -5,13 +5,13 @@ function bg140Form(param) {
         + '<div class="form-group">'
 
             + '<div class="col-md-6">'
-                + '<label class="col-md-4 control-label text-right" for="budgetPeriodId">ปีงบประมาณ : </label>'
-                + '<div class="col-md-6">'+param["budgetPeriodId"]+'</div>'
+                + '<label class="col-md-4 control-label text-right">ปีงบประมาณ : </label>'
+                + '<div class="col-md-6">'+budgetPeriodArr[param["budgetPeriodId"]]+'</div>'
             + '</div>'
 
             + '<div class="col-md-6">'
-                + '<label class="col-md-4 control-label text-right" for="budgetPeriodId">แผนงาน : </label>'
-                + '<div class="col-md-6">'+param["planId"]+'</div>'
+                + '<label class="col-md-4 control-label text-right">แผนงาน : </label>'
+                + '<div class="col-md-6">'+planArr[param["planId"]]+'</div>'
             + '</div>'
 
         + '</div>'
@@ -19,13 +19,13 @@ function bg140Form(param) {
         + '<div class="form-group">'
 
             + '<div class="col-md-6">'
-                + '<label class="col-md-4 control-label text-right" for="budgetPeriodId">ผลผลิต/โครงการ : </label>'
-                + '<div class="col-md-6">'+param["projectId"]+'</div>'
+                + '<label class="col-md-4 control-label text-right">ผลผลิต/โครงการ : </label>'
+                + '<div class="col-md-6">'+projectArr[param["projectId"]]+'</div>'
             + '</div>'
 
             + '<div class="col-md-6">'
-                + '<label class="col-md-4 control-label text-right" for="budgetPeriodId">กองทุน : </label>'
-                + '<div class="col-md-6">'+param["fundgroupId"]+'</div>'
+                + '<label class="col-md-4 control-label text-right">กองทุน : </label>'
+                + '<div class="col-md-6">'+fundgroupArr[param["fundgroupId"]]+'</div>'
             + '</div>'
 
         + '</div>'
@@ -239,21 +239,21 @@ function bg140Detail(){
                         var salaryTotal = $("#salaryTotal").val();
                         var remark = $("#remark").val();
                         var input = '<tr data-tt-id="" data-tt-parent-id="'+id+'">'
-                                + '<td></td>'
-                                + '<td>'+positionName+'</td>'
-                                + '<td>'+rateNo+'</td>'
-                                + '<td>'+salary+'</td>'
-                                + '<td>'+occupy+'</td>'
-                                + '<td>'+vacancy+'</td>'
-                                + '<td>'+salaryTotal+'</td>'
-                                + '<td>'+remark+'</td>'
-                                + '<td>'
-                                    + '<div class="btn-group">'
-                                        + '<button class="btn btn-sm btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                        + '<button class="btn btn-sm btn-default"><i class="fa fa-trash"></i> ลบ</button>'
-                                    + '</div>'
-                                + '</td>'
-                            + '</tr>';
+                            + '<td></td>'
+                            + '<td>'+positionName+'</td>'
+                            + '<td>'+rateNo+'</td>'
+                            + '<td>'+salary+'</td>'
+                            + '<td>'+occupy+'</td>'
+                            + '<td>'+vacancy+'</td>'
+                            + '<td>'+salaryTotal+'</td>'
+                            + '<td>'+remark+'</td>'
+                            + '<td>'
+                                + '<div class="btn-group">'
+                                    + '<button class="btn btn-sm btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                    + '<button class="btn btn-sm btn-default"><i class="fa fa-trash"></i> ลบ</button>'
+                                + '</div>'
+                            + '</td>'
+                        + '</tr>';
 
                         var node = $("#table140").treetable("node", id);
                         $("#table140").treetable("loadBranch", node, input);
