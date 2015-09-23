@@ -66,194 +66,65 @@ interface IBudgetInfoService {
     public function listBudgetType146();
 
     /**
-     * @name saveBgOperating
-     * @uri /saveBgOperating
-     * @param apps\common\entity\BudgetMoneyOperating[] budget Description
-     * @return boolean save Description
-     * @description เพิ่ม/แก้ไขคำขอแบบ ง.143, ง.146
+     * @name viewBudget140
+     * @uri /viewBudget140
+     * @param apps\common\entity\model\BudgetFilter param 
+     * @return apps\common\entity\Budget140[] budget Description
+     * @description แสดงข้อมูลฟอร์ม 140 
      */
-    public function saveBgOperating($budget);
+    public function viewBudget140($param);
 
     /**
-     * @name saveBgUtility
-     * @uri /saveBgUtility
-     * @param apps\common\entity\BudgetMoneyUtility[] budget Description
-     * @return boolean save Description
-     * @description เพิ่ม/แก้ไขคำขอแบบ ง.144
+     * @name viewBudget141
+     * @uri /viewBudget141
+     * @param apps\common\entity\model\BudgetFilter param
+     * @return apps\common\entity\Budget141[] budget Description
+     * @description แสดงข้อมูลฟอร์ม 141
      */
-    public function saveBgUtility($budget);
+    public function viewBudget141($param);
 
     /**
-     * @name saveBgDurable
-     * @uri /saveBgDurable
-     * @param apps\common\entity\BudgetMoneyDurable[] budget Description
-     * @return boolean save Description
-     * @description เพิ่ม/แก้ไขคำขอแบบ ง.145 - ครุภัณฑ์
+     * @name viewBudget142
+     * @uri /viewBudget142
+     * @param apps\common\entity\model\BudgetFilter param
+     * @return apps\common\entity\Budget142[] budget Description
+     * @description แสดงข้อมูลฟอร์ม 142
      */
-    public function saveBgDurable($budget);
+    public function viewBudget142($param);
 
     /**
-     * @name saveBgBuilding1Year
-     * @uri /saveBgBuilding1Year
-     * @param apps\common\entity\BudgetMoneyBuilding building Description
-     * @param apps\common\entity\BudgetMoneyBuildingOneyear[] oneyear Description
-     * @return boolean save Description
-     * @description เพิ่ม/แก้ไขคำชี้แจงสิ่งก่อสร้าง 1 ปี
+     * @name viewBudget143
+     * @uri /viewBudget143
+     * @param apps\common\entity\model\BudgetFilter param
+     * @return apps\common\entity\Budget143[] budget Description
+     * @description แสดงข้อมูลฟอร์ม 143
      */
-    public function saveBgBuilding1Year($building, $oneyear);
+    public function viewBudget143($param);
 
     /**
-     * @name saveBgBuildingContinue
-     * @uri /saveBgBuildingContinue
-     * @param apps\common\entity\BudgetMoneyBuilding building Description
-     * @param apps\common\entity\BudgetMoneyBuildingContinuePeriod period Description
-     * @param apps\common\entity\BudgetMoneyBuildingContinueList list Description
-     * @return boolean save Description
-     * @description เพิ่ม/แก้ไขคำชี้แจงสิ่งก่อสร้าง ต่อเนื่อง
+     * @name viewBudget144
+     * @uri /viewBudget144
+     * @param apps\common\entity\model\BudgetFilter param
+     * @return apps\common\entity\Budget144[] budget Description
+     * @description แสดงข้อมูลฟอร์ม 144
      */
-    public function saveBgBuildingContinue($building, $period, $list);
+    public function viewBudget144($param);
 
     /**
-     * @name deleteBg140
-     * @uri /deleteBg140
-     * @param int budget140 Description
-     * @return boolean delete Description
-     * @description ลบคำขอแบบ ง.140
+     * @name viewBudget145
+     * @uri /viewBudget145
+     * @param apps\common\entity\model\BudgetFilter param
+     * @return apps\common\entity\Budget145[] budget Description
+     * @description แสดงข้อมูลฟอร์ม 145
      */
-    public function deleteBg140($budget140);
+    public function viewBudget145($param);
 
     /**
-     * @name deleteBg141
-     * @uri /deleteBg141
-     * @param int budget141 Description
-     * @return boolean delete Description
-     * @description ลบคำขอแบบ ง.141
+     * @name viewBudget146
+     * @uri /viewBudget146
+     * @param apps\common\entity\model\BudgetFilter param
+     * @return apps\common\entity\Budget146[] budget Description
+     * @description แสดงข้อมูลฟอร์ม 146
      */
-    public function deleteBg141($budget141);
-
-    /**
-     * @name deleteBg142
-     * @uri /deleteBg142
-     * @param int budget142 Description
-     * @return boolean delete Description
-     * @description ลบคำขอแบบ ง.142
-     */
-    public function deleteBg142($budget142);
-
-    /**
-     * @name deleteBg143
-     * @uri /deleteBg143
-     * @param int budget143 Description
-     * @return boolean delete Description
-     * @description ลบคำขอแบบ ง.143
-     */
-    public function deleteBg143($budget143);
-
-    /**
-     * @name deleteBg144
-     * @uri /deleteBg144
-     * @param int budget144 Description
-     * @return boolean delete Description
-     * @description ลบคำขอแบบ ง.144
-     */
-    public function deleteBg144($budget144);
-
-    /**
-     * @name deleteBg145
-     * @uri /deleteBg145
-     * @param int budget145 Description
-     * @return boolean delete Description
-     * @description ลบคำขอแบบ ง.145
-     */
-    public function deleteBg145($budget145);
-
-    /**
-     * @name deleteBg146
-     * @uri /deleteBg146
-     * @param int budget146 Description
-     * @return boolean delete Description
-     * @description ลบคำขอแบบ ง.146
-     */
-    public function deleteBg146($budget146);
-
-    /**
-     * @name deleteBgBuilding
-     * @uri /deleteBgBuilding
-     * @param int building Description
-     * @return boolean delete Description
-     * @description ลบคำชี้แจงสิ่งก่อสร้าง 1 ปี / ต่อเนื่อง
-     */
-    public function deleteBgBuilding($building);
-
-    /**
-     * @name selectBg140
-     * @uri /selectBg140
-     * @param apps\budget\model\BudgetForm bgForm Description
-     * @return apps\common\entity\BudgetMoneySalary[] select Description
-     * @description แบบ ง.140
-     */
-    public function selectBg140($bgForm);
-
-    /**
-     * @name selectBg141
-     * @uri /selectBg141
-     * @param apps\budget\model\BudgetForm bgForm Description
-     * @return apps\common\entity\BudgetMoneySalary[] select Description
-     * @description แบบ ง.141
-     */
-    public function selectBg141($bgForm);
-
-    /**
-     * @name selectBg142
-     * @uri /selectBg142
-     * @param apps\budget\model\BudgetForm bgForm Description
-     * @return apps\common\entity\BudgetMoneySalary[] select Description
-     * @description แบบ ง.142
-     */
-    public function selectBg142($bgForm);
-
-    /**
-     * @name selectBg143
-     * @uri /selectBg143
-     * @param apps\budget\model\BudgetForm bgForm Description
-     * @return apps\common\entity\BudgetMoneyOperating[] select Description
-     * @description แบบ ง.143
-     */
-    public function selectBg143($bgForm);
-
-    /**
-     * @name selectBg144
-     * @uri /selectBg144
-     * @param apps\budget\model\BudgetForm bgForm Description
-     * @return apps\common\entity\BudgetMoneyUtility[] select Description
-     * @description แบบ ง.144
-     */
-    public function selectBg144($bgForm);
-
-    /**
-     * @name selectBg145
-     * @uri /selectBg145
-     * @param apps\budget\model\BudgetForm bgForm Description
-     * @return apps\common\entity\BudgetMoneyDurable[] select Description
-     * @description แบบ ง.145
-     */
-    public function selectBg145($bgForm);
-
-    /**
-     * @name selectBg146
-     * @uri /selectBg146
-     * @param apps\budget\model\BudgetForm bgForm Description
-     * @return apps\common\entity\BudgetMoneyOperating[] select Description
-     * @description แบบ ง.146
-     */
-    public function selectBg146($bgForm);
-
-    /**
-     * @name selectBuilding
-     * @uri /selectBuilding
-     * @param int durableId Description
-     * @return apps\common\entity\BudgetMoneyBuilding[] select Description
-     * @description คำชี้แจงแบบก่อสร้าง
-     */
-    public function selectBuilding($durableId);
+    public function viewBudget146($param);
 }
