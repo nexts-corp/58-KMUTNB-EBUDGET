@@ -158,6 +158,60 @@ function bg140Form(param) {
                 + '</div>'
             + '</div>'
         + '</div>'
+    + '</div>'
+
+    + '<div id="panelDeleteForm" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">'
+        + '<div class="modal-dialog">'
+            + '<div class="modal-content">'
+                + '<div class="modal-header">'
+                    + '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
+                    + '<h4 class="modal-title" id="myModalLabel">ลบคำของบประมาณ</h4>'
+                + '</div>'
+                + '<div class="modal-body">'
+                    + '<table>'
+                        + '<tbody>'
+                            + '<tr>'
+                                + '<td class="col-md-3 text-right">ชื่อตำแหน่ง : </td>'
+                                + '<td class="col-md-9 text-bold" id="positionNameDel"></td>'
+                            + '</tr>'
+                            + '<tr>'
+                                + '<td class="col-md-3 text-right">ระดับ : </td>'
+                                + '<td class="col-md-9 text-bold" id="rateNoDel"></td>'
+                            + '</tr>'
+                            + '<tr>'
+                                + '<td class="col-md-3 text-right">อัตราเงินเดือน : </td>'
+                                + '<td class="col-md-9 text-bold" id="salaryDel"></td>'
+                            + '</tr>'
+                            + '<tr>'
+                                + '<td class="col-md-3 text-right">จำนวนอัตรา : </td>'
+                                + '<td class="col-md-9">'
+                                    + '<table>'
+                                        + '<tr>'
+                                            + '<td class="col-md-4 text-right">มีคนครอง : </td>'
+                                            + '<td class="col-md-2 text-bold" id="occupyDel"></td>'
+                                            + '<td class="col-md-4 text-right">อัตราว่าง : </td>'
+                                            + '<td class="col-md-2 text-bold" id="vacancyDel"></td>'
+                                        + '</tr>'
+                                    + '</table>'
+                                + '</td>'
+                            + '</tr>'
+                            + '<tr>'
+                                + '<td class="col-md-3 text-right">จำนวนเงินทั้งปี : </td>'
+                                + '<td class="col-md-9 text-bold" id="salaryTotalDel"></td>'
+                            + '</tr>'
+                            + '<tr>'
+                                + '<td class="col-md-3 text-right">คำชี้แจง : </td>'
+                                + '<td class="col-md-9 text-bold" id="remarkDel"></td>'
+                            + '</tr>'
+                        + '</tbody>'
+                    + '</table>'
+                + '</div>'
+                + '<div class="modal-footer">'
+                    + '<button type="button" class="btn btn-danger save" data-dismiss="modal"><i class="fa fa-trash"></i> ยืนยันการลบ</button>'
+                    + '<button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>'
+                + '</div>'
+            + '</div>'
+        + '</div>'
     + '</div>';
 
     $("#divForm").html(html);
@@ -333,6 +387,26 @@ function bg140Action(param){
             }
         });
     });
+
+    // when you press to edit button
+    $("button.deleteList").unbind("click").click(function(){
+        var parentId = $(this).attr("data-pid");
+        var id = $(this).attr("data-id");
+
+        $("#panelDeleteForm").modal("show");
+        $("#panelDeleteForm").find('td').each (function() {
+            if($(this).attr("id")){
+                var aId = $(this).attr("id");
+                var name = aId.replace('Del', '');
+                $("#"+aId).html(list140Arr[id][name]);
+            }
+        });
+        $("button.save").unbind("click").click(function(){
+            var dataJSON = JSON.stringify({budgetId: id});
+            var dataJSONEN = encodeURIComponent(dataJSON);
+            bg140delete(id, parentId, dataJSONEN);
+        });
+    });
 }
 function bg140Insert(parentId, param, dataJSONEN){
     $("#loadingForm").html("Loading...");
@@ -345,22 +419,15 @@ function bg140Insert(parentId, param, dataJSONEN){
                 $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
 
                 // insert node in branch
-                var positionName = $("#positionName").val();
-                var rateNo = $("#rateNo").val();
-                var salary = $("#salary").val();
-                var occupy = $("#occupy").val();
-                var vacancy = $("#vacancy").val();
-                var salaryTotal = $("#salaryTotal").val();
-                var remark = $("#remark").val();
-                var input = '<tr data-tt-id="'+data["id"]+'" data-tt-parent-id="'+parentId+'">'
+                var input = '<tr data-tt-id="list'+data["id"]+'" data-tt-parent-id="'+parentId+'">'
                     + '<td></td>'
                     + '<td>'+$("#positionName").val()+'</td>'
-                    + '<td>'+$("#rateNo").val()+'</td>'
                     + '<td>'+$("#rateNo").val()+'</td>'
                     + '<td>'+$("#salary").val()+'</td>'
                     + '<td>'+$("#occupy").val()+'</td>'
                     + '<td>'+$("#vacancy").val()+'</td>'
                     + '<td>'+$("#salaryTotal").val()+'</td>'
+                    + '<td>'+$("#remark").val()+'</td>'
                     + '<td>'
                         + '<div class="btn-group">'
                             + '<button class="btn btn-sm btn-warning editList" data-pid="'+parentId+'" data-id="'+data["id"]+'"><i class="fa fa-pencil"></i> แก้ไข</button>'
@@ -395,27 +462,17 @@ function bg140Edit(id, parentId, param, dataJSONEN){
     setTimeout(function(){
         var datas = callAjax(js_context_path+"/api/budget/budgetSave/updateBudget140", "post", dataJSONEN, "json");
         if(typeof datas !== "undefined" && datas !== null){
-            var data = datas["result"][0];
-            if(data["result"] == true){
+            if(datas["result"] == true){
                 $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
-
-                // insert node in branch
-                var positionName = $("#positionName").val();
-                var rateNo = $("#rateNo").val();
-                var salary = $("#salary").val();
-                var occupy = $("#occupy").val();
-                var vacancy = $("#vacancy").val();
-                var salaryTotal = $("#salaryTotal").val();
-                var remark = $("#remark").val();
 
                 var input = '<td></td>'
                 + '<td>'+$("#positionName").val()+'</td>'
-                + '<td>'+$("#rateNo").val()+'</td>'
                 + '<td>'+$("#rateNo").val()+'</td>'
                 + '<td>'+$("#salary").val()+'</td>'
                 + '<td>'+$("#occupy").val()+'</td>'
                 + '<td>'+$("#vacancy").val()+'</td>'
                 + '<td>'+$("#salaryTotal").val()+'</td>'
+                + '<td>'+$("#remark").val()+'</td>'
                 + '<td>'
                     + '<div class="btn-group">'
                         + '<button class="btn btn-sm btn-warning editList" data-pid="'+parentId+'" data-id="'+id+'"><i class="fa fa-pencil"></i> แก้ไข</button>'
@@ -425,8 +482,7 @@ function bg140Edit(id, parentId, param, dataJSONEN){
 
                 //var node = $("#table140").treetable("node", parentId);
                 //$("#table140 ").treetable("loadBranch", node, input);
-
-                $('tr[data-tt-id="'+id+'"]').html(input);
+                $('tr[data-tt-id="list'+id+'"]').html(input);
 
                 $("#form input, #form textarea").each(function(){
                     list140Arr[id][$(this).attr("name")] = $(this).val();
@@ -439,4 +495,17 @@ function bg140Edit(id, parentId, param, dataJSONEN){
             }
         }
     }, 500);
+}
+
+function bg140delete(id, parentId, dataJSONEN){
+    var datas = callAjax(js_context_path+"/api/budget/budgetSave/deleteBudget140", "post", dataJSONEN, "json");
+    if(typeof datas !== "undefined" && datas !== null){
+        if(datas["result"] == true){
+            $("#table140").treetable("removeNode", "list"+id);
+            var parent = $('#table140').treetable('node', parentId);
+            if (parent.children.length == 0) {
+                parent.row.find('.indenter').html('');
+            }
+        }
+    }
 }
