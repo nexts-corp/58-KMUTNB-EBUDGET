@@ -24,10 +24,10 @@ class ActivityType extends EntityBase {
     /** @Column(type="string",length=1, name="ACTIVITYTYPESTATUS") */
     public $actTypeStatus;
 
-    /** @Column(type="string",length=20, name="creator") */
+    /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
 
-    /** @Column(type="string",length=20, name="updater") */
+    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
     public $updater;
 
     function getId() {
