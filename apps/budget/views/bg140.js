@@ -1,5 +1,5 @@
 function bg140Form(param) {
-    console.log(param);
+    //console.log(param);
     var html = '<div id="panelTable" class="col-md-12">'
 
         + '<div class="form-group">'
@@ -158,16 +158,17 @@ function bg140Form(param) {
 
     toggleShow("form");
 
-    bg140Detail();
+    bg140Detail(param);
 }
 
-function bg140Detail(){
+function bg140Detail(param){
+    var typeNameArr = [];
     var listArr = [];
 
     $("#table140 tbody").html('<td colspan="8" class="text-center">Loading...</td>');
 
     setTimeout(function(){
-        var datas = callAjax(js_context_path+"/api/budget/budgetInfo/listBudgetType140", "post", {}, "json");
+        var datas = callAjax(js_context_path+"/api/budget/budgetInfo/listBudgetType140", "post", {param: param}, "json");
         if(typeof datas !== "undefined" && datas !== null){
             var html = '';
             var pCount = 0;
@@ -202,7 +203,22 @@ function bg140Detail(){
                         + '</td>'
                     + '</tr>';
 
-                    listArr[value2["id"]] = value2["typeName"];
+                    typeNameArr[value2["id"]] = value2["typeName"];
+
+                    $.each(value2["budget"], function(key3, value3){
+                        html += '<tr data-tt-id="" data-tt-parent-id="">'
+                            + '<td class="text-center"></td>'
+                            + '<td>'+value3["positionName"]+'</td>'
+                            + '<td>'+value3["occupy"]+'</td>'
+                            + '<td>'+value3["vacancy"]+'</td>'
+                            + '<td>'+value3["rateNo"]+'</td>'
+                            + '<td>'+value3["salary"]+'</td>'
+                            + '<td>'+value3["salaryTotal"]+'</td>'
+                            + '<td>'+value3["remark"]+'</td>'
+                        + '</tr>';
+
+                        listArr[value3["id"]] = value3;
+                    });
                 });
             });
 
@@ -228,7 +244,7 @@ function bg140Detail(){
                 var id = $(this).attr("data-id");
 
                 // reset form for new insert
-                $("#modalHead").empty().html(listArr[id]);
+                $("#modalHead").empty().html(typeNameArr[id]);
                 $("#form").trigger('reset');
                 $("#panelForm").modal("show");
 
@@ -239,33 +255,56 @@ function bg140Detail(){
                             isValid = false;
                     });
                     if(isValid){
-                        // insert node in branch
-                        var positionName = $("#positionName").val();
-                        var rateNo = $("#rateNo").val();
-                        var salary = $("#salary").val();
-                        var occupy = $("#occupy").val();
-                        var vacancy = $("#vacancy").val();
-                        var salaryTotal = $("#salaryTotal").val();
-                        var remark = $("#remark").val();
-                        var input = '<tr data-tt-id="" data-tt-parent-id="'+id+'">'
-                            + '<td></td>'
-                            + '<td>'+positionName+'</td>'
-                            + '<td>'+rateNo+'</td>'
-                            + '<td>'+salary+'</td>'
-                            + '<td>'+occupy+'</td>'
-                            + '<td>'+vacancy+'</td>'
-                            + '<td>'+salaryTotal+'</td>'
-                            + '<td>'+remark+'</td>'
-                            + '<td>'
-                                + '<div class="btn-group">'
-                                    + '<button class="btn btn-sm btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                    + '<button class="btn btn-sm btn-default"><i class="fa fa-trash"></i> ลบ</button>'
-                                + '</div>'
-                            + '</td>'
-                        + '</tr>';
+                        $("#form input").each(function(){
+                            var name = $(this).attr("name");
+                            var val = $(this).val();
 
-                        var node = $("#table140").treetable("node", id);
-                        $("#table140").treetable("loadBranch", node, input);
+                            param[name] = val;
+                        });
+
+                        var datas = callAjax(js_context_path+"/api/budget/budgetSave/insertBudget140", "post", {
+                            budget: param
+                        }, "json");
+
+                        if(typeof datas !== "undefined" && datas !== null){
+                            if(datas["result"] == true){
+                                // insert node in branch
+                                var positionName = $("#positionName").val();
+                                var rateNo = $("#rateNo").val();
+                                var salary = $("#salary").val();
+                                var occupy = $("#occupy").val();
+                                var vacancy = $("#vacancy").val();
+                                var salaryTotal = $("#salaryTotal").val();
+                                var remark = $("#remark").val();
+                                var input = '<tr data-tt-id="" data-tt-parent-id="'+id+'">'
+                                    + '<td></td>'
+                                    + '<td>'+$("#positionName").val()+'</td>'
+                                    + '<td>'+$("#rateNo").val()+'</td>'
+                                    + '<td>'+$("#rateNo").val()+'</td>'
+                                    + '<td>'+$("#salary").val()+'</td>'
+                                    + '<td>'+$("#occupy").val()+'</td>'
+                                    + '<td>'+$("#vacancy").val()+'</td>'
+                                    + '<td>'+$("#salaryTotal").val()+'</td>'
+                                    + '<td>'
+                                        + '<div class="btn-group">'
+                                            + '<button class="btn btn-sm btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                            + '<button class="btn btn-sm btn-default"><i class="fa fa-trash"></i> ลบ</button>'
+                                        + '</div>'
+                                    + '</td>'
+                                + '</tr>';
+
+                                var node = $("#table140").treetable("node", id);
+                                $("#table140").treetable("loadBranch", node, input);
+
+                                listArr[datas["id"]] = {
+                                    id: datas["id"]
+                                }
+
+                                $("#form input").each(function(){
+                                    listArr[datas["id"]][$(this).attr("name")] = $(this).val();
+                                });
+                            }
+                        }
                     }
                 });
             });
