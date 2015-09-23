@@ -204,7 +204,7 @@ function bg140Detail(param){
                         + '<td></td>'
                         + '<td></td>'
                         + '<td>'
-                            + '<button class="btn btn-sm btn-success addList" data-id="'+value2["id"]+'"><i class="fa fa-plus"></i> เพิ่ม</button>'
+                            + '<button class="btn btn-sm btn-success addList" data-pid="'+value2["id"]+'"><i class="fa fa-plus"></i> เพิ่ม</button>'
                         + '</td>'
                     + '</tr>';
 
@@ -221,6 +221,12 @@ function bg140Detail(param){
                                 + '<td>'+value3["salary"]+'</td>'
                                 + '<td>'+value3["salaryTotal"]+'</td>'
                                 + '<td>'+value3["remark"]+'</td>'
+                                + '<td>'
+                                    + '<div class="btn-group">'
+                                        + '<button class="btn btn-sm btn-warning editList"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                        + '<button class="btn btn-sm btn-default deleteList"><i class="fa fa-trash"></i> ลบ</button>'
+                                    + '</div>'
+                                + '</td>'
                             + '</tr>';
 
                             list140Arr[value3["id"]] = value3;
@@ -248,13 +254,53 @@ function bg140Detail(param){
 
             // when you press to add button
             $("button.addList").unbind("click").click(function(){
-                var parentId = $(this).attr("data-id");
+                var parentId = $(this).attr("data-pid");
 
                 // reset form for new insert
                 $("#modalHead").empty().html(typeNameArr[parentId]);
+                $("#loadingForm").html('');
                 $("#form").trigger('reset');
                 $("#panelForm").modal("show");
 
+                $("button.save").unbind("click").click(function(){
+                    var isValid = true;
+                    $('#form input[required]').each(function() {
+                        if($(this).val() == "" && !$(this).prop("disabled"))
+                            isValid = false;
+                    });
+                    if(isValid){
+                        param["budgetTypeId"] = parentId;
+                        $("#form input").each(function(){
+                            var name = $(this).attr("name");
+                            var val = $(this).val();
+
+                            param[name] = val;
+                        });
+
+                        var fdata = [];
+                        fdata.push(param);
+                        var dataJSON = JSON.stringify({budget: fdata});
+                        var dataJSONEN = encodeURIComponent(dataJSON);
+
+                        bg140Insert(parentId, dataJSONEN);
+                    }
+                });
+            });
+
+            // when you press to edit button
+            $("button.editList").unbind("click").click(function(){
+                //var parentId = $(this).attr("data-id");
+
+                // reset form for new insert
+                $("#modalHead").empty().html(typeNameArr[parentId]);
+                $("#loadingForm").html('');
+                $("#form").trigger('reset');
+                $("#panelForm").modal("show");
+
+                $("#form input").each(function(){
+                    var fid = $(this).attr("id");
+                    $("#"+fid).val(list140Arr[""])
+                });
                 $("button.save").unbind("click").click(function(){
                     var isValid = true;
                     $('#form input[required]').each(function() {
@@ -311,10 +357,10 @@ function bg140Insert(parentId, dataJSONEN){
                     + '<td>'+$("#vacancy").val()+'</td>'
                     + '<td>'+$("#salaryTotal").val()+'</td>'
                     + '<td>'
-                    + '<div class="btn-group">'
-                        + '<button class="btn btn-sm btn-warning editList"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                        + '<button class="btn btn-sm btn-default deleteList"><i class="fa fa-trash"></i> ลบ</button>'
-                    + '</div>'
+                        + '<div class="btn-group">'
+                            + '<button class="btn btn-sm btn-warning editList"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                            + '<button class="btn btn-sm btn-default deleteList"><i class="fa fa-trash"></i> ลบ</button>'
+                        + '</div>'
                     + '</td>'
                 + '</tr>';
 
