@@ -258,7 +258,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                         . " from " . $this->ent . "\\Budget140 bg "
                         . " where bg.bgStatus = :bgStatus "
                         . " and bg.budgetTypeId = :budgetTypeId "
-                        . " and bg.budgetPeriodId = :budgetPeriodId and "
+                        . " and bg.budgetPeriodId = :budgetPeriodId "
                         . " and bg.budgetTypeCode = :budgetTypeCode "
                         . " and bg.planId = :planId "
                         . " and bg.projectId = :projectId "
@@ -322,6 +322,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                         . " bg.projectId = :projectId and "
                         . " bg.fundgroupId = :fundgroupId and "
                         . " bg.deptId = :deptId";
+                //if(isset())
                 $param3 = array(
                     "bgStatus" => "Y",
                     "budgetTypeId" => $value2["id"],
