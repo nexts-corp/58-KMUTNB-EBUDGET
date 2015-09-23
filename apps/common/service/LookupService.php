@@ -112,4 +112,12 @@ class LookupService extends CServiceBase implements ILookupService {
         return $list;
     }
 
+    public function listBudgetSource() {
+        $list = array();
+        array_push($list, array("id" => "G", "name" => "เงินงบประมาณแผ่นดิน"));
+        array_push($list, array("id" => "K", "name" => "เงินรายได้"));
+        array_push($list, array("id" => "U", "name" => "เงินงบประมาณแผ่นดินและเงินรายได้"));
+        return $list;
+    }
+
 }

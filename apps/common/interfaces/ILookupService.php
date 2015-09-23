@@ -68,4 +68,13 @@ interface ILookupService {
      * @description รายการปีงบประมาณ
      */
     public function listYear();
+    
+    /**
+     * @name listBudgetSource
+     * @uri /listBudgetSource
+     * @return String[] lists Description
+     * @description แหล่งเงิน
+     */
+    public function listBudgetSource();
+    
 }
