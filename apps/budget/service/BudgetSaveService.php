@@ -76,26 +76,34 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
     }
 
     public function updateBudget140($budget) {
-        $return = array();
+        $return = true;
 
-        foreach ($budget as $key => $value) {
-            $refId = $value->getId();
-            $sql = " UPDATE BUDGET140 SET BUDGETSTATUS = 'N' WHERE ID = $refId";
-            $this->datacontext->pdoQuery($sql);
-
-            $value->setId(NULL);
-            $value->setRefId($refId);
-            $value->setBgStatus("Y");
-            if (!$this->datacontext->saveObject($value)) {
-                $return[$key]["result"] = false;
-                $return[$key]["msg"] = $this->datacontext->getLastMessage();
-            } else {
-                $return[$key]["result"] = true;
-                $return[$key]["id"] = $budget[$key]->id;
-            }
+        if (!$this->datacontext->updateObject($budget)) {
+            $return = false;
         }
 
         return $return;
+
+        /*
+          foreach ($budget as $key => $value) {
+          $refId = $value->getId();
+          $sql = " UPDATE BUDGET140 SET BUDGETSTATUS = 'N' WHERE ID = $refId";
+          $this->datacontext->pdoQuery($sql);
+
+          $value->setId(NULL);
+          $value->setRefId($refId);
+          $value->setBgStatus("Y");
+          if (!$this->datacontext->saveObject($value)) {
+          $return[$key]["result"] = false;
+          $return[$key]["msg"] = $this->datacontext->getLastMessage();
+          } else {
+          $return[$key]["result"] = true;
+          $return[$key]["id"] = $budget[$key]->id;
+          }
+          }
+
+          return $return;
+         */
     }
 
     public function insertBudget141($budget) {
@@ -116,23 +124,10 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
     }
 
     public function updateBudget141($budget) {
-        $return = array();
+        $return = true;
 
-        foreach ($budget as $key => $value) {
-            $refId = $value->getId();
-            $sql = " UPDATE BUDGET141 SET BUDGETSTATUS = 'N' WHERE ID = $refId";
-            $this->datacontext->pdoQuery($sql);
-
-            $value->setId(NULL);
-            $value->setRefId($refId);
-            $value->setBgStatus("Y");
-            if (!$this->datacontext->saveObject($value)) {
-                $return[$key]["result"] = false;
-                $return[$key]["msg"] = $this->datacontext->getLastMessage();
-            } else {
-                $return[$key]["result"] = true;
-                $return[$key]["id"] = $budget[$key]->id;
-            }
+        if (!$this->datacontext->updateObject($budget)) {
+            $return = false;
         }
 
         return $return;
@@ -156,23 +151,10 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
     }
 
     public function updateBudget142($budget) {
-        $return = array();
+        $return = true;
 
-        foreach ($budget as $key => $value) {
-            $refId = $value->getId();
-            $sql = " UPDATE BUDGET142 SET BUDGETSTATUS = 'N' WHERE ID = $refId";
-            $this->datacontext->pdoQuery($sql);
-
-            $value->setId(NULL);
-            $value->setRefId($refId);
-            $value->setBgStatus("Y");
-            if (!$this->datacontext->saveObject($value)) {
-                $return[$key]["result"] = false;
-                $return[$key]["msg"] = $this->datacontext->getLastMessage();
-            } else {
-                $return[$key]["result"] = true;
-                $return[$key]["id"] = $budget[$key]->id;
-            }
+        if (!$this->datacontext->updateObject($budget)) {
+            $return = false;
         }
 
         return $return;
@@ -196,23 +178,10 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
     }
 
     public function updateBudget143($budget) {
-        $return = array();
+        $return = true;
 
-        foreach ($budget as $key => $value) {
-            $refId = $value->getId();
-            $sql = " UPDATE BUDGET143 SET BUDGETSTATUS = 'N' WHERE ID = $refId";
-            $this->datacontext->pdoQuery($sql);
-
-            $value->setId(NULL);
-            $value->setRefId($refId);
-            $value->setBgStatus("Y");
-            if (!$this->datacontext->saveObject($value)) {
-                $return[$key]["result"] = false;
-                $return[$key]["msg"] = $this->datacontext->getLastMessage();
-            } else {
-                $return[$key]["result"] = true;
-                $return[$key]["id"] = $budget[$key]->id;
-            }
+        if (!$this->datacontext->updateObject($budget)) {
+            $return = false;
         }
 
         return $return;
@@ -236,23 +205,10 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
     }
 
     public function updateBudget144($budget) {
-        $return = array();
+        $return = true;
 
-        foreach ($budget as $key => $value) {
-            $refId = $value->getId();
-            $sql = " UPDATE BUDGET144 SET BUDGETSTATUS = 'N' WHERE ID = $refId";
-            $this->datacontext->pdoQuery($sql);
-
-            $value->setId(NULL);
-            $value->setRefId($refId);
-            $value->setBgStatus("Y");
-            if (!$this->datacontext->saveObject($value)) {
-                $return[$key]["result"] = false;
-                $return[$key]["msg"] = $this->datacontext->getLastMessage();
-            } else {
-                $return[$key]["result"] = true;
-                $return[$key]["id"] = $budget[$key]->id;
-            }
+        if (!$this->datacontext->updateObject($budget)) {
+            $return = false;
         }
 
         return $return;
@@ -276,23 +232,10 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
     }
 
     public function updateBudget145($budget) {
-        $return = array();
+        $return = true;
 
-        foreach ($budget as $key => $value) {
-            $refId = $value->getId();
-            $sql = " UPDATE BUDGET145 SET BUDGETSTATUS = 'N' WHERE ID = $refId";
-            $this->datacontext->pdoQuery($sql);
-
-            $value->setId(NULL);
-            $value->setRefId($refId);
-            $value->setBgStatus("Y");
-            if (!$this->datacontext->saveObject($value)) {
-                $return[$key]["result"] = false;
-                $return[$key]["msg"] = $this->datacontext->getLastMessage();
-            } else {
-                $return[$key]["result"] = true;
-                $return[$key]["id"] = $budget[$key]->id;
-            }
+        if (!$this->datacontext->updateObject($budget)) {
+            $return = false;
         }
 
         return $return;
@@ -316,23 +259,10 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
     }
 
     public function updateBudget146($budget) {
-        $return = array();
+        $return = true;
 
-        foreach ($budget as $key => $value) {
-            $refId = $value->getId();
-            $sql = " UPDATE BUDGET146 SET BUDGETSTATUS = 'N' WHERE ID = $refId";
-            $this->datacontext->pdoQuery($sql);
-
-            $value->setId(NULL);
-            $value->setRefId($refId);
-            $value->setBgStatus("Y");
-            if (!$this->datacontext->saveObject($value)) {
-                $return[$key]["result"] = false;
-                $return[$key]["msg"] = $this->datacontext->getLastMessage();
-            } else {
-                $return[$key]["result"] = true;
-                $return[$key]["id"] = $budget[$key]->id;
-            }
+        if (!$this->datacontext->updateObject($budget)) {
+            $return = false;
         }
 
         return $return;
