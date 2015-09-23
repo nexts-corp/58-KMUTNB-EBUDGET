@@ -11,22 +11,19 @@ use th\co\bpg\cde\data\CDataContext;
 use apps\oauth\interfaces\IAuthenService;
 use Firebase\JWT\JWT;
 
-class AuthenService extends CServiceBase implements IAuthenService
-{
+class AuthenService extends CServiceBase implements IAuthenService {
 
     public $datacontext;
     public $logger;
     public $md = "apps\\common\\model";
     public $ent = "apps\\common\\entity";
 
-    function __construct()
-    {
+    function __construct() {
         $this->logger = \Logger::getLogger("root");
         $this->datacontext = new CDataContext(NULL);
     }
 
-    public function authorization()
-    {
+    public function authorization() {
 
         $code = $this->getRequest()->code;
         if ($this->getRequest()->username && $this->getRequest()->password) {
@@ -45,7 +42,7 @@ class AuthenService extends CServiceBase implements IAuthenService
 
                 $data = base64_decode($code);
                 $datas = explode("|", $data);
-                $cc = (array)JWT::decode($datas[1], "123456", array('HS256'));
+                $cc = (array) JWT::decode($datas[1], "123456", array('HS256'));
                 $pp = array(
                     "uid" => $user[0]->id
                 );
@@ -75,14 +72,13 @@ class AuthenService extends CServiceBase implements IAuthenService
         }
     }
 
-    public function authenticate()
-    {
+    public function authenticate() {
 
         $this->logger->info("authenticate.....");
         $euid = $this->getRequest()->code;
         $uid = base64_decode($euid);
 
-        $uidd = (array)JWT::decode($uid, "123456", array('HS256'));
+        $uidd = (array) JWT::decode($uid, "123456", array('HS256'));
 
         $check = new Member();
         $check->id = $uidd['uid'];

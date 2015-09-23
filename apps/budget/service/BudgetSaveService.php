@@ -273,9 +273,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
         $repo = new Budget140();
         $repo->setId($budgetId);
-        $repo->setCampusStatus("N");
 
-        if (!$this->datacontext->updateObject($repo)) {
+        if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
         }
         return $result;
@@ -286,9 +285,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
         $repo = new Budget141();
         $repo->setId($budgetId);
-        $repo->setCampusStatus("N");
 
-        if (!$this->datacontext->updateObject($repo)) {
+        if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
         }
         return $result;
@@ -299,9 +297,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
         $repo = new Budget142();
         $repo->setId($budgetId);
-        $repo->setCampusStatus("N");
 
-        if (!$this->datacontext->updateObject($repo)) {
+        if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
         }
         return $result;
@@ -312,9 +309,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
         $repo = new Budget143();
         $repo->setId($budgetId);
-        $repo->setCampusStatus("N");
 
-        if (!$this->datacontext->updateObject($repo)) {
+        if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
         }
         return $result;
@@ -325,9 +321,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
         $repo = new Budget144();
         $repo->setId($budgetId);
-        $repo->setCampusStatus("N");
 
-        if (!$this->datacontext->updateObject($repo)) {
+        if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
         }
         return $result;
@@ -338,9 +333,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
         $repo = new Budget145();
         $repo->setId($budgetId);
-        $repo->setCampusStatus("N");
 
-        if (!$this->datacontext->updateObject($repo)) {
+        if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
         }
         return $result;
@@ -351,9 +345,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
         $repo = new Budget146();
         $repo->setId($budgetId);
-        $repo->setCampusStatus("N");
 
-        if (!$this->datacontext->updateObject($repo)) {
+        if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
         }
         return $result;
