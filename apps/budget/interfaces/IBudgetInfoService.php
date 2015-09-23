@@ -69,7 +69,7 @@ interface IBudgetInfoService {
      * @name viewBudget140
      * @uri /viewBudget140
      * @param apps\common\entity\model\BudgetFilter param 
-     * @return apps\common\entity\Budget140[] list Description
+     * @return apps\common\entity\Budget140[] budget Description
      * @description แสดงข้อมูลฟอร์ม 140 
      */
     public function viewBudget140($param);
@@ -78,7 +78,7 @@ interface IBudgetInfoService {
      * @name viewBudget141
      * @uri /viewBudget141
      * @param apps\common\entity\model\BudgetFilter param
-     * @return apps\common\entity\Budget141[] list Description
+     * @return apps\common\entity\Budget141[] budget Description
      * @description แสดงข้อมูลฟอร์ม 141
      */
     public function viewBudget141($param);
@@ -87,7 +87,7 @@ interface IBudgetInfoService {
      * @name viewBudget142
      * @uri /viewBudget142
      * @param apps\common\entity\model\BudgetFilter param
-     * @return apps\common\entity\Budget142[] list Description
+     * @return apps\common\entity\Budget142[] budget Description
      * @description แสดงข้อมูลฟอร์ม 142
      */
     public function viewBudget142($param);
@@ -96,7 +96,7 @@ interface IBudgetInfoService {
      * @name viewBudget143
      * @uri /viewBudget143
      * @param apps\common\entity\model\BudgetFilter param
-     * @return apps\common\entity\Budget143[] list Description
+     * @return apps\common\entity\Budget143[] budget Description
      * @description แสดงข้อมูลฟอร์ม 143
      */
     public function viewBudget143($param);
@@ -105,7 +105,7 @@ interface IBudgetInfoService {
      * @name viewBudget144
      * @uri /viewBudget144
      * @param apps\common\entity\model\BudgetFilter param
-     * @return apps\common\entity\Budget144[] list Description
+     * @return apps\common\entity\Budget144[] budget Description
      * @description แสดงข้อมูลฟอร์ม 144
      */
     public function viewBudget144($param);
@@ -114,7 +114,7 @@ interface IBudgetInfoService {
      * @name viewBudget145
      * @uri /viewBudget145
      * @param apps\common\entity\model\BudgetFilter param
-     * @return apps\common\entity\Budget145[] list Description
+     * @return apps\common\entity\Budget145[] budget Description
      * @description แสดงข้อมูลฟอร์ม 145
      */
     public function viewBudget145($param);
@@ -123,7 +123,7 @@ interface IBudgetInfoService {
      * @name viewBudget146
      * @uri /viewBudget146
      * @param apps\common\entity\model\BudgetFilter param
-     * @return apps\common\entity\Budget146[] list Description
+     * @return apps\common\entity\Budget146[] budget Description
      * @description แสดงข้อมูลฟอร์ม 146
      */
     public function viewBudget146($param);
