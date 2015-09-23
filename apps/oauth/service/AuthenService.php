@@ -2,6 +2,8 @@
 
 namespace apps\oauth\service;
 
+use apps\common\entity\Member;
+use apps\common\entity\Role;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
@@ -22,18 +24,17 @@ class AuthenService extends CServiceBase implements IAuthenService {
     }
 
     public function authorization() {
+
         $code = $this->getRequest()->code;
         if ($this->getRequest()->username && $this->getRequest()->password) {
             $username = $this->getRequest()->username;
             $password = $this->getRequest()->password;
 
+//          header('Location: /kmutnb-ebudget/api/budget/view/formBudget');
 
-            header('Location: /kmutnb-ebudget/api/budget/view/formBudget');
-
-
-            $check = new \apps\common\entity\User();
+            $check = new Member();
             $check->username = $username;
-            $check->password = $password;
+            $check->password = md5($password);
 
             $user = $this->datacontext->getObject($check);
             //print_r($user);
@@ -52,9 +53,11 @@ class AuthenService extends CServiceBase implements IAuthenService {
                 // echo $authUrl;
 
                 header('Location: ' . $authUrl);
+                header('Location: /kmutnb-ebudget/api/budget/view/formBudget');
                 exit;
                 //        return false;
             } else {
+
                 $view = new CJView("signin", CJViewType::HTML_VIEW_ENGINE);
                 $view->code = $code;
                 $view->username = $username;
@@ -70,18 +73,19 @@ class AuthenService extends CServiceBase implements IAuthenService {
     }
 
     public function authenticate() {
+
         $this->logger->info("authenticate.....");
         $euid = $this->getRequest()->code;
         $uid = base64_decode($euid);
 
         $uidd = (array) JWT::decode($uid, "123456", array('HS256'));
 
-        $check = new \apps\common\entity\User();
+        $check = new Member();
         $check->id = $uidd['uid'];
         $user = $this->datacontext->getObject($check);
         if (count($user) > 0) {
 
-            $role = new \apps\common\entity\Role();
+            $role = new Role();
             $role->code = $user[0]->roleCode;
 
             $xrole = $this->datacontext->getObject($role);
