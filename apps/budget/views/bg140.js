@@ -1,3 +1,6 @@
+var typeNameArr = [];
+var list140Arr = [];
+
 function bg140Form(param) {
     //console.log(param);
     var html = '<div id="panelTable" class="col-md-12">'
@@ -10,31 +13,33 @@ function bg140Form(param) {
             + '</div>'
 
             + '<div class="col-md-6">'
-                + '<label class="col-md-4 control-label text-right">แผนงาน : </label>'
-                + '<div class="col-md-6">'+planArr[param["planId"]]+'</div>'
+                + '<label class="col-md-4 control-label text-right">แหล่งเงิน : </label>'
+                + '<div class="col-md-6">'+budgetTypeArr[param["budgetTypeCode"]]+'</div>'
             + '</div>'
 
         + '</div>'
 
         + '<div class="form-group">'
+            + '<div class="col-md-6">'
+                + '<label class="col-md-4 control-label text-right">แผนงาน : </label>'
+                + '<div class="col-md-6">'+planArr[param["planId"]]+'</div>'
+            + '</div>'
 
             + '<div class="col-md-6">'
                 + '<label class="col-md-4 control-label text-right">ผลผลิต/โครงการ : </label>'
                 + '<div class="col-md-6">'+projectArr[param["projectId"]]+'</div>'
             + '</div>'
+        + '</div>'
 
+        + '<div class="form-group">'
             + '<div class="col-md-6">'
                 + '<label class="col-md-4 control-label text-right">กองทุน : </label>'
                 + '<div class="col-md-6">'+fundgroupArr[param["fundgroupId"]]+'</div>'
             + '</div>'
 
-        + '</div>'
-
-        + '<div class="form-group">'
-
             + '<div class="col-md-6">'
                 + '<label class="col-md-4 control-label text-right">หน่วยงาน : </label>'
-                + '<div class="col-md-6">'+departmentArr[param["departmentId"]]+'</div>'
+                + '<div class="col-md-6">'+departmentArr[param["deptId"]]+'</div>'
             + '</div>'
 
         + '</div>'
@@ -146,6 +151,7 @@ function bg140Form(param) {
                         + '</div>'
                     + '</form>'
                 + '</div>'
+                + '<div id="loadingForm" class="col-md-12 text-center"></div>'
                 + '<div class="modal-footer">'
                     + '<button type="button" class="btn btn-success save" data-dismiss="modal"><i class="fa fa-save"></i> บันทึก</button>'
                     + '<button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>'
@@ -162,13 +168,12 @@ function bg140Form(param) {
 }
 
 function bg140Detail(param){
-    var typeNameArr = [];
-    var listArr = [];
-
-    $("#table140 tbody").html('<td colspan="8" class="text-center">Loading...</td>');
+    $("#table140 tbody").html('<td colspan="9" class="text-center">Loading...</td>');
 
     setTimeout(function(){
-        var datas = callAjax(js_context_path+"/api/budget/budgetInfo/listBudgetType140", "post", {param: param}, "json");
+        var dataJSON = JSON.stringify({param: param});
+        var dataJSONEN = encodeURIComponent(dataJSON);
+        var datas = callAjax(js_context_path+"/api/budget/budgetInfo/viewBudget140", "post", dataJSONEN, "json");
         if(typeof datas !== "undefined" && datas !== null){
             var html = '';
             var pCount = 0;
@@ -205,20 +210,22 @@ function bg140Detail(param){
 
                     typeNameArr[value2["id"]] = value2["typeName"];
 
-                    $.each(value2["budget"], function(key3, value3){
-                        html += '<tr data-tt-id="" data-tt-parent-id="">'
-                            + '<td class="text-center"></td>'
-                            + '<td>'+value3["positionName"]+'</td>'
-                            + '<td>'+value3["occupy"]+'</td>'
-                            + '<td>'+value3["vacancy"]+'</td>'
-                            + '<td>'+value3["rateNo"]+'</td>'
-                            + '<td>'+value3["salary"]+'</td>'
-                            + '<td>'+value3["salaryTotal"]+'</td>'
-                            + '<td>'+value3["remark"]+'</td>'
-                        + '</tr>';
+                    if(typeof value2["budget"] !== "undefined"){
+                        $.each(value2["budget"], function(key3, value3){
+                            html += '<tr data-tt-id="list'+value3["id"]+'" data-tt-parent-id="'+value2["id"]+'">'
+                                + '<td class="text-center"></td>'
+                                + '<td>'+value3["positionName"]+'</td>'
+                                + '<td>'+value3["occupy"]+'</td>'
+                                + '<td>'+value3["vacancy"]+'</td>'
+                                + '<td>'+value3["rateNo"]+'</td>'
+                                + '<td>'+value3["salary"]+'</td>'
+                                + '<td>'+value3["salaryTotal"]+'</td>'
+                                + '<td>'+value3["remark"]+'</td>'
+                            + '</tr>';
 
-                        listArr[value3["id"]] = value3;
-                    });
+                            list140Arr[value3["id"]] = value3;
+                        });
+                    }
                 });
             });
 
@@ -241,10 +248,10 @@ function bg140Detail(param){
 
             // when you press to add button
             $("button.addList").unbind("click").click(function(){
-                var id = $(this).attr("data-id");
+                var parentId = $(this).attr("data-id");
 
                 // reset form for new insert
-                $("#modalHead").empty().html(typeNameArr[id]);
+                $("#modalHead").empty().html(typeNameArr[parentId]);
                 $("#form").trigger('reset');
                 $("#panelForm").modal("show");
 
@@ -255,6 +262,7 @@ function bg140Detail(param){
                             isValid = false;
                     });
                     if(isValid){
+                        param["budgetTypeId"] = parentId;
                         $("#form input").each(function(){
                             var name = $(this).attr("name");
                             var val = $(this).val();
@@ -262,52 +270,68 @@ function bg140Detail(param){
                             param[name] = val;
                         });
 
-                        var datas = callAjax(js_context_path+"/api/budget/budgetSave/insertBudget140", "post", {
-                            budget: param
-                        }, "json");
+                        var fdata = [];
+                        fdata.push(param);
+                        var dataJSON = JSON.stringify({budget: fdata});
+                        var dataJSONEN = encodeURIComponent(dataJSON);
 
-                        if(typeof datas !== "undefined" && datas !== null){
-                            if(datas["result"] == true){
-                                // insert node in branch
-                                var positionName = $("#positionName").val();
-                                var rateNo = $("#rateNo").val();
-                                var salary = $("#salary").val();
-                                var occupy = $("#occupy").val();
-                                var vacancy = $("#vacancy").val();
-                                var salaryTotal = $("#salaryTotal").val();
-                                var remark = $("#remark").val();
-                                var input = '<tr data-tt-id="" data-tt-parent-id="'+id+'">'
-                                    + '<td></td>'
-                                    + '<td>'+$("#positionName").val()+'</td>'
-                                    + '<td>'+$("#rateNo").val()+'</td>'
-                                    + '<td>'+$("#rateNo").val()+'</td>'
-                                    + '<td>'+$("#salary").val()+'</td>'
-                                    + '<td>'+$("#occupy").val()+'</td>'
-                                    + '<td>'+$("#vacancy").val()+'</td>'
-                                    + '<td>'+$("#salaryTotal").val()+'</td>'
-                                    + '<td>'
-                                        + '<div class="btn-group">'
-                                            + '<button class="btn btn-sm btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                            + '<button class="btn btn-sm btn-default"><i class="fa fa-trash"></i> ลบ</button>'
-                                        + '</div>'
-                                    + '</td>'
-                                + '</tr>';
-
-                                var node = $("#table140").treetable("node", id);
-                                $("#table140").treetable("loadBranch", node, input);
-
-                                listArr[datas["id"]] = {
-                                    id: datas["id"]
-                                }
-
-                                $("#form input").each(function(){
-                                    listArr[datas["id"]][$(this).attr("name")] = $(this).val();
-                                });
-                            }
-                        }
+                        bg140Insert(parentId, dataJSONEN);
                     }
                 });
             });
         }
     }, 100);
+}
+
+function bg140Insert(parentId, dataJSONEN){
+    $("#loadingForm").html("Loading...");
+
+    setTimeout(function(){
+        var datas = callAjax(js_context_path+"/api/budget/budgetSave/insertBudget140", "post", dataJSONEN, "json");
+        if(typeof datas !== "undefined" && datas !== null){
+            var data = datas["result"][0];
+            if(data["result"] == true){
+                $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
+
+                // insert node in branch
+                var positionName = $("#positionName").val();
+                var rateNo = $("#rateNo").val();
+                var salary = $("#salary").val();
+                var occupy = $("#occupy").val();
+                var vacancy = $("#vacancy").val();
+                var salaryTotal = $("#salaryTotal").val();
+                var remark = $("#remark").val();
+                var input = '<tr data-tt-id="'+data["id"]+'" data-tt-parent-id="'+parentId+'">'
+                    + '<td></td>'
+                    + '<td>'+$("#positionName").val()+'</td>'
+                    + '<td>'+$("#rateNo").val()+'</td>'
+                    + '<td>'+$("#rateNo").val()+'</td>'
+                    + '<td>'+$("#salary").val()+'</td>'
+                    + '<td>'+$("#occupy").val()+'</td>'
+                    + '<td>'+$("#vacancy").val()+'</td>'
+                    + '<td>'+$("#salaryTotal").val()+'</td>'
+                    + '<td>'
+                    + '<div class="btn-group">'
+                        + '<button class="btn btn-sm btn-warning editList"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                        + '<button class="btn btn-sm btn-default deleteList"><i class="fa fa-trash"></i> ลบ</button>'
+                    + '</div>'
+                    + '</td>'
+                + '</tr>';
+
+                var node = $("#table140").treetable("node", parentId);
+                $("#table140").treetable("loadBranch", node, input);
+
+                list140Arr[data["id"]] = {
+                    id: data["id"]
+                }
+
+                $("#form input").each(function(){
+                    list140Arr[data["id"]][$(this).attr("name")] = $(this).val();
+                });
+            }
+            else{
+                $("#loadingForm").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
+            }
+        }
+    }, 500);
 }
