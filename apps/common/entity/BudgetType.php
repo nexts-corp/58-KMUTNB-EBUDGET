@@ -24,6 +24,9 @@ class BudgetType extends EntityBase {
     /** @Column(type="integer",length=11, name="LEVELID") */
     public $level;
 
+    /** @Column(type="string",length=1, name="BUDGETTYPECODE") */
+    public $typeCode;
+
     /** @Column(type="boolean", name="FORM140") */
     public $form140;
 
@@ -45,6 +48,9 @@ class BudgetType extends EntityBase {
     /** @Column(type="boolean", name="FORM146") */
     public $form146;
 
+    /** @Column(type="boolean", name="FORMEXPENSE") */
+    public $formExpense;
+
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
 
@@ -65,6 +71,10 @@ class BudgetType extends EntityBase {
 
     function getLevel() {
         return $this->level;
+    }
+
+    function getTypeCode() {
+        return $this->typeCode;
     }
 
     function getForm140() {
@@ -95,6 +105,10 @@ class BudgetType extends EntityBase {
         return $this->form146;
     }
 
+    function getFormExpense() {
+        return $this->formExpense;
+    }
+
     function getCreator() {
         return $this->creator;
     }
@@ -117,6 +131,10 @@ class BudgetType extends EntityBase {
 
     function setLevel($level) {
         $this->level = $level;
+    }
+
+    function setTypeCode($typeCode) {
+        $this->typeCode = $typeCode;
     }
 
     function setForm140($form140) {
@@ -145,6 +163,10 @@ class BudgetType extends EntityBase {
 
     function setForm146($form146) {
         $this->form146 = $form146;
+    }
+
+    function setFormExpense($formExpense) {
+        $this->formExpense = $formExpense;
     }
 
     function setCreator($creator) {

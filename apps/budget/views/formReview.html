@@ -25,6 +25,7 @@
     <div class="container">
 
         <div id="formTracking" class="col-md-12">
+            <!--
             <div class="form-group">
                 <label class="col-md-2 control-label text-right">{{#i18n}}budgetType{{/i18n}}</label>
 
@@ -37,10 +38,11 @@
                 </div>
                 <div id="warning-expenses" class="col-md-3" style="display: none"><label
                         class="control-label text-danger">
-                    <i class="fa fa-exclamation"></i>
-                    กรุณาเลือกประเภทงบประมาณ</label>
+                        <i class="fa fa-exclamation"></i>
+                        กรุณาเลือกประเภทงบประมาณ</label>
                 </div>
             </div>
+            -->
             <div class="form-group">
                 <label class="col-md-2 control-label text-right">{{#i18n}}budgetYear{{/i18n}}</label>
 
@@ -51,7 +53,7 @@
                 </div>
                 <div id="warning-year" class="col-md-2" style="display: none"><label
                         class="control-label text-danger">
-                    <i class="fa fa-exclamation"></i> กรุณาเลือกปี</label>
+                        <i class="fa fa-exclamation"></i> กรุณาเลือกปี</label>
                 </div>
                 <div class="col-md-1">
                     <button class="btn btn-warning col-md-12" id="get-form">{{#i18n}}ok{{/i18n}}</button>
@@ -67,7 +69,7 @@
                                                                                   data-toggle="collapse"
                                                                                   data-parent="#accordion"
                                                                                   href="#collapse1One">
-                                <i class="fa fa-plus-circle"></i> จัดการรายการ</a></h4></div>
+                                        <i class="fa fa-plus-circle"></i> จัดการรายการ</a></h4></div>
                             <div class="accordion-body collapse in">
                                 <div class="panel-body">
                                     <form onsubmit="return false">
@@ -117,11 +119,11 @@
                                         </div>
                                         <div class="col-md-12 text-right">
                                             <label id="status-ico" style="display: none" class="text-success"><i
-                                                    class="fa fa-check"> บันทึกเรียร้อย</i> </label>
+                                                    class="fa fa-check"> บันทึกเรียบร้อย</i> </label>
                                             <label id="saving-ico" style="display: none"><i
                                                     class="fa fa-spinner fa-spin"></i> กำลังบันทึก</label>
                                             <button id="btn-save" class="btn btn-success "><i class="fa fa-save">
-                                                บันทึก</i></button>
+                                                    บันทึก</i></button>
                                             &nbsp;
                                             <button id="clearForm" class="btn btn-default"><i class="fa fa-trash"></i>
                                                 ยกเลิก
@@ -136,44 +138,44 @@
                 <!-- manage list-->
                 <table id="table" class="table table-bordered table-striped table-condensed mb-none">
                     <thead>
-                    <tr>
-                        <th rowspan="2" class="text-center" width="22%" id="title-tb"
-                            style="vertical-align: middle; min-width:170px">
-                            {{#i18n}}budgetType{{/i18n}}
-                        </th>
-                        <th colspan="2" class="text-center" width="13%">{{#i18n}}total{{/i18n}}</th>
-                        <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter1{{/i18n}}</th>
-                        <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter2{{/i18n}}</th>
-                        <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter3{{/i18n}}</th>
-                        <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter4{{/i18n}}</th>
-                        <th rowspan="2" class="text-center" width="13%" style="vertical-align: middle">
-                            {{#i18n}}total{{/i18n}}
-                        </th>
-                    </tr>
-                    <tr>
-                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
-                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
-                        </th>
-                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
-                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
-                        </th>
-                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
-                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
-                        </th>
-                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
-                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
-                        </th>
-                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
-                        <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
-                        </th>
-                    </tr>
+                        <tr>
+                            <th rowspan="2" class="text-center" width="22%" id="title-tb"
+                                style="vertical-align: middle; min-width:170px">
+                                {{#i18n}}budgetType{{/i18n}}
+                            </th>
+                            <th colspan="2" class="text-center" width="13%">{{#i18n}}total{{/i18n}}</th>
+                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter1{{/i18n}}</th>
+                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter2{{/i18n}}</th>
+                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter3{{/i18n}}</th>
+                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter4{{/i18n}}</th>
+                            <th rowspan="2" class="text-center" width="13%" style="vertical-align: middle">
+                                {{#i18n}}total{{/i18n}}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
+                            </th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
+                            </th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
+                            </th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
+                            </th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}
+                            </th>
+                        </tr>
                     </thead>
 
                     <tbody id="budgetBody">
-                    <tr>
-                        <td colspan="20" class="text-center">เลือกประเภทงบประมาณ และ ปีงบประมาณ</td>
-                    </tr>
-                    <!-- to do content-->
+                        <tr>
+                            <td colspan="20" class="text-center">เลือกประเภทงบประมาณ และปีงบประมาณ</td>
+                        </tr>
+                        <!-- to do content-->
                     </tbody>
                 </table>
             </div>
@@ -210,9 +212,10 @@
                 resetPanel();
                 disablePanel();
 
-                var budgetType = $("#expenses-select").val();
+                //var budgetType = $("#expenses-select").val();
                 var year = $("#year-select").val();
 
+                /*
                 if (budgetType == 0) {
                     $("#expenses-select").parent().addClass("has-error");
                     $("#warning-expenses").show(10);
@@ -225,6 +228,7 @@
                     showTableContent(textSelected, budgetType, year);
                     getExpensesList(budgetType);
                 }
+                */
             });
 
             $("#expenses-select").change(function () {
@@ -247,13 +251,13 @@
                 var year = $("#year-select").val();
                 var quater = $("#quarter-select").val();
                 var objArr = [{
-                    valuePlan: planValue,
-                    valueUsed: usedValue,
-                    id: expendsID,
-                    budgetType: budgetType,
-                    quater: quater,
-                    year: year
-                }];
+                        valuePlan: planValue,
+                        valueUsed: usedValue,
+                        id: expendsID,
+                        budgetType: budgetType,
+                        quater: quater,
+                        year: year
+                    }];
                 if (budgetType != 0 && quater != 0 && expendsID != 0) {
                     $.post("{{_context_path}}/api/budget/budgetTracking/saveTracking/", {objBudget: objArr}, function (data) {
                         if (data.status == true) {

@@ -23,7 +23,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
     public function listBudgetType140() {
         $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = '10000000' and typ.form140 = true ";
+                . " WHERE typ.masterId = '10000000' and typ.typeCode = 'G' and typ.form140 = true ";
         $list1 = $this->datacontext->getObject($sql1);
 
         foreach ($list1 as $key => $value) {
@@ -54,7 +54,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
     public function listBudgetType141() {
         $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = '20100000' and typ.form141 = true ";
+                . " WHERE typ.masterId = '20100000' and typ.typeCode = 'G' and typ.form141 = true ";
         $list1 = $this->datacontext->getObject($sql1);
 
         foreach ($list1 as $key => $value) {
@@ -85,7 +85,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
     public function listBudgetType142() {
         $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = '20100000' and typ.form142 = true ";
+                . " WHERE typ.masterId = '20100000' and typ.typeCode = 'G' and typ.form142 = true ";
         $list1 = $this->datacontext->getObject($sql1);
 
         foreach ($list1 as $key => $value) {
@@ -116,7 +116,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
     public function listBudgetType143() {
         $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = '20000000' and typ.form143 = true ";
+                . " WHERE typ.masterId = '20000000' and typ.typeCode = 'G' and typ.form143 = true ";
         $list1 = $this->datacontext->getObject($sql1);
 
         foreach ($list1 as $key => $value) {
@@ -147,7 +147,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
     public function listBudgetType144() {
         $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = '20200000' and typ.form144 = true ";
+                . " WHERE typ.masterId = '20200000' and typ.typeCode = 'G' and typ.form144 = true ";
         $list1 = $this->datacontext->getObject($sql1);
 
         foreach ($list1 as $key => $value) {
@@ -178,7 +178,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
     public function listBudgetType145() {
         $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = '20300000' and typ.form145 = true ";
+                . " WHERE typ.masterId = '20300000' and typ.typeCode = 'G' and typ.form145 = true ";
         $list1 = $this->datacontext->getObject($sql1);
 
         foreach ($list1 as $key => $value) {
@@ -209,7 +209,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
     public function listBudgetType146() {
         $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = '20500000' and typ.form146 = true ";
+                . " WHERE typ.masterId = '20500000' and typ.typeCode = 'G' and typ.form146 = true ";
         $list1 = $this->datacontext->getObject($sql1);
 
         foreach ($list1 as $key => $value) {
@@ -240,7 +240,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
     public function viewBudget140($param) {
         $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = '10000000' and typ.form140 = true ";
+                . " WHERE typ.masterId = '10000000' and typ.typeCode = 'G' and typ.form140 = true ";
         $list1 = $this->datacontext->getObject($sql1);
 
         foreach ($list1 as $key1 => $value1) {
@@ -300,7 +300,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
     public function viewBudget141($param) {
         $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = '20100000' and typ.form141 = true ";
+                . " WHERE typ.masterId = '20100000' and typ.typeCode = 'G' and typ.form141 = true ";
         $list1 = $this->datacontext->getObject($sql1);
 
         foreach ($list1 as $key1 => $value1) {
@@ -346,7 +346,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
     public function viewBudget142($param) {
         $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = '20100000' and typ.form142 = true ";
+                . " WHERE typ.masterId = '20100000' and typ.typeCode = 'G' and typ.form142 = true ";
         $list1 = $this->datacontext->getObject($sql1);
 
         foreach ($list1 as $key1 => $value1) {
@@ -391,7 +391,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
     public function viewBudget143($param) {
         $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = '20000000' and typ.form143 = true ";
+                . " WHERE typ.masterId = '20000000' and typ.typeCode = 'G' and typ.form143 = true ";
         $list1 = $this->datacontext->getObject($sql1);
 
         foreach ($list1 as $key1 => $value1) {
@@ -436,7 +436,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
     public function viewBudget144($param) {
         $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = '20200000' and typ.form144 = true ";
+                . " WHERE typ.masterId = '20200000' and typ.typeCode = 'G' and typ.form144 = true ";
         $list1 = $this->datacontext->getObject($sql1);
 
         foreach ($list1 as $key1 => $value1) {
@@ -482,7 +482,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
     public function viewBudget145($param) {
         $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = '20300000' and typ.form145 = true ";
+                . " WHERE typ.masterId = '20300000' and typ.typeCode = 'G' and typ.form145 = true ";
         $list1 = $this->datacontext->getObject($sql1);
 
         foreach ($list1 as $key1 => $value1) {
@@ -529,7 +529,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
     public function viewBudget146($param) {
         $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = '20500000' and typ.form146 = true ";
+                . " WHERE typ.masterId = '20500000' and typ.typeCode = 'G' and typ.form146 = true ";
         $list1 = $this->datacontext->getObject($sql1);
 
         foreach ($list1 as $key1 => $value1) {

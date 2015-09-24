@@ -8,23 +8,21 @@ use apps\budget\interfaces\year;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
 use apps\budget\interfaces\IBudgetReviewService;
+use apps\common\entity;
 
-class BudgetReviewService extends CServiceBase implements IBudgetReviewService
-{
+class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
+
     public $datacontext;
     public $pathEnt = "apps\\common\\entity";
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->datacontext = new CDataContext();
     }
 
-    public function getReview($budgetType, $year)
-    {
+    public function getReview($budgetType, $year) {
         $dataArr = array();
 
-        if ($budgetType == "1") { //à§Ô¹ÃÒÂä´é
-
+        if ($budgetType == "1") { //ï¿½Ô¹ï¿½ï¿½ï¿½ï¿½ï¿½
             $sql = $this->queryExpensesRvt($year, 0);
             $dataArr = $this->datacontext->pdoQuery($sql);
 
@@ -49,8 +47,7 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService
                 }
                 $dataArr[$i]["list"] = $dataInner;
             }
-        } else if ($budgetType == "2") { //à§Ô¹§º»ÃÐÁÒ³á¼è¹´Ô¹
-
+        } else if ($budgetType == "2") { //ï¿½Ô¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½è¹´Ô¹
             $sql = $this->queryExpensesBg($year, 0);
             $dataArr = $this->datacontext->pdoQuery($sql);
 
@@ -80,42 +77,34 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService
         return $dataArr;
     }
 
-
-    private function queryExpensesBg($year, $id)
-    {
+    private function queryExpensesBg($year, $id) {
 
         $sql = "SELECT bg.id,bg.type_name"
-            . ",CASE WHEN (tb.budget_quater1_plan IS NULL) THEN ' ' ELSE tb.budget_quater1_plan END AS budget_quater1_plan,CASE WHEN (tb.budget_quater1_used IS NULL) THEN ' ' ELSE tb.budget_quater1_used END AS budget_quater1_used"
-            . ",CASE WHEN (tb.budget_quater2_plan IS NULL) THEN ' ' ELSE tb.budget_quater2_plan END AS budget_quater2_plan,CASE WHEN (tb.budget_quater2_used IS NULL) THEN ' ' ELSE tb.budget_quater2_used END AS budget_quater2_used"
-            . ",CASE WHEN (tb.budget_quater3_plan IS NULL) THEN ' ' ELSE tb.budget_quater3_plan END AS budget_quater3_plan,CASE WHEN (tb.budget_quater3_used IS NULL) THEN ' ' ELSE tb.budget_quater3_used END AS budget_quater3_used"
-            . ",CASE WHEN (tb.budget_quater4_plan IS NULL) THEN ' ' ELSE tb.budget_quater4_plan END AS budget_quater4_plan,CASE WHEN (tb.budget_quater4_used IS NULL) THEN ' ' ELSE tb.budget_quater4_used END AS budget_quater4_used"
-            . " FROM budget_type bg LEFT JOIN ( SELECT SUM(budget_quater1_plan) AS budget_quater1_plan,SUM(budget_quater1_used) AS budget_quater1_used,SUM(budget_quater2_plan) AS budget_quater2_plan,SUM(budget_quater2_used) AS budget_quater2_used,SUM(budget_quater3_plan) AS budget_quater3_plan,SUM(budget_quater3_used) AS budget_quater3_used,SUM(budget_quater4_plan) AS budget_quater4_plan,SUM(budget_quater4_used) AS budget_quater4_used,money_type_id "
-            . " FROM tracking_budget WHERE money_type_code = 'BG' AND budget_year = " . $year . " GROUP BY money_type_id ) AS tb "
-            . " ON bg.id = tb.money_type_id WHERE bg.master_id = " . $id . " AND bg.budget_year = " . $year;
+                . ",CASE WHEN (tb.budget_quater1_plan IS NULL) THEN ' ' ELSE tb.budget_quater1_plan END AS budget_quater1_plan,CASE WHEN (tb.budget_quater1_used IS NULL) THEN ' ' ELSE tb.budget_quater1_used END AS budget_quater1_used"
+                . ",CASE WHEN (tb.budget_quater2_plan IS NULL) THEN ' ' ELSE tb.budget_quater2_plan END AS budget_quater2_plan,CASE WHEN (tb.budget_quater2_used IS NULL) THEN ' ' ELSE tb.budget_quater2_used END AS budget_quater2_used"
+                . ",CASE WHEN (tb.budget_quater3_plan IS NULL) THEN ' ' ELSE tb.budget_quater3_plan END AS budget_quater3_plan,CASE WHEN (tb.budget_quater3_used IS NULL) THEN ' ' ELSE tb.budget_quater3_used END AS budget_quater3_used"
+                . ",CASE WHEN (tb.budget_quater4_plan IS NULL) THEN ' ' ELSE tb.budget_quater4_plan END AS budget_quater4_plan,CASE WHEN (tb.budget_quater4_used IS NULL) THEN ' ' ELSE tb.budget_quater4_used END AS budget_quater4_used"
+                . " FROM budget_type bg LEFT JOIN ( SELECT SUM(budget_quater1_plan) AS budget_quater1_plan,SUM(budget_quater1_used) AS budget_quater1_used,SUM(budget_quater2_plan) AS budget_quater2_plan,SUM(budget_quater2_used) AS budget_quater2_used,SUM(budget_quater3_plan) AS budget_quater3_plan,SUM(budget_quater3_used) AS budget_quater3_used,SUM(budget_quater4_plan) AS budget_quater4_plan,SUM(budget_quater4_used) AS budget_quater4_used,money_type_id "
+                . " FROM tracking_budget WHERE money_type_code = 'BG' AND budget_year = " . $year . " GROUP BY money_type_id ) AS tb "
+                . " ON bg.id = tb.money_type_id WHERE bg.master_id = " . $id . " AND bg.budget_year = " . $year;
 
         return $sql;
-
     }
 
-
-    private function queryExpensesRvt($year, $id)
-    {
+    private function queryExpensesRvt($year, $id) {
 
         $sql = "SELECT rvt.id,rvt.type_name"
-            . ",CASE WHEN (tb.budget_quater1_plan IS NULL) THEN ' ' ELSE tb.budget_quater1_plan END AS budget_quater1_plan,CASE WHEN (tb.budget_quater1_used IS NULL) THEN ' ' ELSE tb.budget_quater1_used END AS budget_quater1_used"
-            . ",CASE WHEN (tb.budget_quater2_plan IS NULL) THEN ' ' ELSE tb.budget_quater2_plan END AS budget_quater2_plan,CASE WHEN (tb.budget_quater2_used IS NULL) THEN ' ' ELSE tb.budget_quater2_used END AS budget_quater2_used"
-            . ",CASE WHEN (tb.budget_quater3_plan IS NULL) THEN ' ' ELSE tb.budget_quater3_plan END AS budget_quater3_plan,CASE WHEN (tb.budget_quater3_used IS NULL) THEN ' ' ELSE tb.budget_quater3_used END AS budget_quater3_used"
-            . ",CASE WHEN (tb.budget_quater4_plan IS NULL) THEN ' ' ELSE tb.budget_quater4_plan END AS budget_quater4_plan,CASE WHEN (tb.budget_quater4_used IS NULL) THEN ' ' ELSE tb.budget_quater4_used END AS budget_quater4_used"
-            . " FROM revenue_type rvt LEFT JOIN ( SELECT SUM(budget_quater1_plan) AS budget_quater1_plan,SUM(budget_quater1_used) AS budget_quater1_used,SUM(budget_quater2_plan) AS budget_quater2_plan,SUM(budget_quater2_used) AS budget_quater2_used,SUM(budget_quater3_plan) AS budget_quater3_plan,SUM(budget_quater3_used) AS budget_quater3_used,SUM(budget_quater4_plan) AS budget_quater4_plan,SUM(budget_quater4_used) AS budget_quater4_used,money_type_id "
-            . " FROM tracking_budget WHERE money_type_code = 'RV' AND budget_year = " . $year . " GROUP BY money_type_id ) AS tb "
-            . " ON rvt.id = tb.money_type_id WHERE rvt.master_id = " . $id . " AND rvt.budget_year = " . $year;
+                . ",CASE WHEN (tb.budget_quater1_plan IS NULL) THEN ' ' ELSE tb.budget_quater1_plan END AS budget_quater1_plan,CASE WHEN (tb.budget_quater1_used IS NULL) THEN ' ' ELSE tb.budget_quater1_used END AS budget_quater1_used"
+                . ",CASE WHEN (tb.budget_quater2_plan IS NULL) THEN ' ' ELSE tb.budget_quater2_plan END AS budget_quater2_plan,CASE WHEN (tb.budget_quater2_used IS NULL) THEN ' ' ELSE tb.budget_quater2_used END AS budget_quater2_used"
+                . ",CASE WHEN (tb.budget_quater3_plan IS NULL) THEN ' ' ELSE tb.budget_quater3_plan END AS budget_quater3_plan,CASE WHEN (tb.budget_quater3_used IS NULL) THEN ' ' ELSE tb.budget_quater3_used END AS budget_quater3_used"
+                . ",CASE WHEN (tb.budget_quater4_plan IS NULL) THEN ' ' ELSE tb.budget_quater4_plan END AS budget_quater4_plan,CASE WHEN (tb.budget_quater4_used IS NULL) THEN ' ' ELSE tb.budget_quater4_used END AS budget_quater4_used"
+                . " FROM revenue_type rvt LEFT JOIN ( SELECT SUM(budget_quater1_plan) AS budget_quater1_plan,SUM(budget_quater1_used) AS budget_quater1_used,SUM(budget_quater2_plan) AS budget_quater2_plan,SUM(budget_quater2_used) AS budget_quater2_used,SUM(budget_quater3_plan) AS budget_quater3_plan,SUM(budget_quater3_used) AS budget_quater3_used,SUM(budget_quater4_plan) AS budget_quater4_plan,SUM(budget_quater4_used) AS budget_quater4_used,money_type_id "
+                . " FROM tracking_budget WHERE money_type_code = 'RV' AND budget_year = " . $year . " GROUP BY money_type_id ) AS tb "
+                . " ON rvt.id = tb.money_type_id WHERE rvt.master_id = " . $id . " AND rvt.budget_year = " . $year;
         return $sql;
-
     }
 
-
-    public function getCatagory($budgetType)
-    {
+    public function getCatagory($budgetType) {
         $dataArr = array();
         if ($budgetType == 1) {
 
@@ -143,7 +132,6 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService
                 }
                 $dataArr[$i]["list"] = $dataInner;
             }
-
         } else if ($budgetType == 2) {
 
             $sql = "SELECT bg.id,bg.typeName FROM " . $this->pathEnt . "\\BudgetType bg WHERE bg.masterId = 0";
@@ -170,8 +158,42 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService
                 }
                 $dataArr[$i]["list"] = $dataInner;
             }
-
         }
         return $dataArr;
     }
+
+    public function listBudgetExpense() {
+        $bgMaster = new entity\BudgetType();
+        $bgMaster->setFormExpense(true);
+        $bgMaster->setLevel(1);
+        $dataBgMaster = $this->datacontext->getObject($bgMaster);
+
+        $result = array();
+        foreach ($dataBgMaster as $key1 => $value1) {
+            $bgSlave1 = new entity\BudgetType();
+            $bgSlave1->setMasterId($dataBgMaster[$key1]->id);
+            $bgSlave1->setFormExpense(true);
+            $dataBgSlave1 = $this->datacontext->getObject($bgSlave1);
+            $result[$key1]["id"] = $dataBgMaster[$key1]->id;
+            $result[$key1]["name"] = $dataBgMaster[$key1]->typeName;
+
+            foreach ($dataBgSlave1 as $key2 => $value2) {
+                $result[$key1]["lv2"][$key2]["id"] = $dataBgSlave1[$key2]->id;
+                $result[$key1]["lv2"][$key2]["name"] = $dataBgSlave1[$key2]->typeName;
+
+                $bgSlave2 = new entity\BudgetType();
+                $bgSlave2->setMasterId($dataBgSlave1[$key2]->id);
+                $bgSlave2->setFormExpense(true);
+                $dataBgSlave2 = $this->datacontext->getObject($bgSlave2);
+
+                foreach ($dataBgSlave2 as $key3 => $value3) {
+                    $result[$key1]["lv2"][$key2]["lv2"][$key3]["id"] = $dataBgSlave2[$key3]->id;
+                    $result[$key1]["lv2"][$key2]["lv2"][$key3]["name"] = $dataBgSlave2[$key3]->typeName;
+                }
+            }
+        }
+
+        return $result;
+    }
+
 }

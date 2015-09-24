@@ -77,4 +77,12 @@ interface ILookupService {
      */
     public function listBudgetSource();
     
+    
+    /**
+     * @name listProjectType
+     * @uri /listProjectType
+     * @return String[] lists Description
+     * @description ประเภทโปรเจค
+     */
+    public function listProjectType();
 }

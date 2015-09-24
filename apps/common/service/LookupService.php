@@ -120,4 +120,17 @@ class LookupService extends CServiceBase implements ILookupService {
         return $list;
     }
 
+    public function listProjectType() {
+        $repo = new entity\ProjectType();
+        $repo->setTypeStatus("Y");
+        $data = $this->datacontext->getObject($repo);
+
+        $result = array();
+        foreach ($data as $key => $value) {
+            $result[$key]["id"] = $value->id;
+            $result[$key]["name"] = $value->typeName;
+        }
+        return $result;
+    }
+
 }

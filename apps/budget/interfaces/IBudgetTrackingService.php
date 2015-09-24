@@ -1,6 +1,5 @@
 <?php
 
-
 namespace apps\budget\interfaces;
 
 /**
@@ -8,28 +7,34 @@ namespace apps\budget\interfaces;
  * @uri /budgetTracking
  * @description BudgetTrackingService
  */
-interface IBudgetTrackingService
-{
+interface IBudgetTrackingService {
 
     /**
      * @name getInfoTracking
      * @uri /getInfoTracking
-     * @param String budgetType Description »ÃÐàÀ·§º»ÃÐÁÒ³
-     * @param String quater Description äµÃÁÒÈ
-     * @param String year Description »Õ ¾È.
+     * @param String budgetType Description à¸›à¸£à¸°à¹€à¸ à¸—à¸‡à¸šà¸›à¸£à¸°à¸¡à¸²à¸“
+     * @param String quater Description à¹„à¸•à¸£à¸¡à¸²à¸¨
+     * @param String year Description à¸›à¸µ à¸žà¸¨.
      * @return String[] listTracking
-     * @description áÊ´§¢éÍÁÙÅ»ÃÐàÀ·µÒÁáËÅè§à§Ô¹
+     * @description à¹à¸ªà¸”à¸‡à¸‚à¹‰à¸­à¸¡à¸¹à¸¥à¸›à¸£à¸°à¹€à¸ à¸—à¸•à¸²à¸¡à¹à¸«à¸¥à¹ˆà¸‡à¹€à¸‡à¸´à¸™
      */
     public function getInfoTracking($budgetType, $quater, $year);
-
 
     /**
      * @name saveTracking
      * @uri /saveTracking
-     * @param String[] objBudget Description ¢éÍÁÙÅ¡ÒÃµÔ´µÒÁ jsonArrOBJECT
+     * @param String[] objBudget Description à¸‚à¹‰à¸­à¸¡à¸¹à¸¥à¸à¸²à¸£à¸•à¸´à¸”à¸•à¸²à¸¡ jsonArrOBJECT
      * @return boolean status
-     * @description ºÑ¹·Ö¡¢éÍÁÙÅ¡ÒÃµÔ´µÒÁ
+     * @description à¸šà¸±à¸™à¸—à¸¶à¸à¸‚à¹‰à¸­à¸¡à¸¹à¸¥à¸à¸²à¸£à¸•à¸´à¸”à¸•à¸²à¸¡
      */
     public function saveTracking($objBudget);
 
+    /**
+     * @name getQuarter
+     * @uri /getQuarter
+     * @param date date Description fotmat yyyy-mm-dd
+     * @return int quarter
+     * @description à¹„à¸•à¸£à¸¡à¸²à¸ªà¸—à¸µà¹ˆ
+     */
+    public function getQuarter($date);
 }

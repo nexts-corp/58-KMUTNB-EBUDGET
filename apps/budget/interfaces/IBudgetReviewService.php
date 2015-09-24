@@ -7,25 +7,32 @@ namespace apps\budget\interfaces;
  * @uri /budgetReview
  * @description BudgetReviewService
  */
-interface IBudgetReviewService
-{
+interface IBudgetReviewService {
+
     /**
      * @name getReview
      * @uri /getReview
-     * @param String budgetType Description ª√–‡¿∑ß∫ª√–¡“≥
-     * @param String year Description ª’ æ».
+     * @param String budgetType Description ‡∏õ‡∏£‡∏∞‡πÄ‡∏†‡∏ó‡∏á‡∏ö‡∏õ‡∏£‡∏∞‡∏°‡∏≤‡∏ì
+     * @param String year Description ‡∏õ‡∏µ ‡∏û‡∏®.
      * @return String[] listTracking
-     * @description · ¥ß¢ÈÕ¡Ÿ≈ª√–‡¿∑µ“¡·À≈Ëß‡ß‘π
+     * @description ‡πÅ‡∏™‡∏î‡∏á‡∏Ç‡πâ‡∏≠‡∏°‡∏π‡∏•‡∏õ‡∏£‡∏∞‡πÄ‡∏†‡∏ó‡∏ï‡∏≤‡∏°‡πÅ‡∏´‡∏•‡πà‡∏á‡πÄ‡∏á‡∏¥‡∏ô
      */
     public function getReview($budgetType, $year);
 
     /**
      * @name getCatagory
      * @uri /getCatagory
-     * @param String budgetType Description ª√–‡¿∑ß∫ª√–¡“≥
+     * @param String budgetType Description ‡∏õ‡∏£‡∏∞‡πÄ‡∏†‡∏ó‡∏á‡∏ö‡∏õ‡∏£‡∏∞‡∏°‡∏≤‡∏ì
      * @return String[] listCatagory
-     * @description ¢ÈÕ¡Ÿ≈catagoryÀ¡«¥√“¬®Ë“¬
+     * @description ‡∏Ç‡πâ‡∏≠‡∏°‡∏π‡∏•catagory‡∏´‡∏°‡∏ß‡∏î‡∏£‡∏≤‡∏¢‡∏à‡πà‡∏≤‡∏¢
      */
     public function getCatagory($budgetType);
 
+    /**
+     * @name listBudgetExpense
+     * @uri /listBudgetExpense
+     * @return String[] list
+     * @description ‡∏Ç‡πâ‡∏≠‡∏°‡∏π‡∏•catagory‡∏´‡∏°‡∏ß‡∏î‡∏£‡∏≤‡∏¢‡∏à‡πà‡∏≤‡∏¢‡πÄ‡∏á‡∏¥‡∏ô‡∏£‡∏≤‡∏¢‡πÑ‡∏î‡πâ
+     */
+    public function listBudgetExpense();
 }
