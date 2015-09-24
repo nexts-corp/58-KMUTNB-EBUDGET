@@ -4,7 +4,7 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="BUDGETEXPENSEPLAN")
+ * @Table(name="BUDGETEXPENSE_PLAN")
  */
 class BudgetExpensePlan extends EntityBase {
 

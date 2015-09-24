@@ -14,7 +14,7 @@ class BudgetExpenseOperating extends EntityBase {
     /** @Column(type="integer",length=11, name="SEQ") */
     public $seq;
 
-    /** @Column(type="string",length=1000, name="OPERATINGNAME") */
+    /** @Column(type="text", name="OPERATINGNAME") */
     public $operName;
 
     /** @Column(type="date", name="TIMESTART") */

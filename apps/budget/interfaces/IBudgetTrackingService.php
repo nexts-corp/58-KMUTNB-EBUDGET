@@ -37,4 +37,24 @@ interface IBudgetTrackingService {
      * @description ไตรมาสที่
      */
     public function getQuarter($date);
+
+    /**
+     * @name updateBudgetExpense
+     * @uri /updateBudgetExpense
+     * @param int expenseId
+     * @param float expenseUsed
+     * @return boolean result
+     * @description รายงานผลการใช้เงินรายไตรมาสของหน่วยงาน
+     */
+    public function updateBudgetExpense($expenseId, $expenseUsed);
+
+    /**
+     * @name getBudgetExpense
+     * @uri /getBudgetExpense
+     * @param int budgetPeriodId
+     * @param int deptId
+     * @return string[] result
+     * @description แบบเสนอโครงการที่ตอบสนองต่อยุทธศาสตร์
+     */
+    public function getBudgetExpense($budgetPeriodId, $deptId);
 }
