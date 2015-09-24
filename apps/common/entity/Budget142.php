@@ -60,7 +60,7 @@ class Budget142 extends EntityBase {
     /** @Column(type="float", name="SALARYTOTAL") */
     public $salaryTotal;
 
-    /** @Column(type="float", name="REMARK") */
+    /** @Column(type="text", name="REMARK") */
     public $remark;
 
     /** @Column(type="integer",length=11, name="REFID") */
