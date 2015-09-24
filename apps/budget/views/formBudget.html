@@ -24,12 +24,15 @@
             <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
                 <li class="active">
                     <button class="btn btn-success goChoice"><i class="fa fa-plus-circle"> เพิ่มคำขอ</i></button>
-                    <button class="btn btn-default backHome" style="display: none;"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
-                    <button class="btn btn-default backChoice" style="display: none;"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
+                    <button class="btn btn-default backHome" style="display: none;"><i class="fa fa-angle-double-left">
+                        ย้อนกลับ</i></button>
+                    <button class="btn btn-default backChoice" style="display: none;"><i
+                            class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
                 </li>
             </ul>
         </div>
-    </div><!-- end button action on header -->
+    </div>
+    <!-- end button action on header -->
 
     <div class="container">
         <div class="row">
@@ -37,16 +40,16 @@
             <div id="divHome" class="col-md-12">
                 <table id="table" class="table table-bordered table-striped table-condensed mb-none">
                     <thead>
-                        <tr>
-                            <th class="text-center col-lg-6">รายละเอียดคำของบประมาณ</th>
-                            <th class="text-center col-lg-3">สถานะ</th>
-                            <th class="text-center col-lg-3">เครื่องมือ</th>
-                        </tr>
+                    <tr>
+                        <th class="text-center col-lg-6">รายละเอียดคำของบประมาณ</th>
+                        <th class="text-center col-lg-3">สถานะ</th>
+                        <th class="text-center col-lg-3">เครื่องมือ</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td colspan="3" class="text-center">-</td>
-                        </tr>
+                    <tr>
+                        <td colspan="3" class="text-center">-</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -60,18 +63,24 @@
                         <div id="panel1">
                             <form id="formChoice" onsubmit="return false;">
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label text-right req" for="budgetPeriodId">ปีงบประมาณ : </label>
+                                    <label class="col-md-3 control-label text-right req" for="budgetPeriodId">ปีงบประมาณ
+                                        : </label>
+
                                     <div class="col-md-6">
-                                        <select id="budgetPeriodId" name="budgetPeriodId" class="form-control input-sm" required>
+                                        <select id="budgetPeriodId" name="budgetPeriodId" class="form-control input-sm"
+                                                required>
                                             <option value="">เลือก</option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label text-right req" for="budgetTypeCode">แหล่งเงิน : </label>
+                                    <label class="col-md-3 control-label text-right req" for="budgetTypeCode">แหล่งเงิน
+                                        : </label>
+
                                     <div class="col-md-6">
-                                        <select id="budgetTypeCode" name="budgetTypeCode" class="form-control input-sm" required>
+                                        <select id="budgetTypeCode" name="budgetTypeCode" class="form-control input-sm"
+                                                required>
                                             <option value="">เลือก</option>
                                         </select>
                                     </div>
@@ -79,6 +88,7 @@
 
                                 <div class="form-group">
                                     <label class="col-md-3 control-label text-right req" for="planId">แผนงาน : </label>
+
                                     <div class="col-md-6">
                                         <select id="planId" name="planId" class="form-control input-sm" required>
                                             <option value="">เลือก</option>
@@ -87,7 +97,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label text-right req" for="projectId">ผลผลิต/โครงการ : </label>
+                                    <label class="col-md-3 control-label text-right req" for="projectId">ผลผลิต/โครงการ
+                                        : </label>
+
                                     <div class="col-md-6">
                                         <select id="projectId" name="projectId" class="form-control input-sm" required>
                                             <option value="">เลือก</option>
@@ -105,9 +117,12 @@
                                 </div>-->
 
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label text-right req" for="fundgroupId">กองทุน : </label>
+                                    <label class="col-md-3 control-label text-right req" for="fundgroupId">กองทุน
+                                        : </label>
+
                                     <div class="col-md-6">
-                                        <select id="fundgroupId" name="fundgroupId" class="form-control input-sm" required>
+                                        <select id="fundgroupId" name="fundgroupId" class="form-control input-sm"
+                                                required>
                                             <option value="">เลือก</option>
                                         </select>
                                     </div>
@@ -115,6 +130,7 @@
 
                                 <div class="form-group">
                                     <label class="col-md-3 control-label text-right req" for="facultyId">คณะ : </label>
+
                                     <div class="col-md-6">
                                         <select id="facultyId" name="facultyId" class="form-control input-sm" required>
                                             <option value="">เลือก</option>
@@ -124,6 +140,7 @@
 
                                 <div class="form-group">
                                     <label class="col-md-3 control-label text-right req" for="deptId">สาขา : </label>
+
                                     <div class="col-md-6">
                                         <select id="deptId" name="deptId" class="form-control input-sm" required>
                                             <option value="">เลือก</option>
@@ -135,9 +152,9 @@
                             <div id="panel2" style="margin-top: 20px;">
                                 <table class="table table-hover">
                                     <thead>
-                                        <tr>
-                                            <th colspan="2" class="text-center">แบบฟอร์มคำของบประมาณ</th>
-                                        </tr>
+                                    <tr>
+                                        <th colspan="2" class="text-center">แบบฟอร์มคำของบประมาณ</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
                                     </tbody>
@@ -151,8 +168,10 @@
 
             <div id="divForm" class="col-md-12" style="display: none;"></div>
 
-        </div><!--  row  -->
-    </div><!--  container  -->
+        </div>
+        <!--  row  -->
+    </div>
+    <!--  container  -->
 </div><!-- main -->
 
 {{>footer}}
@@ -162,7 +181,9 @@
 </script>
 
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg140.js"></script>
-
+<script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg141.js"></script>
+<script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg142.js"></script>
+<script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg143.js"></script>
 <link rel="stylesheet" href="{{_context_path}}/asset/vendor/jquery-treetable/css/jquery.treetable.css" type="text/css"/>
 <script type="text/javascript" src="{{_context_path}}/asset/vendor/jquery-treetable/jquery.treetable.js"></script>
 
@@ -177,55 +198,63 @@
     var facultyArr = {};
     var departmentArr = {};
 
-    $(function(){
+    //    var budgetPeriodArr = {2557: 2557, 2558: 2558, 2559: 2559};
+    //    var budgetTypeArr = {G: "เงินงบประมาณแผ่นดิน", K: "เงินรายได้", U: "เงินงบประมาณแผ่นดินและเงินรายได้"};
+    //    var planArr = {1: "ดำเนินการตามกรอบข้อตกลงของประชาคมอาเซียน", 2: "ขยายโอกาสและพัฒนาคุณภาพการศึกษา", 3: "ส่งเสริมการวิจัยและพัฒนา"};
+    //    var projectArr = {1: "โครงการเตรียมความพร้อมสู่ประชาคมอาเซียน"};
+    //    var fundgroupArr = {100: "กองทุนทั่วไป", 200: "กองทุนเพื่อการศึกษา", 300: "กองทุนวิจัย", 400: "กองทุนบริการวิชาการ", 500: "กองทุนกิจการนักศึกษา", 600: "กองทุนสินทรัพย์ถาวร", 700: "กองทุนอื่น ๆ", 701: "กองทุนทำนุบำรุงศิลปวัฒนธรรม ", 702: "กองทุนสำรอง", 703: "กองทุนสวัสดิการ", 704: "กองทุนพัฒนาบุคลากร", 705: "กองทุนคณะ", 706: "กองทุนพัฒนาสถาบัน", 707: "กองทุนเพื่อวัตถุประสงค์เฉพาะ", 708: "กองทุนคงคลังสถาบัน", 709: "กองทุนส่งเสริมการศึกษาและพัฒนาเทคโนโลยี มจพ."};
+    //    var facultyArr = {10100: "สำนักงานอธิการบดี", 20100: "สำนักคอมพิวเตอร์และเทคโนโลยีสารสนเทศ", 20200: "สถาบันนวัตกรรมเทคโนโลยีไทย-ฝรั่งเศส", 20300: "สำนักพัฒนาเทคโนโลยีเพื่ออุตสาหกรรม", 20400: "สำนักหอสมุดกลาง", 20500: "สำนักพัฒนาเทคนิคศึกษา", 20600: "สำนักวิจัยวิทยาศาสตร์และเทคโนโลยี", 20700: "โครงการที่พักอาศัยเพื่อการเรียนรู้และสันทนาการ", 20800: "สถาบันสหกิจศึกษาและพัฒนาสื่ออิเล็กทรอนิกส์ ไทย-เยอรมัน", 30100: "คณะวิศวกรรมศาสตร์", 30200: "คณะครุศาสตร์อุตสาหกรรม", 30300: "วิทยาลัยเทคโนโลยีอุตสาหกรรม", 30400: "คณะวิทยาศาสตร์ประยุกต์", 30500: "คณะเทคโนโลยีและการจัดการอุตสาหกรรม", 30600: "คณะเทคโนโลยีสารสนเทศ", 30700: "คณะศิลปศาสตร์ประยุกต์", 30800: "คณะอุตสาหกรรมเกษตร", 30900: "บัณฑิตวิทยาลัย", 31000: "บัณฑิตวิทยาลัยวิศวกรรมศาสตร์นานาชาติสิรินธรไทย-เยอรมัน", 31100: "คณะสถาปัตยกรรมและการออกแบบ", 31200: "คณะบริหารธุรกิจ", 31300: "คณะวิศวกรรมศาสตร์และเทคโนโลยี", 31400: "คณะวิทยาศาสตร์ พลังงาน และสิ่งแวดล้อม", 31500: "วิทยาลัยนานาชาติ", 31600: "คณะพัฒนาธุรกิจและอุตสาหกรรม", 31700: "คณะบริหารธุรกิจและอุตสาหกรรมบริการ", 90000: "หน่วยบริหารส่วนกลาง", 91000: "หน่วยกลาง มจพ."};
+    //    var departmentArr = {10100: "สำนักงานอธิการบดี", 10101: "กองกลาง", 10102: "กองบริการการศึกษา", 10103: "กองแผนงาน", 10104: "กองกิจการนักศึกษา", 10105: "กองบริหารและการจัดการทรัพยากรมนุษย์", 10106: "กองคลัง", 10107: "กองอาคารสถานที่และยานพาหนะ", 10108: "กองงานพัสดุ", 10109: "ศูนย์ผลิตตำราเรียน", 10110: "ศูนย์ความร่วมมือนานาชาติ", 10111: "หน่วยตรวจสอบภายใน", 10112: "ศูนย์ประกันคุณภาพการศึกษา", 10113: "ศูนย์ส่งเสริมสวัสดิการและสิ่งจูงใจ", 10114: "สภาคณาจารย์และพนักงาน", 10116: "กองงาน วิทยาเขตปราจีนบุรี", 10117: "ศูนย์บริการเทคโนโลยี", 10118: "IAESTE Thailand", 10120: "หน่วยงานบริหารสำนักงานอธิการบดี", 10122: "โครงการจัดตั้ง มจพ.ระยอง", 10123: "กองกฏหมาย", 10124: "กองส่งเสริมวิชาการ", 10125: "กองงานสำนักงานสภามหาวิทยาลัย", 20100: "สำนักคอมพิวเตอร์และเทคโนโลยีสารสนเทศ", 20200: "สถาบันนวัตกรรมเทคโนโลยีไทย-ฝรั่งเศส", 20300: "สำนักพัฒนาเทคโนโลยีเพื่ออุตสาหกรรม", 20400: "สำนักหอสมุดกลาง", 20500: "สำนักพัฒนาเทคนิคศึกษา", 20600: "สำนักวิจัยวิทยาศาสตร์และเทคโนโลยี", 20700: "โครงการที่พักอาศัยเพื่อการเรียนรู้และสันทนาการ", 20800: "สถาบันสหกิจศึกษาและพัฒนาสื่ออิเล็กทรอนิกส์ ไทย-เยอรมัน", 30100: "คณะวิศวกรรมศาสตร์", 30200: "คณะครุศาสตร์อุตสาหกรรม", 30300: "วิทยาลัยเทคโนโลยีอุตสาหกรรม", 30400: "คณะวิทยาศาสตร์ประยุกต์", 30500: "คณะเทคโนโลยีและการจัดการอุตสาหกรรม", 30600: "คณะเทคโนโลยีสารสนเทศ", 30700: "คณะศิลปศาสตร์ประยุกต์", 30800: "คณะอุตสาหกรรมเกษตร", 30900: "บัณฑิตวิทยาลัย", 31000: "บัณฑิตวิทยาลัยวิศวกรรมศาสตร์นานาชาติสิรินธรไทย-เยอรมัน", 31100: "คณะสถาปัตยกรรมและการออกแบบ", 31200: "คณะบริหารธุรกิจ", 31300: "คณะวิศวกรรมศาสตร์และเทคโนโลยี", 31400: "คณะวิทยาศาสตร์ พลังงาน และสิ่งแวดล้อม", 31500: "วิทยาลัยนานาชาติ", 31600: "คณะพัฒนาธุรกิจและอุตสาหกรรม", 31700: "คณะบริหารธุรกิจและอุตสาหกรรมบริการ", 90000: "หน่วยบริหารส่วนกลาง", 91000: "หน่วยกลาง มจพ."};
+
+    $(function () {
         listsFormSaved();
         toggleShow("home");
 
         $("#budgetPeriodId, #budgetTypeCode, #planId, #projectId, #fundgroupId, #facultyId, #deptId").select2().trigger("change");
 
         // choice changed
-        $("#budgetPeriodId").change(function(){
+        $("#budgetPeriodId").change(function () {
             listsPlan($(this).val());
             listsProject("");
         });
 
-        $("#planId").change(function(){
+        $("#planId").change(function () {
             listsProject($(this).val());
         });
 
-        $("#facultyId").change(function(){
+        $("#facultyId").change(function () {
             listsDepartment($(this).val());
         });
 
         // button action
-        $("button.goChoice").unbind("click").click(function(){
+        $("button.goChoice").unbind("click").click(function () {
             toggleShow("choice");
         });
 
-        $("button.backHome").unbind("click").click(function(){
+        $("button.backHome").unbind("click").click(function () {
             toggleShow("home");
         });
 
-        $("button.backChoice").unbind("click").click(function(){
+        $("button.backChoice").unbind("click").click(function () {
             toggleShow("choice");
         });
     });
 
-    function listsFormSaved(){
+    function listsFormSaved() {
         var html = '<tr>'
-            + '<td>1. แบบรายละเอียดคำของบประมาณเงินเดือน (ง.140)</td>'
-            + '<td class="text-center">-</td>'
-            + '<td class="text-center">'
+                + '<td>1. แบบรายละเอียดคำของบประมาณเงินเดือน (ง.140)</td>'
+                + '<td class="text-center">-</td>'
+                + '<td class="text-center">'
                 + '<button data-form="bg140" class="btn btn-warning edit" title="แก้ไข"><i class="fa fa-pencil"></i> แก้ไข</button>&nbsp;'
                 + '<button data-form="bg140" class="btn btn-default delete" title="ลบ"><i class="fa fa-trash"></i> ลบ</button>'
-            + '</td>'
-        + '</tr>';
+                + '</td>'
+                + '</tr>';
 
         $("#table tbody").html(html);
     }
 
-    function listsForm(){
-        if(isForm == 0){
+    function listsForm() {
+        if (isForm == 0) {
             var formArr = [
                 {
                     form: "bg140",
@@ -270,30 +299,30 @@
             ];
             var html = '';
 
-            $.each(formArr, function(key, value){
+            $.each(formArr, function (key, value) {
                 html += '<tr>'
-                    + '<td class="col-md-11">- '+value["name"]+'</td>'
-                    + '<td class="col-md-1">'
-                        + '<button class="btn btn-success form" data-form="'+value["form"]+'" disabled="disabled"><i class="fa fa-plus-circle"></i> จัดทำ</button>'
-                    + '</td>'
-                + '</tr>';
+                        + '<td class="col-md-11">- ' + value["name"] + '</td>'
+                        + '<td class="col-md-1">'
+                        + '<button class="btn btn-success form" data-form="' + value["form"] + '" disabled="disabled"><i class="fa fa-plus-circle"></i> จัดทำ</button>'
+                        + '</td>'
+                        + '</tr>';
             });
 
             $("#panel2 table tbody").html(html);
 
-            $("#formChoice select").change(function(){
+            $("#formChoice select").change(function () {
                 var valid = true;
 
-                $("#formChoice select").each(function(){
-                    if($(this).val() == ""){
+                $("#formChoice select").each(function () {
+                    if ($(this).val() == "") {
                         valid = false;
                     }
                 });
 
-                if(valid == true){
+                if (valid == true) {
                     $("button.form").removeAttr("disabled", "disabled");
                 }
-                else{
+                else {
                     $("button.form").attr("disabled", "disabled");
                 }
             });
@@ -303,14 +332,24 @@
             listsFundgroup();
             listsFaculty();
 
-            $("button.form").unbind("click").click(function(){
+            $("button.form").unbind("click").click(function () {
                 var form = $(this).attr("data-form");
 
                 var param = {};
-                $("#formChoice select").each(function(){
+                $("#formChoice select").each(function () {
                     var name = $(this).attr("name");
                     param[name] = $(this).val();
                 });
+
+                param = {
+                    budgetPeriodId: "2557",
+                    budgetTypeCode: "G",
+                    deptId: "10101",
+                    facultyId: "10100",
+                    fundgroupId: "100",
+                    planId: "1",
+                    projectId: "1"
+                };
 
                 eval(form + "Form(param)");
             });
@@ -319,13 +358,13 @@
         }
     }
 
-    function listsBudgetPeriod(){
+    function listsBudgetPeriod() {
         var html = '<option value="" selected="selected">เลือก</option>';
 
         var datas = callAjax("{{_context_path}}/api/common/lookup/listYear", "post", {}, "json");
-        if(typeof datas !== "undefined" && datas !== null){
-            $.each(datas["lists"], function(key, value){
-                html += '<option value="'+value["year"]+'">'+value["year"]+'</option>'
+        if (typeof datas !== "undefined" && datas !== null) {
+            $.each(datas["lists"], function (key, value) {
+                html += '<option value="' + value["year"] + '">' + value["year"] + '</option>'
 
                 budgetPeriodArr[value["year"]] = value["year"];
             });
@@ -334,13 +373,13 @@
         $("#budgetPeriodId").html(html).trigger("change");
     }
 
-    function listsBudgetType(){
+    function listsBudgetType() {
         var html = '<option value="" selected="selected">เลือก</option>';
 
         var datas = callAjax("{{_context_path}}/api/common/lookup/listBudgetSource", "post", {}, "json");
-        if(typeof datas !== "undefined" && datas !== null){
-            $.each(datas["lists"], function(key, value){
-                html += '<option value="'+value["id"]+'">'+value["name"]+'</option>'
+        if (typeof datas !== "undefined" && datas !== null) {
+            $.each(datas["lists"], function (key, value) {
+                html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
 
                 budgetTypeArr[value["id"]] = value["name"];
             });
@@ -349,14 +388,14 @@
         $("#budgetTypeCode").html(html).trigger("change");
     }
 
-    function listsPlan(budgetPeriodId){
+    function listsPlan(budgetPeriodId) {
         var html = '<option value="" selected="selected">เลือก</option>';
 
-        if(budgetPeriodId != ""){
+        if (budgetPeriodId != "") {
             var datas = callAjax("{{_context_path}}/api/common/lookup/listBudgetPlan", "post", {budgetYear: budgetPeriodId}, "json");
-            if(typeof datas !== "undefined" && datas !== null){
-                $.each(datas["lists"], function(key, value){
-                    html += '<option value="'+value["id"]+'">'+value["name"]+'</option>'
+            if (typeof datas !== "undefined" && datas !== null) {
+                $.each(datas["lists"], function (key, value) {
+                    html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
 
                     planArr[value["id"]] = value["name"];
                 });
@@ -366,14 +405,14 @@
         $("#planId").html(html).trigger("change");
     }
 
-    function listsProject(planId){
+    function listsProject(planId) {
         var html = '<option value="" selected="selected">เลือก</option>';
 
-        if(planId != ""){
+        if (planId != "") {
             var datas = callAjax("{{_context_path}}/api/common/lookup/listBudgetProject", "post", {planId: planId}, "json");
-            if(typeof datas !== "undefined" && datas !== null){
-                $.each(datas["lists"], function(key, value){
-                    html += '<option value="'+value["id"]+'">'+value["name"]+'</option>'
+            if (typeof datas !== "undefined" && datas !== null) {
+                $.each(datas["lists"], function (key, value) {
+                    html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
 
                     projectArr[value["id"]] = value["name"];
                 });
@@ -383,13 +422,13 @@
         $("#projectId").html(html).trigger("change");
     }
 
-    function listsFundgroup(){
+    function listsFundgroup() {
         var html = '<option value="" selected="selected">เลือก</option>';
 
         var datas = callAjax("{{_context_path}}/api/common/lookup/listFundgroup", "post", {}, "json");
-        if(typeof datas !== "undefined" && datas !== null){
-            $.each(datas["lists"], function(key, value){
-                html += '<option value="'+value["id"]+'">'+value["name"]+'</option>'
+        if (typeof datas !== "undefined" && datas !== null) {
+            $.each(datas["lists"], function (key, value) {
+                html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
 
                 fundgroupArr[value["id"]] = value["name"];
             });
@@ -398,13 +437,13 @@
         $("#fundgroupId").html(html).trigger("change");
     }
 
-    function listsFaculty(){
+    function listsFaculty() {
         var html = '<option value="" selected="selected">เลือก</option>';
 
         var datas = callAjax("{{_context_path}}/api/common/lookup/listFaculty", "post", {campusId: 0}, "json");
-        if(typeof datas !== "undefined" && datas !== null){
-            $.each(datas["lists"], function(key, value){
-                html += '<option value="'+value["id"]+'">'+value["name"]+'</option>'
+        if (typeof datas !== "undefined" && datas !== null) {
+            $.each(datas["lists"], function (key, value) {
+                html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
 
                 facultyArr[value["id"]] = value["name"];
             });
@@ -413,13 +452,13 @@
         $("#facultyId").html(html).trigger("change");
     }
 
-    function listsDepartment(facultyId){
+    function listsDepartment(facultyId) {
         var html = '<option value="" selected="selected">เลือก</option>';
 
         var datas = callAjax("{{_context_path}}/api/common/lookup/listDepartment", "post", {facultyId: facultyId}, "json");
-        if(typeof datas !== "undefined" && datas !== null){
-            $.each(datas["lists"], function(key, value){
-                html += '<option value="'+value["id"]+'">'+value["name"]+'</option>'
+        if (typeof datas !== "undefined" && datas !== null) {
+            $.each(datas["lists"], function (key, value) {
+                html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
 
                 departmentArr[value["id"]] = value["name"];
             });
@@ -428,8 +467,8 @@
         $("#deptId").html(html).trigger("change");
     }
 
-    function toggleShow(option){
-        if(option == "home"){
+    function toggleShow(option) {
+        if (option == "home") {
             // panel show and hide
             $("#divChoice, #divForm").hide();
             $("#divHome").show();
@@ -438,7 +477,7 @@
             $("button.backHome, button.backChoice").hide();
             $("button.goChoice").show();
         }
-        else if(option == "choice"){
+        else if (option == "choice") {
             // panel show and hide
             $("#divHome, #divForm").hide();
             $("#divChoice").show();
@@ -449,7 +488,7 @@
 
             listsForm();
         }
-        else if(option == "form"){
+        else if (option == "form") {
             // panel show and hide
             $("#divHome, #divChoice").hide();
             $("#divForm").show();
