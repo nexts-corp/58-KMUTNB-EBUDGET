@@ -435,7 +435,8 @@ blockquote.testimonial {
 }
 
 .featured-box-secundary .box-content {
-	border-top-color: #0088cc;
+        /*border-top-color: #0088cc;*/
+        border-top-color: rgba(0, 0, 0, 0.3);
 }
 
 .pricing-table .most-popular {

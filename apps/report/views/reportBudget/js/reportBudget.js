@@ -21,9 +21,9 @@ myApp.controller('mainController', function($scope,$http,$controller) {
         
         
         $scope.cmListYear();
-        $scope.cmListFaculty();
+        $scope.cmListFaculty(0);
         $scope.cmListFundgroup();
-        $scope.cmRevenuePlan();
+        //$scope.cmRevenuePlan();
     };
     
     
