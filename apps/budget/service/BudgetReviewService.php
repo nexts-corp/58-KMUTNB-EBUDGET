@@ -13,7 +13,7 @@ use apps\common\entity;
 class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
 
     public $datacontext;
-    public $pathEnt = "apps\\common\\entity";
+    public $ent = "apps\\common\\entity";
 
     public function __construct() {
         $this->datacontext = new CDataContext();
@@ -108,23 +108,23 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
         $dataArr = array();
         if ($budgetType == 1) {
 
-            $sql = "SELECT rvt.id,rvt.typeName FROM " . $this->pathEnt . "\\RevenueType rvt WHERE rvt.masterId = 0";
+            $sql = "SELECT rvt.id,rvt.typeName FROM " . $this->ent . "\\RevenueType rvt WHERE rvt.masterId = 0";
             $dataArr = $this->datacontext->getObject($sql);
 
             for ($i = 0; $i < count($dataArr); $i++) {
                 //get lvl2
-                $sql = "SELECT rvt.id,rvt.typeName FROM " . $this->pathEnt . "\\RevenueType rvt WHERE rvt.masterId = " . $dataArr[$i]["id"];
+                $sql = "SELECT rvt.id,rvt.typeName FROM " . $this->ent . "\\RevenueType rvt WHERE rvt.masterId = " . $dataArr[$i]["id"];
                 $dataInner = $this->datacontext->getObject($sql);
                 for ($y = 0; $y < count($dataInner); $y++) {
                     //get lvl3
 
-                    $sql = "SELECT rvt.id,rvt.typeName FROM " . $this->pathEnt . "\\RevenueType rvt WHERE rvt.masterId = " . $dataInner[$y]["id"];
+                    $sql = "SELECT rvt.id,rvt.typeName FROM " . $this->ent . "\\RevenueType rvt WHERE rvt.masterId = " . $dataInner[$y]["id"];
                     $dataInner2 = $this->datacontext->getObject($sql);
 
                     for ($z = 0; $z < count($dataInner2); $z++) {
                         //get lvl4
 
-                        $sql = "SELECT rvt.id,rvt.typeName FROM " . $this->pathEnt . "\\RevenueType rvt WHERE rvt.masterId = " . $dataInner2[$z]["id"];
+                        $sql = "SELECT rvt.id,rvt.typeName FROM " . $this->ent . "\\RevenueType rvt WHERE rvt.masterId = " . $dataInner2[$z]["id"];
                         $dataInner3 = $this->datacontext->getObject($sql);
                         $dataInner2[$z]["list3"] = $dataInner3;
                     }
@@ -134,23 +134,23 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
             }
         } else if ($budgetType == 2) {
 
-            $sql = "SELECT bg.id,bg.typeName FROM " . $this->pathEnt . "\\BudgetType bg WHERE bg.masterId = 0";
+            $sql = "SELECT bg.id,bg.typeName FROM " . $this->ent . "\\BudgetType bg WHERE bg.masterId = 0";
             $dataArr = $this->datacontext->getObject($sql);
 
             for ($i = 0; $i < count($dataArr); $i++) {
                 //get lvl2
-                $sql = "SELECT bg.id,bg.typeName FROM " . $this->pathEnt . "\\BudgetType bg WHERE bg.masterId = " . $dataArr[$i]["id"];
+                $sql = "SELECT bg.id,bg.typeName FROM " . $this->ent . "\\BudgetType bg WHERE bg.masterId = " . $dataArr[$i]["id"];
                 $dataInner = $this->datacontext->getObject($sql);
                 for ($y = 0; $y < count($dataInner); $y++) {
                     //get lvl3
 
-                    $sql = "SELECT bg.id,bg.typeName FROM " . $this->pathEnt . "\\BudgetType bg WHERE bg.masterId = " . $dataInner[$y]["id"];
+                    $sql = "SELECT bg.id,bg.typeName FROM " . $this->ent . "\\BudgetType bg WHERE bg.masterId = " . $dataInner[$y]["id"];
                     $dataInner2 = $this->datacontext->getObject($sql);
 
                     for ($z = 0; $z < count($dataInner2); $z++) {
                         //get lvl4
 
-                        $sql = "SELECT bg.id,bg.typeName FROM " . $this->pathEnt . "\\BudgetType bg WHERE bg.masterId = " . $dataInner2[$z]["id"];
+                        $sql = "SELECT bg.id,bg.typeName FROM " . $this->ent . "\\BudgetType bg WHERE bg.masterId = " . $dataInner2[$z]["id"];
                         $dataInner3 = $this->datacontext->getObject($sql);
                         $dataInner2[$z]["list3"] = $dataInner3;
                     }
@@ -196,4 +196,94 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
         return $result;
     }
 
+    public function listBudgetExpenseInfo($budgetPeriodId, $fundgroupId, $planId, $deptId) {
+        $result = array();
+        $quarter = array(1, 2, 3, 4);
+
+        foreach ($quarter as $id) {
+            $result[$id - 1]["quarter"] = $id;
+            $sqlList = " select sum(exPlan.expensePlan) as expensePlanTotal,"
+                    . " sum(exPlan.expenseUsed) as expenseUsedTotal "
+                    . " from " . $this->ent . "\\BudgetExpensePlan exPlan"
+                    . " join " . $this->ent . "\\BudgetExpense ex with ex.id = exPlan.expenseId "
+                    . " where exPlan.quarterId = :quarterId "
+                    . " and ex.planId = :planId "
+                    . " and ex.fundgroupId = :fundgroupId "
+                    . " and ex.deptId = :deptId";
+            $paramList = array(
+                "quarterId" => $id,
+                "planId" => $planId,
+                "fundgroupId" => $fundgroupId,
+                "deptId" => $deptId
+            );
+            $dataList = $this->datacontext->getObject($sqlList, $paramList);
+
+            foreach ($dataList as $key => $value) {
+                $result[$id - 1]["list"] = $value;
+            }
+        }
+
+        return $result;
+    }
+
+    /*
+      public function getBudgetExpense($budgetPeriodId, $deptId, $issueId, $targetId, $strategyId) {
+      $bgMaster = new entity\BudgetType();
+      $bgMaster->setFormExpense(true);
+      $bgMaster->setLevel(1);
+      $dataBgMaster = $this->datacontext->getObject($bgMaster);
+
+      $result = array();
+      foreach ($dataBgMaster as $key1 => $value1) {
+      $bgSlave1 = new entity\BudgetType();
+      $bgSlave1->setMasterId($dataBgMaster[$key1]->id);
+      $bgSlave1->setFormExpense(true);
+      $dataBgSlave1 = $this->datacontext->getObject($bgSlave1);
+      $result[$key1]["id"] = $dataBgMaster[$key1]->id;
+      $result[$key1]["name"] = $dataBgMaster[$key1]->typeName;
+
+      foreach ($dataBgSlave1 as $key2 => $value2) {
+      $result[$key1]["lv2"][$key2]["id"] = $dataBgSlave1[$key2]->id;
+      $result[$key1]["lv2"][$key2]["name"] = $dataBgSlave1[$key2]->typeName;
+
+      $bgSlave2 = new entity\BudgetType();
+      $bgSlave2->setMasterId($dataBgSlave1[$key2]->id);
+      $bgSlave2->setFormExpense(true);
+      $dataBgSlave2 = $this->datacontext->getObject($bgSlave2);
+
+      foreach ($dataBgSlave2 as $key3 => $value3) {
+      $result[$key1]["lv2"][$key2]["lv2"][$key3]["id"] = $dataBgSlave2[$key3]->id;
+      $result[$key1]["lv2"][$key2]["lv2"][$key3]["name"] = $dataBgSlave2[$key3]->typeName;
+
+      $sql = " select ex.id, ex.name, exPlan.quarterId, exPlan.expensePlan, exPlan.expenseUsed  "
+      . " from " . $this->ent . "\\BudgetExpense ex "
+      . " join " . $this->ent . "\\BudgetExpenseAffirmative exAff with ex.id = exAff.expenseId "
+      . " join " . $this->ent . "\\BudgetExpenseIntegration exInt with ex.id = exInt.expenseId "
+      . " join " . $this->ent . "\\BudgetExpenseOperating exOper with ex.id = exOper.expenseId "
+      . " join " . $this->ent . "\\BudgetExpensePlan exPlan with ex.id = exPlan.expenseId "
+      . " where ex.budgetPeriodId = $budgetPeriodId "
+      . " and ex.budgetTypeId = " + $dataBgSlave2[$key3]->id;
+      if (isset($deptId)) {
+      $sql += " and ex.deptId = $deptId ";
+      }
+      if (isset($issueId)) {
+      $sql += " and exAff.issueId = $issueId ";
+      }
+      if (isset($targetId)) {
+      $sql += " and exAff.targetId = $targetId ";
+      }
+      if (isset($strategyId)) {
+      $sql += " and exAff.strategyId = $strategyId ";
+      }
+
+      $data = $this->datacontext->getObject($sql);
+
+      $result[$key1]["lv2"][$key2]["lv2"][$key3]["expense"] = $data;
+      }
+      }
+      }
+
+      return $result;
+      }
+     */
 }

@@ -85,4 +85,21 @@ interface ILookupService {
      * @description ประเภทโปรเจค
      */
     public function listProjectType();
+    
+    /**
+     * @name list3DPlan
+     * @uri /list3DPlan
+     * @return String[] lists Description
+     * @description รายชื่อแผนงานใน 3 มิติ
+     */
+    public function list3DPlan();
+    
+        /**
+     * @name list3DPproject
+     * @uri /list3DPproject
+     * @param int planId
+     * @return String[] lists Description
+     * @description รายชื่อแผนงานใน 3 มิติ
+     */
+    public function list3DPproject($planId);
 }

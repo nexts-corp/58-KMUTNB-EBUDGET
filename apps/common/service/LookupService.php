@@ -76,6 +76,7 @@ class LookupService extends CServiceBase implements ILookupService {
 
     public function listBudgetPlan($budgetYear) {
         $repo = new entity\BudgetPlan();
+        $repo->setPeriodId($budgetYear);
         $data = $this->datacontext->getObject($repo);
 
         $result = array();
@@ -129,6 +130,31 @@ class LookupService extends CServiceBase implements ILookupService {
         foreach ($data as $key => $value) {
             $result[$key]["id"] = $value->id;
             $result[$key]["name"] = $value->typeName;
+        }
+        return $result;
+    }
+
+    public function list3DPlan() {
+        $repo = new entity\L3D\Plan();
+        $data = $this->datacontext->getObject($repo);
+
+        $result = array();
+        foreach ($data as $key => $value) {
+            $result[$key]["id"] = $value->id;
+            $result[$key]["name"] = $value->planName;
+        }
+        return $result;
+    }
+
+    public function list3DPproject($planId) {
+        $repo = new entity\L3D\Project();
+        $repo->setPlanId($planId);
+        $data = $this->datacontext->getObject($repo);
+
+        $result = array();
+        foreach ($data as $key => $value) {
+            $result[$key]["id"] = $value->id;
+            $result[$key]["name"] = $value->planName;
         }
         return $result;
     }

@@ -48,13 +48,5 @@ interface IBudgetTrackingService {
      */
     public function updateBudgetExpense($expenseId, $expenseUsed);
 
-    /**
-     * @name getBudgetExpense
-     * @uri /getBudgetExpense
-     * @param int budgetPeriodId
-     * @param int deptId
-     * @return string[] result
-     * @description แบบเสนอโครงการที่ตอบสนองต่อยุทธศาสตร์
-     */
-    public function getBudgetExpense($budgetPeriodId, $deptId);
+ 
 }

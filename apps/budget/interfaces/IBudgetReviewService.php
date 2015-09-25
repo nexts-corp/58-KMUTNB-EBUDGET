@@ -35,4 +35,16 @@ interface IBudgetReviewService {
      * @description ข้อมูลcatagoryหมวดรายจ่ายเงินรายได้
      */
     public function listBudgetExpense();
+
+    /**
+     * @name listBudgetExpenseInfo
+     * @uri /listBudgetExpenseInfo
+     * @param int budgetPeriodId
+     * @param int fundgroupId
+     * @param int planId
+     * @param int deptId
+     * @return string[] result
+     * @description แบบเสนอโครงการที่ตอบสนองต่อยุทธศาสตร์
+     */
+    public function listBudgetExpenseInfo($budgetPeriodId, $fundgroupId, $planId, $deptId);
 }

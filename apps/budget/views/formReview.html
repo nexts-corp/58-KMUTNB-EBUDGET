@@ -36,13 +36,63 @@
                         <option value="2">เงินงบประมาณแผ่นดิน</option>
                     </select>
                 </div>
-                <div id="warning-expenses" class="col-md-3" style="display: none"><label
-                        class="control-label text-danger">
+                <div id="warning-expenses" class="col-md-3" style="display: none">
+                    <label class="control-label text-danger">
                         <i class="fa fa-exclamation"></i>
-                        กรุณาเลือกประเภทงบประมาณ</label>
+                        กรุณาเลือกประเภทงบประมาณ
+                    </label>
                 </div>
             </div>
             -->
+
+            <div class="form-group">
+                <label class="col-md-2 control-label text-right">{{#i18n}}Department{{/i18n}}</label>
+
+                <div class="col-md-4">
+                    <select id="dept-select" class="form-control input-sm" required>
+                        <option value="0">- เลือกหน่วยงาน -</option>
+                    </select>
+                </div>
+                <div id="warning-dept" class="col-md-3" style="display: none">
+                    <label class="control-label text-danger">
+                        <i class="fa fa-exclamation"></i>
+                        กรุณาเลือกหน่วยงาน
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label text-right">{{#i18n}}Fundgroup{{/i18n}}</label>
+
+                <div class="col-md-4">
+                    <select id="fundgroup-select" class="form-control input-sm" required>
+                        <option value="0">- เลือกกองทุน -</option>
+                    </select>
+                </div>
+                <div id="warning-fundgroup" class="col-md-3" style="display: none">
+                    <label class="control-label text-danger">
+                        <i class="fa fa-exclamation"></i>
+                        กรุณาเลือกกองทุน
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label text-right">{{#i18n}}Plan3D{{/i18n}}</label>
+
+                <div class="col-md-4">
+                    <select id="plan3d-select" class="form-control input-sm" required>
+                        <option value="0">- เลือกแผนงาน -</option>
+                    </select>
+                </div>
+                <div id="warning-plan3d" class="col-md-3" style="display: none">
+                    <label class="control-label text-danger">
+                        <i class="fa fa-exclamation"></i>
+                        กรุณาเลือกแผนงาน
+                    </label>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label class="col-md-2 control-label text-right">{{#i18n}}budgetYear{{/i18n}}</label>
 
@@ -149,7 +199,7 @@
                             <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter3{{/i18n}}</th>
                             <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter4{{/i18n}}</th>
                             <th rowspan="2" class="text-center" width="13%" style="vertical-align: middle">
-                                {{#i18n}}total{{/i18n}}
+                                {{#i18n}}totalPercent{{/i18n}}
                             </th>
                         </tr>
                         <tr>
@@ -192,8 +242,10 @@
         $(document).ready(function () {
             var total_quater1_plan = 0, total_quater1_used = 0, total_quater2_plan = 0, total_quater2_used = 0, total_quater3_plan = 0, total_quater3_used = 0, total_quater4_plan = 0, total_quater4_used = 0, total_plan = 0, total_used = 0;
             var dataTable = null;
-
             iniYear();
+            listDepartment();
+            listFundGroup();
+            listPlan3D();
             function iniYear() {
 
                 var html = '<option value="0">- เลือกปี พ.ศ. -</option>';
@@ -206,41 +258,96 @@
                 });
             }
 
+            function listDepartment() {
+                var html = '<option value="0">- เลือกหน่วยงาน -</option>';
+                $.get("{{_context_path}}/api/common/lookup/listDepartment?facultyId=0", function (data) {
+                    for (var i = 0; i < data.lists.length; i++) {
+
+                        html += '<option value="' + data.lists[i].id + '">' + data.lists[i].name + '</option>';
+                    }
+                    $("#dept-select").html(html);
+                });
+            }
+
+            function listFundGroup() {
+                var html = '<option value="0">- เลือกกองทุน -</option>';
+                $.get("{{_context_path}}/api/common/lookup/listFundgroup", function (data) {
+                    for (var i = 0; i < data.lists.length; i++) {
+
+                        html += '<option value="' + data.lists[i].id + '">' + data.lists[i].name + '</option>';
+                    }
+                    $("#fundgroup-select").html(html);
+                });
+            }
+
+            function listPlan3D() {
+                var html = '<option value="0">- เลือกแผนงาน -</option>';
+                $.get("{{_context_path}}/api/common/lookup/list3DPlan", function (data) {
+                    for (var i = 0; i < data.lists.length; i++) {
+
+                        html += '<option value="' + data.lists[i].id + '">' + data.lists[i].name + '</option>';
+                    }
+                    $("#plan3d-select").html(html);
+                });
+            }
+
+
             $("#get-form").click(function () {
 
                 total_quater1_plan = 0, total_quater1_used = 0, total_quater2_plan = 0, total_quater2_used = 0, total_quater3_plan = 0, total_quater3_used = 0, total_quater4_plan = 0, total_quater4_used = 0, total_plan = 0, total_used = 0;
                 resetPanel();
                 disablePanel();
-
                 //var budgetType = $("#expenses-select").val();
+                var dept = $("#dept-select").val();
+                var fund = $("#fundgroup-select").val();
+                var plan = $("#plan3d-select").val();
                 var year = $("#year-select").val();
-
-                /*
-                if (budgetType == 0) {
-                    $("#expenses-select").parent().addClass("has-error");
-                    $("#warning-expenses").show(10);
-                } else if (year == 0) {
+                if (dept > 0 && fund > 0 && plan > 0 && year > 0) {
+                    //var textSelected = $("#expenses-select").find('option:selected').text();
+                    showTableExpenseInfo(dept, fund, plan, year);
+                    //getExpensesList(budgetType);
+                }
+                if (dept == 0) {
+                    $("#dept-select").parent().addClass("has-error");
+                    $("#warning-dept").show(10);
+                }
+                if (fund == 0) {
+                    $("#fundgroup-select").parent().addClass("has-error");
+                    $("#warning-fundgroup").show(10);
+                }
+                if (plan == 0) {
+                    $("#plan3d-select").parent().addClass("has-error");
+                    $("#warning-plan3d").show(10);
+                }
+                if (year == 0) {
                     $("#year-select").parent().addClass("has-error");
                     $("#warning-year").show(10);
-                } else if (budgetType > 0) {
-                    $(this).attr("disabled", true);
-                    var textSelected = $("#expenses-select").find('option:selected').text();
-                    showTableContent(textSelected, budgetType, year);
-                    getExpensesList(budgetType);
                 }
-                */
-            });
 
+
+                /*
+                 if (budgetType == 0) {
+                 $("#expenses-select").parent().addClass("has-error");
+                 $("#warning-expenses").show(10);
+                 } else if (year == 0) {
+                 $("#year-select").parent().addClass("has-error");
+                 $("#warning-year").show(10);
+                 } else if (budgetType > 0) {
+                 $(this).attr("disabled", true);
+                 var textSelected = $("#expenses-select").find('option:selected').text();
+                 showTableContent(textSelected, budgetType, year);
+                 getExpensesList(budgetType);
+                 }
+                 */
+            });
             $("#expenses-select").change(function () {
                 $("#expenses-select").parent().removeClass("has-error")
                 $("#warning-expenses").hide(10);
             });
-
             $("#year-select").change(function () {
                 $("#year-select").parent().removeClass("has-error")
                 $("#warning-year").hide(10);
             });
-
             $("#btn-save").click(function () {
                 $("#btn-save").attr("disabled", true);
                 $("#saving-ico").show(10);
@@ -261,18 +368,16 @@
                 if (budgetType != 0 && quater != 0 && expendsID != 0) {
                     $.post("{{_context_path}}/api/budget/budgetTracking/saveTracking/", {objBudget: objArr}, function (data) {
                         if (data.status == true) {
-                            showTableContent($("#expenses-select option:selected").text(), budgetType, year);//refresh table
+                            showTableContent($("#expenses-select option:selected").text(), budgetType, year); //refresh table
                             $("#saving-ico").hide(10);
                             $("#btn-save").attr("disabled", false);
                             $("#status-ico").show(10).delay(2500).fadeOut();
-
                         } else {
                             alert("ไม่สามารถบันทึกได้");
                         }
                     });
                 }
             });
-
             $("#quarter-select").change(function () {
                 getPlanAndUsedClient();
             });
@@ -282,11 +387,44 @@
             $("#clearForm").click(function () {
                 resetPanel();
             });
-
             $(document).on("blur", "input", function (e) {
                 e.preventDefault();
                 $(this).val(toNumberFormat($(this).val()));
             });
+            /* mssql version */
+            function showTableExpenseInfo(dept, fund, plan, year) {
+                var html = '';
+                $.get("{{_context_path}}/api/budget/budgetReview/listBudgetExpenseInfo", {
+                    budgetPeriodId: year,
+                    fundgroupId: fund,
+                    planId: plan,
+                    deptId: dept
+                }, function (data) {
+
+                    if (data != null && data.result.length > 0) {
+                        dataTable = data.result;
+                        //debugger;
+                        var sumPlanTotal = parseInt(dataTable[0]["list"]["expensePlanTotal"]) + parseInt(dataTable[1]["list"]["expensePlanTotal"]) + parseInt(dataTable[2]["list"]["expensePlanTotal"]) + parseInt(dataTable[3]["list"]["expensePlanTotal"]);
+                        var sumUsedTotal = parseInt(dataTable[0]["list"]["expenseUsedTotal"]) + parseInt(dataTable[1]["list"]["expenseUsedTotal"]) + parseInt(dataTable[2]["list"]["expenseUsedTotal"]) + parseInt(dataTable[3]["list"]["expenseUsedTotal"]);
+                        html = '<tr><td style="padding-left: 4em ;vertical-align:middle">' + 'เงินอุดหนุน' + '</td>';
+                        html += '<td class="text-right">' + toNumberFormat(sumPlanTotal) + '</td>';
+                        html += '<td class="text-right">' + toNumberFormat(sumUsedTotal) + '</td>';
+                        html += '<td class="text-right">' + toNumberFormat(dataTable[0]["list"]["expensePlanTotal"]) + '</td>';
+                        html += '<td class="text-right">' + toNumberFormat(dataTable[0]["list"]["expenseUsedTotal"]) + '</td>';
+                        html += '<td class="text-right">' + toNumberFormat(dataTable[1]["list"]["expensePlanTotal"]) + '</td>';
+                        html += '<td class="text-right">' + toNumberFormat(dataTable[1]["list"]["expenseUsedTotal"]) + '</td>';
+                        html += '<td class="text-right">' + toNumberFormat(dataTable[2]["list"]["expensePlanTotal"]) + '</td>';
+                        html += '<td class="text-right">' + toNumberFormat(dataTable[2]["list"]["expenseUsedTotal"]) + '</td>';
+                        html += '<td class="text-right">' + toNumberFormat(dataTable[3]["list"]["expensePlanTotal"]) + '</td>';
+                        html += '<td class="text-right">' + toNumberFormat(dataTable[3]["list"]["expenseUsedTotal"]) + '</td>';
+                        html += '<td class="text-right"><b>' + '(%)' + '</b></td></tr>';
+                    }
+
+                    $("#budgetBody").html(html);
+                    $("#title-tb").html(budgetName);
+                    $("#get-form").attr("disabled", false);
+                });
+            }
 
             function getPlanAndUsedClient() {
 
@@ -320,9 +458,7 @@
                 }
                 $("#plan-input").val(toNumberFormat(result[0]));
                 $("#used-input").val(toNumberFormat(result[1]));
-
             }
-
 
             function getBudgetQuater(data, quater) {
 
@@ -341,7 +477,6 @@
 
             function showTableContent(budgetName, budgetType, year) {
                 var html = '';
-
                 $.get("{{_context_path}}/api/budget/budgetReview/getReview", {
                     budgetType: budgetType,
                     year: year
@@ -415,7 +550,6 @@
             function checkShowLv1(obj) {
 
                 var html = '';
-
                 if (obj.list.length > 0) { //have lvl2
 
                     html += '<tr><td style="vertical-align:middle"><b>' + obj.type_name + '</b></td>';
@@ -447,7 +581,6 @@
             function checkShowLv2(obj) {
 
                 var html = '';
-
                 if (obj.list2.length > 0) { //have lvl3
 
                     html += '<tr><td style="padding-left: 1em ;vertical-align:middle"><b>' + obj.type_name + '</b></td>';
@@ -479,7 +612,6 @@
             function checkShowLv3(obj) {
 
                 var html = '';
-
                 if (obj.list3.length > 0) { //have lvl4
 
                     html += '<tr><td style="padding-left: 2em ;vertical-align:middle"><b>' + obj.type_name + '</b></td>';
@@ -506,13 +638,11 @@
                 }
 
                 getTotalColumn(obj);
-
                 return html;
             }
 
             function getTotal(data) {
                 var total = 0;
-
                 if (data.budget_quater1_plan != ' ') {
                     total += parseFloat(data.budget_quater1_plan);
                 }
@@ -572,7 +702,6 @@
 
             function getTotalPlan(data) {
                 var total = 0;
-
                 if (data.budget_quater1_plan != ' ') {
                     total += parseFloat(data.budget_quater1_plan);
                 }
@@ -596,7 +725,6 @@
             function getTotalUsed(data) {
 
                 var total = 0;
-
                 if (data.budget_quater1_used != ' ') {
                     total += parseFloat(data.budget_quater1_used);
                 }
@@ -634,7 +762,6 @@
                                 j = (j = i.length) > 3 ? j % 3 : 0;
                         return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
                     };
-
                     return (toUnNumberFormat(value)).formatMoney(2, '.', ',');
                 }
             }
@@ -655,7 +782,6 @@
                 $.get("{{_context_path}}/api/budget/budgetReview/getCatagory/", {budgetType: budgetType}, function (data) {
 
                     var html = '<option value="0">- เลือกประเภทรายจ่าย -</option>';
-
                     for (var i = 0; i < data.listCatagory.length; i++) {
 
                         var topic = data.listCatagory[i].typeName;
