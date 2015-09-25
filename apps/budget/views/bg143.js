@@ -1,145 +1,462 @@
-function bg143Form(){
-    var html = '<div class="col-md-12 text-center">'
-        + '<h4>'
-            + 'แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน (ค่าตอบแทน ใช้สอย และวัสดุ) (ง.143)'
-        + '</h4>'
-    + '</div>'
+var typeName143Arr = [];
+var list143Arr = [];
 
-    + '<form>'
+function bg143Form(param) {
+    //console.log(param);
+    var html = '<div id="panelTable" class="col-md-12">'
+
         + '<div class="form-group">'
-            + '<div class="col-md-4">'
-                + '<label class="col-md-4 control-label text-right" for="xxx">แผนงาน</label>'
-                + '<div class="col-md-8">'
-                    + '<select id="" name="" class="form-control input-sm" required>'
-                    + '</select>'
-                + '</div>'
-            + '</div>'
+
+        + '<div class="col-md-6">'
+        + '<label class="col-md-4 control-label text-right">ปีงบประมาณ : </label>'
+        + '<div class="col-md-6">' + budgetPeriodArr[param["budgetPeriodId"]] + '</div>'
         + '</div>'
 
-        + '<div class="form-group">'
-            + '<div class="col-md-4">'
-                + '<label class="col-md-4 control-label text-right" for="xxx">ผลผลิต</label>'
-                + '<div class="col-md-8">'
-                    + '<select id="" name="" class="form-control input-sm" required>'
-                    + '</select>'
-                + '</div>'
-            + '</div>'
+        + '<div class="col-md-6">'
+        + '<label class="col-md-4 control-label text-right">แหล่งเงิน : </label>'
+        + '<div class="col-md-6">' + budgetTypeArr[param["budgetTypeCode"]] + '</div>'
+        + '</div>'
+
         + '</div>'
 
         + '<div class="form-group">'
-            + '<div class="col-md-4">'
-                + '<label class="col-md-4 control-label text-right" for="xxx">หน่วยงาน</label>'
-                + '<div class="col-md-8">'
-                    + '<select id="" name="" class="form-control input-sm" required>'
-                    + '</select>'
-                + '</div>'
-            + '</div>'
-
-            + '<div class="col-md-8 text-right">'
-                + '<button class="btn btn-success"><i class="fa fa-save"></i> บันทึก</button>&nbsp;'
-                + '<button class="btn btn-default"><i class="fa fa-trash"></i> ล้างข้อมูล</button>'
-            + '</div>'
+        + '<div class="col-md-6">'
+        + '<label class="col-md-4 control-label text-right">แผนงาน : </label>'
+        + '<div class="col-md-6">' + planArr[param["planId"]] + '</div>'
         + '</div>'
-    + '</form>'
 
-    + '<div class="col-md-12" style="margin-top: 20px;">'
-        + '<div class="panel-group" id="accordion">'
-            + '<div class="panel panel-default">'
-                + '<div class="panel-heading">'
-                    + '<h4 class="panel-title">'
-                        + '<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse1One">'
-                            + '<i class="fa fa-plus-circle"></i> เพิ่มรายการ'
-                        + '</a>'
-                    + '</h4>'
-                    + '</div>'
-                    + '<div id="collapse1One" class="accordion-body collapse in">'
-                        + '<div class="panel-body">'
-                            + '<form>'
-                                + '<div class="form-group">'
-                                    + '<div class="col-md-9">'
-                                        + '<label class="col-md-4 control-label text-right" for="xxx">หมวดรายจ่าย</label>'
-                                        + '<div class="col-md-8">'
-                                            + '<select id="" name="" class="form-control input-sm" required>'
-                                            + '</select>'
-                                        + '</div>'
-                                    + '</div>'
-                                + '</div>'
-
-                                + '<div class="form-group">'
-                                    + '<div class="col-md-9">'
-                                        + '<label class="col-md-4 control-label text-right" for="xxx">หมวดรายจ่าย - รายการ</label>'
-                                        + '<div class="col-md-8">'
-                                            + '<textarea id="" name="" class="form-control input-sm" required>'
-                                            + '</textarea>'
-                                        + '</div>'
-                                    + '</div>'
-                                + '</div>'
-
-                                + '<div class="form-group">'
-                                    + '<div class="col-md-9">'
-                                        + '<label class="col-md-4 control-label text-right" for="xxx">งบประมาณที่ได้รับการจัดสรรปีปัจจุบัน</label>'
-                                        + '<div class="col-md-8">'
-                                            + '<input type="text" id="" name="" class="form-control input-sm" required>'
-                                        + '</div>'
-                                    + '</div>'
-                                + '</div>'
-
-                                + '<div class="form-group">'
-                                    + '<div class="col-md-9">'
-                                        + '<label class="col-md-4 control-label text-right" for="xxx">คำของบประมาณปีงบประมาณที่ขอตั้ง</label>'
-                                        + '<div class="col-md-8">'
-                                            + '<input type="text" id="" name="" class="form-control input-sm" required>'
-                                        + '</div>'
-                                    + '</div>'
-                                + '</div>'
-                         
-                                + '<div class="form-group">'
-                                    + '<div class="col-md-9">'
-                                        + '<label class="col-md-4 control-label text-right" for="xxx">คำชี้แจงเหตุผลสรุป</label>'
-                                        + '<div class="col-md-8">'
-                                            + '<textarea id="" name="" class="form-control input-sm">'
-                                            + '</textarea>'
-                                        + '</div>'
-                                    + '</div>'
-                                + '</div>'
-                                
-                                + '<div class="col-md-12 text-right">'
-                                    + '<button class="btn btn-primary"><i class="fa fa-plus-circle"></i> เพิ่ม</button>&nbsp;'
-                                    + '<button class="btn btn-default"><i class="fa fa-trash"></i> ยกเลิก</button>'
-                                + '</div>'
-                            + '</form>'
-                        + '</div>'
-                    + '</div>'
-            + '</div>'
+        + '<div class="col-md-6">'
+        + '<label class="col-md-4 control-label text-right">ผลผลิต/โครงการ : </label>'
+        + '<div class="col-md-6">' + projectArr[param["projectId"]] + '</div>'
         + '</div>'
-    + '</div>'
+        + '</div>'
 
-    + '<div id="bidderTable" class="col-md-12">'
-        + '<table id="table" class="table table-bordered table-striped table-condensed mb-none">'
-            + '<thead>'
-                + '<tr>'
-                    + '<th class="text-center">หมวดรายจ่าย-รายการ</th>'
-                    + '<th class="text-center">งบประมาณที่ได้รับการจัดสรรปีปัจจุบัน (2558)</th>'
-                    + '<th class="text-center">คำของบประมาณปีงบประมาณที่ขอตั้ง</th>'
-                    + '<th class="text-center">คำชี้แจงเหตุผลสรุป</th>'
-                + '</tr>'
+        + '<div class="form-group">'
+        + '<div class="col-md-6">'
+        + '<label class="col-md-4 control-label text-right">กองทุน : </label>'
+        + '<div class="col-md-6">' + fundgroupArr[param["fundgroupId"]] + '</div>'
+        + '</div>'
 
-                + '<tr>'
-                    + '<th class="text-center">รวมทั้งสิ้น</th>'
-                    + '<th class="text-center"></th>'
-                    + '<th class="text-center"></th>'
-                    + '<th class="text-center"></th>'
-                + '</tr>'
-            + '</thead>'
-            + '<tbody id="bidderBody">'
-                + '<tr>'
-                    + '<td colspan="4" class="text-center">-</td>'
-                + '</tr>'
-            + '</tbody>'
+        + '<div class="col-md-6">'
+        + '<label class="col-md-4 control-label text-right">หน่วยงาน : </label>'
+        + '<div class="col-md-6">' + departmentArr[param["deptId"]] + '</div>'
+        + '</div>'
+
+        + '</div>'
+
+        + '<section class="panel">'
+        + '<div class="panel-body">'
+        + '<div class="col-md-12 text-right">'
+        + '<a href="#" id="expandAll"><i class="fa fa-plus-square"></i> แสดงทั้งหมด</a>&nbsp;/&nbsp;'
+        + '<a href="#" id="collapseAll"><i class="fa fa-minus-square"></i> ซ่อนทั้งหมด</a>'
+        + '</div>'
+        + '<table id="table143" class="table table-bordered table-striped mb-none treetable">'
+        + '<thead>'
+        + '<tr>'
+        + '<th class="text-center" style="vertical-align: middle;">ลำดับ</th>'
+        + '<th class="text-center" style="vertical-align: middle;">หมวดรายจ่าย-รายการ</th>'
+        + '<th class="text-center" style="vertical-align: middle;">งบประมาณที่ได้รับการจัดสรรปีปัจจุบัน</th>'
+        + '<th class="text-center" style="vertical-align: middle;">คำของบประมาณปีงบประมาณที่ขอตั้ง</th>'
+        + '<th class="text-center" style="vertical-align: middle;">คำชี้แจงเหตุผลสรุป</th>'
+        + '<th class="text-center" style="vertical-align: middle; min-width: 130px;">เครื่องมือ</th>'
+        + '</tr>'
+        + '<tr>'
+        + '<th></th>'
+        + '<th class="text-center" style="vertical-align: middle;">รวมทั้งสิ้น</th>'
+        + '<th></th>'
+        + '<th></th>'
+        + '<th></th>'
+        + '<th></th>'
+        + '</tr>'
+        + '</thead>'
+        + '<tbody>'
+        + '<tr>'
+        + '<td colspan="9" class="text-center">-</td>'
+        + '</tr>'
+        + '</tbody>'
         + '</table>'
-    + '</div>';
-    
-    $("#formBudget").html(html);
-    
-     
+        + '</div>'
+        + '</section>'
+        + '</div>'
+
+        + '<div id="panelForm" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">'
+        + '<div class="modal-dialog">'
+        + '<div class="modal-content">'
+        + '<div class="modal-header">'
+        + '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
+        + '<h4 class="modal-title" id="myModalLabel">คำของบประมาณ : <span id="modalHead"></span></h4>'
+        + '</div>'
+        + '<div class="modal-body">'
+        + '<form id="form" onsubmit="return false;">'
+
+        + '<div class="form-group">'
+        + ' <label class="col-md-12 control-label req" for="operName">หมวดรายจ่าย-รายการ</label>'
+        + ' <div class="col-md-12">'
+        + '     <input type="text" id="operName" name="operName" class="form-control input-sm" required>'
+        + ' </div>'
+        + '</div>'
+
+        + '<div class="form-group">'
+        + ' <label class="col-md-12 control-label req" for="operDesc">คำอธิบาย</label>'
+        + ' <div class="col-md-12">'
+        + '     <textarea id="operDesc" name="operDesc" class="form-control input-sm" required></textarea>'
+        + ' </div>'
+        + '</div>'
+
+        + '<div class="form-group">'
+        + '<label class="col-md-12 control-label req" for="bgHistory">งบประมาณที่ได้รับการจัดสรรปีปัจจุบัน</label>'
+        + '<div class="col-md-12">'
+        + '<input type="text" id="bgHistory" name="bgHistory" class="form-control input-sm" required>'
+        + '</div>'
+        + '</div>'
+
+        + '<div class="form-group">'
+        + '<label class="col-md-12 control-label req" for="bgRequest">คำของบประมาณปีงบประมาณที่ขอตั้ง</label>'
+        + '<div class="col-md-12">'
+        + '<input type="text" id="bgRequest" name="bgRequest" class="form-control input-sm" required>'
+        + '</div>'
+        + '</div>'
+
+        + '<div class="form-group">'
+        + '<label class="col-md-12 control-label" for="remark">คำชี้แจงเหตุผลสรุป</label>'
+        + '<div class="col-md-12">'
+        + '<textarea id="remark" name="remark" class="form-control input-sm"></textarea>'
+        + '</div>'
+        + '</div>'
+        + '</form>'
+        + '</div>'
+        + '<div id="loadingForm" class="col-md-12 text-center"></div>'
+        + '<div class="modal-footer">'
+        + '<button type="button" class="btn btn-success save" data-dismiss="modal"><i class="fa fa-save"></i> บันทึก</button>'
+        + '<button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>'
+        + '</div>'
+        + '</div>'
+        + '</div>'
+        + '</div>'
+
+        + '<div id="panelDeleteForm" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">'
+        + '<div class="modal-dialog">'
+        + '<div class="modal-content">'
+        + '<div class="modal-header">'
+        + '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
+        + '<h4 class="modal-title" id="myModalLabel">ลบคำของบประมาณ</h4>'
+        + '</div>'
+        + '<div class="modal-body">'
+        + '<table>'
+        + '<tbody>'
+        + '<tr>'
+        + '<td class="col-md-6 text-right">หมวดรายจ่าย : </td>'
+        + '<td class="col-md-6 text-bold" id="operNameDel"></td>'
+        + '</tr>'
+        + '<tr>'
+        + '<td class="col-md-6 text-right">หมวดรายจ่าย-รายการ : </td>'
+        + '<td class="col-md-6 text-bold" id="operDescDel"></td>'
+        + '</tr>'
+        + '<tr>'
+        + '<td class="col-md-6 text-right">งบประมาณที่ได้รับการจัดสรรปีปัจจุบัน : </td>'
+        + '<td class="col-md-6 text-bold" id="bgHistoryDel"></td>'
+        + '</tr>'
+        + '<tr>'
+        + '<tr>'
+        + '<td class="col-md-6 text-right">คำของบประมาณปีงบประมาณที่ขอตั้ง : </td>'
+        + '<td class="col-md-6 text-bold" id="bgRequestDel"></td>'
+        + '</tr>'
+        + '</td>'
+        + '</tr>'
+        + '<tr>'
+        + '<td class="col-md-6 text-right">คำชี้แจง : </td>'
+        + '<td class="col-md-6 text-bold" id="remarkDel"></td>'
+        + '</tr>'
+        + '</tbody>'
+        + '</table>'
+        + '</div>'
+        + '<div class="modal-footer">'
+        + '<button type="button" class="btn btn-danger save" data-dismiss="modal"><i class="fa fa-trash"></i> ยืนยันการลบ</button>'
+        + '<button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>'
+        + '</div>'
+        + '</div>'
+        + '</div>'
+        + '</div>';
+
+    $("#divForm").html(html);
+    toggleShow("form");
+    bg143Detail(param);
+}
+
+function bg143Detail(param) {
+
+    $("#table143 tbody").html('<td colspan="6" class="text-center">Loading...</td>');
+
+    setTimeout(function () {
+        var dataJSON = JSON.stringify({param: param});
+        var dataJSONEN = encodeURIComponent(dataJSON);
+        var datas = callAjax(js_context_path + "/api/budget/budgetInfo/viewBudget143", "post", dataJSONEN, "json");
+        if (typeof datas !== "undefined" && datas !== null) {
+            var html = '';
+            var pCount = 0;
+            $.each(datas["budget"], function (key, value) {
+                html += '<tr data-tt-id="' + value["id"] + '">'
+                    + '<td class="text-center"></td>'
+                    + '<td class="text-bold">' + (++pCount) + '. ' + value["typeName"] + '</td>'
+                    + '<td></td>'
+                    + '<td></td>'
+                    + '<td></td>'
+                    + '<td></td>'
+                    + '</tr>';
+
+                var cCount = 0;
+                $.each(value["lv2"], function (key2, value2) {
+                    html += '<tr data-tt-id="' + value2["id"] + '" data-tt-parent-id="' + value["id"] + '">'
+                        + '<td class="text-center"></td>'
+                        + '<td class="text-bold" style="padding-left: 20px;">'
+                        + pCount + '.' + (++cCount) + ' ' + value2["typeName"]
+                        + '</td>'
+                        + '<td></td>'
+                        + '<td></td>'
+                        + '<td></td>'
+                        + '<td>'
+                        + '<button class="btn btn-sm btn-success addList" data-pid="' + value2["id"] + '"><i class="fa fa-plus"></i> เพิ่ม</button>'
+                        + '</td>'
+                        + '</tr>';
+
+                    typeName143Arr[value2["id"]] = value2["typeName"];
+
+                    $.each(value2["budget"], function (key3, value3) {
+                        html += '<tr data-tt-id="list' + value3["id"] + '" data-tt-parent-id="' + value2["id"] + '">'
+                            + '<td class="text-center"></td>'
+                            + '<td>' + value3["operName"] + '</br> -&nbsp;' + value3["operDesc"] + '</td>'
+                            + '<td>' + value3["bgHistory"] + '</td>'
+                            + '<td>' + value3["bgRequest"] + '</td>'
+                            + '<td>' + value3["remark"] + '</td>'
+                            + '<td>'
+                            + '<div class="btn-group">'
+                            + '<button class="btn btn-sm btn-warning editList" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                            + '<button class="btn btn-sm btn-default deleteList"  data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                            + '</div>'
+                            + '</td>'
+                            + '</tr>';
+
+                        list143Arr[value3["id"]] = value3;
+                    });
+                });
+            });
+
+            $("#table143 tbody").html(html);
+
+            // set default table to tree table
+            $("#table143").treetable({
+                expandable: true
+            });
+
+            // collapse all
+            $("#collapseAll").unbind("click").click(function () {
+                $("#table143").treetable("collapseAll");
+            });
+
+            // expand all
+            $("#expandAll").unbind("click").click(function () {
+                $("#table143").treetable("expandAll");
+            });
+
+            // when you press to add button
+            $("button.addList").unbind("click").click(function () {
+                var parentId = $(this).attr("data-pid");
+
+                // reset form for new insert
+                $("#modalHead").empty().html(typeName143Arr[parentId]);
+                $("#loadingForm").html('');
+                $("#form").trigger('reset');
+                $("#panelForm").modal("show");
+
+                $("button.save").unbind("click").click(function () {
+                    var isValid = true;
+                    $('#form input[required]').each(function () {
+                        if ($(this).val() == "" && !$(this).prop("disabled"))
+                            isValid = false;
+                    });
+                    if (isValid) {
+                        var fParam = param;
+                        fParam["budgetTypeId"] = parentId;
+                        $("#form input, #form textarea").each(function () {
+
+                            var name = $(this).attr("name");
+                            var val = $(this).val();
+
+                            fParam[name] = val;
+                        });
+
+                        var fdata = [];
+                        fdata.push(fParam);
+                        var dataJSON = JSON.stringify({budget: fdata});
+                        var dataJSONEN = encodeURIComponent(dataJSON);
+
+                        bg143Insert(parentId, param, dataJSONEN);
+                    }
+                });
+            });
+
+            bg143Action(param);
+        }
+    }, 100);
+}
+
+function bg143Action(param) {
+    // when you press to edit button
+    $("button.editList").unbind("click").click(function () {
+        var parentId = $(this).attr("data-pid");
+        var id = $(this).attr("data-id");
+
+        // reset form for new insert
+        $("#modalHead").empty().html(typeName143Arr[parentId]);
+        $("#loadingForm").html('');
+        $("#form").trigger('reset');
+        $("#panelForm").modal("show");
+
+        $("#form input, #form textarea").each(function () {
+            var fid = $(this).attr("id");
+            $("#" + fid).val(list143Arr[id][fid]);
+        });
+        $("button.save").unbind("click").click(function () {
+            var isValid = true;
+            $('#form input[required]').each(function () {
+                if ($(this).val() == "" && !$(this).prop("disabled"))
+                    isValid = false;
+            });
+            if (isValid) {
+                var fParam = param;
+                fParam["budgetTypeId"] = parentId;
+                fParam["id"] = id;
+                $("#form input, #form textarea").each(function () {
+                    var name = $(this).attr("name");
+                    var val = $(this).val();
+
+                    fParam[name] = val;
+                });
+
+                var fdata = [];
+                fdata.push(fParam);
+                var dataJSON = JSON.stringify({budget: fdata});
+                var dataJSONEN = encodeURIComponent(dataJSON);
+
+                bg143Edit(id, parentId, param, dataJSONEN);
+            }
+        });
+    });
+
+    // when you press to edit button
+    $("button.deleteList").unbind("click").click(function () {
+        var parentId = $(this).attr("data-pid");
+        var id = $(this).attr("data-id");
+
+        $("#panelDeleteForm").modal("show");
+        $("#panelDeleteForm").find('td').each(function () {
+            if ($(this).attr("id")) {
+                var aId = $(this).attr("id");
+                var name = aId.replace('Del', '');
+                $("#" + aId).html(list143Arr[id][name]);
+            }
+        });
+        $("button.save").unbind("click").click(function () {
+            var dataJSON = JSON.stringify({budgetId: id});
+            var dataJSONEN = encodeURIComponent(dataJSON);
+            bg143delete(id, parentId, dataJSONEN);
+        });
+    });
+}
+
+function bg143Insert(parentId, param, dataJSONEN) {
+    $("#loadingForm").html("Loading...");
+
+    setTimeout(function () {
+        var datas = callAjax(js_context_path + "/api/budget/budgetSave/insertBudget143", "post", dataJSONEN, "json");
+        if (typeof datas !== "undefined" && datas !== null) {
+            var data = datas["result"][0];
+            if (data["result"] == true) {
+                $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
+
+                // insert node in branch
+                var input = '<tr data-tt-id="list' + data["id"] + '" data-tt-parent-id="' + parentId + '">'
+                    + '<td></td>'
+                    + '<td>' + $("#operName").val() + '</br> -&nbsp;' + $("#operDesc").val() + '</td>'
+                    + '<td>' + $("#bgHistory").val() + '</td>'
+                    + '<td>' + $("#bgRequest").val() + '</td>'
+                    + '<td>' + $("#remark").val() + '</td>'
+                    + '<td>'
+                    + '<div class="btn-group">'
+                    + '<button class="btn btn-sm btn-warning editList" data-pid="' + parentId + '" data-id="' + data["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                    + '<button class="btn btn-sm btn-default deleteList" data-pid="' + parentId + '" data-id="' + data["id"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                    + '</div>'
+                    + '</td>'
+                    + '</tr>';
+
+                var node = $("#table143").treetable("node", parentId);
+                $("#table143").treetable("loadBranch", node, input);
+
+                list143Arr[data["id"]] = {
+                    id: data["id"]
+                }
+
+                $("#form input, #form textarea").each(function () {
+                    list143Arr[data["id"]][$(this).attr("name")] = $(this).val();
+                });
+
+                bg143Action(param);
+            }
+            else {
+                $("#loadingForm").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
+            }
+        }
+    }, 500);
+}
+
+function bg143Edit(id, parentId, param, dataJSONEN) {
+    $("#loadingForm").html("Loading...");
+
+    setTimeout(function () {
+        var datas = callAjax(js_context_path + "/api/budget/budgetSave/updateBudget143", "post", dataJSONEN, "json");
+        if (typeof datas !== "undefined" && datas !== null) {
+            if (datas["result"] == true) {
+                $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
+
+                var input = '<td></td>'
+                    + '<td>' + $("#operName").val() + '</br> -&nbsp;' + $("#operDesc").val() + '</td>'
+                    + '<td>' + $("#bgHistory").val() + '</td>'
+                    + '<td>' + $("#bgRequest").val() + '</td>'
+                    + '<td>' + $("#remark").val() + '</td>'
+                    + '<td>'
+                    + '<div class="btn-group">'
+                    + '<button class="btn btn-sm btn-warning editList" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                    + '<button class="btn btn-sm btn-default deleteList" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-trash"></i> ลบ</button>'
+                    + '</div>'
+                    + '</td>';
+
+                //var node = $("#table140").treetable("node", parentId);
+                //$("#table140 ").treetable("loadBranch", node, input);
+                $('tr[data-tt-id="list' + id + '"]').html(input);
+
+                $("#form input, #form textarea").each(function () {
+                    list143Arr[id][$(this).attr("name")] = $(this).val();
+                });
+
+                bg143Action(param);
+            }
+            else {
+                $("#loadingForm").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
+            }
+        }
+    }, 500);
+}
+
+
+function bg143delete(id, parentId, dataJSONEN) {
+    var datas = callAjax(js_context_path + "/api/budget/budgetSave/deleteBudget143", "post", dataJSONEN, "json");
+    if (typeof datas !== "undefined" && datas !== null) {
+        if (datas["result"] == true) {
+            $("#table143").treetable("removeNode", "list" + id);
+            var parent = $('#table143').treetable('node', parentId);
+            if (parent.children.length == 0) {
+                parent.row.find('.indenter').html('');
+            }
+        }
+    }
 }

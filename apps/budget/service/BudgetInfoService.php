@@ -485,18 +485,18 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                 . " WHERE typ.masterId = '20300000' and typ.typeCode = 'G' and typ.form145 = true ";
         $list1 = $this->datacontext->getObject($sql1);
 
-        foreach ($list1 as $key1 => $value1) {
-            $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
-                    . " FROM " . $this->ent . "\\BudgetType typ "
-                    . " WHERE typ.masterId = :masterId ";
-            $param2 = array(
-                "masterId" => $list1[$key1]["id"]
-            );
-            $list2 = $this->datacontext->getObject($sql2, $param2);
-            $list1[$key1]["lv2"] = $list2;
+//        foreach ($list1 as $key1 => $value1) {
+//            $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
+//                    . " FROM " . $this->ent . "\\BudgetType typ "
+//                    . " WHERE typ.masterId = :masterId ";
+//            $param2 = array(
+//                "masterId" => $list1[$key1]["id"]
+//            );
+//            $list2 = $this->datacontext->getObject($sql2, $param2);
+//            $list1[$key1]["lv2"] = $list2;
 
-            foreach ($list2 as $key2 => $value2) {
-                $sql3 = " select bg.id, bg.durableName, bg.durableDesc, bg.qty, bg.unit, bg.price, bg.totalPrice, "
+            foreach ($list1 as $key1 => $value1) {
+                $sql2 = " select bg.id, bg.durableName, bg.durableDesc, bg.qty, bg.unit, bg.price, bg.totalPrice, "
                         . " bg.numNeeded, bg.numWork, bg.numUnwork, bg.remark "
                         . " from " . $this->ent . "\\Budget145 bg "
                         . " where bg.bgStatus = :bgStatus and "
@@ -507,9 +507,9 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                         . " bg.projectId = :projectId and "
                         . " bg.fundgroupId = :fundgroupId and "
                         . " bg.deptId = :deptId";
-                $param3 = array(
+                $param2 = array(
                     "bgStatus" => "Y",
-                    "budgetTypeId" => $value2["id"],
+                    "budgetTypeId" => $value1["id"],
                     "budgetPeriodId" => $param->budgetPeriodId,
                     "budgetTypeCode" => $param->budgetTypeCode,
                     "planId" => $param->planId,
@@ -517,11 +517,11 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                     "fundgroupId" => $param->fundgroupId,
                     "deptId" => $param->deptId
                 );
-                $list3 = $this->datacontext->getObject($sql3, $param3);
+                $list2 = $this->datacontext->getObject($sql2, $param2);
                 //$list2[$key]["budget"] = $list3;
-                $list1[$key1]["lv2"][$key2]["budget"] = $list3;
+                $list1[$key1]["lv2"] = $list2;
             }
-        }
+//        }
 
         return $list1;
     }
@@ -532,18 +532,18 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                 . " WHERE typ.masterId = '20500000' and typ.typeCode = 'G' and typ.form146 = true ";
         $list1 = $this->datacontext->getObject($sql1);
 
-        foreach ($list1 as $key1 => $value1) {
-            $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
-                    . " FROM " . $this->ent . "\\BudgetType typ "
-                    . " WHERE typ.masterId = :masterId ";
-            $param2 = array(
-                "masterId" => $list1[$key1]["id"]
-            );
-            $list2 = $this->datacontext->getObject($sql2, $param2);
-            $list1[$key1]["lv2"] = $list2;
+//        foreach ($list1 as $key1 => $value1) {
+//            $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
+//                    . " FROM " . $this->ent . "\\BudgetType typ "
+//                    . " WHERE typ.masterId = :masterId ";
+//            $param2 = array(
+//                "masterId" => $list1[$key1]["id"]
+//            );
+//            $list2 = $this->datacontext->getObject($sql2, $param2);
+//            $list1[$key1]["lv2"] = $list2;
 
-            foreach ($list2 as $key2 => $value2) {
-                $sql3 = " select bg.id, bg.bursaryName, bg.bursaryDesc, bg.bgRequest, bg.bgHistory, bg.remark "
+            foreach ($list1 as $key1 => $value1) {
+                $sql2 = " select bg.id, bg.bursaryName, bg.bursaryDesc, bg.bgRequest, bg.bgHistory, bg.remark "
                         . " from " . $this->ent . "\\Budget146 bg "
                         . " where bg.bgStatus = :bgStatus and "
                         . " bg.budgetTypeId = :budgetTypeId and "
@@ -553,9 +553,9 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                         . " bg.projectId = :projectId and "
                         . " bg.fundgroupId = :fundgroupId and "
                         . " bg.deptId = :deptId";
-                $param3 = array(
+                $param2 = array(
                     "bgStatus" => "Y",
-                    "budgetTypeId" => $value2["id"],
+                    "budgetTypeId" => $value1["id"],
                     "budgetPeriodId" => $param->budgetPeriodId,
                     "budgetTypeCode" => $param->budgetTypeCode,
                     "planId" => $param->planId,
@@ -563,11 +563,11 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService {
                     "fundgroupId" => $param->fundgroupId,
                     "deptId" => $param->deptId
                 );
-                $list3 = $this->datacontext->getObject($sql3, $param3);
+                $list2 = $this->datacontext->getObject($sql2, $param2);
                 //$list2[$key]["budget"] = $list3;
-                $list1[$key1]["lv2"][$key2]["budget"] = $list3;
+                $list1[$key1]["lv2"] = $list2;
             }
-        }
+//        }
 
         return $list1;
     }

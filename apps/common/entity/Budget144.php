@@ -66,7 +66,7 @@ class Budget144 extends EntityBase {
     /** @Column(type="string",length=18, name="NONBUDGETHISTORY") */
     public $nonBgHistory;
 
-    /** @Column(type="float", name="REMARK") */
+    /** @Column(type="text", name="REMARK") */
     public $remark;
 
     /** @Column(type="integer",length=11, name="REFID") */

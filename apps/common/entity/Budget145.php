@@ -69,7 +69,7 @@ class Budget145 extends EntityBase {
     /** @Column(type="integer",length=11, name="NUMUNWORKABLE") */
     public $numUnwork;
 
-    /** @Column(type="float", name="REMARK") */
+    /** @Column(type="text", name="REMARK") */
     public $remark;
 
     /** @Column(type="integer",length=11, name="REFID") */
