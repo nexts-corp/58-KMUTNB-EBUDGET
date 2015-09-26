@@ -26,7 +26,7 @@ interface IEduDevPlanService {
     /**
      * @name fetchIssueAndTarget
      * @uri /fetchIssueAndTarget
-     * @param apps\common\entity\MainPlanIssue pData Description
+     * @param String[] pData Description
      * @description ดึงข้อมูลประเด็นยุทธศาสตร์และเป้าประสงค์​
      * @return String[] dataList
      */ 
@@ -35,9 +35,9 @@ interface IEduDevPlanService {
     /**
      * @name fetchKpi
      * @uri /fetchKpi
-     * @param apps\common\entity\MainPlanKpi pData Description
+     * @param apps\common\entity\AffirmativeKpi pData Description
      * @description ดึงข้อมูลตัวชี้วัด
-     * @return apps\common\entity\MainPlanKpi dataList
+     * @return apps\common\entity\AffirmativeKpi dataList
      */ 
     public function fetchKpi($pData);
     
@@ -45,9 +45,9 @@ interface IEduDevPlanService {
     /**
      * @name fetchStrategy
      * @uri /fetchStrategy
-     * @param apps\common\entity\MainPlanStrategy pData Description
-     * @description ดึงข้อมูลตัวชี้วัด
-     * @return apps\common\entity\MainPlanStrategy dataList
+     * @param apps\common\entity\AffirmativeStrategy pData Description
+     * @description ดึงข้อมูลกลยุทธ์
+     * @return apps\common\entity\AffirmativeStrategy dataList
      */ 
     public function fetchStrategy($pData);
     
@@ -57,36 +57,36 @@ interface IEduDevPlanService {
     /**
      * @name saveKpi
      * @uri /saveKpi
-     * @param apps\common\entity\MainPlanKpi pData Description
+     * @param apps\common\entity\AffirmativeKpi pData Description
      * @description บันทึกข้อมูลตัวชี้วัด
-     * @return apps\common\entity\MainPlanKpi dataList
+     * @return apps\common\entity\AffirmativeKpi dataList
      */ 
     public function saveKpi($pData);
     
     /**
      * @name saveStrategy
      * @uri /saveStrategy
-     * @param apps\common\entity\MainPlanStrategy pData Description
+     * @param apps\common\entity\AffirmativeStrategy pData Description
      * @description บันทึกข้อมูลกลยุทธ์
-     * @return apps\common\entity\MainPlanStrategy dataList
+     * @return apps\common\entity\AffirmativeStrategy dataList
      */ 
     public function saveStrategy($pData);
     
     /**
      * @name saveTarget
      * @uri /saveTarget
-     * @param apps\common\entity\MainPlanTarget pData Description
+     * @param apps\common\entity\AffirmativeTarget pData Description
      * @description บันทึกข้อมูลเป้าประสงค์
-     * @return apps\common\entity\MainPlanTarget dataList
+     * @return apps\common\entity\AffirmativeTarget dataList
      */ 
     public function saveTarget($pData);
     
     /**
      * @name saveIssue
      * @uri /saveIssue
-     * @param apps\common\entity\MainPlanIssue pData Description
+     * @param apps\common\entity\AffirmativeIssue pData Description
      * @description บันทึกข้อมูลประเด็นยุทธศาสตร์
-     * @return apps\common\entity\MainPlanIssue dataList
+     * @return apps\common\entity\AffirmativeIssue dataList
      */ 
     public function saveIssue($pData);
     
@@ -94,36 +94,36 @@ interface IEduDevPlanService {
     /**
      * @name delKpi
      * @uri /delKpi
-     * @param apps\common\entity\MainPlanKpi pData Description
+     * @param apps\common\entity\AffirmativeKpi pData Description
      * @description ลบข้อมูลตัวชี้วัด
-     * @return apps\common\entity\MainPlanKpi dataList
+     * @return apps\common\entity\AffirmativeKpi dataList
      */ 
     public function delKpi($pData);
     
     /**
      * @name delStrategy
      * @uri /delStrategy
-     * @param apps\common\entity\MainPlanStrategy pData Description
+     * @param apps\common\entity\AffirmativeStrategy pData Description
      * @description ลบข้อมูลกลยุทธ
-     * @return apps\common\entity\MainPlanStrategy dataList
+     * @return apps\common\entity\AffirmativeStrategy dataList
      */ 
     public function delStrategy($pData);
     
     /**
      * @name delTarget
      * @uri /delTarget
-     * @param apps\common\entity\MainPlanTarget pData Description
+     * @param apps\common\entity\AffirmativeTarget pData Description
      * @description ลบข้อมูลเป้าประสงค์
-     * @return apps\common\entity\MainPlanTarget dataList
+     * @return apps\common\entity\AffirmativeTarget dataList
      */ 
     public function delTarget($pData);
     
     /**
      * @name delIssue
      * @uri /delIssue
-     * @param apps\common\entity\MainPlanIssue pData Description
+     * @param apps\common\entity\AffirmativeIssue pData Description
      * @description ลบข้อมูลประเด็นยุทธศาสตร์
-     * @return apps\common\entity\MainPlanIssue dataList
+     * @return apps\common\entity\AffirmativeIssue dataList
      */ 
     public function delIssue($pData);
     

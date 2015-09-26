@@ -8,11 +8,9 @@ use th\co\bpg\cde\collection\CJViewType;
 use apps\bginfo\interfaces\IEduDevPlanService;
 use th\co\bpg\cde\data\CDataContext;
 
-use apps\common\entity\MainPlanType;
-use apps\common\entity\MainPlanIssue;
-use apps\common\entity\MainPlanTarget;
-use apps\common\entity\MainPlanKpi;
-use apps\common\entity\MainPlanStrategy;
+use apps\common\entity\AffirmativeType;
+use apps\common\entity\AffirmativeKpi;
+use apps\common\entity\AffirmativeStrategy;
 
 
 class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
@@ -35,20 +33,23 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
     
     
     public function fetchType() {
-        $list = new MainPlanType();
+        $list = new AffirmativeType();
         return $this->datacontext->getObject($list);
     }
     
     public function fetchIssueAndTarget($pData) {
         
-        $sql="SELECT nIssue.id AS idIssue , nIssue.issueName AS nameIssue , nTarget.id AS idTarget , nTarget.targetName AS nameTarget "
-            ."FROM ".$this->pathEnt."\\MainPlanIssue nIssue "
-            ."LEFT JOIN ".$this->pathEnt."\\MainPlanTarget nTarget "
-            ."WITH nIssue.id = nTarget.mainPlanIssueId "
-            ."WHERE nIssue.mainPlanTypeId = :typeId AND nIssue.budgetYear = :budgetYear "
-            ."ORDER BY nIssue.id,nTarget.id";
-        
-        $dataIAT = $this->datacontext->getObject($sql,array("typeId"=>$pData->mainPlanTypeId,"budgetYear"=>$pData->budgetYear));
+  
+        $sql = "
+            SELECT nIssue.id AS idIssue , nIssue.issueName AS nameIssue , nTarget.id AS idTarget , nTarget.targetName AS nameTarget
+            FROM ".$this->pathEnt."\\AffirmativeIssue nIssue
+            LEFT JOIN ".$this->pathEnt."\\AffirmativeTarget nTarget
+            WITH nIssue.id = nTarget.issueId
+            WHERE nIssue.typeId = :typeId
+            ORDER BY nIssue.id,nTarget.id
+        ";
+            
+        $dataIAT = $this->datacontext->getObject($sql,array("typeId"=>$pData->typeId));
         
     
         $dataList = null;
@@ -81,24 +82,23 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
         }
         
         return $dataList;
-        //return $this->datacontext->getObject($sql,array("typeId"=>$pData->mainPlanTypeId));
-        
         
     }
     
     
     public function fetchKpi($pData) {
         
-        $list = new MainPlanKpi;
-        $list->setMainPlanTargetId($pData->mainPlanTargetId);
+        $list = new AffirmativeKpi;
+        $list->setTargetId($pData->targetId);
         return $this->datacontext->getObject($list);
+        //return $pData;
         
     }
     
     public function fetchStrategy($pData) {
         
-        $list = new MainPlanStrategy();
-        $list->setMainPlanTargetId($pData->mainPlanTargetId);
+        $list = new AffirmativeStrategy();
+        $list->setTargetId($pData->targetId);
         return $this->datacontext->getObject($list);
         
     }
