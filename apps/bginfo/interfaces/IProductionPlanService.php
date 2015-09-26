@@ -20,98 +20,83 @@ interface IProductionPlanService {
      * @name fetchPlan
      * @uri /fetchPlan
      * @param int year ปีงบประมาณ
-     * @param String budget ประเภทงบประมาณ
-     * @return String[] listsPlan
-     * @description ดึงข้อมูลแผนงาน
+     * @return String[] dataList
+     * @description ดึงข้อมูลแผนงานผลผลิต
      */ 
-    public function fetchPlan($year,$budget);
-    
-    /**
-     * @name fetchProduct
-     * @uri /fetchProduct
-     * @param int planId รหัสแผนงาน
-     * @param String budget ประเภทงบประมาณ
-     * @return String[] listsProduct
-     * @description ดึงข้อมูลแผนงาน
-     */ 
-    public function fetchProduct($planId,$budget);
-    
+    public function fetchPlan($year);
     
     
     /**
-     * @name insertPlan
-     * @uri /insertPlan
-     * @param String year ปีแผนงาน
-     * @param String name ชื่อแผนงาน
-     * @param String budget ประเภทงบประมาณ
-     * @return String reqInsertPlan
-     * @description เพิ่มข้อมูลแผนงาน
+     * @name savePlan
+     * @uri /savePlan
+     * @param apps\common\entity\BudgetPlan dataParam 
+     * @description บันทึกข้อมูลแผนงาน
+     * @return apps\common\entity\BudgetPlan dataList
      */ 
-    public function insertPlan($year,$name,$budget);
-    
-    /**
-     * @name insertProduct
-     * @uri /insertProduct
-     * @param String year ปีแผนงาน
-     * @param String planID รหัสแผนงาน
-     * @param String type โครงการหรือแผนงาน
-     * @param String name ชื่อผลผลิตโครงการ
-     * @param String budget ประเภทงบประมาณ
-     * @return String reqInsertProduct
-     * @description เพิ่มข้อมูลผลผลิตโครงการ
-     */ 
-    public function insertProduct($year,$planId,$type,$name,$budget);
+    public function savePlan($dataParam);
     
     
     /**
-     * @name updatePlan
-     * @uri /updatePlan
-     * @param String year ปีแผนงาน
-     * @param String id รหัสแผนงาน
-     * @param String name ชื่อแผนงาน
-     * @param String budget ประเภทงบประมาณ
-     * @return String reqUpdatePlan
-     * @description แก้ไขข้อมูลแผนงาน
+     * @name saveBudgetProject
+     * @uri /saveBudgetProject
+     * @param apps\common\entity\BudgetProject dataParam 
+     * @description บันทึกข้อมูลผลผลิตหรือโครงการ
+     * @return apps\common\entity\BudgetProject dataList
      */ 
-    public function updatePlan($year,$id,$name,$budget);
+    public function saveBudgetProject($dataParam);
     
     
     /**
-     * @name updateProduct
-     * @uri /updateProduct
-     * @param String year ปีแผนงาน
-     * @param String id รหัสผลผลิตและโครงการ
-     * @param String name ชื่อผลผลิตและโครงการ
-     * @param String type โครงการหรือแผนงาน
-     * @param String budget ประเภทงบประมาณ
-     * @return String reqUpdateProduct
-     * @description แก้ไขข้อมูลผลผลิตและโครงการ
-     */ 
-    public function updateProduct($year,$id,$name,$type,$budget);
-    
-    
-    
-    
-    
-    /**
-     * @name deletePlan
-     * @uri /deletePlan
-     * @param String id รหัสแผนงาน
-     * @param String budget ประเภทงบประมาณ
-     * @return String reqDeletePlan
+     * @name delPlan
+     * @uri /delPlan
+     * @param apps\common\entity\BudgetPlan dataParam 
      * @description ลบข้อมูลแผนงาน
+     * @return apps\common\entity\BudgetPlan dataList
      */ 
-    public function deletePlan($id,$budget);
+    public function delPlan($dataParam);
     
     /**
-     * @name deleteProduct
-     * @uri /deleteProduct
-     * @param String id รหัสแผนงาน
-     * @param String budget ประเภทงบประมาณ
-     * @return String reqDeleteProduct
-     * @description ลบข้อมูลแผนงาน
+     * @name delBudgetProject
+     * @uri /delBudgetProject
+     * @param apps\common\entity\BudgetProject dataParam 
+     * @description ลบข้อมูลผลผลิตหรือโครงการ
+     * @return apps\common\entity\BudgetProject dataList
      */ 
-    public function deleteProduct($id,$budget);
+    public function delBudgetProject($dataParam);
+  
     
-
+    
+    
+    
+    
+    
+    
+     /**
+     * @name fetchPlan3D
+     * @uri /fetchPlan3D
+     * @return String[] dataList
+     * @description ดึงข้อมูลแผนงานสามมิติ
+     */ 
+    public function fetchPlan3D();
+    
+    /**
+     * @name savePlan3D
+     * @uri /savePlan3D
+     * @param apps\common\entity\L3D\Plan dataParam 
+     * @param String action 
+     * @description บันทึกข้อมูลแผนงานสามมิติ
+     * @return apps\common\entity\L3D\Plan dataList
+     */ 
+    public function savePlan3D($dataParam,$action);
+    
+    
+    /**
+     * @name delPlan3D
+     * @uri /delPlan3D
+     * @param apps\common\entity\L3D\Plan dataParam 
+     * @description ลบข้อมูลแผนงานสามมิติ
+     * @return apps\common\entity\L3D\Plan dataList
+     */ 
+    public function delPlan3D($dataParam);
+    
 }

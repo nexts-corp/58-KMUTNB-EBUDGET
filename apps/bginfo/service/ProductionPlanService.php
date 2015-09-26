@@ -8,15 +8,13 @@ use th\co\bpg\cde\collection\CJViewType;
 use apps\bginfo\interfaces\IProductionPlanService;
 use th\co\bpg\cde\data\CDataContext;
 
-use apps\common\entity\BudgetPlan;
-use apps\common\entity\RevenuePlan;
-use apps\common\entity\BudgetProduct;
-use apps\common\entity\RevenueProduct;
+use apps\common\entity\L3D\Plan;
 
 class ProductionPlanService extends CServiceBase implements IProductionPlanService {
     
 
     public $datacontext;
+    public $pathEnt = "apps\\common\\entity\\";
     function __construct() {
         $this->datacontext = new CDataContext();
     }
@@ -28,174 +26,144 @@ class ProductionPlanService extends CServiceBase implements IProductionPlanServi
     }
     
     
-    
-    
-    public function fetchPlan($year,$budget) {
-        $sql="SELECT plan FROM apps\\common\\entity\\".$budget."Plan plan WHERE plan.budgetYear=:budgetYear AND plan.isActive=1 ORDER BY plan.id";
-        return $this->datacontext->getObject($sql,array("budgetYear"=>$year));
-    }
-    
-    public function fetchProduct($planId,$budget) {
-        $sql="SELECT product FROM apps\\common\\entity\\".$budget."Product product WHERE product.planId=:planId AND product.isActive=1 ORDER BY product.id";
-        return $this->datacontext->getObject($sql,array("planId"=>$planId));
-    }
-    
-    
-    
-    
-    public function insertPlan($year,$name,$budget){
-        if($budget=="Budget"){
-            $lists = new BudgetPlan();
-        }else if($budget=="Revenue"){
-            $lists = new RevenuePlan();
-        }
+    public function fetchPlan($year) {
         
-        $lists->setBudgetYear($year);
-        $lists->setPlanName($name);
-        $lists->setIsActive(1);
+        $sql = "
+            SELECT pla.id AS planId,pla.planName,pro.id,pro.projectName,pro.projectType
+            FROM ".$this->pathEnt."BudgetPlan pla
+            LEFT JOIN ".$this->pathEnt."BudgetProject pro 
+            WITH pla.id = pro.planId
+            WHERE pla.periodId = :budgetYear
+            ORDER BY pla.id,pro.id
+        ";
         
-        if(!$this->datacontext->getObject($lists)){
-            $this->datacontext->saveObject($lists);
-            return $lists;
-        }else{
-            return "exist";
-        }
-    }
-    
-    
-    public function insertProduct($year,$planId,$name,$type,$budget){
-        if($budget=="Budget"){
-            $lists = new BudgetProduct();
-        }else if($budget=="Revenue"){
-            $lists = new RevenueProduct();
-        }
-        
-        $lists->setBudgetYear($year);
-        $lists->setProductName($name);
-        $lists->setPlanId($planId);
-        $lists->setType($type);
-        $lists->setIsActive(1);
-        
-        if(!$this->datacontext->getObject($lists)){
-            $this->datacontext->saveObject($lists);
-            return $lists;
-        }else{
-            return "exist";
-        }
-    }
-    
-    
-    
-    
-    
-    
-    
-    public function updatePlan($year,$id,$name,$budget){
-        
-        if($budget=="Budget"){
-            $lists = new BudgetPlan();
-        }else if($budget=="Revenue"){
-            $lists = new RevenuePlan();
-        }
+        $dataGetObject = $this->datacontext->getObject($sql,array("budgetYear"=>$year));
         
         
-        $lists->setBudgetYear($year);
-        $lists->setPlanName($name);
-        $lists->setIsActive(1);
+        $treeData = null;
+        $idOld = null;
+        $idNew = null;
         
-        $chNotExist = false;
-        if(!$this->datacontext->getObject($lists)){
-            $lists->setId($id);
-            $chNotExist = true;
+        $j = 0;
+        for ($i = 0; $i < count($dataGetObject); $i++) {
             
-        }else{
-            $lists->setId($id);
-            if($this->datacontext->getObject($lists)){
-                $chNotExist = true;
-            }
-        }
-        
-        if($chNotExist){
-            $this->datacontext->updateObject($lists);
-            return $lists;
-        }else{
-            return "exist";
-        }
-        
-        
-    }
-    
-    
-    public function updateProduct($year,$id,$name,$type,$budget){
-        
-        if($budget=="Budget"){
-            $lists = new BudgetProduct();
-        }else if($budget=="Revenue"){
-            $lists = new RevenueProduct();
-        }
-        
-        
-        $lists->setBudgetYear($year);
-        $lists->setProductName($name);
-        $lists->setType($type);
-        $lists->setIsActive(1);
-        
-        $chNotExist = false;
-        if(!$this->datacontext->getObject($lists)){
-            $lists->setId($id);
-            $chNotExist = true;
             
-        }else{
-            $lists->setId($id);
-            if($this->datacontext->getObject($lists)){
-                $chNotExist = true;
+            $idNew = $dataGetObject[$i]["planId"];
+            
+            if($idOld!=$idNew){
+                
+                $treeData[$j]["planId"] = $dataGetObject[$i]["planId"];
+                $treeData[$j]["planName"] = $dataGetObject[$i]["planName"];
+                $treeData[$j]["checkPlanName"] = $dataGetObject[$i]["planName"];
+                $treeData[$j]["show"] = false;
+                $treeData[$j]["produce"] = array();
+                $treeData[$j]["project"] = array();
+                
+                $j++;
+                $k = 0;
+                $l = 0;
+                $idOld = $idNew;
             }
+            
+            if($dataGetObject[$i]["id"]!=""){
+                if($dataGetObject[$i]["projectType"]=="1"){
+                    $treeData[$j-1]["produce"][$k]["id"] = $dataGetObject[$i]["id"];
+                    $treeData[$j-1]["produce"][$k]["name"] = $dataGetObject[$i]["projectName"];
+                    $treeData[$j-1]["produce"][$k]["checkName"] = $dataGetObject[$i]["projectName"];
+                    $k++;
+                }else if($dataGetObject[$i]["projectType"]=="2"){
+                    $treeData[$j-1]["project"][$l]["id"] = $dataGetObject[$i]["id"];
+                    $treeData[$j-1]["project"][$l]["name"] = $dataGetObject[$i]["projectName"];
+                    $treeData[$j-1]["project"][$l]["checkName"] = $dataGetObject[$i]["projectName"];
+                    $l++;
+                }
+                
+            }
+            
+
         }
         
-        if($chNotExist){
-            $this->datacontext->updateObject($lists);
-            return $lists;
+       
+        return $treeData;
+        
+    }
+    
+    
+    
+    public function savePlan($dataParam) {
+        if($dataParam->id==NULL){
+            $this->datacontext->saveObject($dataParam);
         }else{
-            return "exist";
+            $this->datacontext->updateObject($dataParam);
         }
+        return $dataParam;
+    }
+    
+    public function saveBudgetProject($dataParam) {
+        if($dataParam->id==NULL){
+            $this->datacontext->saveObject($dataParam);
+        }else{
+            $this->datacontext->updateObject($dataParam);
+        }
+        return $dataParam;
+    }
+    
+    
+    public function delPlan($dataParam) {
+//        $delBudgetProject = new BudgetProject();
+//        $delBudgetProject->setPlanId($dataParam->id);
+//        
+//        return $this->datacontext->removeObject($delBudgetProject);
+//        if($this->datacontext->removeObject($delBudgetProject)){
+            $this->datacontext->removeObject($dataParam);
+            return $dataParam;
+//        }
         
+    }
+    
+    public function delBudgetProject($dataParam) {
+        
+        return $this->datacontext->removeObject($dataParam);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    public function fetchPlan3D() {
+        
+        $query = new Plan();
+        return $this->datacontext->getObject($query);
+        
+    }
+    
+    
+    public function savePlan3D($dataParam,$action) {
+        //return $dataParam;
+        if($action=="add"){
+            $this->datacontext->saveObject($dataParam);
+        }else if($action=="edit"){
+            $this->datacontext->updateObject($dataParam);
+        }
+            
+        return $dataParam;
         
     }
     
     
     
-    public function deletePlan($id,$budget){
-        
-        if($budget=="Budget"){
-            $lists=new BudgetPlan();
-        }else if($budget=="Revenue"){
-            $lists=new RevenuePlan();
-        }
-        
-        $lists->setId($id);
-        $lists->setIsActive(0);
-        
-        return $this->datacontext->updateObject($lists);
-
+    public function delPlan3D($dataParam) {
+        $this->datacontext->removeObject($dataParam);
+        return $dataParam;
     }
-    
-    
-    
-    public function deleteProduct($id,$budget){
-        
-        if($budget=="Budget"){
-            $lists=new BudgetProduct();
-        }else if($budget=="Revenue"){
-            $lists=new RevenueProduct();
-        }
-        
-        $lists->setId($id);
-        $lists->setIsActive(0);
-        
-        return $this->datacontext->updateObject($lists);
-
-    }
-    
     
     
 

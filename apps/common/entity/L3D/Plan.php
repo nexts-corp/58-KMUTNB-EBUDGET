@@ -12,7 +12,6 @@ class Plan extends EntityBase {
     /**
      * @Id 
      * @Column(type="integer",length=11,name="PLANID")
-     * @GeneratedValue
      */
     public $id;
 
