@@ -77,12 +77,12 @@ class Driver implements \Doctrine\DBAL\Driver
             $dsn = 'sqlsrv:server=';
 
             if (isset($params['host'])) {
-                
                 $dsn .= $params['host'];
             }
+            
 
             if (isset($params['port']) && !empty($params['port'])) {
-                //$dsn .= ':' . $params['port'];
+              //  $dsn .= ',' . $params['port'];
             }
 
             if (isset($params['dbname'])) {
@@ -101,7 +101,6 @@ class Driver implements \Doctrine\DBAL\Driver
                     $dsn .= 'host=' . $params['host'] . ';';
                 }
             }
-            
             if (isset($params['port'])) {
                 //$dsn .= 'port=' . $params['port'] . ';';
             }
@@ -112,7 +111,7 @@ class Driver implements \Doctrine\DBAL\Driver
             if(isset($params['charset'])) {
                 $dsn .= 'charset=' . $params['charset'] .';';
             }
-
+            //echo $dsn;
             return $dsn;
         }
     }
