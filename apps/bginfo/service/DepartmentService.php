@@ -2,8 +2,11 @@
 
 namespace apps\bginfo\service;
 
-use apps\common\entity\BudgetPlan;
-use apps\common\entity\Campus;
+use apps\bginfo\interfaces\apps;
+use apps\common\entity\ActivityType;
+use apps\common\entity\L3D\Campus;
+use apps\common\entity\L3D\Department;
+use apps\common\entity\MappingDepartmentType;
 use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use th\co\bpg\cde\core\CServiceBase;
@@ -15,6 +18,8 @@ class DepartmentService extends CServiceBase implements IDepartmentService
 {
 
     public $datacontext;
+
+    public $pathEnt = "apps\\common\\entity";
 
     function __construct()
     {
@@ -30,39 +35,100 @@ class DepartmentService extends CServiceBase implements IDepartmentService
 
     public function fetchCampus()
     {
-        $sql = "SELECT * FROM [3D_CAMPUS] WHERE CAMPUSSTATUS = 'Y'";
-        return $this->datacontext->pdoQuery($sql);
+        $obj = new Campus();
+        $obj->setCampusStatus('Y');
+        return $this->datacontext->getObject($obj);
     }
 
     public function fetchDepartment($campusID)
     {
-        $sql = $this->toSqlDepartment(0, $campusID);
-        $headDepartment = $this->datacontext->pdoQuery($sql);
 
-        for ($i = 0; $i < count($headDepartment); $i++) {
+        $sql = "SELECT dept.id AS deptID,dept.deptName,dept.masterId,maping.id as mapID,act.id AS actTypeID,act.actTypeName "
+            . "FROM " . $this->pathEnt . "\\L3D\\Department dept "
+            . "LEFT JOIN " . $this->pathEnt . "\\MappingDepartmentType maping "
+            . "WITH dept.id = maping.deptId "
+            . "LEFT JOIN " . $this->pathEnt . "\\ActivityType act "
+            . "WITH maping.actId = act.id WHERE dept.deptStatus = 'Y' AND dept.campusId=" . $campusID;
 
-            $masterID = $headDepartment[$i]["DEPARTMENTID"];
-            $sql = $this->toSqlDepartment($masterID, $campusID);
-            $subDepartment = $this->datacontext->pdoQuery($sql);
+        return $this->datacontext->getObject($sql);
+    }
 
-            for ($j = 0; $j < count($subDepartment); $j++) {
+    public function fetchDepartmentMain($campusID)
+    {
+        $SQL = "WITH  Departmnet " .
+            "AS ( " .
+            "SELECT  DEPARTMENTID, [DEPARTMENTNAME], MASTERID,CAMPUSID,CAST(([DEPARTMENTNAME]) AS VARCHAR(1000)) AS 'MultiLevel',DEPARTMENTSTATUS,Level = 0 " .
+            "FROM    L3D_DEPARTMENT " .
+            "WHERE   DEPARTMENTID = 0 OR MASTERID=  NULL " .
+            "UNION ALL " .
+            "SELECT  t.DEPARTMENTID, t.[DEPARTMENTNAME], t.MASTERID,t.CAMPUSID,CAST((a.MultiLevel +'|'+ t.DEPARTMENTNAME) AS VARCHAR(1000)) AS 'MultiLevel',t.DEPARTMENTSTATUS,a.Level+1 " .
+            "FROM    L3D_DEPARTMENT AS t JOIN Departmnet AS a ON t.MASTERID = a.DEPARTMENTID) " .
+            "SELECT DEPARTMENTID,DEPARTMENTNAME,Level FROM Departmnet WHERE CAMPUSID = " . $campusID . " AND DEPARTMENTSTATUS = 'Y' AND LEVEL = 1 ORDER BY DEPARTMENTID";
 
-                $masterID = $subDepartment[$j]["DEPARTMENTID"];
-                $sql = $this->toSqlDepartment($masterID, $campusID);
-                $sub2Department = $this->datacontext->pdoQuery($sql);
-                $subDepartment[$j]["sub2Department"] = $sub2Department;
+        return $this->datacontext->pdoQuery($SQL);
+    }
+
+    public function fetchActivityType()
+    {
+        $obj = new ActivityType();
+        $obj->setActTypeStatus('Y');
+
+        return $this->datacontext->getObject($obj);
+    }
+
+
+    public function saveDepartment($dataDept, $dataMaping)
+    {
+        if ($this->datacontext->saveObject($dataDept) && $this->datacontext->saveObject($dataMaping)) {
+
+            return $dataMaping->id;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function editDepartment($dataDept, $dataMaping)
+    {
+        if ($dataMaping->id == "null" || $dataMaping->id == null) {
+
+            if ($this->datacontext->updateObject($dataDept)) {
+
+                if ($this->datacontext->saveObject($dataMaping)) {
+                    return $dataMaping->id;
+                } else {
+                    return false;
+                }
+            } else {
+
+            }
+        } else {
+
+            if ($this->datacontext->updateObject($dataDept) && $this->datacontext->updateObject($dataMaping)) {
+
+                return $dataMaping->id;
+            } else {
+                return false;
             }
 
-            $headDepartment[$i]["subDepartment"] = $subDepartment;
         }
 
-        return $headDepartment;
     }
 
-    private function toSqlDepartment($masterID, $campusID)
+
+    public function removeDepartment($idDept, $mapid)
     {
-        $sql = "SELECT * FROM [3D_DEPARTMENT] WHERE  MASTERID = " . $masterID . " AND DEPARTMENTSTATUS = 'Y' AND CAMPUSID = " . $campusID;
-        return $sql;
-    }
+        $obj = new Department();
+        $obj->setId($idDept);
+        $obj->setDeptStatus('N');
 
+        if ($this->datacontext->updateObject($obj)) {
+            $obj2 = new MappingDepartmentType();
+            $obj2->setId($mapid);
+            return $this->datacontext->removeObject($obj2);
+        } else {
+            return false;
+        }
+
+    }
 }
