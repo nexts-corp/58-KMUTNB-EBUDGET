@@ -28,9 +28,27 @@ interface ICenterService {
     /**
      * @name insert
      * @uri /insert
-     * @param /apps/common/entity/AffirmativePlanCenter affirmative Description
-     * @return String[] add Description
+     * @param apps\common\entity\AffirmativePlanCentre affirmative Description
+     * @return String[] insert Description
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
     public function insert($affirmative);
+
+    /**
+     * @name update
+     * @uri /update
+     * @param apps\common\entity\AffirmativePlanCentre affirmative Description
+     * @return boolean update Description
+     * @description ผู้เสนอราคาสูงสุดต่อคลัง
+     */
+    public function update($affirmative);
+
+    /**
+     * @name delete
+     * @uri /delete
+     * @param integer affirmativeId Description
+     * @return boolean delete Description
+     * @description ผู้เสนอราคาสูงสุดต่อคลัง
+     */
+    public function delete($affirmativeId);
 } 

@@ -129,6 +129,45 @@ class CenterService extends CServiceBase implements ICenterService{
     }
 
     public function insert($affirmative){
-        return $affirmative;
+        $return = array();
+
+        foreach($affirmative as $key => $val){
+            $val->budgetPeriodId = $this->getYear()->year;
+
+            if (!$this->datacontext->saveObject($val)) {
+                $return[$key]["result"] = false;
+                $return[$key]["msg"] = $this->datacontext->getLastMessage();
+            } else {
+                $return[$key]["result"] = true;
+                $return[$key]["id"] = $affirmative[$key]->id;
+            }
+        }
+
+        return $return;
+    }
+
+    public function update($affirmative){
+        $return = true;
+
+        $affirmative[0]->budgetPeriodId = $this->getYear()->year;
+
+        if (!$this->datacontext->updateObject($affirmative[0])) {
+            $return = $this->datacontext->getLastMessage();
+        }
+
+        return $return;
+    }
+
+    public function delete($affirmativeId){
+        $return = true;
+
+        $aff = new \apps\common\entity\AffirmativePlanCentre();
+        $aff->id = $affirmativeId;
+
+        if (!$this->datacontext->removeObject($aff)) {
+            $return = $this->datacontext->getLastMessage();
+        }
+
+        return $return;
     }
 } 

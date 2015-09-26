@@ -60,7 +60,7 @@
                                 <div class="form-group">
                                     <label class="col-md-3 control-label text-right" for="affKpiId">ตัวชี้วัด</label>
                                     <div class="col-md-6">
-                                        <select type="text" class="form-control input-sm" name="affKpiId" id="affKpiId" required></select>
+                                        <select type="text" class="form-control input-sm" name="affKpiId" id="affKpiId"></select>
                                     </div>
                                 </div>
 
@@ -111,11 +111,40 @@
                                 </div>
                                 <div id="loadingForm" class="col-md-12 text-center"></div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-success save"><i class="fa fa-save"></i> บันทึก</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                    <ul class="nav nav-pills sort-source pull-right" data-option-key="filter">
+                                        <li data-option-value="*" class="">
+                                            <button class="btn btn-success save"><i class="fa fa-save"></i> บันทึก</button>
+                                        </li>
+                                        <li data-option-value="" class="padding-left">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="panelDeleteForm" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">ลบตัวชี้วัดคำรับรองการปฏิบัติงาน</h4>
+                        </div>
+                        <div class="modal-body">
+                        </div>
+                        <div class="modal-footer">
+                            <ul class="nav nav-pills sort-source pull-right" data-option-key="filter">
+                                <li data-option-value="*" class="">
+                                    <button class="btn btn-danger save"><i class="fa fa-trash"></i> ยืนยันการลบ</button>
+                                </li>
+                                <li data-option-value="" class="padding-left">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -126,6 +155,9 @@
 {{>footer}}
 
 <script type="text/javascript">
+    var findNode = {};
+    var listArr = {};
+
     $(function () {
         centerForm();
 
@@ -201,6 +233,8 @@
                             + '<td class="text-center"><button class="btn btn-sm btn-success add" data-pid="'+value3["targetId"]+'"><i class="fa fa-plus"></i> เพิ่ม</button></td>'
                         + '</tr>';
 
+                        findNode[value3["targetId"]] = value1["typeId"];
+
                         $.each(value3["kpi"], function(key4, value4){
                             var org = [];
                             if(value4["isEducation"] == "1") org.push("- จัดการศึกษา");
@@ -214,11 +248,13 @@
                                 + '<td>'+value4["remark"]+'</td>'
                                 + '<td class="text-center">'
                                     + '<div class="btn-group">'
-                                        + '<button type="button" class="btn btn-sm btn-warning" data-pid="'+value3["targetId"]+'" data-id="'+value4["id"]+'"><i class="fa fa-pencil"></i></button>'
-                                        + '<button type="button" class="btn btn-sm btn-default" data-pid="'+value3["targetId"]+'" data-id="'+value4["id"]+'"><i class="fa fa-trash"></i></button>'
+                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="'+value3["targetId"]+'" data-id="'+value4["id"]+'"><i class="fa fa-pencil"></i></button>'
+                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="'+value3["targetId"]+'" data-id="'+value4["id"]+'"><i class="fa fa-trash"></i></button>'
                                     + '</div>'
                                 + '</td>'
                             + '</tr>';
+
+                            listArr[value4["id"]] = value4;
                         });
                     });
                 });
@@ -261,31 +297,192 @@
                     });
                     if(isValid){
                         var fdata = dataObject(parentId, null);
-                        var dataJSON = JSON.stringify({affirmative: fdata});
-                        var dataJSONEN = encodeURIComponent(dataJSON);
-
-                        centerInsert(parentId, dataJSONEN);
+                        centerInsert(parentId, fdata);
                     }
                 });
             });
+
+            centerAction();
         }
     }
 
-    function centerInsert(parentId, dataJSONEN){
+    function centerAction(){
+        $("button.edit").unbind("click").click(function(){
+            var parentId = $(this).attr("data-pid");
+            var id = $(this).attr("data-id");
+
+            // reset form for new insert
+            $("#loadingForm").html('');
+            $("#form").trigger('reset');
+            $("#panelForm").modal("show");
+            listsKpi(parentId);
+
+            $("#form input[type=text], #form textarea, #form select").each(function(){
+                var fid = $(this).attr("id");
+                $("#"+fid).val(listArr[id][fid]);
+            });
+
+            $("#form input[type=checkbox]").each(function(){
+                var fid = $(this).attr("id");
+                if(listArr[id][fid] == 1) $("#"+fid).prop("checked", true);
+                else $("#"+fid).prop("checked", false);
+            });
+
+            $("button.save").unbind("click").click(function(){
+                var isValid = true;
+                $('#form input[required]').each(function() {
+                    if($(this).val() == "" && !$(this).prop("disabled"))
+                        isValid = false;
+                });
+                if(isValid){
+                    var fdata = dataObject(parentId, id);
+                    centerEdit(parentId, fdata);
+                }
+            });
+        });
+
+        $("button.delete").unbind("click").click(function(){
+            var parentId = $(this).attr("data-pid");
+            var id = $(this).attr("data-id");
+
+            $("#panelDeleteForm").modal("show");
+            $("#panelDeleteForm").find('td').each (function() {
+                if($(this).attr("id")){
+                    var aId = $(this).attr("id");
+                    var name = aId.replace('Del', '');
+                    $("#"+aId).html(listArr[id][name]);
+                }
+            });
+            $("button.save").unbind("click").click(function(){
+                centerDelete(parentId, id);
+            });
+        });
+    }
+
+    function centerInsert(parentId, fdata){
         $("#loadingForm").html("Loading...");
 
         setTimeout(function(){
+            var dataJSON = JSON.stringify({affirmative: fdata});
+            var dataJSONEN = encodeURIComponent(dataJSON);
+
             var datas = callAjax("{{_context_path}}/api/affirmative/center/insert", "post", dataJSONEN, "json");
             if(typeof datas !== "undefined" && datas !== null){
-                var data = datas["add"][0];
+                var data = datas["insert"][0];
                 if(data["result"] == true){
+                    $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
 
+                    var id = data["id"];
+                    listArr[id] = fdata[0];
+                    listArr[id]["id"] = id;
+
+                    var org = [];
+                    if(listArr[id]["isEducation"] == "1") org.push("- จัดการศึกษา");
+                    if(listArr[id]["isSupport"] == "1") org.push("- สนับสนุนการศึกษา");
+                    if(listArr[id]["isService"] == "1") org.push("- บริการวิชาการ");
+
+                    // insert node in branch
+                    var  input = '<tr data-tt-id="aff'+id+'" data-tt-parent-id="target'+parentId+'">'
+                        + '<td style="padding-left: 20px;">'+listArr[id]["no"]+' '+listArr[id]["name"]+'</td>'
+                        + '<td class="center">'+listArr[id]["unit"]+'</td>'
+                        + '<td>'+org.join('<br>')+'</td>'
+                        + '<td>'+listArr[id]["remark"]+'</td>'
+                        + '<td class="text-center">'
+                            + '<div class="btn-group">'
+                                + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="'+parentId+'" data-id="'+id+'"><i class="fa fa-pencil"></i></button>'
+                                + '<button type="button" class="btn btn-sm btn-default delete" data-pid="'+parentId+'" data-id="'+id+'"><i class="fa fa-trash"></i></button>'
+                            + '</div>'
+                        + '</td>'
+                    + '</tr>';
+
+                    var node = $("#tableall").treetable("node", "target"+parentId);
+                    $("#tableall").treetable("loadBranch", node, input);
+
+                    var node2 = $("#table"+findNode[parentId]).treetable("node", "target"+parentId);
+                    $("#table"+findNode[parentId]).treetable("loadBranch", node2, input);
+
+                    $("#panelForm").modal("hide");
+                    centerAction();
                 }
                 else{
                     $("#loadingForm").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
                 }
             }
         }, 500);
+    }
+
+    function centerEdit(parentId, fdata){
+        $("#loadingForm").html("Loading...");
+
+        setTimeout(function(){
+            var dataJSON = JSON.stringify({affirmative: fdata});
+            var dataJSONEN = encodeURIComponent(dataJSON);
+
+            var datas = callAjax("{{_context_path}}/api/affirmative/center/update", "post", dataJSONEN, "json");
+            if(typeof datas !== "undefined" && datas !== null){
+                if(datas["update"] == true){
+                    $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
+
+                    var id = fdata[0]["id"];
+                    listArr[id] = fdata[0];
+
+                    var org = [];
+                    if(listArr[id]["isEducation"] == "1") org.push("- จัดการศึกษา");
+                    if(listArr[id]["isSupport"] == "1") org.push("- สนับสนุนการศึกษา");
+                    if(listArr[id]["isService"] == "1") org.push("- บริการวิชาการ");
+
+                    // insert node in branch
+                    var  input = '<tr data-tt-id="aff'+id+'" data-tt-parent-id="target'+parentId+'">'
+                        + '<td style="padding-left: 20px;">'+listArr[id]["no"]+' '+listArr[id]["name"]+'</td>'
+                        + '<td class="center">'+listArr[id]["unit"]+'</td>'
+                        + '<td>'+org.join('<br>')+'</td>'
+                        + '<td>'+listArr[id]["remark"]+'</td>'
+                        + '<td class="text-center">'
+                            + '<div class="btn-group">'
+                                + '<button type="button" class="btn btn-sm btn-warning" data-pid="'+parentId+'" data-id="'+id+'"><i class="fa fa-pencil"></i></button>'
+                                + '<button type="button" class="btn btn-sm btn-default" data-pid="'+parentId+'" data-id="'+id+'"><i class="fa fa-trash"></i></button>'
+                            + '</div>'
+                        + '</td>'
+                    + '</tr>';
+
+                    var node = $("#tableall").treetable("node", "target"+parentId);
+                    $("#tableall").treetable("loadBranch", node, input);
+
+                    var node2 = $("#table"+findNode[parentId]).treetable("node", "target"+parentId);
+                    $("#table"+findNode[parentId]).treetable("loadBranch", node2, input);
+
+                    $("#panelForm").modal("hide");
+                    centerAction();
+                }
+                else{
+                    $("#loadingForm").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
+                }
+            }
+        }, 500);
+    }
+
+    function centerDelete(parentId, id){
+        var dataJSON = JSON.stringify({affirmativeId: id});
+        var dataJSONEN = encodeURIComponent(dataJSON);
+
+        var datas = callAjax("{{_context_path}}/api/affirmative/center/delete", "post", dataJSONEN, "json");
+        if(typeof datas !== "undefined" && datas !== null){
+            if(datas["delete"] == true){
+                $("#tableall").treetable("removeNode", "aff"+id);
+                var parent = $('#tableall').treetable('node', "target"+parentId);
+                if (parent.children.length == 0) {
+                    parent.row.find('.indenter').html('');
+                }
+
+                $("#table"+findNode[parentId]).treetable("removeNode", "aff"+id);
+                var parent = $("#table"+findNode[parentId]).treetable('node', "target"+parentId);
+                if (parent.children.length == 0) {
+                    parent.row.find('.indenter').html('');
+                }
+
+                $("#panelDeleteForm").modal("hide");
+            }
+        }
     }
 
     function listsKpi(targetId){
@@ -302,7 +499,10 @@
 
     function dataObject(parentId, id){
         var fParam = {};
-        fParam["targetId"] = parentId;
+        if(id != null){
+            fParam["id"] = id;
+        }
+        fParam["affTargetId"] = parentId;
         $("#form select, #form input[type=text], #form textarea").each(function(){
             var name = $(this).attr("name");
             var val = $(this).val();
