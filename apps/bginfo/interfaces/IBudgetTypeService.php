@@ -29,10 +29,11 @@ interface IBudgetTypeService {
      * @name saveBudgetType
      * @uri /saveBudgetType
      * @param apps\common\entity\BudgetType pData Description
+     * @param Interger editId Description
      * @description บันทึกข้อมูลประเภทหมวดรายจ่าย
      * @return apps\common\entity\BudgetType dataList
      */ 
-    public function saveBudgetType($pData);
+    public function saveBudgetType($pData,$editId);
     
     /**
      * @name delBudgetType

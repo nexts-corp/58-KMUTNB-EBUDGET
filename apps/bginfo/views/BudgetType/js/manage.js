@@ -7,7 +7,8 @@ myApp.controller('mainController', function($scope,$http,$controller) {
         
         $("[ng-app]").show();
         
-        $scope.cmListYear();
+        $scope.fetchBudgetType(0,'start');
+        
         
         $scope.dataBudgetType = [];
         $scope.idLevel  = [];
@@ -49,6 +50,7 @@ myApp.controller('mainController', function($scope,$http,$controller) {
     $scope.modal = function(action,editId,name) {
         $scope.action = action;
         $scope.textName = name;
+        $scope.textId = editId;
         $scope.editId = editId;
         
         $scope.centerModal();
@@ -74,6 +76,10 @@ myApp.controller('mainController', function($scope,$http,$controller) {
     $scope.fetchBudgetType = function(masterId,action,name) {
         $scope.dataBudgetType = 0;
         
+        if(typeof masterId === 'undefined'){
+            masterId = 0;
+        }
+        
         if(action==="start"){
             $scope.idLevel = [masterId];
             $scope.nameLevel  = [];
@@ -90,11 +96,13 @@ myApp.controller('mainController', function($scope,$http,$controller) {
         
         $scope.masterId = masterId;
         //console.log($scope.findValueArray($scope.idLevel,0));
-        var sendData = {pData:{budgetYear:$scope.selectYear,masterId:masterId,isActive:1}};
+        var sendData = {pData:{masterId:masterId}};
+        $scope.waitDataList = true;
         $http.post("fetchBudgetType",sendData).then(function(response) {
             //console.log(JSON.stringify(response.data.dataList, null, 4));
             $scope.dataBudgetType = response.data.dataList;
             $scope.soitTextName();
+            $scope.waitDataList = false;
         });
     };
     
@@ -104,20 +112,18 @@ myApp.controller('mainController', function($scope,$http,$controller) {
     };
     
     $scope.saveData = function(){
-        console.log("test");
         var pData = {};
         pData.typeName = $scope.textName;
-        pData.id = $scope.editId;
+        pData.id = $scope.textId;
         pData.masterId = $scope.masterId;
-        pData.budgetYear = $scope.selectYear;
-        pData.isActive = 1;
         
-        var sendData = {pData:pData};
+        var sendData = {pData:pData,editId:$scope.editId};
         $http.post("saveBudgetType",sendData).then(function(response) {
             if($scope.action==="add"){
                 $scope.dataBudgetType.push(response.data.dataList);
             }else if($scope.action==="edit"){
                 $scope.dataBudgetType[$scope.findIndexObject($scope.dataBudgetType,"id",$scope.editId)].typeName=$scope.textName;
+                $scope.dataBudgetType[$scope.findIndexObject($scope.dataBudgetType,"id",$scope.editId)].id=$scope.textId;
             }
             $("#modal").modal('hide');
         });
@@ -126,7 +132,7 @@ myApp.controller('mainController', function($scope,$http,$controller) {
     $scope.delData = function(delId){
         
         if(confirm("ยืนยันการลบข้อมูล")){
-            var sendData = {pData:{id:delId,isActive:0}};
+            var sendData = {pData:{id:delId}};
             $http.post("delBudgetType",sendData).then(function(response) {
                 $scope.dataBudgetType.splice($scope.findIndexObject($scope.dataBudgetType,"id",response.data.dataList.id), 1);
             });

@@ -36,17 +36,23 @@ class BudgetTypeService extends CServiceBase implements IBudgetTypeService {
     }
     
     
-    public function saveBudgetType($pData) {
-        if($pData->id==null){ 
+    public function saveBudgetType($pData,$editId) {
+        //return $pData;
+        if($editId==NULL){ 
             $this->datacontext->saveObject($pData);
         }else{
-            $this->datacontext->updateObject($pData);
+            $query = new BudgetType();
+            $query->setId($editId);
+            if($this->datacontext->removeObject($query)){
+                $this->datacontext->saveObject($pData);
+            }
         }
         return $pData;
     }
     
     public function delBudgetType($pData) {
-        $this->datacontext->updateObject($pData);
-        return $pData;
+        $query = new BudgetType();
+        $query->setId($pData->id);
+        return $this->datacontext->removeObject($query);
     }
 }
