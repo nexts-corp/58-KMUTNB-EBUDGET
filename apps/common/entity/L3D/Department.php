@@ -12,7 +12,6 @@ class Department extends EntityBase {
     /**
      * @Id 
      * @Column(type="integer",length=11,name="DEPARTMENTID")
-     * @GeneratedValue
      */
     public $id;
 

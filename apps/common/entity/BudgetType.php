@@ -11,7 +11,6 @@ class BudgetType extends EntityBase {
     /**
      * @Id 
      * @Column(type="integer",length=11,name="BUDGETTYPEID")
-     * @GeneratedValue
      */
     public $id;
 
