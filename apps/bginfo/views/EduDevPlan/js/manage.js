@@ -45,7 +45,7 @@ myApp.controller('mainController', function($scope,$http,$controller) {
     };
    
    $scope.pageKpiAndStrategy = function(targetId,issueName,targetName){
-       console.log(targetName);
+
        $scope.dataKpi = {};
        $scope.dataStrategy = {};
        $scope.fetchKpi(targetId);
@@ -91,7 +91,7 @@ myApp.controller('mainController', function($scope,$http,$controller) {
     
     $scope.fetchIssueAndTarget = function() {
         $scope.dataIssueAndTarget = 0;
-        var sendData = {pData:{mainPlanTypeId:$scope.selectType,budgetYear:$scope.selectYear}};
+        var sendData = {pData:{typeId:$scope.selectType}};
         
         $http.post("fetchIssueAndTarget",sendData).then(function(response) {
  
@@ -102,7 +102,7 @@ myApp.controller('mainController', function($scope,$http,$controller) {
     };
     
     $scope.fetchKpi = function(targetId) {
-        var sendData = {pData:{mainPlanTargetId:targetId}};
+        var sendData = {pData:{targetId:targetId}};
         $http.post("fetchKpi",sendData).then(function(response) {
             //console.log(JSON.stringify(response.data.dataList, null, 4));
             $scope.dataKpi = response.data.dataList;
@@ -110,7 +110,7 @@ myApp.controller('mainController', function($scope,$http,$controller) {
     };
     
     $scope.fetchStrategy = function(targetId) {
-        var sendData = {pData:{mainPlanTargetId:targetId}};
+        var sendData = {pData:{targetId:targetId}};
         $http.post("fetchStrategy",sendData).then(function(response) {
             //console.log(JSON.stringify(response.data.dataList, null, 4));
             $scope.dataStrategy = response.data.dataList;
@@ -129,22 +129,19 @@ myApp.controller('mainController', function($scope,$http,$controller) {
         pData.id = $scope.idEdit;
         
         if($scope.type==="kpi"){
-            pData.mainPlanTargetId = $scope.targetId;
+            pData.targetId = $scope.targetId;
             pData.kpiName = $scope.textName;
         }else if($scope.type==="strategy"){
-            pData.mainPlanTargetId = $scope.targetId;
+            pData.targetId = $scope.targetId;
             pData.strategyName = $scope.textName;
         }else if($scope.type==="target"){
-            pData.mainPlanIssueId = $scope.issueId;
+            pData.issueId = $scope.issueId;
             pData.targetName = $scope.textName;
         }else if($scope.type==="issue"){
-            pData.mainPlanTypeId = $scope.selectType;
+            pData.typeId = $scope.selectType;
             pData.issueName = $scope.textName;
         }
         
-        if($scope.action==="add"){
-            pData.budgetYear = $scope.selectYear;
-        }
         
         var sendData = {pData:pData};
         
@@ -183,10 +180,7 @@ myApp.controller('mainController', function($scope,$http,$controller) {
             }else if($scope.type==="issue"){
                 var arrayIssue = {idIssue:response.data.dataList.id,nameIssue:response.data.dataList.issueName};
                 if($scope.action==="add"){
-                    //console.log(JSON.stringify(arrayIssue, null, 4));
-                    //console.log(JSON.stringify($scope.dataIssue, null, 4));
                     $scope.dataIssueAndTarget.push(arrayIssue);
-                    //console.log(JSON.stringify($scope.dataIssueAndTarget, null, 4));
                 }else if($scope.action==="edit"){
                     $scope.dataIssueAndTarget[$scope.findIndexObject($scope.dataIssueAndTarget,"idIssue",$scope.idEdit)].nameIssue=$scope.textName;
                 }
@@ -201,7 +195,6 @@ myApp.controller('mainController', function($scope,$http,$controller) {
     
     
     $scope.delData = function(type,delId,arrayIndex){
-        
         if(confirm("ยืนยันการลบข้อมูล")){
             var sendData = {pData:{id:delId}};
             $http.post("del"+$scope.firstLetterUpperCase(type),sendData).then(function(response) {
