@@ -17,35 +17,51 @@ class CenterService extends CServiceBase implements ICenterService{
         $this->logger = \Logger::getLogger("root");
         $this->datacontext = new CDataContext(NULL);
     }
-    
+
+    function getYear() {
+        $sql = "SELECT"
+                ." yr"
+            ." FROM ".$this->ent."\\Year yr"
+            ." WHERE yr.yearStatus = :active";
+        $param = array(
+            "active" => "Y"
+        );
+        $data = $this->datacontext->getObject($sql, $param); //get STATUS is Active
+
+        return $data[0];
+    }
+
     public function listsAll(){
         $sql = "SELECT"
-            ." pt.id as typeId, pt.planTypeName,"
-            ." pi.id as issueId, pi.issueName,"
-            ." pg.id as targetId, pg.targetName,"
-            ." ac.id, ac.mainPlanKpiId, ac.no, ac.name,"
-            ." ac.unit, ac.score1, ac.score2, ac.score3,"
-            ." ac.score4, ac.score5, ac.isEducation,"
-            ." ac.isSupport, ac.isService, ac.remark, ac.target"
-        ." FROM ".$this->ent."\\MainPlanTarget pg"
-        ." INNER JOIN ".$this->ent."\\MainPlanIssue pi WITH pi.id = pg.mainPlanIssueId"
-        ." INNER JOIN ".$this->ent."\\MainPlanType pt WITH pt.id=pi.mainPlanTypeId"
-        ." LEFT JOIN ".$this->ent."\\AffirmativeCentre ac WITH ac.mainPlanTargetId=pg.id";
-
-        $data = $this->datacontext->getObject($sql);
+                ." tp.id AS typeId, tp.typeName,"
+                ." ai.id AS issueId, ai.issueName,"
+                ." tg.id AS targetId, tg.targetName,"
+                ." ac.id, ac.affKpiId as kpiId, ac.no, ac.name,"
+                ." ac.unit, ac.score1, ac.score2, ac.score3,"
+                ." ac.score4, ac.score5, ac.isEducation,"
+                ." ac.isSupport, ac.isService, ac.remark, ac.target"
+            ." FROM ".$this->ent."\\AffirmativeTarget tg"
+            ." JOIN ".$this->ent."\\AffirmativeIssue ai WITH ai.id = tg.issueId"
+            ." JOIN ".$this->ent."\\AffirmativeType tp WITH tp.id = ai.typeId"
+            ." LEFT JOIN ".$this->ent."\\AffirmativePlanCentre ac WITH ac.affTargetId = tg.id"
+            ." WHERE tp.budgetPeriodId = :year";
+        $param = array(
+            "year" => $this->getYear()->year
+        );
+        $data = $this->datacontext->getObject($sql, $param);
 
         $group = [];
         $typeKey = [];
         $issueKey = [];
         $targetKey = [];
         foreach($data as $key => $val){
-            $typeKey[$val["typeId"]] = $val["planTypeName"];
+            $typeKey[$val["typeId"]] = $val["typeName"];
             $issueKey[$val["issueId"]] = $val["issueName"];
             $targetKey[$val["targetId"]] = $val["targetName"];
 
-            $group[$val["typeId"]][$val["issueId"]][$val["issueId"]][] = array(
+            $group[$val["typeId"]][$val["issueId"]][$val["targetId"]][] = array(
                 "id" => $val["id"],
-                "mainPlanKpiId" => $val["mainPlanKpiId"],
+                "kpiId" => $val["kpiId"],
                 "no" => $val["no"],
                 "name" => $val["name"],
                 "unit" => $val["unit"],
@@ -68,11 +84,13 @@ class CenterService extends CServiceBase implements ICenterService{
             foreach($type as $key2 => $issue){
                 $targetArr = [];
 
-                foreach($type as $key3 => $target){
+                foreach($issue as $key3 => $target){
                     $kpiArr = [];
 
                     foreach($target as $key4 => $kpi){
-                        $kpiArr[] = $kpi;
+                        if($kpi["id"] != ""){
+                            $kpiArr[] = $kpi;
+                        }
                     }
                     $targetArr[] = array(
                         "targetId" => $key3,
@@ -89,10 +107,28 @@ class CenterService extends CServiceBase implements ICenterService{
             }
             $result[] = array(
                 "typeId" => $key1,
-                "planTypeName" => $typeKey[$key1],
+                "typeName" => $typeKey[$key1],
                 "issue" => $issueArr
             );
         }
+
         return $result;
+    }
+
+    public function listsKpi($targetId){
+        $sql = "SELECT"
+                ." ak.id, ak.kpiName"
+            ." FROM ".$this->ent."\\AffirmativeKpi ak"
+            ." WHERE ak.targetId = :targetId";
+        $param = array(
+            "targetId" => $targetId
+        );
+        $data = $this->datacontext->getObject($sql, $param);
+
+        return $data;
+    }
+
+    public function insert($affirmative){
+        return $affirmative;
     }
 } 

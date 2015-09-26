@@ -19,7 +19,7 @@ class AffirmativeType extends EntityBase {
     public $typeName;
 
     /** @Column(type="integer",length=11, name="BUDGETPERIODID") */
-    public $budgetperiodId;
+    public $budgetPeriodId;
 
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;

@@ -43,10 +43,4 @@ commonApp.controller('cmListController', function ($scope, $http) {
             $scope.cmDataListBudgetPlan = response.data.lists;
         });
     };
-<<<<<<< Updated upstream
-
 });
-=======
-    
-});      
->>>>>>> Stashed changes
