@@ -82,12 +82,12 @@ interface IProductionPlanService {
     /**
      * @name savePlan3D
      * @uri /savePlan3D
-     * @param apps\common\entity\L3D\Plan dataParam 
-     * @param String action 
+     * @param apps\common\entity\L3D\Plan dataParam
+     * @param Interger editId 
      * @description บันทึกข้อมูลแผนงานสามมิติ
      * @return apps\common\entity\L3D\Plan dataList
      */ 
-    public function savePlan3D($dataParam,$action);
+    public function savePlan3D($dataParam,$editId);
     
     
     /**

@@ -231,8 +231,7 @@ myApp.controller('tableController', function ($scope, $http, $controller) {
                     id:parseInt($scope.addPlanTextId3D),
                     planName:$scope.addPlanText3D
                     
-                },
-                action:"add"
+                }
             }).then(function(req) {
                 value = {
                     id:req.data.dataList.id,
@@ -252,17 +251,17 @@ myApp.controller('tableController', function ($scope, $http, $controller) {
     
     
     $scope.editItem3D = function(index,id){
+        
 
             $http.post("savePlan3D",{
                 dataParam:{
-                    id:parseInt(id),
+                    id:id,
                     planName:$scope.dataPlan3D[index].planName
-                    
                 },
-                action:"edit"
+                editId:$scope.dataPlan3D[index].checkId
             }).then(function(req) {
                 $scope.dataPlan3D[index].checkPlanName = $scope.dataPlan3D[index].planName;
-                //console.log(JSON.stringify($scope.dataPlan3D, null, 4));
+                $scope.dataPlan3D[index].checkId = $scope.dataPlan3D[index].id;
             });
              
         

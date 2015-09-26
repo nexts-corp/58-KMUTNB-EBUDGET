@@ -146,15 +146,21 @@ class ProductionPlanService extends CServiceBase implements IProductionPlanServi
     }
     
     
-    public function savePlan3D($dataParam,$action) {
-        //return $dataParam;
-        if($action=="add"){
+    public function savePlan3D($dataParam,$editId) {
+        
+        if($editId==NULL){
             $this->datacontext->saveObject($dataParam);
-        }else if($action=="edit"){
-            $this->datacontext->updateObject($dataParam);
-        }
+        }else{
+            $query = new Plan();
+            $query->setId($editId);
+            if($this->datacontext->removeObject($query)){
+                $this->datacontext->saveObject($dataParam);
+            }
             
-        return $dataParam;
+        }
+        return $dataParam;  
+        //return $this->datacontext->removeObject($editId);
+
         
     }
     
