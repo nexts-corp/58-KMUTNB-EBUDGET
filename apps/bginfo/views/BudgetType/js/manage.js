@@ -101,6 +101,7 @@ myApp.controller('mainController', function($scope,$http,$controller) {
         $http.post("fetchBudgetType",sendData).then(function(response) {
             //console.log(JSON.stringify(response.data.dataList, null, 4));
             $scope.dataBudgetType = response.data.dataList;
+            console.log($scope.dataBudgetType);
             $scope.soitTextName();
             $scope.waitDataList = false;
         });
@@ -133,8 +134,9 @@ myApp.controller('mainController', function($scope,$http,$controller) {
         
         if(confirm("ยืนยันการลบข้อมูล")){
             var sendData = {pData:{id:delId}};
+            //console.log($scope.findIndexObject($scope.dataBudgetType,"id",delId));
             $http.post("delBudgetType",sendData).then(function(response) {
-                $scope.dataBudgetType.splice($scope.findIndexObject($scope.dataBudgetType,"id",response.data.dataList.id), 1);
+                $scope.dataBudgetType.splice($scope.findIndexObject($scope.dataBudgetType,"id",delId), 1);
             });
         }
     };
