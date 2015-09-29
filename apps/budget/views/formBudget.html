@@ -171,7 +171,7 @@
             <div ng-show="!activeNg" id="divForm" class="col-md-12" style="display: none;"></div>
             <!-- divForm AngularJs -->
             <div ng-show="activeNg">
-                <div ng-if="activeTemplate==='project'" ng-controller="projectForm"><project-Template></project-Template></div>
+                <div ng-if="activeTemplate==='project'" ng-controller="projectForm" data-ng-init="init()"><project-Template></project-Template></div>
             </div>
             
         </div>
@@ -365,7 +365,7 @@
                     // open Form for AngularJS
                     var $scopeJS = angular.element(document.querySelector('[ng-app=formBudget]')).scope();
                     $scopeJS.$apply(function() {
-                        $scopeJS.openForm(form);
+                        $scopeJS.openForm(form,param);
                     });
                     
                     toggleShow("form");
