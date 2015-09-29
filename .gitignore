@@ -17,9 +17,20 @@
 /vendor/apache/log4php/package.php
 /vendor/apache/log4php/package-config.php
 /vendor
+<<<<<<< Updated upstream
 .idea/workspace.xml
 .idea/vcs.xml
 .idea/kmutnb-ebudget.iml
 .idea/misc.xml
 .idea/.name
 .idea/modules.xml
+=======
+
+manifest.server.json
+
+manifest.server.json
+
+apps/bginfo/service/composer.lock
+>>>>>>> Stashed changes
+
+manifest.server.json

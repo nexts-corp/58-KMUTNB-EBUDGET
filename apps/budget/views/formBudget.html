@@ -1,5 +1,6 @@
 {{>header}}
-<div role="main" class="main">
+<!-- insert and initial for AngularJS into divMain -->
+<div ng-app="formBudget" ng-controller="mainController" role="main" class="main">
     <section class="page-top none-margin">
         <div class="container">
             <div class="row">
@@ -166,8 +167,13 @@
                 </section>
             </div>
 
-            <div id="divForm" class="col-md-12" style="display: none;"></div>
-
+            <!-- divForm Jquery -->
+            <div ng-show="!activeNg" id="divForm" class="col-md-12" style="display: none;"></div>
+            <!-- divForm AngularJs -->
+            <div ng-show="activeNg">
+                <div ng-if="activeTemplate==='project'" ng-controller="projectForm"><project-Template></project-Template></div>
+            </div>
+            
         </div>
         <!--  row  -->
     </div>
@@ -188,7 +194,12 @@
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg145.js"></script>
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg146.js"></script>
 
+<!-- initial AngularJS file -->
+<script type="text/javascript" src="{{_context_path}}/apps/budget/views/initNg.js"></script>
+<script type="text/javascript" src="{{_context_path}}/apps/budget/views/project.js"></script>
+
 <script type="text/javascript">
+    
     var isForm = 0;
 
     var budgetPeriodArr = {};
@@ -208,6 +219,7 @@
     //        var departmentArr = {10100: "สำนักงานอธิการบดี", 10101: "กองกลาง", 10102: "กองบริการการศึกษา", 10103: "กองแผนงาน", 10104: "กองกิจการนักศึกษา", 10105: "กองบริหารและการจัดการทรัพยากรมนุษย์", 10106: "กองคลัง", 10107: "กองอาคารสถานที่และยานพาหนะ", 10108: "กองงานพัสดุ", 10109: "ศูนย์ผลิตตำราเรียน", 10110: "ศูนย์ความร่วมมือนานาชาติ", 10111: "หน่วยตรวจสอบภายใน", 10112: "ศูนย์ประกันคุณภาพการศึกษา", 10113: "ศูนย์ส่งเสริมสวัสดิการและสิ่งจูงใจ", 10114: "สภาคณาจารย์และพนักงาน", 10116: "กองงาน วิทยาเขตปราจีนบุรี", 10117: "ศูนย์บริการเทคโนโลยี", 10118: "IAESTE Thailand", 10120: "หน่วยงานบริหารสำนักงานอธิการบดี", 10122: "โครงการจัดตั้ง มจพ.ระยอง", 10123: "กองกฏหมาย", 10124: "กองส่งเสริมวิชาการ", 10125: "กองงานสำนักงานสภามหาวิทยาลัย", 20100: "สำนักคอมพิวเตอร์และเทคโนโลยีสารสนเทศ", 20200: "สถาบันนวัตกรรมเทคโนโลยีไทย-ฝรั่งเศส", 20300: "สำนักพัฒนาเทคโนโลยีเพื่ออุตสาหกรรม", 20400: "สำนักหอสมุดกลาง", 20500: "สำนักพัฒนาเทคนิคศึกษา", 20600: "สำนักวิจัยวิทยาศาสตร์และเทคโนโลยี", 20700: "โครงการที่พักอาศัยเพื่อการเรียนรู้และสันทนาการ", 20800: "สถาบันสหกิจศึกษาและพัฒนาสื่ออิเล็กทรอนิกส์ ไทย-เยอรมัน", 30100: "คณะวิศวกรรมศาสตร์", 30200: "คณะครุศาสตร์อุตสาหกรรม", 30300: "วิทยาลัยเทคโนโลยีอุตสาหกรรม", 30400: "คณะวิทยาศาสตร์ประยุกต์", 30500: "คณะเทคโนโลยีและการจัดการอุตสาหกรรม", 30600: "คณะเทคโนโลยีสารสนเทศ", 30700: "คณะศิลปศาสตร์ประยุกต์", 30800: "คณะอุตสาหกรรมเกษตร", 30900: "บัณฑิตวิทยาลัย", 31000: "บัณฑิตวิทยาลัยวิศวกรรมศาสตร์นานาชาติสิรินธรไทย-เยอรมัน", 31100: "คณะสถาปัตยกรรมและการออกแบบ", 31200: "คณะบริหารธุรกิจ", 31300: "คณะวิศวกรรมศาสตร์และเทคโนโลยี", 31400: "คณะวิทยาศาสตร์ พลังงาน และสิ่งแวดล้อม", 31500: "วิทยาลัยนานาชาติ", 31600: "คณะพัฒนาธุรกิจและอุตสาหกรรม", 31700: "คณะบริหารธุรกิจและอุตสาหกรรมบริการ", 90000: "หน่วยบริหารส่วนกลาง", 91000: "หน่วยกลาง มจพ."};
 
     $(function () {
+        
         listsFormSaved();
         toggleShow("home");
 
@@ -294,6 +306,7 @@
                     name: "คำชี้แจงรายละเอียดรายการที่ดินและสิ่งก่อสร้าง"
                 },
                 {
+                    ng:"true",
                     form: "project",
                     name: "โครงการที่ตอบสนองยุทธศาสตร์"
                 }
@@ -301,10 +314,11 @@
             var html = '';
 
             $.each(formArr, function (key, value) {
+                
                 html += '<tr>'
                         + '<td class="col-md-11">- ' + value["name"] + '</td>'
                         + '<td class="col-md-1">'
-                        + '<button class="btn btn-success form" data-form="' + value["form"] + '" disabled="disabled"><i class="fa fa-plus-circle"></i> จัดทำ</button>'
+                        + '<button class="btn btn-success form" has-ng="'+value["ng"]+'" data-form="' + value["form"] + '" disabled="disabled"><i class="fa fa-plus-circle"></i> จัดทำ</button>'
                         + '</td>'
                         + '</tr>';
             });
@@ -343,7 +357,21 @@
                 });
 
 
-                eval(form + "Form(param)");
+                var hasNg = $(this).attr("has-ng");
+                if(hasNg!=="true"){
+                    // open Form for Jquery
+                    eval(form + "Form(param)");
+                }else{
+                    // open Form for AngularJS
+                    var $scopeJS = angular.element(document.querySelector('[ng-app=formBudget]')).scope();
+                    $scopeJS.$apply(function() {
+                        $scopeJS.openForm(form);
+                    });
+                    
+                    toggleShow("form");
+                    
+                }
+
             });
 
             isForm = 1;
@@ -477,6 +505,15 @@
             // button show and hide
             $("button.goChoice, button.backChoice").hide();
             $("button.backHome").show();
+            
+            // hide divForm for AngularJS
+            var $scopeJS = angular.element(document.querySelector('[ng-app=formBudget]')).scope();
+            $scopeJS.$apply(function() {
+                $scopeJS.activeNg=false;
+                $scopeJS.activeTemplate="no";
+            });
+            
+            
 
             listsForm();
         }
