@@ -158,5 +158,12 @@ class LookupService extends CServiceBase implements ILookupService {
         }
         return $result;
     }
+    
+    
+    
+    public function listAffirmativeType() {
+        $list = new entity\AffirmativeType();
+        return $this->datacontext->getObject($list);
+    }
 
 }
