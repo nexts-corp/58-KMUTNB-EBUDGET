@@ -94,7 +94,7 @@ interface ILookupService {
      */
     public function list3DPlan();
     
-        /**
+    /**
      * @name list3DPproject
      * @uri /list3DPproject
      * @param int planId
@@ -102,4 +102,12 @@ interface ILookupService {
      * @description รายชื่อแผนงานใน 3 มิติ
      */
     public function list3DPproject($planId);
+    
+    /**
+     * @name listAffirmativeType
+     * @uri /listAffirmativeType
+     * @return String[] lists Description
+     * @description รายการแผนกลยุทธ์
+     */
+    public function listAffirmativeType();
 }
