@@ -134,6 +134,30 @@
                             <h4 class="modal-title">ลบตัวชี้วัดคำรับรองการปฏิบัติงาน</h4>
                         </div>
                         <div class="modal-body">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td class="col-md-3 text-right" style="vertical-align: top;">ลำดับที่ : </td>
+                                        <td class="col-md-9 text-bold" id="noDel"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-3 text-right" style="vertical-align: top;">ตัวชี้วัดคำรับรอง : </td>
+                                        <td class="col-md-9 text-bold" id="nameDel"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-3 text-right" style="vertical-align: top;">หน่วยนับ : </td>
+                                        <td class="col-md-9 text-bold" id="unitDel"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-3 text-right" style="vertical-align: top;">ประเภทส่วนงาน : </td>
+                                        <td class="col-md-9 text-bold" id="workTypeDel"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-3 text-right" style="vertical-align: top;">หมายเหตุ : </td>
+                                        <td class="col-md-9 text-bold" id="remarkDel"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                         <div class="modal-footer">
                             <ul class="nav nav-pills sort-source pull-right" data-option-key="filter">
@@ -180,10 +204,10 @@
                     + '<thead>'
                         + '<tr>'
                             + '<th class="text-center col-md-5" style="vertical-align: middle;">ตัวชี้วัดคำรับรอง ปี 2558</th>'
-                            + '<th class="text-center col-md-2" style="vertical-align: middle;">หน่วยนับ</th>'
+                            + '<th class="text-center col-md-1" style="vertical-align: middle;">หน่วยนับ</th>'
                             + '<th class="text-center col-md-2" style="vertical-align: middle;">ประเภทส่วนงานที่ต้องดำเนินการ</th>'
                             + '<th class="text-center col-md-2" style="vertical-align: middle;">หมายเหตุ</th>'
-                            + '<th class="text-center col-md-1" style="vertical-align: middle;">เครื่องมือ</th>'
+                            + '<th class="text-center col-md-2" style="vertical-align: middle;">เครื่องมือ</th>'
                         + '</tr>'
                     + '</thead>'
                     + '<tbody>'
@@ -203,11 +227,11 @@
                     + '<table id="table'+value1["typeId"]+'" class="table table-hover table-bordered">'
                         + '<thead>'
                             + '<tr>'
-                                + '<th class="text-center col-lg-5" style="vertical-align: middle;">ตัวชี้วัดคำรับรอง ปี 2558</th>'
-                                + '<th class="text-center col-lg-2" style="vertical-align: middle;">หน่วยนับ</th>'
-                                + '<th class="text-center col-lg-2" style="vertical-align: middle;">ประเภทส่วนงานที่ต้องดำเนินการ</th>'
-                                + '<th class="text-center col-lg-2" style="vertical-align: middle;">หมายเหตุ</th>'
-                                + '<th class="text-center col-lg-1" style="vertical-align: middle;">เครื่องมือ</th>'
+                                + '<th class="text-center col-md-5" style="vertical-align: middle;">ตัวชี้วัดคำรับรอง ปี 2558</th>'
+                                + '<th class="text-center col-md-1" style="vertical-align: middle;">หน่วยนับ</th>'
+                                + '<th class="text-center col-md-2" style="vertical-align: middle;">ประเภทส่วนงานที่ต้องดำเนินการ</th>'
+                                + '<th class="text-center col-md-2" style="vertical-align: middle;">หมายเหตุ</th>'
+                                + '<th class="text-center col-md-2" style="vertical-align: middle;">เครื่องมือ</th>'
                             + '</tr>'
                         + '</thead>'
                         + '<tbody>'
@@ -248,8 +272,8 @@
                                 + '<td>'+value4["remark"]+'</td>'
                                 + '<td class="text-center">'
                                     + '<div class="btn-group">'
-                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="'+value3["targetId"]+'" data-id="'+value4["id"]+'"><i class="fa fa-pencil"></i></button>'
-                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="'+value3["targetId"]+'" data-id="'+value4["id"]+'"><i class="fa fa-trash"></i></button>'
+                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="'+value3["targetId"]+'" data-id="'+value4["id"]+'"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="'+value3["targetId"]+'" data-id="'+value4["id"]+'"><i class="fa fa-trash"></i> ลบ</button>'
                                     + '</div>'
                                 + '</td>'
                             + '</tr>';
@@ -349,8 +373,19 @@
             $("#panelDeleteForm").find('td').each (function() {
                 if($(this).attr("id")){
                     var aId = $(this).attr("id");
-                    var name = aId.replace('Del', '');
-                    $("#"+aId).html(listArr[id][name]);
+
+                    if($(this).attr("id") == "workTypeDel"){
+                        var org = [];
+                        if(listArr[id]["isEducation"] == "1") org.push("- จัดการศึกษา");
+                        if(listArr[id]["isSupport"] == "1") org.push("- สนับสนุนการศึกษา");
+                        if(listArr[id]["isService"] == "1") org.push("- บริการวิชาการ");
+
+                        $("#workTypeDel").html(org.join("<br>"));
+                    }
+                    else{
+                        var name = aId.replace('Del', '');
+                        $("#"+aId).html(getTag(listArr[id][name], "-"));
+                    }
                 }
             });
             $("button.save").unbind("click").click(function(){
@@ -439,8 +474,8 @@
                         + '<td>'+listArr[id]["remark"]+'</td>'
                         + '<td class="text-center">'
                             + '<div class="btn-group">'
-                                + '<button type="button" class="btn btn-sm btn-warning" data-pid="'+parentId+'" data-id="'+id+'"><i class="fa fa-pencil"></i></button>'
-                                + '<button type="button" class="btn btn-sm btn-default" data-pid="'+parentId+'" data-id="'+id+'"><i class="fa fa-trash"></i></button>'
+                                + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="'+parentId+'" data-id="'+id+'"><i class="fa fa-pencil"></i></button>'
+                                + '<button type="button" class="btn btn-sm btn-default delete" data-pid="'+parentId+'" data-id="'+id+'"><i class="fa fa-trash"></i></button>'
                             + '</div>'
                         + '</td>'
                     + '</tr>';

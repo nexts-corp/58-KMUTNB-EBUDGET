@@ -19,11 +19,19 @@ class AdminService extends CServiceBase implements IAdminService{
     }
     
     public function listsDraft(){
-        $sql = "SELECT"
-                ." fc"
-            . " FROM ".$this->ent."\\LKFaculty fc";
-        $data = $this->datacontext->getObject($sql);
+        $repo = new \apps\common\entity\L3D\Department();
+        $repo->setDeptGroup("A");
+        $repo->setDeptStatus("Y");
+        if (isset($campusId) && $campusId != "0") {
+            $repo->setCampusId($campusId);
+        }
+        $data = $this->datacontext->getObject($repo);
 
-        return $data;
+        $result = array();
+        foreach ($data as $key => $value) {
+            $result[$key]["id"] = $value->id;
+            $result[$key]["name"] = $value->deptName;
+        }
+        return $result;
     }
 } 
