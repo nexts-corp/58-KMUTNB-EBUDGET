@@ -14,5 +14,8 @@ myApp.controller('mainController', function($scope,$http,$controller) {
         
     };
     
+    //use for project
+    //$scope.openForm("project",tParam);
+    
 });
 

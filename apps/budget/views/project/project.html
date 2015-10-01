@@ -15,7 +15,7 @@
         <div class="col-md-12">
             <div class="col-md-2"></div>
             <div class="col-md-6">
-                <input ng-model="seriesData.projectName" type="text" class="form-control input-sm" required>
+                <input ng-model="seriesData.name" type="text" class="form-control input-sm">
             </div>
         </div>
     </div>
@@ -26,50 +26,86 @@
         </div>
 
         <div class="col-md-12">
-            <label class="col-md-2 control-label text-right" for="xxx">คณะ/สำนัก/วิทยาลัย</label>
+            <label class="col-md-2 control-label text-right">คณะ/สำนัก/วิทยาลัย</label>
             <div class="col-md-6">
-                <input ng-model="seriesData.facultyName" class="form-control input-sm" required>
+                <input ng-model="seriesData.facName" class="form-control input-sm" disabled>
             </div>
         </div>
 
         <div class="col-md-12" style="margin: 5px 0;">
-            <label class="col-md-2 control-label text-right" for="xxx">ภาควิชา/ศูนย์/ฝ่าย/กอง</label>
+            <label class="col-md-2 control-label text-right">ภาควิชา/ศูนย์/ฝ่าย/กอง</label>
             <div class="col-md-6">
-                <input ng-model="seriesData.departmentName" type="text" class="form-control input-sm" required>
+                <input ng-model="seriesData.deptName" type="text" class="form-control input-sm" disabled>
             </div>
         </div>
-
         <div class="col-md-12" style="margin: 5px 0;">
-            <label class="col-md-2 control-label text-right" for="xxx">ผู้รับผิดชอบ</label>
+            <label class="col-md-2 control-label text-right">ผู้รับผิดชอบ</label>
             <div class="col-md-6">
-                <input ng-model="seriesData.director" type="text" class="form-control input-sm" required>
+                <input ng-model="seriesData.responder" type="text" class="form-control input-sm">
+            </div>
+        </div>
+        <div class="col-md-12" style="margin: 5px 0;">
+            <label class="col-md-2 control-label text-right">ผู้กำกับ</label>
+            <div class="col-md-6">
+                <input ng-model="seriesData.director" type="text" class="form-control input-sm">
             </div>
         </div>
     </div>
 
     <div class="form-group">
         <div class="col-md-12">
-            <h5>3. ความเชื่อมโยงสอดคล้องกับแผนพัฒนาการศึกษาระดับอุดมศึกษาฯ ฉบับที่ 11 (พ.ศ. 2555-2559)</h5>
+            <h5>3. ความเชื่อมโยงสอดคล้องกับแผนกลยุทธ์</h5>
         </div>
+        <div ng-repeat="affList in affirmative">
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="col-md-2 control-label text-right">แผนกลยุทธ์</label>
+                    <div class="col-md-6">
+                        <select ng-model="affList.typeId" ng-init="affList.typeId = 'udf'" ng-change="fetchIssue($index,affList.typeId)" class="form-control">
+                            <option value="udf">เลือก</option>
+                            <option ng-repeat="list in cmDataListAffirmativeType" value="{[list.id]}">{[list.typeName]}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <button ng-show="affirmative.length!=1" ng-click="affirmativeManage('splice',$index)" class="btn btn-default"><i class="fa fa-trash"></i> ลบ</button>
+                    </div>
+                </div>
+                <div class="col-md-12" style="margin: 5px 0;">
+                    <label class="col-md-3 control-label text-right">ประเด็นยุทธศาสตร์</label>
+                    <div class="col-md-5">
+                        <select ng-model="affList.issueId" ng-init="affList.issueId = 'udf'" ng-change="fetchTarget($index,affList.issueId)" class="form-control">
+                            <option value="udf">เลือก</option>
+                            <option ng-repeat="listIssue in affList.dataIssue" value="{[listIssue.id]}">{[listIssue.issueName]}</option>
+                        </select>
+                    </div>
+                </div>
 
-        <div class="col-md-12">
-            <label class="col-md-2 control-label text-right" for="xxx">ประเด็นยุทธศาสตร์ที่</label>
-            <div class="col-md-6">
-                <input type="text" id="" name="" class="form-control input-sm" required>
+                <div class="col-md-12" style="margin: 5px 0;">
+                    <label class="col-md-3 control-label text-right">เป้าประสงค์</label>
+                    <div class="col-md-5">
+                        <select ng-model="affList.targetId" ng-init="affList.targetId = 'udf'" ng-change="fetchStrategy($index,affList.typeId)" class="form-control">
+                            <option value="udf">เลือก</option>
+                            <option ng-repeat="listTarget in affList.dataTarget" value="{[listTarget.id]}">{[listTarget.targetName]}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-12" style="margin: 5px 0;">
+                    <label class="col-md-3 control-label text-right" for="xxx">กลยุทธ์</label>
+                    <div class="col-md-5">
+                        <select ng-model="affList.strategyId" ng-init="affList.strategyId = 'udf'" ng-change="seriesData.affirmative[$index].strategyId=affList.strategyId" class="form-control">
+                            <option value="udf">เลือก</option>
+                            <option ng-repeat="listStrategy in affList.dataStrategy" value="{[listStrategy.id]}">{[listStrategy.strategyName]}</option>
+                        </select>
+                    </div>
+                </div>
             </div>
+            <br>
         </div>
-
+        
         <div class="col-md-12" style="margin: 5px 0;">
-            <label class="col-md-2 control-label text-right" for="xxx">เป้าประสงค์ที่</label>
-            <div class="col-md-6">
-                <input type="text" id="" name="" class="form-control input-sm" required>
-            </div>
-        </div>
-
-        <div class="col-md-12" style="margin: 5px 0;">
-            <label class="col-md-2 control-label text-right" for="xxx">กลยุทธ์ที่</label>
-            <div class="col-md-6">
-                <input type="text" id="" name="" class="form-control input-sm" required>
+            <div class="col-md-offset-3 col-md-5" style="text-align: right;">
+                <button class="btn btn-primary" ng-click="affirmativeManage('push')"><i class="fa fa-plus"></i> เพิ่ม</button>
             </div>
         </div>
     </div>
@@ -79,73 +115,55 @@
             <h5>4. ลักษณะโครงการ/กิจกรรม</h5>
         </div>
 
-        <div class="col-md-12">
-            <div class="col-md-2"></div>
-            <div class="col-md-6 radio-custom radio-primary">
-                <input type="radio" id="radio1_1" name="project" checked="">
-                <label for="radio1">โครงการใหม่</label>
-            </div>
-        </div>
-
-        <div class="col-md-12">
-            <div class="col-md-2"></div>
-            <div class="col-md-6 radio-custom radio-primary">
-                <input type="radio" id="radio1_2" name="project">
-                <label for="radio2">โครงการต่อเนื่อง</label>
-            </div>
-        </div>
-
-        <div class="col-md-12">
-            <div class="col-md-2"></div>
-            <div class="col-md-6 radio-custom radio-primary">
-                <input type="radio" id="radio1_3" name="project">
-                <label for="radio3">งานประจำ</label>
-            </div>
-        </div>
-
-        <div class="col-md-12">
-            <div class="col-md-2"></div>
-            <div class="col-md-6 radio-custom radio-primary">
-                <input type="radio" id="radio1_4" name="project">
-                <label for="radio4">งานพัฒนา</label>
+        <div ng-repeat="listPT in dataProjectType" class="col-md-2">
+            <div class="col-md-offset-2 col-md-10 radio-custom radio-primary">
+                <input ng-model="seriesData.projectTypeId" type="radio" value="{[listPT.id]}">
+                <label>{[listPT.name]}</label>
             </div>
         </div>
     </div>
-
+    
     <div class="form-group">
         <div class="col-md-12">
             <h5>5. การบูรณาการโครงการ</h5>
         </div>
 
+        <div ng-repeat="listInt in dataIntegration" class="col-md-12">
+            <div class="row">
+                <div class="col-md-offset-1 col-md-3 checkbox-custom checkbox-primary">
+                    <input ng-model="seriesData.integrationId[$index]" ng-change="clearIntegrationDESC($index,seriesData.integrationId[$index])" type="checkbox" value="listInt.id">
+                    <label>{[listInt.name]}</label>
+                </div>
+                <div class="col-md-6">
+                    <input ng-disabled="!seriesData.integrationId[$index]" ng-model="seriesData.integrationDESC[$index]" type="text" class="form-control">
+                </div>
+            </div><br>
+        </div>
+    </div>
+    
+    
+    <div class="form-group">
         <div class="col-md-12">
-            <div class="col-md-2"></div>
-            <div class="col-md-6 radio-custom radio-primary">
-                <input type="radio" id="radio2_1" name="project2" checked="">
-                <label for="radio1">บูรณาการกับการเรียนการสอน</label>
-            </div>
+            <h5>6. หลักการและเหตุผลของโครงการ</h5>
         </div>
 
         <div class="col-md-12">
             <div class="col-md-2"></div>
-            <div class="col-md-6 radio-custom radio-primary">
-                <input type="radio" id="radio2" name="project">
-                <label for="radio2">โครงการต่อเนื่อง</label>
+            <div class="col-md-6">
+                <textarea ng-model="seriesData.rationale" type="text" class="form-control" rows="5"></textarea>
             </div>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <div class="col-md-12">
+            <h5>7. วัตถุประสงค์</h5>
         </div>
 
         <div class="col-md-12">
             <div class="col-md-2"></div>
-            <div class="col-md-6 radio-custom radio-primary">
-                <input type="radio" id="radio3" name="project">
-                <label for="radio3">งานประจำ</label>
-            </div>
-        </div>
-
-        <div class="col-md-12">
-            <div class="col-md-2"></div>
-            <div class="col-md-6 radio-custom radio-primary">
-                <input type="radio" id="radio4" name="project">
-                <label for="radio4">งานพัฒนา</label>
+            <div class="col-md-6">
+                <textarea ng-model="seriesData.objective" type="text" class="form-control" rows="5"></textarea>
             </div>
         </div>
     </div>

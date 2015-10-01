@@ -44,12 +44,35 @@ commonApp.controller('cmListController', function ($scope, $http) {
         });
     };
     
+    
+    
+    
+    
+    
+    
     $scope.cmListAffirmativeType = function () {
         $http.post(ngContextPath+"/api/common/lookup/listAffirmativeType").then(function (response) {
             $scope.cmDataListAffirmativeType = response.data.lists;
         });
     };
     
+    $scope.cmListAffirmativeIssue = function ($id) {
+        $http.post(ngContextPath+"/api/common/lookup/listAffirmativeIssue",{id:$id}).then(function (response) {
+            $scope.cmDataListAffirmativeIssue = response.data.lists;
+        });
+    };
+    
+    $scope.cmListAffirmativeTarget = function ($id) {
+        $http.post(ngContextPath+"/api/common/lookup/listAffirmativeTarget",{id:$id}).then(function (response) {
+            $scope.cmDataListAffirmativeTarget = response.data.lists;
+        });
+    };
+    
+    $scope.cmListAffirmativeStrategy = function ($id) {
+        $http.post(ngContextPath+"/api/common/lookup/listAffirmativeStrategy",{id:$id}).then(function (response) {
+            $scope.cmDataListAffirmativeStrategy = response.data.lists;
+        });
+    };
     
     
 });

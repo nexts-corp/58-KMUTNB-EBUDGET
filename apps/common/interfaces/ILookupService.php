@@ -65,7 +65,7 @@ interface ILookupService {
      * @name listYear
      * @uri /listYear
      * @return String[] lists Description
-     * @description รายการปีงบประมาณ
+     * @description ข้อมูลปีงบประมาณ
      */
     public function listYear();
     
@@ -103,11 +103,61 @@ interface ILookupService {
      */
     public function list3DPproject($planId);
     
+    
+    
+    
+    
     /**
      * @name listAffirmativeType
      * @uri /listAffirmativeType
      * @return String[] lists Description
-     * @description รายการแผนกลยุทธ์
+     * @description ข้อมูลแผนกลยุทธ์
      */
     public function listAffirmativeType();
+    
+    /**
+     * @name listAffirmativeIssue
+     * @uri /listAffirmativeIssue
+     * @param int id
+     * @return String[] lists Description
+     * @description ข้อมูลประเด็นยุทธศาสตร์
+     */
+    public function listAffirmativeIssue($id);
+    
+    /**
+     * @name listAffirmativeTarget
+     * @uri /listAffirmativeTarget
+     * @param int id
+     * @return String[] lists Description
+     * @description ข้อมูลแผนเป้าประสงค์
+     */
+    public function listAffirmativeTarget($id);
+    
+    /**
+     * @name listAffirmativeStrategy
+     * @uri /listAffirmativeStrategy
+     * @param int id
+     * @return String[] lists Description
+     * @description ข้อมูลกลยุทธ์
+     */
+    public function listAffirmativeStrategy($id);
+    
+    
+    
+    
+    
+    
+    /**
+     * @name listIntegration
+     * @uri /listIntegration
+     * @return String[] lists Description
+     * @description ข้อมูลบูรณาการโครงการ
+     */
+    public function listIntegration();
+    
+    
+    
+    
+    
+    
 }

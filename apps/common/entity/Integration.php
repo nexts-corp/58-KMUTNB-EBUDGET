@@ -57,5 +57,3 @@ class Integration extends EntityBase {
     }
 
 }
-
-?>
