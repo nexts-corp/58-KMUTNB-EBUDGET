@@ -15,6 +15,9 @@ class Budget141 extends EntityBase {
      */
     public $id;
 
+    /** @Column(type="integer",length=11, name="BUDGETHEADID") */
+    public $budgetHeadId;
+
     /** @Column(type="integer",length=11, name="BUDGETPERIODID") */
     public $budgetPeriodId;
 
@@ -27,11 +30,17 @@ class Budget141 extends EntityBase {
     /** @Column(type="integer",length=11, name="DEPARTMENTID") */
     public $deptId;
 
-    /** @Column(type="integer",length=11, name="L3D_PLANID") */
+    /** @Column(type="integer",length=11, name="BUDGETPLANID") */
     public $planId;
 
-    /** @Column(type="integer",length=11, name="L3D_PROJECTID") */
+    /** @Column(type="integer",length=11, name="BUDGETPROJECTID") */
     public $projectId;
+
+    /** @Column(type="integer",length=11, name="L3D_PLANID") */
+    public $l3dPlanId;
+
+    /** @Column(type="integer",length=11, name="L3D_PROJECTID") */
+    public $l3dProjectId;
 
     /** @Column(type="integer",length=11, name="FUNDGROUPID") */
     public $fundgroupId;
@@ -44,6 +53,9 @@ class Budget141 extends EntityBase {
 
     /** @Column(type="string",length=500, name="POSITIONNAME") */
     public $positionName;
+
+    /** @Column(type="string",length=500, name="QUALIFICATION") */
+    public $qualify;
 
     /** @Column(type="integer",length=11, name="POSITIONOCCUPIED") */
     public $occupy;
@@ -66,9 +78,6 @@ class Budget141 extends EntityBase {
     /** @Column(type="integer",length=11, name="REFID") */
     public $refId;
 
-    /** @Column(type="string",length=1, name="BUDGETSTATUS") */
-    public $bgStatus;
-
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
 
@@ -77,6 +86,10 @@ class Budget141 extends EntityBase {
 
     function getId() {
         return $this->id;
+    }
+
+    function getBudgetHeadId() {
+        return $this->budgetHeadId;
     }
 
     function getBudgetPeriodId() {
@@ -103,6 +116,14 @@ class Budget141 extends EntityBase {
         return $this->projectId;
     }
 
+    function getL3dPlanId() {
+        return $this->l3dPlanId;
+    }
+
+    function getL3dProjectId() {
+        return $this->l3dProjectId;
+    }
+
     function getFundgroupId() {
         return $this->fundgroupId;
     }
@@ -117,6 +138,10 @@ class Budget141 extends EntityBase {
 
     function getPositionName() {
         return $this->positionName;
+    }
+
+    function getQualify() {
+        return $this->qualify;
     }
 
     function getOccupy() {
@@ -147,10 +172,6 @@ class Budget141 extends EntityBase {
         return $this->refId;
     }
 
-    function getBgStatus() {
-        return $this->bgStatus;
-    }
-
     function getCreator() {
         return $this->creator;
     }
@@ -161,6 +182,10 @@ class Budget141 extends EntityBase {
 
     function setId($id) {
         $this->id = $id;
+    }
+
+    function setBudgetHeadId($budgetHeadId) {
+        $this->budgetHeadId = $budgetHeadId;
     }
 
     function setBudgetPeriodId($budgetPeriodId) {
@@ -187,6 +212,14 @@ class Budget141 extends EntityBase {
         $this->projectId = $projectId;
     }
 
+    function setL3dPlanId($l3dPlanId) {
+        $this->l3dPlanId = $l3dPlanId;
+    }
+
+    function setL3dProjectId($l3dProjectId) {
+        $this->l3dProjectId = $l3dProjectId;
+    }
+
     function setFundgroupId($fundgroupId) {
         $this->fundgroupId = $fundgroupId;
     }
@@ -201,6 +234,10 @@ class Budget141 extends EntityBase {
 
     function setPositionName($positionName) {
         $this->positionName = $positionName;
+    }
+
+    function setQualify($qualify) {
+        $this->qualify = $qualify;
     }
 
     function setOccupy($occupy) {
@@ -229,10 +266,6 @@ class Budget141 extends EntityBase {
 
     function setRefId($refId) {
         $this->refId = $refId;
-    }
-
-    function setBgStatus($bgStatus) {
-        $this->bgStatus = $bgStatus;
     }
 
     function setCreator($creator) {

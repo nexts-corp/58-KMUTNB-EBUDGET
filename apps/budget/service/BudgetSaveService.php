@@ -5,6 +5,7 @@ namespace apps\budget\service;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
 use apps\budget\interfaces\IBudgetSaveService;
+use apps\common\entity\BudgetHead;
 use apps\common\entity\Budget140;
 use apps\common\entity\Budget141;
 use apps\common\entity\Budget142;
@@ -29,15 +30,33 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         $return = array();
 
         foreach ($budget as $key => $value) {
-            $budget[$key]->bgStatus = "Y";
-            if (!$this->datacontext->saveObject($value)) {
+            $bgHead = new BudgetHead();
+            $bgHead->formId = 140;
+            $bgHead->budgetPeriodId = $value->budgetPeriodId;
+            $bgHead->budgetTypeId = $value->budgetTypeId;
+            $bgHead->budgetTypeCode = $value->budgetTypeCode;
+            $bgHead->deptId = $value->deptId;
+            $bgHead->planId = $value->planId;
+            $bgHead->projectId = $value->projectId;
+            $bgHead->l3dPlanId = $value->l3dPlanId;
+            $bgHead->l3dProjectId = $value->l3dProjectId;
+            $bgHead->fundgroupId = $value->fundgroupId;
+            $bgHead->activityId = $value->activityId;
+            $bgHead->statusId = 1;
+            if (!$this->datacontext->saveObject($bgHead)) {
                 $return[$key]["result"] = false;
                 $return[$key]["msg"] = $this->datacontext->getLastMessage();
-                //array_push($return, array("result" => false, "msg" => $this->datacontext->getLastMessage()));
             } else {
-                $return[$key]["result"] = true;
-                $return[$key]["id"] = $budget[$key]->id;
-                //array_push($return, array("result" => true, "id" => $budget[$key]->id));
+                $bgHeadId = $bgHead->id;
+                $value->budgetHeadId = $bgHeadId;
+
+                if (!$this->datacontext->saveObject($budget[$key])) {
+                    $return[$key]["result"] = false;
+                    $return[$key]["msg"] = $this->datacontext->getLastMessage();
+                } else {
+                    $return[$key]["result"] = true;
+                    $return[$key]["id"] = $budget[$key]->id;
+                }
             }
         }
 
@@ -110,13 +129,33 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         $return = array();
 
         foreach ($budget as $key => $value) {
-            $budget[$key]->bgStatus = "Y";
-            if (!$this->datacontext->saveObject($value)) {
+            $bgHead = new BudgetHead();
+            $bgHead->formId = 141;
+            $bgHead->budgetPeriodId = $value->budgetPeriodId;
+            $bgHead->budgetTypeId = $value->budgetTypeId;
+            $bgHead->budgetTypeCode = $value->budgetTypeCode;
+            $bgHead->deptId = $value->deptId;
+            $bgHead->planId = $value->planId;
+            $bgHead->projectId = $value->projectId;
+            $bgHead->l3dPlanId = $value->l3dPlanId;
+            $bgHead->l3dProjectId = $value->l3dProjectId;
+            $bgHead->fundgroupId = $value->fundgroupId;
+            $bgHead->activityId = $value->activityId;
+            $bgHead->statusId = 1;
+            if (!$this->datacontext->saveObject($bgHead)) {
                 $return[$key]["result"] = false;
                 $return[$key]["msg"] = $this->datacontext->getLastMessage();
             } else {
-                $return[$key]["result"] = true;
-                $return[$key]["id"] = $budget[$key]->id;
+                $bgHeadId = $bgHead->id;
+                $value->budgetHeadId = $bgHeadId;
+
+                if (!$this->datacontext->saveObject($budget[$key])) {
+                    $return[$key]["result"] = false;
+                    $return[$key]["msg"] = $this->datacontext->getLastMessage();
+                } else {
+                    $return[$key]["result"] = true;
+                    $return[$key]["id"] = $budget[$key]->id;
+                }
             }
         }
 
@@ -137,13 +176,33 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         $return = array();
 
         foreach ($budget as $key => $value) {
-            $budget[$key]->bgStatus = "Y";
-            if (!$this->datacontext->saveObject($value)) {
+            $bgHead = new BudgetHead();
+            $bgHead->formId = 142;
+            $bgHead->budgetPeriodId = $value->budgetPeriodId;
+            $bgHead->budgetTypeId = $value->budgetTypeId;
+            $bgHead->budgetTypeCode = $value->budgetTypeCode;
+            $bgHead->deptId = $value->deptId;
+            $bgHead->planId = $value->planId;
+            $bgHead->projectId = $value->projectId;
+            $bgHead->l3dPlanId = $value->l3dPlanId;
+            $bgHead->l3dProjectId = $value->l3dProjectId;
+            $bgHead->fundgroupId = $value->fundgroupId;
+            $bgHead->activityId = $value->activityId;
+            $bgHead->statusId = 1;
+            if (!$this->datacontext->saveObject($bgHead)) {
                 $return[$key]["result"] = false;
                 $return[$key]["msg"] = $this->datacontext->getLastMessage();
             } else {
-                $return[$key]["result"] = true;
-                $return[$key]["id"] = $budget[$key]->id;
+                $bgHeadId = $bgHead->id;
+                $value->budgetHeadId = $bgHeadId;
+
+                if (!$this->datacontext->saveObject($budget[$key])) {
+                    $return[$key]["result"] = false;
+                    $return[$key]["msg"] = $this->datacontext->getLastMessage();
+                } else {
+                    $return[$key]["result"] = true;
+                    $return[$key]["id"] = $budget[$key]->id;
+                }
             }
         }
 
@@ -164,13 +223,33 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         $return = array();
 
         foreach ($budget as $key => $value) {
-            $budget[$key]->bgStatus = "Y";
-            if (!$this->datacontext->saveObject($value)) {
+            $bgHead = new BudgetHead();
+            $bgHead->formId = 143;
+            $bgHead->budgetPeriodId = $value->budgetPeriodId;
+            $bgHead->budgetTypeId = $value->budgetTypeId;
+            $bgHead->budgetTypeCode = $value->budgetTypeCode;
+            $bgHead->deptId = $value->deptId;
+            $bgHead->planId = $value->planId;
+            $bgHead->projectId = $value->projectId;
+            $bgHead->l3dPlanId = $value->l3dPlanId;
+            $bgHead->l3dProjectId = $value->l3dProjectId;
+            $bgHead->fundgroupId = $value->fundgroupId;
+            $bgHead->activityId = $value->activityId;
+            $bgHead->statusId = 1;
+            if (!$this->datacontext->saveObject($bgHead)) {
                 $return[$key]["result"] = false;
                 $return[$key]["msg"] = $this->datacontext->getLastMessage();
             } else {
-                $return[$key]["result"] = true;
-                $return[$key]["id"] = $budget[$key]->id;
+                $bgHeadId = $bgHead->id;
+                $value->budgetHeadId = $bgHeadId;
+
+                if (!$this->datacontext->saveObject($budget[$key])) {
+                    $return[$key]["result"] = false;
+                    $return[$key]["msg"] = $this->datacontext->getLastMessage();
+                } else {
+                    $return[$key]["result"] = true;
+                    $return[$key]["id"] = $budget[$key]->id;
+                }
             }
         }
 
@@ -191,13 +270,33 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         $return = array();
 
         foreach ($budget as $key => $value) {
-            $budget[$key]->bgStatus = "Y";
-            if (!$this->datacontext->saveObject($value)) {
+            $bgHead = new BudgetHead();
+            $bgHead->formId = 144;
+            $bgHead->budgetPeriodId = $value->budgetPeriodId;
+            $bgHead->budgetTypeId = $value->budgetTypeId;
+            $bgHead->budgetTypeCode = $value->budgetTypeCode;
+            $bgHead->deptId = $value->deptId;
+            $bgHead->planId = $value->planId;
+            $bgHead->projectId = $value->projectId;
+            $bgHead->l3dPlanId = $value->l3dPlanId;
+            $bgHead->l3dProjectId = $value->l3dProjectId;
+            $bgHead->fundgroupId = $value->fundgroupId;
+            $bgHead->activityId = $value->activityId;
+            $bgHead->statusId = 1;
+            if (!$this->datacontext->saveObject($bgHead)) {
                 $return[$key]["result"] = false;
                 $return[$key]["msg"] = $this->datacontext->getLastMessage();
             } else {
-                $return[$key]["result"] = true;
-                $return[$key]["id"] = $budget[$key]->id;
+                $bgHeadId = $bgHead->id;
+                $value->budgetHeadId = $bgHeadId;
+
+                if (!$this->datacontext->saveObject($budget[$key])) {
+                    $return[$key]["result"] = false;
+                    $return[$key]["msg"] = $this->datacontext->getLastMessage();
+                } else {
+                    $return[$key]["result"] = true;
+                    $return[$key]["id"] = $budget[$key]->id;
+                }
             }
         }
 
@@ -218,13 +317,33 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         $return = array();
 
         foreach ($budget as $key => $value) {
-            $budget[$key]->bgStatus = "Y";
-            if (!$this->datacontext->saveObject($value)) {
+            $bgHead = new BudgetHead();
+            $bgHead->formId = 145;
+            $bgHead->budgetPeriodId = $value->budgetPeriodId;
+            $bgHead->budgetTypeId = $value->budgetTypeId;
+            $bgHead->budgetTypeCode = $value->budgetTypeCode;
+            $bgHead->deptId = $value->deptId;
+            $bgHead->planId = $value->planId;
+            $bgHead->projectId = $value->projectId;
+            $bgHead->l3dPlanId = $value->l3dPlanId;
+            $bgHead->l3dProjectId = $value->l3dProjectId;
+            $bgHead->fundgroupId = $value->fundgroupId;
+            $bgHead->activityId = $value->activityId;
+            $bgHead->statusId = 1;
+            if (!$this->datacontext->saveObject($bgHead)) {
                 $return[$key]["result"] = false;
                 $return[$key]["msg"] = $this->datacontext->getLastMessage();
             } else {
-                $return[$key]["result"] = true;
-                $return[$key]["id"] = $budget[$key]->id;
+                $bgHeadId = $bgHead->id;
+                $value->budgetHeadId = $bgHeadId;
+
+                if (!$this->datacontext->saveObject($budget[$key])) {
+                    $return[$key]["result"] = false;
+                    $return[$key]["msg"] = $this->datacontext->getLastMessage();
+                } else {
+                    $return[$key]["result"] = true;
+                    $return[$key]["id"] = $budget[$key]->id;
+                }
             }
         }
 
@@ -245,13 +364,33 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         $return = array();
 
         foreach ($budget as $key => $value) {
-            $budget[$key]->bgStatus = "Y";
-            if (!$this->datacontext->saveObject($value)) {
+            $bgHead = new BudgetHead();
+            $bgHead->formId = 146;
+            $bgHead->budgetPeriodId = $value->budgetPeriodId;
+            $bgHead->budgetTypeId = $value->budgetTypeId;
+            $bgHead->budgetTypeCode = $value->budgetTypeCode;
+            $bgHead->deptId = $value->deptId;
+            $bgHead->planId = $value->planId;
+            $bgHead->projectId = $value->projectId;
+            $bgHead->l3dPlanId = $value->l3dPlanId;
+            $bgHead->l3dProjectId = $value->l3dProjectId;
+            $bgHead->fundgroupId = $value->fundgroupId;
+            $bgHead->activityId = $value->activityId;
+            $bgHead->statusId = 1;
+            if (!$this->datacontext->saveObject($bgHead)) {
                 $return[$key]["result"] = false;
                 $return[$key]["msg"] = $this->datacontext->getLastMessage();
             } else {
-                $return[$key]["result"] = true;
-                $return[$key]["id"] = $budget[$key]->id;
+                $bgHeadId = $bgHead->id;
+                $value->budgetHeadId = $bgHeadId;
+
+                if (!$this->datacontext->saveObject($budget[$key])) {
+                    $return[$key]["result"] = false;
+                    $return[$key]["msg"] = $this->datacontext->getLastMessage();
+                } else {
+                    $return[$key]["result"] = true;
+                    $return[$key]["id"] = $budget[$key]->id;
+                }
             }
         }
 
@@ -273,10 +412,20 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
         $repo = new Budget140();
         $repo->setId($budgetId);
+        $data = $this->datacontext->getObject($repo);
+        $bgHeadId = $data[0]->budgetHeadId;
 
         if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
+        } else {
+            $repoHead = new BudgetHead();
+            $repoHead->setId($bgHeadId);
+
+            if (!$this->datacontext->removeObject($repoHead)) {
+                $return = $this->datacontext->getLastMessage();
+            }
         }
+
         return $result;
     }
 
@@ -285,10 +434,20 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
         $repo = new Budget141();
         $repo->setId($budgetId);
+        $data = $this->datacontext->getObject($repo);
+        $bgHeadId = $data[0]->budgetHeadId;
 
         if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
+        } else {
+            $repoHead = new BudgetHead();
+            $repoHead->setId($bgHeadId);
+
+            if (!$this->datacontext->removeObject($repoHead)) {
+                $return = $this->datacontext->getLastMessage();
+            }
         }
+
         return $result;
     }
 
@@ -297,10 +456,20 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
         $repo = new Budget142();
         $repo->setId($budgetId);
+        $data = $this->datacontext->getObject($repo);
+        $bgHeadId = $data[0]->budgetHeadId;
 
         if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
+        } else {
+            $repoHead = new BudgetHead();
+            $repoHead->setId($bgHeadId);
+
+            if (!$this->datacontext->removeObject($repoHead)) {
+                $return = $this->datacontext->getLastMessage();
+            }
         }
+
         return $result;
     }
 
@@ -309,10 +478,20 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
         $repo = new Budget143();
         $repo->setId($budgetId);
+        $data = $this->datacontext->getObject($repo);
+        $bgHeadId = $data[0]->budgetHeadId;
 
         if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
+        } else {
+            $repoHead = new BudgetHead();
+            $repoHead->setId($bgHeadId);
+
+            if (!$this->datacontext->removeObject($repoHead)) {
+                $return = $this->datacontext->getLastMessage();
+            }
         }
+
         return $result;
     }
 
@@ -321,10 +500,20 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
         $repo = new Budget144();
         $repo->setId($budgetId);
+        $data = $this->datacontext->getObject($repo);
+        $bgHeadId = $data[0]->budgetHeadId;
 
         if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
+        } else {
+            $repoHead = new BudgetHead();
+            $repoHead->setId($bgHeadId);
+
+            if (!$this->datacontext->removeObject($repoHead)) {
+                $return = $this->datacontext->getLastMessage();
+            }
         }
+
         return $result;
     }
 
@@ -333,10 +522,20 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
         $repo = new Budget145();
         $repo->setId($budgetId);
+        $data = $this->datacontext->getObject($repo);
+        $bgHeadId = $data[0]->budgetHeadId;
 
         if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
+        } else {
+            $repoHead = new BudgetHead();
+            $repoHead->setId($bgHeadId);
+
+            if (!$this->datacontext->removeObject($repoHead)) {
+                $return = $this->datacontext->getLastMessage();
+            }
         }
+
         return $result;
     }
 
@@ -345,10 +544,20 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
         $repo = new Budget146();
         $repo->setId($budgetId);
+        $data = $this->datacontext->getObject($repo);
+        $bgHeadId = $data[0]->budgetHeadId;
 
         if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
+        } else {
+            $repoHead = new BudgetHead();
+            $repoHead->setId($bgHeadId);
+
+            if (!$this->datacontext->removeObject($repoHead)) {
+                $return = $this->datacontext->getLastMessage();
+            }
         }
+
         return $result;
     }
 

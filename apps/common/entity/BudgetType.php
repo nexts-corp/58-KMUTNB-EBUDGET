@@ -26,6 +26,9 @@ class BudgetType extends EntityBase {
     /** @Column(type="string",length=1, name="BUDGETTYPECODE") */
     public $typeCode;
 
+    /** @Column(type="boolean", name="ISFIXEDCOST") */
+    public $isFixedCost;
+
     /** @Column(type="boolean", name="FORM140") */
     public $form140;
 
@@ -74,6 +77,10 @@ class BudgetType extends EntityBase {
 
     function getTypeCode() {
         return $this->typeCode;
+    }
+
+    function getIsFixedCost() {
+        return $this->isFixedCost;
     }
 
     function getForm140() {
@@ -134,6 +141,10 @@ class BudgetType extends EntityBase {
 
     function setTypeCode($typeCode) {
         $this->typeCode = $typeCode;
+    }
+
+    function setIsFixedCost($isFixedCost) {
+        $this->isFixedCost = $isFixedCost;
     }
 
     function setForm140($form140) {
