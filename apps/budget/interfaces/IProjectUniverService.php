@@ -1,0 +1,37 @@
+<?php
+
+namespace apps\budget\interfaces;
+
+/**
+ * @name BudgetInfoService
+ * @uri /projectUniver
+ * @description BudgetInfoService
+ */
+interface IProjectUniverService {
+
+    /**
+     * @name fetchSubsidies
+     * @uri /fetchSubsidies
+     * @return apps\common\entity\BudgetType[] dataList Description
+     * @description ดึงข้อมูลเงินอุดหนุน
+     */
+    public function fetchSubsidies();
+    
+    /**
+     * @name fetchPlan
+     * @uri /fetchPlan
+     * @return apps\common\entity\L3D\Plan[] dataList Description
+     * @description ดึงข้อมูลแผนงาน
+     */
+    public function fetchPlan();
+    
+    
+    /**
+     * @name fetchBudgetType
+     * @uri /fetchBudgetType
+     * @description ดึงข้อมูลสำหรับใช้ในช่องงบแระมาณและแผนการใช้จ่ายงบประมาณ
+     * @return String[] dataList
+     */ 
+    public function fetchBudgetType();
+
+}

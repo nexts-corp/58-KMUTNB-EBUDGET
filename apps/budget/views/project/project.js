@@ -27,6 +27,9 @@ myApp.controller('projectForm', function($scope,$http,$controller) {
         $scope.cmListAffirmativeType();
         $scope.fetchProjectType();
         $scope.fetchIntegration();
+        $scope.fetchSubsidies();
+        $scope.fetchPlan();
+        $scope.fetchBudgetType();
         
         //ข้อมูลพร้อมส่ง
         $scope.seriesData = {
@@ -36,6 +39,15 @@ myApp.controller('projectForm', function($scope,$http,$controller) {
             facName:facultyArr[$scope.param.facultyId],
             
             affirmative:[{typeId:null,issueId:null,targetId:null,strategyId:null}],
+            
+            kpi:[
+                {name:'เชิงปริมาณ',data:[]},
+                {name:'เชิงเวลา',data:[]},
+                {name:'เชิงคุณภาพ',data:[]},
+                {name:'เชิงต้นทุน',data:[]}
+            ],
+            operating:[],
+            expense:[]
             
         };
         
@@ -122,6 +134,63 @@ myApp.controller('projectForm', function($scope,$http,$controller) {
     };
     
     
+    
+    
+    
+    // #ตัวชี้วัดความสำเร็จระดับโครงการ (Output/Outcome) และค่าเป้าหมาย (ระบุหน่วยนับ)
+    
+    $scope.kpiManage = function(action,index,childIndex){
+        if(action==="push"){
+            $scope.seriesData.kpi[index].data.push({kpi:null,unit:null,target:null}); 
+        }else if(action==="splice"){
+            $scope.seriesData.kpi[index].data.splice(childIndex, 1);
+        }
+    };
+    
+    
+    // #ขั้นตอนการดำเนินการ
+    $scope.operatingManage = function(action,index){
+        if(action==="push"){
+            $scope.seriesData.operating.push({operatingName:null,timeStart:null,timeEnd:null}); 
+        }else if(action==="splice"){
+            $scope.seriesData.operating.splice(index, 1);
+        }
+    };
+    
+    
+    // # 13. แหล่งเงิน/ประเภทงบประมาณที่ใช้/แผนงาน
+        $scope.fetchSubsidies = function(){
+            $http.post(ngContextPath+"/api/budget/projectUniver/fetchSubsidies").then(function (response) {
+                $scope.dataSubsidies = response.data.dataList;
+            });
+        };
+        
+        
+    // # แผนงาน
+        $scope.fetchPlan = function(){
+            $http.post(ngContextPath+"/api/budget/projectUniver/fetchPlan").then(function (response) {
+                $scope.dataPlan = response.data.dataList;
+            });
+        };   
+        
+        
+        
+    // # 14. งบประมาณและแผนการใช้จ่ายงบประมาณ
+        $scope.fetchBudgetType = function(){
+            $http.post(ngContextPath+"/api/budget/projectUniver/fetchBudgetType").then(function (response) {
+                $scope.dataBudgetType = response.data.dataList;
+            });
+        }; 
+        
+
+    // # 15. รายละเอียดการใช้งบประมาณ
+    $scope.expenseManage = function(action,index){
+        if(action==="push"){
+            $scope.seriesData.expense.push({list:null,unit:null,price:null,total:null,note:null}); 
+        }else if(action==="splice"){
+            $scope.seriesData.expense.splice(index, 1);
+        }
+    };
     
     
     
