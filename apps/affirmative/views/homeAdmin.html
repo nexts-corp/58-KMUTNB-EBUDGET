@@ -96,15 +96,16 @@
                         </div>
                         <div class="modal-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-condensed mb-none">
+                                <table id="tableDepartment" class="table table-bordered table-striped table-condensed mb-none">
                                     <thead>
                                         <tr>
+                                            <th class="text-center">ลำดับ</th>
                                             <th class="text-center">หน่วยงาน</th>
                                             <th class="text-center">สถานะ</th>
                                             <th class="text-center">เครื่องมือ</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="departmentBody">
+                                    <tbody>
                                     </tbody>
                                 </table>
                             </div>
@@ -170,7 +171,18 @@
             setTimeout(function(){
                 var datas = callAjax("{{_context_path}}/api/affirmative/admin/listsDraft", "post", {}, "json");
                 if(typeof datas !== "undefined" && datas !== null){
+                    var html = '';
+                    var count = 0;
+                    $.each(datas["lists"], function(key, value){
+                        html += '<tr>'
+                            + '<td>'+(++count)+'</td>'
+                            + '<td>'+value["name"]+'</td>'
+                            + '<td>-</td>'
+                            + '<td><button class="btn btn-sm btn-success">จัดทำ</button></td>'
+                        + '</tr>';
+                    });
 
+                    $("#tableDepartment tbody").html(html);
                 }
             }, 1000);
         });

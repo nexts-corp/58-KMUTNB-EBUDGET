@@ -32,7 +32,7 @@ myApp.controller('mainController', function ($scope, $http, $controller) {
 
         $scope.cmListYear();
         $scope.cmListFaculty('0');
-        $scope.cmBudgetPlan(2558);
+        $scope.cmListBudgetPlan(2558);
     };
 
     $scope.getSelectReportPage = function (idReport) {
