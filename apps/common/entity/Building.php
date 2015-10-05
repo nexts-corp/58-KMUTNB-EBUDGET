@@ -96,11 +96,12 @@ class Building extends EntityBase {
     /** @Column(type="string",length=18, name="PH3BUDGETAMOUNT") */
     public $ph3BudgetAmount;
 
-    /** @Column(type="string",length=100, name="creator") */
+    /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
 
-    /** @Column(type="string",length=100, name="updater") */
+    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
     public $updater;
+
 
     function getId() {
         return $this->id;

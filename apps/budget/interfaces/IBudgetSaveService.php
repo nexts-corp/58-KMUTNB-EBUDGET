@@ -197,4 +197,16 @@ interface IBudgetSaveService {
      * @description ลบคำขอแบบ ง.146
      */
     public function deleteBudget146($budgetId);
+
+
+    /**
+     * @name insertBuilding
+     * @uri /insertBuilding
+     * @param apps\common\entity\Building building Description
+     * @param apps\common\entity\BuildingDetail buildingDetail Description
+     * @return boolean result Description
+     * @description เพิ่มคำชี้แจงรายละเอียดสิ่งก่อสร้าง
+     */
+    public function insertBuilding($building, $buildingDetail);
+
 }
