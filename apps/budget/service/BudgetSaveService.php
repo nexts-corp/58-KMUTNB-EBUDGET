@@ -48,9 +48,10 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
             if (!isset($dataHead) || $dataHead == null) {
                 $bgHead->setStatusId(1);
                 $dataHead = $this->datacontext->saveObject($bgHead);
+                $bgHeadId = $bgHead->id;
+            } else {
+                $bgHeadId = $dataHead[0]->id;
             }
-
-            $bgHeadId = $dataHead[0]->id;
 
             $value->budgetHeadId = $bgHeadId;
 
@@ -133,7 +134,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
         foreach ($budget as $key => $value) {
             $bgHead = new BudgetHead();
-            $bgHead->setFormId(141);
+            $bgHead->setFormId(140);
             $bgHead->setBudgetPeriodId($value->budgetPeriodId);
             $bgHead->setBudgetTypeCode($value->budgetTypeCode);
             $bgHead->setDeptId($value->deptId);
@@ -149,9 +150,10 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
             if (!isset($dataHead) || $dataHead == null) {
                 $bgHead->setStatusId(1);
                 $dataHead = $this->datacontext->saveObject($bgHead);
+                $bgHeadId = $bgHead->id;
+            } else {
+                $bgHeadId = $dataHead[0]->id;
             }
-
-            $bgHeadId = $dataHead[0]->id;
 
             $value->budgetHeadId = $bgHeadId;
 
@@ -182,7 +184,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
         foreach ($budget as $key => $value) {
             $bgHead = new BudgetHead();
-            $bgHead->setFormId(142);
+            $bgHead->setFormId(140);
             $bgHead->setBudgetPeriodId($value->budgetPeriodId);
             $bgHead->setBudgetTypeCode($value->budgetTypeCode);
             $bgHead->setDeptId($value->deptId);
@@ -198,9 +200,10 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
             if (!isset($dataHead) || $dataHead == null) {
                 $bgHead->setStatusId(1);
                 $dataHead = $this->datacontext->saveObject($bgHead);
+                $bgHeadId = $bgHead->id;
+            } else {
+                $bgHeadId = $dataHead[0]->id;
             }
-
-            $bgHeadId = $dataHead[0]->id;
 
             $value->budgetHeadId = $bgHeadId;
 
@@ -231,7 +234,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
         foreach ($budget as $key => $value) {
             $bgHead = new BudgetHead();
-            $bgHead->setFormId(143);
+            $bgHead->setFormId(140);
             $bgHead->setBudgetPeriodId($value->budgetPeriodId);
             $bgHead->setBudgetTypeCode($value->budgetTypeCode);
             $bgHead->setDeptId($value->deptId);
@@ -247,9 +250,10 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
             if (!isset($dataHead) || $dataHead == null) {
                 $bgHead->setStatusId(1);
                 $dataHead = $this->datacontext->saveObject($bgHead);
+                $bgHeadId = $bgHead->id;
+            } else {
+                $bgHeadId = $dataHead[0]->id;
             }
-
-            $bgHeadId = $dataHead[0]->id;
 
             $value->budgetHeadId = $bgHeadId;
 
@@ -280,7 +284,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
         foreach ($budget as $key => $value) {
             $bgHead = new BudgetHead();
-            $bgHead->setFormId(144);
+            $bgHead->setFormId(140);
             $bgHead->setBudgetPeriodId($value->budgetPeriodId);
             $bgHead->setBudgetTypeCode($value->budgetTypeCode);
             $bgHead->setDeptId($value->deptId);
@@ -296,9 +300,10 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
             if (!isset($dataHead) || $dataHead == null) {
                 $bgHead->setStatusId(1);
                 $dataHead = $this->datacontext->saveObject($bgHead);
+                $bgHeadId = $bgHead->id;
+            } else {
+                $bgHeadId = $dataHead[0]->id;
             }
-
-            $bgHeadId = $dataHead[0]->id;
 
             $value->budgetHeadId = $bgHeadId;
 
@@ -329,7 +334,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
         foreach ($budget as $key => $value) {
             $bgHead = new BudgetHead();
-            $bgHead->setFormId(145);
+            $bgHead->setFormId(140);
             $bgHead->setBudgetPeriodId($value->budgetPeriodId);
             $bgHead->setBudgetTypeCode($value->budgetTypeCode);
             $bgHead->setDeptId($value->deptId);
@@ -345,9 +350,10 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
             if (!isset($dataHead) || $dataHead == null) {
                 $bgHead->setStatusId(1);
                 $dataHead = $this->datacontext->saveObject($bgHead);
+                $bgHeadId = $bgHead->id;
+            } else {
+                $bgHeadId = $dataHead[0]->id;
             }
-
-            $bgHeadId = $dataHead[0]->id;
 
             $value->budgetHeadId = $bgHeadId;
 
@@ -378,7 +384,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
         foreach ($budget as $key => $value) {
             $bgHead = new BudgetHead();
-            $bgHead->setFormId(146);
+            $bgHead->setFormId(140);
             $bgHead->setBudgetPeriodId($value->budgetPeriodId);
             $bgHead->setBudgetTypeCode($value->budgetTypeCode);
             $bgHead->setDeptId($value->deptId);
@@ -394,9 +400,10 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
             if (!isset($dataHead) || $dataHead == null) {
                 $bgHead->setStatusId(1);
                 $dataHead = $this->datacontext->saveObject($bgHead);
+                $bgHeadId = $bgHead->id;
+            } else {
+                $bgHeadId = $dataHead[0]->id;
             }
-
-            $bgHeadId = $dataHead[0]->id;
 
             $value->budgetHeadId = $bgHeadId;
 
