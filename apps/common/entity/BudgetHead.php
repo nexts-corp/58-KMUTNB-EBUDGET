@@ -21,9 +21,6 @@ class BudgetHead extends EntityBase {
     /** @Column(type="integer",length=11, name="BUDGETPERIODID") */
     public $budgetPeriodId;
 
-    /** @Column(type="integer",length=11, name="BUDGETTYPEID") */
-    public $budgetTypeId;
-
     /** @Column(type="string",length=1, name="BUDGETTYPECODE") */
     public $budgetTypeCode;
 
@@ -67,10 +64,6 @@ class BudgetHead extends EntityBase {
 
     function getBudgetPeriodId() {
         return $this->budgetPeriodId;
-    }
-
-    function getBudgetTypeId() {
-        return $this->budgetTypeId;
     }
 
     function getBudgetTypeCode() {
@@ -127,10 +120,6 @@ class BudgetHead extends EntityBase {
 
     function setBudgetPeriodId($budgetPeriodId) {
         $this->budgetPeriodId = $budgetPeriodId;
-    }
-
-    function setBudgetTypeId($budgetTypeId) {
-        $this->budgetTypeId = $budgetTypeId;
     }
 
     function setBudgetTypeCode($budgetTypeCode) {
