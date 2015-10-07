@@ -1,4 +1,32 @@
-var commonApp = angular.module('commonApp', []);
+var commonService = angular.module('commonService', []); 
+         
+commonService.service('cde', function () {
+    
+    this.path = function (path) {
+        var subPath = path.split('//');
+        
+        var projectUri = 'kmutnb-ebudget';
+        var appUri = 'budget';
+        var serUri = 'allocate';
+        
+        if(subPath.length === 1){
+            return '/'+projectUri+'/api/'+appUri+'/'+serUri+'/'+subPath[0];
+        }else if(subPath.length === 2){
+            return '/'+projectUri+'/api/'+appUri+'/'+subPath[0]+'/'+subPath[1];
+        }else if(subPath.length === 3){
+            return '/'+projectUri+'/api/'+subPath[0]+'/'+subPath[1]+'/'+subPath[2];
+        }else{
+            return "Path is error.";
+        }
+        
+    };
+    
+});
+
+
+
+
+var commonApp = angular.module('commonApp', ['commonService']);
 
 commonApp.config(function ($interpolateProvider) {
     $interpolateProvider.startSymbol('{[');
@@ -43,9 +71,6 @@ commonApp.controller('cmListController', function ($scope, $http) {
             $scope.cmDataListBudgetPlan = response.data.lists;
         });
     };
-    
-    
-    
     
     
     
