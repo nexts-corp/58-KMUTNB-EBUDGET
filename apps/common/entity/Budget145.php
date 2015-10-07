@@ -57,6 +57,15 @@ class Budget145 extends EntityBase {
     /** @Column(type="text", name="DURABLEDESC") */
     public $durableDesc;
 
+    /** @Column(type="string",length=18, name="LATITUDE") */
+    public $latitude;
+
+    /** @Column(type="string",length=18, name="LONGITUDE") */
+    public $longitude;
+
+    /** @Column(type="string",length=50, name="GRIDUTM") */
+    public $gridUtm;
+
     /** @Column(type="integer",length=11, name="QTY") */
     public $qty;
 
@@ -148,6 +157,18 @@ class Budget145 extends EntityBase {
 
     function getDurableDesc() {
         return $this->durableDesc;
+    }
+
+    function getLatitude() {
+        return $this->latitude;
+    }
+
+    function getLongitude() {
+        return $this->longitude;
+    }
+
+    function getGridUtm() {
+        return $this->gridUtm;
     }
 
     function getQty() {
@@ -252,6 +273,18 @@ class Budget145 extends EntityBase {
 
     function setDurableDesc($durableDesc) {
         $this->durableDesc = $durableDesc;
+    }
+
+    function setLatitude($latitude) {
+        $this->latitude = $latitude;
+    }
+
+    function setLongitude($longitude) {
+        $this->longitude = $longitude;
+    }
+
+    function setGridUtm($gridUtm) {
+        $this->gridUtm = $gridUtm;
     }
 
     function setQty($qty) {
