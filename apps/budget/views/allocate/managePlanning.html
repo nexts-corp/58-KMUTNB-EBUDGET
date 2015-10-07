@@ -35,7 +35,7 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="selectYear">ปีงบประมาณ</label>
                     <div class="col-md-8">
-                        <select ng-model="selectYear" ng-init="selectYear = 'udf'" class="form-control input-sm selChange" ng-change="fetchPlan()">
+                        <select ng-model="selectYear" ng-init="selectYear = 'udf'" class="form-control input-sm selChange">
                             <option value="udf">- เลือกปีงบประมาณ -</option>
                             <option ng-repeat="list in cmDataListYear" value="{[list.year]}">{[list.year]}</option>
                         </select>
@@ -44,11 +44,11 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label class="col-md-4 control-label" for="selectYear">ประเภทรายจ่าย</label>
+                    <label class="col-md-4 control-label" for="selectBudgetType">ประเภทรายจ่าย</label>
                     <div class="col-md-8">
-                        <select ng-model="selectYear" ng-init="selectYear = 'udf'" class="form-control input-sm selChange" ng-change="fetchPlan()">
+                        <select ng-model="selectBudgetType" ng-init="selectBudgetType = 'udf'" class="form-control input-sm selChange">
                             <option value="udf">- เลือกประเภทรายจ่าย -</option>
-                            <option ng-repeat="list in cmDataListYear" value="{[list.year]}">{[list.year]}</option>
+                            <option ng-repeat="list in cmDataListBudgetType" value="{[list.id]}">{[list.typeName]}</option>
                         </select>
                     </div>
                 </div>
@@ -86,6 +86,22 @@
                                     <button ng-click="fetchBudgetType(list.id,'next',list.typeName)" class="btn btn-primary""><i class="fa fa-cog"></i> จัดการ</button>
                                     <button ng-click="modal('edit',list.id,list.typeName)" class="btn btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>    
                                     <button ng-click="delData(list.id)" class="btn btn-default"><i class="fa fa-trash-o "></i> ลบ</button> 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select ng-model="department" ng-init="department = 'udf'" class="form-control input-sm selChange">
+                                        <option value="udf">- เลือกหน่วยงาน -</option>
+                                        <option ng-repeat="list in cmDataListDepartment" value="{[list.id]}">{[list.name]}</option>
+                                    </select>
+                                </td>
+                                <td><input ng-model="education" type="text" class="form-control input-sm"></td>
+                                <td><input ng-model="academic" type="text" class="form-control input-sm"></td>
+                                <td class="text-right" style="vertical-align: middle;">{[sumProceeds()]}</td>
+                                <td class="text-center">
+                                    <button class="btn btn-success"><i class="fa fa-plus"></i> เพิ่ม</button>
+                                    <button class="btn btn-default"><i class="fa fa-trash-o "></i> ลบ</button>
+                                    <button class="btn btn-primary"><i class="fa fa-save"></i> บันทึก</button>
                                 </td>
                             </tr>
 

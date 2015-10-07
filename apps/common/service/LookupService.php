@@ -120,6 +120,11 @@ class LookupService extends CServiceBase implements ILookupService {
         array_push($list, array("id" => "U", "name" => "เงินงบประมาณแผ่นดินและเงินรายได้"));
         return $list;
     }
+    
+    public function listBudgetType() {
+        $sql = "SELECT bgt FROM ".$this->ent."\\BudgetType bgt WHERE (bgt.typeCode = 'K' OR bgt.typeCode = 'U') AND bgt.masterId = 0";
+        return $this->datacontext->getObject($sql);
+    }
 
     public function listProjectType() {
         $repo = new entity\ProjectType();
