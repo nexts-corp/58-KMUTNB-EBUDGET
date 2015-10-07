@@ -6,7 +6,13 @@
     </h4>
 </div>
 
-<form class="form-horizontal form-bordered">
+<form name="projectForm" class="form-horizontal form-bordered" novalidate>
+<!--    <p>Username:<br>
+        <input type="text" name="user" ng-model="user" required>
+        <span style="color:red" ng-show="projectForm.user.$dirty && projectForm.user.$invalid">
+            <span ng-show="projectForm.user.$error.required">Username is required.</span>
+        </span>
+    </p>-->
     <div class="form-group">
         <div class="col-md-12">
             <h5>1. ชื่อโครงการ</h5>
@@ -15,7 +21,10 @@
         <div class="col-md-12">
             <div class="col-md-2"></div>
             <div class="col-md-6">
-                <input ng-model="seriesData.name" type="text" class="form-control input-sm">
+                <input name="name" ng-model="seriesData.name" type="text" class="form-control input-sm" required>
+                <span style="color:red" ng-show="projectForm.name.$dirty && projectForm.name.$invalid">
+                    <span ng-show="projectForm.name.$error.required">กรุณากรอก ชื่อโครงการ</span>
+                </span>
             </div>
         </div>
     </div>
@@ -61,19 +70,19 @@
                 <div class="col-md-12">
                     <label class="col-md-2 control-label text-right">แผนกลยุทธ์</label>
                     <div class="col-md-6">
-                        <select ng-model="affList.typeId" ng-init="affList.typeId = 'udf'" ng-change="fetchIssue($index,affList.typeId)" class="form-control input-sm">
+                        <select ng-model="affList.typeId" ng-init="affList.typeId = 'udf'" ng-change="fetchIssue($index, affList.typeId)" class="form-control input-sm">
                             <option value="udf">เลือก</option>
                             <option ng-repeat="list in cmDataListAffirmativeType" value="{[list.id]}">{[list.typeName]}</option>
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <button ng-show="affirmative.length!=1" ng-click="affirmativeManage('splice',$index)" class="btn btn-default"><i class="fa fa-trash"></i> ลบ</button>
+                        <button ng-show="affirmative.length != 1" ng-click="affirmativeManage('splice', $index)" class="btn btn-default"><i class="fa fa-trash"></i> ลบ</button>
                     </div>
                 </div>
                 <div class="col-md-12" style="margin: 5px 0;">
                     <label class="col-md-3 control-label text-right">ประเด็นยุทธศาสตร์</label>
                     <div class="col-md-5">
-                        <select ng-model="affList.issueId" ng-init="affList.issueId = 'udf'" ng-change="fetchTarget($index,affList.issueId)" class="form-control input-sm">
+                        <select ng-model="affList.issueId" ng-init="affList.issueId = 'udf'" ng-change="fetchTarget($index, affList.issueId)" class="form-control input-sm">
                             <option value="udf">เลือก</option>
                             <option ng-repeat="listIssue in affList.dataIssue" value="{[listIssue.id]}">{[listIssue.issueName]}</option>
                         </select>
@@ -83,7 +92,7 @@
                 <div class="col-md-12" style="margin: 5px 0;">
                     <label class="col-md-3 control-label text-right">เป้าประสงค์</label>
                     <div class="col-md-5">
-                        <select ng-model="affList.targetId" ng-init="affList.targetId = 'udf'" ng-change="fetchStrategy($index,affList.typeId)" class="form-control input-sm">
+                        <select ng-model="affList.targetId" ng-init="affList.targetId = 'udf'" ng-change="fetchStrategy($index, affList.typeId)" class="form-control input-sm">
                             <option value="udf">เลือก</option>
                             <option ng-repeat="listTarget in affList.dataTarget" value="{[listTarget.id]}">{[listTarget.targetName]}</option>
                         </select>
@@ -93,7 +102,7 @@
                 <div class="col-md-12" style="margin: 5px 0;">
                     <label class="col-md-3 control-label text-right" for="xxx">กลยุทธ์</label>
                     <div class="col-md-5">
-                        <select ng-model="affList.strategyId" ng-init="affList.strategyId = 'udf'" ng-change="seriesData.affirmative[$index].strategyId=affList.strategyId" class="form-control input-sm">
+                        <select ng-model="affList.strategyId" ng-init="affList.strategyId = 'udf'" ng-change="seriesData.affirmative[$index].strategyId = affList.strategyId" class="form-control input-sm">
                             <option value="udf">เลือก</option>
                             <option ng-repeat="listStrategy in affList.dataStrategy" value="{[listStrategy.id]}">{[listStrategy.strategyName]}</option>
                         </select>
@@ -102,7 +111,7 @@
             </div>
             <br>
         </div>
-        
+
         <div class="col-md-12" style="margin: 5px 0;">
             <div class="col-md-offset-3 col-md-5" style="text-align: right;">
                 <button class="btn btn-primary" ng-click="affirmativeManage('push')"><i class="fa fa-plus"></i> เพิ่ม</button>
@@ -122,7 +131,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="form-group">
         <div class="col-md-12">
             <h5>5. การบูรณาการโครงการ</h5>
@@ -131,7 +140,7 @@
         <div ng-repeat="listInt in dataIntegration" class="col-md-12">
             <div class="row">
                 <div class="col-md-offset-1 col-md-3 checkbox-custom checkbox-primary">
-                    <input ng-model="seriesData.integrationId[$index]" ng-change="clearIntegrationDESC($index,seriesData.integrationId[$index])" type="checkbox" value="listInt.id">
+                    <input ng-model="seriesData.integrationId[$index]" ng-change="clearIntegrationDESC($index, seriesData.integrationId[$index])" type="checkbox" value="listInt.id">
                     <label>{[listInt.name]}</label>
                 </div>
                 <div class="col-md-6">
@@ -140,8 +149,8 @@
             </div><br>
         </div>
     </div>
-    
-    
+
+
     <div class="form-group">
         <div class="col-md-12">
             <h5>6. หลักการและเหตุผลของโครงการ</h5>
@@ -154,7 +163,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="form-group">
         <div class="col-md-12">
             <h5>7. วัตถุประสงค์</h5>
@@ -167,12 +176,12 @@
             </div>
         </div>
     </div>
-    
+
     <div class="form-group">
         <div class="col-md-12">
             <h5>8. ตัวชี้วัดความสำเร็จระดับโครงการ (Output/Outcome) และค่าเป้าหมาย (ระบุหน่วยนับ)</h5>
         </div>
-        
+
         <div class="col-md-offset-1 col-md-10">
             <table class="table table-bordered">
                 <tr>
@@ -189,21 +198,21 @@
                     <td><input ng-model="listItem.unit" type="text" class="form-control input-sm"></td>
                     <td><input ng-model="listItem.target" type="text" class="form-control input-sm"></td>
                     <td class="text-center">
-                        <button ng-click="kpiManage('splice',$parent.$index,$index)" class="btn btn-default"><i class="fa fa-trash"></i> ลบ</button>
+                        <button ng-click="kpiManage('splice', $parent.$index, $index)" class="btn btn-default"><i class="fa fa-trash"></i> ลบ</button>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="3"></td>
                     <td class="text-center">
-                        <button ng-click="kpiManage('push',$index)" class="btn btn-primary"><i class="fa fa-plus"></i> เพิ่ม</button>
+                        <button ng-click="kpiManage('push', $index)" class="btn btn-primary"><i class="fa fa-plus"></i> เพิ่ม</button>
                     </td>
                 </tr>
-                
+
                 <tr ng-show="0" ng-repeat-end><td>repeat end</td></tr>
             </table>
         </div>
     </div>
-    
+
     <div class="form-group">
         <div class="col-md-12">
             <h5>9. กลุ่มเป้าหมาย (ระบุกลุ่มเป้าหมายและจำนวนปุ่มเป้าหมายที่เข้าร่วมโครงการ)</h5>
@@ -216,13 +225,13 @@
             </div>
         </div>
     </div>
-    
-    
+
+
     <div class="form-group">
         <div class="col-md-12">
             <h5>10. ขั้นตอนการดำเนินการ</h5>
         </div>
-        
+
         <div class="col-md-offset-1 col-md-10">
             <table class="table table-bordered">
                 <tr>
@@ -236,7 +245,7 @@
                     <td><input ng-model="listOpe.timeStart" type="text" class="form-control input-sm"></td>
                     <td><input ng-model="listOpe.timeEnd" type="text" class="form-control input-sm"></td>
                     <td class="text-center">
-                        <button ng-click="operatingManage('splice',$index)" class="btn btn-default"><i class="fa fa-trash"></i> ลบ</button>
+                        <button ng-click="operatingManage('splice', $index)" class="btn btn-default"><i class="fa fa-trash"></i> ลบ</button>
                     </td>
                 </tr>
                 <tr>
@@ -248,7 +257,7 @@
             </table>
         </div>
     </div>
-    
+
     <div class="form-group">
         <div class="col-md-12">
             <h5>11. ระยะเวลาการดำเนินงาน</h5>
@@ -267,7 +276,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="form-group">
         <div class="col-md-12">
             <h5>12. ประมาณการงบประมาณที่ใช้</h5>
@@ -283,11 +292,11 @@
             </div>
         </div>
         <div class="col-md-12" style="margin: 5px 0;">
-            
+
         </div>
     </div>
-    
-    
+
+
     <div class="form-group">
         <div class="col-md-12">
             <h5>13. แหล่งเงิน/ประเภทงบประมาณที่ใช้/แผนงาน</h5>
@@ -323,12 +332,12 @@
             </div>
         </div>
     </div>
-    
+
     <div class="form-group">
         <div class="col-md-12">
             <h5>14. งบประมาณและแผนการใช้จ่ายงบประมาณ</h5>
         </div>
-        
+
         <div class="col-md-12">
             <table class="table table-bordered">
                 <tr>
@@ -359,12 +368,12 @@
             </table>
         </div>
     </div>
-    
+
     <div class="form-group">
         <div class="col-md-12">
             <h5>15. รายละเอียดการใช้งบประมาณ</h5>
         </div>
-        
+
         <div class="col-md-12">
             <table class="table table-bordered">
                 <tr>
@@ -382,7 +391,7 @@
                     <td><input ng-model="listEx.total" type="text" class="form-control input-sm"></td>
                     <td><input ng-model="listEx.note" type="text" class="form-control input-sm"></td>
                     <td class="text-center">
-                        <button ng-click="expenseManage('splice',$index)" class="btn btn-default"><i class="fa fa-trash"></i> ลบ</button>
+                        <button ng-click="expenseManage('splice', $index)" class="btn btn-default"><i class="fa fa-trash"></i> ลบ</button>
                     </td>
                 </tr>
                 <tr>
@@ -394,8 +403,8 @@
             </table>
         </div>
     </div>
-    
-    
+
+
     <div class="form-group">
         <div class="col-md-12">
             <h5>16. ประโยชน์ที่คาดว่าจะได้รับ</h5>
@@ -408,8 +417,8 @@
             </div>
         </div>
     </div>
-    
-    
+
+
 
     <div class="col-md-12 text-right">
         <button class="btn btn-success"><i class="fa fa-save"></i> บันทึก</button>&nbsp;
