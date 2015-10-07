@@ -72,6 +72,12 @@ commonApp.controller('cmListController', function ($scope, $http) {
         });
     };
     
+    $scope.cmListBudgetType = function () {
+        $http.post(ngContextPath+"/api/common/lookup/listBudgetType").then(function (response) {
+            $scope.cmDataListBudgetType = response.data.lists;
+        });
+    };
+    
     
     
     
