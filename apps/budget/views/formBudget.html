@@ -232,6 +232,11 @@
             listsPlan($(this).val());
             listsProject("");
         });
+        
+        $("#budgetTypeCode").change(function(){
+            isForm = 0;
+            listsForm($(this).val());
+        });
 
         $("#planId").change(function () {
             listsProject($(this).val());
@@ -268,51 +273,60 @@
         $("#table tbody").html(html);
     }
 
-    function listsForm() {
+    function listsForm(type) {
         if (isForm == 0) {
-            var formArr = [
-                {
-                    form: "bg140",
-                    name: "แบบรายละเอียดคำของบประมาณเงินเดือน (ง.140)"
-                },
-                {
-                    form: "bg141",
-                    name: "แบบรายละเอียดคำของบประมาณค่าจ้างประจำ (ง.141)"
-                },
-                {
-                    form: "bg142",
-                    name: "แบบรายละเอียดคำของบประมาณค่าจ้างชั่วคราว (ง.142)"
-                },
-                {
-                    form: "bg143",
-                    name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน (ค่าตอบแทน ใช้สอย และวัสดุ) (ง.143)"
-                },
-                {
-                    form: "bg144",
-                    name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าสาธารณูปโภค (ง.144)"
-                },
-                {
-                    form: "bg145",
-                    name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าครุภัณฑ์ ค่าที่ดิน/สิ่งก่อสร้าง (ง.145)"
-                },
-                {
-                    form: "bg146",
-                    name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุน (ง.146)"
-                },
-                {
-                    form: "buildingOne",
-                    name: "คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง 1 ปี"
-                },
-                {
-                    form: "buildingMore",
-                    name: "คำชี้แจงรายละเอียดรายการที่ดินและสิ่งก่อสร้าง"
-                },
-                {
-                    ng:"true",
-                    form: "project",
-                    name: "โครงการที่ตอบสนองยุทธศาสตร์"
-                }
-            ];
+            var formArr;
+            if(type == "G") {
+                formArr = [
+                    {
+                        form: "bg140",
+                        name: "แบบรายละเอียดคำของบประมาณเงินเดือน (ง.140)"
+                    },
+                    {
+                        form: "bg141",
+                        name: "แบบรายละเอียดคำของบประมาณค่าจ้างประจำ (ง.141)"
+                    },
+                    {
+                        form: "bg142",
+                        name: "แบบรายละเอียดคำของบประมาณค่าจ้างชั่วคราว (ง.142)"
+                    },
+                    {
+                        form: "bg143",
+                        name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน (ค่าตอบแทน ใช้สอย และวัสดุ) (ง.143)"
+                    },
+                    {
+                        form: "bg144",
+                        name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าสาธารณูปโภค (ง.144)"
+                    },
+                    {
+                        form: "bg145",
+                        name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าครุภัณฑ์ ค่าที่ดิน/สิ่งก่อสร้าง (ง.145)"
+                    },
+                    {
+                        form: "bg146",
+                        name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุน (ง.146)"
+                    },
+                    {
+                        form: "buildingOne",
+                        name: "คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง 1 ปี"
+                    },
+                    {
+                        form: "buildingMore",
+                        name: "คำชี้แจงรายละเอียดรายการที่ดินและสิ่งก่อสร้าง"
+                    }
+                ];
+            } else if (type == "K") {
+                formArr = [
+                    {
+                        ng:"true",
+                        form: "project",
+                        name: "โครงการที่ตอบสนองยุทธศาสตร์"
+                    }
+                ];
+            } else {
+                formArr = [{}];
+            }
+        
             var html = '';
 
             $.each(formArr, function (key, value) {
@@ -343,12 +357,14 @@
                     $("button.form").attr("disabled", "disabled");
                 }
             });
-
+            
+            /*
             listsBudgetPeriod();
             listsBudgetType();
             listsFundgroup();
             listsFaculty();
-
+            */
+                
             $("button.form").unbind("click").click(function () {
                 var form = $(this).attr("data-form");
 
@@ -398,7 +414,7 @@
     function listsBudgetType() {
         var html = '<option value="" selected="selected">เลือก</option>';
 
-        var datas = callAjax("{{_context_path}}/api/common/lookup/listBudgetSource", "post", {}, "json");
+        var datas = callAjax("{{_context_path}}/api/common/lookup/listBudgetSource", "post", {}, "json" );
         if (typeof datas !== "undefined" && datas !== null) {
             $.each(datas["lists"], function (key, value) {
                 html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
@@ -490,6 +506,7 @@
     }
 
     function toggleShow(option) {
+
         if (option == "home") {
             // panel show and hide
             $("#divChoice, #divForm").hide();
@@ -515,9 +532,10 @@
                 $scopeJS.activeTemplate="no";
             });
             
-            
-
-            listsForm();
+            listsBudgetPeriod();
+            listsBudgetType();
+            listsFundgroup();
+            listsFaculty();
         }
         else if (option == "form") {
             // panel show and hide
