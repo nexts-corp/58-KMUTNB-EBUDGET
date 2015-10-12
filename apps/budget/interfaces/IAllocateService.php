@@ -51,5 +51,17 @@ interface IAllocateService {
     
     
     
+    
+    
+    
+    /**
+     * @name testJS
+     * @uri /test/js
+     * @description ทดสอบ
+     */
+    public function testJS();
+    
+    
+    
 
 }

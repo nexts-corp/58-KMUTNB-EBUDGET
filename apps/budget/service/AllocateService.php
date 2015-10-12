@@ -113,4 +113,9 @@ class AllocateService extends CServiceBase implements IAllocateService {
     }
     
 
+    public function testJS() {
+        //$view = new CJView("initNg.js", CJViewType::JS);
+        //$view->name = "testByNamkhaeng";
+        return $this->getRoute();
+    }
 }

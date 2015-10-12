@@ -107,3 +107,22 @@ commonApp.controller('cmListController', function ($scope, $http) {
     
     
 });
+
+
+commonApp.directive('numberFormat', function() {
+    return function(scope, element, attrs) {
+        angular.element(element).number(true,2);
+    };
+});
+
+commonApp.directive('autoFocus', function() {
+    return function(scope, element, attrs) {
+        scope.$watch(attrs.autoFocus,function (newValue) { 
+            //newValue && element.focus();
+            
+            if(typeof(newValue)!=="undefined"){
+                element.focus();
+            }
+        },true);
+    };
+});
