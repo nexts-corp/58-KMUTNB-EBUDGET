@@ -12,8 +12,35 @@ myApp.controller('mainCtrl', function($scope,cde,$controller) {
         $scope.cmListBudgetType();
         $scope.cmListDepartment();
         
+        $scope.dataAllocate = [];
+        
         //$scope.testPath = cde.path("app//service//action/subAction");
-        $('[ng-model=education],[ng-model=academic]').number( true, 2 );
+    };
+    
+    
+    $scope.addItem = function(){
+        $scope.dataAllocate.push({
+            department:$scope.department,
+            education:$scope.education,
+            academic:$scope.academic
+        });
+        
+        $scope.education = "";
+        $scope.academic = "";
+        $scope.department = "udf";
+    };
+    
+    
+    $scope.delItem = function(index){
+        if(confirm("ยืนยันการลบ")){
+            //alert(index);
+            $scope.dataAllocate.splice(index,1);
+        }
+    };
+    
+    
+    $scope.sumRows = function(val1,val2){
+        return parseFloat(val1)+parseFloat(val2);
     };
     
     $scope.sumProceeds = function(){

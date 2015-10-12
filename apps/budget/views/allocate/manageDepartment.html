@@ -1,301 +1,249 @@
-{{>header}}
-<style type="text/css">
-    .cssCursor {
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        cursor:pointer;
-    }
-</style>
-
-<div ng-app="managePlanning" ng-controller="mainCtrl" data-ng-init="init()" style="display:none;">
-    <div role="main" class="main">
-        <section class="page-top none-margin">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <ul class="breadcrumb">
-                            <li class="active">ระบบจัดทำ/จัดสรรงบประมาณ</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1 class="none-padding">ระบบจัดสรรงบประมาณ (หน่วยงาน)</h1>
-                    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="department">หน่วยงาน</label>
+                <div class="col-md-8">
+                    <select ng-model="department" ng-init="department = 'udf'" class="form-control input-sm selChange" ng-change="fetchPlan()">
+                        <option value="udf">- เลือกหน่วยงาน -</option>
+                        <option ng-repeat="list in cmDataListDepartment" value="{[list.id]}">{[list.name]}</option>
+                    </select>
                 </div>
             </div>
-        </section>
-        <hr class="tall dashboard">
-        <div class="sort-source-wrapper"><!-- button action on header -->
-            <div class="container">
-                <ul data-option-key="filter" data-sort-id="portfolio" class="nav nav-pills sort-source menu-top pull-right">
-                    <li class="active">
-                        <button ng-click="back()" ng-show="idLevel.length>=1" class="btn btn-default back"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
-                    </li>
-                </ul>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="col-md-8 control-label">เงินต้น&nbsp;&nbsp;xxxxxxxxx.xx&nbsp;&nbsp;บาท</label>
+
+            </div>
+        </div>
+    </div><br>
+    <div class="row">
+        <div class="tabs">
+            <ul id="tabMenu" class="nav nav-tabs">
+                <li class="active">
+                    <a href="#tab-format1" data-toggle="tab" aria-expanded="false">แผนแบบที่ 1</a>
+                </li>
+                <li class="">
+                    <a href="#tab-format2" data-toggle="tab" aria-expanded="true">แผนแบบที่ 2</a>
+                </li>
+            </ul>
+            <div id="tabContent" class="tab-content">
+                <div id="tab-format1" class="tab-pane active">
+                    <div ng-include="'formPlanAndBudget.htm'"></div><br>
+                    <table class="table table-bordered table-condensed mb-none">
+                        <thead>
+                            <tr>
+                                <th class="text-center col-md-1">ลำดับ</th>
+                                <th class="text-center col-md-7">รายการ</th>
+                                <th class="text-center col-md-2">จำนวนเงิน</th>
+                                <th class="text-center col-md-2">จัดการ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat-start="list in dataBttP1" style="background-color:#F1F1F1;">   
+                                <td ng-click="treeToggle(list.show,$index)" class="text-center" style="padding-top: 10px; vertical-align: middle;">
+                                    <label>{[$index+1]}</label>
+                                </td> 
+                                <td style="vertical-align: middle; padding-top: 10px;">
+                                    <div class="form-group">
+                                        <label>{[list.name]}</label>
+                                    </div>
+                                </td>
+                                <td class="text-right" style="vertical-align: middle; padding-right: 18px; padding-top: 10px;">
+                                    <label>{[sumBudget($index) | currency:"":2]}</label>
+                                </td>  
+                                <td class="text-center" style="vertical-align: middle;"></td>
+                            </tr>
+                            <tr ng-repeat-start="listSub in list.sub" my-repeat-directive>   
+                                <td ng-click="toggleShow($parent.$index+'.'+$index,listSub.show)" class="text-center cssCursor" style="vertical-align: middle;">
+                                    <i ng-hide="listSub.show" class="fa fa-plus-square"></i>
+                                    <i ng-show="listSub.show" class="fa fa-minus-square"></i>
+                                </td> 
+                                <td style="padding-left:25px;vertical-align: middle;">
+                                    <div class="form-group">
+                                        {[($parent.$index+1)+'.'+($index+1)+' '+listSub.name]}
+                                    </div>
+                                </td>   
+                                <td class="text-right" style="vertical-align: middle; padding-right: 18px;">
+                                    {[sumList($parent.$index+'.'+$index) | currency:"":2]}
+                                </td> 
+                                <td class="text-center"></td>
+                            </tr>
+                            <tr ng-show="listSub.show" ng-repeat="listData in listSub.data">   
+                                <td class="text-center" style="vertical-align: middle;"></td> 
+                                <td style="padding-left:50px;vertical-align: middle;">
+                                    <div class="form-group">
+                                        <input ng-model="listData.name" type="text" class="form-control">
+                                    </div>
+                                </td>   
+                                <td class="text-right" style="vertical-align: middle;">
+                                    <input ng-model="listData.value" type="text" class="form-control text-right" number-format>
+                                </td> 
+                                <td class="text-center">
+                                    <button ng-show="(listData.name!=listData.nameC)||(listData.value!=listData.valueC)" ng-click="upItemPlanList($parent.$parent.$index+'.'+$parent.$index+'.'+$index)" class="btn btn-primary"><i class="fa fa-save"></i> บันทึก</button>
+                                    <button ng-show="(listData.name!=listData.nameC)||(listData.value!=listData.valueC)" ng-click="undoItemPlanList($parent.$parent.$index+'.'+$parent.$index+'.'+$index)" class="btn btn-default"><i class="fa fa-undo"></i> ย้อนกลับ</button>
+                                    <button ng-hide="(listData.name!=listData.nameC)||(listData.value!=listData.valueC)" ng-click="delItemPlanList($parent.$parent.$index+'.'+$parent.$index+'.'+$index)" class="btn btn-default"><i class="fa fa-trash-o "></i> ลบ</button> 
+                                </td>
+                            </tr>
+                            <tr ng-show="listSub.show" style="background-color:#FFF;">   
+                                <td class="text-center"></td> 
+                                <td style="padding-left:50px;vertical-align: middle;">
+                                    <div class="form-group">
+                                        <input ng-model="listSub.nameText" type="text" placeholder="รายการ" class="form-control" auto-focus="listSub.toggleFocus" ng-keypress="addItemByEnter($parent.$index+'.'+$index,$event)">
+                                    </div>
+                                </td>
+                                <td style="vertical-align: middle;">
+                                    <div class="form-group">
+                                        <input ng-model="listSub.valueText" type="text" placeholder="จำนวนเงิน" class="form-control text-right" ng-keypress="addItemByEnter($parent.$index+'.'+$index,$event)" number-format>
+                                    </div>
+                                </td>  
+                                <td class="text-center" style="vertical-align: middle;">
+                                    <button ng-show="listSub.nameText && (listSub.valueText!=null && listSub.valueText!=0)" ng-click="addItemPlanList($parent.$index+'.'+$index)" class="btn btn-success"><i class="fa fa-plus"></i> เพิ่ม</button>
+                                </td>
+                            </tr>
+
+
+
+                            <tr ng-show="0" ng-repeat-end><td colspan="4">repeat end</td></tr>
+                            <tr ng-show="0" ng-repeat-end><td colspan="4">repeat end</td></tr>
+
+                            <tr style="background-color: #F1F1F1;" ng-show="dataBttP1">   
+                                <td></td> 
+                                <td style="vertical-align: middle; padding-top: 10px;">
+                                    <label>รวมทั้งสิ้น</label>
+                                </td>
+                                <td class="text-right" style="vertical-align: middle; padding-top: 10px; padding-right: 18px;">
+                                    <label>{[sumAll() | currency:"":2]}</label>
+                                </td>  
+                                <td></td>
+                            </tr>
+
+
+
+                            <tr><td ng-show="loadBttP1" colspan="4" style="background-color: #F1F1F1;text-align: center;"><i class="fa fa-cog fa-spin"></i> กำลังโหลด</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="tab-format2" class="tab-pane">
+                    <div ng-include="'formPlanAndBudget.htm'"></div><br>
+
+                    <table class="table table-bordered table-condensed mb-none">
+                        <thead>
+                            <tr>
+                                <th class="text-center col-md-1">ลำดับ</th>
+                                <th class="text-center col-md-3">รายการ</th>
+                                <th class="text-center col-md-1">รวม</th>
+                                <th class="text-center col-md-1">ไตรมาส 1</th>
+                                <th class="text-center col-md-1">ไตรมาส 2</th>
+                                <th class="text-center col-md-1">ไตรมาส 3</th>
+                                <th class="text-center col-md-1">ไตรมาส 4</th>
+                                <th class="text-center col-md-1">จัดการ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat-start="list in dataBudgetTypeTree" style="background-color:#F1F1F1;">   
+                                <td ng-click="treeToggle(list.show,$index)" class="text-center" style="vertical-align: middle;">
+                                    {[$index+1]}
+                                </td> 
+                                <td style="vertical-align: middle;">
+                                    {[list.name]}
+                                </td>
+                                <td class="text-center" style="vertical-align: middle;"></td>
+                                <td class="text-center" style="vertical-align: middle;"></td>
+                                <td class="text-center" style="vertical-align: middle;"></td>
+                                <td class="text-center" style="vertical-align: middle;"></td>
+                                <td class="text-center" style="vertical-align: middle;"></td>
+                                <td class="text-center" style="vertical-align: middle;"></td>
+                            </tr>
+
+                            <tr ng-repeat="listSub in list.sub">   
+                                <td class="text-center" style="vertical-align: middle;">
+                                </td> 
+                                <td style="padding-left:25px;vertical-align: middle;">
+                                    {[listSub.name]}
+                                </td>
+                                <td class="text-right" style="vertical-align: middle;">
+                                    {[v1+v2+v3+v4]}
+                                </td>
+                                <td class="text-right" style="vertical-align: middle;">
+                                    <input ng-model="v1" type="number" class="form-control text-right">
+                                </td> 
+                                <td class="text-right" style="vertical-align: middle;">
+                                    <input ng-model="v2" type="number" class="form-control text-right">
+                                </td> 
+                                <td class="text-right" style="vertical-align: middle;">
+                                    <input ng-model="v3" type="number" class="form-control text-right">
+                                </td> 
+                                <td class="text-right" style="vertical-align: middle;">
+                                    <input ng-model="v4" type="number" class="form-control text-right">
+                                </td> 
+                                <td class="text-center">
+                                    <button ng-click="editItem($parent.$index+'.produce.'+$index,pdList.id)" class="btn btn-primary"><i class="fa fa-save"></i> บันทึก</button>    
+                                </td>
+                            </tr>
+
+                            <tr ng-show="0" ng-repeat-end><td colspan="4">repeat end</td></tr>
+
+                            <tr style="background-color: #F1F1F1;">   
+                                <td class="text-center" style="vertical-align: middle;"></td> 
+                                <td style="vertical-align: middle;">
+                                    รวมเงินงบประมาณ
+                                </td>
+                                <td class="text-right" style="vertical-align: middle;">
+                                    xxxxxxxxx.xx
+                                </td>
+                                <td class="text-right" style="vertical-align: middle;">
+                                    xxxxx.xx
+                                </td> 
+                                <td class="text-right" style="vertical-align: middle;">
+                                    xxxxx.xx
+                                </td> 
+                                <td class="text-right" style="vertical-align: middle;">
+                                    xxxxx.xx
+                                </td> 
+                                <td class="text-right" style="vertical-align: middle;">
+                                    xxxxx.xx
+                                </td> 
+                                <td class="text-center"></td>
+                            </tr>
+                            <tr><td colspan="8" style="background-color: #F1F1F1;text-align: center;"><i class="fa fa-cog fa-spin"></i> กำลังโหลด</td></tr>
+                            <tr><td colspan="8" style="background-color: #F1F1F1;text-align: center;">กรุณาเลือกข้อมูลเบื้องต้น</td></tr>
+                        </tbody>
+                    </table>
+
+
+
+                </div>
             </div>
         </div>
     </div>
-    
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="department">หน่วยงาน</label>
-                    <div class="col-md-8">
-                        <select ng-model="department" ng-init="department = 'udf'" class="form-control input-sm selChange" ng-change="fetchPlan()">
-                            <option value="udf">- เลือกหน่วยงาน -</option>
-                            <option ng-repeat="list in cmDataListDepartment" value="{[list.id]}">{[list.name]}</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label class="col-md-8 control-label">เงินต้น&nbsp;&nbsp;xxxxxxxxx.xx&nbsp;&nbsp;บาท</label>
-
-                </div>
-            </div>
-        </div><br>
-        <div class="row">
-            <div class="tabs">
-                <ul id="tabMenu" class="nav nav-tabs">
-                    <li class="active">
-                        <a href="#tab-format1" data-toggle="tab" aria-expanded="false">แผนแบบที่ 1</a>
-                    </li>
-                    <li class="">
-                        <a href="#tab-format2" data-toggle="tab" aria-expanded="true">แผนแบบที่ 2</a>
-                    </li>
-                </ul>
-                <div id="tabContent" class="tab-content">
-                    <div id="tab-format1" class="tab-pane active">
-                        <div ng-include="'formPlanAndBudget.htm'"></div><br>
-                        <table class="table table-bordered table-condensed mb-none">
-                            <thead>
-                                <tr>
-                                    <th class="text-center col-md-1">ลำดับ</th>
-                                    <th class="text-center col-md-7">รายการ</th>
-                                    <th class="text-center col-md-2">จำนวนเงิน</th>
-                                    <th class="text-center col-md-2">จัดการ</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat-start="list in dataBttP1" style="background-color:#F1F1F1;">   
-                                    <td ng-click="treeToggle(list.show,$index)" class="text-center" style="padding-top: 10px; vertical-align: middle;">
-                                        <label>{[$index+1]}</label>
-                                    </td> 
-                                    <td style="vertical-align: middle; padding-top: 10px;">
-                                        <div class="form-group">
-                                            <label>{[list.name]}</label>
-                                        </div>
-                                    </td>
-                                    <td class="text-right" style="vertical-align: middle; padding-right: 18px; padding-top: 10px;">
-                                        <label>{[sumBudget($index) | currency:"":2]}</label>
-                                    </td>  
-                                    <td class="text-center" style="vertical-align: middle;"></td>
-                                </tr>
-                                <tr ng-repeat-start="listSub in list.sub" my-repeat-directive>   
-                                    <td ng-click="toggleShow($parent.$index+'.'+$index,listSub.show)" class="text-center cssCursor" style="vertical-align: middle;">
-                                        <i ng-hide="listSub.show" class="fa fa-plus-square"></i>
-                                        <i ng-show="listSub.show" class="fa fa-minus-square"></i>
-                                    </td> 
-                                    <td style="padding-left:25px;vertical-align: middle;">
-                                        <div class="form-group">
-                                            {[($parent.$index+1)+'.'+($index+1)+' '+listSub.name]}
-                                        </div>
-                                    </td>   
-                                    <td class="text-right" style="vertical-align: middle; padding-right: 18px;">
-                                        {[sumList($parent.$index+'.'+$index) | currency:"":2]}
-                                    </td> 
-                                    <td class="text-center"></td>
-                                </tr>
-                                <tr ng-show="listSub.show" ng-repeat="listData in listSub.data">   
-                                    <td class="text-center" style="vertical-align: middle;"></td> 
-                                    <td style="padding-left:50px;vertical-align: middle;">
-                                        <div class="form-group">
-                                            <input ng-model="listData.name" type="text" class="form-control">
-                                        </div>
-                                    </td>   
-                                    <td class="text-right" style="vertical-align: middle;">
-                                        <input ng-model="listData.value" type="text" class="form-control text-right" number-format>
-                                    </td> 
-                                    <td class="text-center">
-                                        <button ng-show="(listData.name!=listData.nameC)||(listData.value!=listData.valueC)" ng-click="upItemPlanList($parent.$parent.$index+'.'+$parent.$index+'.'+$index)" class="btn btn-primary"><i class="fa fa-save"></i> บันทึก</button>
-                                        <button ng-show="(listData.name!=listData.nameC)||(listData.value!=listData.valueC)" ng-click="undoItemPlanList($parent.$parent.$index+'.'+$parent.$index+'.'+$index)" class="btn btn-default"><i class="fa fa-undo"></i> ย้อนกลับ</button>
-                                        <button ng-hide="(listData.name!=listData.nameC)||(listData.value!=listData.valueC)" ng-click="delItemPlanList($parent.$parent.$index+'.'+$parent.$index+'.'+$index)" class="btn btn-default"><i class="fa fa-trash-o "></i> ลบ</button> 
-                                    </td>
-                                </tr>
-                                <tr ng-show="listSub.show" style="background-color:#FFF;">   
-                                    <td class="text-center"></td> 
-                                    <td style="padding-left:50px;vertical-align: middle;">
-                                        <div class="form-group">
-                                            <input ng-model="listSub.nameText" type="text" placeholder="รายการ" class="form-control" auto-focus="listSub.toggleFocus" ng-keypress="addItemByEnter($parent.$index+'.'+$index,$event)">
-                                        </div>
-                                    </td>
-                                    <td style="vertical-align: middle;">
-                                        <div class="form-group">
-                                            <input ng-model="listSub.valueText" type="text" placeholder="จำนวนเงิน" class="form-control text-right" ng-keypress="addItemByEnter($parent.$index+'.'+$index,$event)" number-format>
-                                        </div>
-                                    </td>  
-                                    <td class="text-center" style="vertical-align: middle;">
-                                        <button ng-show="listSub.nameText && (listSub.valueText!=null && listSub.valueText!=0)" ng-click="addItemPlanList($parent.$index+'.'+$index)" class="btn btn-success"><i class="fa fa-plus"></i> เพิ่ม</button>
-                                    </td>
-                                </tr>
-
-
-
-                                <tr ng-show="0" ng-repeat-end><td colspan="4">repeat end</td></tr>
-                                <tr ng-show="0" ng-repeat-end><td colspan="4">repeat end</td></tr>
-                                
-                                <tr style="background-color: #F1F1F1;" ng-show="dataBttP1">   
-                                    <td></td> 
-                                    <td style="vertical-align: middle; padding-top: 10px;">
-                                        <label>รวมทั้งสิ้น</label>
-                                    </td>
-                                    <td class="text-right" style="vertical-align: middle; padding-top: 10px; padding-right: 18px;">
-                                        <label>{[sumAll() | currency:"":2]}</label>
-                                    </td>  
-                                    <td></td>
-                                </tr>
-                                
-
-
-                                <tr><td ng-show="loadBttP1" colspan="4" style="background-color: #F1F1F1;text-align: center;"><i class="fa fa-cog fa-spin"></i> กำลังโหลด</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="tab-format2" class="tab-pane">
-                        <div ng-include="'formPlanAndBudget.htm'"></div><br>
-                        
-                        <table class="table table-bordered table-condensed mb-none">
-                            <thead>
-                                <tr>
-                                    <th class="text-center col-md-1">ลำดับ</th>
-                                    <th class="text-center col-md-3">รายการ</th>
-                                    <th class="text-center col-md-1">รวม</th>
-                                    <th class="text-center col-md-1">ไตรมาส 1</th>
-                                    <th class="text-center col-md-1">ไตรมาส 2</th>
-                                    <th class="text-center col-md-1">ไตรมาส 3</th>
-                                    <th class="text-center col-md-1">ไตรมาส 4</th>
-                                    <th class="text-center col-md-1">จัดการ</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat-start="list in dataBudgetTypeTree" style="background-color:#F1F1F1;">   
-                                    <td ng-click="treeToggle(list.show,$index)" class="text-center" style="vertical-align: middle;">
-                                        {[$index+1]}
-                                    </td> 
-                                    <td style="vertical-align: middle;">
-                                        {[list.name]}
-                                    </td>
-                                    <td class="text-center" style="vertical-align: middle;"></td>
-                                    <td class="text-center" style="vertical-align: middle;"></td>
-                                    <td class="text-center" style="vertical-align: middle;"></td>
-                                    <td class="text-center" style="vertical-align: middle;"></td>
-                                    <td class="text-center" style="vertical-align: middle;"></td>
-                                    <td class="text-center" style="vertical-align: middle;"></td>
-                                </tr>
-                                
-                                <tr ng-repeat="listSub in list.sub">   
-                                    <td class="text-center" style="vertical-align: middle;">
-                                    </td> 
-                                    <td style="padding-left:25px;vertical-align: middle;">
-                                        {[listSub.name]}
-                                    </td>
-                                    <td class="text-right" style="vertical-align: middle;">
-                                        {[v1+v2+v3+v4]}
-                                    </td>
-                                    <td class="text-right" style="vertical-align: middle;">
-                                        <input ng-model="v1" type="number" class="form-control text-right">
-                                    </td> 
-                                    <td class="text-right" style="vertical-align: middle;">
-                                        <input ng-model="v2" type="number" class="form-control text-right">
-                                    </td> 
-                                    <td class="text-right" style="vertical-align: middle;">
-                                        <input ng-model="v3" type="number" class="form-control text-right">
-                                    </td> 
-                                    <td class="text-right" style="vertical-align: middle;">
-                                        <input ng-model="v4" type="number" class="form-control text-right">
-                                    </td> 
-                                    <td class="text-center">
-                                        <button ng-click="editItem($parent.$index+'.produce.'+$index,pdList.id)" class="btn btn-primary"><i class="fa fa-save"></i> บันทึก</button>    
-                                    </td>
-                                </tr>
-                                
-                                <tr ng-show="0" ng-repeat-end><td colspan="4">repeat end</td></tr>
-                                
-                                <tr style="background-color: #F1F1F1;">   
-                                    <td class="text-center" style="vertical-align: middle;"></td> 
-                                    <td style="vertical-align: middle;">
-                                        รวมเงินงบประมาณ
-                                    </td>
-                                    <td class="text-right" style="vertical-align: middle;">
-                                        xxxxxxxxx.xx
-                                    </td>
-                                    <td class="text-right" style="vertical-align: middle;">
-                                        xxxxx.xx
-                                    </td> 
-                                    <td class="text-right" style="vertical-align: middle;">
-                                        xxxxx.xx
-                                    </td> 
-                                    <td class="text-right" style="vertical-align: middle;">
-                                        xxxxx.xx
-                                    </td> 
-                                    <td class="text-right" style="vertical-align: middle;">
-                                        xxxxx.xx
-                                    </td> 
-                                    <td class="text-center"></td>
-                                </tr>
-                                <tr><td colspan="8" style="background-color: #F1F1F1;text-align: center;"><i class="fa fa-cog fa-spin"></i> กำลังโหลด</td></tr>
-                                <tr><td colspan="8" style="background-color: #F1F1F1;text-align: center;">กรุณาเลือกข้อมูลเบื้องต้น</td></tr>
-                            </tbody>
-                        </table>
-                        
-                        
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-    </div>
-    
-    <script type="text/ng-template" id="formPlanAndBudget.htm">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label class="col-md-3 control-label" for="department">แผนงาน</label>
-                    <div class="col-md-9">
-                        <select ng-model="department" ng-init="department = 'udf'" class="form-control input-sm selChange" ng-change="fetchPlan()">
-                            <option value="udf">- เลือกแผนงาน -</option>
-                            <option ng-repeat="list in cmDataListBudgetPlan" value="{[list.id]}">{[list.name]}</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label class="col-md-3 control-label" for="department">กองทุน</label>
-                    <div class="col-md-9">
-                        <select ng-model="department" ng-init="department = 'udf'" class="form-control input-sm selChange" ng-change="fetchPlan()">
-                            <option value="udf">- เลือกกองทุน -</option>
-                            <option ng-repeat="list in cmDataListFundgroup" value="{[list.id]}">{[list.name]}</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </script>
 
 </div>
 
-
-
-
-
-<script type="text/javascript" src="{{_context_path}}/apps/budget/views/allocate/manageDepartment.js"></script>
-{{>footer}}
+<script type="text/ng-template" id="formPlanAndBudget.htm">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="department">แผนงาน</label>
+                <div class="col-md-9">
+                    <select ng-model="department" ng-init="department = 'udf'" class="form-control input-sm selChange" ng-change="fetchPlan()">
+                        <option value="udf">- เลือกแผนงาน -</option>
+                        <option ng-repeat="list in cmDataListBudgetPlan" value="{[list.id]}">{[list.name]}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="department">กองทุน</label>
+                <div class="col-md-9">
+                    <select ng-model="department" ng-init="department = 'udf'" class="form-control input-sm selChange" ng-change="fetchPlan()">
+                        <option value="udf">- เลือกกองทุน -</option>
+                        <option ng-repeat="list in cmDataListFundgroup" value="{[list.id]}">{[list.name]}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

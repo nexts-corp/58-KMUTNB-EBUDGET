@@ -12,7 +12,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <h1 class="none-padding">ระบบจัดสรรงบประมาณ (กองแผนงาน)</h1>
+                        <h1 class="none-padding">ระบบจัดสรรงบประมาณ</h1>
                     </div>
                 </div>
             </div>
@@ -77,31 +77,33 @@
                         </thead>
                         <tbody>
 
-
-                            <tr ng-repeat="list in dataBudgetType | orderBy:'id'">   
-                                <td class="text-center">{[$index+1]}</td> 
-                                <td class="text-center">{[list.id]}</td>
-                                <td>{[list.typeName]}</td>   
+                            <tr ng-repeat="listA in dataAllocate">
+                                <td>
+                                    <select ng-model="listA.department" ng-selected="listA.department" class="form-control input-sm selChange">
+                                        <option value="udf">- เลือกหน่วยงาน -</option>
+                                        <option ng-repeat="list in cmDataListDepartment" ng-selected="listA.department==list.id" value="{[list.id]}">{[list.name]}</option>
+                                    </select>
+                                </td>
+                                <td><input ng-model="listA.education" type="text" class="form-control input-sm"></td>
+                                <td><input ng-model="listA.academic" type="text" class="form-control input-sm"></td>
+                                <td class="text-right" style="vertical-align: middle;">{[sumRows(listA.education,listA.academic)]}</td>
                                 <td class="text-center">
-                                    <button ng-click="fetchBudgetType(list.id,'next',list.typeName)" class="btn btn-primary""><i class="fa fa-cog"></i> จัดการ</button>
-                                    <button ng-click="modal('edit',list.id,list.typeName)" class="btn btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>    
-                                    <button ng-click="delData(list.id)" class="btn btn-default"><i class="fa fa-trash-o "></i> ลบ</button> 
+                                    <button class="btn btn-primary"><i class="fa fa-save"></i> บันทึก</button>
+                                    <button class="btn btn-default" ng-click="delItem($index)"><i class="fa fa-trash-o "></i> ลบ</button>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr style="background-color: #F1F1F1;">
                                 <td>
                                     <select ng-model="department" ng-init="department = 'udf'" class="form-control input-sm selChange">
                                         <option value="udf">- เลือกหน่วยงาน -</option>
                                         <option ng-repeat="list in cmDataListDepartment" value="{[list.id]}">{[list.name]}</option>
                                     </select>
                                 </td>
-                                <td><input ng-model="education" type="text" class="form-control input-sm"></td>
-                                <td><input ng-model="academic" type="text" class="form-control input-sm"></td>
+                                <td><input ng-model="education" type="text" class="form-control input-sm" number-format></td>
+                                <td><input ng-model="academic" type="text" class="form-control input-sm" number-format></td>
                                 <td class="text-right" style="vertical-align: middle;">{[sumProceeds()]}</td>
                                 <td class="text-center">
-                                    <button class="btn btn-success"><i class="fa fa-plus"></i> เพิ่ม</button>
-                                    <button class="btn btn-default"><i class="fa fa-trash-o "></i> ลบ</button>
-                                    <button class="btn btn-primary"><i class="fa fa-save"></i> บันทึก</button>
+                                    <button class="btn btn-success" ng-click="addItem()"><i class="fa fa-plus"></i> เพิ่ม</button>
                                 </td>
                             </tr>
 
