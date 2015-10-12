@@ -3,16 +3,4 @@
 /logs
 /vendor
 manifest.server.json
-
-<<<<<<< Updated upstream
-.idea/workspace.xml
-.idea/vcs.xml
-.idea/kmutnb-ebudget.iml
-.idea/misc.xml
-.idea/.name
-.idea/modules.xml
-=======
->>>>>>> Stashed changes
-
-
-
+vendor/autoload.php
