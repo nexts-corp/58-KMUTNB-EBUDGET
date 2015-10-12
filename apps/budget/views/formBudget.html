@@ -171,7 +171,8 @@
             <div ng-show="!activeNg" id="divForm" class="col-md-12" style="display: none;"></div>
             <!-- divForm AngularJs -->
             <div ng-show="activeNg">
-                <div ng-if="activeTemplate==='project'" ng-controller="projectForm" data-ng-init="init()"><project-Template></project-Template></div>
+                <div ng-if="activeTemplate==='project'" ng-controller="projectForm" data-ng-init="init()"><project-template></project-template></div>
+                <div ng-if="activeTemplate==='manageDepartment'" ng-controller="manageDepartment" data-ng-init="init()"><managedepartment-template></managedepartment-template></div>
             </div>
             
         </div>
@@ -199,6 +200,7 @@
 <!-- initial AngularJS file -->
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/initNg.js"></script>
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/project/project.js"></script>
+<script type="text/javascript" src="{{_context_path}}/apps/budget/views/allocate/manageDepartment.js"></script>
 
 <script type="text/javascript">
     
@@ -321,6 +323,11 @@
                         ng:"true",
                         form: "project",
                         name: "โครงการที่ตอบสนองยุทธศาสตร์"
+                    },
+                    {
+                        ng:"true",
+                        form: "manageDepartment",
+                        name: "จัดสรรงบประมาณ"
                     }
                 ];
             } else {

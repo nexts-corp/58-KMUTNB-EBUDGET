@@ -1,9 +1,11 @@
-//ngContextPath
+myApp.directive('managedepartmentTemplate', function() {
+  return {
+    restrict: 'E',
+    templateUrl: js_context_path+'/apps/budget/views/allocate/manageDepartment.html'
+  };
+});
 
-
-var myApp = angular.module('managePlanning', ['commonApp']);
-
-myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
+myApp.controller('manageDepartment', function($scope,$http,$controller,cde) {
     $controller('cmListController', {$scope: $scope});
     
     $scope.init = function(){
