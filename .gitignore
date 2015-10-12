@@ -1,0 +1,9 @@
+composer.json
+composer.lock
+manifest.server.json
+
+/nbproject
+/logs
+/vendor
+
+/.idea
