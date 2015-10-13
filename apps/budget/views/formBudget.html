@@ -250,7 +250,11 @@
 
         // button action
         $("button.goChoice").unbind("click").click(function () {
-            toggleShow("choice");
+            if(!isForm){
+                toggleShow("choice");
+            }else{
+                toggleShow("backChoice");
+            }
         });
 
         $("button.backHome").unbind("click").click(function () {
@@ -258,7 +262,7 @@
         });
 
         $("button.backChoice").unbind("click").click(function () {
-            toggleShow("choice");
+            toggleShow("backChoice");
         });
     });
 
@@ -331,11 +335,12 @@
                     }
                 ];
             } else {
-                formArr = [{}];
+                formArr = [];
             }
         
             var html = '';
 
+            
             $.each(formArr, function (key, value) {
                 
                 html += '<tr>'
@@ -511,6 +516,24 @@
 
         $("#deptId").html(html).trigger("change");
     }
+    
+    
+    function goChoice(){
+        // panel show and hide
+        $("#divHome, #divForm").hide();
+        $("#divChoice").show();
+
+        // button show and hide
+        $("button.goChoice, button.backChoice").hide();
+        $("button.backHome").show();
+
+        // hide divForm for AngularJS
+        var $scopeJS = angular.element(document.querySelector('[ng-app=formBudget]')).scope();
+        $scopeJS.$apply(function() {
+            $scopeJS.activeNg=false;
+            $scopeJS.activeTemplate="no";
+        });
+    }
 
     function toggleShow(option) {
 
@@ -524,25 +547,18 @@
             $("button.goChoice").show();
         }
         else if (option == "choice") {
-            // panel show and hide
-            $("#divHome, #divForm").hide();
-            $("#divChoice").show();
-
-            // button show and hide
-            $("button.goChoice, button.backChoice").hide();
-            $("button.backHome").show();
             
-            // hide divForm for AngularJS
-            var $scopeJS = angular.element(document.querySelector('[ng-app=formBudget]')).scope();
-            $scopeJS.$apply(function() {
-                $scopeJS.activeNg=false;
-                $scopeJS.activeTemplate="no";
-            });
+            
+            goChoice();
             
             listsBudgetPeriod();
             listsBudgetType();
             listsFundgroup();
             listsFaculty();
+        }
+        else if (option == "backChoice")
+        {
+            goChoice();
         }
         else if (option == "form") {
             // panel show and hide
