@@ -115,6 +115,20 @@ commonApp.directive('numberFormat', function() {
     };
 });
 
+
+commonApp.directive('nkCloak', function() {
+    return function(scope, element, attrs) {
+        //alert("a");
+        angular.element(element).removeAttr("nk-cloak");
+        //alert("b");
+//        if(attrs.nkCloak!=="hide"){
+//            angular.element(element).show();
+//        }
+        //console.log(JSON.stringify(attrs, null, 4));
+    };
+});
+
+
 commonApp.directive('autoFocus', function() {
     return function(scope, element, attrs) {
         scope.$watch(attrs.autoFocus,function (newValue) { 
