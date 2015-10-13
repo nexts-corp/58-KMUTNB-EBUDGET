@@ -1,5 +1,6 @@
 {{>header}}
-<div ng-app="managePlanning" ng-controller="mainCtrl" data-ng-init="init()" style="display:none;">
+
+<div ng-app="managePlanning" ng-controller="mainCtrl" data-ng-init="init()" ng-cloak>
     <div role="main" class="main">
         <section class="page-top none-margin">
             <div class="container">
@@ -77,7 +78,7 @@
                         </thead>
                         <tbody>
 
-                            <tr ng-repeat="listA in dataAllocate">
+                            <tr ng-repeat="listA in dataAllocate" nk-cloak>
                                 <td>
                                     <select ng-model="listA.department" ng-selected="listA.department" class="form-control input-sm selChange">
                                         <option value="udf">- เลือกหน่วยงาน -</option>
@@ -86,9 +87,9 @@
                                 </td>
                                 <td><input ng-model="listA.education" type="text" class="form-control input-sm"></td>
                                 <td><input ng-model="listA.academic" type="text" class="form-control input-sm"></td>
-                                <td class="text-right" style="vertical-align: middle;">{[sumRows(listA.education,listA.academic)]}</td>
+                                <td class="text-right" style="vertical-align: middle;" ng-bind="sumRows(listA.education,listA.academic)"></td>
                                 <td class="text-center">
-                                    <button class="btn btn-primary"><i class="fa fa-save"></i> บันทึก</button>
+                                    <button ng-show="0" class="btn btn-primary"><i class="fa fa-save"></i> บันทึก</button>
                                     <button class="btn btn-default" ng-click="delItem($index)"><i class="fa fa-trash-o "></i> ลบ</button>
                                 </td>
                             </tr>
@@ -101,7 +102,7 @@
                                 </td>
                                 <td><input ng-model="education" type="text" class="form-control input-sm" number-format></td>
                                 <td><input ng-model="academic" type="text" class="form-control input-sm" number-format></td>
-                                <td class="text-right" style="vertical-align: middle;">{[sumProceeds()]}</td>
+                                <td class="text-right" style="vertical-align: middle;" ng-bind="sumProceeds()"></td>
                                 <td class="text-center">
                                     <button class="btn btn-success" ng-click="addItem()"><i class="fa fa-plus"></i> เพิ่ม</button>
                                 </td>

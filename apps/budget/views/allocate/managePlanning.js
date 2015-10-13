@@ -6,6 +6,8 @@ var myApp = angular.module('managePlanning', ['commonApp']);
 myApp.controller('mainCtrl', function($scope,cde,$controller) {
     $controller('cmListController', {$scope: $scope});
     
+    
+    
     $scope.init = function(){
         $('[ng-app]').show();
         $scope.cmListYear();
