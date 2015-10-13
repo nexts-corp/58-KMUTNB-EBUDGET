@@ -4,13 +4,13 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="BUILDING_DETAIL")
+ * @Table(name="BUILDING_FLOORPLAN")
  */
-class BuildingDetail extends EntityBase {
+class BuildingFloorPlan extends EntityBase {
 
     /**
      * @Id
-     * @Column(type="integer",length=11,name="BUILDINGDETAILID")
+     * @Column(type="integer",length=11,name="BUILDINGFLOORPLANID")
      * @GeneratedValue
      */
     public $id;
@@ -18,14 +18,14 @@ class BuildingDetail extends EntityBase {
     /** @Column(type="integer",length=11, name="BUILDINGID") */
     public $buildingId;
 
-    /** @Column(type="string",length=200, name="BUILDINGDESC") */
-    public $desc;
+    /** @Column(type="string",length=50, name="FLOORNO") */
+    public $floorNo;
 
-    /** @Column(type="string",length=50, name="UNIT") */
-    public $unit;
+    /** @Column(type="text", name="FLOOORDESC") */
+    public $floorDesc;
 
-    /** @Column(type="string",length=18, name="QUANTITY") */
-    public $quantity;
+    /** @Column(type="string",length=100, name="AREA") */
+    public $area;
 
     /** @Column(type="string",length=18, name="COSTPERUNIT") */
     public $costUnit;
@@ -47,16 +47,16 @@ class BuildingDetail extends EntityBase {
         return $this->buildingId;
     }
 
-    function getDesc() {
-        return $this->desc;
+    function getFloorNo() {
+        return $this->floorNo;
     }
 
-    function getUnit() {
-        return $this->unit;
+    function getFloorDesc() {
+        return $this->floorDesc;
     }
 
-    function getQuantity() {
-        return $this->quantity;
+    function getArea() {
+        return $this->area;
     }
 
     function getCostUnit() {
@@ -83,16 +83,16 @@ class BuildingDetail extends EntityBase {
         $this->buildingId = $buildingId;
     }
 
-    function setDesc($desc) {
-        $this->desc = $desc;
+    function setFloorNo($floorNo) {
+        $this->floorNo = $floorNo;
     }
 
-    function setUnit($unit) {
-        $this->unit = $unit;
+    function setFloorDesc($floorDesc) {
+        $this->floorDesc = $floorDesc;
     }
 
-    function setQuantity($quantity) {
-        $this->quantity = $quantity;
+    function setArea($area) {
+        $this->area = $area;
     }
 
     function setCostUnit($costUnit) {

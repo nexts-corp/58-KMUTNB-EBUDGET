@@ -4,13 +4,13 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="BUILDING_DETAIL")
+ * @Table(name="BUILDING_PERIOD")
  */
-class BuildingDetail extends EntityBase {
+class BuildingPeriod extends EntityBase {
 
     /**
      * @Id
-     * @Column(type="integer",length=11,name="BUILDINGDETAILID")
+     * @Column(type="integer",length=11,name="BUILDINGFLOORPLANID")
      * @GeneratedValue
      */
     public $id;
@@ -18,17 +18,11 @@ class BuildingDetail extends EntityBase {
     /** @Column(type="integer",length=11, name="BUILDINGID") */
     public $buildingId;
 
-    /** @Column(type="string",length=200, name="BUILDINGDESC") */
-    public $desc;
+    /** @Column(type="integer",length=11, name="BUDGETPERIODID") */
+    public $budgetPeriodId;
 
-    /** @Column(type="string",length=50, name="UNIT") */
-    public $unit;
-
-    /** @Column(type="string",length=18, name="QUANTITY") */
-    public $quantity;
-
-    /** @Column(type="string",length=18, name="COSTPERUNIT") */
-    public $costUnit;
+    /** @Column(type="integer",length=11, name="PHASENO") */
+    public $phaseNo;
 
     /** @Column(type="string",length=18, name="COSTTOTAL") */
     public $costTotal;
@@ -47,20 +41,12 @@ class BuildingDetail extends EntityBase {
         return $this->buildingId;
     }
 
-    function getDesc() {
-        return $this->desc;
+    function getBudgetPeriodId() {
+        return $this->budgetPeriodId;
     }
 
-    function getUnit() {
-        return $this->unit;
-    }
-
-    function getQuantity() {
-        return $this->quantity;
-    }
-
-    function getCostUnit() {
-        return $this->costUnit;
+    function getPhaseNo() {
+        return $this->phaseNo;
     }
 
     function getCostTotal() {
@@ -83,20 +69,12 @@ class BuildingDetail extends EntityBase {
         $this->buildingId = $buildingId;
     }
 
-    function setDesc($desc) {
-        $this->desc = $desc;
+    function setBudgetPeriodId($budgetPeriodId) {
+        $this->budgetPeriodId = $budgetPeriodId;
     }
 
-    function setUnit($unit) {
-        $this->unit = $unit;
-    }
-
-    function setQuantity($quantity) {
-        $this->quantity = $quantity;
-    }
-
-    function setCostUnit($costUnit) {
-        $this->costUnit = $costUnit;
+    function setPhaseNo($phaseNo) {
+        $this->phaseNo = $phaseNo;
     }
 
     function setCostTotal($costTotal) {

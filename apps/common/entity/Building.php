@@ -21,6 +21,9 @@ class Building extends EntityBase {
     /** @Column(type="integer",length=11, name="BUILDINGTYPE") */
     public $typeId;
 
+    /** @Column(type="integer",length=11, name="TOTALYEAR") */
+    public $totalYear;
+
     /** @Column(type="string",length=1000, name="NAME") */
     public $name;
 
@@ -69,39 +72,11 @@ class Building extends EntityBase {
     /** @Column(type="string",length=18, name="COSTTOTAL") */
     public $costTotal;
 
-    /** @Column(type="integer",length=11, name="PH1BUDGETYEAR") */
-    public $ph1BudgetYear;
-
-    /** @Column(type="integer",length=11, name="PH1BUDGETWORK") */
-    public $ph1BudgetWork;
-
-    /** @Column(type="string",length=18, name="PH1BUDGETAMOUNT") */
-    public $ph1BudgetAmount;
-
-    /** @Column(type="integer",length=11, name="PH2BUDGETYEAR") */
-    public $ph2BudgetYear;
-
-    /** @Column(type="integer",length=11, name="PH2BUDGETWORK") */
-    public $ph2BudgetWork;
-
-    /** @Column(type="string",length=18, name="PH2BUDGETAMOUNT") */
-    public $ph2BudgetAmount;
-
-    /** @Column(type="integer",length=11, name="PH3BUDGETYEAR") */
-    public $ph3BudgetYear;
-
-    /** @Column(type="integer",length=11, name="PH3BUDGETWORK") */
-    public $ph3BudgetWork;
-
-    /** @Column(type="string",length=18, name="PH3BUDGETAMOUNT") */
-    public $ph3BudgetAmount;
-
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
 
     /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
     public $updater;
-
 
     function getId() {
         return $this->id;
@@ -113,6 +88,10 @@ class Building extends EntityBase {
 
     function getTypeId() {
         return $this->typeId;
+    }
+
+    function getTotalYear() {
+        return $this->totalYear;
     }
 
     function getName() {
@@ -179,42 +158,6 @@ class Building extends EntityBase {
         return $this->costTotal;
     }
 
-    function getPh1BudgetYear() {
-        return $this->ph1BudgetYear;
-    }
-
-    function getPh1BudgetWork() {
-        return $this->ph1BudgetWork;
-    }
-
-    function getPh1BudgetAmount() {
-        return $this->ph1BudgetAmount;
-    }
-
-    function getPh2BudgetYear() {
-        return $this->ph2BudgetYear;
-    }
-
-    function getPh2BudgetWork() {
-        return $this->ph2BudgetWork;
-    }
-
-    function getPh2BudgetAmount() {
-        return $this->ph2BudgetAmount;
-    }
-
-    function getPh3BudgetYear() {
-        return $this->ph3BudgetYear;
-    }
-
-    function getPh3BudgetWork() {
-        return $this->ph3BudgetWork;
-    }
-
-    function getPh3BudgetAmount() {
-        return $this->ph3BudgetAmount;
-    }
-
     function getCreator() {
         return $this->creator;
     }
@@ -233,6 +176,10 @@ class Building extends EntityBase {
 
     function setTypeId($typeId) {
         $this->typeId = $typeId;
+    }
+
+    function setTotalYear($totalYear) {
+        $this->totalYear = $totalYear;
     }
 
     function setName($name) {
@@ -297,42 +244,6 @@ class Building extends EntityBase {
 
     function setCostTotal($costTotal) {
         $this->costTotal = $costTotal;
-    }
-
-    function setPh1BudgetYear($ph1BudgetYear) {
-        $this->ph1BudgetYear = $ph1BudgetYear;
-    }
-
-    function setPh1BudgetWork($ph1BudgetWork) {
-        $this->ph1BudgetWork = $ph1BudgetWork;
-    }
-
-    function setPh1BudgetAmount($ph1BudgetAmount) {
-        $this->ph1BudgetAmount = $ph1BudgetAmount;
-    }
-
-    function setPh2BudgetYear($ph2BudgetYear) {
-        $this->ph2BudgetYear = $ph2BudgetYear;
-    }
-
-    function setPh2BudgetWork($ph2BudgetWork) {
-        $this->ph2BudgetWork = $ph2BudgetWork;
-    }
-
-    function setPh2BudgetAmount($ph2BudgetAmount) {
-        $this->ph2BudgetAmount = $ph2BudgetAmount;
-    }
-
-    function setPh3BudgetYear($ph3BudgetYear) {
-        $this->ph3BudgetYear = $ph3BudgetYear;
-    }
-
-    function setPh3BudgetWork($ph3BudgetWork) {
-        $this->ph3BudgetWork = $ph3BudgetWork;
-    }
-
-    function setPh3BudgetAmount($ph3BudgetAmount) {
-        $this->ph3BudgetAmount = $ph3BudgetAmount;
     }
 
     function setCreator($creator) {
