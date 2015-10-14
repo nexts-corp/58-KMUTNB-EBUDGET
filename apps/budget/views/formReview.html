@@ -260,7 +260,7 @@
 
             function listDepartment() {
                 var html = '<option value="0">- เลือกหน่วยงาน -</option>';
-                $.get("{{_context_path}}/api/common/lookup/listDepartment?facultyId=0", function (data) {
+                $.get("{{_context_path}}/api/common/lookup/listDepartment", function (data) {
                     for (var i = 0; i < data.lists.length; i++) {
 
                         html += '<option value="' + data.lists[i].id + '">' + data.lists[i].name + '</option>';
