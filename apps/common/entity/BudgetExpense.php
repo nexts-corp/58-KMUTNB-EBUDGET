@@ -67,13 +67,13 @@ class BudgetExpense extends EntityBase {
     public $timeEnd;
 
     /** @Column(type="string",length=18, name="BUDGETESTIMATIONAMOUNT") */
-    public $budgetAmount;
+    public $budgetEstAmount;
 
     /** @Column(type="string",length=300, name="BUDGETESTIMATIONTEXT") */
-    public $budgetText;
+    public $budgetEstText;
 
     /** @Column(type="text", name="BUDGETESTIMATIONDESC") */
-    public $budgetDesc;
+    public $budgetEstDesc;
 
     /** @Column(type="text", name="BENEFITS") */
     public $benefits;
@@ -156,16 +156,16 @@ class BudgetExpense extends EntityBase {
         return $this->timeEnd;
     }
 
-    function getBudgetAmount() {
-        return $this->budgetAmount;
+    function getBudgetEstAmount() {
+        return $this->budgetEstAmount;
     }
 
-    function getBudgetText() {
-        return $this->budgetText;
+    function getBudgetEstText() {
+        return $this->budgetEstText;
     }
 
-    function getBudgetDesc() {
-        return $this->budgetDesc;
+    function getBudgetEstDesc() {
+        return $this->budgetEstDesc;
     }
 
     function getBenefits() {
@@ -252,16 +252,16 @@ class BudgetExpense extends EntityBase {
         $this->timeEnd = $timeEnd;
     }
 
-    function setBudgetAmount($budgetAmount) {
-        $this->budgetAmount = $budgetAmount;
+    function setBudgetEstAmount($budgetEstAmount) {
+        $this->budgetEstAmount = $budgetEstAmount;
     }
 
-    function setBudgetText($budgetText) {
-        $this->budgetText = $budgetText;
+    function setBudgetEstText($budgetEstText) {
+        $this->budgetEstText = $budgetEstText;
     }
 
-    function setBudgetDesc($budgetDesc) {
-        $this->budgetDesc = $budgetDesc;
+    function setBudgetEstDesc($budgetEstDesc) {
+        $this->budgetEstDesc = $budgetEstDesc;
     }
 
     function setBenefits($benefits) {
