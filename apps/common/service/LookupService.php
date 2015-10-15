@@ -49,7 +49,7 @@ class LookupService extends CServiceBase implements ILookupService {
     public function listDepartment($facultyId) {
         $repo = new L3D\Department();
         $repo->setDeptStatus("Y");
-        if (isset($facultyId) && $facultyId != "0") {
+        if (isset($facultyId)) {
             $repo->setMasterId($facultyId);
         }
         $data = $this->datacontext->getObject($repo);
