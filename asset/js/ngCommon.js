@@ -23,6 +23,28 @@ commonService.service('cde', function () {
     
 });
 
+commonService.service('nk', function () {
+    
+    this.findObjectIndex = function (obj, attr, value) {
+        for(var i = 0; i < obj.length; i += 1) {
+            if(obj[i][attr] === value) {
+                return i;
+            }
+        }
+        return null;
+    };
+    
+    this.findObjectValue = function (obj, attrFind , value , attrReturn) {
+        var index = this.findObjectIndex(obj,attrFind,value);
+        if(index!==null){
+            return obj[index][attrReturn];
+        }else{
+            return index;
+        }
+    };
+    
+});
+
 
 
 
@@ -118,13 +140,7 @@ commonApp.directive('numberFormat', function() {
 
 commonApp.directive('nkCloak', function() {
     return function(scope, element, attrs) {
-        //alert("a");
         angular.element(element).removeAttr("nk-cloak");
-        //alert("b");
-//        if(attrs.nkCloak!=="hide"){
-//            angular.element(element).show();
-//        }
-        //console.log(JSON.stringify(attrs, null, 4));
     };
 });
 
