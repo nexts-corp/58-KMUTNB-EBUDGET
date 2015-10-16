@@ -58,6 +58,7 @@ class LookupService extends CServiceBase implements ILookupService {
         foreach ($data as $key => $value) {
             $result[$key]["id"] = $value->id;
             $result[$key]["name"] = $value->deptName;
+            $result[$key]["masterId"] = $value->masterId;
         }
         return $result;
     }
