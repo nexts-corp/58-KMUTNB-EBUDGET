@@ -24,10 +24,10 @@ class Attachment extends EntityBase {
     /** @Column(type="text", name="remark") */
     public $remark;
 
-    /** @Column(type="string",length=100, name="creator") */
+    /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
 
-    /** @Column(type="string",length=100, name="updater") */
+    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
     public $updater;
 
     function getId() {

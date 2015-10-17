@@ -7,13 +7,14 @@ namespace apps\budget\interfaces;
  * @uri /budgetSave
  * @description BudgetSaveService
  */
-interface IBudgetSaveService {
+interface IBudgetSaveService
+{
 
     /**
      * @name insertBudget140
      * @uri /insertBudget140
      * @param apps\common\entity\Budget140 budget Description
-     * @return boolean result 
+     * @return boolean result
      * @description เพิ่มคำขอแบบ ง.140
      */
     public function insertBudget140($budget);
@@ -200,13 +201,64 @@ interface IBudgetSaveService {
 
 
     /**
-     * @name insertBuilding
-     * @uri /insertBuilding
+     * @name insertBuildingOne
+     * @uri /insertBuildingOne
      * @param apps\common\entity\Building building Description
-     * @param apps\common\entity\BuildingDetail buildingDetail Description
-     * @return boolean result Description
+     * @param apps\common\entity\BuildingDetail listBuildDetail Description
+     * @param apps\common\entity\BuildingBOQ listBOQ Description
+     * @return boolean results Description
      * @description เพิ่มคำชี้แจงรายละเอียดสิ่งก่อสร้าง
      */
-    public function insertBuilding($building, $buildingDetail);
+    public function insertBuildingOne($building, $listBuildDetail, $listBOQ);
 
+
+    /**
+     * @name editBuildingOne
+     * @uri /editBuildingOne
+     * @param apps\common\entity\Building building Description
+     * @param apps\common\entity\BuildingDetail listBuildDetail Description
+     * @param apps\common\entity\BuildingBOQ listBOQ Description
+     * @param String listIDRemoveBuildingOne Description
+     * @param String listIDRemoveBOQ Description
+     * @return boolean results Description
+     * @description แก้ไขคำชี้แจงรายละเอียดสิ่งก่อสร้าง
+     */
+    public function editBuildingOne($building, $listBuildDetail, $listBOQ, $listIDRemoveBuildingOne, $listIDRemoveBOQ);
+
+
+    /**
+     * @name insertBuildingMore
+     * @uri /insertBuildingMore
+     * @param apps\common\entity\Building building Description
+     * @param apps\common\entity\BuildingFloorPlan listBuildFloor Description
+     * @param apps\common\entity\BuildingBOQ listBOQ Description
+     * @param apps\common\entity\BuildingPeriod listBuildPeriod Description
+     * @return boolean results Description
+     * @description เพิ่มคำชี้แจงรายละเอียดสิ่งก่อสร้างต่อเนื่อง
+     */
+    public function insertBuildingMore($building, $listBuildFloor, $listBOQ, $listBuildPeriod);
+
+    /**
+     * @name editBuildingMore
+     * @uri /editBuildingMore
+     * @param apps\common\entity\Building building Description
+     * @param apps\common\entity\BuildingFloorPlan listBuildFloor Description
+     * @param apps\common\entity\BuildingBOQ listBOQ Description
+     * @param apps\common\entity\BuildingPeriod listBuildPeriod Description
+     * @param String listIDRemoveFloor Description
+     * @param String listIDRemoveBOQ Description
+     * @param String listIDRemovePeriod Description
+     * @return boolean results Description
+     * @description แก้ไขคำชี้แจงรายละเอียดสิ่งก่อสร้างต่อเนื่อง
+     */
+    public function editBuildingMore($building, $listBuildFloor, $listBOQ, $listBuildPeriod, $listIDRemoveFloor, $listIDRemoveBOQ, $listIDRemovePeriod);
+
+    /**
+     * @name attment
+     * @uri /attment
+     * @param apps\common\entity\Attachment attment Description
+     * @return boolean results Description
+     * @description แนบไฟล์เอกสาร
+     */
+    public function AttachmentsFile($attment);
 }

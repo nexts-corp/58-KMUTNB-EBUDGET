@@ -26,8 +26,10 @@
                 <li class="active">
                     <button class="btn btn-success goChoice"><i class="fa fa-plus-circle"> เพิ่มคำขอ</i></button>
                     <button class="btn btn-default backHome" style="display: none;"><i class="fa fa-angle-double-left">
-                            ย้อนกลับ</i></button>
+                        ย้อนกลับ</i></button>
                     <button class="btn btn-default backChoice" style="display: none;"><i
+                            class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
+                    <button class="btn btn-default backAttachment" style="display: none;"><i
                             class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
                 </li>
             </ul>
@@ -41,16 +43,16 @@
             <div id="divHome" class="col-md-12">
                 <table id="table" class="table table-bordered table-striped table-condensed mb-none">
                     <thead>
-                        <tr>
-                            <th class="text-center col-lg-6">รายละเอียดคำของบประมาณ</th>
-                            <th class="text-center col-lg-3">สถานะ</th>
-                            <th class="text-center col-lg-3">เครื่องมือ</th>
-                        </tr>
+                    <tr>
+                        <th class="text-center col-lg-6">รายละเอียดคำของบประมาณ</th>
+                        <th class="text-center col-lg-3">สถานะ</th>
+                        <th class="text-center col-lg-3">เครื่องมือ</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td colspan="3" class="text-center">-</td>
-                        </tr>
+                    <tr>
+                        <td colspan="3" class="text-center">-</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -153,9 +155,9 @@
                             <div id="panel2" style="margin-top: 20px;">
                                 <table class="table table-hover">
                                     <thead>
-                                        <tr>
-                                            <th colspan="2" class="text-center">แบบฟอร์มคำของบประมาณ</th>
-                                        </tr>
+                                    <tr>
+                                        <th colspan="2" class="text-center">แบบฟอร์มคำของบประมาณ</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
                                     </tbody>
@@ -169,12 +171,17 @@
 
             <!-- divForm Jquery -->
             <div ng-show="!activeNg" id="divForm" class="col-md-12" style="display: none;"></div>
+            <div id="divAttachment" class="col-md-12" style="display: none;"></div>
             <!-- divForm AngularJs -->
             <div ng-show="activeNg">
-                <div ng-if="activeTemplate==='project'" ng-controller="projectForm" data-ng-init="init()"><project-template></project-template></div>
-                <div ng-if="activeTemplate==='manageDepartment'" ng-controller="manageDepartment" data-ng-init="init()"><managedepartment-template></managedepartment-template></div>
+                <div ng-if="activeTemplate==='project'" ng-controller="projectForm" data-ng-init="init()">
+                    <project-template></project-template>
+                </div>
+                <div ng-if="activeTemplate==='manageDepartment'" ng-controller="manageDepartment" data-ng-init="init()">
+                    <managedepartment-template></managedepartment-template>
+                </div>
             </div>
-            
+
         </div>
         <!--  row  -->
     </div>
@@ -203,7 +210,7 @@
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/allocate/manageDepartment.js"></script>
 
 <script type="text/javascript">
-    
+
     var isForm = 0;
 
     var budgetPeriodArr = {};
@@ -223,7 +230,7 @@
     //        var departmentArr = {10100: "สำนักงานอธิการบดี", 10101: "กองกลาง", 10102: "กองบริการการศึกษา", 10103: "กองแผนงาน", 10104: "กองกิจการนักศึกษา", 10105: "กองบริหารและการจัดการทรัพยากรมนุษย์", 10106: "กองคลัง", 10107: "กองอาคารสถานที่และยานพาหนะ", 10108: "กองงานพัสดุ", 10109: "ศูนย์ผลิตตำราเรียน", 10110: "ศูนย์ความร่วมมือนานาชาติ", 10111: "หน่วยตรวจสอบภายใน", 10112: "ศูนย์ประกันคุณภาพการศึกษา", 10113: "ศูนย์ส่งเสริมสวัสดิการและสิ่งจูงใจ", 10114: "สภาคณาจารย์และพนักงาน", 10116: "กองงาน วิทยาเขตปราจีนบุรี", 10117: "ศูนย์บริการเทคโนโลยี", 10118: "IAESTE Thailand", 10120: "หน่วยงานบริหารสำนักงานอธิการบดี", 10122: "โครงการจัดตั้ง มจพ.ระยอง", 10123: "กองกฏหมาย", 10124: "กองส่งเสริมวิชาการ", 10125: "กองงานสำนักงานสภามหาวิทยาลัย", 20100: "สำนักคอมพิวเตอร์และเทคโนโลยีสารสนเทศ", 20200: "สถาบันนวัตกรรมเทคโนโลยีไทย-ฝรั่งเศส", 20300: "สำนักพัฒนาเทคโนโลยีเพื่ออุตสาหกรรม", 20400: "สำนักหอสมุดกลาง", 20500: "สำนักพัฒนาเทคนิคศึกษา", 20600: "สำนักวิจัยวิทยาศาสตร์และเทคโนโลยี", 20700: "โครงการที่พักอาศัยเพื่อการเรียนรู้และสันทนาการ", 20800: "สถาบันสหกิจศึกษาและพัฒนาสื่ออิเล็กทรอนิกส์ ไทย-เยอรมัน", 30100: "คณะวิศวกรรมศาสตร์", 30200: "คณะครุศาสตร์อุตสาหกรรม", 30300: "วิทยาลัยเทคโนโลยีอุตสาหกรรม", 30400: "คณะวิทยาศาสตร์ประยุกต์", 30500: "คณะเทคโนโลยีและการจัดการอุตสาหกรรม", 30600: "คณะเทคโนโลยีสารสนเทศ", 30700: "คณะศิลปศาสตร์ประยุกต์", 30800: "คณะอุตสาหกรรมเกษตร", 30900: "บัณฑิตวิทยาลัย", 31000: "บัณฑิตวิทยาลัยวิศวกรรมศาสตร์นานาชาติสิรินธรไทย-เยอรมัน", 31100: "คณะสถาปัตยกรรมและการออกแบบ", 31200: "คณะบริหารธุรกิจ", 31300: "คณะวิศวกรรมศาสตร์และเทคโนโลยี", 31400: "คณะวิทยาศาสตร์ พลังงาน และสิ่งแวดล้อม", 31500: "วิทยาลัยนานาชาติ", 31600: "คณะพัฒนาธุรกิจและอุตสาหกรรม", 31700: "คณะบริหารธุรกิจและอุตสาหกรรมบริการ", 90000: "หน่วยบริหารส่วนกลาง", 91000: "หน่วยกลาง มจพ."};
 
     $(function () {
-        
+
         listsFormSaved();
         toggleShow("home");
 
@@ -234,8 +241,8 @@
             listsPlan($(this).val());
             listsProject("");
         });
-        
-        $("#budgetTypeCode").change(function(){
+
+        $("#budgetTypeCode").change(function () {
             isForm = 0;
             listsForm($(this).val());
         });
@@ -260,6 +267,9 @@
         $("button.backChoice").unbind("click").click(function () {
             toggleShow("choice");
         });
+        $("button.backAttachment").unbind("click").click(function () {
+            toggleShow("form");
+        });
     });
 
     function listsFormSaved() {
@@ -278,7 +288,7 @@
     function listsForm(type) {
         if (isForm == 0) {
             var formArr;
-            if(type == "G") {
+            if (type == "G") {
                 formArr = [
                     {
                         form: "bg140",
@@ -320,12 +330,12 @@
             } else if (type == "K") {
                 formArr = [
                     {
-                        ng:"true",
+                        ng: "true",
                         form: "project",
                         name: "โครงการที่ตอบสนองยุทธศาสตร์"
                     },
                     {
-                        ng:"true",
+                        ng: "true",
                         form: "manageDepartment",
                         name: "จัดสรรงบประมาณ"
                     }
@@ -333,16 +343,16 @@
             } else {
                 formArr = [];
             }
-        
+
             var html = '';
 
-            
+
             $.each(formArr, function (key, value) {
-                
+
                 html += '<tr>'
                         + '<td class="col-md-11">- ' + value["name"] + '</td>'
                         + '<td class="col-md-1">'
-                        + '<button class="btn btn-success form" has-ng="'+value["ng"]+'" data-form="' + value["form"] + '" disabled="disabled"><i class="fa fa-plus-circle"></i> จัดทำ</button>'
+                        + '<button class="btn btn-success form" has-ng="' + value["ng"] + '" data-form="' + value["form"] + '" disabled="disabled"><i class="fa fa-plus-circle"></i> จัดทำ</button>'
                         + '</td>'
                         + '</tr>';
             });
@@ -365,14 +375,14 @@
                     $("button.form").attr("disabled", "disabled");
                 }
             });
-            
+
             /*
-            listsBudgetPeriod();
-            listsBudgetType();
-            listsFundgroup();
-            listsFaculty();
-            */
-                
+             listsBudgetPeriod();
+             listsBudgetType();
+             listsFundgroup();
+             listsFaculty();
+             */
+
             $("button.form").unbind("click").click(function () {
                 var form = $(this).attr("data-form");
 
@@ -384,18 +394,18 @@
 
 
                 var hasNg = $(this).attr("has-ng");
-                if(hasNg!=="true"){
+                if (hasNg !== "true") {
                     // open Form for Jquery
                     eval(form + "Form(param)");
-                }else{
+                } else {
                     // open Form for AngularJS
                     var $scopeJS = angular.element(document.querySelector('[ng-app=formBudget]')).scope();
-                    $scopeJS.$apply(function() {
-                        $scopeJS.openForm(form,param);
+                    $scopeJS.$apply(function () {
+                        $scopeJS.openForm(form, param);
                     });
-                    
+
                     toggleShow("form");
-                    
+
                 }
 
             });
@@ -422,7 +432,7 @@
     function listsBudgetType() {
         var html = '<option value="" selected="selected">เลือก</option>';
 
-        var datas = callAjax("{{_context_path}}/api/common/lookup/listBudgetSource", "post", {}, "json" );
+        var datas = callAjax("{{_context_path}}/api/common/lookup/listBudgetSource", "post", {}, "json");
         if (typeof datas !== "undefined" && datas !== null) {
             $.each(datas["lists"], function (key, value) {
                 html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
@@ -524,7 +534,7 @@
             $("button.goChoice").show();
         }
         else if (option == "choice") {
-            
+
             // panel show and hide
             $("#divHome, #divForm").hide();
             $("#divChoice").show();
@@ -535,27 +545,49 @@
 
             // hide divForm for AngularJS
             var $scopeJS = angular.element(document.querySelector('[ng-app=formBudget]')).scope();
-            $scopeJS.$apply(function() {
-                $scopeJS.activeNg=false;
-                $scopeJS.activeTemplate="no";
+            $scopeJS.$apply(function () {
+                $scopeJS.activeNg = false;
+                $scopeJS.activeTemplate = "no";
             });
-            
-            if(!isForm){
+
+            if (!isForm) {
                 listsBudgetPeriod();
                 listsBudgetType();
                 listsFundgroup();
                 listsFaculty();
             }
-            
+
         }
         else if (option == "form") {
             // panel show and hide
-            $("#divHome, #divChoice").hide();
+            $("#divHome, #divChoice, #divAttachment").hide();
             $("#divForm").show();
 
             // button show and hide
-            $("button.goChoice, button.backHome").hide();
+            $("button.goChoice, button.backHome, button.backAttachment").hide();
             $("button.backChoice").show();
+        } else if (option == "attachment") {
+            // panel show and hide
+            $("#divHome, #divChoice, #divForm").hide();
+            $("#divAttachment").show();
+
+            $("button.goChoice,button.backChoice,button.backHome").hide();
+            $("button.backAttachment").show();
         }
+    }
+
+    function AttachmentsFile() {
+
+        var fileName = $('input[name="fileInput"]').val();
+        var fileDesc = $("#fileDesc").val();
+        console.log(fileName);
+        $("#statusUploadFile").html(fileName);
+        param = {};
+        param.desc = fileDesc;
+        param.path = fileName;
+        var dataJSON = JSON.stringify({attment: param});
+        var dataJSONEN = encodeURIComponent(dataJSON);
+        console.log(param);
+//        var datas = callAjax(js_context_path + "/api/budget/budgetSave/attment", "post", dataJSONEN, "json");
     }
 </script>
