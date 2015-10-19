@@ -36,9 +36,8 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="selectYear">ปีงบประมาณ</label>
                     <div class="col-md-8">
-                        <select ng-model="selectYear" ng-init="selectYear = 'udf'" class="form-control input-sm selChange">
-                            <option value="udf">- เลือกปีงบประมาณ -</option>
-                            <option ng-repeat="list in cmDataListYear" value="{[list.year]}">{[list.year]}</option>
+                        <select ng-model="selectYear" ng-change="fetchItem()" class="form-control input-sm" ng-options="year.year as year.year for year in cmDataListYear">
+                            <option value="">- เลือกปีงบประมาณ -</option>
                         </select>
                     </div>
                 </div>
@@ -49,8 +48,6 @@
             <div id="formHome" class="col-md-12">
                 <div id="bidderTable" class="col-md-12"><!-- table shown bidder information list -->
                    
-                    
-                    
                     
                     <div class="tabs">
                             <ul id="tabMenu" class="nav nav-tabs">
@@ -82,7 +79,7 @@
                                             <tr ng-repeat="listA in dataAllocate" nk-cloak>
                                                 <td class="text-center" style="vertical-align: middle;" ng-bind="$index+1"></td>
                                                 <td>
-                                                    <select ng-model="listA.department" class="form-control input-sm" ng-options="dep.id as dep.name for dep in cmDataListDepartment | filter:setMaster"></select>
+                                                    <select ng-model="listA.department" class="form-control input-sm" ng-options="dep.id as dep.name for dep in cmDataListDepartment | filter:setMaster" disabled></select>
                                                 </td>
                                                 <td><input ng-model="listA.education" type="text" class="form-control input-sm" number-format></td>
                                                 <td><input ng-model="listA.academic" type="text" class="form-control input-sm" number-format></td>
@@ -92,20 +89,23 @@
                                                     <button class="btn btn-default" ng-click="delItem($index)"><i class="fa fa-trash-o "></i> ลบ</button>
                                                 </td>
                                             </tr>
-                                            <tr style="background-color: #F1F1F1;">
+                                            <tr ng-show="selectYear && !loadAllocate" style="background-color: #F1F1F1;">
                                                 <td></td>
                                                 <td>
-                                                    <select ng-model="department" class="form-control input-sm" ng-options="dep.id as dep.name for dep in cmDataListDepartment | filter:setMaster">
+                                                    <select ng-model="department" class="form-control input-sm" ng-options="dep.id as dep.name for dep in cmDataListDepartment | filter:setMaster" auto-focus="departmentFocus">
                                                         <option value="">- เลือกหน่วยงาน -</option>
                                                     </select>
+                                                    {[departmentFocus]}
                                                 </td>
                                                 <td><input ng-model="education" type="text" class="form-control input-sm" number-format></td>
                                                 <td><input ng-model="academic" type="text" class="form-control input-sm" number-format></td>
                                                 <td class="text-right" style="vertical-align: middle;" ng-bind="sumProceeds() | currency:'':2"></td>
                                                 <td class="text-center">
-                                                    <button class="btn btn-success" ng-click="addItem()"><i class="fa fa-plus"></i> เพิ่ม</button>
+                                                    <button ng-show="checkAddItem()" class="btn btn-success" ng-click="addItem()"><i class="fa fa-plus"></i> เพิ่ม</button>
                                                 </td>
                                             </tr>
+                                            <tr ng-show="loadAllocate"><td colspan="6" style="background-color: #F1F1F1;text-align: center;"><i class="fa fa-cog fa-spin"></i> กำลังโหลด</td></tr>
+                                            <tr ng-hide="selectYear"><td colspan="6" style="background-color: #F1F1F1;text-align: center;">กรุณาเลือกปีงบประมาณ</td></tr>
 
 
                                         </tbody>

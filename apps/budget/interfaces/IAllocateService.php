@@ -72,6 +72,18 @@ interface IAllocateService {
      */
     public function deleteExpenseProject($projectId);
     
+    
+    
+    /**
+     * @name fetchRevenue
+     * @uri /fetchRevenue
+     * @param int budgetPeriodId ปีงบประมาณ
+     * @return string[] dataList Description
+     * @description หน้าเพิ่มเงินจัดสรรเงินรายได้
+     */
+    public function fetchRevenue($budgetPeriodId);
+    
+    
     /**
      * @name addRevenue
      * @uri /addRevenue
@@ -79,7 +91,7 @@ interface IAllocateService {
      * @param int budgetPeriodId
      * @param float bgEducation เงินจัดสรรจากค่าธรรมเนียมการศึกษา
      * @param float bgService เงินจัดสรรจากงานบริการวิชาการ
-     * @return boolean result Description
+     * @return int result Description
      * @description หน้าเพิ่มเงินจัดสรรเงินรายได้
      */
     public function addRevenue($deptId,$budgetPeriodId,$bgEducation,$bgService);
