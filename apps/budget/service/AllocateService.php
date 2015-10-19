@@ -167,9 +167,31 @@ class AllocateService extends CServiceBase implements IAllocateService {
         }
         return $return;
     }
+    
+    public function fetchRevenue($budgetPeriodId) {
+        
+        $bg = new entity\BudgetRevenuePlan();
+        $bg->setBudgetPeriodId($budgetPeriodId);
+        
+        $data = $this->datacontext->getObject($bg);
+        
+        $dataList = null;
+        
+        for ($i = 0; $i < count($data); $i++) {
+            $dataList[$i]["id"] = $data[$i]->id;
+            $dataList[$i]["department"] = $data[$i]->deptId;
+            $dataList[$i]["departmentC"] = $data[$i]->deptId;
+            $dataList[$i]["education"] = $data[$i]->budgetEducation;
+            $dataList[$i]["educationC"] = $data[$i]->budgetEducation;
+            $dataList[$i]["academic"] = $data[$i]->budgetService;
+            $dataList[$i]["academicC"] = $data[$i]->budgetService;
+        }
+        
+        return $dataList;
+        
+    }
 
     public function addRevenue($deptId, $budgetPeriodId, $bgEducation, $bgService) {
-        $return = true;
 
         $bg = new entity\BudgetRevenuePlan();
         $bg->setDeptId($deptId);
@@ -179,9 +201,11 @@ class AllocateService extends CServiceBase implements IAllocateService {
         $bg->setBudgetService($bgService);
         $bg->setBudgetTotal($bgEducation + $bgService);
         
-        if (!$this->datacontext->saveObject($bg)) {
-            $return = false;
+        if ($this->datacontext->saveObject($bg)) {
+            $return = $bg->id;
             //return $this->datacontext->getLastMessage();
+        }else{
+            $return = 0;
         }
 
         return $bg;

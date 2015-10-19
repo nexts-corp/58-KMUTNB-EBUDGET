@@ -3,14 +3,18 @@
 
 var myApp = angular.module('managePlanning', ['commonApp']);
 
-myApp.controller('mainCtrl', function($scope,$controller) {
+myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
     $controller('cmListController', {$scope: $scope});
     
+    
     $scope.init = function(){
+        cde.setPath('budget','allocate');
+        
         $('[ng-app]').show();
         $scope.cmListYear();
         $scope.cmListBudgetType();
         $scope.cmListDepartment();
+        
         
         $scope.dataAllocate = [];
         
@@ -22,20 +26,74 @@ myApp.controller('mainCtrl', function($scope,$controller) {
     };
     
     
+    $scope.toggleFocus = function(model){
+        alert(model);
+        if(model){
+           model = false; 
+        }else{
+           model = true;
+        }
+    };
+    
+    $scope.checkAddItem = function(){
+        return $scope.department&&$scope.education&&$scope.academic;
+    };
+    
+    $scope.fetchItem = function(){
+        $scope.dataAllocate=[];
+        if($scope.selectYear){
+            $scope.loadAllocate = 1;
+
+
+            $http.post(cde.getPath("fetchRevenue"),{
+                budgetPeriodId : $scope.selectYear
+            }).then(function(response) {
+                if(response.data.dataList!==null){
+                    $scope.dataAllocate = response.data.dataList;
+                }
+
+                $scope.loadAllocate = 0;
+            });
+        }
+    };
+    
     $scope.addItem = function(){
-        $scope.dataAllocate.push({
-            department:parseInt($scope.department),
-            departmentC:parseInt($scope.department),
-            education:$scope.education,
-            educationC:$scope.education,
-            academic:$scope.academic,
-            academicC:$scope.academic
+        
+        
+        $http.post(cde.getPath("addRevenue"),{
+            
+            budgetPeriodId : $scope.selectYear,
+            deptId : parseInt($scope.department),
+            bgEducation : $scope.education,
+            bgService : $scope.academic
+            
+        }).then(function(response) {
+            //console.log(JSON.stringify(response.data.result, null, 4));
+            //$scope.dataKpi = response.data.result;
+            if(response.data.result){
+                
+                $scope.dataAllocate.push({
+                    id:response.data.result,
+                    department:parseInt($scope.department),
+                    departmentC:parseInt($scope.department),
+                    education:$scope.education,
+                    educationC:$scope.education,
+                    academic:$scope.academic,
+                    academicC:$scope.academic
+                });
+
+                $scope.education = "";
+                $scope.academic = "";
+                $scope.department = "udf";
+                
+                $scope.toggleFocus($scope.departmentFocus);
+            }
+            
         });
         
-        $scope.education = "";
-        $scope.academic = "";
-        $scope.department = "udf";
+        
     };
+    
     
     $scope.checkEditItem = function(index){
         var arrUse = $scope.dataAllocate[index];
@@ -44,16 +102,32 @@ myApp.controller('mainCtrl', function($scope,$controller) {
     
     $scope.editItem = function(index){
         var arrUse = $scope.dataAllocate[index];
-        arrUse.departmentC = parseInt(arrUse.department);
-        arrUse.educationC = arrUse.education;
-        arrUse.academicC = arrUse.academic;
+        $http.post(cde.getPath("updateRevenue"),{
+            id : arrUse.id,
+            bgEducation : arrUse.education,
+            bgService : arrUse.academic
+        }).then(function(response) {
+            if(response.data.result){
+                arrUse.departmentC = parseInt(arrUse.department);
+                arrUse.educationC = arrUse.education;
+                arrUse.academicC = arrUse.academic;
+            }
+        });
+        
     };
     
     
     
     $scope.delItem = function(index){
         if(confirm("ยืนยันการลบ")){
-            $scope.dataAllocate.splice(index,1);
+            $http.post(cde.getPath("deleteRevenue"),{
+                id:$scope.dataAllocate[index].id
+            }).then(function(response) {
+                if(response.data.result){
+                    $scope.dataAllocate.splice(index,1);
+                }
+            });
+            
         }
     };
     

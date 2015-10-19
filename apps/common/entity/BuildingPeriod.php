@@ -10,7 +10,7 @@ class BuildingPeriod extends EntityBase {
 
     /**
      * @Id
-     * @Column(type="integer",length=11,name="BUILDINGFLOORPLANID")
+     * @Column(type="integer",length=11,name="BUILDINGPERIODID")
      * @GeneratedValue
      */
     public $id;

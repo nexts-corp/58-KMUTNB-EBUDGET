@@ -127,4 +127,26 @@ interface IBudgetInfoService {
      * @description แสดงข้อมูลฟอร์ม 146
      */
     public function viewBudget146($param);
+
+
+    /**
+     * @name viewBuildingOne
+     * @uri /viewBuildingOne
+     * @param String bg145Id
+     * @param String type
+     * @return apps\common\entity\Building[] budget Description
+     * @description คำชี้แจงค่าก่อสร้าง 1 ปี
+     */
+    public function viewBuildingOne($bg145Id,$type);
+
+
+    /**
+     * @name viewBuildingMore
+     * @uri /viewBuildingMore
+     * @param String bg145Id
+     * @param String type
+     * @return apps\common\entity\Building[] budget Description
+     * @description คำชี้แจงค่าก่อสร้างต่อเนื่อง
+     */
+    public function viewBuildingMore($bg145Id,$type);
 }

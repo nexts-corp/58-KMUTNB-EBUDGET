@@ -66,6 +66,9 @@ class Building extends EntityBase {
     /** @Column(type="string",length=18, name="COSTSANITATION") */
     public $costSanit;
 
+    /** @Column(type="string",length=18, name="COSTVENTILATE") */
+    public $costVen;
+
     /** @Column(type="string",length=18, name="COSTELEVATORS") */
     public $costElev;
 
