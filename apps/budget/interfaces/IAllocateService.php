@@ -70,7 +70,7 @@ interface IAllocateService {
      * @return boolean result Description
      * @description หน้าเพิ่มเงินจัดสรรสำหรับโครงการพัฒนามหาวิทยาลัย
      */
-    public function deleteExpenseProject($projectId);
+    public function deleteExpenseProject($projectId);        
     
     /**
      * @name addRevenue

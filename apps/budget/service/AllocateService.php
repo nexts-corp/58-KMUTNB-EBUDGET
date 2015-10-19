@@ -98,7 +98,7 @@ class AllocateService extends CServiceBase implements IAllocateService {
 
     public function addExpenseProject($projectName, $budgetPeriodId, $budgetTotal, $deptId) {
         $return = true;
-return $projectName;
+
         $bghead = new entity\BudgetHead();
         $bghead->setFormId(999);
         $bghead->setBudgetPeriodId($budgetPeriodId);
@@ -108,6 +108,14 @@ return $projectName;
         }        
         $dataHead = $this->datacontext->getObject($bgHead);        
         return $dataHead;
+        
+        if(isset($dataHead)) {
+            //update bgHead
+            $headId = $dataHead["id"];
+        } else {
+            //add bgHead
+            
+        }
         
         foreach ($departmentId as $key => $value) {
 
@@ -176,7 +184,7 @@ return $projectName;
             //return $this->datacontext->getLastMessage();
         }
 
-        return $return;
+        return $bg;
     }
 
     public function updateRevenue($id, $bgEducation, $bgService) {
