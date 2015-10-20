@@ -43,7 +43,6 @@
                 </div>
             </div>
         </div><br>
-        
         <div class="row">
             <div id="formHome" class="col-md-12">
                 <div id="bidderTable" class="col-md-12"><!-- table shown bidder information list -->
@@ -81,8 +80,8 @@
                                                 <td>
                                                     <select ng-model="listA.department" class="form-control input-sm" ng-options="dep.id as dep.name for dep in cmDataListDepartment | filter:setMaster" disabled></select>
                                                 </td>
-                                                <td><input ng-model="listA.education" type="text" class="form-control input-sm" number-format></td>
-                                                <td><input ng-model="listA.academic" type="text" class="form-control input-sm" number-format></td>
+                                                <td><input ng-model="listA.education" type="text" class="form-control input-sm" number-format ng-keypress="editItemByEnter($index,$event)"></td>
+                                                <td><input ng-model="listA.academic" type="text" class="form-control input-sm" number-format ng-keypress="editItemByEnter($index,$event)"></td>
                                                 <td class="text-right" style="vertical-align: middle;" ng-bind="sumRows(listA.education,listA.academic) | currency:'':2"></td>
                                                 <td class="text-center">
                                                     <button ng-show="checkEditItem($index)" ng-click="editItem($index)" class="btn btn-primary"><i class="fa fa-save"></i> บันทึก</button>
@@ -92,13 +91,13 @@
                                             <tr ng-show="selectYear && !loadAllocate" style="background-color: #F1F1F1;">
                                                 <td></td>
                                                 <td>
-                                                    <select ng-model="department" class="form-control input-sm" ng-options="dep.id as dep.name for dep in cmDataListDepartment | filter:setMaster" auto-focus="departmentFocus">
+                                                    <select ng-model="department" class="form-control input-sm" ng-options="dep.id as dep.name for dep in cmDataListDepartment | filter:setMaster" nk-focus="focusDepartment" ng-keypress="addItemByEnter($event)">
                                                         <option value="">- เลือกหน่วยงาน -</option>
                                                     </select>
                                                     {[departmentFocus]}
                                                 </td>
-                                                <td><input ng-model="education" type="text" class="form-control input-sm" number-format></td>
-                                                <td><input ng-model="academic" type="text" class="form-control input-sm" number-format></td>
+                                                <td><input ng-model="education" type="text" class="form-control input-sm" number-format ng-keypress="addItemByEnter($event)"></td>
+                                                <td><input ng-model="academic" type="text" class="form-control input-sm" number-format ng-keypress="addItemByEnter($event)"></td>
                                                 <td class="text-right" style="vertical-align: middle;" ng-bind="sumProceeds() | currency:'':2"></td>
                                                 <td class="text-center">
                                                     <button ng-show="checkAddItem()" class="btn btn-success" ng-click="addItem()"><i class="fa fa-plus"></i> เพิ่ม</button>
