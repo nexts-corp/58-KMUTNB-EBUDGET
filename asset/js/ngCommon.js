@@ -71,6 +71,40 @@ commonService.service('nk', function () {
     
 });
 
+commonService.controller('nkController', function ($scope,$timeout) {
+    
+    $scope.nkFocus = function(model){
+        $scope[model] = 0;
+        var focus= function(){
+          $scope[model] = 1;  
+        };
+        $timeout(focus, 1);
+    };
+    
+});
+
+
+commonService.directive('nkFocus', function() {
+    return function(scope, element, attrs) {
+        scope.$watch(attrs.nkFocus,function (newValue) { 
+            //newValue && element.focus();
+            
+            if(newValue===1){
+                element.focus();
+            }
+        },true);
+    };
+});
+
+commonService.directive('nkCloak', function() {
+    return function(scope, element, attrs) {
+        angular.element(element).removeAttr("nk-cloak");
+    };
+});
+
+
+
+
 
 
 
@@ -80,7 +114,6 @@ commonApp.config(function ($interpolateProvider) {
     $interpolateProvider.startSymbol('{[');
     $interpolateProvider.endSymbol(']}');
 });
-
 
 commonApp.controller('cmListController', function ($scope, $http) {
 
@@ -160,13 +193,6 @@ commonApp.controller('cmListController', function ($scope, $http) {
 commonApp.directive('numberFormat', function() {
     return function(scope, element, attrs) {
         angular.element(element).number(true,2);
-    };
-});
-
-
-commonApp.directive('nkCloak', function() {
-    return function(scope, element, attrs) {
-        angular.element(element).removeAttr("nk-cloak");
     };
 });
 

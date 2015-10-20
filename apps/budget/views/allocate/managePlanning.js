@@ -5,6 +5,7 @@ var myApp = angular.module('managePlanning', ['commonApp']);
 
 myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
     $controller('cmListController', {$scope: $scope});
+    $controller('nkController', {$scope: $scope});
     
     
     $scope.init = function(){
@@ -26,18 +27,6 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
     };
     
     
-    $scope.toggleFocus = function(model){
-        alert(model);
-        if(model){
-           model = false; 
-        }else{
-           model = true;
-        }
-    };
-    
-    $scope.checkAddItem = function(){
-        return $scope.department&&$scope.education&&$scope.academic;
-    };
     
     $scope.fetchItem = function(){
         $scope.dataAllocate=[];
@@ -54,6 +43,18 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
 
                 $scope.loadAllocate = 0;
             });
+        }
+    };
+    
+    $scope.checkAddItem = function(){
+        return $scope.department&&$scope.education&&$scope.academic;
+    };
+    
+    $scope.addItemByEnter = function(keyEvent){
+        if (keyEvent.which === 13){
+            if($scope.checkAddItem()){
+                $scope.addItem();
+            }
         }
     };
     
@@ -86,7 +87,7 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
                 $scope.academic = "";
                 $scope.department = "udf";
                 
-                $scope.toggleFocus($scope.departmentFocus);
+                $scope.nkFocus('focusDepartment');
             }
             
         });
@@ -98,6 +99,14 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
     $scope.checkEditItem = function(index){
         var arrUse = $scope.dataAllocate[index];
         return (arrUse.department!==arrUse.departmentC)||(arrUse.education!==arrUse.educationC)||(arrUse.academic!==arrUse.academicC);
+    };
+    
+    $scope.editItemByEnter = function(index,keyEvent){
+        if (keyEvent.which === 13){
+            if($scope.checkEditItem(index)){
+                $scope.editItem(index);
+            }
+        }
     };
     
     $scope.editItem = function(index){
