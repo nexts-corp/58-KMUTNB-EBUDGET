@@ -99,28 +99,29 @@ class AllocateService extends CServiceBase implements IAllocateService {
     public function addExpenseProject($projectName, $budgetPeriodId, $budgetTotal, $deptId) {
         $return = true;
 
-        $bghead = new entity\BudgetHead();
-        $bghead->setFormId(999);
-        $bghead->setBudgetPeriodId($budgetPeriodId);
-        $bghead->setBudgetTypeCode("K");
-        if(count($deptId) > 1) {
-            $bghead->setIsCoBudget(true);
-        }        
-        $dataHead = $this->datacontext->getObject($bgHead);        
-        return $dataHead;
-        
-        if(isset($dataHead)) {
-            //update bgHead
-            $headId = $dataHead["id"];
+        $bgHead = new entity\BudgetHead();
+        $bgHead->setFormId(999);
+        $bgHead->setBudgetPeriodId($budgetPeriodId);
+        $bgHead->setBudgetTypeCode('K');
+        if (count($deptId) == 1) {
+            $bgHead->setIsCoBudget(false);
+            $bgHead->setDeptId($deptId[0]);
         } else {
-            //add bgHead
-            
+            $bgHead->setIsCoBudget(true);
         }
-        
-        foreach ($departmentId as $key => $value) {
 
+        $dataHead = $this->datacontext->getObject($bgHead);
 
-            $obj = new \apps\common\entity\BudgetExpense();
+        if ($dataHead) {
+            $headId = $dataHead[0]->id;
+        } else {
+            $dataHead = $this->datacontext->saveObject($bgHead);
+            $headId = $bgHead->id;
+        }
+
+        foreach ($deptId as $key => $value) {
+            $obj = new entity\BudgetExpense();
+            $obj->budgetHeadId = $headId;
             $obj->name = $projectName;
             $obj->budgetPeriodId = $budgetPeriodId;
             $obj->budgetTypeId = 30100000;
@@ -136,47 +137,68 @@ class AllocateService extends CServiceBase implements IAllocateService {
         return $return;
     }
 
-    public function updateExpenseProject($projectId, $projectName, $budgetPeriodId, $budgetTotal, $departmentId) {
+    public function updateExpenseProject($bgHeadId, $projectName, $budgetPeriodId, $budgetTotal, $deptId) {
         $return = true;
-        $obj = new entity\BudgetExpense();
-        $obj->setId($projectId);
-        if ($this->datacontext->removeObject($obj)) {
-            foreach ($departmentId as $key => $value) {
-                $obj = new \apps\common\entity\BudgetExpense();
-                $obj->name = $projectName;
-                $obj->budgetPeriodId = $budgetPeriodId;
-                $obj->budgetEstAmount = $budgetTotal[$key];
-                $obj->deptId = $departmentId[$key];
-                if (!$this->datacontext->saveObject($obj)) {
-                    $return = false;
-                }
+
+        $exp = new entity\BudgetExpense();
+        $exp->setBudgetHeadId($bgHeadId);
+        $data = $this->datacontext->getObject($exp);
+
+        if (!$this->datacontext->removeObject($data)) {
+            $return = false;
+            return $this->datacontext->getLastMessage();
+        }
+
+        foreach ($deptId as $key => $value) {
+            
+            $obj = new entity\BudgetExpense();
+            $obj->budgetHeadId = $bgHeadId;
+            $obj->name = $projectName;
+            $obj->budgetPeriodId = $budgetPeriodId;
+            $obj->budgetTypeId = 30100000;
+            $obj->budgetTypeCode = "K";
+            $obj->budgetEstAmount = $budgetTotal[$key];
+            $obj->deptId = $deptId[$key];
+            if (!$this->datacontext->saveObject($obj)) {
+                $return = false;
+                return $this->datacontext->getLastMessage();
             }
-        } else {
-            $return = false;
         }
 
         return $return;
     }
 
-    public function deleteExpenseProject($projectId) {
+    public function deleteExpenseProject($bgHeadId) {
         $return = true;
+        
         $obj = new entity\BudgetExpense();
-        $obj->setId($projectId);
-        if (!$this->datacontext->removeObject($obj)) {
+        $obj->setId($bgHeadId);
+        $data = $this->datacontext->getObject($obj);        
+        if (!$this->datacontext->removeObject($data)) {
             $return = false;
+            return $this->datacontext->getLastMessage();
         }
+        
+        $bgHead = new entity\BudgetHead();
+        $bgHead->setId($bgHeadId);
+        $dataHead = $this->datacontext->getObject($bgHead);        
+        if (!$this->datacontext->removeObject($dataHead)) {
+            $return = false;
+            return $this->datacontext->getLastMessage();
+        }
+        
         return $return;
     }
-    
+
     public function fetchRevenue($budgetPeriodId) {
-        
+
         $bg = new entity\BudgetRevenuePlan();
         $bg->setBudgetPeriodId($budgetPeriodId);
-        
+
         $data = $this->datacontext->getObject($bg);
-        
+
         $dataList = null;
-        
+
         for ($i = 0; $i < count($data); $i++) {
             $dataList[$i]["id"] = $data[$i]->id;
             $dataList[$i]["department"] = $data[$i]->deptId;
@@ -186,9 +208,8 @@ class AllocateService extends CServiceBase implements IAllocateService {
             $dataList[$i]["academic"] = $data[$i]->budgetService;
             $dataList[$i]["academicC"] = $data[$i]->budgetService;
         }
-        
+
         return $dataList;
-        
     }
 
     public function addRevenue($deptId, $budgetPeriodId, $bgEducation, $bgService) {
@@ -200,11 +221,11 @@ class AllocateService extends CServiceBase implements IAllocateService {
         $bg->setBudgetEducation($bgEducation);
         $bg->setBudgetService($bgService);
         $bg->setBudgetTotal($bgEducation + $bgService);
-        
+
         if ($this->datacontext->saveObject($bg)) {
             $return = $bg->id;
             //return $this->datacontext->getLastMessage();
-        }else{
+        } else {
             $return = 0;
         }
 
@@ -220,7 +241,7 @@ class AllocateService extends CServiceBase implements IAllocateService {
         $bg->setBudgetPeriodId($budgetPeriodId);
         $bg->setBudgetEducation($bgEducation);
         $bg->setBudgetService($bgService);
-        
+
         if (!$this->datacontext->updateObject($bg)) {
             $return = false;
             //return $this->datacontext->getLastMessage();
