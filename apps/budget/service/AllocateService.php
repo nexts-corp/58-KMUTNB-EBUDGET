@@ -215,8 +215,15 @@ class AllocateService extends CServiceBase implements IAllocateService {
     public function addRevenue($deptId, $budgetPeriodId, $bgEducation, $bgService) {
 
         $bg = new entity\BudgetRevenuePlan();
-        $bg->setDeptId($deptId);
         $bg->setBudgetPeriodId($budgetPeriodId);
+        $bg->setDeptId($deptId);
+        
+        $data = $this->datacontext->getObject($bg);
+        
+        if($data) {
+            return "duplicate department, pls use update function!";
+        }
+        
         $bg->setBudgetTypeCode("K");
         $bg->setBudgetEducation($bgEducation);
         $bg->setBudgetService($bgService);

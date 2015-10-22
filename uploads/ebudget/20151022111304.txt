@@ -1,0 +1,8 @@
+﻿Teamviewer
+ID :202 951 852
+PW : ch17n3
+
+Remote Desktop
+Server IP : 192.168.242.136
+user : smartlogger
+pass : smartlogger

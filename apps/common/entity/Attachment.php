@@ -15,14 +15,11 @@ class Attachment extends EntityBase {
      */
     public $id;
 
-    /** @Column(type="string",length=300, name="ATTACHMENTDESCRIPTION") */
+    /** @Column(type="text", name="ATTACHMENTDESCRIPTION") */
     public $desc;
 
     /** @Column(type="string",length=10, name="PATH") */
     public $path;
-
-    /** @Column(type="text", name="remark") */
-    public $remark;
 
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
@@ -34,16 +31,12 @@ class Attachment extends EntityBase {
         return $this->id;
     }
 
+    function getDesc() {
+        return $this->desc;
+    }
+
     function getPath() {
         return $this->path;
-    }
-
-    function getExt() {
-        return $this->ext;
-    }
-
-    function getRemark() {
-        return $this->remark;
     }
 
     function getCreator() {
@@ -58,16 +51,12 @@ class Attachment extends EntityBase {
         $this->id = $id;
     }
 
+    function setDesc($desc) {
+        $this->desc = $desc;
+    }
+
     function setPath($path) {
         $this->path = $path;
-    }
-
-    function setExt($ext) {
-        $this->ext = $ext;
-    }
-
-    function setRemark($remark) {
-        $this->remark = $remark;
     }
 
     function setCreator($creator) {
