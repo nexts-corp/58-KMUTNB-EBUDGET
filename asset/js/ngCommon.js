@@ -1,6 +1,32 @@
 var commonService = angular.module('commonService', []); 
          
 commonService.service('cde', function () {
+    this.projectPath = ngContextPath;
+    
+    this.setPath = function(appUri,serviceUri){
+        this.appPath = appUri;
+        this.servicePath = serviceUri;
+    };
+    
+    this.getPath = function (path) {
+        var subPath = path.split('//');
+        
+        var projectUri = this.projectPath;
+        var appUri = this.appPath;
+        var serUri = this.servicePath;
+        
+        if(subPath.length === 1){
+            return projectUri+'/api/'+appUri+'/'+serUri+'/'+subPath[0];
+        }else if(subPath.length === 2){
+            return projectUri+'/api/'+appUri+'/'+subPath[0]+'/'+subPath[1];
+        }else if(subPath.length === 3){
+            return projectUri+'/api/'+subPath[0]+'/'+subPath[1]+'/'+subPath[2];
+        }else{
+            return "Path is error.";
+        }
+        
+    };
+    
     
     this.path = function (path) {
         var subPath = path.split('//');
@@ -45,6 +71,40 @@ commonService.service('nk', function () {
     
 });
 
+commonService.controller('nkController', function ($scope,$timeout) {
+    
+    $scope.nkFocus = function(model){
+        $scope[model] = 0;
+        var focus= function(){
+          $scope[model] = 1;  
+        };
+        $timeout(focus, 1);
+    };
+    
+});
+
+
+commonService.directive('nkFocus', function() {
+    return function(scope, element, attrs) {
+        scope.$watch(attrs.nkFocus,function (newValue) { 
+            //newValue && element.focus();
+            
+            if(newValue===1){
+                element.focus();
+            }
+        },true);
+    };
+});
+
+commonService.directive('nkCloak', function() {
+    return function(scope, element, attrs) {
+        angular.element(element).removeAttr("nk-cloak");
+    };
+});
+
+
+
+
 
 
 
@@ -54,7 +114,6 @@ commonApp.config(function ($interpolateProvider) {
     $interpolateProvider.startSymbol('{[');
     $interpolateProvider.endSymbol(']}');
 });
-
 
 commonApp.controller('cmListController', function ($scope, $http) {
 
@@ -136,14 +195,6 @@ commonApp.directive('numberFormat', function() {
         angular.element(element).number(true,2);
     };
 });
-
-
-commonApp.directive('nkCloak', function() {
-    return function(scope, element, attrs) {
-        angular.element(element).removeAttr("nk-cloak");
-    };
-});
-
 
 commonApp.directive('autoFocus', function() {
     return function(scope, element, attrs) {
