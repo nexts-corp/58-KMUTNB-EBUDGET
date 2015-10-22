@@ -253,12 +253,44 @@ interface IBudgetSaveService
      */
     public function editBuildingMore($building, $listBuildFloor, $listBOQ, $listBuildPeriod, $listIDRemoveFloor, $listIDRemoveBOQ, $listIDRemovePeriod);
 
+
     /**
-     * @name attment
-     * @uri /attment
-     * @param apps\common\entity\Attachment attment Description
+     * @name uploadF
+     * @uri /uploadF
+     * @param file file
      * @return boolean results Description
      * @description แนบไฟล์เอกสาร
      */
-    public function AttachmentsFile($attment);
+    public function uploadFileAttachment($file);
+
+    /**
+     * @name insertAtt
+     * @uri /insertAtt
+     * @param apps\common\entity\Attachment att Description
+     * @return boolean results Description
+     * @description ตารางข้อมูลเอกสาร
+     */
+    public function InsertAttachment($att);
+
+    /**
+     * @name editAtt
+     * @uri /editAtt
+     * @param apps\common\entity\Attachment att Description
+     * @return boolean results Description
+     * @description แก้ไขตารางข้อมูลเอกสาร
+     */
+    public function editAttachment($att);
+
+
+    /**
+     * @name delAtt
+     * @uri /delAtt
+     * @param string attachmentID Description
+     * @param string path Description
+     * @param string budgetID Description
+     * @param string formBudget Description
+     * @return boolean results Description
+     * @description ลบตารางข้อมูลเอกสาร
+     */
+    public function deleteAttachment($attachmentID, $path, $budgetID, $formBudget);
 }

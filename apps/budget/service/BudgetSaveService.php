@@ -3,16 +3,14 @@
 namespace apps\budget\service;
 
 use apps\budget\interfaces\apps;
-use apps\budget\interfaces\listIDRemoveBOQ;
-use apps\budget\interfaces\listIDRemoveFloor;
-use apps\budget\interfaces\listIDRemovePeriod;
+use apps\budget\interfaces\IBudgetSaveService;
+use apps\common\entity\Attachment;
 use apps\common\entity\BuildingBOQ;
 use apps\common\entity\BuildingDetail;
 use apps\common\entity\BuildingFloorPlan;
 use apps\common\entity\BuildingPeriod;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
-use apps\budget\interfaces\IBudgetSaveService;
 use apps\common\entity\BudgetHead;
 use apps\common\entity\Budget140;
 use apps\common\entity\Budget141;
@@ -759,20 +757,6 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
     }
 
 
-    public function AttachmentsFile($attment)
-    {
-        $return = array();
-        if ($this->datacontext->saveObject($attment)) {
-            $return["result"] = true;
-            $return["id"] = $attment->id;
-        } else {
-            $return["result"] = false;
-            $return["msg"] = $this->datacontext->getLastMessage();
-        }
-
-        return $return;
-    }
-
     public function insertBuildingMore($building, $listBuildFloor, $listBOQ, $listBuildPeriod)
     {
         foreach ($building as $key => $value) {
@@ -971,4 +955,109 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
 
         return $return;
     }
+
+    public function uploadFileAttachment($file)
+    {
+        //uploadFile
+        $return = array();
+        $uploaddir = './uploads/ebudget/';
+        $filename = date("YmdHis");
+        $typefile = explode(".", $file["name"]);
+        $filename = $filename . "." . $typefile[count($typefile) - 1];
+        $uploadfile = $uploaddir . $filename;
+
+        if (move_uploaded_file($file['tmp_name'], $uploadfile)) {
+            $return["path"] = $filename;
+            $return["result"] = true;
+            $return["msg"] = "Upload Success";
+        } else {
+            $return["result"] = false;
+            $return["msg"] = "Can't upload file to Server";
+        }
+
+        return $return;
+    }
+
+
+    public function InsertAttachment($att)
+    {
+        $return = array();
+
+        foreach ($att as $key => $value) {
+
+            if (!$this->datacontext->saveObject($value)) {
+                $return[$key]["result"] = false;
+                $return[$key]["msg"] = $this->datacontext->getLastMessage();
+            } else {
+                $return[$key]["result"] = true;
+                $return[$key]["id"] = $att[$key]->id;
+            }
+        }
+
+        return $return[0];
+
+    }
+
+
+    public function editAttachment($att)
+    {
+        $return = array();
+
+        foreach ($att as $key => $value) {
+
+            if (isset($value->id)) {
+                // update object
+                if (!$this->datacontext->updateObject($value)) {
+                    $return[$key]["result"] = false;
+                    $return[$key]["msg"] = $this->datacontext->getLastMessage();
+                } else {
+                    $return[$key]["result"] = true;
+                    $return[$key]["attObj"] = $att[$key];
+                }
+            } else {
+                //insert new
+                if (!$this->datacontext->saveObject($value)) {
+                    $return[$key]["result"] = false;
+                    $return[$key]["msg"] = $this->datacontext->getLastMessage();
+                } else {
+                    $return[$key]["result"] = true;
+                    $return[$key]["attObj"] = $att[$key];
+                }
+            }
+        }
+        return $return[0];
+    }
+
+    public function deleteAttachment($attachmentID, $path, $budgetID, $formBudget)
+    {
+        $uploaddir = './uploads/ebudget/';
+        $return = array();
+
+        $sql = "UPDATE BUDGET" . $formBudget . " SET ATTACHMENTID = NULL WHERE ID=" . $budgetID;
+
+        if (!$this->datacontext->pdoUpdate($sql)) {
+
+            $return["result"] = false;
+            $return["msg"] = $this->datacontext->getLastMessage();
+
+        } else {
+
+            $obj = new Attachment();
+            $obj->setId($attachmentID);
+
+            if (!$this->datacontext->removeObject($obj)) {
+                $return["result"] = false;
+                $return["msg"] = $this->datacontext->getLastMessage();
+
+            } else {
+                unlink($uploaddir . $path); //removefile
+                $return["result"] = true;
+                $return["msg"] = $this->datacontext->getLastMessage();
+                $return["attObj"] = null; //for update in array
+            }
+        }
+
+        return $return;
+    }
+
 }

@@ -119,6 +119,17 @@ function bg142Form(param) {
         + '</div>'
         + '</div>'
 
+        + '<div id="attachFileDiv" class="form-group">'
+        + '<div class="col-md-12">'
+        + '    <div class="col-md-7" id="contranerFile"><input  type="file" id="fileInput" name="fileInput"/></div>'
+        + '    <label class="col-md-5 req text-right">แนบเอกสาร เช่น พิมพ์เขียว</label>'
+        + '</div>'
+        + '<div id="descFileDiv" class="form-group">'
+        + '    <label class="col-md-12">คำอธิบายประกอบไฟล์</label>'
+        + '    <div class="col-md-12"><textarea type="text" id="desc" class="form-control input-sm" name="desc" placeholder="คำอธิบายประกอบไฟล์"></textarea></div>'
+        + '</div>'
+        + '</div>'
+
         + '<div class="form-group">'
         + '<label class="col-md-12 control-label">จำนวนอัตรา</label>'
         + '<div class="col-md-12">'
@@ -151,7 +162,7 @@ function bg142Form(param) {
         + '</div>'
         + '<div id="loadingForm" class="col-md-12 text-center"></div>'
         + '<div class="modal-footer">'
-        + '<button type="button" class="btn btn-success save" data-dismiss="modal"><i class="fa fa-save"></i> บันทึก</button>'
+        + '<button type="button" class="btn btn-success save"><i class="fa fa-save"></i> บันทึก</button>'
         + '<button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>'
         + '</div>'
         + '</div>'
@@ -313,16 +324,19 @@ function bg142Detail(param) {
                 $("#modalHead").empty().html(typeName142Arr[parentId]);
                 $("#loadingForm").html('');
                 $("#form").trigger('reset');
+                $("#contranerFile").html('<input  type="file" id="fileInput" name="fileInput"/>');
                 $("#panelForm").modal("show");
 
                 $("button.save").unbind("click").click(function () {
+
+                    $("#loadingForm").html('<i class="fa fa-spinner fa-spin"></i> Loading...');
                     var isValid = true;
                     $('#form input[required]').each(function () {
                         if ($(this).val() == "" && !$(this).prop("disabled"))
                             isValid = false;
                     });
                     if (isValid) {
-                        var fParam = param;
+                        var fParam = tofParam(param);
                         fParam["budgetTypeId"] = parentId;
                         $("#form input, #form textarea").each(function () {
                             var name = $(this).attr("name");
@@ -331,12 +345,21 @@ function bg142Detail(param) {
                             fParam[name] = val;
                         });
 
+                        var objAttment = InsertAttachment();
+
+                        //objAttment empty is not insert to table Attachment
+                        if (!isEmptyObject(objAttment)) {
+                            fParam["attachmentId"] = objAttment.id;
+                            fParam["path"] = objAttment.path;
+                            fParam["desc"] = objAttment.desc;
+                        }
+
                         var fdata = [];
                         fdata.push(fParam);
                         var dataJSON = JSON.stringify({budget: fdata});
                         var dataJSONEN = encodeURIComponent(dataJSON);
 
-                        bg142Insert(parentId, param, dataJSONEN);
+                        bg142Insert(parentId, param, dataJSONEN, objAttment);
                     }
                 });
             });
@@ -360,9 +383,25 @@ function bg142Action(param) {
 
         $("#form input, #form textarea").each(function () {
             var fid = $(this).attr("id");
-            $("#" + fid).val(list142Arr[id][fid]);
+            if (fid != "fileInput")$("#" + fid).val(list142Arr[id][fid]);
         });
+
+        var ContranerFile = $("#contranerFile");
+
+        if (list142Arr[id]["path"] != null && list142Arr[id]["path"] != "null") {
+            ContranerFile.html('<a href="' + js_context_path + "/uploads/ebudget/" + list142Arr[id]["path"] + '"><i class="fa fa-file-zip-o"></i> ดาวโหลดเอกสารที่แนบไว้</a>&nbsp;&nbsp;<a id="removeFile" style="text-decoration: underline;">ลบไฟล์</a>');
+        } else {
+            ContranerFile.html('<input  type="file" id="fileInput" name="fileInput"/>');
+        }
+
+        $("#removeFile").unbind("click").click(function () {
+            if (confirm('ต้องการยกเลิกไฟล์นี้ ?')) {
+                ContranerFile.html('<input  type="file" id="fileInput" name="fileInput"/>');
+            }
+        });
+
         $("button.save").unbind("click").click(function () {
+            $("#loadingForm").html('<i class="fa fa-spinner fa-spin"></i> Loading...');
             var isValid = true;
             $('#form input[required]').each(function () {
                 if ($(this).val() == "" && !$(this).prop("disabled"))
@@ -379,12 +418,19 @@ function bg142Action(param) {
                     fParam[name] = val;
                 });
 
+                var objAttment = updateAttachment(list142Arr[id]["attachmentId"], list142Arr[id]["path"], list142Arr[id]["id"], "142");
+                if (!isEmptyObject(objAttment)) {
+                    fParam["attachmentId"] = objAttment.id;
+                    fParam["path"] = objAttment.path;
+                    fParam["desc"] = objAttment.desc;
+                }
+
                 var fdata = [];
                 fdata.push(fParam);
                 var dataJSON = JSON.stringify({budget: fdata});
                 var dataJSONEN = encodeURIComponent(dataJSON);
 
-                bg142Edit(id, parentId, param, dataJSONEN);
+                bg142Edit(id, parentId, param, dataJSONEN, objAttment);
             }
         });
     });
@@ -409,7 +455,7 @@ function bg142Action(param) {
         });
     });
 }
-function bg142Insert(parentId, param, dataJSONEN) {
+function bg142Insert(parentId, param, dataJSONEN, objAttment) {
 
     $("#loadingForm").html("Loading...");
 
@@ -450,6 +496,16 @@ function bg142Insert(parentId, param, dataJSONEN) {
                     list142Arr[data["id"]][$(this).attr("name")] = $(this).val();
                 });
 
+                if (!isEmptyObject(objAttment)) {
+                    // if have attachemnt
+                    list142Arr[data["id"]]["attachmentId"] = objAttment.id;
+                    list142Arr[data["id"]]["desc"] = objAttment.desc;
+                    list142Arr[data["id"]]["path"] = objAttment.path;
+                } else {
+                    list142Arr[data["id"]]["desc"] = "";
+                }
+                $("#panelForm").modal("hide");
+
                 bg142Action(param);
             }
             else {
@@ -459,7 +515,7 @@ function bg142Insert(parentId, param, dataJSONEN) {
     }, 500);
 }
 
-function bg142Edit(id, parentId, param, dataJSONEN) {
+function bg142Edit(id, parentId, param, dataJSONEN, objAttment) {
 
     $("#loadingForm").html("Loading...");
 
@@ -492,6 +548,15 @@ function bg142Edit(id, parentId, param, dataJSONEN) {
                 $("#form input, #form textarea").each(function () {
                     list142Arr[id][$(this).attr("name")] = $(this).val();
                 });
+                if (!isEmptyObject(objAttment)) {
+                    // if have attachemnt
+                    list142Arr[id]["attachmentId"] = objAttment.id;
+                    list142Arr[id]["desc"] = objAttment.desc;
+                    list142Arr[id]["path"] = objAttment.path;
+                } else {
+                    list142Arr[id]["desc"] = "";
+                }
+                $("#panelForm").modal("hide");
 
                 bg142Action(param);
             }

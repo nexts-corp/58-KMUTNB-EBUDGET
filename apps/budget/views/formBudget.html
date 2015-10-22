@@ -405,7 +405,6 @@
                     });
 
                     toggleShow("form");
-
                 }
 
             });
@@ -576,18 +575,138 @@
         }
     }
 
-    function AttachmentsFile() {
+    function InsertAttachment() {
 
-        var fileName = $('input[name="fileInput"]').val();
-        var fileDesc = $("#fileDesc").val();
-        console.log(fileName);
-        $("#statusUploadFile").html(fileName);
-        param = {};
-        param.desc = fileDesc;
-        param.path = fileName;
-        var dataJSON = JSON.stringify({attment: param});
-        var dataJSONEN = encodeURIComponent(dataJSON);
-        console.log(param);
-//        var datas = callAjax(js_context_path + "/api/budget/budgetSave/attment", "post", dataJSONEN, "json");
+        var param = {};
+        var filePath = uploadFile();
+        if (filePath != "") { //not have file
+            param.desc = $("#desc").val(); //fileDescription
+            param.path = filePath;
+            var fdata = [];
+            fdata.push(param);
+            var datas = callAjax(js_context_path + "/api/budget/budgetSave/insertAtt", "post", JSON.stringify({att: fdata}), "json");
+            if (datas != undefined && datas !== null) {
+                param.id = datas["results"]["id"];
+            }
+        }
+        return param;
     }
+
+    function updateAttachment(attachmentID, oldFileName, budgetListID, formBudget) {
+
+        // UPDATE IF NOT HAVE AND INSERT
+        var result = {};
+        var file_data = undefined; //not have file on inputFile
+        if ($("#fileInput").val() != undefined) file_data = $("#fileInput").prop("files")[0];
+        var param = {};
+        param.id = attachmentID;
+        param.desc = $("#desc").val(); //fileDescription
+
+        if (file_data != undefined) { // เมื่อมีการเปลี่ยนไฟล์
+
+            if (oldFileName != file_data["name"]) {
+                var filePath = uploadFile(); // update new file
+                param.path = filePath;
+            }
+
+            var fdata = [];
+            fdata.push(param);
+            var datas = callAjax(js_context_path + "/api/budget/budgetSave/editAtt", "post", JSON.stringify({att: fdata}), "json");
+            if (datas != undefined && datas !== null) {
+                result = datas["results"]["attObj"];
+            } else {
+                alert("แก้ไขไฟล์ล้มเหลว")
+            }
+
+        } else { //เมื่อมีการเอาไฟล์ออกจากเดิมที่มี
+
+            if (attachmentID != null && $("#removeFile").val() == undefined) {
+                //delete service at attachmentID
+                var datas = callAjax(js_context_path + "/api/budget/budgetSave/delAtt", "post", JSON.stringify({
+                    attachmentID: attachmentID,
+                    path: oldFileName,
+                    budgetID: budgetListID,
+                    formBudget: formBudget
+                }), "json");
+                if (datas != undefined && datas !== null) {
+                    var paramRemove = {};
+                    paramRemove.id = null;
+                    paramRemove.path = null;
+                    paramRemove.desc = null;
+                    result = datas["results"]["attObj"] = paramRemove;
+                }
+                else {
+                    alert("ลบไฟล์ล้มเหลว")
+                }
+            }
+        }
+
+        return result;
+    }
+
+
+    function uploadFile() {
+
+        var filePath = "";
+        var file_data = $("#fileInput").prop("files")[0];// Getting the properties of file from file field
+        if (file_data != undefined) {
+            var form_data = new FormData();                  // Creating object of FormData class
+            form_data.append("file", file_data);
+
+            $.ajax({
+                url: js_context_path + "/api/budget/budgetSave/uploadF",
+                data: form_data,
+                cache: false,
+                async: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                success: function (result) {
+                    // Process the result ...
+                    filePath = result["results"]["path"];
+                },
+                error: function (e) {
+                    alert(e.toString);
+                }
+            });
+        }
+        return filePath;
+    }
+
+    function tofParam(param) {
+
+        var fParam = {};
+        fParam.budgetPeriodId = param.budgetPeriodId;
+        fParam.budgetTypeCode = param.budgetTypeCode;
+        fParam.deptId = param.deptId;
+        fParam.facultyId = param.facultyId;
+        fParam.fundgroupId = param.fundgroupId;
+        fParam.planId = param.planId;
+        fParam.projectId = param.projectId;
+
+        return fParam;
+    }
+
+    function isEmptyObject(obj) {
+
+        var hasOwnProperty = Object.prototype.hasOwnProperty;
+        // null and undefined are "empty"
+        if (obj == null) return true;
+
+        // Assume if it has a length property with a non-zero value
+        // that that property is correct.
+        if (obj.length > 0)    return false;
+        if (obj.length === 0)  return true;
+
+        // Otherwise, does it have any properties of its own?
+        // Note that this doesn't handle
+        // toString and valueOf enumeration bugs in IE < 9
+        for (var key in obj) {
+            if (hasOwnProperty.call(obj, key)) return false;
+        }
+
+        return true;
+    }
+
+
 </script>

@@ -267,9 +267,10 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
             $list1[$key1]["lv2"] = $list2;
 
             foreach ($list2 as $key2 => $value2) {
-                $sql3 = " select bg.id, bg.positionName, bg.occupy, bg.vacancy, bg.rateNo, bg.salary, bg.salaryTotal, bg.remark "
+                $sql3 = " select bg.id, bg.positionName, bg.occupy, bg.vacancy, bg.rateNo, bg.salary, bg.salaryTotal, bg.remark,bg.attachmentId,att.desc,att.path"
                     . " from " . $this->ent . "\\Budget140 bg "
                     . " left join " . $this->ent . "\\BudgetHead head with head.id = bg.budgetHeadId "
+                    . " left join " . $this->ent . "\\Attachment att with bg.attachmentId = att.id "
                     . " where head.formId = :formId "
                     . " and bg.budgetTypeId = :budgetTypeId "
                     . " and bg.budgetPeriodId = :budgetPeriodId "
@@ -330,9 +331,10 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
             $list1[$key1]["lv2"] = $list2;
 
             foreach ($list2 as $key2 => $value2) {
-                $sql3 = " select bg.id, bg.positionName, bg.occupy, bg.vacancy, bg.rateNo, bg.salary, bg.salaryTotal, bg.remark "
+                $sql3 = " select bg.id, bg.positionName, bg.occupy, bg.vacancy, bg.rateNo, bg.salary, bg.salaryTotal, bg.remark,bg.attachmentId,att.desc,att.path "
                     . " from " . $this->ent . "\\Budget141 bg "
                     . " left join " . $this->ent . "\\BudgetHead head with head.id = bg.budgetHeadId "
+                    . " left join " . $this->ent . "\\Attachment att with bg.attachmentId = att.id "
                     . " where head.formId = :formId and "
                     . " bg.budgetTypeId = :budgetTypeId and "
                     . " bg.budgetPeriodId = :budgetPeriodId and "
@@ -378,9 +380,10 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
             $list1[$key1]["lv2"] = $list2;
 
             foreach ($list2 as $key2 => $value2) {
-                $sql3 = " select bg.id, bg.positionName, bg.occupy, bg.vacancy, bg.rateNo, bg.salary, bg.salaryTotal, bg.remark "
+                $sql3 = " select bg.id, bg.positionName, bg.occupy, bg.vacancy, bg.rateNo, bg.salary, bg.salaryTotal, bg.remark,bg.remark,bg.attachmentId,att.desc,att.path "
                     . " from " . $this->ent . "\\Budget142 bg "
                     . " left join " . $this->ent . "\\BudgetHead head with head.id = bg.budgetHeadId "
+                    . " left join " . $this->ent . "\\Attachment att with bg.attachmentId = att.id "
                     . " where head.formId = :formId and "
                     . " bg.budgetTypeId = :budgetTypeId and "
                     . " bg.budgetPeriodId = :budgetPeriodId and "
@@ -425,9 +428,10 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
             $list1[$key1]["lv2"] = $list2;
 
             foreach ($list2 as $key2 => $value2) {
-                $sql3 = " select bg.id, bg.operName, bg.operDesc, bg.bgRequest, bg.bgReceive, bg.bgHistory, bg.remark "
+                $sql3 = " select bg.id, bg.operName, bg.operDesc, bg.bgRequest, bg.bgReceive, bg.bgHistory, bg.remark , bg.remark,bg.remark,bg.attachmentId,att.desc,att.path"
                     . " from " . $this->ent . "\\Budget143 bg "
                     . " left join " . $this->ent . "\\BudgetHead head with head.id = bg.budgetHeadId "
+                    . " left join " . $this->ent . "\\Attachment att with bg.attachmentId = att.id "
                     . " where head.formId = :formId and "
                     . " bg.budgetTypeId = :budgetTypeId and "
                     . " bg.budgetPeriodId = :budgetPeriodId and "
@@ -473,9 +477,10 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
 
             foreach ($list2 as $key2 => $value2) {
                 $sql3 = " select bg.id, bg.utilName, bg.utilDesc, bg.bgRequest, bg.bgReceive, bg.bgHistory, "
-                    . " bg.nonBgRequest, bg.nonBgReceive, bg.nonBgHistory, bg.remark "
+                    . " bg.nonBgRequest, bg.nonBgReceive, bg.nonBgHistory, bg.remark, bg.remark,bg.remark,bg.attachmentId,att.desc,att.path "
                     . " from " . $this->ent . "\\Budget144 bg "
                     . " left join " . $this->ent . "\\BudgetHead head with head.id = bg.budgetHeadId "
+                    . " left join " . $this->ent . "\\Attachment att with bg.attachmentId = att.id "
                     . " where head.formId = :formId and "
                     . " bg.budgetTypeId = :budgetTypeId and "
                     . " bg.budgetPeriodId = :budgetPeriodId and "
@@ -525,9 +530,10 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
 
                 foreach ($list2 as $key2 => $value2) {
                     $sql3 = " select bg.id, bg.durableName, bg.durableDesc, bg.qty, bg.unit, bg.price, bg.totalPrice, "
-                        . " bg.numNeeded, bg.numWork, bg.numUnwork, bg.remark "
+                        . " bg.numNeeded, bg.numWork, bg.numUnwork, bg.remark,bg.attachmentId,att.desc,att.path"
                         . " from " . $this->ent . "\\Budget145 bg "
                         . " left join " . $this->ent . "\\BudgetHead head with head.id = bg.budgetHeadId "
+                        . " left join " . $this->ent . "\\Attachment att with bg.attachmentId = att.id "
                         . " where head.formId = :formId and "
                         . " bg.budgetTypeId = :budgetTypeId and "
                         . " bg.budgetPeriodId = :budgetPeriodId and "
@@ -552,9 +558,10 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
             } else {
 
                 $sql2 = " select bg.id, bg.durableName, bg.durableDesc, bg.qty, bg.unit, bg.price, bg.totalPrice, "
-                    . " bg.numNeeded, bg.numWork, bg.numUnwork, bg.remark "
+                    . " bg.numNeeded, bg.numWork, bg.numUnwork, bg.remark ,bg.attachmentId,att.desc,att.path"
                     . " from " . $this->ent . "\\Budget145 bg "
                     . " left join " . $this->ent . "\\BudgetHead head with head.id = bg.budgetHeadId "
+                    . " left join " . $this->ent . "\\Attachment att with bg.attachmentId = att.id "
                     . " where head.formId = :formId and "
                     . " bg.budgetTypeId = :budgetTypeId and "
                     . " bg.budgetPeriodId = :budgetPeriodId and "
@@ -602,9 +609,10 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
 //            $list1[$key1]["lv2"] = $list2;
 
         foreach ($list1 as $key1 => $value1) {
-            $sql2 = " select bg.id, bg.bursaryName, bg.bursaryDesc, bg.bgRequest, bg.bgHistory, bg.remark "
+            $sql2 = " select bg.id, bg.bursaryName, bg.bursaryDesc, bg.bgRequest, bg.bgHistory, bg.remark , bg.remark,bg.remark,bg.attachmentId,att.desc,att.path"
                 . " from " . $this->ent . "\\Budget146 bg "
                 . " left join " . $this->ent . "\\BudgetHead head with head.id = bg.budgetHeadId "
+                . " left join " . $this->ent . "\\Attachment att with bg.attachmentId = att.id "
                 . " where head.formId = :formId and "
                 . " bg.budgetTypeId = :budgetTypeId and "
                 . " bg.budgetPeriodId = :budgetPeriodId and "

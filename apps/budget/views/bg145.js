@@ -60,7 +60,7 @@ function bg145Form(param) {
         + '<th class="text-center" rowspan="3" style="vertical-align: middle;">ราคาต่อหน่วย</th>'
         + '<th class="text-center" rowspan="3" style="vertical-align: middle;">รวมเงิน</th>'
         + '<th class="text-center" colspan="3">คำชี้แจง</th><th class="text-center" rowspan="3" style="vertical-align: middle;">เหตุผลความจำเป็น</th>'
-        + '<th rowspan="3" class="text-center" style="vertical-align: middle;min-width: 130px;">เครื่องมือ</th>'
+        + '<th rowspan="3" class="text-center" style="vertical-align: middle;min-width: 150px;">เครื่องมือ</th>'
         + '</tr>'
         + '<tr>'
         + '<th class="text-center" rowspan="2" style="vertical-align: middle;">ความต้องการทั้งสิ้น</th>'
@@ -111,15 +111,12 @@ function bg145Form(param) {
 
         + '<div id="attachFileDiv" class="form-group">'
         + '<div class="col-md-12">'
-        + '    <input class="col-md-6" type="file" id="fileInput" name="fileInput"/>'
-        + '    <label class="col-md-6 req text-right">แนบเอกสาร เช่น พิมพ์เขียว</label>'
+        + '    <div class="col-md-7" id="contranerFile"><input  type="file" id="fileInput" name="fileInput"/></div>'
+        + '    <label class="col-md-5 req text-right">แนบเอกสาร เช่น พิมพ์เขียว</label>'
         + '</div>'
-        + '<div class="col-md-12">'
-        + '     <textarea type="text" id="fileDesc" class="form-control" name="fileDesc" placeholder="คำอธิบายประกอบไฟล์"></textarea>'
-        + '</div>'
-        + '<div class="col-md-12 text-center" style="padding-top: 5px;">'
-        + '    <label id="statusUploadFile" class="text-center col-md-8"></label>'
-        + '     <button type="button" onclick="AttachmentsFile();" class="btn btn-default col-md-4">Upload File</button>'
+        + '<div id="descFileDiv" class="form-group">'
+        + '    <label class="col-md-12">คำอธิบายประกอบไฟล์</label>'
+        + '    <div class="col-md-12"><textarea type="text" id="desc" class="form-control input-sm" name="desc" placeholder="คำอธิบายประกอบไฟล์"></textarea></div>'
         + '</div>'
         + '</div>'
 
@@ -251,7 +248,8 @@ function bg145Form(param) {
         + '</div>'
         + '</div>'
         + '</div>'
-        + '</div>';
+        + '</div>'
+        + '<div id="contranerAttacment"></div>';
 
     $("#divForm").html(html);
     toggleShow("form");
@@ -260,7 +258,7 @@ function bg145Form(param) {
 
 function bg145Detail(param) {
 
-    $("#table145 tbody").html('<td colspan="11" class="text-center">Loading...</td>');
+    $("#table145 tbody").html('<td colspan="12" class="text-center">Loading...</td>');
 
     setTimeout(function () {
         var dataJSON = JSON.stringify({param: param});
@@ -306,6 +304,7 @@ function bg145Detail(param) {
                             + '<td></td>'
                             + '<td></td>'
                             + '<td></td>'
+                            + '<td></td>'
                             + '<td>'
                             + '<div class="btn-group">'
                             + '<button class="btn btn-sm btn-success addList" data-pid="' + value2["id"] + '"><i class="fa fa-plus"></i> เพิ่ม</button>'
@@ -326,7 +325,7 @@ function bg145Detail(param) {
                             + '<td>' + value2["numUnwork"] + '</td>'
                             + '<td>' + value2["remark"] + '</td>'
                             + '<td>'
-                            + '<div class="btn-group col-md-12">'
+                            + '<div class="btn-group col-md-12 none-padding">'
                             + '<button class="btn btn-sm btn-warning editList col-md-6" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
                             + '<button class="btn btn-sm btn-default deleteList col-md-6"  data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-trash"></i> ลบ</button>'
                             + '<div class="col-md-12"></div>'
@@ -346,8 +345,8 @@ function bg145Detail(param) {
                             + '<td>' + value3["durableName"] + '<br> -&nbsp;' + value3["durableDesc"] + '</td>'
                             + '<td>' + value3["qty"] + '</td>'
                             + '<td>' + value3["unit"] + '</td>'
-                            + '<td>' + value3["price"] + '</td>'
-                            + '<td>' + value3["totalPrice"] + '</td>'
+                            + '<td class="number">' + value3["price"] + '</td>'
+                            + '<td class="number">' + value3["totalPrice"] + '</td>'
                             + '<td>' + value3["numNeeded"] + '</td>'
                             + '<td>' + value3["numWork"] + '</td>'
                             + '<td>' + value3["numUnwork"] + '</td>'
@@ -384,14 +383,16 @@ function bg145Detail(param) {
 
             // when you press to add button
             $("button.addList").unbind("click").click(function () {
+
                 var parentId = $(this).attr("data-pid");
 
                 // reset form for new insert
                 $("#modalHead").empty().html(typeName145Arr[parentId]);
                 $("#loadingForm").html('');
-                $("#attachFileDiv").addClass('hidden');
                 $("#form").trigger('reset');
+                $("#contranerFile").html('<input  type="file" id="fileInput" name="fileInput"/>');
                 $("#panelForm").modal("show");
+
 
                 $('#qty').keyup(function () {
                     var price = parseFloat($("#price").val());
@@ -418,13 +419,16 @@ function bg145Detail(param) {
                 });
 
                 $("button.save").unbind("click").click(function () {
+                    $("#loadingForm").html('<i class="fa fa-spinner fa-spin"></i> Loading...');
+                    // save on add event
                     var isValid = true;
                     $('#form input[required]').each(function () {
                         if ($(this).val() == "" && !$(this).prop("disabled"))
                             isValid = false;
                     });
                     if (isValid) {
-                        var fParam = param;
+                        var fParam = tofParam(param);
+
                         fParam["budgetTypeId"] = parentId;
                         $("#form input, #form textarea").each(function () {
                             var name = $(this).attr("name");
@@ -433,11 +437,19 @@ function bg145Detail(param) {
                             fParam[name] = val;
                         });
 
+                        var objAttment = InsertAttachment();
+
+                        //objAttment empty is not insert to table Attachment
+                        if (!isEmptyObject(objAttment)) {
+                            fParam["attachmentId"] = objAttment.id;
+                            fParam["path"] = objAttment.path;
+                            fParam["desc"] = objAttment.desc;
+                        }
                         var fdata = [];
                         fdata.push(fParam);
                         var dataJSON = JSON.stringify({budget: fdata});
                         var dataJSONEN = encodeURIComponent(dataJSON);
-                        bg145Insert(parentId, param, dataJSONEN);
+                        bg145Insert(parentId, param, dataJSONEN, objAttment);
                     }
                 });
             });
@@ -453,42 +465,61 @@ function bg145Action(param) {
 
         var parentId = $(this).attr("data-pid");
         var id = $(this).attr("data-id");
-        var totalPrice = 0;
+
         // reset form for new insert
         $("#modalHead").empty().html(typeName145Arr[parentId]);
         $("#loadingForm").html('');
         $("#form").trigger('reset');
-        $("#attachFileDiv").removeClass('hidden');
         $("#panelForm").modal("show");
 
         $("#form input, #form textarea").each(function () {
             var fid = $(this).attr("id");
-            $("#" + fid).val(list145Arr[id][fid]);
+            if (fid != "fileInput")$("#" + fid).val(list145Arr[id][fid]); //not set val in inputFile
         });
-        $("button.save").unbind("click").click(function () {
 
+        var ContranerFile = $("#contranerFile");
+
+        if (list145Arr[id]["path"] != null && list145Arr[id]["path"] != "null") {
+            ContranerFile.html('<a href="' + js_context_path + "/uploads/ebudget/" + list145Arr[id]["path"] + '"><i class="fa fa-file-zip-o"></i> ดาวโหลดเอกสารที่แนบไว้</a>&nbsp;&nbsp;<a id="removeFile" style="text-decoration: underline;">ลบไฟล์</a>');
+        } else {
+            ContranerFile.html('<input  type="file" id="fileInput" name="fileInput"/>');
+        }
+
+        $("#removeFile").unbind("click").click(function () {
+            if (confirm('ต้องการยกเลิกไฟล์นี้ ?')) {
+                ContranerFile.html('<input  type="file" id="fileInput" name="fileInput"/>');
+            }
+        });
+
+        $("button.save").unbind("click").click(function () {
+            $("#loadingForm").html('<i class="fa fa-spinner fa-spin"></i> Loading...');
+            // save on edit event
             var isValid = true;
             $('#form input[req]').each(function () {
                 if ($(this).val() == "" && !$(this).prop("disabled"))
                     isValid = false;
             });
             if (isValid) {
-                var fParam = param;
+                var fParam = tofParam(param);
                 fParam["budgetTypeId"] = parentId;
                 fParam["id"] = id;
                 $("#form input, #form textarea").each(function () {
                     var name = $(this).attr("name");
                     var val = $(this).val();
-
                     fParam[name] = val;
                 });
 
+                var objAttment = updateAttachment(list145Arr[id]["attachmentId"], list145Arr[id]["path"], list145Arr[id]["id"], "145");
+                if (!isEmptyObject(objAttment)) {
+                    fParam["attachmentId"] = objAttment.id;
+                    fParam["path"] = objAttment.path;
+                    fParam["desc"] = objAttment.desc;
+                }
                 var fdata = [];
                 fdata.push(fParam);
                 var dataJSON = JSON.stringify({budget: fdata});
                 var dataJSONEN = encodeURIComponent(dataJSON);
-
-                bg145Edit(id, parentId, param, dataJSONEN);
+                bg145Edit(id, parentId, param, dataJSONEN, objAttment);
             }
         });
 
@@ -549,9 +580,7 @@ function bg145Action(param) {
         buildingMoreForm(param);
     });
 }
-function bg145Insert(parentId, param, dataJSONEN) {
-
-    $("#loadingForm").html("Loading...");
+function bg145Insert(parentId, param, dataJSONEN, objAttment) {
 
     setTimeout(function () {
 
@@ -576,7 +605,7 @@ function bg145Insert(parentId, param, dataJSONEN) {
                     + '<td>';
 
                 if (parentId == "20400000") {
-                    html += '<div class="btn-group col-md-12">'
+                    html += '<div class="btn-group col-md-12 none-padding">'
                         + '<button class="btn btn-sm btn-warning editList col-md-6" data-pid="' + parentId + '" data-id="' + data["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
                         + '<button class="btn btn-sm btn-default deleteList col-md-6"  data-pid="' + parentId + '" data-id="' + data["id"] + '"><i class="fa fa-trash"></i> ลบ</button>'
                         + '<div class="col-md-12"></div>'
@@ -593,7 +622,6 @@ function bg145Insert(parentId, param, dataJSONEN) {
                     + '</td>'
                     + '</tr>';
 
-
                 var node = $("#table145").treetable("node", parentId);
                 $("#table145").treetable("loadBranch", node, html);
 
@@ -604,6 +632,14 @@ function bg145Insert(parentId, param, dataJSONEN) {
                 $("#form input, #form textarea").each(function () {
                     list145Arr[data["id"]][$(this).attr("name")] = $(this).val();
                 });
+                if (!isEmptyObject(objAttment)) {
+                    // if have attachemnt
+                    list145Arr[data["id"]]["attachmentId"] = objAttment.id;
+                    list145Arr[data["id"]]["desc"] = objAttment.desc;
+                    list145Arr[data["id"]]["path"] = objAttment.path;
+                } else {
+                    list145Arr[data["id"]]["desc"] = "";
+                }
                 $("#panelForm").modal("hide");
                 bg145Action(param);
             }
@@ -613,9 +649,7 @@ function bg145Insert(parentId, param, dataJSONEN) {
         }
     }, 500);
 }
-
-function bg145Edit(id, parentId, param, dataJSONEN) {
-    $("#loadingForm").html("Loading...");
+function bg145Edit(id, parentId, param, dataJSONEN, objAttment) {
 
     setTimeout(function () {
         var datas = callAjax(js_context_path + "/api/budget/budgetSave/updateBudget145", "post", dataJSONEN, "json");
@@ -635,7 +669,7 @@ function bg145Edit(id, parentId, param, dataJSONEN) {
                     + '<td>' + $("#remark").val() + '</td>'
                     + '<td>';
                 if (parentId == "20400000") {
-                    html += '<div class="btn-group col-md-12">'
+                    html += '<div class="btn-group col-md-12 none-padding">'
                         + '<button class="btn btn-sm btn-warning editList col-md-6" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
                         + '<button class="btn btn-sm btn-default deleteList col-md-6"  data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-trash"></i> ลบ</button>'
                         + '<div class="col-md-12"></div>'
@@ -657,6 +691,14 @@ function bg145Edit(id, parentId, param, dataJSONEN) {
                 $("#form input, #form textarea").each(function () {
                     list145Arr[id][$(this).attr("name")] = $(this).val();
                 });
+                if (!isEmptyObject(objAttment)) {
+                    // if have attachemnt
+                    list145Arr[id]["attachmentId"] = objAttment.id;
+                    list145Arr[id]["desc"] = objAttment.desc;
+                    list145Arr[id]["path"] = objAttment.path;
+                } else {
+                    list145Arr[id]["desc"] = "";
+                }
                 $("#panelForm").modal("hide");
                 bg145Action(param);
             }
@@ -671,7 +713,7 @@ function bg145delete(id, parentId, dataJSONEN) {
     var datas = callAjax(js_context_path + "/api/budget/budgetSave/deleteBudget145", "post", dataJSONEN, "json");
     if (typeof datas !== "undefined" && datas !== null) {
         if (datas["result"] == true) {
-            $("#table145").treetable("removeNode", "list" + id);
+            $("#table145").treetable("removeNode", "" + id);
             var parent = $('#table145').treetable('node', parentId);
             if (parent.children.length == 0) {
                 parent.row.find('.indenter').html('');
@@ -682,4 +724,5 @@ function bg145delete(id, parentId, dataJSONEN) {
         }
     }
 }
+
 

@@ -119,6 +119,17 @@ function bg144Form(param) {
         + '</div>'
         + '</div>'
 
+        + '<div id="attachFileDiv" class="form-group">'
+        + '<div class="col-md-12">'
+        + '    <div class="col-md-7" id="contranerFile"><input  type="file" id="fileInput" name="fileInput"/></div>'
+        + '    <label class="col-md-5 req text-right">แนบเอกสาร เช่น พิมพ์เขียว</label>'
+        + '</div>'
+        + '<div id="descFileDiv" class="form-group">'
+        + '    <label class="col-md-12">คำอธิบายประกอบไฟล์</label>'
+        + '    <div class="col-md-12"><textarea type="text" id="desc" class="form-control input-sm" name="desc" placeholder="คำอธิบายประกอบไฟล์"></textarea></div>'
+        + '</div>'
+        + '</div>'
+
         + '<div class="form-group">'
         + '<label class="col-md-12 control-label req" for="nonBgRequest">เงินนอกงบประมาณ</label>'
         + '<div class="col-md-12">'
@@ -143,7 +154,7 @@ function bg144Form(param) {
         + '</div>'
         + '<div id="loadingForm" class="col-md-12 text-center"></div>'
         + '<div class="modal-footer">'
-        + '<button type="button" class="btn btn-success save" data-dismiss="modal"><i class="fa fa-save"></i> บันทึก</button>'
+        + '<button type="button" class="btn btn-success save"><i class="fa fa-save"></i> บันทึก</button>'
         + '<button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>'
         + '</div>'
         + '</div>'
@@ -306,9 +317,11 @@ function bg144Detail(param) {
                 $("#modalHead").empty().html(typeName144Arr[parentId]);
                 $("#loadingForm").html('');
                 $("#form").trigger('reset');
+                $("#contranerFile").html('<input  type="file" id="fileInput" name="fileInput"/>');
                 $("#panelForm").modal("show");
 
                 $("button.save").unbind("click").click(function () {
+                    $("#loadingForm").html('<i class="fa fa-spinner fa-spin"></i> Loading...');
                     var isValid = true;
                     $('#form input[required]').each(function () {
                         if ($(this).val() == "" && !$(this).prop("disabled"))
@@ -323,13 +336,20 @@ function bg144Detail(param) {
 
                             fParam[name] = val;
                         });
+                        var objAttment = InsertAttachment();
 
+                        //objAttment empty is not insert to table Attachment
+                        if (!isEmptyObject(objAttment)) {
+                            fParam["attachmentId"] = objAttment.id;
+                            fParam["path"] = objAttment.path;
+                            fParam["desc"] = objAttment.desc;
+                        }
                         var fdata = [];
                         fdata.push(fParam);
                         var dataJSON = JSON.stringify({budget: fdata});
                         var dataJSONEN = encodeURIComponent(dataJSON);
 
-                        bg144Insert(parentId, param, dataJSONEN);
+                        bg144Insert(parentId, param, dataJSONEN, objAttment);
                     }
                 });
             });
@@ -353,16 +373,32 @@ function bg144Action(param) {
 
         $("#form input, #form textarea").each(function () {
             var fid = $(this).attr("id");
-            $("#" + fid).val(list144Arr[id][fid]);
+            if (fid != "fileInput")$("#" + fid).val(list144Arr[id][fid]);
         });
+
+        var ContranerFile = $("#contranerFile");
+
+        if (list144Arr[id]["path"] != null && list144Arr[id]["path"] != "null") {
+            ContranerFile.html('<a href="' + js_context_path + "/uploads/ebudget/" + list144Arr[id]["path"] + '"><i class="fa fa-file-zip-o"></i> ดาวโหลดเอกสารที่แนบไว้</a>&nbsp;&nbsp;<a id="removeFile" style="text-decoration: underline;">ลบไฟล์</a>');
+        } else {
+            ContranerFile.html('<input  type="file" id="fileInput" name="fileInput"/>');
+        }
+
+        $("#removeFile").unbind("click").click(function () {
+            if (confirm('ต้องการยกเลิกไฟล์นี้ ?')) {
+                ContranerFile.html('<input  type="file" id="fileInput" name="fileInput"/>');
+            }
+        });
+
         $("button.save").unbind("click").click(function () {
+            $("#loadingForm").html('<i class="fa fa-spinner fa-spin"></i> Loading...');
             var isValid = true;
             $('#form input[required]').each(function () {
                 if ($(this).val() == "" && !$(this).prop("disabled"))
                     isValid = false;
             });
             if (isValid) {
-                var fParam = param;
+                var fParam = tofParam(param);
                 fParam["budgetTypeId"] = parentId;
                 fParam["id"] = id;
                 $("#form input, #form textarea").each(function () {
@@ -372,17 +408,24 @@ function bg144Action(param) {
                     fParam[name] = val;
                 });
 
+                var objAttment = updateAttachment(list144Arr[id]["attachmentId"], list144Arr[id]["path"], list144Arr[id]["id"], "144");
+                if (!isEmptyObject(objAttment)) {
+                    fParam["attachmentId"] = objAttment.id;
+                    fParam["path"] = objAttment.path;
+                    fParam["desc"] = objAttment.desc;
+                }
+
                 var fdata = [];
                 fdata.push(fParam);
                 var dataJSON = JSON.stringify({budget: fdata});
                 var dataJSONEN = encodeURIComponent(dataJSON);
 
-                bg144Edit(id, parentId, param, dataJSONEN);
+                bg144Edit(id, parentId, param, dataJSONEN, objAttment);
             }
         });
     });
 
-    // when you press to edit button
+    // when you press to delete button
     $("button.deleteList").unbind("click").click(function () {
         var parentId = $(this).attr("data-pid");
         var id = $(this).attr("data-id");
@@ -402,10 +445,10 @@ function bg144Action(param) {
         });
     });
 }
-function bg144Insert(parentId, param, dataJSONEN) {
-    $("#loadingForm").html("Loading...");
+function bg144Insert(parentId, param, dataJSONEN, objAttment) {
 
     setTimeout(function () {
+
         var datas = callAjax(js_context_path + "/api/budget/budgetSave/insertBudget144", "post", dataJSONEN, "json");
         if (typeof datas !== "undefined" && datas !== null) {
             var data = datas["result"][0];
@@ -446,6 +489,16 @@ function bg144Insert(parentId, param, dataJSONEN) {
                     list144Arr[data["id"]][$(this).attr("name")] = $(this).val();
                 });
 
+                if (!isEmptyObject(objAttment)) {
+                    // if have attachemnt
+                    list144Arr[data["id"]]["attachmentId"] = objAttment.id;
+                    list144Arr[data["id"]]["desc"] = objAttment.desc;
+                    list144Arr[data["id"]]["path"] = objAttment.path;
+                } else {
+                    list144Arr[data["id"]]["desc"] = "";
+                }
+                $("#panelForm").modal("hide");
+
                 bg144Action(param);
             }
             else {
@@ -455,8 +508,7 @@ function bg144Insert(parentId, param, dataJSONEN) {
     }, 500);
 }
 
-function bg144Edit(id, parentId, param, dataJSONEN) {
-    $("#loadingForm").html("Loading...");
+function bg144Edit(id, parentId, param, dataJSONEN, objAttment) {
 
     setTimeout(function () {
         var datas = callAjax(js_context_path + "/api/budget/budgetSave/updateBudget144", "post", dataJSONEN, "json");
@@ -491,6 +543,16 @@ function bg144Edit(id, parentId, param, dataJSONEN) {
                 $("#form input, #form textarea").each(function () {
                     list144Arr[id][$(this).attr("name")] = $(this).val();
                 });
+
+                if (!isEmptyObject(objAttment)) {
+                    // if have attachemnt
+                    list144Arr[id]["attachmentId"] = objAttment.id;
+                    list144Arr[id]["desc"] = objAttment.desc;
+                    list144Arr[id]["path"] = objAttment.path;
+                } else {
+                    list144Arr[id]["desc"] = "";
+                }
+                $("#panelForm").modal("hide");
 
                 bg144Action(param);
             }
