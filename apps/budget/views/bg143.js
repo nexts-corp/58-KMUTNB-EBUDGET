@@ -83,65 +83,75 @@ function bg143Form(param) {
         + '<div class="modal-dialog">'
         + '<div class="modal-content">'
         + '<div class="modal-header">'
-        + '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
-        + '<h4 class="modal-title" id="myModalLabel">คำของบประมาณ : <span id="modalHead"></span></h4>'
+        + ' <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
+        + ' <h4 class="modal-title" id="myModalLabel">คำของบประมาณ : <span id="modalHead"></span></h4>'
         + '</div>'
         + '<div class="modal-body">'
         + '<form id="form" onsubmit="return false;">'
 
         + '<div class="form-group">'
-        + ' <label class="col-md-12 control-label req" for="operName">หมวดรายจ่าย-รายการ</label>'
+        + ' <label class="col-md-12 control-label text-bold req" for="operName">หมวดรายจ่าย-รายการ</label>'
         + ' <div class="col-md-12">'
         + '     <input type="text" id="operName" name="operName" class="form-control input-sm" required>'
         + ' </div>'
         + '</div>'
 
         + '<div class="form-group">'
-        + ' <label class="col-md-12 control-label req" for="operDesc">คำอธิบาย</label>'
+        + ' <label class="col-md-12 control-label text-bold req" for="operDesc">คำอธิบาย</label>'
         + ' <div class="col-md-12">'
-        + '     <textarea id="operDesc" name="operDesc" class="form-control input-sm" required></textarea>'
+            //+ '     <textarea id="operDesc" name="operDesc" class="form-control input-sm" required></textarea>'
+        + '    <div  class="summernote noteOperdesc" id="operDesc" name="operDesc"></div>'
         + ' </div>'
         + '</div>'
 
         + '<div id="attachFileDiv" class="form-group">'
-        + '<div class="col-md-12">'
-        + '    <div class="col-md-7" id="contranerFile"><input  type="file" id="fileInput" name="fileInput"/></div>'
-        + '    <label class="col-md-5 req text-right">แนบเอกสาร เช่น พิมพ์เขียว</label>'
-        + '</div>'
-        + '<div id="descFileDiv" class="form-group">'
-        + '    <label class="col-md-12">คำอธิบายประกอบไฟล์</label>'
-        + '    <div class="col-md-12"><textarea type="text" id="desc" class="form-control input-sm" name="desc" placeholder="คำอธิบายประกอบไฟล์"></textarea></div>'
-        + '</div>'
-        + '</div>'
-
-        + '<div class="form-group">'
-        + '<label class="col-md-12 control-label req" for="bgHistory">งบประมาณที่ได้รับการจัดสรรปีปัจจุบัน</label>'
-        + '<div class="col-md-12">'
-        + '<input type="text" id="bgHistory" name="bgHistory" class="form-control input-sm" required>'
-        + '</div>'
+        + ' <div class="col-md-12 col-sm-12 col-xs-12">'
+        + '    <div class="col-md-7 col-sm-7 col-xs-7 none-padding none-margin" id="contranerFile"><input  type="file" id="fileInput" name="fileInput"/></div>'
+        + '    <label class="col-md-5 col-sm-5 col-xs-5 req text-right">แนบเอกสารประกอบคำของบประมาณ</label>'
+        + ' </div>'
+        + ' <label class="col-md-12 text-bold">คำอธิบายประกอบไฟล์</label>'
+        + ' <div class="form-group col-md-12">'
+            //+ '    <div class="col-md-12"><textarea type="text" id="desc" class="form-control input-sm" name="desc" placeholder="คำอธิบายประกอบไฟล์"></textarea></div>'
+        + '    <div  class="summernote noteDesc" id="desc" name="desc"></div>'
+        + ' </div>'
         + '</div>'
 
         + '<div class="form-group">'
-        + '<label class="col-md-12 control-label req" for="bgRequest">คำของบประมาณปีงบประมาณที่ขอตั้ง</label>'
-        + '<div class="col-md-12">'
-        + '<input type="text" id="bgRequest" name="bgRequest" class="form-control input-sm" required>'
-        + '</div>'
+        + '   <div class="col-md-6">'
+        + '     <label class="col-md-12 control-label text-bold req" for="bgHistory">งบประมาณที่ได้รับการจัดสรรปีปัจจุบัน</label>'
+        + '     <div class="col-md-12">'
+        + '         <input type="number" min="0"id="bgHistory" name="bgHistory" class="form-control input-sm" required>'
+        + '     </div>'
+        + '   </div>'
+        + '   <div class="col-md-6">'
+        + '     <label class="col-md-12 control-label  text-bold req" for="bgRequest">คำของบประมาณปีงบประมาณที่ขอตั้ง</label>'
+        + '     <div class="col-md-12">'
+        + '         <input type="number" min="0" id="bgRequest" name="bgRequest" class="form-control input-sm" required>'
+        + '     </div>'
+        + '   </div>'
         + '</div>'
 
+            //+ '<div class="form-group">'
+            //+ '<label class="col-md-12 control-label req" for="bgRequest">คำของบประมาณปีงบประมาณที่ขอตั้ง</label>'
+            //+ '<div class="col-md-12">'
+            //+ '<input type="text" id="bgRequest" name="bgRequest" class="form-control input-sm" required>'
+            //+ '</div>'
+            //+ '</div>'
+
         + '<div class="form-group">'
-        + '<label class="col-md-12 control-label" for="remark">คำชี้แจงเหตุผลสรุป</label>'
-        + '<div class="col-md-12">'
-        + '<textarea id="remark" name="remark" class="form-control input-sm"></textarea>'
-        + '</div>'
+        + ' <label class="col-md-12 control-label" for="remark">คำชี้แจงเหตุผลสรุป</label>'
+        + ' <div class="col-md-12">'
+        + '    <div  class="summernote noteRemark" id="remark" name="remark"></div>'
+        + ' </div>'
         + '</div>'
         + '</form>'
         + '</div>'
         + '<div id="loadingForm" class="col-md-12 text-center"></div>'
-        + '<div class="modal-footer">'
-        + '<button type="button" class="btn btn-success save"><i class="fa fa-save"></i> บันทึก</button>'
-        + '<button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>'
-        + '</div>'
-        + '</div>'
+        + ' <div class="modal-footer">'
+        + '     <button type="button" class="btn btn-success save"><i class="fa fa-save"></i> บันทึก</button>'
+        + '     <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>'
+        + ' </div>'
+        + ' </div>'
         + '</div>'
         + '</div>'
 
@@ -192,6 +202,7 @@ function bg143Form(param) {
     $("#divForm").html(html);
     toggleShow("form");
     bg143Detail(param);
+    $('.summernote').summernote();
 }
 
 function bg143Detail(param) {
@@ -235,9 +246,9 @@ function bg143Detail(param) {
                     $.each(value2["budget"], function (key3, value3) {
                         html += '<tr data-tt-id="list' + value3["id"] + '" data-tt-parent-id="' + value2["id"] + '">'
                             + '<td class="text-center"></td>'
-                            + '<td>' + value3["operName"] + '</br> -&nbsp;' + value3["operDesc"] + '</td>'
-                            + '<td>' + value3["bgHistory"] + '</td>'
-                            + '<td>' + value3["bgRequest"] + '</td>'
+                            + '<td>' + value3["operName"] + '</br> &nbsp;' + value3["operDesc"] + '</td>'
+                            + '<td class="number">' + value3["bgHistory"] + '</td>'
+                            + '<td class="number">' + value3["bgRequest"] + '</td>'
                             + '<td>' + value3["remark"] + '</td>'
                             + '<td>'
                             + '<div class="btn-group">'
@@ -253,7 +264,7 @@ function bg143Detail(param) {
             });
 
             $("#table143 tbody").html(html);
-
+            $('.number').number(true, 2);
             // set default table to tree table
             $("#table143").treetable({
                 expandable: true
@@ -272,7 +283,7 @@ function bg143Detail(param) {
             // when you press to add button
             $("button.addList").unbind("click").click(function () {
                 var parentId = $(this).attr("data-pid");
-
+                $('.summernote').code('');
                 // reset form for new insert
                 $("#modalHead").empty().html(typeName143Arr[parentId]);
                 $("#loadingForm").html('');
@@ -298,6 +309,8 @@ function bg143Detail(param) {
 
                             fParam[name] = val;
                         });
+                        fParam["remark"] = $(".noteRemark").code();
+                        fParam["operDesc"] = $(".noteOperdesc").code();
 
                         var objAttment = InsertAttachment();
 
@@ -307,6 +320,7 @@ function bg143Detail(param) {
                             fParam["path"] = objAttment.path;
                             fParam["desc"] = objAttment.desc;
                         }
+
                         var fdata = [];
                         fdata.push(fParam);
                         var dataJSON = JSON.stringify({budget: fdata});
@@ -338,6 +352,10 @@ function bg143Action(param) {
             var fid = $(this).attr("id");
             if (fid != "fileInput")$("#" + fid).val(list143Arr[id][fid]);
         });
+
+        $(".noteOperdesc").code(list143Arr[id]["operDesc"]);
+        $('.noteDesc').code(list143Arr[id]["desc"]);
+        $('.noteRemark').code(list143Arr[id]["remark"]);
 
         var ContranerFile = $("#contranerFile");
 
@@ -372,6 +390,8 @@ function bg143Action(param) {
 
                     fParam[name] = val;
                 });
+                fParam["remark"] = $(".noteRemark").code();
+                fParam["operDesc"] = $(".noteOperdesc").code();
 
                 var objAttment = updateAttachment(list143Arr[id]["attachmentId"], list143Arr[id]["path"], list143Arr[id]["id"], "143");
                 if (!isEmptyObject(objAttment)) {
@@ -423,10 +443,10 @@ function bg143Insert(parentId, param, dataJSONEN, objAttment) {
                 // insert node in branch
                 var input = '<tr data-tt-id="list' + data["id"] + '" data-tt-parent-id="' + parentId + '">'
                     + '<td></td>'
-                    + '<td>' + $("#operName").val() + '</br> -&nbsp;' + $("#operDesc").val() + '</td>'
-                    + '<td>' + $("#bgHistory").val() + '</td>'
-                    + '<td>' + $("#bgRequest").val() + '</td>'
-                    + '<td>' + $("#remark").val() + '</td>'
+                    + '<td>' + $("#operName").val() + '</br> &nbsp;' + $(".noteOperdesc").code() + '</td>'
+                    + '<td class="number">' + $("#bgHistory").val() + '</td>'
+                    + '<td class="number">' + $("#bgRequest").val() + '</td>'
+                    + '<td>' + $(".noteRemark").code() + '</td>'
                     + '<td>'
                     + '<div class="btn-group">'
                     + '<button class="btn btn-sm btn-warning editList" data-pid="' + parentId + '" data-id="' + data["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
@@ -437,6 +457,7 @@ function bg143Insert(parentId, param, dataJSONEN, objAttment) {
 
                 var node = $("#table143").treetable("node", parentId);
                 $("#table143").treetable("loadBranch", node, input);
+                $('.number').number(true, 2);
 
                 list143Arr[data["id"]] = {
                     id: data["id"]
@@ -445,6 +466,9 @@ function bg143Insert(parentId, param, dataJSONEN, objAttment) {
                 $("#form input, #form textarea").each(function () {
                     list143Arr[data["id"]][$(this).attr("name")] = $(this).val();
                 });
+
+                list143Arr[data["id"]]["operDesc"] = $(".noteOperdesc").code();
+                list143Arr[data["id"]]["remark"] = $(".noteRemark").code();
 
                 if (!isEmptyObject(objAttment)) {
                     // if have attachemnt
@@ -468,16 +492,17 @@ function bg143Insert(parentId, param, dataJSONEN, objAttment) {
 function bg143Edit(id, parentId, param, dataJSONEN, objAttment) {
 
     setTimeout(function () {
+
         var datas = callAjax(js_context_path + "/api/budget/budgetSave/updateBudget143", "post", dataJSONEN, "json");
         if (typeof datas !== "undefined" && datas !== null) {
             if (datas["result"] == true) {
                 $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
 
                 var input = '<td></td>'
-                    + '<td>' + $("#operName").val() + '</br> -&nbsp;' + $("#operDesc").val() + '</td>'
-                    + '<td>' + $("#bgHistory").val() + '</td>'
-                    + '<td>' + $("#bgRequest").val() + '</td>'
-                    + '<td>' + $("#remark").val() + '</td>'
+                    + '<td>' + $("#operName").val() + '</br> &nbsp;' + $(".noteOperdesc").code() + '</td>'
+                    + '<td class="number">' + $("#bgHistory").val() + '</td>'
+                    + '<td class="number">' + $("#bgRequest").val() + '</td>'
+                    + '<td>' + $(".noteRemark").code() + '</td>'
                     + '<td>'
                     + '<div class="btn-group">'
                     + '<button class="btn btn-sm btn-warning editList" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
@@ -488,18 +513,19 @@ function bg143Edit(id, parentId, param, dataJSONEN, objAttment) {
                 //var node = $("#table140").treetable("node", parentId);
                 //$("#table140 ").treetable("loadBranch", node, input);
                 $('tr[data-tt-id="list' + id + '"]').html(input);
+                $('.number').number(true, 2);
 
                 $("#form input, #form textarea").each(function () {
                     list143Arr[id][$(this).attr("name")] = $(this).val();
                 });
+                list143Arr[id]["operDesc"] = $(".noteOperdesc").code();
+                list143Arr[id]["remark"] = $(".noteRemark").code();
 
                 if (!isEmptyObject(objAttment)) {
                     // if have attachemnt
                     list143Arr[id]["attachmentId"] = objAttment.id;
                     list143Arr[id]["desc"] = objAttment.desc;
                     list143Arr[id]["path"] = objAttment.path;
-                } else {
-                    list143Arr[id]["desc"] = "";
                 }
                 $("#panelForm").modal("hide");
 

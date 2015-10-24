@@ -89,56 +89,74 @@ function bg146Form(param) {
         + '<div class="modal-body">'
         + '<form id="form" onsubmit="return false;">'
         + '<div class="form-group">'
-        + '<label class="col-md-12 control-label req" for="bursaryName">รายการ - ประเภทเงินอุดหนุน</label>'
+        + '<label class="col-md-12 control-label text-bold req" for="bursaryName">รายการ - ประเภทเงินอุดหนุน</label>'
         + '<div class="col-md-12">'
         + '<input type="text" id="bursaryName" name="bursaryName" class="form-control input-sm" required>'
         + '</div>'
         + '</div>'
 
         + '<div class="form-group">'
-        + '<label class="col-md-12 control-label req" for="bursaryDesc">คำอธิบาย</label>'
-        + '<div class="col-md-12">'
-        + ' <textarea type="text" id="bursaryDesc" name="bursaryDesc" class="form-control input-sm" required></textarea>'
-        + '</div>'
+        + ' <label class="col-md-12 control-label text-bold req" for="bursaryDesc">คำอธิบาย</label>'
+        + ' <div class="col-md-12">'
+            //+ ' <textarea type="text" id="bursaryDesc" name="bursaryDesc" class="form-control input-sm" required></textarea>'
+        + '    <div  class="summernote noteBursaryDesc" id="bursaryDesc" name="bursaryDesc"></div>'
+        + ' </div>'
         + '</div>'
 
         + '<div id="attachFileDiv" class="form-group">'
-        + '<div class="col-md-12">'
-        + '    <div class="col-md-7" id="contranerFile"><input  type="file" id="fileInput" name="fileInput"/></div>'
-        + '    <label class="col-md-5 req text-right">แนบเอกสาร เช่น พิมพ์เขียว</label>'
-        + '</div>'
-        + '<div id="descFileDiv" class="form-group">'
-        + '    <label class="col-md-12">คำอธิบายประกอบไฟล์</label>'
-        + '    <div class="col-md-12"><textarea type="text" id="desc" class="form-control input-sm" name="desc" placeholder="คำอธิบายประกอบไฟล์"></textarea></div>'
-        + '</div>'
-        + '</div>'
-
-        + '<div class="form-group">'
-        + '<label class="col-md-12 control-label req" for="bgHistory">งบประมาณที่ได้รับการจัดสรรปีงบประมาณปัจจุบัน</label>'
-        + '<div class="col-md-12">'
-        + ' <input type="text" id="bgHistory" name="bgHistory" class="form-control input-sm" required>'
-        + '</div>'
+        + ' <div class="col-md-12 col-sm-12 col-xs-12">'
+        + '    <div class="col-md-7 col-sm-7 col-xs-7 none-padding none-margin" id="contranerFile"><input  type="file" id="fileInput" name="fileInput"/></div>'
+        + '    <label class="col-md-5 col-sm-5 col-xs-5 req text-right">แนบเอกสารประกอบคำของบประมาณ</label>'
+        + ' </div>'
+        + ' <label class="col-md-12 text-bold">คำอธิบายประกอบไฟล์</label>'
+        + ' <div class="form-group col-md-12">'
+            //+ '    <div class="col-md-12"><textarea type="text" id="desc" class="form-control input-sm" name="desc" placeholder="คำอธิบายประกอบไฟล์"></textarea></div>'
+        + '    <div  class="summernote noteDesc" id="desc" name="desc"></div>'
+        + ' </div>'
         + '</div>'
 
-        + '<div class="form-group">'
-        + '<label class="col-md-12 control-label req" for="bgRequest">คำของบประมาณปีงบประมาณที่ขอตั้งงบประมาณ</label>'
-        + '<div class="col-md-12">'
-        + ' <input type="text" id="bgRequest" name="bgRequest" class="form-control input-sm" required>'
-        + '</div>'
-        + '</div>'
 
         + '<div class="form-group">'
-        + '<label class="col-md-12 control-label" for="remark">คำชี้แจงเหตุผลสรุป</label>'
-        + '<div class="col-md-12">'
-        + ' <textarea id="remark" name="remark" class="form-control input-sm"></textarea>'
+        + '   <div class="col-md-6">'
+        + '     <label class="col-md-12 control-label text-bold req"  for="bgHistory">งบประมาณที่ได้รับการจัดสรรปีงบประมาณปัจจุบัน</label>'
+        + '     <div class="col-md-12">'
+        + '         <input type="number" min="0" id="bgHistory" name="bgHistory"  class="form-control input-sm" required>'
+        + '     </div>'
+        + '   </div>'
+        + '   <div class="col-md-6">'
+        + '     <label class="col-md-12 control-label  text-bold req" for="bgRequest">คำของบประมาณปีงบประมาณที่ขอตั้งงบประมาณ</label>'
+        + '     <div class="col-md-12">'
+        + '         <input type="number" min="0" id="bgRequest" name="bgRequest" class="form-control input-sm" required>'
+        + '     </div>'
+        + '   </div>'
         + '</div>'
+
+            //+ '<div class="form-group">'
+            //+ '<label class="col-md-12 control-label req" for="bgHistory">งบประมาณที่ได้รับการจัดสรรปีงบประมาณปัจจุบัน</label>'
+            //+ '<div class="col-md-12">'
+            //+ ' <input type="text" id="bgHistory" name="bgHistory" class="form-control input-sm" required>'
+            //+ '</div>'
+            //+ '</div>'
+            //
+            //+ '<div class="form-group">'
+            //+ '<label class="col-md-12 control-label req" for="bgRequest">คำของบประมาณปีงบประมาณที่ขอตั้งงบประมาณ</label>'
+            //+ '<div class="col-md-12">'
+            //+ ' <input type="text" id="bgRequest" name="bgRequest" class="form-control input-sm" required>'
+            //+ '</div>'
+            //+ '</div>'
+
+        + '<div class="form-group">'
+        + ' <label class="col-md-12 control-label text-bold" for="remark">คำชี้แจงเหตุผลสรุป</label>'
+        + ' <div class="col-md-12">'
+        + '    <div  class="summernote noteRemark" id="remark" name="remark"></div>'
+        + ' </div>'
         + '</div>'
         + '</form>'
         + '</div>'
         + '<div id="loadingForm" class="col-md-12 text-center"></div>'
         + '<div class="modal-footer">'
-        + '<button type="button" class="btn btn-success save" ><i class="fa fa-save"></i> บันทึก</button>'
-        + '<button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>'
+        + ' <button type="button" class="btn btn-success save" ><i class="fa fa-save"></i> บันทึก</button>'
+        + ' <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>'
         + '</div>'
         + '</div>'
         + '</div>'
@@ -186,10 +204,9 @@ function bg146Form(param) {
         + '</div>';
 
     $("#divForm").html(html);
-
     toggleShow("form");
-
     bg146Detail(param);
+    $('.summernote').summernote();
 }
 
 function bg146Detail(param) {
@@ -220,9 +237,9 @@ function bg146Detail(param) {
                 $.each(value["lv2"], function (key2, value2) {
                     html += '<tr data-tt-id="list' + value2["id"] + '" data-tt-parent-id="' + value["id"] + '">'
                         + '<td class="text-center"></td>'
-                        + '<td>' + value2["bursaryName"] + '<br> -&nbsp;' + value2["bursaryDesc"] + '</td>'
-                        + '<td>' + value2["bgHistory"] + '</td>'
-                        + '<td>' + value2["bgRequest"] + '</td>'
+                        + '<td>' + value2["bursaryName"] + '<br> &nbsp;' + value2["bursaryDesc"] + '</td>'
+                        + '<td class="number">' + value2["bgHistory"] + '</td>'
+                        + '<td class="number">' + value2["bgRequest"] + '</td>'
                         + '<td>' + value2["remark"] + '</td>'
                         + '<td>'
                         + '<div class="btn-group">'
@@ -237,7 +254,7 @@ function bg146Detail(param) {
             });
 
             $("#table146 tbody").html(html);
-
+            $('.number').number(true, 2);
             // set default table to tree table
             $("#table146").treetable({
                 expandable: true
@@ -260,10 +277,10 @@ function bg146Detail(param) {
                 // reset form for new insert
                 $("#modalHead").empty().html(typeName146Arr[parentId]);
                 $("#loadingForm").html('');
+                $('.summernote').code('');
                 $("#form").trigger('reset');
                 $("#contranerFile").html('<input  type="file" id="fileInput" name="fileInput"/>');
                 $("#panelForm").modal("show");
-
 
                 $("button.save").unbind("click").click(function () {
                     $("#loadingForm").html('<i class="fa fa-spinner fa-spin"></i> Loading...');
@@ -281,6 +298,9 @@ function bg146Detail(param) {
 
                             fParam[name] = val;
                         });
+
+                        fParam["remark"] = $(".noteRemark").code();
+                        fParam["bursaryDesc"] = $(".noteBursaryDesc").code();
 
                         var objAttment = InsertAttachment();
 
@@ -322,6 +342,10 @@ function bg146Action(param) {
             if (fid != "fileInput")$("#" + fid).val(list146Arr[id][fid]);
         });
 
+        $(".noteBursaryDesc").code(list146Arr[id]["bursaryDesc"]);
+        $('.noteDesc').code(list146Arr[id]["desc"]);
+        $('.noteRemark').code(list146Arr[id]["remark"]);
+
         var ContranerFile = $("#contranerFile");
 
         if (list146Arr[id]["path"] != null && list146Arr[id]["path"] != "null") {
@@ -354,6 +378,9 @@ function bg146Action(param) {
 
                     fParam[name] = val;
                 });
+
+                fParam["remark"] = $(".noteRemark").code();
+                fParam["bursaryDesc"] = $(".noteBursaryDesc").code();
 
                 var objAttment = updateAttachment(list146Arr[id]["attachmentId"], list146Arr[id]["path"], list146Arr[id]["id"], "146");
                 if (!isEmptyObject(objAttment)) {
@@ -407,10 +434,10 @@ function bg146Insert(parentId, param, dataJSONEN, objAttment) {
                 // insert node in branch
                 var input = '<tr data-tt-id="list' + data["id"] + '" data-tt-parent-id="' + parentId + '">'
                     + '<td></td>'
-                    + '<td>' + $("#bursaryName").val() + '</br> -&nbsp;' + $("#bursaryDesc").val() + '</td>'
-                    + '<td>' + $("#bgHistory").val() + '</td>'
-                    + '<td>' + $("#bgRequest").val() + '</td>'
-                    + '<td>' + $("#remark").val() + '</td>'
+                    + '<td>' + $("#bursaryName").val() + '</br> &nbsp;' + $(".noteBursaryDesc").code() + '</td>'
+                    + '<td class="number">' + $("#bgHistory").val() + '</td>'
+                    + '<td class="number">' + $("#bgRequest").val() + '</td>'
+                    + '<td>' + $(".noteRemark").code() + '</td>'
                     + '<td>'
                     + '<div class="btn-group">'
                     + '<button class="btn btn-sm btn-warning editList" data-pid="' + parentId + '" data-id="' + data["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
@@ -421,7 +448,7 @@ function bg146Insert(parentId, param, dataJSONEN, objAttment) {
 
                 var node = $("#table146").treetable("node", parentId);
                 $("#table146").treetable("loadBranch", node, input);
-
+                $('.number').number(true, 2);
                 list146Arr[data["id"]] = {
                     id: data["id"]
                 }
@@ -429,6 +456,9 @@ function bg146Insert(parentId, param, dataJSONEN, objAttment) {
                 $("#form input, #form textarea").each(function () {
                     list146Arr[data["id"]][$(this).attr("name")] = $(this).val();
                 });
+
+                list146Arr[data["id"]]["bursaryDesc"] = $(".noteBursaryDesc").code();
+                list146Arr[data["id"]]["remark"] = $(".noteRemark").code();
 
                 if (!isEmptyObject(objAttment)) {
                     // if have attachemnt
@@ -457,10 +487,10 @@ function bg146Edit(id, parentId, param, dataJSONEN, objAttment) {
                 $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
 
                 var input = '<td></td>'
-                    + '<td>' + $("#bursaryName").val() + '</br> -&nbsp;' + $("#bursaryDesc").val() + '</td>'
-                    + '<td>' + $("#bgHistory").val() + '</td>'
-                    + '<td>' + $("#bgRequest").val() + '</td>'
-                    + '<td>' + $("#remark").val() + '</td>'
+                    + '<td>' + $("#bursaryName").val() + '</br> &nbsp;' + $(".noteBursaryDesc").code() + '</td>'
+                    + '<td class="number">' + $("#bgHistory").val() + '</td>'
+                    + '<td class="number">' + $("#bgRequest").val() + '</td>'
+                    + '<td>' + $(".noteRemark").code() + '</td>'
                     + '<td>'
                     + '<div class="btn-group">'
                     + '<button class="btn btn-sm btn-warning editList" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
@@ -471,10 +501,13 @@ function bg146Edit(id, parentId, param, dataJSONEN, objAttment) {
                 //var node = $("#table146").treetable("node", parentId);
                 //$("#table146 ").treetable("loadBranch", node, input);
                 $('tr[data-tt-id="list' + id + '"]').html(input);
-
+                $('.number').number(true, 2);
                 $("#form input, #form textarea").each(function () {
                     list146Arr[id][$(this).attr("name")] = $(this).val();
                 });
+
+                list146Arr[id]["bursaryDesc"] = $(".noteBursaryDesc").code();
+                list146Arr[id]["remark"] = $(".noteRemark").code();
 
                 if (!isEmptyObject(objAttment)) {
                     // if have attachemnt

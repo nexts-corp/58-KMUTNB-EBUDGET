@@ -60,7 +60,7 @@ function bg145Form(param) {
         + '<th class="text-center" rowspan="3" style="vertical-align: middle;">ราคาต่อหน่วย</th>'
         + '<th class="text-center" rowspan="3" style="vertical-align: middle;">รวมเงิน</th>'
         + '<th class="text-center" colspan="3">คำชี้แจง</th><th class="text-center" rowspan="3" style="vertical-align: middle;">เหตุผลความจำเป็น</th>'
-        + '<th rowspan="3" class="text-center" style="vertical-align: middle;min-width: 150px;">เครื่องมือ</th>'
+        + '<th rowspan="3" class="text-center" style="vertical-align: middle;min-width: 200px;">เครื่องมือ</th>'
         + '</tr>'
         + '<tr>'
         + '<th class="text-center" rowspan="2" style="vertical-align: middle;">ความต้องการทั้งสิ้น</th>'
@@ -77,7 +77,7 @@ function bg145Form(param) {
         + '</thead>'
         + '<tbody>'
         + '<tr>'
-        + '<td colspan="10" class="text-center">-</td>'
+        + ' <td colspan="10" class="text-center">-</td>'
         + '</tr>'
         + '</tbody>'
         + '</table>'
@@ -86,97 +86,151 @@ function bg145Form(param) {
         + '</div>'
 
         + '<div id="panelForm" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">'
-        + '<div class="modal-dialog">'
-        + '<div class="modal-content">'
-        + '<div class="modal-header">'
-        + '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
-        + '<h4 class="modal-title" id="myModalLabel">คำของบประมาณ : <span id="modalHead"></span></h4>'
-        + '</div>'
+        + ' <div class="modal-dialog">'
+        + ' <div class="modal-content">'
+        + ' <div class="modal-header">'
+        + '     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
+        + '     <h4 class="modal-title" id="myModalLabel">คำของบประมาณ : <span id="modalHead"></span></h4>'
+        + ' </div>'
         + '<div class="modal-body">'
+
         + '<form id="form" onsubmit="return false;">'
+        + ' <div class="form-group">'
+        + '     <label class="col-md-12 control-label text-bold req" for="durableName">หมวดรายจ่าย-รายการ</label>'
+        + '     <div class="col-md-12">'
+        + '         <input type="text" id="durableName" name="durableName" class="form-control input-sm" required>'
+        + '     </div>'
+        + ' </div>'
 
         + '<div class="form-group">'
-        + '<label class="col-md-12 control-label req" for="durableName">หมวดรายจ่าย-รายการ</label>'
+        + '<label class="col-md-12 control-label text-bold req" for="durableDesc">รายละเอียดประกอบ</label>'
         + '<div class="col-md-12">'
-        + ' <input type="text" id="durableName" name="durableName" class="form-control input-sm" required>'
-        + '</div>'
-        + '</div>'
-
-        + '<div class="form-group">'
-        + '<label class="col-md-12 control-label req" for="durableDesc">รายละเอียดประกอบ</label>'
-        + '<div class="col-md-12">'
-        + ' <textarea id="durableDesc" name="durableDesc" class="form-control input-sm"></textarea>'
+            //+ ' <textarea id="durableDesc" name="durableDesc" class="form-control input-sm"></textarea>'
+        + '    <div  class="summernote noteDurableDesc" id="durableDesc" name="durableDesc"></div>'
         + '</div>'
         + '</div>'
 
         + '<div id="attachFileDiv" class="form-group">'
-        + '<div class="col-md-12">'
-        + '    <div class="col-md-7" id="contranerFile"><input  type="file" id="fileInput" name="fileInput"/></div>'
-        + '    <label class="col-md-5 req text-right">แนบเอกสาร เช่น พิมพ์เขียว</label>'
-        + '</div>'
-        + '<div id="descFileDiv" class="form-group">'
-        + '    <label class="col-md-12">คำอธิบายประกอบไฟล์</label>'
-        + '    <div class="col-md-12"><textarea type="text" id="desc" class="form-control input-sm" name="desc" placeholder="คำอธิบายประกอบไฟล์"></textarea></div>'
-        + '</div>'
-        + '</div>'
-
-        + '<div class="form-group">'
-        + '<label class="col-md-3 control-label req" for="unit">หน่วยนับ</label>'
-        + '<div class="col-md-9">'
-        + ' <input type="text" id="unit" name="unit" class="form-control input-sm" required>'
-        + '</div>'
+        + ' <div class="col-md-12 col-sm-12 col-xs-12">'
+        + '    <div class="col-md-7 col-sm-7 col-xs-7 none-padding none-margin" id="contranerFile"><input  type="file" id="fileInput" name="fileInput"/></div>'
+        + '    <label class="col-md-5 col-sm-5 col-xs-5 req text-right">แนบเอกสารประกอบคำของบประมาณ</label>'
+        + ' </div>'
+        + ' <label class="col-md-12 text-bold">คำอธิบายประกอบไฟล์</label>'
+        + ' <div class="form-group col-md-12">'
+            //+ '    <div class="col-md-12"><textarea type="text" id="desc" class="form-control input-sm" name="desc" placeholder="คำอธิบายประกอบไฟล์"></textarea></div>'
+        + '    <div  class="summernote noteDesc" id="desc" name="desc"></div>'
+        + ' </div>'
         + '</div>'
 
-        + '<div class="form-group">'
-        + '<label class="col-md-3 control-label req" for="qty">จำนวนหน่วย</label>'
-        + '<div class="col-md-9">'
-        + ' <input type="number" min="0" id="qty" name="qty" class="form-control input-sm" required>'
-        + '</div>'
-        + '</div>'
+            //+ '<div class="form-group">'
+            //+ '<label class="col-md-3 control-label req" for="unit">หน่วยนับ</label>'
+            //+ '<div class="col-md-9">'
+            //+ ' <input type="text" id="unit" name="unit" class="form-control input-sm" required>'
+            //+ '</div>'
+            //+ '</div>'
+            //
+            //+ '<div class="form-group">'
+            //+ '<label class="col-md-3 control-label req" for="qty">จำนวนหน่วย</label>'
+            //+ '<div class="col-md-9">'
+            //+ ' <input type="number" min="0" id="qty" name="qty" class="form-control input-sm" required>'
+            //+ '</div>'
+            //+ '</div>'
+            //
+            //+ '<div class="form-group">'
+            //+ '<label class="col-md-3 control-label req" for="price">ราคาต่อหน่วย</label>'
+            //+ '<div class="col-md-9">'
+            //+ ' <input type="number" min="0" id="price" name="price" class="form-control input-sm" required>'
+            //+ '</div>'
+            //+ '</div>'
 
         + '<div class="form-group">'
-        + '<label class="col-md-3 control-label req" for="price">ราคาต่อหน่วย</label>'
-        + '<div class="col-md-9">'
-        + ' <input type="number" min="0" id="price" name="price" class="form-control input-sm" required>'
-        + '</div>'
+        + ' <div class="col-md-12 col-sm-12 col-xs-12">'
+        + '     <div class="col-md-2 col-sm-2 col-xs-2">'
+        + '         <label class="control-label req text-right text-bold" for="occupy">หน่วยนับ</label>'
+        + '         <div>'
+        + '             <input type="text" id="unit" name="unit" class="form-control input-sm" required>'
+        + '         </div>'
+        + '     </div>'
+        + '     <div class="col-md-3 col-sm-3 col-xs-3">'
+        + '         <label class="control-label req text-right text-bold" for="vacancy">จำนวนหน่วย</label>'
+        + '         <div>'
+        + '             <input type="number" min="0" id="qty" name="qty" class="form-control input-sm" required>'
+        + '         </div>'
+        + '     </div>'
+        + '     <div class="col-md-3 col-sm-3 col-xs-3">'
+        + '         <label class="col-md-12 control-label req text-bold" for="salaryTotal">ราคาต่อหน่วย</label>'
+        + '         <div class="col-md-12">'
+        + '             <input type="number" min="0" id="price" name="price" class="form-control input-sm" required>'
+        + '         </div>'
+        + '     </div>'
+        + '     <div class="col-md-4 col-sm-4 col-xs-4">'
+        + '         <label class="col-md-12 control-label req text-bold" for="totalPrice">รวมเงิน</label>'
+        + '         <div class="col-md-12">'
+        + '             <input disabled type="text" id="totalPrice" name="totalPrice" class="form-control input-sm text-right" required>'
+        + '         </div>'
+        + '     </div>'
+        + ' </div>'
         + '</div>'
 
+            //+ '<div class="form-group">'
+            //+ '<label class="col-md-3 control-label" for="totalPrice">รวมเงิน</label>'
+            //+ '<div class="col-md-9">'
+            //+ ' <input disabled type="text" id="totalPrice" name="totalPrice" class="form-control input-sm" required>'
+            //+ '</div>'
+            //+ '</div>'
         + '<div class="form-group">'
-        + '<label class="col-md-3 control-label" for="totalPrice">รวมเงิน</label>'
-        + '<div class="col-md-9">'
-        + ' <input disabled type="text" id="totalPrice" name="totalPrice" class="form-control input-sm" required>'
-        + '</div>'
+        + ' <label class="col-md-12 control-label text-bold">คำชี้แจง</label>'
+        + ' <div class="col-md-12 col-sm-12 col-xs-12">'
+        + '     <div class="col-md-4 col-sm-4 col-xs-4">'
+        + '         <label class="control-label req text-right text-bold" for="numNeeded">ความต้องการทั้งสิ้น</label>'
+        + '         <div>'
+        + '             <input type="number" min="0" id="numNeeded" name="numNeeded" class="form-control input-sm" required>'
+        + '         </div>'
+        + '     </div>'
+        + '     <div class="col-md-4 col-sm-4 col-xs-4">'
+        + '         <label class="control-label req text-right text-bold" for="numWork">ใช้การได้</label>'
+        + '         <div>'
+        + '             <input type="number" min="0" id="numWork" name="numWork" class="form-control input-sm" required>'
+        + '         </div>'
+        + '     </div>'
+        + '     <div class="col-md-4 col-sm-4 col-xs-4">'
+        + '         <label class="col-md-12 control-label req text-bold" for="numUnwork">ใช้การไม่ได้</label>'
+        + '         <div class="col-md-12">'
+        + '             <input type="number" min="0" id="numUnwork" name="numUnwork" class="form-control input-sm" required>'
+        + '         </div>'
+        + '     </div>'
+        + ' </div>'
         + '</div>'
 
+            //+ '<div class="form-group">'
+            //+ ' <label class="col-md-12 control-label text-bold">คำชี้แจง</label>'
+            //+ ' <div class="col-md-12">'
+            //+ '     <label class="col-md-4 control-label req text-bold" for="numNeeded">ความต้องการทั้งสิ้น</label>'
+            //+ ' <div class="col-md-8">'
+            //+ '     <input type="text" id="numNeeded" name="numNeeded" class="form-control input-sm" required>'
+            //+ ' </div>'
+            //+ ' </div>'
+            //+ '</div>'
+            //
+            //+ '<div class="form-group">'
+            //+ ' <div class="col-md-12">'
+            //+ '     <label class="col-md-12 control-label text-bold" for="occupy">มีอยู่แล้ว</label>'
+            //+ ' <div class="col-md-6">'
+            //+ '     <label class="col-md-4 control-label req text-bold" for="numWork">ใช้การได้</label>'
+            //+ '     <div class="col-md-8"><input type="number" min="0" id="numWork" name="numWork" class="form-control input-sm" required></div>'
+            //+ ' </div>'
+            //+ ' <div class="col-md-6">'
+            //+ '     <label class="col-md-4 control-label req text-bold" for="numUnwork">ใช้การไม่ได้</label>'
+            //+ '     <div class="col-md-8"><input type="number" min="0" id="numUnwork" name="numUnwork" class="form-control input-sm" required></div>'
+            //+ ' </div>'
+            //+ ' </div>'
+            //+ '</div>'
+
         + '<div class="form-group">'
-        + ' <label class="col-md-12 control-label">คำชี้แจง</label>'
+        + ' <label class="col-md-12 control-label text-bold" for="remark">เหตุผลความจำเป็น</label>'
         + ' <div class="col-md-12">'
-        + '     <label class="col-md-4 control-label req" for="numNeeded">ความต้องการทั้งสิ้น</label>'
-        + ' <div class="col-md-8">'
-        + '     <input type="text" id="numNeeded" name="numNeeded" class="form-control input-sm" required>'
+        + '    <div  class="summernote noteRemark" id="remark" name="remark"></div>'
         + ' </div>'
-        + ' </div>'
-        + '</div>'
-
-        + '<div class="form-group">'
-        + ' <div class="col-md-12">'
-        + '     <label class="col-md-12 control-label" for="occupy">มีอยู่แล้ว</label>'
-        + ' <div class="col-md-6">'
-        + '     <label class="col-md-6 control-label req" for="numWork">ใช้การได้</label>'
-        + '     <div class="col-md-6"><input type="number" min="0" id="numWork" name="numWork" class="form-control input-sm" required></div>'
-        + ' </div>'
-        + ' <div class="col-md-6">'
-        + '     <label class="col-md-6 control-label req" for="numUnwork">ใช้การไม่ได้</label>'
-        + '     <div class="col-md-6"><input type="number" min="0" id="numUnwork" name="numUnwork" class="form-control input-sm" required></div>'
-        + ' </div>'
-        + ' </div>'
-        + '</div>'
-
-        + '<div class="form-group">'
-        + '<label class="col-md-12 control-label" for="remark">เหตุผลความจำเป็น</label>'
-        + '<div class="col-md-12">'
-        + '<textarea id="remark" name="remark" class="form-control input-sm"></textarea>'
-        + '</div>'
         + '</div>'
         + '</form>'
         + '</div>'
@@ -254,6 +308,7 @@ function bg145Form(param) {
     $("#divForm").html(html);
     toggleShow("form");
     bg145Detail(param);
+    $('.summernote').summernote();
 }
 
 function bg145Detail(param) {
@@ -304,7 +359,6 @@ function bg145Detail(param) {
                             + '<td></td>'
                             + '<td></td>'
                             + '<td></td>'
-                            + '<td></td>'
                             + '<td>'
                             + '<div class="btn-group">'
                             + '<button class="btn btn-sm btn-success addList" data-pid="' + value2["id"] + '"><i class="fa fa-plus"></i> เพิ่ม</button>'
@@ -315,8 +369,8 @@ function bg145Detail(param) {
                         //ค่าที่ดินและสิ่งก่อสร้าง
                         html += '<tr data-tt-id="' + value2["id"] + '" data-tt-parent-id="' + value["id"] + '">'
                             + '<td class="text-center"></td>'
-                            + '<td>' + value2["durableName"] + '<br> -&nbsp;' + value2["durableDesc"] + '</td>'
-                            + '<td>' + value2["qty"] + '</td>'
+                            + '<td>' + value2["durableName"] + '<br> &nbsp;' + value2["durableDesc"] + '</td>'
+                            + '<td class="number">' + value2["qty"] + '</td>'
                             + '<td>' + value2["unit"] + '</td>'
                             + '<td class="number">' + value2["price"] + '</td>'
                             + '<td class="number">' + value2["totalPrice"] + '</td>'
@@ -342,8 +396,8 @@ function bg145Detail(param) {
 
                         html += '<tr data-tt-id="' + value3["id"] + '" data-tt-parent-id="' + value2["id"] + '">'
                             + '<td class="text-center"></td>'
-                            + '<td>' + value3["durableName"] + '<br> -&nbsp;' + value3["durableDesc"] + '</td>'
-                            + '<td>' + value3["qty"] + '</td>'
+                            + '<td>' + value3["durableName"] + '<br> &nbsp;' + value3["durableDesc"] + '</td>'
+                            + '<td class="number">' + value3["qty"] + '</td>'
                             + '<td>' + value3["unit"] + '</td>'
                             + '<td class="number">' + value3["price"] + '</td>'
                             + '<td class="number">' + value3["totalPrice"] + '</td>'
@@ -385,7 +439,7 @@ function bg145Detail(param) {
             $("button.addList").unbind("click").click(function () {
 
                 var parentId = $(this).attr("data-pid");
-
+                $('.summernote').code('');
                 // reset form for new insert
                 $("#modalHead").empty().html(typeName145Arr[parentId]);
                 $("#loadingForm").html('');
@@ -436,6 +490,8 @@ function bg145Detail(param) {
 
                             fParam[name] = val;
                         });
+                        fParam["remark"] = $(".noteRemark").code();
+                        fParam["durableDesc"] = $(".noteDurableDesc").code();
 
                         var objAttment = InsertAttachment();
 
@@ -477,6 +533,10 @@ function bg145Action(param) {
             if (fid != "fileInput")$("#" + fid).val(list145Arr[id][fid]); //not set val in inputFile
         });
 
+        $(".noteDurableDesc").code(list145Arr[id]["durableDesc"]);
+        $('.noteDesc').code(list145Arr[id]["desc"]);
+        $('.noteRemark').code(list145Arr[id]["remark"]);
+
         var ContranerFile = $("#contranerFile");
 
         if (list145Arr[id]["path"] != null && list145Arr[id]["path"] != "null") {
@@ -508,6 +568,9 @@ function bg145Action(param) {
                     var val = $(this).val();
                     fParam[name] = val;
                 });
+
+                fParam["remark"] = $(".noteRemark").code();
+                fParam["durableDesc"] = $(".noteDurableDesc").code();
 
                 var objAttment = updateAttachment(list145Arr[id]["attachmentId"], list145Arr[id]["path"], list145Arr[id]["id"], "145");
                 if (!isEmptyObject(objAttment)) {
@@ -593,15 +656,15 @@ function bg145Insert(parentId, param, dataJSONEN, objAttment) {
                 // insert node in branch
                 var html = '<tr data-tt-id="' + data["id"] + '" data-tt-parent-id="' + parentId + '">'
                     + '<td></td>'
-                    + '<td>' + $("#durableName").val() + '</br> -&nbsp;' + $("#durableDesc").val() + '</td>'
-                    + '<td>' + $("#qty").val() + '</td>'
+                    + '<td>' + $("#durableName").val() + '</br> &nbsp;' + $(".noteDurableDesc").code() + '</td>'
+                    + '<td class="number">' + $("#qty").val() + '</td>'
                     + '<td>' + $("#unit").val() + '</td>'
-                    + '<td>' + $("#price").val() + '</td>'
-                    + '<td>' + $("#totalPrice").val() + '</td>'
+                    + '<td class="number">' + $("#price").val() + '</td>'
+                    + '<td class="number">' + $("#totalPrice").val() + '</td>'
                     + '<td>' + $("#numNeeded").val() + '</td>'
                     + '<td>' + $("#numWork").val() + '</td>'
                     + '<td>' + $("#numUnwork").val() + '</td>'
-                    + '<td>' + $("#remark").val() + '</td>'
+                    + '<td>' + $(".noteRemark").code() + '</td>'
                     + '<td>';
 
                 if (parentId == "20400000") {
@@ -624,14 +687,19 @@ function bg145Insert(parentId, param, dataJSONEN, objAttment) {
 
                 var node = $("#table145").treetable("node", parentId);
                 $("#table145").treetable("loadBranch", node, html);
-
+                $('.number').number(true, 2);
                 list145Arr[data["id"]] = {
                     id: data["id"]
                 };
 
+
                 $("#form input, #form textarea").each(function () {
                     list145Arr[data["id"]][$(this).attr("name")] = $(this).val();
                 });
+
+                list145Arr[data["id"]]["durableDesc"] = $(".noteDurableDesc").code();
+                list145Arr[data["id"]]["remark"] = $(".noteRemark").code();
+
                 if (!isEmptyObject(objAttment)) {
                     // if have attachemnt
                     list145Arr[data["id"]]["attachmentId"] = objAttment.id;
@@ -658,15 +726,15 @@ function bg145Edit(id, parentId, param, dataJSONEN, objAttment) {
                 $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
 
                 var html = '<td></td>'
-                    + '<td>' + $("#durableName").val() + '</br> -&nbsp;' + $("#durableDesc").val() + '</td>'
-                    + '<td>' + $("#qty").val() + '</td>'
+                    + '<td>' + $("#durableName").val() + '</br> &nbsp;' + $(".noteDurableDesc").code() + '</td>'
+                    + '<td class="number">' + $("#qty").val() + '</td>'
                     + '<td>' + $("#unit").val() + '</td>'
-                    + '<td>' + $("#price").val() + '</td>'
-                    + '<td>' + $("#totalPrice").val() + '</td>'
+                    + '<td class="number">' + $("#price").val() + '</td>'
+                    + '<td class="number">' + $("#totalPrice").val() + '</td>'
                     + '<td>' + $("#numNeeded").val() + '</td>'
                     + '<td>' + $("#numWork").val() + '</td>'
                     + '<td>' + $("#numUnwork").val() + '</td>'
-                    + '<td>' + $("#remark").val() + '</td>'
+                    + '<td>' + $(".noteRemark").code() + '</td>'
                     + '<td>';
                 if (parentId == "20400000") {
                     html += '<div class="btn-group col-md-12 none-padding">'
@@ -687,18 +755,21 @@ function bg145Edit(id, parentId, param, dataJSONEN, objAttment) {
                 //var node = $("#table145").treetable("node", parentId);
                 //$("#table145 ").treetable("loadBranch", node, input);
                 $('tr[data-tt-id="' + id + '"]').html(html);
-
+                $('.number').number(true, 2);
                 $("#form input, #form textarea").each(function () {
                     list145Arr[id][$(this).attr("name")] = $(this).val();
                 });
+
+                list145Arr[id]["durableDesc"] = $(".noteDurableDesc").code();
+                list145Arr[id]["remark"] = $(".noteRemark").code();
+
                 if (!isEmptyObject(objAttment)) {
                     // if have attachemnt
                     list145Arr[id]["attachmentId"] = objAttment.id;
                     list145Arr[id]["desc"] = objAttment.desc;
                     list145Arr[id]["path"] = objAttment.path;
-                } else {
-                    list145Arr[id]["desc"] = "";
                 }
+
                 $("#panelForm").modal("hide");
                 bg145Action(param);
             }

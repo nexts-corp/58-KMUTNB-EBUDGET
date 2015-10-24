@@ -189,6 +189,12 @@
 </div><!-- main -->
 
 {{>footer}}
+<style type="text/css">
+    .modal-dialog {
+        width: 820px;
+    }
+
+</style>
 
 <script type="text/javascript">
     var js_context_path = "{{_context_path}}";
@@ -555,7 +561,6 @@
                 listsFundgroup();
                 listsFaculty();
             }
-
         }
         else if (option == "form") {
             // panel show and hide
@@ -580,7 +585,7 @@
         var param = {};
         var filePath = uploadFile();
         if (filePath != "") { //not have file
-            param.desc = $("#desc").val(); //fileDescription
+            param.desc = $(".noteDesc").code(); //fileDescription
             param.path = filePath;
             var fdata = [];
             fdata.push(param);
@@ -600,10 +605,22 @@
         if ($("#fileInput").val() != undefined) file_data = $("#fileInput").prop("files")[0];
         var param = {};
         param.id = attachmentID;
-        param.desc = $("#desc").val(); //fileDescription
+        param.desc = $(".noteDesc").code(); //fileDescription
 
-        if (file_data != undefined) { // เมื่อมีการเปลี่ยนไฟล์
+        if ($("#removeFile").val() != undefined) {
+            //update desc
+            var fdata = [];
+            param.path = oldFileName;
+            fdata.push(param);
+            var datas = callAjax(js_context_path + "/api/budget/budgetSave/editAtt", "post", JSON.stringify({att: fdata}), "json");
+            if (datas != undefined && datas !== null) {
+                result = datas["results"]["attObj"];
+            } else {
+                alert("แก้ไขอธิบายไฟล์ล้มเหลว")
+            }
 
+        } else if (file_data != undefined) {
+            // เมื่อมีการเปลี่ยนไฟล์
             if (oldFileName != file_data["name"]) {
                 var filePath = uploadFile(); // update new file
                 param.path = filePath;
@@ -643,7 +660,6 @@
 
         return result;
     }
-
 
     function uploadFile() {
 

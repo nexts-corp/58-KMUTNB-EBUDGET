@@ -56,7 +56,7 @@ function bg141Form(param) {
         + '<th rowspan="3" class="text-center" style="vertical-align: middle;">ชื่อตำแหน่ง</th>'
         + '<th colspan="5" class="text-center" style="vertical-align: middle;">อัตราเดิม (ตามบัญชีถือจ่าย ณ ต.ค.57)</th>'
         + '<th rowspan="3" class="text-center" style="vertical-align: middle;">คำชี้แจง</th>'
-        + '<th rowspan="3" class="text-center" style="vertical-align: middle;">เครื่องมือ</th>'
+        + '<th rowspan="3" class="text-center" style="vertical-align: middle; min-width: 130px;">เครื่องมือ</th>'
         + '</tr>'
         + '<tr>'
         + '<th rowspan="2" class="text-center" style="vertical-align: middle;">ระดับ</th>'
@@ -100,72 +100,75 @@ function bg141Form(param) {
         + '<div class="modal-body">'
         + '<form id="form" onsubmit="return false;">'
         + '<div class="form-group">'
-        + '<label class="col-md-12 control-label req" for="positionName">ชื่อตำแหน่ง</label>'
+        + '<label class="col-md-12 control-label text-bold req" for="positionName">ชื่อตำแหน่ง</label>'
         + '<div class="col-md-12">'
         + '<input type="text" id="positionName" name="positionName" class="form-control input-sm" required>'
         + '</div>'
         + '</div>'
 
-        + '<div class="form-group">'
-        + '<label class="col-md-12 control-label req" for="rateNo">ระดับ</label>'
-        + '<div class="col-md-12">'
-        + '<input type="text" id="rateNo" name="rateNo" class="form-control input-sm" required>'
-        + '</div>'
-        + '</div>'
-
-        + '<div class="form-group">'
-        + '<label class="col-md-12 control-label req" for="salary">อัตราเงินเดือน</label>'
-        + '<div class="col-md-12">'
-        + '<input type="text" id="salary" name="salary" class="form-control input-sm" required>'
-        + '</div>'
+        + '<div class="form-group row">'
+        + '     <div class="col-md-4 col-sm-4 col-xs-4">'
+        + '         <label class="col-md-4 col-sm-4 col-xs-4 control-label text-bold req" for="rateNo">ระดับ</label>'
+        + '         <div class="col-md-8 col-sm-8 col-xs-8">'
+        + '             <input type="text" id="rateNo" name="rateNo" class="form-control input-sm" required>'
+        + '          </div>'
+        + '     </div>'
+        + '     <div class="col-md-8 col-sm-8 col-xs-8">'
+        + '         <label class="col-md-4 col-sm-4 col-xs-4 control-label text-bold req" for="salary">อัตราเงินเดือน</label>'
+        + '         <div class="col-md-8 col-sm-8 col-xs-8">'
+        + '             <input type="text" id="salary" name="salary" class="form-control input-sm" required>'
+        + '         </div>'
+        + '     </div>'
         + '</div>'
 
         + '<div id="attachFileDiv" class="form-group">'
-        + '<div class="col-md-12">'
-        + '    <div class="col-md-7" id="contranerFile"><input  type="file" id="fileInput" name="fileInput"/></div>'
-        + '    <label class="col-md-5 req text-right">แนบเอกสาร เช่น พิมพ์เขียว</label>'
-        + '</div>'
-        + '<div id="descFileDiv" class="form-group">'
-        + '    <label class="col-md-12">คำอธิบายประกอบไฟล์</label>'
-        + '    <div class="col-md-12"><textarea type="text" id="desc" class="form-control input-sm" name="desc" placeholder="คำอธิบายประกอบไฟล์"></textarea></div>'
-        + '</div>'
-        + '</div>'
-
-
-        + '<div class="form-group">'
-        + '<label class="col-md-12 control-label">จำนวนอัตรา</label>'
-        + '<div class="col-md-12">'
-        + '<label class="col-md-3 control-label req text-right" for="occupy">มีคนครอง</label>'
-        + '<div class="col-md-3">'
-        + '<input type="text" id="occupy" name="occupy" class="form-control input-sm" required>'
-        + '</div>'
-
-        + '<label class="col-md-3 control-label req text-right" for="vacancy">อัตราว่าง</label>'
-        + '<div class="col-md-3">'
-        + '<input type="text" id="vacancy" name="vacancy" class="form-control input-sm" required>'
-        + '</div>'
-        + '</div>'
+        + ' <div class="col-md-12 col-sm-12 col-xs-12">'
+        + '    <div class="col-md-7 col-sm-7 col-xs-7 none-padding none-margin" id="contranerFile"><input  type="file" id="fileInput" name="fileInput"/></div>'
+        + '    <label class="col-md-5 col-sm-5 col-xs-5 req text-right">แนบเอกสารประกอบคำของบประมาณ</label>'
+        + ' </div>'
+        + ' <label class="col-md-12 text-bold">คำอธิบายประกอบไฟล์</label>'
+        + ' <div class="form-group col-md-12">'
+            //+ '    <div class="col-md-12"><textarea type="text" id="desc" class="form-control input-sm" name="desc" placeholder="คำอธิบายประกอบไฟล์"></textarea></div>'
+        + '    <div  class="summernote noteDesc" id="desc" name="desc"></div>'
+        + ' </div>'
         + '</div>'
 
         + '<div class="form-group">'
-        + '<label class="col-md-12 control-label req" for="salaryTotal">จำนวนเงินทั้งปี</label>'
-        + '<div class="col-md-12">'
-        + '<input type="text" id="salaryTotal" name="salaryTotal" class="form-control input-sm" required>'
-        + '</div>'
+        + ' <label class="col-md-12 col-sm-12 col-xs-12 control-label text-bold">จำนวนอัตรา</label>'
+        + ' <div class="col-md-12 col-sm-12 col-xs-12">'
+        + '     <div class="col-md-3 col-sm-3 col-xs-3">'
+        + '         <label class="control-label req text-right" for="occupy">มีคนครอง</label>'
+        + '         <div>'
+        + '             <input type="text" id="occupy" name="occupy" class="form-control input-sm" required>'
+        + '         </div>'
+        + '     </div>'
+        + '     <div class="col-md-3 col-sm-3 col-xs-3">'
+        + '         <label class="control-label req text-right" for="vacancy">อัตราว่าง</label>'
+        + '         <div>'
+        + '             <input type="text" id="vacancy" name="vacancy" class="form-control input-sm" required>'
+        + '         </div>'
+        + '     </div>'
+        + '     <div class="col-md-6 col-sm-6 col-xs-6">'
+        + '         <label class="col-md-12 control-label req" for="salaryTotal">จำนวนเงินทั้งปี</label>'
+        + '         <div class="col-md-12">'
+        + '             <input type="text" id="salaryTotal" name="salaryTotal" class="form-control input-sm" required>'
+        + '         </div>'
+        + '     </div>'
+        + ' </div>'
         + '</div>'
 
         + '<div class="form-group">'
-        + '<label class="col-md-12 control-label" for="remark">คำชี้แจง</label>'
+        + '<label class="col-md-12 control-label text-bold" for="remark">คำชี้แจง</label>'
         + '<div class="col-md-12">'
-        + '<textarea id="remark" name="remark" class="form-control input-sm"></textarea>'
+        + '    <div  class="summernote noteRemark" id="remark" name="remark"></div>'
         + '</div>'
         + '</div>'
         + '</form>'
         + '</div>'
         + '<div id="loadingForm" class="col-md-12 text-center"></div>'
         + '<div class="modal-footer">'
-        + '<button type="button" class="btn btn-success save" ><i class="fa fa-save"></i> บันทึก</button>'
-        + '<button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>'
+        + ' <button type="button" class="btn btn-success save" ><i class="fa fa-save"></i> บันทึก</button>'
+        + ' <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>'
         + '</div>'
         + '</div>'
         + '</div>'
@@ -218,18 +221,17 @@ function bg141Form(param) {
         + '</table>'
         + '</div>'
         + '<div class="modal-footer">'
-        + '<button type="button" class="btn btn-danger save"><i class="fa fa-trash"></i> ยืนยันการลบ</button>'
-        + '<button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>'
+        + ' <button type="button" class="btn btn-danger save"><i class="fa fa-trash"></i> ยืนยันการลบ</button>'
+        + ' <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>'
         + '</div>'
         + '</div>'
         + '</div>'
         + '</div>';
 
     $("#divForm").html(html);
-
     toggleShow("form");
-
     bg141Detail(param);
+    $('.summernote').summernote();
 }
 
 function bg141Detail(param) {
@@ -280,11 +282,11 @@ function bg141Detail(param) {
                         html += '<tr data-tt-id="list' + value3["id"] + '" data-tt-parent-id="' + value2["id"] + '">'
                             + '<td class="text-center"></td>'
                             + '<td>' + value3["positionName"] + '</td>'
+                            + '<td>' + value3["rateNo"] + '</td>'
+                            + '<td class="number">' + value3["salary"] + '</td>'
                             + '<td>' + value3["occupy"] + '</td>'
                             + '<td>' + value3["vacancy"] + '</td>'
-                            + '<td>' + value3["rateNo"] + '</td>'
-                            + '<td>' + value3["salary"] + '</td>'
-                            + '<td>' + value3["salaryTotal"] + '</td>'
+                            + '<td class="number">' + value3["salaryTotal"] + '</td>'
                             + '<td>' + value3["remark"] + '</td>'
                             + '<td>'
                             + '<div class="btn-group">'
@@ -300,7 +302,7 @@ function bg141Detail(param) {
             });
 
             $("#table141 tbody").html(html);
-
+            $('.number').number(true, 2);
             // set default table to tree table
             $("#table141").treetable({
                 expandable: true
@@ -319,7 +321,7 @@ function bg141Detail(param) {
             // when you press to add button
             $("button.addList").unbind("click").click(function () {
                 var parentId = $(this).attr("data-pid");
-
+                $('.summernote').code('');
                 // reset form for new insert
                 $("#modalHead").empty().html(typeName141Arr[parentId]);
                 $("#loadingForm").html('');
@@ -343,6 +345,8 @@ function bg141Detail(param) {
 
                             fParam[name] = val;
                         });
+                        fParam["remark"] = $(".noteRemark").code();
+
                         var objAttment = InsertAttachment();
 
                         //objAttment empty is not insert to table Attachment
@@ -383,6 +387,9 @@ function bg141Action(param) {
             if (fid != "fileInput")$("#" + fid).val(list141Arr[id][fid]);
         });
 
+        $('.noteDesc').code(list141Arr[id]["desc"]);
+        $('.noteRemark').code(list141Arr[id]["remark"]);
+
         var ContranerFile = $("#contranerFile");
 
         if (list141Arr[id]["path"] != null && list141Arr[id]["path"] != "null") {
@@ -414,7 +421,7 @@ function bg141Action(param) {
 
                     fParam[name] = val;
                 });
-
+                fParam["remark"] = $(".noteRemark").code();
                 var objAttment = updateAttachment(list141Arr[id]["attachmentId"], list141Arr[id]["path"], list141Arr[id]["id"], "141");
                 if (!isEmptyObject(objAttment)) {
                     fParam["attachmentId"] = objAttment.id;
@@ -467,12 +474,12 @@ function bg141Insert(parentId, param, dataJSONEN, objAttment) {
                 var input = '<tr data-tt-id="list' + data["id"] + '" data-tt-parent-id="' + parentId + '">'
                     + '<td></td>'
                     + '<td>' + $("#positionName").val() + '</td>'
-                    + '<td>' + $("#rateNo").val() + '</td>'
-                    + '<td>' + $("#salary").val() + '</td>'
+                    + '<td >' + $("#rateNo").val() + '</td>'
+                    + '<td class="number">' + $("#salary").val() + '</td>'
                     + '<td>' + $("#occupy").val() + '</td>'
                     + '<td>' + $("#vacancy").val() + '</td>'
-                    + '<td>' + $("#salaryTotal").val() + '</td>'
-                    + '<td>' + $("#remark").val() + '</td>'
+                    + '<td class="number">' + $("#salaryTotal").val() + '</td>'
+                    + '<td>' + $(".noteRemark").code() + '</td>'
                     + '<td>'
                     + '<div class="btn-group">'
                     + '<button class="btn btn-sm btn-warning editList" data-pid="' + parentId + '" data-id="' + data["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
@@ -483,7 +490,7 @@ function bg141Insert(parentId, param, dataJSONEN, objAttment) {
 
                 var node = $("#table141").treetable("node", parentId);
                 $("#table141").treetable("loadBranch", node, input);
-
+                $('.number').number(true, 2);
                 list141Arr[data["id"]] = {
                     id: data["id"]
                 }
@@ -491,6 +498,7 @@ function bg141Insert(parentId, param, dataJSONEN, objAttment) {
                 $("#form input, #form textarea").each(function () {
                     list141Arr[data["id"]][$(this).attr("name")] = $(this).val();
                 });
+                list141Arr[data["id"]]["remark"] = $(".noteRemark").code();
 
                 if (!isEmptyObject(objAttment)) {
                     // if have attachemnt
@@ -522,11 +530,11 @@ function bg141Edit(id, parentId, param, dataJSONEN, objAttment) {
                 var input = '<td></td>'
                     + '<td>' + $("#positionName").val() + '</td>'
                     + '<td>' + $("#rateNo").val() + '</td>'
-                    + '<td>' + $("#salary").val() + '</td>'
+                    + '<td class="number">' + $("#salary").val() + '</td>'
                     + '<td>' + $("#occupy").val() + '</td>'
                     + '<td>' + $("#vacancy").val() + '</td>'
-                    + '<td>' + $("#salaryTotal").val() + '</td>'
-                    + '<td>' + $("#remark").val() + '</td>'
+                    + '<td class="number">' + $("#salaryTotal").val() + '</td>'
+                    + '<td>' + $(".noteRemark").code() + '</td>'
                     + '<td>'
                     + '<div class="btn-group">'
                     + '<button class="btn btn-sm btn-warning editList" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
@@ -537,18 +545,20 @@ function bg141Edit(id, parentId, param, dataJSONEN, objAttment) {
                 //var node = $("#table140").treetable("node", parentId);
                 //$("#table140 ").treetable("loadBranch", node, input);
                 $('tr[data-tt-id="list' + id + '"]').html(input);
-
+                $('.number').number(true, 2);
                 $("#form input, #form textarea").each(function () {
                     list141Arr[id][$(this).attr("name")] = $(this).val();
                 });
+
+                list141Arr[id]["remark"] = $(".noteRemark").code();
+
                 if (!isEmptyObject(objAttment)) {
                     // if have attachemnt
                     list141Arr[id]["attachmentId"] = objAttment.id;
                     list141Arr[id]["desc"] = objAttment.desc;
                     list141Arr[id]["path"] = objAttment.path;
-                } else {
-                    list141Arr[id]["desc"] = "";
                 }
+
                 $("#panelForm").modal("hide");
 
                 bg141Action(param);
