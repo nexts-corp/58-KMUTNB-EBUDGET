@@ -48,5 +48,16 @@ interface IBudgetTrackingService {
      */
     public function updateBudgetExpense($expenseId, $expenseUsed);
 
+    /**
+     * @name updateStatus
+     * @uri /updateStatus
+     * @param int formId
+     * @param int id
+     * @param int status
+     * @param string comment
+     * @return boolean result
+     * @description อัพเดตสถานะของข้อมูล
+     */
+    public function updateStatus($formId, $id, $status, $comment);
  
 }

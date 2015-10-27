@@ -10,6 +10,7 @@ use apps\budget\interfaces\budgetType;
 //use apps\budget\interfaces\quater;
 //use apps\budget\interfaces\year;
 use apps\common\entity\BudgetExpense;
+use apps\common\entity;
 
 class BudgetTrackingService extends CServiceBase implements IBudgetTrackingService {
 
@@ -171,6 +172,58 @@ class BudgetTrackingService extends CServiceBase implements IBudgetTrackingServi
         $obj = new entity\BudgetExpensePlan();
         $obj->setId($expenseId);
         $obj->setExpenseUsed($expenseUsed);
+
+        if (!$this->datacontext->updateObject($obj)) {
+            $return = $this->datacontext->getLastMessage();
+        }
+
+        return $return;
+    }
+
+    public function updateStatus($formId, $id, $status, $comment) {
+        $return = true;
+
+        if ($formId == 140) {
+            $obj = new entity\Budget140();
+            $obj->setId($id);
+            $obj->setStatusId($status);
+            $obj->setComment($comment);
+        } else if ($formId == 141) {
+            $obj = new entity\Budget141();
+            $obj->setId($id);
+            $obj->setStatusId($status);
+            $obj->setComment($comment);
+        } else if ($formId == 142) {
+            $obj = new entity\Budget142();
+            $obj->setId($id);
+            $obj->setStatusId($status);
+            $obj->setComment($comment);
+        } else if ($formId == 143) {
+            $obj = new entity\Budget143();
+            $obj->setId($id);
+            $obj->setStatusId($status);
+            $obj->setComment($comment);
+        } else if ($formId == 144) {
+            $obj = new entity\Budget144();
+            $obj->setId($id);
+            $obj->setStatusId($status);
+            $obj->setComment($comment);
+        } else if ($formId == 145) {
+            $obj = new entity\Budget145();
+            $obj->setId($id);
+            $obj->setStatusId($status);
+            $obj->setComment($comment);
+        } else if ($formId == 146) {
+            $obj = new entity\Budget146();
+            $obj->setId($id);
+            $obj->setStatusId($status);
+            $obj->setComment($comment);
+        } else if ($formId == 999) {
+            $obj = new entity\BudgetExpense();
+            $obj->setId($id);
+            $obj->setStatusId($status);
+            $obj->setComment($comment);
+        }
 
         if (!$this->datacontext->updateObject($obj)) {
             $return = $this->datacontext->getLastMessage();

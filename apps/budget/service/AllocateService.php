@@ -95,7 +95,7 @@ class AllocateService extends CServiceBase implements IAllocateService {
         //$view->name = "testByNamkhaeng";
         return $this->getRoute();
     }
-    
+
     public function fetchExpenseProject($budgetPeriodId) {
 
         $bg = new entity\BudgetRevenuePlan();
@@ -117,7 +117,6 @@ class AllocateService extends CServiceBase implements IAllocateService {
 
         return $dataList;
     }
-    
 
     public function addExpenseProject($projectName, $budgetPeriodId, $budgetTotal, $deptId) {
         $return = true;
@@ -133,14 +132,8 @@ class AllocateService extends CServiceBase implements IAllocateService {
             $bgHead->setIsCoBudget(true);
         }
 
-        $dataHead = $this->datacontext->getObject($bgHead);
-
-        if ($dataHead) {
-            $headId = $dataHead[0]->id;
-        } else {
-            $dataHead = $this->datacontext->saveObject($bgHead);
-            $headId = $bgHead->id;
-        }
+        $dataHead = $this->datacontext->saveObject($bgHead);
+        $headId = $bgHead->id;
 
         foreach ($deptId as $key => $value) {
             $obj = new entity\BudgetExpense();
@@ -173,7 +166,7 @@ class AllocateService extends CServiceBase implements IAllocateService {
         }
 
         foreach ($deptId as $key => $value) {
-            
+
             $obj = new entity\BudgetExpense();
             $obj->budgetHeadId = $bgHeadId;
             $obj->name = $projectName;
@@ -193,23 +186,23 @@ class AllocateService extends CServiceBase implements IAllocateService {
 
     public function deleteExpenseProject($bgHeadId) {
         $return = true;
-        
+
         $obj = new entity\BudgetExpense();
         $obj->setId($bgHeadId);
-        $data = $this->datacontext->getObject($obj);        
+        $data = $this->datacontext->getObject($obj);
         if (!$this->datacontext->removeObject($data)) {
             $return = false;
             return $this->datacontext->getLastMessage();
         }
-        
+
         $bgHead = new entity\BudgetHead();
         $bgHead->setId($bgHeadId);
-        $dataHead = $this->datacontext->getObject($bgHead);        
+        $dataHead = $this->datacontext->getObject($bgHead);
         if (!$this->datacontext->removeObject($dataHead)) {
             $return = false;
             return $this->datacontext->getLastMessage();
         }
-        
+
         return $return;
     }
 
@@ -240,13 +233,13 @@ class AllocateService extends CServiceBase implements IAllocateService {
         $bg = new entity\BudgetRevenuePlan();
         $bg->setBudgetPeriodId($budgetPeriodId);
         $bg->setDeptId($deptId);
-        
+
         $data = $this->datacontext->getObject($bg);
-        
-        if($data) {
+
+        if ($data) {
             return "duplicate department, pls use update function!";
         }
-        
+
         $bg->setBudgetTypeCode("K");
         $bg->setBudgetEducation($bgEducation);
         $bg->setBudgetService($bgService);
