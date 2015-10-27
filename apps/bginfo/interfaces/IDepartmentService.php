@@ -60,7 +60,7 @@ interface IDepartmentService
      * @uri /saveDept
      * @param apps\common\entity\L3D\Department dataDept Description
      * @param apps\common\entity\MappingDepartmentType dataMaping Description
-     * @return String mapid
+     * @return boolean result
      * @description บันทึกหน่วยงาน
      */
     public function saveDepartment($dataDept, $dataMaping);
@@ -70,7 +70,7 @@ interface IDepartmentService
      * @uri /editDept
      * @param apps\common\entity\L3D\Department dataDept Description
      * @param apps\common\entity\MappingDepartmentType dataMaping Description
-     * @return boolean status
+     * @return boolean result
      * @description แก้ไขหน่วยงาน
      */
     public function editDepartment($dataDept, $dataMaping);
@@ -80,10 +80,19 @@ interface IDepartmentService
      * @name removeDept
      * @uri /removeDept
      * @param string idDept Description
-     * @param string mapid Description
-     * @return boolean status
+     * @param string mapId Description
+     * @return boolean result
      * @description ลบหน่วยงาน
      */
-    public function removeDepartment($idDept, $mapid);
+    public function removeDepartment($idDept, $mapId);
+
+    /**
+     * @name saveCam
+     * @uri /saveCam
+     * @param apps\common\entity\L3D\Campus dataCampus Description
+     * @return boolean result
+     * @description บันทึกวิทยาเขต
+     */
+    public function saveCampus($dataCampus);
 
 }

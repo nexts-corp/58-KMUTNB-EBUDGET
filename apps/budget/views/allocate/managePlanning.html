@@ -36,7 +36,7 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="selectYear">ปีงบประมาณ</label>
                     <div class="col-md-8">
-                        <select ng-model="selectYear" ng-change="fetchItem()" class="form-control input-sm" ng-options="year.year as year.year for year in cmDataListYear">
+                        <select ng-model="selectYear" ng-change="fetchItemAPP()" class="form-control input-sm" ng-options="year.year as year.year for year in cmDataListYear">
                             <option value="">- เลือกปีงบประมาณ -</option>
                         </select>
                     </div>
@@ -132,7 +132,7 @@
                                                 </td>
                                                 <td style="vertical-align: middle;"><input ng-model="list.pName" placeholder="( โครงการ )" type="text" class="form-control input-sm"></td>
                                                 <td class="text-right" style="vertical-align: middle; padding-right: 17px; padding-top: 10px;">
-                                                    <label ng-bind="sumItemAPPSub($index) | currency:'':2"></label>
+                                                    <label style="font-size: 12px;" ng-bind="sumItemAPPSub($index) | currency:'':2"></label>
                                                 </td>
                                                 <td class="text-center">
                                                     <button ng-show="checkEditItemAPP($index)" ng-click="editItemApp($index)" ng-disabled="checkDisableEditItemApp($index)" class="btn btn-primary"><i class="fa fa-save"></i> บันทึก</button>
@@ -154,7 +154,7 @@
                                                 </td>
                                             </tr>
                                             <tr ng-repeat-end class="nk-cloak"><td colspan="4">Repeat End</td></tr>
-                                            <tr ng-show="selectYear" style="background-color: #F1F1F1;">
+                                            <tr ng-show="selectYear && !loadManageAPP" style="background-color: #F1F1F1;">
                                                 <td></td>
                                                 <td><input ng-model="manageAPP.projectTxt" placeholder="( โครงการ )" type="text" class="form-control input-sm"></td>
                                                 <td></td>
@@ -162,7 +162,7 @@
                                                     <button ng-show="manageAPP.projectTxt && manageAPP.depTxt.length>=2" ng-click="addItemAPP()" class="btn btn-success"><i class="fa fa-plus"></i> เพิ่ม</button>
                                                 </td>
                                             </tr>
-                                            <tr ng-show="selectYear" ng-repeat="listTxt in manageAPP.depTxt" style="background-color: #F1F1F1;">
+                                            <tr ng-show="selectYear && !loadManageAPP" ng-repeat="listTxt in manageAPP.depTxt" style="background-color: #F1F1F1;">
                                                 <td></td>
                                                 <td style="padding-left: 25px;">
                                                     <select ng-model="listTxt.depId" ng-change="pushDepTxt($last)" class="form-control input-sm" ng-options="dep.id as dep.name for dep in cmDataListDepartment | filter:setMaster">
@@ -176,7 +176,7 @@
                                                     <button ng-show="!$last" ng-click="delDepTxt($index)" class="btn btn-default" ><i class="fa fa-trash-o "></i> ลบ</button>
                                                 </td>
                                             </tr>
-                                            <tr ng-show="0"><td colspan="4" style="background-color: #F1F1F1;text-align: center;"><i class="fa fa-cog fa-spin"></i> กำลังโหลด</td></tr>
+                                            <tr ng-show="loadManageAPP"><td colspan="4" style="background-color: #F1F1F1;text-align: center;"><i class="fa fa-cog fa-spin"></i> กำลังโหลด</td></tr>
                                             <tr ng-hide="selectYear"><td colspan="4" style="background-color: #F1F1F1;text-align: center;">กรุณาเลือกปีงบประมาณ</td></tr>
                                         </tbody>
                                     </table>

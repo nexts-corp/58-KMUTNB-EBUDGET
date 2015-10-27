@@ -188,6 +188,27 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
         }
     };
     
+    
+    
+    $scope.fetchItemAPP = function(){
+        $scope.manageAPP.data=[];
+        if($scope.selectYear){
+            $scope.loadManageAPP = 1;
+
+
+            $http.post(cde.getPath("fetchExpenseProject"),{
+                budgetPeriodId : $scope.selectYear
+            }).then(function(response) {
+                if(response.data.dataList!==null){
+                    $scope.manageAPP.data = response.data.dataList;
+                }
+
+                $scope.loadManageAPP = 0;
+            });
+        }
+    };
+    
+    
     $scope.pushDepTxt = function(last){
 
         if(last){
@@ -233,9 +254,12 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
             budgetTotal:budgetTotal,
             deptId:deptId
         }).then(function(response) {
-            $scope.manageAPP.data.push(preData);
-            $scope.manageAPP.projectTxt = '';
-            $scope.manageAPP.depTxt=[{depId:'',depValue:0}];
+            if(response.data.result){
+                preData.id = response.data.result;
+                $scope.manageAPP.data.push(preData);
+                $scope.manageAPP.projectTxt = '';
+                $scope.manageAPP.depTxt=[{depId:'',depValue:0}];
+            }
         });
         
         
@@ -254,7 +278,6 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
     $scope.delItemAPPSub = function(index){
         var indexSplit = index.split('.');
         $scope.manageAPP.data[indexSplit[0]].sub.splice(index,1);
-        
     };
     
     
@@ -285,13 +308,35 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
     
     $scope.editItemApp = function(index){
         var arrUse = $scope.manageAPP.data[index];
-        //arrUse.pNameC = arrUse.pName;
-
         var lengthOfDepTxt = arrUse.sub.length;
-        arrUse.sub[lengthOfDepTxt-1].depValue = 0;
         
-        angular.copy(arrUse.sub,arrUse.subC);
-        arrUse.pNameC = arrUse.pName;
+        var deptId = [];
+        var budgetTotal = [];
+        
+        for(var i=0;i<(arrUse.sub.length-1);i++){
+            deptId.push(arrUse.sub[i].depId);
+            budgetTotal.push(parseFloat(arrUse.sub[i].depValue));
+        }
+        
+        
+        $http.post(cde.getPath("updateExpenseProject"),{
+            
+            bgHeadId:arrUse.id,
+            projectName:arrUse.pName,
+            budgetPeriodId:$scope.selectYear,
+            budgetTotal:budgetTotal,
+            deptId:deptId
+            
+        }).then(function(response) {
+            
+            if(response.data.result){
+                arrUse.sub[lengthOfDepTxt-1].depValue = 0;
+                angular.copy(arrUse.sub,arrUse.subC);
+                arrUse.pNameC = arrUse.pName;
+            }
+            
+        });
+        
         
         
     };
@@ -299,7 +344,14 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
     
     $scope.delItemAPP = function(index){
         if(confirm("ยืนยันการลบ")){
-            $scope.manageAPP.data.splice(index,1);
+            $http.post(cde.getPath("deleteExpenseProject"),{
+                bgHeadId:$scope.manageAPP.data[index].id
+            }).then(function(response) {
+                if(response.data.result){
+                    $scope.manageAPP.data.splice(index,1);
+                }
+            });
+            
         }
     }; 
     
