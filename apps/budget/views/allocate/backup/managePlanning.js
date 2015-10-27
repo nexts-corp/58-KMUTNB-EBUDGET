@@ -22,7 +22,6 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
         //manage allocate project for Planning
         $scope.manageAPP = {
                 projectTxt:'',
-                depTxt:[{depId:'',depValue:0}],
                 data:[]
         };
     };
@@ -176,9 +175,6 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
     
     
     
-    
-    
-    
     $scope.toggleShow = function(index){
         var arrUse = $scope.manageAPP.data[index];
         if(arrUse.show){
@@ -188,112 +184,49 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
         }
     };
     
-    $scope.pushDepTxt = function(last){
-
-        if(last){
-            $scope.manageAPP.depTxt.push({
-                depId:'',
-                depValue:0
-            });
-        }
-    };
-    
-    
-    
-    $scope.delDepTxt = function(index){
-        $scope.manageAPP.depTxt.splice(index,1);
-    };
     
     $scope.addItemAPP = function(){
-        var lengthOfDepTxt = $scope.manageAPP.depTxt.length;
-        $scope.manageAPP.depTxt[lengthOfDepTxt-1].depValue = 0;
-        
-        var preData = {
+        $scope.manageAPP.data.push({
             pName:$scope.manageAPP.projectTxt,
             pNameC:$scope.manageAPP.projectTxt,
-            sub:$scope.manageAPP.depTxt,
-            subC:[],
+            sub:[],
             show:1
-        };
-        
-        angular.copy(preData.sub,preData.subC);
-        
-        var deptId = [];
-        var budgetTotal = [];
-        
-        for(var i=0;i<(preData.sub.length-1);i++){
-            deptId.push(preData.sub[i].depId);
-            budgetTotal.push(parseFloat(preData.sub[i].depValue));
-        }
-        //console.log(budgetTotal);
-        //console.log(preData.sub[0].depValue);
-        $http.post(cde.getPath("addExpenseProject"),{
-            projectName:preData.pName,
-            budgetPeriodId:$scope.selectYear,
-            budgetTotal:budgetTotal,
-            deptId:deptId
-        }).then(function(response) {
-            $scope.manageAPP.data.push(preData);
-            $scope.manageAPP.projectTxt = '';
-            $scope.manageAPP.depTxt=[{depId:'',depValue:0}];
         });
         
-        
+        $scope.manageAPP.projectTxt = '';
     };
-    
-    
-    $scope.pushDepAPPSub = function(index,last){
-        if(last){
-            $scope.manageAPP.data[index].sub.push({
-                depId:'',
-                depValue:0
-            });
-        }
-    };
-    
-    $scope.delItemAPPSub = function(index){
-        var indexSplit = index.split('.');
-        $scope.manageAPP.data[indexSplit[0]].sub.splice(index,1);
-        
-    };
-    
-    
-    
-    $scope.checkEditItemAPP = function(index){
-        var arrUse = $scope.manageAPP.data[index].sub;
-        var arrUseC = $scope.manageAPP.data[index].subC;
-        
-        if((arrUse.length === arrUseC.length) && ($scope.manageAPP.data[index].pName === $scope.manageAPP.data[index].pNameC)){
-            for(var i=0;i<arrUse.length;i++){
-                if((arrUse[i].depId !== arrUseC[i].depId) || (arrUse[i].depValue !== arrUseC[i].depValue)){
-                    return true;
-                }
-            }
-        }else{
-            return true;
-        }
-        
-    };
-    
-    $scope.checkDisableEditItemApp = function(index){
-        var arrUse = $scope.manageAPP.data[index];
-        if(arrUse.pName===""){
-            return true;
-        }
-    };
-    
     
     $scope.editItemApp = function(index){
         var arrUse = $scope.manageAPP.data[index];
-        //arrUse.pNameC = arrUse.pName;
-
-        var lengthOfDepTxt = arrUse.sub.length;
-        arrUse.sub[lengthOfDepTxt-1].depValue = 0;
-        
-        angular.copy(arrUse.sub,arrUse.subC);
         arrUse.pNameC = arrUse.pName;
-        
-        
+    };
+    
+    
+    
+    $scope.addItemAPPSub = function(index){
+        var arrUse = $scope.manageAPP.data[index];
+        //console.log(arrUse.depId);
+        arrUse.sub.push({
+            depId:arrUse.depOpt,
+            depIdC:arrUse.depOpt,
+            depValue:arrUse.valueTxt,
+            depValueC:arrUse.valueTxt
+        });
+        arrUse.valueTxt = "";
+        arrUse.depOpt = "";
+    };
+    
+    $scope.checkEditItemAppSub = function(index){
+        var indexSplit = index.split('.');
+        var arrUse = $scope.manageAPP.data[indexSplit[0]].sub[indexSplit[1]];
+        return (arrUse.depId!==arrUse.depIdC) || (arrUse.depValue!==arrUse.depValueC);
+    };
+    
+    $scope.editItemAppSub = function(index){
+        var indexSplit = index.split('.');
+        var arrUse = $scope.manageAPP.data[indexSplit[0]].sub[indexSplit[1]];
+        arrUse.depIdC = arrUse.depId;
+        arrUse.depValueC = arrUse.depValue;
     };
     
     
@@ -304,21 +237,12 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
     }; 
     
     
-    $scope.test = function(name,event){
-        if(!$scope[name]){
-            $(event.target).select();
-            $scope[name]=1;
+    $scope.delItemAPPSub = function(index){
+        if(confirm("ยืนยันการลบ")){
+            var indexSplit = index.split('.');
+            $scope.manageAPP.data[indexSplit[0]].sub.splice(indexSplit[1],1);
         }
-    };
-    
-    $scope.test2 = function(name){
-        $scope[name] = 0;
-    };
-    
-    
-    
-    
-    
+    }; 
     
     $scope.sumItemAPPSub= function(index){
         
