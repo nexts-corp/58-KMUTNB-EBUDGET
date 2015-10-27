@@ -9,6 +9,8 @@ namespace apps\budget\interfaces;
  */
 interface IBudgetTrackingService {
 
+    
+    
     /**
      * @name getInfoTracking
      * @uri /getInfoTracking
@@ -60,4 +62,13 @@ interface IBudgetTrackingService {
      */
     public function updateStatus($formId, $id, $status, $comment);
  
+    
+    
+    
+    
+    
+    
+    
+    
+  
 }

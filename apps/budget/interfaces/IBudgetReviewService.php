@@ -47,4 +47,21 @@ interface IBudgetReviewService {
      * @description แบบเสนอโครงการที่ตอบสนองต่อยุทธศาสตร์
      */
     public function listBudgetExpenseInfo($budgetPeriodId, $fundgroupId, $planId, $deptId);
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /**
+     * @name getAllBudgetRequest
+     * @uri /getAllBudgetRequest
+     * @param int budgetPeriodId ปีงบประมาณ
+     * @description แสดงข้อมูลประเภทตามแหล่งเงิน
+     */
+    public function getAllBudgetRequest($budgetPeriodId);
 }

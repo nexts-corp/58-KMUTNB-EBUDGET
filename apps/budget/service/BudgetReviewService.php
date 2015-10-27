@@ -226,6 +226,24 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
         return $result;
     }
 
+    public function getAllBudgetRequest($budgetPeriodId) {
+
+        $bgHead = new entity\BudgetHead();
+        $bgHead->setBudgetPeriodId($budgetPeriodId);
+        $bgHead->setBudgetTypeCode("G");
+        $bgHead->setStatusId(2);  //2=waiting
+
+        $dataHead = $this->datacontext->getObject($bgHead);
+
+        foreach ($dataHead as $key => $value) {
+            $sql = "select . from ".$this->ent."\\Budget140 bg140 "
+                    . "join ";
+            
+        }
+        
+        return true;
+    }
+
     /*
       public function getBudgetExpense($budgetPeriodId, $deptId, $issueId, $targetId, $strategyId) {
       $bgMaster = new entity\BudgetType();

@@ -1,0 +1,754 @@
+{{> header}}
+<!-- insert and initial for AngularJS into divMain -->
+<div ng-app="formBudgetReview" ng-controller="mainController" role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">คำของบประมาณ</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">ตรวจสอบคำของบประมาณ</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="tall dashboard">
+
+    <!-- button action on header -->
+    <!--
+    <div class="sort-source-wrapper">
+        <div class="container">
+            <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+                <li class="active">
+                    <button class="btn btn-success goChoice"><i class="fa fa-plus-circle"> เพิ่มคำขอ</i></button>
+                    <button class="btn btn-default backHome" style="display: none;"><i class="fa fa-angle-double-left">
+                        ย้อนกลับ</i></button>
+                    <button class="btn btn-default backChoice" style="display: none;"><i
+                            class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
+                    <button class="btn btn-default backAttachment" style="display: none;"><i
+                            class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    -->
+    <!-- end button action on header -->
+
+    <div class="container">
+        <div class="row">
+
+            <div id="divChoice" class="col-md-12">
+                <section class="panel panel-featured panel-featured-success">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">รายละเอียดคำของบประมาณ</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div id="panel1">
+                            <form id="formChoice" onsubmit="return false;">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label text-right req" for="budgetPeriodId">ปีงบประมาณ
+                                        : </label>
+
+                                    <div class="col-md-6">
+                                        <select id="budgetPeriodId" name="budgetPeriodId" class="form-control input-sm"
+                                                required>
+                                            <option value="">เลือก</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="col-md-3">
+                                        <button class="btn btn-success viewBudget"><i
+                            class="fa fa-search"> เรียกดูข้อมูล</i></button>
+                                    </div>
+                                </div>
+
+                                <!--
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label text-right req" for="budgetTypeCode">แหล่งเงิน
+                                        : </label>
+
+                                    <div class="col-md-6">
+                                        <select id="budgetTypeCode" name="budgetTypeCode" class="form-control input-sm"
+                                                required>
+                                            <option value="">เลือก</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label text-right req" for="planId">แผนงาน : </label>
+
+                                    <div class="col-md-6">
+                                        <select id="planId" name="planId" class="form-control input-sm" required>
+                                            <option value="">เลือก</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label text-right req" for="projectId">ผลผลิต/โครงการ
+                                        : </label>
+
+                                    <div class="col-md-6">
+                                        <select id="projectId" name="projectId" class="form-control input-sm" required>
+                                            <option value="">เลือก</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label text-right" for="budgetPlanId">แผนงาน 3 มิติ : </label>
+                                    <div class="col-md-6">
+                                        <select id="budgetPlanId" name="budgetPlanId" class="form-control input-sm" required>
+                                            <option value="">เลือก</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label text-right req" for="fundgroupId">กองทุน
+                                        : </label>
+
+                                    <div class="col-md-6">
+                                        <select id="fundgroupId" name="fundgroupId" class="form-control input-sm"
+                                                required>
+                                            <option value="">เลือก</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label text-right req" for="facultyId">คณะ : </label>
+
+                                    <div class="col-md-6">
+                                        <select id="facultyId" name="facultyId" class="form-control input-sm" required>
+                                            <option value="">เลือก</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label text-right req" for="deptId">สาขา : </label>
+
+                                    <div class="col-md-6">
+                                        <select id="deptId" name="deptId" class="form-control input-sm" required>
+                                            <option value="">เลือก</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                -->
+                            </form>
+
+                            <div id="panel2" style="margin-top: 20px;">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2" class="text-center">แบบฟอร์มคำของบประมาณ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="divHome" class="col-md-12">
+                <table id="table" class="table table-bordered table-striped table-condensed mb-none">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-lg-6">รายละเอียดคำของบประมาณ</th>
+                            <th class="text-center col-lg-3">สถานะ</th>
+                            <th class="text-center col-lg-3">เครื่องมือ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="3" class="text-center">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- divForm Jquery -->
+            <div ng-show="!activeNg" id="divForm" class="col-md-12" style="display: none;"></div>
+            <div id="divAttachment" class="col-md-12" style="display: none;"></div>
+            <!-- divForm AngularJs -->
+            <div ng-show="activeNg">
+                <div ng-if="activeTemplate === 'project'" ng-controller="projectForm" data-ng-init="init()">
+                    <project-template></project-template>
+                </div>
+                <div ng-if="activeTemplate === 'manageDepartment'" ng-controller="manageDepartment" data-ng-init="init()">
+                    <managedepartment-template></managedepartment-template>
+                </div>
+            </div>
+
+        </div>
+        <!--  row  -->
+    </div>
+    <!--  container  -->
+</div><!-- main -->
+
+{{> footer}}
+<style type="text/css">
+    .modal-dialog {
+        width: 820px;
+    }
+
+</style>
+
+<script type="text/javascript">
+            var js_context_path = "{{_context_path}}";
+</script>
+
+<!--
+<script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg140.js"></script>
+<script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg141.js"></script>
+<script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg142.js"></script>
+<script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg143.js"></script>
+<script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg144.js"></script>
+<script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg145.js"></script>
+<script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg146.js"></script>
+<script type="text/javascript" src="{{_context_path}}/apps/budget/views/buildingOne.js"></script>
+<script type="text/javascript" src="{{_context_path}}/apps/budget/views/buildingMore.js"></script>
+-->
+
+<!-- initial AngularJS file -->
+<!--
+<script type="text/javascript" src="{{_context_path}}/apps/budget/views/initNg.js"></script>
+<script type="text/javascript" src="{{_context_path}}/apps/budget/views/project/project.js"></script>
+<script type="text/javascript" src="{{_context_path}}/apps/budget/views/allocate/manageDepartment.js"></script>
+-->
+
+<script type="text/javascript">
+
+    var isForm = 0;
+
+    var budgetPeriodArr = {};
+    var budgetTypeArr = {};
+    var planArr = {};
+    var projectArr = {};
+    var fundgroupArr = {};
+    var facultyArr = {};
+    var departmentArr = {};
+
+    //        var budgetPeriodArr = {2557: 2557, 2558: 2558, 2559: 2559};
+    //        var budgetTypeArr = {G: "เงินงบประมาณแผ่นดิน", K: "เงินรายได้", U: "เงินงบประมาณแผ่นดินและเงินรายได้"};
+    //        var planArr = {1: "ดำเนินการตามกรอบข้อตกลงของประชาคมอาเซียน", 2: "ขยายโอกาสและพัฒนาคุณภาพการศึกษา", 3: "ส่งเสริมการวิจัยและพัฒนา"};
+    //        var projectArr = {1: "โครงการเตรียมความพร้อมสู่ประชาคมอาเซียน"};
+    //        var fundgroupArr = {100: "กองทุนทั่วไป", 200: "กองทุนเพื่อการศึกษา", 300: "กองทุนวิจัย", 400: "กองทุนบริการวิชาการ", 500: "กองทุนกิจการนักศึกษา", 600: "กองทุนสินทรัพย์ถาวร", 700: "กองทุนอื่น ๆ", 701: "กองทุนทำนุบำรุงศิลปวัฒนธรรม ", 702: "กองทุนสำรอง", 703: "กองทุนสวัสดิการ", 704: "กองทุนพัฒนาบุคลากร", 705: "กองทุนคณะ", 706: "กองทุนพัฒนาสถาบัน", 707: "กองทุนเพื่อวัตถุประสงค์เฉพาะ", 708: "กองทุนคงคลังสถาบัน", 709: "กองทุนส่งเสริมการศึกษาและพัฒนาเทคโนโลยี มจพ."};
+    //        var facultyArr = {10100: "สำนักงานอธิการบดี", 20100: "สำนักคอมพิวเตอร์และเทคโนโลยีสารสนเทศ", 20200: "สถาบันนวัตกรรมเทคโนโลยีไทย-ฝรั่งเศส", 20300: "สำนักพัฒนาเทคโนโลยีเพื่ออุตสาหกรรม", 20400: "สำนักหอสมุดกลาง", 20500: "สำนักพัฒนาเทคนิคศึกษา", 20600: "สำนักวิจัยวิทยาศาสตร์และเทคโนโลยี", 20700: "โครงการที่พักอาศัยเพื่อการเรียนรู้และสันทนาการ", 20800: "สถาบันสหกิจศึกษาและพัฒนาสื่ออิเล็กทรอนิกส์ ไทย-เยอรมัน", 30100: "คณะวิศวกรรมศาสตร์", 30200: "คณะครุศาสตร์อุตสาหกรรม", 30300: "วิทยาลัยเทคโนโลยีอุตสาหกรรม", 30400: "คณะวิทยาศาสตร์ประยุกต์", 30500: "คณะเทคโนโลยีและการจัดการอุตสาหกรรม", 30600: "คณะเทคโนโลยีสารสนเทศ", 30700: "คณะศิลปศาสตร์ประยุกต์", 30800: "คณะอุตสาหกรรมเกษตร", 30900: "บัณฑิตวิทยาลัย", 31000: "บัณฑิตวิทยาลัยวิศวกรรมศาสตร์นานาชาติสิรินธรไทย-เยอรมัน", 31100: "คณะสถาปัตยกรรมและการออกแบบ", 31200: "คณะบริหารธุรกิจ", 31300: "คณะวิศวกรรมศาสตร์และเทคโนโลยี", 31400: "คณะวิทยาศาสตร์ พลังงาน และสิ่งแวดล้อม", 31500: "วิทยาลัยนานาชาติ", 31600: "คณะพัฒนาธุรกิจและอุตสาหกรรม", 31700: "คณะบริหารธุรกิจและอุตสาหกรรมบริการ", 90000: "หน่วยบริหารส่วนกลาง", 91000: "หน่วยกลาง มจพ."};
+    //        var departmentArr = {10100: "สำนักงานอธิการบดี", 10101: "กองกลาง", 10102: "กองบริการการศึกษา", 10103: "กองแผนงาน", 10104: "กองกิจการนักศึกษา", 10105: "กองบริหารและการจัดการทรัพยากรมนุษย์", 10106: "กองคลัง", 10107: "กองอาคารสถานที่และยานพาหนะ", 10108: "กองงานพัสดุ", 10109: "ศูนย์ผลิตตำราเรียน", 10110: "ศูนย์ความร่วมมือนานาชาติ", 10111: "หน่วยตรวจสอบภายใน", 10112: "ศูนย์ประกันคุณภาพการศึกษา", 10113: "ศูนย์ส่งเสริมสวัสดิการและสิ่งจูงใจ", 10114: "สภาคณาจารย์และพนักงาน", 10116: "กองงาน วิทยาเขตปราจีนบุรี", 10117: "ศูนย์บริการเทคโนโลยี", 10118: "IAESTE Thailand", 10120: "หน่วยงานบริหารสำนักงานอธิการบดี", 10122: "โครงการจัดตั้ง มจพ.ระยอง", 10123: "กองกฏหมาย", 10124: "กองส่งเสริมวิชาการ", 10125: "กองงานสำนักงานสภามหาวิทยาลัย", 20100: "สำนักคอมพิวเตอร์และเทคโนโลยีสารสนเทศ", 20200: "สถาบันนวัตกรรมเทคโนโลยีไทย-ฝรั่งเศส", 20300: "สำนักพัฒนาเทคโนโลยีเพื่ออุตสาหกรรม", 20400: "สำนักหอสมุดกลาง", 20500: "สำนักพัฒนาเทคนิคศึกษา", 20600: "สำนักวิจัยวิทยาศาสตร์และเทคโนโลยี", 20700: "โครงการที่พักอาศัยเพื่อการเรียนรู้และสันทนาการ", 20800: "สถาบันสหกิจศึกษาและพัฒนาสื่ออิเล็กทรอนิกส์ ไทย-เยอรมัน", 30100: "คณะวิศวกรรมศาสตร์", 30200: "คณะครุศาสตร์อุตสาหกรรม", 30300: "วิทยาลัยเทคโนโลยีอุตสาหกรรม", 30400: "คณะวิทยาศาสตร์ประยุกต์", 30500: "คณะเทคโนโลยีและการจัดการอุตสาหกรรม", 30600: "คณะเทคโนโลยีสารสนเทศ", 30700: "คณะศิลปศาสตร์ประยุกต์", 30800: "คณะอุตสาหกรรมเกษตร", 30900: "บัณฑิตวิทยาลัย", 31000: "บัณฑิตวิทยาลัยวิศวกรรมศาสตร์นานาชาติสิรินธรไทย-เยอรมัน", 31100: "คณะสถาปัตยกรรมและการออกแบบ", 31200: "คณะบริหารธุรกิจ", 31300: "คณะวิศวกรรมศาสตร์และเทคโนโลยี", 31400: "คณะวิทยาศาสตร์ พลังงาน และสิ่งแวดล้อม", 31500: "วิทยาลัยนานาชาติ", 31600: "คณะพัฒนาธุรกิจและอุตสาหกรรม", 31700: "คณะบริหารธุรกิจและอุตสาหกรรมบริการ", 90000: "หน่วยบริหารส่วนกลาง", 91000: "หน่วยกลาง มจพ."};
+
+    $(function () {
+
+        listsFormSaved();
+        //toggleShow("home");
+        listsBudgetPeriod();
+
+        //$("#budgetPeriodId, #budgetTypeCode, #planId, #projectId, #fundgroupId, #facultyId, #deptId").select2().trigger("change");
+
+        // choice changed
+        /*
+        $("#budgetPeriodId").change(function () {
+            listsPlan($(this).val());
+            listsProject("");
+        });
+        */
+
+        $("#budgetTypeCode").change(function () {
+            isForm = 0;
+            listsForm($(this).val());
+        });
+
+        $("#planId").change(function () {
+            listsProject($(this).val());
+        });
+
+        $("#facultyId").change(function () {
+            listsDepartment($(this).val());
+        });
+
+        // button action
+        /*
+         $("button.goChoice").unbind("click").click(function () {
+         toggleShow("choice");
+         });
+         */
+
+        $("button.backHome").unbind("click").click(function () {
+            toggleShow("home");
+        });
+
+        $("button.backChoice").unbind("click").click(function () {
+            toggleShow("choice");
+        });
+        $("button.backAttachment").unbind("click").click(function () {
+            toggleShow("form");
+        });
+    });
+
+    function listsFormSaved() {
+        var html = '<tr>'
+                + '<td>1. แบบรายละเอียดคำของบประมาณเงินเดือน (ง.140)</td>'
+                + '<td class="text-center">-</td>'
+                + '<td class="text-center">'
+                + '<button data-form="bg140" class="btn btn-warning edit" title="แก้ไข"><i class="fa fa-pencil"></i> แก้ไข</button>&nbsp;'
+                + '<button data-form="bg140" class="btn btn-default delete" title="ลบ"><i class="fa fa-trash"></i> ลบ</button>'
+                + '</td>'
+                + '</tr>';
+
+        $("#table tbody").html(html);
+    }
+
+    function listsForm(type) {
+        if (isForm == 0) {
+            var formArr;
+            if (type == "G") {
+                formArr = [
+                    {
+                        form: "bg140",
+                        name: "แบบรายละเอียดคำของบประมาณเงินเดือน (ง.140)"
+                    },
+                    {
+                        form: "bg141",
+                        name: "แบบรายละเอียดคำของบประมาณค่าจ้างประจำ (ง.141)"
+                    },
+                    {
+                        form: "bg142",
+                        name: "แบบรายละเอียดคำของบประมาณค่าจ้างชั่วคราว (ง.142)"
+                    },
+                    {
+                        form: "bg143",
+                        name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน (ค่าตอบแทน ใช้สอย และวัสดุ) (ง.143)"
+                    },
+                    {
+                        form: "bg144",
+                        name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าสาธารณูปโภค (ง.144)"
+                    },
+                    {
+                        form: "bg145",
+                        name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าครุภัณฑ์ ค่าที่ดิน/สิ่งก่อสร้าง (ง.145)"
+                    },
+                    {
+                        form: "bg146",
+                        name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุน (ง.146)"
+                    },
+                    {
+                        form: "buildingOne",
+                        name: "คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง 1 ปี"
+                    },
+                    {
+                        form: "buildingMore",
+                        name: "คำชี้แจงรายละเอียดรายการที่ดินและสิ่งก่อสร้าง"
+                    }
+                ];
+            } else if (type == "K") {
+                formArr = [
+                    {
+                        ng: "true",
+                        form: "project",
+                        name: "โครงการที่ตอบสนองยุทธศาสตร์"
+                    },
+                    {
+                        ng: "true",
+                        form: "manageDepartment",
+                        name: "จัดสรรงบประมาณ"
+                    }
+                ];
+            } else {
+                formArr = [];
+            }
+
+            var html = '';
+
+
+            $.each(formArr, function (key, value) {
+
+                html += '<tr>'
+                        + '<td class="col-md-11">- ' + value["name"] + '</td>'
+                        + '<td class="col-md-1">'
+                        + '<button class="btn btn-success form" has-ng="' + value["ng"] + '" data-form="' + value["form"] + '" disabled="disabled"><i class="fa fa-plus-circle"></i> จัดทำ</button>'
+                        + '</td>'
+                        + '</tr>';
+            });
+
+            $("#panel2 table tbody").html(html);
+            $("button.form").removeAttr("disabled", "disabled");
+            $("#formChoice select").change(function () {
+                var valid = true;
+
+                $("#formChoice select").each(function () {
+                    if ($(this).val() == "") {
+                        valid = false;
+                    }
+                });
+
+                if (valid == true) {
+                    $("button.form").removeAttr("disabled", "disabled");
+                }
+                else {
+                    $("button.form").attr("disabled", "disabled");
+                }
+            });
+
+            /*
+             listsBudgetPeriod();
+             listsBudgetType();
+             listsFundgroup();
+             listsFaculty();
+             */
+
+            $("button.form").unbind("click").click(function () {
+                var form = $(this).attr("data-form");
+
+                var param = {};
+                $("#formChoice select").each(function () {
+                    var name = $(this).attr("name");
+                    param[name] = $(this).val();
+                });
+
+
+                var hasNg = $(this).attr("has-ng");
+                if (hasNg !== "true") {
+                    // open Form for Jquery
+                    eval(form + "Form(param)");
+                } else {
+                    // open Form for AngularJS
+                    var $scopeJS = angular.element(document.querySelector('[ng-app=formBudgetReview]')).scope();
+                    $scopeJS.$apply(function () {
+                        $scopeJS.openForm(form, param);
+                    });
+
+                    toggleShow("form");
+                }
+
+            });
+
+            isForm = 1;
+        }
+    }
+
+    function listsBudgetPeriod() {
+        var html = '<option value="" selected="selected">เลือก</option>';
+
+        var datas = callAjax("{{_context_path}}/api/common/lookup/listYear", "post", {}, "json");
+        if (typeof datas !== "undefined" && datas !== null) {
+            $.each(datas["lists"], function (key, value) {
+                html += '<option value="' + value["year"] + '">' + value["year"] + '</option>'
+
+                budgetPeriodArr[value["year"]] = value["year"];
+            });
+        }
+
+        //$("#budgetPeriodId").html(html).trigger("change");
+        $("#budgetPeriodId").html(html);
+    }
+
+    function listsBudgetType() {
+        var html = '<option value="" selected="selected">เลือก</option>';
+
+        var datas = callAjax("{{_context_path}}/api/common/lookup/listBudgetSource", "post", {}, "json");
+        if (typeof datas !== "undefined" && datas !== null) {
+            $.each(datas["lists"], function (key, value) {
+                html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
+
+                budgetTypeArr[value["id"]] = value["name"];
+            });
+        }
+
+        $("#budgetTypeCode").html(html).trigger("change");
+    }
+
+    function listsPlan(budgetPeriodId) {
+        var html = '<option value="" selected="selected">เลือก</option>';
+
+        if (budgetPeriodId != "") {
+            var datas = callAjax("{{_context_path}}/api/common/lookup/listBudgetPlan", "post", {budgetYear: budgetPeriodId}, "json");
+            if (typeof datas !== "undefined" && datas !== null) {
+                $.each(datas["lists"], function (key, value) {
+                    html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
+
+                    planArr[value["id"]] = value["name"];
+                });
+            }
+        }
+
+        $("#planId").html(html).trigger("change");
+    }
+
+    function listsProject(planId) {
+        var html = '<option value="" selected="selected">เลือก</option>';
+
+        if (planId != "") {
+            var datas = callAjax("{{_context_path}}/api/common/lookup/listBudgetProject", "post", {planId: planId}, "json");
+            if (typeof datas !== "undefined" && datas !== null) {
+                $.each(datas["lists"], function (key, value) {
+                    html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
+
+                    projectArr[value["id"]] = value["name"];
+                });
+            }
+        }
+
+        $("#projectId").html(html).trigger("change");
+    }
+
+    function listsFundgroup() {
+        var html = '<option value="" selected="selected">เลือก</option>';
+
+        var datas = callAjax("{{_context_path}}/api/common/lookup/listFundgroup", "post", {}, "json");
+        if (typeof datas !== "undefined" && datas !== null) {
+            $.each(datas["lists"], function (key, value) {
+                html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
+
+                fundgroupArr[value["id"]] = value["name"];
+            });
+        }
+
+        $("#fundgroupId").html(html).trigger("change");
+    }
+
+    function listsFaculty() {
+        var html = '<option value="" selected="selected">เลือก</option>';
+
+        var datas = callAjax("{{_context_path}}/api/common/lookup/listFaculty", "post", {campusId: 0}, "json");
+        if (typeof datas !== "undefined" && datas !== null) {
+            $.each(datas["lists"], function (key, value) {
+                html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
+
+                facultyArr[value["id"]] = value["name"];
+            });
+        }
+
+        $("#facultyId").html(html).trigger("change");
+    }
+
+    function listsDepartment(facultyId) {
+        var html = '<option value="" selected="selected">เลือก</option>';
+
+        var datas = callAjax("{{_context_path}}/api/common/lookup/listDepartment", "post", {facultyId: facultyId}, "json");
+        if (typeof datas !== "undefined" && datas !== null) {
+            $.each(datas["lists"], function (key, value) {
+                html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
+
+                departmentArr[value["id"]] = value["name"];
+            });
+        }
+
+        $("#deptId").html(html).trigger("change");
+    }
+    
+    function toggleShow(option) {
+
+        if (option == "home") {
+            // panel show and hide
+            $("#divChoice, #divForm").hide();
+            $("#divHome").show();
+
+            // button show and hide
+            $("button.backHome, button.backChoice").hide();
+            //$("button.goChoice").show();
+        }
+        else if (option == "choice") {
+
+            // panel show and hide
+            $("#divHome, #divForm").hide();
+            $("#divChoice").show();
+
+            // button show and hide
+            //$("button.goChoice, button.backChoice").hide();
+            $("button.backHome").show();
+
+            // hide divForm for AngularJS
+            var $scopeJS = angular.element(document.querySelector('[ng-app=formBudgetReview]')).scope();
+            $scopeJS.$apply(function () {
+                $scopeJS.activeNg = false;
+                $scopeJS.activeTemplate = "no";
+            });
+
+            if (!isForm) {
+                listsBudgetPeriod();
+                listsBudgetType();
+                listsFundgroup();
+                listsFaculty();
+            }
+        }
+        else if (option == "form") {
+            // panel show and hide
+            $("#divHome, #divChoice, #divAttachment").hide();
+            $("#divForm").show();
+
+            // button show and hide
+            //$("button.goChoice, button.backHome, button.backAttachment").hide();
+            $("button.backChoice").show();
+        } else if (option == "attachment") {
+            // panel show and hide
+            $("#divHome, #divChoice, #divForm").hide();
+            $("#divAttachment").show();
+
+            //$("button.goChoice,button.backChoice,button.backHome").hide();
+            $("button.backAttachment").show();
+        }
+    }
+
+    function InsertAttachment() {
+
+        var param = {};
+        var filePath = uploadFile();
+        if (filePath != "") { //not have file
+            param.desc = $(".noteDesc").code(); //fileDescription
+            param.path = filePath;
+            var fdata = [];
+            fdata.push(param);
+            var datas = callAjax(js_context_path + "/api/budget/budgetSave/insertAtt", "post", JSON.stringify({att: fdata}), "json");
+            if (datas != undefined && datas !== null) {
+                param.id = datas["results"]["id"];
+            }
+        }
+        return param;
+    }
+
+    function updateAttachment(attachmentID, oldFileName, budgetListID, formBudget) {
+
+        // UPDATE IF NOT HAVE AND INSERT
+        var result = {};
+        var file_data = undefined; //not have file on inputFile
+        if ($("#fileInput").val() != undefined)
+            file_data = $("#fileInput").prop("files")[0];
+        var param = {};
+        param.id = attachmentID;
+        param.desc = $(".noteDesc").code(); //fileDescription
+
+        if ($("#removeFile").val() != undefined) {
+            //update desc
+            var fdata = [];
+            param.path = oldFileName;
+            fdata.push(param);
+            var datas = callAjax(js_context_path + "/api/budget/budgetSave/editAtt", "post", JSON.stringify({att: fdata}), "json");
+            if (datas != undefined && datas !== null) {
+                result = datas["results"]["attObj"];
+            } else {
+                alert("แก้ไขอธิบายไฟล์ล้มเหลว")
+            }
+
+        } else if (file_data != undefined) {
+            // เมื่อมีการเปลี่ยนไฟล์
+            if (oldFileName != file_data["name"]) {
+                var filePath = uploadFile(); // update new file
+                param.path = filePath;
+            }
+
+            var fdata = [];
+            fdata.push(param);
+            var datas = callAjax(js_context_path + "/api/budget/budgetSave/editAtt", "post", JSON.stringify({att: fdata}), "json");
+            if (datas != undefined && datas !== null) {
+                result = datas["results"]["attObj"];
+            } else {
+                alert("แก้ไขไฟล์ล้มเหลว")
+            }
+
+        } else { //เมื่อมีการเอาไฟล์ออกจากเดิมที่มี
+
+            if (attachmentID != null && $("#removeFile").val() == undefined) {
+                //delete service at attachmentID
+                var datas = callAjax(js_context_path + "/api/budget/budgetSave/delAtt", "post", JSON.stringify({
+                    attachmentID: attachmentID,
+                    path: oldFileName,
+                    budgetID: budgetListID,
+                    formBudget: formBudget
+                }), "json");
+                if (datas != undefined && datas !== null) {
+                    var paramRemove = {};
+                    paramRemove.id = null;
+                    paramRemove.path = null;
+                    paramRemove.desc = null;
+                    result = datas["results"]["attObj"] = paramRemove;
+                }
+                else {
+                    alert("ลบไฟล์ล้มเหลว")
+                }
+            }
+        }
+
+        return result;
+    }
+
+    function uploadFile() {
+
+        var filePath = "";
+        var file_data = $("#fileInput").prop("files")[0];// Getting the properties of file from file field
+        if (file_data != undefined) {
+            var form_data = new FormData();                  // Creating object of FormData class
+            form_data.append("file", file_data);
+
+            $.ajax({
+                url: js_context_path + "/api/budget/budgetSave/uploadF",
+                data: form_data,
+                cache: false,
+                async: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                success: function (result) {
+                    // Process the result ...
+                    filePath = result["results"]["path"];
+                },
+                error: function (e) {
+                    alert(e.toString);
+                }
+            });
+        }
+        return filePath;
+    }
+
+    function tofParam(param) {
+
+        var fParam = {};
+        fParam.budgetPeriodId = param.budgetPeriodId;
+        fParam.budgetTypeCode = param.budgetTypeCode;
+        fParam.deptId = param.deptId;
+        fParam.facultyId = param.facultyId;
+        fParam.fundgroupId = param.fundgroupId;
+        fParam.planId = param.planId;
+        fParam.projectId = param.projectId;
+
+        return fParam;
+    }
+
+    function isEmptyObject(obj) {
+
+        var hasOwnProperty = Object.prototype.hasOwnProperty;
+        // null and undefined are "empty"
+        if (obj == null)
+            return true;
+
+        // Assume if it has a length property with a non-zero value
+        // that that property is correct.
+        if (obj.length > 0)
+            return false;
+        if (obj.length === 0)
+            return true;
+
+        // Otherwise, does it have any properties of its own?
+        // Note that this doesn't handle
+        // toString and valueOf enumeration bugs in IE < 9
+        for (var key in obj) {
+            if (hasOwnProperty.call(obj, key))
+                return false;
+        }
+
+        return true;
+    }
+
+
+</script>
