@@ -97,25 +97,56 @@ class AllocateService extends CServiceBase implements IAllocateService {
     }
 
     public function fetchExpenseProject($budgetPeriodId) {
+        $result = array();
 
-        $bg = new entity\BudgetRevenuePlan();
-        $bg->setBudgetPeriodId($budgetPeriodId);
+        $bgHeadSql = "select bgHead.id as id from " . $this->pathEnt . "BudgetHead bgHead "
+                . "where bgHead.budgetPeriodId = :budgetPeriodId ";
+        $paramHead = array("budgetPeriodId" => $budgetPeriodId);
 
-        $data = $this->datacontext->getObject($bg);
+        $dataHead = $this->datacontext->getObject($bgHeadSql, $paramHead);
+        foreach ($dataHead as $key1 => $value1) {
+            $bgHeadId = $dataHead[$key1]["id"];
+            $result[$key1]["bgHeadId"] = $bgHeadId;
 
-        $dataList = null;
+            $bgExp = "select exp.id, exp.deptId, exp.name, exp.budgetEstAmount, dept.deptName "
+                    . "from " . $this->pathEnt . "BudgetExpense exp "
+                    . "join " . $this->pathEnt . "L3D\\Department dept "
+                    . "with exp.deptId = dept.id "
+                    . "where exp.budgetHeadId = :budgetHeadId "
+                    . "order by exp.deptId asc ";
+            $paramExp = array("budgetHeadId" => $bgHeadId);
 
-        for ($i = 0; $i < count($data); $i++) {
-            $dataList[$i]["id"] = $data[$i]->id;
-            $dataList[$i]["department"] = $data[$i]->deptId;
-            $dataList[$i]["departmentC"] = $data[$i]->deptId;
-            $dataList[$i]["education"] = $data[$i]->budgetEducation;
-            $dataList[$i]["educationC"] = $data[$i]->budgetEducation;
-            $dataList[$i]["academic"] = $data[$i]->budgetService;
-            $dataList[$i]["academicC"] = $data[$i]->budgetService;
+            $dataExp = $this->datacontext->getObject($bgExp, $paramExp);
+            $result[$key1]["name"] = $dataExp[0]["name"];
+            foreach ($dataExp as $key2 => $value2) {
+                $result[$key1]["detail"][$key2]["id"] = $dataExp[$key2]["id"];
+                $result[$key1]["detail"][$key2]["deptId"] = $dataExp[$key2]["deptId"];
+                $result[$key1]["detail"][$key2]["deptName"] = $dataExp[$key2]["deptName"];
+                $result[$key1]["detail"][$key2]["budgetTotal"] = $dataExp[$key2]["budgetEstAmount"];
+            }
         }
+        return $result;
 
-        return $dataList;
+        /*
+          $bg = new entity\BudgetRevenuePlan();
+          $bg->setBudgetPeriodId($budgetPeriodId);
+
+          $data = $this->datacontext->getObject($bg);
+
+          $dataList = null;
+
+          for ($i = 0; $i < count($data); $i++) {
+          $dataList[$i]["id"] = $data[$i]->id;
+          $dataList[$i]["department"] = $data[$i]->deptId;
+          $dataList[$i]["departmentC"] = $data[$i]->deptId;
+          $dataList[$i]["education"] = $data[$i]->budgetEducation;
+          $dataList[$i]["educationC"] = $data[$i]->budgetEducation;
+          $dataList[$i]["academic"] = $data[$i]->budgetService;
+          $dataList[$i]["academicC"] = $data[$i]->budgetService;
+          }
+
+          return $dataList;
+         */
     }
 
     public function addExpenseProject($projectName, $budgetPeriodId, $budgetTotal, $deptId) {
