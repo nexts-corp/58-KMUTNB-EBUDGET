@@ -40,8 +40,8 @@ interface IAllocateService {
     
     
     /**
-     * @name fetchRevenue
-     * @uri /fetchRevenue
+     * @name fetchExpenseProject
+     * @uri /fetchExpenseProject
      * @param int budgetPeriodId ปีงบประมาณ
      * @return string[] dataList Description
      * @description หน้าเพิ่มเงินจัดสรรเงินรายได้
