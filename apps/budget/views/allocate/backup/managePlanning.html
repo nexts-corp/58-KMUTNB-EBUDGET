@@ -50,15 +50,15 @@
                     
                     <div class="tabs">
                             <ul id="tabMenu" class="nav nav-tabs">
-                                <li class="">
+                                <li class="active">
                                     <a href="#tab-budget" data-toggle="tab" aria-expanded="false">จัดสรรงบประมาณเงินรายได้</a>
                                 </li>
-                                <li class="active">
+                                <li class="">
                                     <a href="#tab-project" data-toggle="tab" aria-expanded="true">จัดสรรงบประมาณโครงการพัฒนามหาวิทยาลัย</a>
                                 </li>
                             </ul>
                             <div id="tabContent" class="tab-content">
-                                <div id="tab-budget" class="tab-pane">
+                                <div id="tab-budget" class="tab-pane active">
                                     
                                     
                                     
@@ -94,6 +94,7 @@
                                                     <select ng-model="department" class="form-control input-sm" ng-options="dep.id as dep.name for dep in cmDataListDepartment | filter:setMaster" nk-focus="focusDepartment" ng-keypress="addItemByEnter($event)">
                                                         <option value="">- เลือกหน่วยงาน -</option>
                                                     </select>
+                                                    {[departmentFocus]}
                                                 </td>
                                                 <td><input ng-model="education" type="text" class="form-control input-sm" number-format ng-keypress="addItemByEnter($event)"></td>
                                                 <td><input ng-model="academic" type="text" class="form-control input-sm" number-format ng-keypress="addItemByEnter($event)"></td>
@@ -112,7 +113,7 @@
                                     
                                     
                                 </div>
-                                <div id="tab-project" class="tab-pane active">
+                                <div id="tab-project" class="tab-pane">
                                     
                                     <table class="table table-bordered table-condensed mb-none">
                                         <thead>
@@ -124,7 +125,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-show="selectYear" ng-repeat-start="list in manageAPP.data" style="background-color: #F1F1F1;" nk-cloak>
+                                            <tr ng-repeat-start="list in manageAPP.data" style="background-color: #F1F1F1;" nk-cloak>
                                                 <td class="text-center cssCursor" style="vertical-align: middle;" ng-click="toggleShow($index)">
                                                     <i ng-hide="list.show" class="fa fa-plus-square"></i>
                                                     <i ng-show="list.show" class="fa fa-minus-square"></i>
@@ -135,14 +136,14 @@
                                                     <label ng-bind="sumItemAPPSub($index) | currency:'':2"></label>
                                                 </td>
                                                 <td class="text-center">
-                                                    <button ng-show="checkEditItemAPP($index)" ng-click="editItemApp($index)" ng-disabled="checkDisableEditItemApp($index)" class="btn btn-primary"><i class="fa fa-save"></i> บันทึก</button>
+                                                    <button ng-show="list.pName!=list.pNameC" ng-click="editItemApp($index)" class="btn btn-primary"><i class="fa fa-save"></i> บันทึก</button>
                                                     <button class="btn btn-default" ng-click="delItemAPP($index)"><i class="fa fa-trash-o "></i> ลบ</button>
                                                 </td>
                                             </tr>
-                                            <tr ng-show="list.show && selectYear" ng-repeat="listSub in list.sub" nk-cloak>
+                                            <tr ng-show="list.show" ng-repeat="listSub in list.sub">
                                                 <td></td>
                                                 <td style="padding-left: 25px;">
-                                                    <select ng-model="listSub.depId" ng-change="pushDepAPPSub($parent.$index,$last)" class="form-control input-sm" ng-options="dep.id as dep.name for dep in cmDataListDepartment | filter:setMaster">
+                                                    <select ng-model="listSub.depId" class="form-control input-sm" ng-options="dep.id as dep.name for dep in cmDataListDepartment | filter:setMaster">
                                                         <option value=''>- เลือกหน่วยงาน -</option>
                                                     </select>
                                                 </td>
@@ -150,34 +151,33 @@
                                                      <input ng-model="listSub.depValue" type="text" class="form-control input-sm text-right" number-format>
                                                 </td>
                                                 <td class="text-center">
-                                                    <button class="btn btn-default" ng-show="!$last" ng-click="delItemAPPSub($parent.$index+'.'+$index)"><i class="fa fa-trash-o "></i> ลบ</button>
+                                                    <button ng-show="checkEditItemAppSub($parent.$index+'.'+$index)" ng-click="editItemAppSub($parent.$index+'.'+$index)" class="btn btn-primary"><i class="fa fa-save"></i> บันทึก</button>
+                                                    <button class="btn btn-default" ng-click="delItemAPPSub($parent.$index+'.'+$index)"><i class="fa fa-trash-o "></i> ลบ</button>
                                                 </td>
                                             </tr>
-                                            <tr ng-repeat-end class="nk-cloak"><td colspan="4">Repeat End</td></tr>
-                                            <tr ng-show="selectYear" style="background-color: #F1F1F1;">
-                                                <td></td>
-                                                <td><input ng-model="manageAPP.projectTxt" placeholder="( โครงการ )" type="text" class="form-control input-sm"></td>
-                                                <td></td>
-                                                <td class="text-center">
-                                                    <button ng-show="manageAPP.projectTxt && manageAPP.depTxt.length>=2" ng-click="addItemAPP()" class="btn btn-success"><i class="fa fa-plus"></i> เพิ่ม</button>
-                                                </td>
-                                            </tr>
-                                            <tr ng-show="selectYear" ng-repeat="listTxt in manageAPP.depTxt" style="background-color: #F1F1F1;">
+                                            <tr ng-show="list.show">
                                                 <td></td>
                                                 <td style="padding-left: 25px;">
-                                                    <select ng-model="listTxt.depId" ng-change="pushDepTxt($last)" class="form-control input-sm" ng-options="dep.id as dep.name for dep in cmDataListDepartment | filter:setMaster">
+                                                    <select ng-model="list.depOpt" class="form-control input-sm" ng-options="dep.id as dep.name for dep in cmDataListDepartment | filter:setMaster">
                                                         <option value=''>- เลือกหน่วยงาน -</option>
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input ng-model="listTxt.depValue" type="text" class="form-control input-sm text-right" number-format>
+                                                    <input ng-model="list.valueTxt" type="text" class="form-control input-sm text-right" number-format>
                                                 </td>
                                                 <td class="text-center">
-                                                    <button ng-show="!$last" ng-click="delDepTxt($index)" class="btn btn-default" ><i class="fa fa-trash-o "></i> ลบ</button>
+                                                    <button ng-show="list.depOpt && list.valueTxt" class="btn btn-success" ng-click="addItemAPPSub($index)"><i class="fa fa-plus"></i> เพิ่ม</button>
                                                 </td>
                                             </tr>
-                                            <tr ng-show="0"><td colspan="4" style="background-color: #F1F1F1;text-align: center;"><i class="fa fa-cog fa-spin"></i> กำลังโหลด</td></tr>
-                                            <tr ng-hide="selectYear"><td colspan="4" style="background-color: #F1F1F1;text-align: center;">กรุณาเลือกปีงบประมาณ</td></tr>
+                                            <tr ng-repeat-end class="nk-cloak"><td colspan="4">Repeat End</td></tr>
+                                            <tr style="background-color: #F1F1F1;">
+                                                <td></td>
+                                                <td><input ng-model="manageAPP.projectTxt" placeholder="( โครงการ )" type="text" class="form-control input-sm"></td>
+                                                <td></td>
+                                                <td class="text-center">
+                                                    <button ng-show="manageAPP.projectTxt" class="btn btn-success" ng-click="addItemAPP()"><i class="fa fa-plus"></i> เพิ่ม</button>
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                     

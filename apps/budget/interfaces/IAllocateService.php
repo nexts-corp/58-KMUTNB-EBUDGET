@@ -38,6 +38,17 @@ interface IAllocateService {
      */
     public function testJS();
     
+    
+    /**
+     * @name fetchRevenue
+     * @uri /fetchRevenue
+     * @param int budgetPeriodId ปีงบประมาณ
+     * @return string[] dataList Description
+     * @description หน้าเพิ่มเงินจัดสรรเงินรายได้
+     */
+    public function fetchExpenseProject($budgetPeriodId);
+    
+    
     /**
      * @name addExpenseProject
      * @uri /addExpenseProject
