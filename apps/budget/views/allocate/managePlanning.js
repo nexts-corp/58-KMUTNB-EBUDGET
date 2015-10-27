@@ -11,6 +11,8 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
     $scope.init = function(){
         cde.setPath('budget','allocate');
         
+        $scope.page = 1;
+        
         $('[ng-app]').show();
         $scope.cmListYear();
         $scope.cmListBudgetType();
@@ -26,6 +28,27 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
                 data:[]
         };
     };
+    
+    $scope.changePage = function(page){
+        $scope.selectYear = '';
+        $scope.page = page;
+        
+        $scope.dataAllocate = [];
+        $scope.manageAPP = {
+                projectTxt:'',
+                depTxt:[{depId:'',depValue:0}],
+                data:[]
+        };
+    };
+    
+    $scope.fetchData = function(){
+        if($scope.page===1){
+            $scope.fetchItem($scope.selectYear);
+        }else if($scope.page===2){
+            $scope.fetchItemAPP($scope.selectYear);
+        };
+    };
+    
     
     
     
