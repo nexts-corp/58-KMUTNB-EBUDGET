@@ -36,7 +36,7 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="selectYear">ปีงบประมาณ</label>
                     <div class="col-md-8">
-                        <select ng-model="selectYear" ng-change="fetchItemAPP()" class="form-control input-sm" ng-options="year.year as year.year for year in cmDataListYear">
+                        <select ng-model="selectYear" ng-change="fetchData()" class="form-control input-sm" ng-options="year.year as year.year for year in cmDataListYear">
                             <option value="">- เลือกปีงบประมาณ -</option>
                         </select>
                     </div>
@@ -50,15 +50,15 @@
                     
                     <div class="tabs">
                             <ul id="tabMenu" class="nav nav-tabs">
-                                <li class="">
-                                    <a href="#tab-budget" data-toggle="tab" aria-expanded="false">จัดสรรงบประมาณเงินรายได้</a>
-                                </li>
                                 <li class="active">
-                                    <a href="#tab-project" data-toggle="tab" aria-expanded="true">จัดสรรงบประมาณโครงการพัฒนามหาวิทยาลัย</a>
+                                    <a ng-click="changePage(1)" href="#tab-budget" data-toggle="tab" aria-expanded="false">จัดสรรงบประมาณเงินรายได้</a>
+                                </li>
+                                <li class="">
+                                    <a ng-click="changePage(2)" href="#tab-project" data-toggle="tab" aria-expanded="true">จัดสรรงบประมาณโครงการพัฒนามหาวิทยาลัย</a>
                                 </li>
                             </ul>
                             <div id="tabContent" class="tab-content">
-                                <div id="tab-budget" class="tab-pane">
+                                <div id="tab-budget" class="tab-pane active">
                                     
                                     
                                     
@@ -112,7 +112,7 @@
                                     
                                     
                                 </div>
-                                <div id="tab-project" class="tab-pane active">
+                                <div id="tab-project" class="tab-pane">
                                     
                                     <table class="table table-bordered table-condensed mb-none">
                                         <thead>
@@ -154,7 +154,7 @@
                                                 </td>
                                             </tr>
                                             <tr ng-repeat-end class="nk-cloak"><td colspan="4">Repeat End</td></tr>
-                                            <tr ng-show="selectYear && !loadManageAPP" style="background-color: #F1F1F1;">
+                                            <tr ng-show="selectYear && !loadManageAPP" style="background-color: #E5E5E5;">
                                                 <td></td>
                                                 <td><input ng-model="manageAPP.projectTxt" placeholder="( โครงการ )" type="text" class="form-control input-sm"></td>
                                                 <td></td>
@@ -162,7 +162,7 @@
                                                     <button ng-show="manageAPP.projectTxt && manageAPP.depTxt.length>=2" ng-click="addItemAPP()" class="btn btn-success"><i class="fa fa-plus"></i> เพิ่ม</button>
                                                 </td>
                                             </tr>
-                                            <tr ng-show="selectYear && !loadManageAPP" ng-repeat="listTxt in manageAPP.depTxt" style="background-color: #F1F1F1;">
+                                            <tr ng-show="selectYear && !loadManageAPP" ng-repeat="listTxt in manageAPP.depTxt" style="background-color: #E5E5E5;">
                                                 <td></td>
                                                 <td style="padding-left: 25px;">
                                                     <select ng-model="listTxt.depId" ng-change="pushDepTxt($last)" class="form-control input-sm" ng-options="dep.id as dep.name for dep in cmDataListDepartment | filter:setMaster">
