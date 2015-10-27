@@ -81,6 +81,12 @@ class Budget144 extends EntityBase {
     /** @Column(type="integer",length=11, name="REFID") */
     public $refId;
 
+    /** @Column(type="integer",length=11, name="TRACKINGSTATUSID") */
+    public $statusId;
+
+    /** @Column(type="text", name="COMMENT") */
+    public $comment;
+
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
 
@@ -177,6 +183,14 @@ class Budget144 extends EntityBase {
 
     function getRefId() {
         return $this->refId;
+    }
+
+    function getStatusId() {
+        return $this->statusId;
+    }
+
+    function getComment() {
+        return $this->comment;
     }
 
     function getCreator() {
@@ -277,6 +291,14 @@ class Budget144 extends EntityBase {
 
     function setRefId($refId) {
         $this->refId = $refId;
+    }
+
+    function setStatusId($statusId) {
+        $this->statusId = $statusId;
+    }
+
+    function setComment($comment) {
+        $this->comment = $comment;
     }
 
     function setCreator($creator) {

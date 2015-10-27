@@ -81,6 +81,12 @@ class BudgetExpense extends EntityBase {
     /** @Column(type="text", name="BENEFITS") */
     public $benefits;
 
+    /** @Column(type="integer",length=11, name="TRACKINGSTATUSID") */
+    public $statusId;
+
+    /** @Column(type="text", name="COMMENT") */
+    public $comment;
+
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
 
@@ -177,6 +183,14 @@ class BudgetExpense extends EntityBase {
 
     function getBenefits() {
         return $this->benefits;
+    }
+
+    function getStatusId() {
+        return $this->statusId;
+    }
+
+    function getComment() {
+        return $this->comment;
     }
 
     function getCreator() {
@@ -277,6 +291,14 @@ class BudgetExpense extends EntityBase {
 
     function setBenefits($benefits) {
         $this->benefits = $benefits;
+    }
+
+    function setStatusId($statusId) {
+        $this->statusId = $statusId;
+    }
+
+    function setComment($comment) {
+        $this->comment = $comment;
     }
 
     function setCreator($creator) {
