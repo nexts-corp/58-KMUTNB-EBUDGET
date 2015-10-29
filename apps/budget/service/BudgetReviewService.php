@@ -227,21 +227,60 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
     }
 
     public function getAllBudgetRequest($budgetPeriodId) {
+        $sql = "select bgh.id as bghId, "
+                . "bgh.formId as formId, dept.id as deptId, dept.deptName as deptName, "
+                . "bgPlan.id as planId, bgPlan.planName as planName, "
+                . "bgProj.id as projectId, bgProj.projectName as projectName, "
+                . "fund.id as fundId, fund.fundgroupName as fundName, "
+                . "status.id as statusId, status.desc as statusDesc "
+                . "from " . $this->ent . "\\BudgetHead bgh "
+                . "left outer join " . $this->ent . "\\L3D\\Department dept with dept.id = bgh.deptId "
+                . "left outer join " . $this->ent . "\\BudgetPlan bgPlan with bgPlan.id = bgh.planId "
+                . "left outer join " . $this->ent . "\\BudgetProject bgProj with bgProj.id = bgh.projectId "
+                . "left outer join " . $this->ent . "\\L3D\\FundGroup fund with fund.id = bgh.fundgroupId "
+                . "left outer join " . $this->ent . "\\TrackingStatus status with status.id = bgh.statusId "
+                . "where bgh.budgetTypeCode = 'G' and bgh.statusId = 1 "
+                . "and bgh.budgetPeriodId = :budgetPeriodId "
+                . "order by bgh.formId, dept.id, bgPlan.id, bgProj.id, fund.id asc ";
+        $param = array("budgetPeriodId" => $budgetPeriodId);
+        $data = $this->datacontext->getObject($sql, $param);
 
-        $bgHead = new entity\BudgetHead();
-        $bgHead->setBudgetPeriodId($budgetPeriodId);
-        $bgHead->setBudgetTypeCode("G");
-        $bgHead->setStatusId(2);  //2=waiting
+        return $data;
 
-        $dataHead = $this->datacontext->getObject($bgHead);
+        /*
+         * DO NOT DELETE
+          $sql = "select bgh.id as bghId, "
+          . "case when bgh.formId = 140 then bg140.id "
+          . "when bgh.formId = 141 then bg141.id "
+          . "when bgh.formId = 142 then bg142.id "
+          . "when bgh.formId = 143 then bg143.id "
+          . "when bgh.formId = 144 then bg144.id "
+          . "when bgh.formId = 145 then bg145.id "
+          . "when bgh.formId = 146 then bg146.id "
+          . "else 0 end as bgId, "
+          . "bgh.formId as formId, dept.id as deptId, dept.deptName as deptName, "
+          . "bgPlan.planName as planName, bgProj.projectName as projectName, fund.fundgroupName as fundName "
+          . "from " . $this->ent . "\\BudgetHead bgh "
+          . "left outer join " . $this->ent . "\\Budget140 bg140 with bgh.id = bg140.budgetHeadId "
+          . "left outer join " . $this->ent . "\\Budget141 bg141 with bgh.id = bg141.budgetHeadId "
+          . "left outer join " . $this->ent . "\\Budget142 bg142 with bgh.id = bg142.budgetHeadId "
+          . "left outer join " . $this->ent . "\\Budget143 bg143 with bgh.id = bg143.budgetHeadId "
+          . "left outer join " . $this->ent . "\\Budget144 bg144 with bgh.id = bg144.budgetHeadId "
+          . "left outer join " . $this->ent . "\\Budget145 bg145 with bgh.id = bg145.budgetHeadId "
+          . "left outer join " . $this->ent . "\\Budget146 bg146 with bgh.id = bg146.budgetHeadId "
+          . "left outer join " . $this->ent . "\\L3D\\Department dept with dept.id = bgh.deptId "
+          . "left outer join " . $this->ent . "\\BudgetPlan bgPlan with bgPlan.id = bgh.planId "
+          . "left outer join " . $this->ent . "\\BudgetProject bgProj with bgProj.id = bgh.projectId "
+          . "left outer join " . $this->ent . "\\L3D\\FundGroup fund with fund.id = bgh.fundgroupId "
+          . "where bgh.budgetTypeCode = 'G' and bgh.statusId = 1 "
+          . "and bgh.budgetPeriodId = :budgetPeriodId "
+          . "order by bgh.formId asc ";
+          $param = array("budgetPeriodId" => $budgetPeriodId);
+          $data = $this->datacontext->getObject($sql, $param);
 
-        foreach ($dataHead as $key => $value) {
-            $sql = "select . from ".$this->ent."\\Budget140 bg140 "
-                    . "join ";
-            
-        }
-        
-        return true;
+          return $data;
+
+         */
     }
 
     /*

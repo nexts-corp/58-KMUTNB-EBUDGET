@@ -61,6 +61,7 @@ interface IBudgetReviewService {
      * @name getAllBudgetRequest
      * @uri /getAllBudgetRequest
      * @param int budgetPeriodId ปีงบประมาณ
+     * @return string[] result
      * @description แสดงข้อมูลประเภทตามแหล่งเงิน
      */
     public function getAllBudgetRequest($budgetPeriodId);
