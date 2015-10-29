@@ -227,11 +227,11 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
     }
 
     public function getAllBudgetRequest($budgetPeriodId) {
-        $sql = "select bgh.id as bghId, "
+        $sql = "select bgh.id as bghId, bgh.budgetTypeCode, "
                 . "bgh.formId as formId, dept.id as deptId, dept.deptName as deptName, "
                 . "bgPlan.id as planId, bgPlan.planName as planName, "
                 . "bgProj.id as projectId, bgProj.projectName as projectName, "
-                . "fund.id as fundId, fund.fundgroupName as fundName, "
+                . "fund.id as fundgroupId, fund.fundgroupName as fundName, "
                 . "status.id as statusId, status.desc as statusDesc "
                 . "from " . $this->ent . "\\BudgetHead bgh "
                 . "left outer join " . $this->ent . "\\L3D\\Department dept with dept.id = bgh.deptId "
