@@ -220,7 +220,8 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
 
 
             $http.post(cde.getPath("fetchExpenseProject"),{
-                budgetPeriodId : $scope.selectYear
+                budgetPeriodId : $scope.selectYear,
+                depId : 0
             }).then(function(response) {
                 if(response.data.dataList!==null){
                     $scope.manageAPP.data = response.data.dataList;

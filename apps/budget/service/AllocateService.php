@@ -96,8 +96,12 @@ class AllocateService extends CServiceBase implements IAllocateService {
         return $this->getRoute();
     }
 
-    public function fetchExpenseProject($budgetPeriodId) {
-
+    public function fetchExpenseProject($budgetPeriodId,$depId) {
+        $sqlDep = "";
+        if($depId){
+            $sqlDep = "AND be.deptId = ".$depId;
+        }
+        
         $sql = "
             SELECT 
                 bh.id,
@@ -109,6 +113,7 @@ class AllocateService extends CServiceBase implements IAllocateService {
             WITH bh.id = be.budgetHeadId
             WHERE bh.formId = 999
             AND bh.budgetTypeCode = 'K'
+            ".$sqlDep."
             AND bh.budgetPeriodId = ".$budgetPeriodId."
             ORDER BY bh.id,be.id
         ";
@@ -134,7 +139,9 @@ class AllocateService extends CServiceBase implements IAllocateService {
                 
                 $dataList[$j]["id"] = $dataIAT[$i]["id"];
                 $dataList[$j]["pName"] = $dataIAT[$i]["pName"];
-                $dataList[$j]["pNameC"] = $dataIAT[$i]["pName"];
+                if(!$depId){
+                    $dataList[$j]["pNameC"] = $dataIAT[$i]["pName"];
+                }
 
                 $j++;
                 $k = 0;
@@ -148,10 +155,12 @@ class AllocateService extends CServiceBase implements IAllocateService {
                 $dataList[$j - 1]["subC"][$k]["depId"] = $dataIAT[$i]["depId"];
                 $dataList[$j - 1]["subC"][$k]["depValue"] = $dataIAT[$i]["depValue"];
                 
-                $dataList[$j - 1]["sub"][$k+1]["depId"] = '';
-                $dataList[$j - 1]["sub"][$k+1]["depValue"] = 0;
-                $dataList[$j - 1]["subC"][$k+1]["depId"] = '';
-                $dataList[$j - 1]["subC"][$k+1]["depValue"] = 0;
+                if(!$depId){
+                    $dataList[$j - 1]["sub"][$k+1]["depId"] = '';
+                    $dataList[$j - 1]["sub"][$k+1]["depValue"] = 0;
+                    $dataList[$j - 1]["subC"][$k+1]["depId"] = '';
+                    $dataList[$j - 1]["subC"][$k+1]["depValue"] = 0;
+                }
             }
             
             $k++;

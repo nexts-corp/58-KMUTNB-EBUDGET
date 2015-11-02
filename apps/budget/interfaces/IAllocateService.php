@@ -43,10 +43,11 @@ interface IAllocateService {
      * @name fetchExpenseProject
      * @uri /fetchExpenseProject
      * @param int budgetPeriodId ปีงบประมาณ
+     * @param int depId รหัสหน่วยงาน
      * @return string[] dataList Description
      * @description หน้าเพิ่มเงินจัดสรรเงินรายได้
      */
-    public function fetchExpenseProject($budgetPeriodId);
+    public function fetchExpenseProject($budgetPeriodId,$depId);
     
     
     /**
