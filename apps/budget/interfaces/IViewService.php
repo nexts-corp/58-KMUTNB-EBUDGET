@@ -1,4 +1,5 @@
 <?php
+
 namespace apps\budget\interfaces;
 
 /**
@@ -6,23 +7,22 @@ namespace apps\budget\interfaces;
  * @uri /view
  * @description ViewService
  */
-interface IViewService
-{
+interface IViewService {
 
     /**
      * @name formBudget
      * @uri /formBudget
-     * @description ยื่นคำของบประมาณ
+     * @description ยื่นคำของบประมาณเงินแผ่นดิน
      */
     public function formBudget();
-        
+
     /**
      * @name formBudgetReview
      * @uri /formBudgetReview
-     * @description ตรวจสอบคำขอเงินงบประมาณ
+     * @description ตรวจสอบคำขอเงินงบประมาณเงินแผ่นดิน
      */
     public function formBudgetReview();
-    
+
     /**
      * @name formTracking
      * @uri /formTracking
@@ -93,5 +93,10 @@ interface IViewService
      */
     public function bg146();
 
-
+    /**
+     * @name formRevenue
+     * @uri /formRevenue
+     * @description ยื่นคำของบประมาณเงินรายได้
+     */
+    public function formRevenue();
 }

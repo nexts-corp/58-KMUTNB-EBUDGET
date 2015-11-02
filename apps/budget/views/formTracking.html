@@ -26,7 +26,7 @@
 
         <div id="formTracking" class="col-md-12">
             <div class="form-group">
-                <label class="col-md-2 control-label text-right">{{#i18n}}budgetType{{/i18n}}</label>
+                <label class="col-md-3 control-label text-right req">{{#i18n}}budgetType{{/i18n}} : </label>
 
                 <div class="col-md-4">
                     <select id="expenses-select" class="form-control input-sm" required>
@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-2 control-label text-right">{{#i18n}}budgetYear{{/i18n}}</label>
+                <label class="col-md-3 control-label text-right req">{{#i18n}}budgetYear{{/i18n}} : </label>
 
                 <div class="col-md-4">
                     <select id="year-select" class="form-control input-sm" required>
@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-2 control-label text-right">{{#i18n}}quarter{{/i18n}}</label>
+                <label class="col-md-3 control-label text-right req">{{#i18n}}quarter{{/i18n}} : </label>
 
                 <div class="col-md-4">
                     <select id="quarter-select" class="form-control input-sm" required>
@@ -118,6 +118,8 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+        $("#expenses-select, #year-select, #quarter-select").select2().trigger("change");
+
 
         $("#bt-save").attr("disabled", true);
         iniYear();

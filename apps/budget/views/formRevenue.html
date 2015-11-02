@@ -156,7 +156,7 @@
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th colspan="2" class="text-center">แบบฟอร์มคำของบประมาณแผ่นดิน</th>
+                                            <th colspan="2" class="text-center">แบบฟอร์มคำของบประมาณเงินรายได้</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -169,11 +169,16 @@
                 </section>
             </div>
 
-            <!-- divForm Jquery -->
-            
-            <div id="divForm" class="col-md-12" style="display: none;"></div>
-            <div id="divAttachment" class="col-md-12" style="display: none;"></div>
-           
+            <!-- divForm AngularJs -->
+            <div ng-show="activeNg">
+                <div ng-if="activeTemplate === 'project'" ng-controller="projectForm" data-ng-init="init()">
+                    <project-template></project-template>
+                </div>
+                <div ng-if="activeTemplate === 'manageDepartment'" ng-controller="manageDepartment" data-ng-init="init()">
+                    <managedepartment-template></managedepartment-template>
+                </div>
+            </div>
+
             <!-- divForm AngularJs -->
             <!-- 
             <div ng-show="!activeNg" id="divForm" class="col-md-12" style="display: none;"></div>
@@ -205,6 +210,7 @@
 <script type="text/javascript">
             var js_context_path = "{{_context_path}}";</script>
 
+<!--
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg140.js"></script>
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg141.js"></script>
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg142.js"></script>
@@ -214,12 +220,13 @@
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg146.js"></script>
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/buildingOne.js"></script>
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/buildingMore.js"></script>
+-->
 
 <!-- initial AngularJS file -->
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/initNg.js"></script>
-<!--     <script type="text/javascript" src="{{_context_path}}/apps/budget/views/project/project.js"></script>
-    <script type="text/javascript" src="{{_context_path}}/apps/budget/views/allocate/manageDepartment.js"></script>
--->
+<script type="text/javascript" src="{{_context_path}}/apps/budget/views/project/project.js"></script>
+<script type="text/javascript" src="{{_context_path}}/apps/budget/views/allocate/manageDepartment.js"></script>
+
 
 <script type="text/javascript">
 
@@ -276,7 +283,7 @@
     });
     function listsFormSaved() {
         var html = '<tr>'
-                + '<td>1. แบบรายละเอียดคำของบประมาณเงินเดือน (ง.140)</td>'
+                + '<td>1. แบบรายละเอียดคำของบประมาณเงินรายได้</td>'
                 + '<td class="text-center">-</td>'
                 + '<td class="text-center">'
                 + '<button data-form="bg140" class="btn btn-warning edit" title="แก้ไข"><i class="fa fa-pencil"></i> แก้ไข</button>&nbsp;'
@@ -291,43 +298,17 @@
             var formArr;
             formArr = [
                 {
-                    form: "bg140",
-                    name: "แบบรายละเอียดคำของบประมาณเงินเดือน (ง.140)"
+                    ng: "true",
+                    form: "project",
+                    name: "โครงการที่ตอบสนองยุทธศาสตร์"
                 },
                 {
-                    form: "bg141",
-                    name: "แบบรายละเอียดคำของบประมาณค่าจ้างประจำ (ง.141)"
-                },
-                {
-                    form: "bg142",
-                    name: "แบบรายละเอียดคำของบประมาณค่าจ้างชั่วคราว (ง.142)"
-                },
-                {
-                    form: "bg143",
-                    name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน (ค่าตอบแทน ใช้สอย และวัสดุ) (ง.143)"
-                },
-                {
-                    form: "bg144",
-                    name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าสาธารณูปโภค (ง.144)"
-                },
-                {
-                    form: "bg145",
-                    name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าครุภัณฑ์ ค่าที่ดิน/สิ่งก่อสร้าง (ง.145)"
-                },
-                {
-                    form: "bg146",
-                    name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุน (ง.146)"
-                },
-                {
-                    form: "buildingOne",
-                    name: "คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง 1 ปี"
-                },
-                {
-                    form: "buildingMore",
-                    name: "คำชี้แจงรายละเอียดรายการที่ดินและสิ่งก่อสร้าง"
+                    ng: "true",
+                    form: "manageDepartment",
+                    name: "จัดสรรงบประมาณ"
                 }
             ];
-            /*                
+            /*
              if (type == "G") {
              formArr = [
              {
@@ -384,6 +365,7 @@
              formArr = [];
              }
              */
+
             var html = '';
             $.each(formArr, function (key, value) {
 
@@ -394,7 +376,6 @@
                         + '</td>'
                         + '</tr>';
             });
-
             $("#panel2 table tbody").html(html);
             $("button.form").removeAttr("disabled", "disabled");
             $("#formChoice select").change(function () {
@@ -419,38 +400,23 @@
              */
 
             $("button.form").unbind("click").click(function () {
+
                 var form = $(this).attr("data-form");
-                
+
                 var param = {};
                 $("#formChoice select").each(function () {
                     var name = $(this).attr("name");
                     param[name] = $(this).val();
                 });
-                
-                eval(form + "Form(param)");
-                
-                /*
-                var form = $(this).attr("data-form");
-                
-                var param = {};
-                $("#formChoice select").each(function () {
-                    var name = $(this).attr("name");
-                    param[name] = $(this).val();
-                });
-        
+
                 var hasNg = $(this).attr("has-ng");
-                if (hasNg !== "true") {
-                    // open Form for Jquery
-                    eval(form + "Form(param)");
-                } else {
-                    // open Form for AngularJS
-                    var $scopeJS = angular.element(document.querySelector('[ng-app=formBudget]')).scope();
-                    $scopeJS.$apply(function () {
-                        $scopeJS.openForm(form, param);
-                    });
-                    toggleShow("form");
-                }
-                */
+
+                // open Form for AngularJS
+                var $scopeJS = angular.element(document.querySelector('[ng-app=formBudget]')).scope();
+                $scopeJS.$apply(function () {
+                    $scopeJS.openForm(form, param);
+                });
+                toggleShow("form");
 
             });
             isForm = 1;
@@ -476,7 +442,7 @@
         var datas = callAjax("{{_context_path}}/api/common/lookup/listBudgetSource", "post", {}, "json");
         if (typeof datas !== "undefined" && datas !== null) {
             $.each(datas["lists"], function (key, value) {
-                if (value["id"] === "G") {
+                if (value["id"] === "K") {
                     html += '<option selected value="' + value["id"] + '">' + value["name"] + '</option>';
                     budgetTypeArr[value["id"]] = value["name"];
                 }
