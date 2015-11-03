@@ -13,48 +13,40 @@ use th\co\bpg\cde\core\CServiceBase;
 use apps\bginfo\interfaces\IDepartmentService;
 use th\co\bpg\cde\data\CDataContext;
 
-
-class DepartmentService extends CServiceBase implements IDepartmentService
-{
+class DepartmentService extends CServiceBase implements IDepartmentService {
 
     public $datacontext;
-
     public $pathEnt = "apps\\common\\entity";
 
-    function __construct()
-    {
+    function __construct() {
 
         $this->datacontext = new CDataContext();
     }
 
-    public function viewDepartment()
-    {
+    public function viewDepartment() {
         $view = new CJView("Department/viewDepartment", CJViewType::HTML_VIEW_ENGINE);
         return $view;
     }
 
-    public function fetchCampus()
-    {
+    public function fetchCampus() {
         $obj = new Campus();
         $obj->setCampusStatus('Y');
         return $this->datacontext->getObject($obj);
     }
 
-    public function fetchDepartment($campusID)
-    {
+    public function fetchDepartment($campusID) {
 
         $sql = "SELECT dept.id AS deptID,dept.deptName,dept.masterId,dept.campusId,maping.id as mapID,act.id AS actTypeID,act.actTypeName "
-            . "FROM " . $this->pathEnt . "\\L3D\\Department dept "
-            . "LEFT JOIN " . $this->pathEnt . "\\MappingDepartmentType maping "
-            . "WITH dept.id = maping.deptId "
-            . "LEFT JOIN " . $this->pathEnt . "\\ActivityType act "
-            . "WITH maping.actId = act.id WHERE dept.deptStatus = 'Y' AND dept.campusId=" . $campusID;
+                . "FROM " . $this->pathEnt . "\\L3D\\Department dept "
+                . "LEFT JOIN " . $this->pathEnt . "\\MappingDepartmentType maping "
+                . "WITH dept.id = maping.deptId "
+                . "LEFT JOIN " . $this->pathEnt . "\\ActivityType act "
+                . "WITH maping.actId = act.id WHERE dept.deptStatus = 'Y' AND (dept.campusId is null OR dept.campusId=" . $campusID . ")";
 
         return $this->datacontext->getObject($sql);
     }
 
-    public function fetchDepartmentMain($campusID)
-    {
+    public function fetchDepartmentMain($campusID) {
 //        $SQL = "WITH  Departmnet " .
 //            "AS ( " .
 //            "SELECT  DEPARTMENTID, [DEPARTMENTNAME], MASTERID,CAMPUSID,CAST(([DEPARTMENTNAME]) AS VARCHAR(1000)) AS 'MultiLevel',DEPARTMENTSTATUS,Level = 0 " .
@@ -65,25 +57,31 @@ class DepartmentService extends CServiceBase implements IDepartmentService
 //            "FROM    L3D_DEPARTMENT AS t JOIN Departmnet AS a ON t.MASTERID = a.DEPARTMENTID) " .
 //            "SELECT DEPARTMENTID,DEPARTMENTNAME,Level FROM Departmnet WHERE CAMPUSID = " . $campusID . " AND DEPARTMENTSTATUS = 'Y' AND LEVEL = 1 ORDER BY DEPARTMENTID";
 
-        $obj = new Department();
-        $obj->setCampusId($campusID);
-        $obj->setMasterId(0);
-        $obj->setDeptStatus('Y');
+        /*
+          $obj = new Department();
+          $obj->setCampusId($campusID || NULL);
+          $obj->setMasterId(0);
+          $obj->setDeptStatus('Y');
 
-        return $this->datacontext->getObject($obj);
+          return $this->datacontext->getObject($obj);
+        */ 
+        
+        
+    
+        $sql = "select dept.id, dept.deptName from " . $this->pathEnt . "\\L3D\\Department dept "
+                . "where dept.masterId = 0 and dept.deptStatus = 'Y' and (dept.campusId is null or dept.campusId = " . $campusID . ")";
+        return $this->datacontext->getObject($sql);
+        
     }
 
-    public function fetchActivityType()
-    {
+    public function fetchActivityType() {
         $obj = new ActivityType();
         $obj->setActTypeStatus('Y');
 
         return $this->datacontext->getObject($obj);
     }
 
-
-    public function saveDepartment($dataDept, $dataMaping)
-    {
+    public function saveDepartment($dataDept, $dataMaping) {
         $return = array();
 
         if ($this->datacontext->saveObject($dataDept) && $this->datacontext->saveObject($dataMaping)) {
@@ -98,9 +96,7 @@ class DepartmentService extends CServiceBase implements IDepartmentService
         return $return;
     }
 
-
-    public function editDepartment($dataDept, $dataMaping)
-    {
+    public function editDepartment($dataDept, $dataMaping) {
         $return = array();
         if ($dataMaping->id == "null" || $dataMaping->id == null) {
 
@@ -118,7 +114,6 @@ class DepartmentService extends CServiceBase implements IDepartmentService
                 $return["msg"] = $this->datacontext->getLastMessage();
                 $return["status"] = false;
             }
-
         } else {
 
             if ($this->datacontext->updateObject($dataDept) && $this->datacontext->updateObject($dataMaping)) {
@@ -130,14 +125,11 @@ class DepartmentService extends CServiceBase implements IDepartmentService
                 $return["msg"] = $this->datacontext->getLastMessage();
                 $return["status"] = false;
             }
-
         }
         return $return;
     }
 
-
-    public function removeDepartment($idDept, $mapId)
-    {
+    public function removeDepartment($idDept, $mapId) {
         $return = array();
         $obj = new Department();
         $obj->setId($idDept);
@@ -165,9 +157,7 @@ class DepartmentService extends CServiceBase implements IDepartmentService
         return $return;
     }
 
-
-    public function saveCampus($dataCampus)
-    {
+    public function saveCampus($dataCampus) {
         $return = array();
 
         if ($this->datacontext->saveObject($dataCampus)) {
@@ -180,4 +170,5 @@ class DepartmentService extends CServiceBase implements IDepartmentService
         }
         return $return;
     }
+
 }
