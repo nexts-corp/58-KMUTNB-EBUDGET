@@ -6,7 +6,7 @@ myApp.directive('projectTemplate', function() {
 });
 
 
-myApp.controller('projectForm', function($scope,$http,$controller) {
+myApp.controller('projectForm', function($scope,$http,$controller,cde) {
     $controller('cmListController', {$scope: $scope});
     
     
@@ -21,7 +21,9 @@ myApp.controller('projectForm', function($scope,$http,$controller) {
 
     $scope.init = function() {
         //console.log(JSON.stringify($scope.param, null, 4));
+        cde.setPath('budget','allocate');
         
+        $scope.dataExpenseProject = [];
         
         //ข้อมูลเบื้องต้น
         $scope.cmListAffirmativeType();

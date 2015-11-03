@@ -2,426 +2,465 @@
     <h4>
         แบบเสนอโครงการที่ตอบสนองยุทธศาสตร์การพัฒนามหาวิทยาลัย<br>
         ประจำปีงบประมาณ พ.ศ.{[seriesData.budgetPeriodId]}<br>
-        มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ
     </h4>
 </div>
-
-<form name="projectForm" class="form-horizontal form-bordered" novalidate>
-<!--    <p>Username:<br>
-        <input type="text" name="user" ng-model="user" required>
-        <span style="color:red" ng-show="projectForm.user.$dirty && projectForm.user.$invalid">
-            <span ng-show="projectForm.user.$error.required">Username is required.</span>
-        </span>
-    </p>-->
-    <div class="form-group">
-        <div class="col-md-12">
-            <h5>1. ชื่อโครงการ</h5>
-        </div>
-
-        <div class="col-md-12">
-            <div class="col-md-2"></div>
-            <div class="col-md-6">
-                <input name="name" ng-model="seriesData.name" type="text" class="form-control input-sm" required>
-                <span style="color:red" ng-show="projectForm.name.$dirty && projectForm.name.$invalid">
-                    <span ng-show="projectForm.name.$error.required">กรุณากรอก ชื่อโครงการ</span>
-                </span>
-            </div>
+<br>
+<br>
+<div class="row">
+    <div class="col-md-12">
+        <label class="col-md-1 control-label">โครงการ</label>
+        <div class="col-md-5">
+            <select ng-model="affList.typeId" class="form-control input-sm">
+                <option value="udf">- เลือกโครงการ -</option>
+            </select>
         </div>
     </div>
+</div>
+<br>
+<div class="tabs">
+    <ul id="tabMenu" class="nav nav-tabs">
+        <li class="active">
+            <a ng-click="" href="#tab-general" data-toggle="tab" aria-expanded="false">ทั่วไป</a>
+        </li>
+        <li class="">
+            <a ng-click="" href="#tab-objective" data-toggle="tab" aria-expanded="true">หลักการและวัตถุประสงค์</a>
+        </li>
+        <li class="">
+            <a ng-click="" href="#tab-target" data-toggle="tab" aria-expanded="true">ตัวชี้วัดและกลุ่มเป้าหมาย</a>
+        </li>
+        <li class="">
+            <a ng-click="" href="#tab-time" data-toggle="tab" aria-expanded="true">ขั้นตอนและระยะเวลา</a>
+        </li>
+        <li class="">
+            <a ng-click="" href="#tab-budget" data-toggle="tab" aria-expanded="true">งบประมาณ</a>
+        </li>
+    </ul>
+    <div id="tabContent" class="tab-content">
+        <div id="tab-general" class="tab-pane">
+            
+            
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <h5>1. ชื่อโครงการ</h5>
+                        </div>
 
-    <div class="form-group">
-        <div class="col-md-12">
-            <h5>2. หน่วยงานที่รับผิดชอบโครงการ</h5>
-        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-6">
+                                <input name="name" ng-model="seriesData.name" type="text" class="form-control input-sm" required>
+                                <span style="color:red" ng-show="projectForm.name.$dirty && projectForm.name.$invalid">
+                                    <span ng-show="projectForm.name.$error.required">กรุณากรอก ชื่อโครงการ</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
 
-        <div class="col-md-12">
-            <label class="col-md-2 control-label text-right">คณะ/สำนัก/วิทยาลัย</label>
-            <div class="col-md-6">
-                <input ng-model="seriesData.facName" class="form-control input-sm" disabled>
-            </div>
-        </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <h5>2. หน่วยงานที่รับผิดชอบโครงการ</h5>
+                        </div>
 
-        <div class="col-md-12" style="margin: 5px 0;">
-            <label class="col-md-2 control-label text-right">ภาควิชา/ศูนย์/ฝ่าย/กอง</label>
-            <div class="col-md-6">
-                <input ng-model="seriesData.deptName" type="text" class="form-control input-sm" disabled>
-            </div>
-        </div>
-        <div class="col-md-12" style="margin: 5px 0;">
-            <label class="col-md-2 control-label text-right">ผู้รับผิดชอบ</label>
-            <div class="col-md-6">
-                <input ng-model="seriesData.responder" type="text" class="form-control input-sm">
-            </div>
-        </div>
-        <div class="col-md-12" style="margin: 5px 0;">
-            <label class="col-md-2 control-label text-right">ผู้กำกับ</label>
-            <div class="col-md-6">
-                <input ng-model="seriesData.director" type="text" class="form-control input-sm">
-            </div>
-        </div>
-    </div>
+                        <div class="col-md-12">
+                            <label class="col-md-2 control-label text-right">คณะ/สำนัก/วิทยาลัย</label>
+                            <div class="col-md-6">
+                                <input ng-model="seriesData.facName" class="form-control input-sm" disabled>
+                            </div>
+                        </div>
 
-    <div class="form-group">
-        <div class="col-md-12">
-            <h5>3. ความเชื่อมโยงสอดคล้องกับแผนกลยุทธ์</h5>
-        </div>
-        <div ng-repeat="affList in affirmative">
-            <div class="row">
+                        <div class="col-md-12" style="margin: 5px 0;">
+                            <label class="col-md-2 control-label text-right">ภาควิชา/ศูนย์/ฝ่าย/กอง</label>
+                            <div class="col-md-6">
+                                <input ng-model="seriesData.deptName" type="text" class="form-control input-sm" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-12" style="margin: 5px 0;">
+                            <label class="col-md-2 control-label text-right">ผู้รับผิดชอบ</label>
+                            <div class="col-md-6">
+                                <input ng-model="seriesData.responder" type="text" class="form-control input-sm">
+                            </div>
+                        </div>
+                        <div class="col-md-12" style="margin: 5px 0;">
+                            <label class="col-md-2 control-label text-right">ผู้กำกับ</label>
+                            <div class="col-md-6">
+                                <input ng-model="seriesData.director" type="text" class="form-control input-sm">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <h5>4. ลักษณะโครงการ/กิจกรรม</h5>
+                        </div>
+
+                        <div ng-repeat="listPT in dataProjectType" class="col-md-2">
+                            <div class="col-md-offset-2 col-md-10 radio-custom radio-primary">
+                                <input ng-model="seriesData.projectTypeId" type="radio" value="{[listPT.id]}">
+                                <label>{[listPT.name]}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <h5>5. การบูรณาการโครงการ</h5>
+                        </div>
+
+                        <div ng-repeat="listInt in dataIntegration" class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-offset-1 col-md-3 checkbox-custom checkbox-primary">
+                                    <input ng-model="seriesData.integrationId[$index]" ng-change="clearIntegrationDESC($index, seriesData.integrationId[$index])" type="checkbox" value="listInt.id">
+                                    <label>{[listInt.name]}</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input ng-disabled="!seriesData.integrationId[$index]" ng-model="seriesData.integrationDESC[$index]" type="text" class="form-control input-sm">
+                                </div>
+                            </div><br>
+                        </div>
+                    </div>
+            <div class="form-group">
                 <div class="col-md-12">
-                    <label class="col-md-2 control-label text-right">แผนกลยุทธ์</label>
-                    <div class="col-md-6">
-                        <select ng-model="affList.typeId" ng-init="affList.typeId = 'udf'" ng-change="fetchIssue($index, affList.typeId)" class="form-control input-sm">
-                            <option value="udf">เลือก</option>
-                            <option ng-repeat="list in cmDataListAffirmativeType" value="{[list.id]}">{[list.typeName]}</option>
-                        </select>
+                    <h5>3. ความเชื่อมโยงสอดคล้องกับแผนกลยุทธ์</h5>
+                </div>
+                <div ng-repeat="affList in affirmative">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="col-md-2 control-label text-right">แผนกลยุทธ์</label>
+                            <div class="col-md-6">
+                                <select ng-model="affList.typeId" ng-init="affList.typeId = 'udf'" ng-change="fetchIssue($index, affList.typeId)" class="form-control input-sm">
+                                    <option value="udf">เลือก</option>
+                                    <option ng-repeat="list in cmDataListAffirmativeType" value="{[list.id]}">{[list.typeName]}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <button ng-show="affirmative.length != 1" ng-click="affirmativeManage('splice', $index)" class="btn btn-default"><i class="fa fa-trash"></i> ลบ</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12" style="margin: 5px 0;">
+                            <label class="col-md-3 control-label text-right">ประเด็นยุทธศาสตร์</label>
+                            <div class="col-md-5">
+                                <select ng-model="affList.issueId" ng-init="affList.issueId = 'udf'" ng-change="fetchTarget($index, affList.issueId)" class="form-control input-sm">
+                                    <option value="udf">เลือก</option>
+                                    <option ng-repeat="listIssue in affList.dataIssue" value="{[listIssue.id]}">{[listIssue.issueName]}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12" style="margin: 5px 0;">
+                            <label class="col-md-3 control-label text-right">เป้าประสงค์</label>
+                            <div class="col-md-5">
+                                <select ng-model="affList.targetId" ng-init="affList.targetId = 'udf'" ng-change="fetchStrategy($index, affList.typeId)" class="form-control input-sm">
+                                    <option value="udf">เลือก</option>
+                                    <option ng-repeat="listTarget in affList.dataTarget" value="{[listTarget.id]}">{[listTarget.targetName]}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12" style="margin: 5px 0;">
+                            <label class="col-md-3 control-label text-right" for="xxx">กลยุทธ์</label>
+                            <div class="col-md-5">
+                                <select ng-model="affList.strategyId" ng-init="affList.strategyId = 'udf'" ng-change="seriesData.affirmative[$index].strategyId = affList.strategyId" class="form-control input-sm">
+                                    <option value="udf">เลือก</option>
+                                    <option ng-repeat="listStrategy in affList.dataStrategy" value="{[listStrategy.id]}">{[listStrategy.strategyName]}</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <button ng-show="affirmative.length != 1" ng-click="affirmativeManage('splice', $index)" class="btn btn-default"><i class="fa fa-trash"></i> ลบ</button>
+                    <br>
+                </div>
+
+                <div class="col-md-12" style="margin: 5px 0;">
+                    <div class="col-md-offset-3 col-md-5" style="text-align: right;">
+                        <button class="btn btn-primary" ng-click="affirmativeManage('push')"><i class="fa fa-plus"></i> เพิ่ม</button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div id="tab-objective" class="tab-pane">
+            
+            
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <h5>6. หลักการและเหตุผลของโครงการ</h5>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-6">
+                                <textarea ng-model="seriesData.rationale" type="text" class="form-control" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <h5>7. วัตถุประสงค์</h5>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-6">
+                                <textarea ng-model="seriesData.objective" type="text" class="form-control" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <h5>16. ประโยชน์ที่คาดว่าจะได้รับ</h5>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-6">
+                                <textarea ng-model="seriesData.benefit" type="text" class="form-control" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+            
+            
+        </div>
+        <div id="tab-target" class="tab-pane">
+            
+            
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <h5>8. ตัวชี้วัดความสำเร็จระดับโครงการ (Output/Outcome) และค่าเป้าหมาย (ระบุหน่วยนับ)</h5>
+                        </div>
+
+                        <div class="col-md-offset-1 col-md-10">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th class="col-md-6 text-center">ตัวชี้วัดความสำเร็จ</th>
+                                    <th class="col-md-2 text-center">หน่วยนับ</th>
+                                    <th class="col-md-2 text-center">ค่าเป้าหมาย</th>
+                                    <th class="col-md-2 text-center">จัดการ</th>
+                                </tr>
+                                <tr ng-repeat-start="listKpi in seriesData.kpi" style="background-color: #F1F1F1;">
+                                    <td colspan="4">{[listKpi.name]}</td>
+                                </tr>
+                                <tr ng-repeat="listItem in listKpi.data">
+                                    <td><input ng-model="listItem.kpi" type="text" class="form-control input-sm"></td>
+                                    <td><input ng-model="listItem.unit" type="text" class="form-control input-sm"></td>
+                                    <td><input ng-model="listItem.target" type="text" class="form-control input-sm"></td>
+                                    <td class="text-center">
+                                        <button ng-click="kpiManage('splice', $parent.$index, $index)" class="btn btn-default"><i class="fa fa-trash"></i> ลบ</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                    <td class="text-center">
+                                        <button ng-click="kpiManage('push', $index)" class="btn btn-primary"><i class="fa fa-plus"></i> เพิ่ม</button>
+                                    </td>
+                                </tr>
+
+                                <tr ng-show="0" ng-repeat-end><td>repeat end</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <h5>9. กลุ่มเป้าหมาย (ระบุกลุ่มเป้าหมายและจำนวนปุ่มเป้าหมายที่เข้าร่วมโครงการ)</h5>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-6">
+                                <textarea ng-model="seriesData.target" type="text" class="form-control" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+            
+            
+        </div>      
+        <div id="tab-time" class="tab-pane">
+            
+            
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <h5>10. ขั้นตอนการดำเนินการ</h5>
+                        </div>
+
+                        <div class="col-md-offset-1 col-md-10">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th class="col-md-6 text-center">ขั้นตอนการดำเนินการ/รายการกิจกรรม</th>
+                                    <th class="col-md-2 text-center">วันที่เริ่มต้น</th>
+                                    <th class="col-md-2 text-center">วันที่สิ้นสุด</th>
+                                    <th class="col-md-2 text-center">จัดการ</th>
+                                </tr>
+                                <tr ng-repeat="listOpe in seriesData.operating">
+                                    <td><input ng-model="listOpe.operatingName" type="text" class="form-control input-sm"></td>
+                                    <td><input ng-model="listOpe.timeStart" type="text" class="form-control input-sm"></td>
+                                    <td><input ng-model="listOpe.timeEnd" type="text" class="form-control input-sm"></td>
+                                    <td class="text-center">
+                                        <button ng-click="operatingManage('splice', $index)" class="btn btn-default"><i class="fa fa-trash"></i> ลบ</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                    <td class="text-center">
+                                        <button ng-click="operatingManage('push')" class="btn btn-primary"><i class="fa fa-plus"></i> เพิ่ม</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <h5>11. ระยะเวลาการดำเนินงาน</h5>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div style="margin: 5px 0;" class="col-md-12">
+                                <label class="col-md-2 control-label text-right">วันที่เริ่มต้น</label>
+                                <div class="col-md-3">
+                                    <input ng-model="seriesData.timeStart" type="text" class="form-control input-sm ng-pristine ng-valid ng-touched">
+                                </div>
+                                <label class="col-md-1 control-label text-right">วันที่สิ้นสุด</label>
+                                <div class="col-md-3">
+                                    <input ng-model="seriesData.timeEnd" type="text" class="form-control input-sm ng-pristine ng-valid ng-touched">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+        <div id="tab-budget" class="tab-pane active">
+            
+            
+            <div class="form-group">
+                <div class="col-md-12">
+                    <h5>12. ประมาณการงบประมาณที่ใช้</h5>
+                </div>
+                <div class="col-md-12" style="margin: 5px 0;">
+                    <label class="col-md-2 control-label text-right">ตัวเลข</label>
+                    <div class="col-md-3">
+                        <input ng-model="seriesData.budgetAmount" type="text" class="form-control input-sm ng-pristine ng-valid ng-touched">
+                    </div>
+                    <label class="col-md-1 control-label text-right">ตัวอักษร</label>
+                    <div class="col-md-3">
+                        <input ng-model="seriesData.budgetText" type="text" class="form-control input-sm ng-pristine ng-valid ng-touched">
                     </div>
                 </div>
                 <div class="col-md-12" style="margin: 5px 0;">
-                    <label class="col-md-3 control-label text-right">ประเด็นยุทธศาสตร์</label>
-                    <div class="col-md-5">
-                        <select ng-model="affList.issueId" ng-init="affList.issueId = 'udf'" ng-change="fetchTarget($index, affList.issueId)" class="form-control input-sm">
-                            <option value="udf">เลือก</option>
-                            <option ng-repeat="listIssue in affList.dataIssue" value="{[listIssue.id]}">{[listIssue.issueName]}</option>
-                        </select>
-                    </div>
-                </div>
 
-                <div class="col-md-12" style="margin: 5px 0;">
-                    <label class="col-md-3 control-label text-right">เป้าประสงค์</label>
-                    <div class="col-md-5">
-                        <select ng-model="affList.targetId" ng-init="affList.targetId = 'udf'" ng-change="fetchStrategy($index, affList.typeId)" class="form-control input-sm">
-                            <option value="udf">เลือก</option>
-                            <option ng-repeat="listTarget in affList.dataTarget" value="{[listTarget.id]}">{[listTarget.targetName]}</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col-md-12" style="margin: 5px 0;">
-                    <label class="col-md-3 control-label text-right" for="xxx">กลยุทธ์</label>
-                    <div class="col-md-5">
-                        <select ng-model="affList.strategyId" ng-init="affList.strategyId = 'udf'" ng-change="seriesData.affirmative[$index].strategyId = affList.strategyId" class="form-control input-sm">
-                            <option value="udf">เลือก</option>
-                            <option ng-repeat="listStrategy in affList.dataStrategy" value="{[listStrategy.id]}">{[listStrategy.strategyName]}</option>
-                        </select>
-                    </div>
                 </div>
             </div>
-            <br>
-        </div>
 
-        <div class="col-md-12" style="margin: 5px 0;">
-            <div class="col-md-offset-3 col-md-5" style="text-align: right;">
-                <button class="btn btn-primary" ng-click="affirmativeManage('push')"><i class="fa fa-plus"></i> เพิ่ม</button>
-            </div>
-        </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-12">
-            <h5>4. ลักษณะโครงการ/กิจกรรม</h5>
-        </div>
-
-        <div ng-repeat="listPT in dataProjectType" class="col-md-2">
-            <div class="col-md-offset-2 col-md-10 radio-custom radio-primary">
-                <input ng-model="seriesData.projectTypeId" type="radio" value="{[listPT.id]}">
-                <label>{[listPT.name]}</label>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-12">
-            <h5>5. การบูรณาการโครงการ</h5>
-        </div>
-
-        <div ng-repeat="listInt in dataIntegration" class="col-md-12">
-            <div class="row">
-                <div class="col-md-offset-1 col-md-3 checkbox-custom checkbox-primary">
-                    <input ng-model="seriesData.integrationId[$index]" ng-change="clearIntegrationDESC($index, seriesData.integrationId[$index])" type="checkbox" value="listInt.id">
-                    <label>{[listInt.name]}</label>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <h5>13. แหล่งเงิน/ประเภทงบประมาณที่ใช้/แผนงาน</h5>
                 </div>
-                <div class="col-md-6">
-                    <input ng-disabled="!seriesData.integrationId[$index]" ng-model="seriesData.integrationDESC[$index]" type="text" class="form-control input-sm">
-                </div>
-            </div><br>
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        <div class="col-md-12">
-            <h5>6. หลักการและเหตุผลของโครงการ</h5>
-        </div>
-
-        <div class="col-md-12">
-            <div class="col-md-2"></div>
-            <div class="col-md-6">
-                <textarea ng-model="seriesData.rationale" type="text" class="form-control" rows="5"></textarea>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-12">
-            <h5>7. วัตถุประสงค์</h5>
-        </div>
-
-        <div class="col-md-12">
-            <div class="col-md-2"></div>
-            <div class="col-md-6">
-                <textarea ng-model="seriesData.objective" type="text" class="form-control" rows="5"></textarea>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-12">
-            <h5>8. ตัวชี้วัดความสำเร็จระดับโครงการ (Output/Outcome) และค่าเป้าหมาย (ระบุหน่วยนับ)</h5>
-        </div>
-
-        <div class="col-md-offset-1 col-md-10">
-            <table class="table table-bordered">
-                <tr>
-                    <th class="col-md-6 text-center">ตัวชี้วัดความสำเร็จ</th>
-                    <th class="col-md-2 text-center">หน่วยนับ</th>
-                    <th class="col-md-2 text-center">ค่าเป้าหมาย</th>
-                    <th class="col-md-2 text-center">จัดการ</th>
-                </tr>
-                <tr ng-repeat-start="listKpi in seriesData.kpi" style="background-color: #F1F1F1;">
-                    <td colspan="4">{[listKpi.name]}</td>
-                </tr>
-                <tr ng-repeat="listItem in listKpi.data">
-                    <td><input ng-model="listItem.kpi" type="text" class="form-control input-sm"></td>
-                    <td><input ng-model="listItem.unit" type="text" class="form-control input-sm"></td>
-                    <td><input ng-model="listItem.target" type="text" class="form-control input-sm"></td>
-                    <td class="text-center">
-                        <button ng-click="kpiManage('splice', $parent.$index, $index)" class="btn btn-default"><i class="fa fa-trash"></i> ลบ</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="3"></td>
-                    <td class="text-center">
-                        <button ng-click="kpiManage('push', $index)" class="btn btn-primary"><i class="fa fa-plus"></i> เพิ่ม</button>
-                    </td>
-                </tr>
-
-                <tr ng-show="0" ng-repeat-end><td>repeat end</td></tr>
-            </table>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-12">
-            <h5>9. กลุ่มเป้าหมาย (ระบุกลุ่มเป้าหมายและจำนวนปุ่มเป้าหมายที่เข้าร่วมโครงการ)</h5>
-        </div>
-
-        <div class="col-md-12">
-            <div class="col-md-2"></div>
-            <div class="col-md-6">
-                <textarea ng-model="seriesData.target" type="text" class="form-control" rows="5"></textarea>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        <div class="col-md-12">
-            <h5>10. ขั้นตอนการดำเนินการ</h5>
-        </div>
-
-        <div class="col-md-offset-1 col-md-10">
-            <table class="table table-bordered">
-                <tr>
-                    <th class="col-md-6 text-center">ขั้นตอนการดำเนินการ/รายการกิจกรรม</th>
-                    <th class="col-md-2 text-center">วันที่เริ่มต้น</th>
-                    <th class="col-md-2 text-center">วันที่สิ้นสุด</th>
-                    <th class="col-md-2 text-center">จัดการ</th>
-                </tr>
-                <tr ng-repeat="listOpe in seriesData.operating">
-                    <td><input ng-model="listOpe.operatingName" type="text" class="form-control input-sm"></td>
-                    <td><input ng-model="listOpe.timeStart" type="text" class="form-control input-sm"></td>
-                    <td><input ng-model="listOpe.timeEnd" type="text" class="form-control input-sm"></td>
-                    <td class="text-center">
-                        <button ng-click="operatingManage('splice', $index)" class="btn btn-default"><i class="fa fa-trash"></i> ลบ</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="3"></td>
-                    <td class="text-center">
-                        <button ng-click="operatingManage('push')" class="btn btn-primary"><i class="fa fa-plus"></i> เพิ่ม</button>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-12">
-            <h5>11. ระยะเวลาการดำเนินงาน</h5>
-        </div>
-
-        <div class="col-md-12">
-            <div style="margin: 5px 0;" class="col-md-12">
-                <label class="col-md-2 control-label text-right">วันที่เริ่มต้น</label>
-                <div class="col-md-3">
-                    <input ng-model="seriesData.timeStart" type="text" class="form-control input-sm ng-pristine ng-valid ng-touched">
-                </div>
-                <label class="col-md-1 control-label text-right">วันที่สิ้นสุด</label>
-                <div class="col-md-3">
-                    <input ng-model="seriesData.timeEnd" type="text" class="form-control input-sm ng-pristine ng-valid ng-touched">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-12">
-            <h5>12. ประมาณการงบประมาณที่ใช้</h5>
-        </div>
-        <div class="col-md-12" style="margin: 5px 0;">
-            <label class="col-md-2 control-label text-right">ตัวเลข</label>
-            <div class="col-md-3">
-                <input ng-model="seriesData.budgetAmount" type="text" class="form-control input-sm ng-pristine ng-valid ng-touched">
-            </div>
-            <label class="col-md-1 control-label text-right">ตัวอักษร</label>
-            <div class="col-md-3">
-                <input ng-model="seriesData.budgetText" type="text" class="form-control input-sm ng-pristine ng-valid ng-touched">
-            </div>
-        </div>
-        <div class="col-md-12" style="margin: 5px 0;">
-
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        <div class="col-md-12">
-            <h5>13. แหล่งเงิน/ประเภทงบประมาณที่ใช้/แผนงาน</h5>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
                 <div class="row">
-                    <div class="col-md-offset-1" style="font-weight: bold;">งบประมาณแผ่นดิน หมวดเงินอุดหนุนอื่นๆ</div>
-                </div><br>
-            </div>
-            <div ng-repeat="listSub in dataSubsidies" class="col-md-6">
-                <div class="row">
-                    <div class="col-md-offset-2 col-md-10 checkbox-custom checkbox-primary">
-                        <input ng-model="seriesData.subsidies[listSub.id]" type="checkbox" value="{[listSub.id]}">
-                        <label>{[listSub.typeName]}</label>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-offset-1" style="font-weight: bold;">งบประมาณแผ่นดิน หมวดเงินอุดหนุนอื่นๆ</div>
+                        </div><br>
+                    </div>
+                    <div ng-repeat="listSub in dataSubsidies" class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-offset-2 col-md-10 checkbox-custom checkbox-primary">
+                                <input ng-model="seriesData.subsidies[listSub.id]" type="checkbox" value="{[listSub.id]}">
+                                <label>{[listSub.typeName]}</label>
+                            </div>
+                        </div><br>
                     </div>
                 </div><br>
-            </div>
-        </div><br>
-        <div class="row">
-            <div class="col-md-12">
                 <div class="row">
-                    <div class="col-md-offset-1" style="font-weight: bold;">แผนงาน</div>
-                </div><br>
-            </div>
-            <div ng-repeat="listPlan in dataPlan" class="col-md-6">
-                <div class="row">
-                    <div class="col-md-offset-2 col-md-10 checkbox-custom checkbox-primary">
-                        <input ng-model="seriesData.Plan[listPlan.id]" type="checkbox" value="{[listPlan.id]}">
-                        <label>{[listPlan.planName]}</label>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-offset-1" style="font-weight: bold;">แผนงาน</div>
+                        </div><br>
                     </div>
-                </div><br>
+                    <div ng-repeat="listPlan in dataPlan" class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-offset-2 col-md-10 checkbox-custom checkbox-primary">
+                                <input ng-model="seriesData.Plan[listPlan.id]" type="checkbox" value="{[listPlan.id]}">
+                                <label>{[listPlan.planName]}</label>
+                            </div>
+                        </div><br>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-12">
-            <h5>14. งบประมาณและแผนการใช้จ่ายงบประมาณ</h5>
-        </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <h5>14. งบประมาณและแผนการใช้จ่ายงบประมาณ</h5>
+                </div>
 
-        <div class="col-md-12">
-            <table class="table table-bordered">
-                <tr>
-                    <th rowspan="2" class="text-center" style="vertical-align: middle;">งบรายจ่าย</th>
-                    <th class="text-center">ไตรมาส 1</th>
-                    <th class="text-center">ไตรมาส 2</th>
-                    <th class="text-center">ไตรมาส 3</th>
-                    <th class="text-center">ไตรมาส 4</th>
-                </tr>
-                <tr>
-                    <th class="text-center">แผนการใช้จ่าย</th>
-                    <th class="text-center">แผนการใช้จ่าย</th>
-                    <th class="text-center">แผนการใช้จ่าย</th>
-                    <th class="text-center">แผนการใช้จ่าย</th>
-                </tr>
-                <tr ng-repeat-start="list in dataBudgetType" style="background-color: #F1F1F1;">
-                    <td>{[($index+1)+ '. ' + list.typeName]}</td>
-                    <td colspan="4">&nbsp;</td>
-                </tr>
-                <tr ng-repeat="listSub in list.sub">
-                    <td style="padding-left: 50px;">{[($parent.$index+1)+ '.' + ($index+1) + ' ' + listSub.typeName]}</td>
-                    <td><input ng-model="seriesData.paymentPlan[listSub.id].quarter1" type="number" class="form-control input-sm"></td>
-                    <td><input ng-model="seriesData.paymentPlan[listSub.id].quarter2" type="number" class="form-control input-sm"></td>
-                    <td><input ng-model="seriesData.paymentPlan[listSub.id].quarter3" type="number" class="form-control input-sm"></td>
-                    <td><input ng-model="seriesData.paymentPlan[listSub.id].quarter4" type="number" class="form-control input-sm"></td>
-                </tr>
-                <tr ng-show="0" colspan="6" ng-repeat-end><td>ng-repeat-end</td></tr>
-            </table>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-12">
-            <h5>15. รายละเอียดการใช้งบประมาณ</h5>
-        </div>
-
-        <div class="col-md-12">
-            <table class="table table-bordered">
-                <tr>
-                    <th class="col-md-3 text-center">รายการ</th>
-                    <th class="col-md-2 text-center">จำนวนหน่วย</th>
-                    <th class="col-md-2 text-center">ราคาต่อหน่วย</th>
-                    <th class="col-md-2 text-center">รวมเงิน</th>
-                    <th class="col-md-2 text-center">หมายเหตุ</th>
-                    <th class="col-md-1 text-center">จัดการ</th>
-                </tr>
-                <tr ng-repeat="listEx in seriesData.expense">
-                    <td><input ng-model="listEx.list" type="text" class="form-control input-sm"></td>
-                    <td><input ng-model="listEx.unit" type="text" class="form-control input-sm"></td>
-                    <td><input ng-model="listEx.price" type="text" class="form-control input-sm"></td>
-                    <td><input ng-model="listEx.total" type="text" class="form-control input-sm"></td>
-                    <td><input ng-model="listEx.note" type="text" class="form-control input-sm"></td>
-                    <td class="text-center">
-                        <button ng-click="expenseManage('splice', $index)" class="btn btn-default"><i class="fa fa-trash"></i> ลบ</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="5"></td>
-                    <td class="text-center">
-                        <button ng-click="expenseManage('push')" class="btn btn-primary"><i class="fa fa-plus"></i> เพิ่ม</button>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-
-
-    <div class="form-group">
-        <div class="col-md-12">
-            <h5>16. ประโยชน์ที่คาดว่าจะได้รับ</h5>
-        </div>
-
-        <div class="col-md-12">
-            <div class="col-md-2"></div>
-            <div class="col-md-6">
-                <textarea ng-model="seriesData.benefit" type="text" class="form-control" rows="5"></textarea>
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th rowspan="2" class="text-center" style="vertical-align: middle;">งบรายจ่าย</th>
+                            <th class="text-center">ไตรมาส 1</th>
+                            <th class="text-center">ไตรมาส 2</th>
+                            <th class="text-center">ไตรมาส 3</th>
+                            <th class="text-center">ไตรมาส 4</th>
+                        </tr>
+                        <tr>
+                            <th class="text-center">แผนการใช้จ่าย</th>
+                            <th class="text-center">แผนการใช้จ่าย</th>
+                            <th class="text-center">แผนการใช้จ่าย</th>
+                            <th class="text-center">แผนการใช้จ่าย</th>
+                        </tr>
+                        <tr ng-repeat-start="list in dataBudgetType" style="background-color: #F1F1F1;">
+                            <td>{[($index+1)+ '. ' + list.typeName]}</td>
+                            <td colspan="4">&nbsp;</td>
+                        </tr>
+                        <tr ng-repeat="listSub in list.sub">
+                            <td style="padding-left: 50px;">{[($parent.$index+1)+ '.' + ($index+1) + ' ' + listSub.typeName]}</td>
+                            <td><input ng-model="seriesData.paymentPlan[listSub.id].quarter1" type="number" class="form-control input-sm"></td>
+                            <td><input ng-model="seriesData.paymentPlan[listSub.id].quarter2" type="number" class="form-control input-sm"></td>
+                            <td><input ng-model="seriesData.paymentPlan[listSub.id].quarter3" type="number" class="form-control input-sm"></td>
+                            <td><input ng-model="seriesData.paymentPlan[listSub.id].quarter4" type="number" class="form-control input-sm"></td>
+                        </tr>
+                        <tr ng-show="0" colspan="6" ng-repeat-end><td>ng-repeat-end</td></tr>
+                    </table>
+                </div>
             </div>
+
+            <div class="form-group">
+                <div class="col-md-12">
+                    <h5>15. รายละเอียดการใช้งบประมาณ</h5>
+                </div>
+
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th class="col-md-3 text-center">รายการ</th>
+                            <th class="col-md-2 text-center">จำนวนหน่วย</th>
+                            <th class="col-md-2 text-center">ราคาต่อหน่วย</th>
+                            <th class="col-md-2 text-center">รวมเงิน</th>
+                            <th class="col-md-2 text-center">หมายเหตุ</th>
+                            <th class="col-md-1 text-center">จัดการ</th>
+                        </tr>
+                        <tr ng-repeat="listEx in seriesData.expense">
+                            <td><input ng-model="listEx.list" type="text" class="form-control input-sm"></td>
+                            <td><input ng-model="listEx.unit" type="text" class="form-control input-sm"></td>
+                            <td><input ng-model="listEx.price" type="text" class="form-control input-sm"></td>
+                            <td><input ng-model="listEx.total" type="text" class="form-control input-sm"></td>
+                            <td><input ng-model="listEx.note" type="text" class="form-control input-sm"></td>
+                            <td class="text-center">
+                                <button ng-click="expenseManage('splice', $index)" class="btn btn-default"><i class="fa fa-trash"></i> ลบ</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5"></td>
+                            <td class="text-center">
+                                <button ng-click="expenseManage('push')" class="btn btn-primary"><i class="fa fa-plus"></i> เพิ่ม</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            
         </div>
     </div>
+</div>
 
-
-
-    <div class="col-md-12 text-right">
-        <button class="btn btn-success"><i class="fa fa-save"></i> บันทึก</button>&nbsp;
-        <button class="btn btn-default"><i class="fa fa-trash"></i> ล้างข้อมูล</button>
-    </div>
-</form>
+<div class="col-md-12 text-right">
+    <button class="btn btn-success"><i class="fa fa-save"></i> บันทึก</button>&nbsp;
+    <button class="btn btn-default"><i class="fa fa-trash"></i> ล้างข้อมูล</button>
+</div>
