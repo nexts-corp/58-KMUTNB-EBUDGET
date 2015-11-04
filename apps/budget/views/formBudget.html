@@ -26,7 +26,7 @@
                 <li class="active">
                     <button class="btn btn-success goChoice"><i class="fa fa-plus-circle"> เพิ่มคำขอ</i></button>
                     <button class="btn btn-default backHome" style="display: none;"><i class="fa fa-angle-double-left">
-                            ย้อนกลับ</i></button>
+                        ย้อนกลับ</i></button>
                     <button class="btn btn-default backChoice" style="display: none;"><i
                             class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
                     <button class="btn btn-default backAttachment" style="display: none;"><i
@@ -43,16 +43,16 @@
             <div id="divHome" class="col-md-12">
                 <table id="table" class="table table-bordered table-striped table-condensed mb-none">
                     <thead>
-                        <tr>
-                            <th class="text-center col-lg-6">รายละเอียดคำของบประมาณ</th>
-                            <th class="text-center col-lg-3">สถานะ</th>
-                            <th class="text-center col-lg-3">เครื่องมือ</th>
-                        </tr>
+                    <tr>
+                        <th class="text-center col-lg-6">รายละเอียดคำของบประมาณ</th>
+                        <th class="text-center col-lg-3">สถานะ</th>
+                        <th class="text-center col-lg-3">เครื่องมือ</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td colspan="3" class="text-center">-</td>
-                        </tr>
+                    <tr>
+                        <td colspan="3" class="text-center">-</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -155,9 +155,9 @@
                             <div id="panel2" style="margin-top: 20px;">
                                 <table class="table table-hover">
                                     <thead>
-                                        <tr>
-                                            <th colspan="2" class="text-center">แบบฟอร์มคำของบประมาณแผ่นดิน</th>
-                                        </tr>
+                                    <tr>
+                                        <th colspan="2" class="text-center">แบบฟอร์มคำของบประมาณแผ่นดิน</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
                                     </tbody>
@@ -170,10 +170,10 @@
             </div>
 
             <!-- divForm Jquery -->
-            
+
             <div id="divForm" class="col-md-12" style="display: none;"></div>
             <div id="divAttachment" class="col-md-12" style="display: none;"></div>
-           
+
             <!-- divForm AngularJs -->
             <!-- 
             <div ng-show="!activeNg" id="divForm" class="col-md-12" style="display: none;"></div>
@@ -203,7 +203,7 @@
 </style>
 
 <script type="text/javascript">
-            var js_context_path = "{{_context_path}}";</script>
+    var js_context_path = "{{_context_path}}";</script>
 
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg140.js"></script>
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg141.js"></script>
@@ -223,6 +223,8 @@
 
 <script type="text/javascript">
 
+    var STATUSPROGRESS = 1, STATUSWAITING = 2, STATUSAPPROVE = 3, STATUSEDITING = 4;
+    var PERMISSION = "DEPARTMENT";
     var isForm = 0;
     var budgetPeriodArr = {};
     var budgetTypeArr = {};
@@ -231,17 +233,12 @@
     var fundgroupArr = {};
     var facultyArr = {};
     var departmentArr = {};
-    //        var budgetPeriodArr = {2557: 2557, 2558: 2558, 2559: 2559};
-    //        var budgetTypeArr = {G: "เงินงบประมาณแผ่นดิน", K: "เงินรายได้", U: "เงินงบประมาณแผ่นดินและเงินรายได้"};
-    //        var planArr = {1: "ดำเนินการตามกรอบข้อตกลงของประชาคมอาเซียน", 2: "ขยายโอกาสและพัฒนาคุณภาพการศึกษา", 3: "ส่งเสริมการวิจัยและพัฒนา"};
-    //        var projectArr = {1: "โครงการเตรียมความพร้อมสู่ประชาคมอาเซียน"};
-    //        var fundgroupArr = {100: "กองทุนทั่วไป", 200: "กองทุนเพื่อการศึกษา", 300: "กองทุนวิจัย", 400: "กองทุนบริการวิชาการ", 500: "กองทุนกิจการนักศึกษา", 600: "กองทุนสินทรัพย์ถาวร", 700: "กองทุนอื่น ๆ", 701: "กองทุนทำนุบำรุงศิลปวัฒนธรรม ", 702: "กองทุนสำรอง", 703: "กองทุนสวัสดิการ", 704: "กองทุนพัฒนาบุคลากร", 705: "กองทุนคณะ", 706: "กองทุนพัฒนาสถาบัน", 707: "กองทุนเพื่อวัตถุประสงค์เฉพาะ", 708: "กองทุนคงคลังสถาบัน", 709: "กองทุนส่งเสริมการศึกษาและพัฒนาเทคโนโลยี มจพ."};
-    //        var facultyArr = {10100: "สำนักงานอธิการบดี", 20100: "สำนักคอมพิวเตอร์และเทคโนโลยีสารสนเทศ", 20200: "สถาบันนวัตกรรมเทคโนโลยีไทย-ฝรั่งเศส", 20300: "สำนักพัฒนาเทคโนโลยีเพื่ออุตสาหกรรม", 20400: "สำนักหอสมุดกลาง", 20500: "สำนักพัฒนาเทคนิคศึกษา", 20600: "สำนักวิจัยวิทยาศาสตร์และเทคโนโลยี", 20700: "โครงการที่พักอาศัยเพื่อการเรียนรู้และสันทนาการ", 20800: "สถาบันสหกิจศึกษาและพัฒนาสื่ออิเล็กทรอนิกส์ ไทย-เยอรมัน", 30100: "คณะวิศวกรรมศาสตร์", 30200: "คณะครุศาสตร์อุตสาหกรรม", 30300: "วิทยาลัยเทคโนโลยีอุตสาหกรรม", 30400: "คณะวิทยาศาสตร์ประยุกต์", 30500: "คณะเทคโนโลยีและการจัดการอุตสาหกรรม", 30600: "คณะเทคโนโลยีสารสนเทศ", 30700: "คณะศิลปศาสตร์ประยุกต์", 30800: "คณะอุตสาหกรรมเกษตร", 30900: "บัณฑิตวิทยาลัย", 31000: "บัณฑิตวิทยาลัยวิศวกรรมศาสตร์นานาชาติสิรินธรไทย-เยอรมัน", 31100: "คณะสถาปัตยกรรมและการออกแบบ", 31200: "คณะบริหารธุรกิจ", 31300: "คณะวิศวกรรมศาสตร์และเทคโนโลยี", 31400: "คณะวิทยาศาสตร์ พลังงาน และสิ่งแวดล้อม", 31500: "วิทยาลัยนานาชาติ", 31600: "คณะพัฒนาธุรกิจและอุตสาหกรรม", 31700: "คณะบริหารธุรกิจและอุตสาหกรรมบริการ", 90000: "หน่วยบริหารส่วนกลาง", 91000: "หน่วยกลาง มจพ."};
-    //        var departmentArr = {10100: "สำนักงานอธิการบดี", 10101: "กองกลาง", 10102: "กองบริการการศึกษา", 10103: "กองแผนงาน", 10104: "กองกิจการนักศึกษา", 10105: "กองบริหารและการจัดการทรัพยากรมนุษย์", 10106: "กองคลัง", 10107: "กองอาคารสถานที่และยานพาหนะ", 10108: "กองงานพัสดุ", 10109: "ศูนย์ผลิตตำราเรียน", 10110: "ศูนย์ความร่วมมือนานาชาติ", 10111: "หน่วยตรวจสอบภายใน", 10112: "ศูนย์ประกันคุณภาพการศึกษา", 10113: "ศูนย์ส่งเสริมสวัสดิการและสิ่งจูงใจ", 10114: "สภาคณาจารย์และพนักงาน", 10116: "กองงาน วิทยาเขตปราจีนบุรี", 10117: "ศูนย์บริการเทคโนโลยี", 10118: "IAESTE Thailand", 10120: "หน่วยงานบริหารสำนักงานอธิการบดี", 10122: "โครงการจัดตั้ง มจพ.ระยอง", 10123: "กองกฏหมาย", 10124: "กองส่งเสริมวิชาการ", 10125: "กองงานสำนักงานสภามหาวิทยาลัย", 20100: "สำนักคอมพิวเตอร์และเทคโนโลยีสารสนเทศ", 20200: "สถาบันนวัตกรรมเทคโนโลยีไทย-ฝรั่งเศส", 20300: "สำนักพัฒนาเทคโนโลยีเพื่ออุตสาหกรรม", 20400: "สำนักหอสมุดกลาง", 20500: "สำนักพัฒนาเทคนิคศึกษา", 20600: "สำนักวิจัยวิทยาศาสตร์และเทคโนโลยี", 20700: "โครงการที่พักอาศัยเพื่อการเรียนรู้และสันทนาการ", 20800: "สถาบันสหกิจศึกษาและพัฒนาสื่ออิเล็กทรอนิกส์ ไทย-เยอรมัน", 30100: "คณะวิศวกรรมศาสตร์", 30200: "คณะครุศาสตร์อุตสาหกรรม", 30300: "วิทยาลัยเทคโนโลยีอุตสาหกรรม", 30400: "คณะวิทยาศาสตร์ประยุกต์", 30500: "คณะเทคโนโลยีและการจัดการอุตสาหกรรม", 30600: "คณะเทคโนโลยีสารสนเทศ", 30700: "คณะศิลปศาสตร์ประยุกต์", 30800: "คณะอุตสาหกรรมเกษตร", 30900: "บัณฑิตวิทยาลัย", 31000: "บัณฑิตวิทยาลัยวิศวกรรมศาสตร์นานาชาติสิรินธรไทย-เยอรมัน", 31100: "คณะสถาปัตยกรรมและการออกแบบ", 31200: "คณะบริหารธุรกิจ", 31300: "คณะวิศวกรรมศาสตร์และเทคโนโลยี", 31400: "คณะวิทยาศาสตร์ พลังงาน และสิ่งแวดล้อม", 31500: "วิทยาลัยนานาชาติ", 31600: "คณะพัฒนาธุรกิจและอุตสาหกรรม", 31700: "คณะบริหารธุรกิจและอุตสาหกรรมบริการ", 90000: "หน่วยบริหารส่วนกลาง", 91000: "หน่วยกลาง มจพ."};
+    var listSTATUSTRACKING = [];
 
     $(function () {
 
         listsFormSaved();
+        listsStatusTracking();
         toggleShow("home");
         $("#budgetPeriodId, #budgetTypeCode, #planId, #projectId, #fundgroupId, #facultyId, #deptId").select2().trigger("change");
         // choice changed
@@ -420,37 +417,37 @@
 
             $("button.form").unbind("click").click(function () {
                 var form = $(this).attr("data-form");
-                
+
                 var param = {};
                 $("#formChoice select").each(function () {
                     var name = $(this).attr("name");
                     param[name] = $(this).val();
                 });
-                
+
                 eval(form + "Form(param)");
-                
+
                 /*
-                var form = $(this).attr("data-form");
-                
-                var param = {};
-                $("#formChoice select").each(function () {
-                    var name = $(this).attr("name");
-                    param[name] = $(this).val();
-                });
-        
-                var hasNg = $(this).attr("has-ng");
-                if (hasNg !== "true") {
-                    // open Form for Jquery
-                    eval(form + "Form(param)");
-                } else {
-                    // open Form for AngularJS
-                    var $scopeJS = angular.element(document.querySelector('[ng-app=formBudget]')).scope();
-                    $scopeJS.$apply(function () {
-                        $scopeJS.openForm(form, param);
-                    });
-                    toggleShow("form");
-                }
-                */
+                 var form = $(this).attr("data-form");
+
+                 var param = {};
+                 $("#formChoice select").each(function () {
+                 var name = $(this).attr("name");
+                 param[name] = $(this).val();
+                 });
+
+                 var hasNg = $(this).attr("has-ng");
+                 if (hasNg !== "true") {
+                 // open Form for Jquery
+                 eval(form + "Form(param)");
+                 } else {
+                 // open Form for AngularJS
+                 var $scopeJS = angular.element(document.querySelector('[ng-app=formBudget]')).scope();
+                 $scopeJS.$apply(function () {
+                 $scopeJS.openForm(form, param);
+                 });
+                 toggleShow("form");
+                 }
+                 */
 
             });
             isForm = 1;
@@ -560,6 +557,17 @@
         $("#deptId").html(html).trigger("change");
     }
 
+    function listsStatusTracking() {
+
+        var datas = callAjax("{{_context_path}}/api/budget/budgetReview/listTracking", "get", "json");
+        if (typeof datas !== "undefined" && datas !== null) {
+            $.each(datas["lists"], function (key, value) {
+
+                listSTATUSTRACKING[value["id"]] = value["desc"];
+            });
+        }
+    }
+
     function toggleShow(option) {
 
         if (option == "home") {
@@ -606,6 +614,44 @@
             $("button.backAttachment").show();
         }
     }
+
+    function updateStatusBG(bgType, listBg, status, isRefresh) {
+        //update status all
+        var form = [];
+        form["Budget140"] = "bg140Form"; // for refresh form
+        form["Budget141"] = "bg141Form";
+        form["Budget142"] = "bg142Form";
+        form["Budget143"] = "bg143Form";
+        form["Budget144"] = "bg144Form";
+        form["Budget145"] = "bg145Form";
+        form["Budget146"] = "bg146Form";
+
+        var param = {};
+        param.bgType = bgType;
+        param.listBg = listBg;
+        param.status = status;
+
+        var datas = callAjax(js_context_path + "/api/budget/budgetSave/updateStatus", "post", JSON.stringify(param), "json");
+        if (datas != undefined && datas !== null) {
+            if (datas["results"]["status"] == true) {
+                alert("ส่งคำขอสำเร็จ");
+                if (isRefresh) {
+                    var param = {};
+                    $("#formChoice select").each(function () {
+                        var name = $(this).attr("name");
+                        param[name] = $(this).val();
+                    });
+                    eval(form[bgType] + "(param);");
+                }
+                return true;
+
+            } else {
+                alert("ส่งคำขอผิดพลาด");
+                return false;
+            }
+        }
+    }
+
 
     function InsertAttachment() {
 

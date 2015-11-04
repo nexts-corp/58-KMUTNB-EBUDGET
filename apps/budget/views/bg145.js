@@ -2,50 +2,96 @@ var typeName145Arr = [];
 var list145Arr = [];
 
 function bg145Form(param) {
+    typeName145Arr = [];
+    list145Arr = [];
 
     var html = '<div id="panelTable" class="col-md-12">'
+        + '<div class="form-group">';
 
-        + '<div class="form-group">'
+    if (budgetPeriodArr != null && budgetTypeArr != null && planArr != null && projectArr != null && fundgroupArr != null && departmentArr != null) {
 
-        + '<div class="col-md-6">'
-        + '<label class="col-md-4 control-label text-right">ปีงบประมาณ : </label>'
-        + '<div class="col-md-6">' + budgetPeriodArr[param["budgetPeriodId"]] + '</div>'
-        + '</div>'
+        html += '<div class="col-md-6">'
+            + '<label class="col-md-4 control-label text-right">ปีงบประมาณ : </label>'
+            + '<div class="col-md-6">' + budgetPeriodArr[param["budgetPeriodId"]] + '</div>'
+            + '</div>'
 
-        + '<div class="col-md-6">'
-        + '<label class="col-md-4 control-label text-right">แหล่งเงิน : </label>'
-        + '<div class="col-md-6">' + budgetTypeArr[param["budgetTypeCode"]] + '</div>'
-        + '</div>'
+            + '<div class="col-md-6">'
+            + '<label class="col-md-4 control-label text-right">แหล่งเงิน : </label>'
+            + '<div class="col-md-6">' + budgetTypeArr[param["budgetTypeCode"]] + '</div>'
+            + '</div>'
 
-        + '</div>'
+            + '</div>'
 
-        + '<div class="form-group">'
-        + '<div class="col-md-6">'
-        + '<label class="col-md-4 control-label text-right">แผนงาน : </label>'
-        + '<div class="col-md-6">' + planArr[param["planId"]] + '</div>'
-        + '</div>'
+            + '<div class="form-group">'
+            + '<div class="col-md-6">'
+            + '<label class="col-md-4 control-label text-right">แผนงาน : </label>'
+            + '<div class="col-md-6">' + planArr[param["planId"]] + '</div>'
+            + '</div>'
 
-        + '<div class="col-md-6">'
-        + '<label class="col-md-4 control-label text-right">ผลผลิต/โครงการ : </label>'
-        + '<div class="col-md-6">' + projectArr[param["projectId"]] + '</div>'
-        + '</div>'
-        + '</div>'
+            + '<div class="col-md-6">'
+            + '<label class="col-md-4 control-label text-right">ผลผลิต/โครงการ : </label>'
+            + '<div class="col-md-6">' + projectArr[param["projectId"]] + '</div>'
+            + '</div>'
+            + '</div>'
 
-        + '<div class="form-group">'
-        + '<div class="col-md-6">'
-        + '<label class="col-md-4 control-label text-right">กองทุน : </label>'
-        + '<div class="col-md-6">' + fundgroupArr[param["fundgroupId"]] + '</div>'
-        + '</div>'
+            + '<div class="form-group">'
+            + ' <div class="col-md-6">'
+            + '     <label class="col-md-4 control-label text-right">กองทุน : </label>'
+            + '     <div class="col-md-6">' + fundgroupArr[param["fundgroupId"]] + '</div>'
+            + ' </div>'
 
-        + '<div class="col-md-6">'
-        + '<label class="col-md-4 control-label text-right">หน่วยงาน : </label>'
-        + '<div class="col-md-6">' + departmentArr[param["deptId"]] + '</div>'
-        + '</div>'
+            + ' <div class="col-md-6">'
+            + '     <label class="col-md-4 control-label text-right">หน่วยงาน : </label>'
+            + '     <div class="col-md-6">' + departmentArr[param["deptId"]] + '</div>'
+            + ' </div>'
+            + '</div>';
 
-        + '</div>'
+    } else {
 
-        + '<section class="panel">'
+        //for กองแผน (Angular js)
+        html += '<div class="col-md-6">'
+            + '<label class="col-md-4 control-label text-right">ปีงบประมาณ : </label>'
+            + '<div class="col-md-6">' + param.budgetPeriodId + '</div>'
+            + '</div>'
+
+            + '<div class="col-md-6">'
+            + '<label class="col-md-4 control-label text-right">แหล่งเงิน : </label>'
+            + '<div class="col-md-6">' + param.budgetTypeName + '</div>'
+            + '</div>'
+
+            + '</div>'
+
+            + '<div class="form-group">'
+            + '<div class="col-md-6">'
+            + '<label class="col-md-4 control-label text-right">แผนงาน : </label>'
+            + '<div class="col-md-6">' + param.planName + '</div>'
+            + '</div>'
+
+            + '<div class="col-md-6">'
+            + '<label class="col-md-4 control-label text-right">ผลผลิต/โครงการ : </label>'
+            + '<div class="col-md-6">' + param.projectName + '</div>'
+            + '</div>'
+            + '</div>'
+
+            + '<div class="form-group">'
+            + ' <div class="col-md-6">'
+            + '     <label class="col-md-4 control-label text-right">กองทุน : </label>'
+            + '     <div class="col-md-6">' + param.fundName + '</div>'
+            + ' </div>'
+
+            + ' <div class="col-md-6">'
+            + '     <label class="col-md-4 control-label text-right">หน่วยงาน : </label>'
+            + '     <div class="col-md-6">' + param.deptName + '</div>'
+            + ' </div>'
+            + '</div>';
+    }
+
+    html += '<section class="panel">'
         + '<div class="panel-body">'
+        + ' <div class="col-md-12 text-right">'
+        + '     <button class="requestBGbtn btn btn-success" type="button">ส่งข้อมูลคำของบประมาณ</button>'
+        + '     <button class="approveBGbtn btn btn-success" type="button">อนุมัติคำขอทั้งหมด</button>'
+        + ' </div>'
         + '<div class="col-md-12 text-right">'
         + '<a href="#" id="expandAll"><i class="fa fa-plus-square"></i> แสดงทั้งหมด</a>&nbsp;/&nbsp;'
         + '<a href="#" id="collapseAll"><i class="fa fa-minus-square"></i> ซ่อนทั้งหมด</a>'
@@ -60,6 +106,7 @@ function bg145Form(param) {
         + '<th class="text-center" rowspan="3" style="vertical-align: middle;">ราคาต่อหน่วย</th>'
         + '<th class="text-center" rowspan="3" style="vertical-align: middle;">รวมเงิน</th>'
         + '<th class="text-center" colspan="3">คำชี้แจง</th><th class="text-center" rowspan="3" style="vertical-align: middle;">เหตุผลความจำเป็น</th>'
+        + '<th class="text-center" rowspan="3" style="vertical-align: middle;">สถานะคำขอ</th>'
         + '<th rowspan="3" class="text-center" style="vertical-align: middle;min-width: 200px;">เครื่องมือ</th>'
         + '</tr>'
         + '<tr>'
@@ -69,6 +116,7 @@ function bg145Form(param) {
         + '<th class="text-center">รวมทั้งสิ้น</th><th class="text-center"></th>'
         + '<th class="text-center"></th><th class="text-center"></th>'
         + '<th class="text-center"></th><th class="text-center"></th>'
+        + '<th class="text-center"></th>'
         + '<th class="text-center"></th>'
         + '<th class="text-center"></th>'
         + '<th class="text-center"></th>'
@@ -105,7 +153,6 @@ function bg145Form(param) {
         + '<div class="form-group">'
         + '<label class="col-md-12 control-label text-bold req" for="durableDesc">รายละเอียดประกอบ</label>'
         + '<div class="col-md-12">'
-            //+ ' <textarea id="durableDesc" name="durableDesc" class="form-control input-sm"></textarea>'
         + '    <div  class="summernote noteDurableDesc" id="durableDesc" name="durableDesc"></div>'
         + '</div>'
         + '</div>'
@@ -117,7 +164,6 @@ function bg145Form(param) {
         + ' </div>'
         + ' <label class="col-md-12 text-bold">คำอธิบายประกอบไฟล์</label>'
         + ' <div class="form-group col-md-12">'
-            //+ '    <div class="col-md-12"><textarea type="text" id="desc" class="form-control input-sm" name="desc" placeholder="คำอธิบายประกอบไฟล์"></textarea></div>'
         + '    <div  class="summernote noteDesc" id="desc" name="desc"></div>'
         + ' </div>'
         + '</div>'
@@ -303,16 +349,70 @@ function bg145Form(param) {
         + '</div>'
         + '</div>'
         + '</div>'
-        + '<div id="contranerAttacment"></div>';
+        + '<div id="contranerAttacment"></div>'
+
+        + '<div id="panelCommentApprove" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">'
+        + '<div class="modal-dialog">'
+        + '<div class="modal-content">'
+        + '<div class="modal-header">'
+        + '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
+        + '<h4 class="modal-title" id="myModalLabel">บันทึกเพิ่มเติม</h4>'
+        + '</div>'
+        + '<div class="modal-body">'
+        + '    <div class="summernoteApprove"></div>'
+        + '</div>'
+        + '<div id="loadingModalApprove" class="col-md-12 text-center"></div>'
+        + '<div class="modal-footer">'
+        + '     <button type="button" class="btn btn-success approve"><i class="fa fa-check"></i> อนุมัติ</button>'
+        + '     <button type="button" class="btn btn-warning edit"><i class="fa fa-pencil"></i> แก้ไข</button>'
+        + '</div>'
+        + '</div>'
+        + '</div>'
+        + '</div>'
+
+        + '<div id="panelShowComment" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">'
+        + '<div class="modal-dialog">'
+        + '<div class="modal-content">'
+        + '<div class="modal-header">'
+        + '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
+        + '     <h4 class="modal-title" id="myModalLabel">บันทึกเพิ่มเติม</h4>'
+        + '</div>'
+        + '<div class="modal-body bodyComment">'
+
+        + '</div>'
+        + '     <div id="loadingModalApprove" class="col-md-12 text-center"></div>'
+        + '</div>'
+        + '</div>'
+        + '</div>';
 
     $("#divForm").html(html);
     toggleShow("form");
-    bg145Detail(param);
-    $('.summernote').summernote();
-}
 
+    if (PERMISSION == "DEPARTMENT") {
+        $("button.approveBGbtn").hide();
+        $("button.requestBGbtn").show();
+        $("button.requestBGbtn").unbind("click").click(function () {
+
+            updateStatusBG("Budget145", list145Arr, STATUSWAITING, true);
+        });
+        bg145Detail(param);
+    } else {
+
+        $("button.approveBGbtn").show();
+        $("button.requestBGbtn").hide();
+        $("button.approveBGbtn").unbind("click").click(function () {
+
+            updateStatusBG("Budget145", list145Arr, STATUSAPPROVE, true);
+        });
+        bg145DetailPlaningBudget(param);//กองแผนงาน
+    }
+    $('.summernote').summernote({height: 100});
+    $('.summernoteApprove').summernote({height: 300});
+}
+//for department
 function bg145Detail(param) {
 
+    $(".requestBGbtn").attr('disabled', 'disabled');
     $("#table145 tbody").html('<td colspan="12" class="text-center">Loading...</td>');
 
     setTimeout(function () {
@@ -326,6 +426,7 @@ function bg145Detail(param) {
                 html += '<tr data-tt-id="' + value["id"] + '">'
                     + '<td class="text-center"></td>'
                     + '<td class="text-bold">' + (++pCount) + '. ' + value["typeName"] + '</td>'
+                    + '<td></td>'
                     + '<td></td>'
                     + '<td></td>'
                     + '<td></td>'
@@ -359,6 +460,7 @@ function bg145Detail(param) {
                             + '<td></td>'
                             + '<td></td>'
                             + '<td></td>'
+                            + '<td></td>'
                             + '<td>'
                             + '<div class="btn-group">'
                             + '<button class="btn btn-sm btn-success addList" data-pid="' + value2["id"] + '"><i class="fa fa-plus"></i> เพิ่ม</button>'
@@ -378,19 +480,44 @@ function bg145Detail(param) {
                             + '<td>' + value2["numWork"] + '</td>'
                             + '<td>' + value2["numUnwork"] + '</td>'
                             + '<td>' + value2["remark"] + '</td>'
-                            + '<td>'
-                            + '<div class="btn-group col-md-12 none-padding">'
-                            + '<button class="btn btn-sm btn-warning editList col-md-6" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                            + '<button class="btn btn-sm btn-default deleteList col-md-6"  data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-trash"></i> ลบ</button>'
-                            + '<div class="col-md-12"></div>'
-                            + '<button class="btn btn-sm btn-primary buildingOne col-md-6"  data-pid="' + value["id"] + '" data-id="' + value2["id"] + '" title="คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง 1 ปี"><i class="fa fa-file-text-o"></i> 1ปี</button>'
-                            + '<button class="btn btn-sm btn-info buildingMore col-md-6"  data-pid="' + value["id"] + '" data-id="' + value2["id"] + '" title="คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้างต่อเนื่อง"><i class="fa fa-file-text-o"></i> ต่อเนื่อง</button>'
-                            + '</div>'
-                            + '</td>'
-                            + '</tr>';
-                        list145Arr[value2["id"]] = value2;
+                            + '<td class="text-bold status">';
 
+                        if (value2["statusId"] == STATUSEDITING) {
+
+                            html += '<a href="javascript:void(0)" onclick="bg145ShowComment(' + value2["id"] + ')" style="text-decoration: underline;" title="คลิกเพื่อดูบันทึกเพิ่มเติม">' + value2["statusDesc"] + '</a>';
+                        } else {
+                            html += value2["statusDesc"];
+                        }
+
+                        html += '</td>'
+                            + '<td>';
+
+                        if (value2["statusId"] == STATUSPROGRESS || value2["statusId"] == STATUSEDITING) {
+
+                            html += '<div class="btn-group col-md-12 none-padding">'
+                                + '<button class="btn btn-sm btn-warning editList col-md-6" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                + '<button class="btn btn-sm btn-default deleteList col-md-6"  data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                                + '<div class="col-md-12"></div>'
+                                + '<button class="btn btn-sm btn-primary buildingOne col-md-6"  data-pid="' + value["id"] + '" data-id="' + value2["id"] + '" title="คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง 1 ปี"><i class="fa fa-file-text-o"></i> 1ปี</button>'
+                                + '<button class="btn btn-sm btn-info buildingMore col-md-6"  data-pid="' + value["id"] + '" data-id="' + value2["id"] + '" title="คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้างต่อเนื่อง"><i class="fa fa-file-text-o"></i> ต่อเนื่อง</button>'
+                                + '</div>';
+                        } else {
+
+                            html += '<div class="btn-group col-md-12 none-padding">'
+                                + '<button class="btn btn-sm btn-warning editList col-md-6 disabled" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                + '<button class="btn btn-sm btn-default deleteList col-md-6 disabled"  data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                                + '<div class="col-md-12"></div>'
+                                + '<button class="btn btn-sm btn-primary buildingOne col-md-6 disabled"  data-pid="' + value["id"] + '" data-id="' + value2["id"] + '" title="คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง 1 ปี"><i class="fa fa-file-text-o"></i> 1ปี</button>'
+                                + '<button class="btn btn-sm btn-info buildingMore col-md-6 disabled"  data-pid="' + value["id"] + '" data-id="' + value2["id"] + '" title="คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้างต่อเนื่อง"><i class="fa fa-file-text-o"></i> ต่อเนื่อง</button>'
+                                + '</div>';
+                        }
+
+                        html += '</td>'
+                            + '</tr>';
+
+                        list145Arr[value2["id"]] = value2;
                     }
+
                     typeName145Arr[value2["id"]] = value2["typeName"];
                     $.each(value2["budget"], function (key3, value3) {
 
@@ -405,13 +532,35 @@ function bg145Detail(param) {
                             + '<td>' + value3["numWork"] + '</td>'
                             + '<td>' + value3["numUnwork"] + '</td>'
                             + '<td>' + value3["remark"] + '</td>'
-                            + '<td>'
-                            + '<div class="btn-group">'
-                            + '<button class="btn btn-sm btn-warning editList" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                            + '<button class="btn btn-sm btn-default deleteList"  data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-trash"></i> ลบ</button>'
-                            + '</div>'
-                            + '</td>'
+                            + '<td class="text-bold status">';
+
+                        if (value3["statusId"] == STATUSEDITING) {
+
+                            html += '<a href="javascript:void(0)" onclick="bg145ShowComment(' + value3["id"] + ')" style="text-decoration: underline;" title="คลิกเพื่อดูบันทึกเพิ่มเติม">' + value3["statusDesc"] + '</a>';
+                        } else {
+                            html += value3["statusDesc"];
+                        }
+
+                        html += '</td>'
+                            + '<td>';
+
+                        if (value3["statusId"] == STATUSPROGRESS || value3["statusId"] == STATUSEDITING) {
+
+                            html += '<div class="btn-group">'
+                                + '<button class="btn btn-sm btn-warning editList" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                + '<button class="btn btn-sm btn-default deleteList"  data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                                + '</div>';
+
+                        } else {
+
+                            html += '<div class="btn-group">'
+                                + '<button class="btn btn-sm btn-warning editList disabled" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                + '<button class="btn btn-sm btn-default deleteList disabled"  data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                                + '</div>';
+                        }
+                        html += '</td>'
                             + '</tr>';
+
                         list145Arr[value3["id"]] = value3;
                     });
                 });
@@ -419,6 +568,7 @@ function bg145Detail(param) {
 
             $("#table145 tbody").html(html);
             $('.number').number(true, 2);
+            $(".requestBGbtn").removeAttr('disabled');
 
             // set default table to tree table
             $("#table145").treetable({
@@ -447,6 +597,275 @@ function bg145Detail(param) {
                 $("#contranerFile").html('<input  type="file" id="fileInput" name="fileInput"/>');
                 $("#panelForm").modal("show");
 
+
+                $('#qty').keyup(function () {
+                    var price = parseFloat($("#price").val());
+                    var qty = parseFloat($(this).val());
+                    if (qty == "" || qty == undefined || isNaN(qty)) {
+                        qty = 0;
+                    }
+                    if (price == "" || price == undefined || isNaN(price)) {
+                        price = 0;
+                    }
+                    $("#totalPrice").val(qty * price);
+                });
+
+                $('#price').keyup(function () {
+                    var qty = parseFloat($("#qty").val());
+                    var price = parseFloat($(this).val());
+                    if (qty == "" || qty == undefined || isNaN(qty)) {
+                        qty = 0;
+                    }
+                    if (price == "" || price == undefined || isNaN(price)) {
+                        price = 0;
+                    }
+                    $("#totalPrice").val(qty * price);
+                });
+
+                $("button.save").unbind("click").click(function () {
+                    $("#loadingForm").html('<i class="fa fa-spinner fa-spin"></i> Loading...');
+                    // save on add event
+                    var isValid = true;
+                    $('#form input[required]').each(function () {
+                        if ($(this).val() == "" && !$(this).prop("disabled"))
+                            isValid = false;
+                    });
+                    if (isValid) {
+                        var fParam = tofParam(param);
+
+                        fParam["budgetTypeId"] = parentId;
+                        $("#form input, #form textarea").each(function () {
+                            var name = $(this).attr("name");
+                            var val = $(this).val();
+
+                            fParam[name] = val;
+                        });
+                        fParam["remark"] = $(".noteRemark").code();
+                        fParam["durableDesc"] = $(".noteDurableDesc").code();
+
+                        var objAttment = InsertAttachment();
+
+                        //objAttment empty is not insert to table Attachment
+                        if (!isEmptyObject(objAttment)) {
+                            fParam["attachmentId"] = objAttment.id;
+                            fParam["path"] = objAttment.path;
+                            fParam["desc"] = objAttment.desc;
+                        }
+                        var fdata = [];
+                        fdata.push(fParam);
+                        var dataJSON = JSON.stringify({budget: fdata});
+                        var dataJSONEN = encodeURIComponent(dataJSON);
+                        bg145Insert(parentId, param, dataJSONEN, objAttment);
+                    }
+                });
+            });
+
+            bg145Action(param);
+        }
+    }, 100);
+}
+//for BudgetPlaning
+function bg145DetailPlaningBudget(param) {
+
+    $(".requestBGbtn").attr('disabled', 'disabled');
+    $("#table145 tbody").html('<td colspan="12" class="text-center">Loading...</td>');
+
+    setTimeout(function () {
+        var dataJSON = JSON.stringify({param: param});
+        var dataJSONEN = encodeURIComponent(dataJSON);
+        var datas = callAjax(js_context_path + "/api/budget/budgetInfo/viewBudget145", "post", dataJSONEN, "json");
+        if (typeof datas !== "undefined" && datas !== null) {
+            var html = '';
+            var pCount = 0;
+            $.each(datas["budget"], function (key, value) {
+                html += '<tr data-tt-id="' + value["id"] + '">'
+                    + '<td class="text-center"></td>'
+                    + '<td class="text-bold">' + (++pCount) + '. ' + value["typeName"] + '</td>'
+                    + '<td></td>'
+                    + '<td></td>'
+                    + '<td></td>'
+                    + '<td></td>'
+                    + '<td></td>'
+                    + '<td></td>'
+                    + '<td></td>'
+                    + '<td></td>'
+                    + '<td></td>'
+                    + '<td>';
+                if (value['id'] != '20300000') {
+                    html += '<div class="btn-group">';
+                    html += '<button class="btn btn-sm btn-success addList" data-pid="' + value["id"] + '"><i class="fa fa-plus"></i> เพิ่ม</button>';
+                    html += '</div>';
+                }
+                html += '</td>';
+                html += '</tr>';
+
+                var cCount = 0;
+                $.each(value["lv2"], function (key2, value2) {
+
+                    if (value['id'] == '20300000') {
+                        html += '<tr data-tt-id="' + value2["id"] + '" data-tt-parent-id="' + value["id"] + '">'
+                            + '<td class="text-center"></td>'
+                            + '<td class="text-bold" style="padding-left: 20px;">'
+                            + pCount + '.' + (++cCount) + ' ' + value2["typeName"]
+                            + '</td>'
+                            + '<td></td>'
+                            + '<td></td>'
+                            + '<td></td>'
+                            + '<td></td>'
+                            + '<td></td>'
+                            + '<td></td>'
+                            + '<td></td>'
+                            + '<td></td>'
+                            + '<td></td>'
+                            + '<td>'
+                            + '<div class="btn-group">'
+                            + ' <button class="btn btn-sm btn-success addList" data-pid="' + value2["id"] + '"><i class="fa fa-plus"></i> เพิ่ม</button>'
+                            + '</div>'
+                            + '</td>'
+                            + '</tr>'
+                    } else {
+                        //ค่าที่ดินและสิ่งก่อสร้าง
+                        html += '<tr data-tt-id="' + value2["id"] + '" data-tt-parent-id="' + value["id"] + '">'
+                            + '<td class="text-center"></td>'
+                            + '<td>' + value2["durableName"] + '<br> &nbsp;' + value2["durableDesc"] + '</td>'
+                            + '<td class="number">' + value2["qty"] + '</td>'
+                            + '<td>' + value2["unit"] + '</td>'
+                            + '<td class="number">' + value2["price"] + '</td>'
+                            + '<td class="number">' + value2["totalPrice"] + '</td>'
+                            + '<td>' + value2["numNeeded"] + '</td>'
+                            + '<td>' + value2["numWork"] + '</td>'
+                            + '<td>' + value2["numUnwork"] + '</td>'
+                            + '<td>' + value2["remark"] + '</td>'
+                            + '<td class="text-bold status">' + value2["statusDesc"] + '</td>'
+                            + '<td>';
+                        if (value2["statusId"] == STATUSWAITING || value2["statusId"] == STATUSAPPROVE) {
+
+                            html += '<div class="btn-group">' +
+                                '<button class="btn btn-sm btn-warning approveEdit" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' +
+                                '</div>';
+                        } else {
+
+                            html += '<div class="btn-group">' +
+                                '<button class="btn btn-sm btn-warning approveEdit disabled" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' +
+                                '</div>';
+                        }
+                        html += '</td>'
+                            + '</tr>';
+
+                        list145Arr[value2["id"]] = value2;
+
+                    }
+                    typeName145Arr[value2["id"]] = value2["typeName"];
+                    $.each(value2["budget"], function (key3, value3) {
+
+                        html += '<tr data-tt-id="' + value3["id"] + '" data-tt-parent-id="' + value2["id"] + '">'
+                            + '<td class="text-center"></td>'
+                            + '<td>' + value3["durableName"] + '<br> &nbsp;' + value3["durableDesc"] + '</td>'
+                            + '<td class="number">' + value3["qty"] + '</td>'
+                            + '<td>' + value3["unit"] + '</td>'
+                            + '<td class="number">' + value3["price"] + '</td>'
+                            + '<td class="number">' + value3["totalPrice"] + '</td>'
+                            + '<td>' + value3["numNeeded"] + '</td>'
+                            + '<td>' + value3["numWork"] + '</td>'
+                            + '<td>' + value3["numUnwork"] + '</td>'
+                            + '<td>' + value3["remark"] + '</td>'
+                            + '<td class="text-bold status">' + value3["statusDesc"] + '</td>'
+                            + '<td>';
+                        if (value3["statusId"] == STATUSWAITING || value3["statusId"] == STATUSAPPROVE) {
+
+                            html += '<div class="btn-group">' +
+                                '<button class="btn btn-sm btn-warning approveEdit" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' +
+                                '</div>';
+                        } else {
+
+                            html += '<div class="btn-group">' +
+                                '<button class="btn btn-sm btn-warning approveEdit disabled" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' +
+                                '</div>';
+                        }
+                        html += '</td>'
+                            + '</tr>';
+
+                        list145Arr[value3["id"]] = value3;
+                    });
+                });
+            });
+
+            $("#table145 tbody").html(html);
+            $('.number').number(true, 2);
+            $(".requestBGbtn").removeAttr('disabled');
+
+            // set default table to tree table
+            $("#table145").treetable({
+                expandable: true
+            });
+
+            // collapse all
+            $("#collapseAll").unbind("click").click(function () {
+                $("#table145").treetable("collapseAll");
+            });
+
+            // expand all
+            $("#expandAll").unbind("click").click(function () {
+                $("#table145").treetable("expandAll");
+            });
+
+            // when you press to editApprove button
+            $("button.approveEdit").unbind("click").click(function () {
+                var id = $(this).attr("data-id");
+                var objButton = this;
+                $('.summernoteApprove').code(list145Arr[id]["comment"]);
+                $("#panelCommentApprove").modal("show");
+
+                $("button.approve").unbind("click").click(function () {
+                    var txtComment = $('.summernoteApprove').code();
+                    //bg145updateStatusWithComment(txtComment, id, STATUSAPPROVE, objButton);
+                    var fParam = [];
+                    list145Arr[id]["comment"] = txtComment;
+                    fParam.push(list145Arr[id]);
+                    if (updateStatusBG("Budget145", fParam, STATUSAPPROVE, false)) {
+
+                        if (list145Arr[id]["statusId"] != STATUSAPPROVE) {
+                            list145Arr[id]["statusId"] = STATUSAPPROVE;
+                            $(objButton).closest('tr').find('.status').html(listSTATUSTRACKING[STATUSAPPROVE]);
+                        }
+
+                        $("#panelCommentApprove").modal("hide");
+                    } else {
+                        $("#loadingModalApprove").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
+                    }
+                });
+                $("button.edit").unbind("click").click(function () {
+                    var txtComment = $('.summernoteApprove').code();
+                    //bg145updateStatusWithComment(txtComment, id, STATUSEDITING, objButton);
+                    var fParam = [];
+                    list145Arr[id]["comment"] = txtComment;
+                    fParam.push(list145Arr[id]);
+
+                    if (updateStatusBG("Budget145", fParam, STATUSEDITING, false)) {
+
+                        if (list145Arr[id]["statusId"] != STATUSEDITING) {
+                            list145Arr[id]["statusId"] = STATUSEDITING;
+                            $(objButton).addClass('disabled');
+                            $(objButton).closest('tr').find('.status').html(listSTATUSTRACKING[STATUSEDITING]);
+                        }
+                        $("#panelCommentApprove").modal("hide");
+                    } else {
+                        $("#loadingModalApprove").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
+                    }
+                });
+            });
+
+            // when you press to add button
+            $("button.addList").unbind("click").click(function () {
+
+                var parentId = $(this).attr("data-pid");
+                $('.summernote').code('');
+                // reset form for new insert
+                $("#modalHead").empty().html(typeName145Arr[parentId]);
+                $("#loadingForm").html('');
+                $("#form").trigger('reset');
+                $("#contranerFile").html('<input  type="file" id="fileInput" name="fileInput"/>');
+                $("#panelForm").modal("show");
 
                 $('#qty').keyup(function () {
                     var price = parseFloat($("#price").val());
@@ -665,6 +1084,7 @@ function bg145Insert(parentId, param, dataJSONEN, objAttment) {
                     + '<td>' + $("#numWork").val() + '</td>'
                     + '<td>' + $("#numUnwork").val() + '</td>'
                     + '<td>' + $(".noteRemark").code() + '</td>'
+                    + '<td class=" text-bold status">' + listSTATUSTRACKING[STATUSPROGRESS] + '</td>'
                     + '<td>';
 
                 if (parentId == "20400000") {
@@ -699,6 +1119,8 @@ function bg145Insert(parentId, param, dataJSONEN, objAttment) {
 
                 list145Arr[data["id"]]["durableDesc"] = $(".noteDurableDesc").code();
                 list145Arr[data["id"]]["remark"] = $(".noteRemark").code();
+                list145Arr[data["id"]]["statusId"] = STATUSPROGRESS;
+                list145Arr[data["id"]]["statusDesc"] = listSTATUSTRACKING[STATUSPROGRESS];
 
                 if (!isEmptyObject(objAttment)) {
                     // if have attachemnt
@@ -735,9 +1157,17 @@ function bg145Edit(id, parentId, param, dataJSONEN, objAttment) {
                     + '<td>' + $("#numWork").val() + '</td>'
                     + '<td>' + $("#numUnwork").val() + '</td>'
                     + '<td>' + $(".noteRemark").code() + '</td>'
-                    + '<td>';
+                    + '<td class="text-bold status">';
+
+                if (list145Arr[id]["statusId"] == STATUSEDITING) {
+                    html += '<a href="javascript:void(0)" onclick="bg145ShowComment(' + id + ')" style="text-decoration: underline;" title="คลิกเพื่อดูบันทึกเพิ่มเติม">' + list145Arr[id]["statusDesc"] + '</a>';
+                } else {
+                    html += list145Arr[id]["statusDesc"];
+                }
+
                 if (parentId == "20400000") {
-                    html += '<div class="btn-group col-md-12 none-padding">'
+
+                    html += '<td><div class="btn-group col-md-12 none-padding">'
                         + '<button class="btn btn-sm btn-warning editList col-md-6" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
                         + '<button class="btn btn-sm btn-default deleteList col-md-6"  data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-trash"></i> ลบ</button>'
                         + '<div class="col-md-12"></div>'
@@ -745,7 +1175,7 @@ function bg145Edit(id, parentId, param, dataJSONEN, objAttment) {
                         + '<button class="btn btn-sm btn-info buildingMore col-md-6"  data-pid="' + parentId + '" data-id="' + id + '" title="คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้างต่อเนื่อง"><i class="fa fa-file-text-o"></i> ต่อเนื่อง</button>';
 
                 } else {
-                    html += '<div class="btn-group">'
+                    html += '<td><div class="btn-group">'
                         + '<button class="btn btn-sm btn-warning editList" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
                         + '<button class="btn btn-sm btn-default deleteList"  data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-trash"></i> ลบ</button>';
                 }
@@ -795,5 +1225,11 @@ function bg145delete(id, parentId, dataJSONEN) {
         }
     }
 }
+function bg145ShowComment(id) {
 
+    $(".bodyComment").html('');//reset
+    $(".bodyComment").html(list145Arr[id]["comment"]);
+    $("#panelShowComment").modal("show");
+
+}
 

@@ -293,4 +293,17 @@ interface IBudgetSaveService
      * @description ลบตารางข้อมูลเอกสาร
      */
     public function deleteAttachment($attachmentID, $path, $budgetID, $formBudget);
+
+    /**
+     * @name updateStatus
+     * @uri /updateStatus
+     * @param string bgType Description
+     * @param object listBg Description listID Budget
+     * @param string status Description
+     * @return boolean results Description
+     * @description เปลี่ยนแปลงสถานะทั้งหมด
+     */
+    public function updateStatusBG($bgType, $listBg, $status);
+
+
 }

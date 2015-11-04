@@ -220,7 +220,7 @@ function buildingMoreForm(param) {
         + ' <div class = "col-md-12 form-group">'
         + '   <label class="col-md-5 text-right">จำนวนปีงบประมาณ</label>'
         + '   <div class="col-md-3"><input class="form-control input-sm" type="number" min="0" id="totalYear" name="totalYear"></div>'
-        + '   <button class="col-md-1 btn btn-default" onclick="addPeriodHTML({})">ตกลง</button>'
+        + '   <button class="col-md-1 btn btn-default" type="button" onclick="addPeriodHTML({})">ตกลง</button>'
         + ' </div>'
         + ' <div class="inner-installment"></div>'
         + '</div>'

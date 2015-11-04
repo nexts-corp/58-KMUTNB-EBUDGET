@@ -5,21 +5,25 @@ namespace apps\budget\service;
 use apps\budget\interfaces\budgetType;
 use apps\budget\interfaces\quater;
 use apps\budget\interfaces\year;
+use apps\common\entity\TrackingStatus;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
 use apps\budget\interfaces\IBudgetReviewService;
 use apps\common\entity;
 
-class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
+class BudgetReviewService extends CServiceBase implements IBudgetReviewService
+{
 
     public $datacontext;
     public $ent = "apps\\common\\entity";
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->datacontext = new CDataContext();
     }
 
-    public function getReview($budgetType, $year) {
+    public function getReview($budgetType, $year)
+    {
         $dataArr = array();
 
         if ($budgetType == "1") { //�Թ�����
@@ -77,34 +81,37 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
         return $dataArr;
     }
 
-    private function queryExpensesBg($year, $id) {
+    private function queryExpensesBg($year, $id)
+    {
 
         $sql = "SELECT bg.id,bg.type_name"
-                . ",CASE WHEN (tb.budget_quater1_plan IS NULL) THEN ' ' ELSE tb.budget_quater1_plan END AS budget_quater1_plan,CASE WHEN (tb.budget_quater1_used IS NULL) THEN ' ' ELSE tb.budget_quater1_used END AS budget_quater1_used"
-                . ",CASE WHEN (tb.budget_quater2_plan IS NULL) THEN ' ' ELSE tb.budget_quater2_plan END AS budget_quater2_plan,CASE WHEN (tb.budget_quater2_used IS NULL) THEN ' ' ELSE tb.budget_quater2_used END AS budget_quater2_used"
-                . ",CASE WHEN (tb.budget_quater3_plan IS NULL) THEN ' ' ELSE tb.budget_quater3_plan END AS budget_quater3_plan,CASE WHEN (tb.budget_quater3_used IS NULL) THEN ' ' ELSE tb.budget_quater3_used END AS budget_quater3_used"
-                . ",CASE WHEN (tb.budget_quater4_plan IS NULL) THEN ' ' ELSE tb.budget_quater4_plan END AS budget_quater4_plan,CASE WHEN (tb.budget_quater4_used IS NULL) THEN ' ' ELSE tb.budget_quater4_used END AS budget_quater4_used"
-                . " FROM budget_type bg LEFT JOIN ( SELECT SUM(budget_quater1_plan) AS budget_quater1_plan,SUM(budget_quater1_used) AS budget_quater1_used,SUM(budget_quater2_plan) AS budget_quater2_plan,SUM(budget_quater2_used) AS budget_quater2_used,SUM(budget_quater3_plan) AS budget_quater3_plan,SUM(budget_quater3_used) AS budget_quater3_used,SUM(budget_quater4_plan) AS budget_quater4_plan,SUM(budget_quater4_used) AS budget_quater4_used,money_type_id "
-                . " FROM tracking_budget WHERE money_type_code = 'BG' AND budget_year = " . $year . " GROUP BY money_type_id ) AS tb "
-                . " ON bg.id = tb.money_type_id WHERE bg.master_id = " . $id . " AND bg.budget_year = " . $year;
+            . ",CASE WHEN (tb.budget_quater1_plan IS NULL) THEN ' ' ELSE tb.budget_quater1_plan END AS budget_quater1_plan,CASE WHEN (tb.budget_quater1_used IS NULL) THEN ' ' ELSE tb.budget_quater1_used END AS budget_quater1_used"
+            . ",CASE WHEN (tb.budget_quater2_plan IS NULL) THEN ' ' ELSE tb.budget_quater2_plan END AS budget_quater2_plan,CASE WHEN (tb.budget_quater2_used IS NULL) THEN ' ' ELSE tb.budget_quater2_used END AS budget_quater2_used"
+            . ",CASE WHEN (tb.budget_quater3_plan IS NULL) THEN ' ' ELSE tb.budget_quater3_plan END AS budget_quater3_plan,CASE WHEN (tb.budget_quater3_used IS NULL) THEN ' ' ELSE tb.budget_quater3_used END AS budget_quater3_used"
+            . ",CASE WHEN (tb.budget_quater4_plan IS NULL) THEN ' ' ELSE tb.budget_quater4_plan END AS budget_quater4_plan,CASE WHEN (tb.budget_quater4_used IS NULL) THEN ' ' ELSE tb.budget_quater4_used END AS budget_quater4_used"
+            . " FROM budget_type bg LEFT JOIN ( SELECT SUM(budget_quater1_plan) AS budget_quater1_plan,SUM(budget_quater1_used) AS budget_quater1_used,SUM(budget_quater2_plan) AS budget_quater2_plan,SUM(budget_quater2_used) AS budget_quater2_used,SUM(budget_quater3_plan) AS budget_quater3_plan,SUM(budget_quater3_used) AS budget_quater3_used,SUM(budget_quater4_plan) AS budget_quater4_plan,SUM(budget_quater4_used) AS budget_quater4_used,money_type_id "
+            . " FROM tracking_budget WHERE money_type_code = 'BG' AND budget_year = " . $year . " GROUP BY money_type_id ) AS tb "
+            . " ON bg.id = tb.money_type_id WHERE bg.master_id = " . $id . " AND bg.budget_year = " . $year;
 
         return $sql;
     }
 
-    private function queryExpensesRvt($year, $id) {
+    private function queryExpensesRvt($year, $id)
+    {
 
         $sql = "SELECT rvt.id,rvt.type_name"
-                . ",CASE WHEN (tb.budget_quater1_plan IS NULL) THEN ' ' ELSE tb.budget_quater1_plan END AS budget_quater1_plan,CASE WHEN (tb.budget_quater1_used IS NULL) THEN ' ' ELSE tb.budget_quater1_used END AS budget_quater1_used"
-                . ",CASE WHEN (tb.budget_quater2_plan IS NULL) THEN ' ' ELSE tb.budget_quater2_plan END AS budget_quater2_plan,CASE WHEN (tb.budget_quater2_used IS NULL) THEN ' ' ELSE tb.budget_quater2_used END AS budget_quater2_used"
-                . ",CASE WHEN (tb.budget_quater3_plan IS NULL) THEN ' ' ELSE tb.budget_quater3_plan END AS budget_quater3_plan,CASE WHEN (tb.budget_quater3_used IS NULL) THEN ' ' ELSE tb.budget_quater3_used END AS budget_quater3_used"
-                . ",CASE WHEN (tb.budget_quater4_plan IS NULL) THEN ' ' ELSE tb.budget_quater4_plan END AS budget_quater4_plan,CASE WHEN (tb.budget_quater4_used IS NULL) THEN ' ' ELSE tb.budget_quater4_used END AS budget_quater4_used"
-                . " FROM revenue_type rvt LEFT JOIN ( SELECT SUM(budget_quater1_plan) AS budget_quater1_plan,SUM(budget_quater1_used) AS budget_quater1_used,SUM(budget_quater2_plan) AS budget_quater2_plan,SUM(budget_quater2_used) AS budget_quater2_used,SUM(budget_quater3_plan) AS budget_quater3_plan,SUM(budget_quater3_used) AS budget_quater3_used,SUM(budget_quater4_plan) AS budget_quater4_plan,SUM(budget_quater4_used) AS budget_quater4_used,money_type_id "
-                . " FROM tracking_budget WHERE money_type_code = 'RV' AND budget_year = " . $year . " GROUP BY money_type_id ) AS tb "
-                . " ON rvt.id = tb.money_type_id WHERE rvt.master_id = " . $id . " AND rvt.budget_year = " . $year;
+            . ",CASE WHEN (tb.budget_quater1_plan IS NULL) THEN ' ' ELSE tb.budget_quater1_plan END AS budget_quater1_plan,CASE WHEN (tb.budget_quater1_used IS NULL) THEN ' ' ELSE tb.budget_quater1_used END AS budget_quater1_used"
+            . ",CASE WHEN (tb.budget_quater2_plan IS NULL) THEN ' ' ELSE tb.budget_quater2_plan END AS budget_quater2_plan,CASE WHEN (tb.budget_quater2_used IS NULL) THEN ' ' ELSE tb.budget_quater2_used END AS budget_quater2_used"
+            . ",CASE WHEN (tb.budget_quater3_plan IS NULL) THEN ' ' ELSE tb.budget_quater3_plan END AS budget_quater3_plan,CASE WHEN (tb.budget_quater3_used IS NULL) THEN ' ' ELSE tb.budget_quater3_used END AS budget_quater3_used"
+            . ",CASE WHEN (tb.budget_quater4_plan IS NULL) THEN ' ' ELSE tb.budget_quater4_plan END AS budget_quater4_plan,CASE WHEN (tb.budget_quater4_used IS NULL) THEN ' ' ELSE tb.budget_quater4_used END AS budget_quater4_used"
+            . " FROM revenue_type rvt LEFT JOIN ( SELECT SUM(budget_quater1_plan) AS budget_quater1_plan,SUM(budget_quater1_used) AS budget_quater1_used,SUM(budget_quater2_plan) AS budget_quater2_plan,SUM(budget_quater2_used) AS budget_quater2_used,SUM(budget_quater3_plan) AS budget_quater3_plan,SUM(budget_quater3_used) AS budget_quater3_used,SUM(budget_quater4_plan) AS budget_quater4_plan,SUM(budget_quater4_used) AS budget_quater4_used,money_type_id "
+            . " FROM tracking_budget WHERE money_type_code = 'RV' AND budget_year = " . $year . " GROUP BY money_type_id ) AS tb "
+            . " ON rvt.id = tb.money_type_id WHERE rvt.master_id = " . $id . " AND rvt.budget_year = " . $year;
         return $sql;
     }
 
-    public function getCatagory($budgetType) {
+    public function getCatagory($budgetType)
+    {
         $dataArr = array();
         if ($budgetType == 1) {
 
@@ -162,7 +169,8 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
         return $dataArr;
     }
 
-    public function listBudgetExpense() {
+    public function listBudgetExpense()
+    {
         $bgMaster = new entity\BudgetType();
         $bgMaster->setFormExpense(true);
         $bgMaster->setLevel(1);
@@ -196,20 +204,21 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
         return $result;
     }
 
-    public function listBudgetExpenseInfo($budgetPeriodId, $fundgroupId, $planId, $deptId) {
+    public function listBudgetExpenseInfo($budgetPeriodId, $fundgroupId, $planId, $deptId)
+    {
         $result = array();
         $quarter = array(1, 2, 3, 4);
 
         foreach ($quarter as $id) {
             $result[$id - 1]["quarter"] = $id;
             $sqlList = " select sum(exPlan.expensePlan) as expensePlanTotal,"
-                    . " sum(exPlan.expenseUsed) as expenseUsedTotal "
-                    . " from " . $this->ent . "\\BudgetExpensePlan exPlan"
-                    . " join " . $this->ent . "\\BudgetExpense ex with ex.id = exPlan.expenseId "
-                    . " where exPlan.quarterId = :quarterId "
-                    . " and ex.planId = :planId "
-                    . " and ex.fundgroupId = :fundgroupId "
-                    . " and ex.deptId = :deptId";
+                . " sum(exPlan.expenseUsed) as expenseUsedTotal "
+                . " from " . $this->ent . "\\BudgetExpensePlan exPlan"
+                . " join " . $this->ent . "\\BudgetExpense ex with ex.id = exPlan.expenseId "
+                . " where exPlan.quarterId = :quarterId "
+                . " and ex.planId = :planId "
+                . " and ex.fundgroupId = :fundgroupId "
+                . " and ex.deptId = :deptId";
             $paramList = array(
                 "quarterId" => $id,
                 "planId" => $planId,
@@ -226,22 +235,23 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
         return $result;
     }
 
-    public function getAllBudgetRequest($budgetPeriodId) {
+    public function getAllBudgetRequest($budgetPeriodId)
+    {
         $sql = "select bgh.id as bghId, bgh.budgetTypeCode, "
-                . "bgh.formId as formId, dept.id as deptId, dept.deptName as deptName, "
-                . "bgPlan.id as planId, bgPlan.planName as planName, "
-                . "bgProj.id as projectId, bgProj.projectName as projectName, "
-                . "fund.id as fundgroupId, fund.fundgroupName as fundName, "
-                . "status.id as statusId, status.desc as statusDesc "
-                . "from " . $this->ent . "\\BudgetHead bgh "
-                . "left outer join " . $this->ent . "\\L3D\\Department dept with dept.id = bgh.deptId "
-                . "left outer join " . $this->ent . "\\BudgetPlan bgPlan with bgPlan.id = bgh.planId "
-                . "left outer join " . $this->ent . "\\BudgetProject bgProj with bgProj.id = bgh.projectId "
-                . "left outer join " . $this->ent . "\\L3D\\FundGroup fund with fund.id = bgh.fundgroupId "
-                . "left outer join " . $this->ent . "\\TrackingStatus status with status.id = bgh.statusId "
-                . "where bgh.budgetTypeCode = 'G' and bgh.statusId = 2 "
-                . "and bgh.budgetPeriodId = :budgetPeriodId "
-                . "order by bgh.formId, dept.id, bgPlan.id, bgProj.id, fund.id asc ";
+            . "bgh.formId as formId, dept.id as deptId, dept.deptName as deptName, "
+            . "bgPlan.id as planId, bgPlan.planName as planName, "
+            . "bgProj.id as projectId, bgProj.projectName as projectName, "
+            . "fund.id as fundgroupId, fund.fundgroupName as fundName, "
+            . "status.id as statusId, status.desc as statusDesc "
+            . "from " . $this->ent . "\\BudgetHead bgh "
+            . "left outer join " . $this->ent . "\\L3D\\Department dept with dept.id = bgh.deptId "
+            . "left outer join " . $this->ent . "\\BudgetPlan bgPlan with bgPlan.id = bgh.planId "
+            . "left outer join " . $this->ent . "\\BudgetProject bgProj with bgProj.id = bgh.projectId "
+            . "left outer join " . $this->ent . "\\L3D\\FundGroup fund with fund.id = bgh.fundgroupId "
+            . "left outer join " . $this->ent . "\\TrackingStatus status with status.id = bgh.statusId "
+            . "where bgh.budgetTypeCode = 'G' and bgh.statusId = 2 "
+            . "and bgh.budgetPeriodId = :budgetPeriodId "
+            . "order by bgh.formId, dept.id, bgPlan.id, bgProj.id, fund.id asc ";
         $param = array("budgetPeriodId" => $budgetPeriodId);
         $data = $this->datacontext->getObject($sql, $param);
 
@@ -343,4 +353,11 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
       return $result;
       }
      */
+
+    public function listStatusTracking()
+    {
+
+        return $this->datacontext->getObject(new TrackingStatus());
+
+    }
 }
