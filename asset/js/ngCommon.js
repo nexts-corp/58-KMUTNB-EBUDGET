@@ -214,20 +214,7 @@ commonApp.directive('numberFormat', function() {
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
-            
-            if(attrs.numberFormat!==""){
-                angular.element(element).number(true,parseInt(attrs.numberFormat));
-            }else{
-                angular.element(element).number(true);
-            }
-            
-            angular.element(element).val(0);
-            element.bind("keydown keypress", function (event) {
-                if(event.which === 8 || event.which === 46) {
-                    angular.element(element).val(0);
-                }
-            });
-            
+            angular.element(element).number(true,2);
         }
     };
  });
