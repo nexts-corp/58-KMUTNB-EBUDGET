@@ -75,6 +75,9 @@ class Budget146 extends EntityBase {
     /** @Column(type="text", name="COMMENT") */
     public $comment;
 
+    /** @Column(type="string",length=18, name="BUDGETSUMMARY") */
+    public $bgSummary;
+
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
 
@@ -163,6 +166,10 @@ class Budget146 extends EntityBase {
 
     function getComment() {
         return $this->comment;
+    }
+
+    function getBgSummary() {
+        return $this->bgSummary;
     }
 
     function getCreator() {
@@ -255,6 +262,10 @@ class Budget146 extends EntityBase {
 
     function setComment($comment) {
         $this->comment = $comment;
+    }
+
+    function setBgSummary($bgSummary) {
+        $this->bgSummary = $bgSummary;
     }
 
     function setCreator($creator) {

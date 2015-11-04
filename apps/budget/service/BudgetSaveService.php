@@ -59,6 +59,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
             }
 
             $value->budgetHeadId = $bgHeadId;
+            $value->bgSummary = $value->salaryTotal;
 
             if (!$this->datacontext->saveObject($budget[$key])) {
                 $return[$key]["result"] = false;
@@ -105,6 +106,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
     public function updateBudget140($budget) {
         $return = true;
+
+        $budget[0]->bgSummary = $budget[0]->salaryTotal;
 
         if (!$this->datacontext->updateObject($budget)) {
             $return = false;
@@ -161,6 +164,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
             }
 
             $value->budgetHeadId = $bgHeadId;
+            $value->bgSummary = $value->salaryTotal;
 
             if (!$this->datacontext->saveObject($budget[$key])) {
                 $return[$key]["result"] = false;
@@ -176,6 +180,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
     public function updateBudget141($budget) {
         $return = true;
+
+        $budget[0]->bgSummary = $budget[0]->salaryTotal;
 
         if (!$this->datacontext->updateObject($budget)) {
             $return = false;
@@ -211,6 +217,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
             }
 
             $value->budgetHeadId = $bgHeadId;
+            $value->bgSummary = $value->salaryTotal;
 
             if (!$this->datacontext->saveObject($budget[$key])) {
                 $return[$key]["result"] = false;
@@ -226,6 +233,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
     public function updateBudget142($budget) {
         $return = true;
+
+        $budget[0]->bgSummary = $budget[0]->salaryTotal;
 
         if (!$this->datacontext->updateObject($budget)) {
             $return = false;
@@ -261,6 +270,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
             }
 
             $value->budgetHeadId = $bgHeadId;
+            $value->bgSummary = $value->bgRequest;
 
             if (!$this->datacontext->saveObject($budget[$key])) {
                 $return[$key]["result"] = false;
@@ -276,6 +286,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
     public function updateBudget143($budget) {
         $return = true;
+
+        $budget[0]->bgSummary = $budget[0]->bgRequest;
 
         if (!$this->datacontext->updateObject($budget)) {
             $return = false;
@@ -311,6 +323,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
             }
 
             $value->budgetHeadId = $bgHeadId;
+            $value->bgSummary = (float) ( $value->bgRequest) + (float) ( $value->nonBgRequest);
 
             if (!$this->datacontext->saveObject($budget[$key])) {
                 $return[$key]["result"] = false;
@@ -326,6 +339,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
     public function updateBudget144($budget) {
         $return = true;
+
+        $budget[0]->bgSummary = (float) ( $budget[0]->bgRequest) + (float) ( $budget[0]->nonBgRequest);
 
         if (!$this->datacontext->updateObject($budget)) {
             $return = false;
@@ -361,6 +376,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
             }
 
             $value->budgetHeadId = $bgHeadId;
+            $value->bgSummary = $value->totalPrice;
 
             if (!$this->datacontext->saveObject($budget[$key])) {
                 $return[$key]["result"] = false;
@@ -376,6 +392,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
     public function updateBudget145($budget) {
         $return = true;
+
+        $budget[0]->bgSummary = $budget[0]->totalPrice;
 
         if (!$this->datacontext->updateObject($budget)) {
             $return = false;
@@ -411,6 +429,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
             }
 
             $value->budgetHeadId = $bgHeadId;
+            $value->bgSummary = $value->bgRequest;
 
             if (!$this->datacontext->saveObject($budget[$key])) {
                 $return[$key]["result"] = false;
@@ -426,6 +445,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
     public function updateBudget146($budget) {
         $return = true;
+
+        $budget[0]->bgSummary = $budget[0]->bgRequest;
 
         if (!$this->datacontext->updateObject($budget)) {
             $return = false;
