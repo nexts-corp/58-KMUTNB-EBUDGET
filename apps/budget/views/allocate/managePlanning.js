@@ -20,6 +20,8 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
         
         
         $scope.dataAllocate = [];
+        $scope.education = 0;
+        $scope.academic = 0;
         
         //manage allocate project for Planning
         $scope.manageAPP = {
@@ -79,7 +81,7 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
             }
             return 1;
         };
-        return $scope.department&&$scope.education&&$scope.academic&&checkDep();
+        return $scope.department&&checkDep();
     };
     
     $scope.addItemByEnter = function(keyEvent){
@@ -106,7 +108,7 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
             if(response.data.result){
                 
                 $scope.dataAllocate.push({
-                    id:response.data.result,
+                    id:response.data.result.id,
                     department:parseInt($scope.department),
                     departmentC:parseInt($scope.department),
                     education:$scope.education,
@@ -115,8 +117,8 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
                     academicC:$scope.academic
                 });
 
-                $scope.education = "";
-                $scope.academic = "";
+                $scope.education = 0;
+                $scope.academic = 0;
                 $scope.department = "udf";
                 
                 $scope.nkFocus('focusDepartment');
