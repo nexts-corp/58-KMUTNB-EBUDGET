@@ -36,7 +36,7 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label text-right req" for="selectYear">ปีงบประมาณ : </label>
                     <div class="col-md-3">
-                        <select id="cbListYear" ng-model="selectYear" ng-change="fetchData()" class="form-control input-sm" ng-options="year.year as year.year for year in cmDataListYear">
+                        <select ui-select2 id="cbListYear" ng-model="selectYear" ng-change="fetchData()" class="form-control input-sm" ng-options="year.year as year.year for year in cmDataListYear">
                             <option value="">- เลือกปีงบประมาณ -</option>
                         </select>
                     </div>
@@ -74,14 +74,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-
                                         <tr ng-repeat="listA in dataAllocate" nk-cloak>
                                             <td class="text-center" style="vertical-align: middle;" ng-bind="$index + 1"></td>
                                             <td>
                                                 <select ng-model="listA.department" class="form-control input-sm" ng-options="dep.id as dep.name for dep in cmDataListDepartment | filter:setMaster" disabled></select>
                                             </td>
-                                            <td><input ng-model="listA.education" type="text" class="form-control input-sm" number-format ng-keypress="editItemByEnter($index, $event)"></td>
-                                            <td><input ng-model="listA.academic" type="text" class="form-control input-sm" number-format ng-keypress="editItemByEnter($index, $event)"></td>
+                                            <td><input ng-model="listA.education" type="text" class="form-control input-sm text-right" nk-number="2" ng-keypress="editItemByEnter($index, $event)"></td>
+                                            <td><input ng-model="listA.academic" type="text" class="form-control input-sm text-right" nk-number="2" ng-keypress="editItemByEnter($index, $event)"></td>
                                             <td class="text-right" style="vertical-align: middle;" ng-bind="sumRows(listA.education,listA.academic) | currency:'':2"></td>
                                             <td class="text-center">
                                                 <button ng-show="checkEditItem($index)" ng-click="editItem($index)" class="btn btn-primary"><i class="fa fa-save"></i> บันทึก</button>
@@ -95,8 +94,8 @@
                                                     <option value="">- เลือกหน่วยงาน -</option>
                                                 </select>
                                             </td>
-                                            <td><input ng-model="education" type="text" class="form-control input-sm" number-format ng-keypress="addItemByEnter($event)"></td>
-                                            <td><input ng-model="academic" type="text" class="form-control input-sm" number-format ng-keypress="addItemByEnter($event)"></td>
+                                            <td><input ng-model="education" type="text" class="form-control input-sm text-right" nk-number="2" ng-keypress="addItemByEnter($event)"></td>
+                                            <td><input ng-model="academic" type="text" class="form-control input-sm text-right" nk-number="2" ng-keypress="addItemByEnter($event)"></td>
                                             <td class="text-right" style="vertical-align: middle;" ng-bind="sumProceeds() | currency:'':2"></td>
                                             <td class="text-center">
                                                 <button ng-show="checkAddItem()" class="btn btn-success" ng-click="addItem()"><i class="fa fa-plus"></i> เพิ่ม</button>
@@ -113,7 +112,7 @@
 
                             </div>
                             <div id="tab-project" class="tab-pane">
-
+                                
                                 <table class="table table-bordered table-condensed mb-none">
                                     <thead>
                                         <tr>
@@ -147,7 +146,7 @@
                                                 </select>
                                             </td>
                                             <td class="text-right">
-                                                <input ng-model="listSub.depValue" type="text" class="form-control input-sm text-right" number-format>
+                                                <input ng-model="listSub.depValue" type="text" class="form-control input-sm text-right" nk-number="2">
                                             </td>
                                             <td class="text-center">
                                                 <button class="btn btn-default" ng-show="!$last" ng-click="delItemAPPSub($parent.$index + '.' + $index)"><i class="fa fa-trash-o "></i> ลบ</button>
@@ -159,7 +158,7 @@
                                             <td><input ng-model="manageAPP.projectTxt" placeholder="( โครงการ )" type="text" class="form-control input-sm"></td>
                                             <td></td>
                                             <td class="text-center">
-                                                <button ng-show="manageAPP.projectTxt && manageAPP.depTxt.length >= 2" ng-click="addItemAPP()" class="btn btn-success"><i class="fa fa-plus"></i> เพิ่ม</button>
+                                                <button ng-show="checkAddItemAPP()" ng-click="addItemAPP()" class="btn btn-success"><i class="fa fa-plus"></i> เพิ่ม</button>
                                             </td>
                                         </tr>
                                         <tr ng-show="selectYear && !loadManageAPP" ng-repeat="listTxt in manageAPP.depTxt" style="background-color: #E5E5E5;">
@@ -170,7 +169,7 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <input ng-model="listTxt.depValue" type="text" class="form-control input-sm text-right" number-format>
+                                                <input ng-model="listTxt.depValue" type="text" class="form-control input-sm text-right" nk-number="2">
                                             </td>
                                             <td class="text-center">
                                                 <button ng-show="!$last" ng-click="delDepTxt($index)" class="btn btn-default" ><i class="fa fa-trash-o "></i> ลบ</button>
@@ -198,15 +197,14 @@
 
 
 
+<!--<script>
+    $(document).ready(function () {
+        $("#cbListYear").select2().trigger("change");
+    });
 
+</script>-->
 
 
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/allocate/managePlanning.js"></script>
 {{> footer}}
 
-<script>
-            $(document).ready(function () {
-        $("#cbListYear").select2().trigger("change");
-    });
-
-</script>

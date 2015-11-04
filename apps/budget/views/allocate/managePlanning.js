@@ -7,8 +7,8 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
     $controller('cmListController', {$scope: $scope});
     $controller('nkController', {$scope: $scope});
     
-    
     $scope.init = function(){
+        
         cde.setPath('budget','allocate');
         
         $scope.page = 1;
@@ -71,7 +71,15 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
     };
     
     $scope.checkAddItem = function(){
-        return $scope.department&&$scope.education&&$scope.academic;
+        var checkDep = function(){
+            for(var i=0;i<$scope.dataAllocate.length;i++){
+                if(parseInt($scope.department)===$scope.dataAllocate[i].departmentC){
+                    return 0;
+                }
+            }
+            return 1;
+        };
+        return $scope.department&&$scope.education&&$scope.academic&&checkDep();
     };
     
     $scope.addItemByEnter = function(keyEvent){
@@ -249,6 +257,51 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
         $scope.manageAPP.depTxt.splice(index,1);
     };
     
+    $scope.checkAddItemAPP = function(index){
+        if(typeof(index)==="undefined"){
+        
+            var checkDep = function(){
+
+                if($scope.manageAPP.projectTxt!=="" && $scope.manageAPP.depTxt.length>1){
+                    for(var i=0;i<$scope.manageAPP.depTxt.length;i++){
+                        for(var j=0;j<$scope.manageAPP.depTxt.length;j++){
+                            if(($scope.manageAPP.depTxt[i].depId===$scope.manageAPP.depTxt[j].depId) && (i!==j)){
+                                return false;
+                            }
+                        }
+                    }
+                }else{
+                    return false;
+                }
+
+                return true;
+
+            };
+        
+        }else{
+            
+            var checkDep = function(){
+                if($scope.manageAPP.data[index].pName!=="" && $scope.manageAPP.data[index].sub.length>1){
+                    for(var i=0;i<$scope.manageAPP.data[index].sub.length;i++){
+                        for(var j=0;j<$scope.manageAPP.data[index].sub.length;j++){
+                            if(($scope.manageAPP.data[index].sub[i].depId===$scope.manageAPP.data[index].sub[j].depId) && (i!==j)){
+                                return false;
+                            }
+                        }
+                    }
+                }else{
+                    return false;
+                }
+
+                return true;
+            };
+            
+        }
+
+        
+        return checkDep();
+    };
+    
     $scope.addItemAPP = function(){
         var lengthOfDepTxt = $scope.manageAPP.depTxt.length;
         $scope.manageAPP.depTxt[lengthOfDepTxt-1].depValue = 0;
@@ -307,17 +360,24 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
     
     
     $scope.checkEditItemAPP = function(index){
-        var arrUse = $scope.manageAPP.data[index].sub;
-        var arrUseC = $scope.manageAPP.data[index].subC;
         
-        if((arrUse.length === arrUseC.length) && ($scope.manageAPP.data[index].pName === $scope.manageAPP.data[index].pNameC)){
-            for(var i=0;i<arrUse.length;i++){
-                if((arrUse[i].depId !== arrUseC[i].depId) || (arrUse[i].depValue !== arrUseC[i].depValue)){
-                    return true;
+        if($scope.checkAddItemAPP(index)){
+        
+            var arrUse = $scope.manageAPP.data[index].sub;
+            var arrUseC = $scope.manageAPP.data[index].subC;
+
+            if((arrUse.length === arrUseC.length) && ($scope.manageAPP.data[index].pName === $scope.manageAPP.data[index].pNameC)){
+                for(var i=0;i<arrUse.length;i++){
+                    if((arrUse[i].depId !== arrUseC[i].depId) || (arrUse[i].depValue !== arrUseC[i].depValue)){
+                        return true;
+                    }
                 }
+            }else{
+                return true;
             }
+            
         }else{
-            return true;
+            return false;
         }
         
     };
