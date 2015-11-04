@@ -1052,14 +1052,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
             $param = array("budgetHeadId" => $id);
             $bg = $this->datacontext->getObject($sql, $param);
 
-            if ($bg && count($bg) > 0) {
-                $bgh = new BudgetHead();
-                $bgh->setId($id);
-                $bgh->setStatusId($statusId);
-                if (!$this->datacontext->updateObject($bgh)) {
-                    $result = false;
-                }
-            } else {
+            if ($bg && count($bg) == 0) {
                 $bgh = new BudgetHead();
                 $bgh->setId($id);
                 $bgh->setStatusId(5);
