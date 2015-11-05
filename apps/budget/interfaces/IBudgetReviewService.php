@@ -7,7 +7,8 @@ namespace apps\budget\interfaces;
  * @uri /budgetReview
  * @description BudgetReviewService
  */
-interface IBudgetReviewService {
+interface IBudgetReviewService
+{
 
     /**
      * @name getReview
@@ -48,15 +49,7 @@ interface IBudgetReviewService {
      */
     public function listBudgetExpenseInfo($budgetPeriodId, $fundgroupId, $planId, $deptId);
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     /**
      * @name getAllBudgetRequest
      * @uri /getAllBudgetRequest
@@ -65,4 +58,12 @@ interface IBudgetReviewService {
      * @description แสดงข้อมูลประเภทตามแหล่งเงิน
      */
     public function getAllBudgetRequest($budgetPeriodId);
+
+    /**
+     * @name listTracking
+     * @uri /listTracking
+     * @return String[] lists
+     * @description สถานะการติดตาม
+     */
+    public function listStatusTracking();
 }

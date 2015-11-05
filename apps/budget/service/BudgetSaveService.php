@@ -20,19 +20,22 @@ use apps\common\entity\Budget144;
 use apps\common\entity\Budget145;
 use apps\common\entity\Budget146;
 
-class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
+class BudgetSaveService extends CServiceBase implements IBudgetSaveService
+{
 
     public $datacontext;
     public $logger;
     public $md = "apps\\common\\model";
     public $ent = "apps\\common\\entity";
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->logger = \Logger::getLogger("root");
         $this->datacontext = new CDataContext(NULL);
     }
 
-    public function insertBudget140($budget) {
+    public function insertBudget140($budget)
+    {
         $return = array();
 
         foreach ($budget as $key => $value) {
@@ -107,7 +110,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
          */
     }
 
-    public function updateBudget140($budget) {
+    public function updateBudget140($budget)
+    {
         $return = true;
 
         $budget[0]->bgSummary = $budget[0]->salaryTotal;
@@ -140,7 +144,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
          */
     }
 
-    public function insertBudget141($budget) {
+    public function insertBudget141($budget)
+    {
         $return = array();
 
         foreach ($budget as $key => $value) {
@@ -184,7 +189,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function updateBudget141($budget) {
+    public function updateBudget141($budget)
+    {
         $return = true;
 
         $budget[0]->bgSummary = $budget[0]->salaryTotal;
@@ -196,7 +202,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function insertBudget142($budget) {
+    public function insertBudget142($budget)
+    {
         $return = array();
 
         foreach ($budget as $key => $value) {
@@ -240,7 +247,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function updateBudget142($budget) {
+    public function updateBudget142($budget)
+    {
         $return = true;
 
         $budget[0]->bgSummary = $budget[0]->salaryTotal;
@@ -252,7 +260,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function insertBudget143($budget) {
+    public function insertBudget143($budget)
+    {
         $return = array();
 
         foreach ($budget as $key => $value) {
@@ -296,7 +305,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function updateBudget143($budget) {
+    public function updateBudget143($budget)
+    {
         $return = true;
 
         $budget[0]->bgSummary = $budget[0]->bgRequest;
@@ -308,7 +318,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function insertBudget144($budget) {
+    public function insertBudget144($budget)
+    {
         $return = array();
 
         foreach ($budget as $key => $value) {
@@ -352,10 +363,11 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function updateBudget144($budget) {
+    public function updateBudget144($budget)
+    {
         $return = true;
 
-        $budget[0]->bgSummary = (float) ( $budget[0]->bgRequest) + (float) ( $budget[0]->nonBgRequest);
+        $budget[0]->bgSummary = (float)($budget[0]->bgRequest) + (float)($budget[0]->nonBgRequest);
 
         if (!$this->datacontext->updateObject($budget)) {
             $return = false;
@@ -364,7 +376,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function insertBudget145($budget) {
+    public function insertBudget145($budget)
+    {
         $return = array();
 
         foreach ($budget as $key => $value) {
@@ -408,7 +421,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function updateBudget145($budget) {
+    public function updateBudget145($budget)
+    {
         $return = true;
 
         $budget[0]->bgSummary = $budget[0]->totalPrice;
@@ -420,7 +434,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function insertBudget146($budget) {
+    public function insertBudget146($budget)
+    {
         $return = array();
 
         foreach ($budget as $key => $value) {
@@ -465,7 +480,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function updateBudget146($budget) {
+    public function updateBudget146($budget)
+    {
         $return = true;
 
         $budget[0]->bgSummary = $budget[0]->bgRequest;
@@ -477,7 +493,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function deleteBudget140($budgetId) {
+    public function deleteBudget140($budgetId)
+    {
         $result = true;
 
         $repo = new Budget140();
@@ -499,7 +516,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $result;
     }
 
-    public function deleteBudget141($budgetId) {
+    public function deleteBudget141($budgetId)
+    {
         $result = true;
 
         $repo = new Budget141();
@@ -521,7 +539,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $result;
     }
 
-    public function deleteBudget142($budgetId) {
+    public function deleteBudget142($budgetId)
+    {
         $result = true;
 
         $repo = new Budget142();
@@ -543,7 +562,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $result;
     }
 
-    public function deleteBudget143($budgetId) {
+    public function deleteBudget143($budgetId)
+    {
         $result = true;
 
         $repo = new Budget143();
@@ -565,7 +585,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $result;
     }
 
-    public function deleteBudget144($budgetId) {
+    public function deleteBudget144($budgetId)
+    {
         $result = true;
 
         $repo = new Budget144();
@@ -587,7 +608,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $result;
     }
 
-    public function deleteBudget145($budgetId) {
+    public function deleteBudget145($budgetId)
+    {
         $result = true;
 
         $repo = new Budget145();
@@ -609,7 +631,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $result;
     }
 
-    public function deleteBudget146($budgetId) {
+    public function deleteBudget146($budgetId)
+    {
         $result = true;
 
         $repo = new Budget146();
@@ -631,7 +654,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $result;
     }
 
-    public function insertBuildingOne($building, $listBuildDetail, $listBOQ) {
+    public function insertBuildingOne($building, $listBuildDetail, $listBOQ)
+    {
         $return = array();
 
         foreach ($building as $key => $value) {
@@ -674,7 +698,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function editBuildingOne($building, $listBuildDetail, $listBOQ, $listIDRemoveBuildingOne, $listIDRemoveBOQ) {
+    public function editBuildingOne($building, $listBuildDetail, $listBOQ, $listIDRemoveBuildingOne, $listIDRemoveBOQ)
+    {
         $return = array();
         foreach ($building as $key => $value) {
 
@@ -771,7 +796,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function insertBuildingMore($building, $listBuildFloor, $listBOQ, $listBuildPeriod) {
+    public function insertBuildingMore($building, $listBuildFloor, $listBOQ, $listBuildPeriod)
+    {
         foreach ($building as $key => $value) {
 
             if (!$this->datacontext->saveObject($value)) {
@@ -825,7 +851,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function editBuildingMore($building, $listBuildFloor, $listBOQ, $listBuildPeriod, $listIDRemoveFloor, $listIDRemoveBOQ, $listIDRemovePeriod) {
+    public function editBuildingMore($building, $listBuildFloor, $listBOQ, $listBuildPeriod, $listIDRemoveFloor, $listIDRemoveBOQ, $listIDRemovePeriod)
+    {
 
         $return = array();
         foreach ($building as $key => $value) {
@@ -964,7 +991,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function uploadFileAttachment($file) {
+    public function uploadFileAttachment($file)
+    {
         //uploadFile
         $return = array();
         $uploaddir = './uploads/ebudget/';
@@ -985,7 +1013,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function InsertAttachment($att) {
+    public function InsertAttachment($att)
+    {
         $return = array();
 
         foreach ($att as $key => $value) {
@@ -1002,7 +1031,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return[0];
     }
 
-    public function editAttachment($att) {
+    public function editAttachment($att)
+    {
         $return = array();
 
         foreach ($att as $key => $value) {
@@ -1030,7 +1060,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return[0];
     }
 
-    public function deleteAttachment($attachmentID, $path, $budgetID, $formBudget) {
+    public function deleteAttachment($attachmentID, $path, $budgetID, $formBudget)
+    {
         $uploaddir = './uploads/ebudget/';
         $return = array();
 
@@ -1059,7 +1090,59 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    private function updateBudgetHead($id, $formType, $statusId) {
+    public function updateStatusBG($bgType, $listBg, $status)
+    {
+        $return = array();
+
+        foreach ($listBg as $key => $value) {
+
+            if (isset($value)) {
+
+                $class = $this->ent . "\\" . $bgType;
+                $object = new $class();
+
+                if ($status == 2) {
+
+                    if ($value->statusId == 1 || $value->statusId == 4) {
+                        $object->setId($value->id);
+                        $object->setStatusId($status);
+                        if (isset($value->comment)) $object->setComment($value->comment);
+                    }
+
+                } else if ($status == 3 || $status == 4) {
+
+                    $object->setId($value->id);
+                    $object->setStatusId($status);
+                    if (isset($value->comment)) $object->setComment($value->comment);
+                }
+
+                if ($object->getId() != null) {
+
+                    if ($this->datacontext->updateObject($object)) {
+                        $return["status"] = true;
+                        if (isset($value->budgetHeadId)) {
+
+                            if ($this->updateBudgetHead($value->budgetHeadId, $bgType, $status)) {
+                                $return["status"] = true;
+                            } else {
+                                $return["status"] = false;
+                                $return["msg"] = $this->datacontext->getLastMessage();
+                            }
+                        }
+                    } else {
+                        $return["status"] = false;
+                        $return["msg"] = $this->datacontext->getLastMessage();
+                    }
+                }
+            }
+        }
+
+        return $return;
+    }
+
+
+    private function updateBudgetHead($id, $formType, $statusId)
+    {
         $result = true;
 
         /*
@@ -1090,8 +1173,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
             }
         } else if ($statusId == "3") {
             $sql = "select count(*) as num from " . $this->ent . "\\" . $formType . " bg "
-                    . "where bg.budgetHeadId = :budgetHeadId "
-                    . "and bg.statusId in (1,2,4) ";
+                . "where bg.budgetHeadId = :budgetHeadId "
+                . "and bg.statusId in (1,2,4) ";
             $param = array("budgetHeadId" => $id);
             $bg = $this->datacontext->getObject($sql, $param);
 

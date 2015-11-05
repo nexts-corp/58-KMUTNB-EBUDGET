@@ -103,12 +103,32 @@ commonService.directive('nkCloak', function() {
 });
 
 
+commonService.directive('nkNumber', function() {
+    return {
+        restrict: 'A',
+        require: '^?ngModel',
+        link: function(scope, element, attrs,ngModel) {
+  
+            if(attrs.nkNumber!==""){
+                angular.element(element).number(true,parseInt(attrs.nkNumber));
+            }else{
+                angular.element(element).number(true);
+            }
+            
+            angular.element(element).val(0);
+            //ngModel.$setViewValue(0);
+            
+        }
+    };
+ });
 
 
 
 
-
-var commonApp = angular.module('commonApp', ['commonService']);
+var commonApp = angular.module('commonApp', [
+    'commonService',
+    'ui.select2'
+]);
 
 commonApp.config(function ($interpolateProvider) {
     $interpolateProvider.startSymbol('{[');
@@ -191,10 +211,13 @@ commonApp.controller('cmListController', function ($scope, $http) {
 
 
 commonApp.directive('numberFormat', function() {
-    return function(scope, element, attrs) {
-        angular.element(element).number(true,2);
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            angular.element(element).number(true,2);
+        }
     };
-});
+ });
 
 commonApp.directive('autoFocus', function() {
     return function(scope, element, attrs) {
