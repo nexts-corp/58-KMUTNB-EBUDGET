@@ -85,7 +85,7 @@
                         <th class="text-center">คณะ</th>
                         <th class="text-center">แหล่งเงิน</th>
                         <th class="text-center">แผนงาน</th>
-                        <th class="text-center">ผลผลิต/โครงการ</th>
+                        <!--<th class="text-center">ผลผลิต/โครงการ</th>-->
                         <th class="text-center">กองทุน</th>
                         <th class="text-center">สถานะ</th>
                         <th class="text-center">เครื่องมือ</th>
@@ -95,10 +95,11 @@
                     <tr ng-repeat="item in listsBudgetItem">
                         <td class="text-center">ง.{[item.formId]}</td>
                         <td>{[item.deptName]}</td>
+                        <td>{[item.budgetTypeCode]}</td>
+                        <td>{[item.l3dPlanName]}</td>
+                        <!--<td>{[item.planName]}</td>
+                        <td>{[item.projectName]}</td>-->
                         <td>{[item.fundName]}</td>
-                        <td>{[item.planName]}</td>
-                        <td>{[item.projectName]}</td>
-                        <td>{[item.planName]}</td>
                         <td>{[item.statusDesc]}</td>
                         <td style="text-align: center">
                             <button class="btn btn-primary edit-btn" ng-click="toFormBudget(item)" title="ดูข้อมูล"><i
@@ -207,13 +208,15 @@
             param.budgetTypeCode = itemBudget.budgetTypeCode;
             param.deptId = itemBudget.deptId;
             param.fundgroupId = itemBudget.fundgroupId;
+            param.l3dPlanId = itemBudget.l3dPlanId;
             param.planId = itemBudget.planId;
             param.projectId = itemBudget.projectId;
             param.deptName = itemBudget.deptName;
             param.planName = itemBudget.planName;
             param.projectName = itemBudget.projectName;
+            param.l3dPlanName = itemBudget.l3dPlanName;
             param.fundName = itemBudget.fundName;
-            if (itemBudget.budgetTypeCode == "G") {
+            if (itemBudget.budgetTypeCode === "G") {
                 param.budgetTypeName = "เงินงบประมาณแผ่นดิน";
             } else {
                 param.budgetTypeName = "เงินรายได้";
