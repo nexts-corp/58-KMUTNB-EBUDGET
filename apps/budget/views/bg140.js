@@ -307,7 +307,24 @@ function bg140Form(param) {
         + '<div class="modal-body bodyComment">'
 
         + '</div>'
-        + '<div id="loadingModalApprove" class="col-md-12 text-center"></div>'
+        + '<div id="loadingModalShowComment" class="col-md-12 text-center"></div>'
+        + '</div>'
+        + '</div>'
+        + '</div>'
+
+        + '<div id="panelShowAttachment" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">'
+        + '<div class="modal-dialog">'
+        + '<div class="modal-content">'
+        + '<div class="modal-header">'
+        + '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
+        + '<h4 class="modal-title" id="myModalLabel">เอกสารแนบ</h4>'
+        + '</div>'
+        + '<div class="modal-body bodyShowAttachment">'
+        + '  <div id="attLink"></div>'
+        + '  <label class="text-bold">คำอธิบายประกอบไฟล์</label>'
+        + '  <div id="descAttachment"></div>'
+        + '</div>'
+        + '<div id="loadingModalShowAttachment" class="col-md-12 text-center"></div>'
         + '</div>'
         + '</div>'
         + '</div>';
@@ -563,12 +580,21 @@ function bg140DetailPlaningBudget(param) {
                             + '<td class="number">' + value3["salaryTotal"] + '</td>'
                             + '<td>' + value3["remark"] + '</td>'
                             + '<td class="text-bold status">' + value3["statusDesc"] + '</td>'
-                            + '<td>';
+                            + '<td class="text-center">';
                         if (value3["statusId"] == STATUSWAITING || value3["statusId"] == STATUSAPPROVE) {
 
-                            html += '<div class="btn-group">' +
-                                '<button class="btn btn-sm btn-warning approveEdit" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' +
-                                '</div>';
+                            if (value3["path"] != null) {
+                                //if have file attachement
+                                html += '<div class="btn-group">' +
+                                    '<button class="btn btn-sm btn-warning approveEdit" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' +
+                                    '<button class="btn btn-sm btn-primary approveFile" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-file-zip-o"></i> เอกสารแนบ</button>' +
+                                    '</div>';
+                            } else {
+                                html += '<div class="btn-group">' +
+                                    '<button class="btn btn-sm btn-warning approveEdit" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' +
+                                    '</div>';
+                            }
+
                         } else {
 
                             html += '<div class="btn-group">' +
@@ -605,7 +631,7 @@ function bg140DetailPlaningBudget(param) {
             // when you press to editApprove button
             $("button.approveEdit").unbind("click").click(function () {
 
-                $("#loadingModalApprove").html('');
+                $("#loadingModalShowComment").html('');
                 var id = $(this).attr("data-id");
                 var objButton = this;
                 $('.summernoteApprove').code(list140Arr[id]["comment"]);
@@ -626,7 +652,7 @@ function bg140DetailPlaningBudget(param) {
 
                         $("#panelCommentApprove").modal("hide");
                     } else {
-                        $("#loadingModalApprove").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
+                        $("#loadingModalShowComment").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
                     }
                 });
 
@@ -646,9 +672,15 @@ function bg140DetailPlaningBudget(param) {
                         }
                         $("#panelCommentApprove").modal("hide");
                     } else {
-                        $("#loadingModalApprove").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
+                        $("#loadingModalShowComment").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
                     }
                 });
+            });
+            $("button.approveFile").unbind("click").click(function () {
+                var id = $(this).attr("data-id");
+                $("#panelShowAttachment").modal("show");
+                $("#attLink").html('<a href="' + js_context_path + "/uploads/ebudget/" + list140Arr[id]["path"] + '"><i class="fa fa-file-zip-o"></i> ดาวโหลดเอกสารที่แนบไว้</a>');
+                $("#descAttachment").html(list140Arr[id]["desc"]);
             });
         }
     }, 100);
