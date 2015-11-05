@@ -17,29 +17,28 @@ function bg142Form(param) {
             + '<label class="col-md-4 control-label text-right">แหล่งเงิน : </label>'
             + '<div class="col-md-6">' + budgetTypeArr[param["budgetTypeCode"]] + '</div>'
             + '</div>'
-
             + '</div>'
 
             + '<div class="form-group">'
             + '<div class="col-md-6">'
             + '<label class="col-md-4 control-label text-right">แผนงาน : </label>'
-            + '<div class="col-md-6">' + planArr[param["planId"]] + '</div>'
+            + '<div class="col-md-6">' + planArr[param["l3dPlanId"]] + '</div>'
             + '</div>'
 
             + '<div class="col-md-6">'
-            + '<label class="col-md-4 control-label text-right">ผลผลิต/โครงการ : </label>'
-            + '<div class="col-md-6">' + projectArr[param["projectId"]] + '</div>'
+            + '<label class="col-md-4 control-label text-right">กองทุน : </label>'
+            + '<div class="col-md-6">' + fundgroupArr[param["fundgroupId"]] + '</div>'
             + '</div>'
             + '</div>'
-
+            
             + '<div class="form-group">'
             + ' <div class="col-md-6">'
-            + '     <label class="col-md-4 control-label text-right">กองทุน : </label>'
-            + '     <div class="col-md-6">' + fundgroupArr[param["fundgroupId"]] + '</div>'
+            + '     <label class="col-md-4 control-label text-right">หน่วยงาน/สำนักงาน : </label>'
+            + '     <div class="col-md-6">' + facultyArr[param["facultyId"]] + '</div>'
             + ' </div>'
 
             + ' <div class="col-md-6">'
-            + '     <label class="col-md-4 control-label text-right">หน่วยงาน : </label>'
+            + '     <label class="col-md-4 control-label text-right">ภาควิชา : </label>'
             + '     <div class="col-md-6">' + departmentArr[param["deptId"]] + '</div>'
             + ' </div>'
             + '</div>';

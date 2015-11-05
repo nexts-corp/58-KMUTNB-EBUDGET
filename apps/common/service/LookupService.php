@@ -121,9 +121,9 @@ class LookupService extends CServiceBase implements ILookupService {
         //array_push($list, array("id" => "U", "name" => "เงินงบประมาณแผ่นดินและเงินรายได้"));
         return $list;
     }
-    
+
     public function listBudgetType() {
-        $sql = "SELECT bgt FROM ".$this->ent."\\BudgetType bgt WHERE (bgt.typeCode = 'K' OR bgt.typeCode = 'U') AND bgt.masterId = 0";
+        $sql = "SELECT bgt FROM " . $this->ent . "\\BudgetType bgt WHERE (bgt.typeCode = 'K' OR bgt.typeCode = 'U') AND bgt.masterId = 0";
         return $this->datacontext->getObject($sql);
     }
 
@@ -164,38 +164,51 @@ class LookupService extends CServiceBase implements ILookupService {
         }
         return $result;
     }
-    
-    
-    
-    
-    
+
     public function listAffirmativeType() {
         $list = new entity\AffirmativeType();
         return $this->datacontext->getObject($list);
     }
+
     public function listAffirmativeIssue($id) {
         $list = new entity\AffirmativeIssue();
         $list->setTypeId($id);
         return $this->datacontext->getObject($list);
     }
+
     public function listAffirmativeTarget($id) {
         $list = new entity\AffirmativeTarget();
         $list->setIssueId($id);
         return $this->datacontext->getObject($list);
     }
+
     public function listAffirmativeStrategy($id) {
         $list = new entity\AffirmativeStrategy();
         $list->setTargetId($id);
         return $this->datacontext->getObject($list);
     }
-    
-    
-    
-    
+
     public function listIntegration() {
         $list = new entity\Integration();
         return $this->datacontext->getObject($list);
     }
-    
+
+    public function listFundgroupWithPlan($budgetPeriodId, $l3dPlanId) {
+        $sql = "select DISTINCT(map.FUNDGROUPID) as id , fund.FUNDGROUPNAME as name "
+            ."from MAPPINGPLAN map "
+            ."inner join L3D_FUNDGROUP fund on fund.FUNDGROUPID = map.FUNDGROUPID "
+            ."where BUDGETPERIODID = '".$budgetPeriodId."'"
+            ."and PLANID = '".$l3dPlanId."'";
+
+        $data = $this->datacontext->pdoExecute($sql);
+
+        $result = array();
+        
+        foreach ($data as $key => $value) {
+            $result[$key]["id"] = $value["id"];
+            $result[$key]["name"] = $value["name"];
+        }
+        return $result;
+    }
 
 }

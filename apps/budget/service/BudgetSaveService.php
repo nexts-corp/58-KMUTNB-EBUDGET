@@ -44,12 +44,16 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
             $bgHead->setBudgetPeriodId($value->budgetPeriodId);
             $bgHead->setBudgetTypeCode($value->budgetTypeCode);
             $bgHead->setDeptId($value->deptId);
-            $bgHead->setPlanId($value->planId);
-            $bgHead->setProjectId($value->projectId);
+            //$bgHead->setPlanId($value->planId);
+            //$bgHead->setProjectId($value->projectId);
             $bgHead->setL3dPlanId($value->l3dPlanId);
             $bgHead->setL3dProjectId($value->l3dProjectId);
             $bgHead->setFundgroupId($value->fundgroupId);
             $bgHead->setActivityId($value->activityId);
+            
+            $budgetPlanProject = $this->getBudgetPlanAndProject($value->budgetPeriodId, $value->l3dPlanId, $value->fundgroupId);
+            $bgHead->setPlanId($budgetPlanProject["budgetPlanId"]);
+            $bgHead->setProjectId($budgetPlanProject["budgetProjectId"]);
 
             $dataHead = $this->datacontext->getObject($bgHead);
 
@@ -62,6 +66,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
             }
 
             $value->budgetHeadId = $bgHeadId;
+            $value->planId = $budgetPlanProject["budgetPlanId"];
+            $value->projectId = $budgetPlanProject["budgetProjectId"];
             $value->bgSummary = $value->salaryTotal;
             if ($value->remark == "") {
                 $value->remark = "-";
@@ -115,6 +121,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
         $return = true;
 
         $budget[0]->bgSummary = $budget[0]->salaryTotal;
+        $budget[0]->dateUpdated = date('Y-m-d H:i:s');
 
         if (!$this->datacontext->updateObject($budget)) {
             $return = false;
@@ -154,13 +161,17 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
             $bgHead->setBudgetPeriodId($value->budgetPeriodId);
             $bgHead->setBudgetTypeCode($value->budgetTypeCode);
             $bgHead->setDeptId($value->deptId);
-            $bgHead->setPlanId($value->planId);
-            $bgHead->setProjectId($value->projectId);
+            //$bgHead->setPlanId($value->planId);
+            //$bgHead->setProjectId($value->projectId);
             $bgHead->setL3dPlanId($value->l3dPlanId);
             $bgHead->setL3dProjectId($value->l3dProjectId);
             $bgHead->setFundgroupId($value->fundgroupId);
             $bgHead->setActivityId($value->activityId);
 
+            $budgetPlanProject = $this->getBudgetPlanAndProject($value->budgetPeriodId, $value->l3dPlanId, $value->fundgroupId);
+            $bgHead->setPlanId($budgetPlanProject["budgetPlanId"]);
+            $bgHead->setProjectId($budgetPlanProject["budgetProjectId"]);
+            
             $dataHead = $this->datacontext->getObject($bgHead);
 
             if (!isset($dataHead) || $dataHead == null) {
@@ -172,6 +183,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
             }
 
             $value->budgetHeadId = $bgHeadId;
+            $value->planId = $budgetPlanProject["budgetPlanId"];
+            $value->projectId = $budgetPlanProject["budgetProjectId"];
             $value->bgSummary = $value->salaryTotal;
             if ($value->remark == "") {
                 $value->remark = "-";
@@ -194,6 +207,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
         $return = true;
 
         $budget[0]->bgSummary = $budget[0]->salaryTotal;
+        $budget[0]->dateUpdated = date('Y-m-d H:i:s');
 
         if (!$this->datacontext->updateObject($budget)) {
             $return = false;
@@ -212,13 +226,17 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
             $bgHead->setBudgetPeriodId($value->budgetPeriodId);
             $bgHead->setBudgetTypeCode($value->budgetTypeCode);
             $bgHead->setDeptId($value->deptId);
-            $bgHead->setPlanId($value->planId);
-            $bgHead->setProjectId($value->projectId);
+            //$bgHead->setPlanId($value->planId);
+            //$bgHead->setProjectId($value->projectId);
             $bgHead->setL3dPlanId($value->l3dPlanId);
             $bgHead->setL3dProjectId($value->l3dProjectId);
             $bgHead->setFundgroupId($value->fundgroupId);
             $bgHead->setActivityId($value->activityId);
 
+            $budgetPlanProject = $this->getBudgetPlanAndProject($value->budgetPeriodId, $value->l3dPlanId, $value->fundgroupId);
+            $bgHead->setPlanId($budgetPlanProject["budgetPlanId"]);
+            $bgHead->setProjectId($budgetPlanProject["budgetProjectId"]);
+            
             $dataHead = $this->datacontext->getObject($bgHead);
 
             if (!isset($dataHead) || $dataHead == null) {
@@ -230,6 +248,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
             }
 
             $value->budgetHeadId = $bgHeadId;
+            $value->planId = $budgetPlanProject["budgetPlanId"];
+            $value->projectId = $budgetPlanProject["budgetProjectId"];
             $value->bgSummary = $value->salaryTotal;
             if ($value->remark == "") {
                 $value->remark = "-";
@@ -252,6 +272,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
         $return = true;
 
         $budget[0]->bgSummary = $budget[0]->salaryTotal;
+        $budget[0]->dateUpdated = date('Y-m-d H:i:s');
 
         if (!$this->datacontext->updateObject($budget)) {
             $return = false;
@@ -270,13 +291,17 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
             $bgHead->setBudgetPeriodId($value->budgetPeriodId);
             $bgHead->setBudgetTypeCode($value->budgetTypeCode);
             $bgHead->setDeptId($value->deptId);
-            $bgHead->setPlanId($value->planId);
-            $bgHead->setProjectId($value->projectId);
+            //$bgHead->setPlanId($value->planId);
+            //$bgHead->setProjectId($value->projectId);
             $bgHead->setL3dPlanId($value->l3dPlanId);
             $bgHead->setL3dProjectId($value->l3dProjectId);
             $bgHead->setFundgroupId($value->fundgroupId);
             $bgHead->setActivityId($value->activityId);
 
+            $budgetPlanProject = $this->getBudgetPlanAndProject($value->budgetPeriodId, $value->l3dPlanId, $value->fundgroupId);
+            $bgHead->setPlanId($budgetPlanProject["budgetPlanId"]);
+            $bgHead->setProjectId($budgetPlanProject["budgetProjectId"]);
+            
             $dataHead = $this->datacontext->getObject($bgHead);
 
             if (!isset($dataHead) || $dataHead == null) {
@@ -288,6 +313,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
             }
 
             $value->budgetHeadId = $bgHeadId;
+            $value->planId = $budgetPlanProject["budgetPlanId"];
+            $value->projectId = $budgetPlanProject["budgetProjectId"];
             $value->bgSummary = $value->bgRequest;
             if ($value->remark == "") {
                 $value->remark = "-";
@@ -310,6 +337,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
         $return = true;
 
         $budget[0]->bgSummary = $budget[0]->bgRequest;
+        $budget[0]->dateUpdated = date('Y-m-d H:i:s');
 
         if (!$this->datacontext->updateObject($budget)) {
             $return = false;
@@ -328,13 +356,17 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
             $bgHead->setBudgetPeriodId($value->budgetPeriodId);
             $bgHead->setBudgetTypeCode($value->budgetTypeCode);
             $bgHead->setDeptId($value->deptId);
-            $bgHead->setPlanId($value->planId);
-            $bgHead->setProjectId($value->projectId);
+            //$bgHead->setPlanId($value->planId);
+            //$bgHead->setProjectId($value->projectId);
             $bgHead->setL3dPlanId($value->l3dPlanId);
             $bgHead->setL3dProjectId($value->l3dProjectId);
             $bgHead->setFundgroupId($value->fundgroupId);
             $bgHead->setActivityId($value->activityId);
 
+            $budgetPlanProject = $this->getBudgetPlanAndProject($value->budgetPeriodId, $value->l3dPlanId, $value->fundgroupId);
+            $bgHead->setPlanId($budgetPlanProject["budgetPlanId"]);
+            $bgHead->setProjectId($budgetPlanProject["budgetProjectId"]);
+            
             $dataHead = $this->datacontext->getObject($bgHead);
 
             if (!isset($dataHead) || $dataHead == null) {
@@ -346,6 +378,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
             }
 
             $value->budgetHeadId = $bgHeadId;
+            $value->planId = $budgetPlanProject["budgetPlanId"];
+            $value->projectId = $budgetPlanProject["budgetProjectId"];
             $value->bgSummary = (float) ( $value->bgRequest) + (float) ( $value->nonBgRequest);
             if ($value->remark == "") {
                 $value->remark = "-";
@@ -368,6 +402,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
         $return = true;
 
         $budget[0]->bgSummary = (float)($budget[0]->bgRequest) + (float)($budget[0]->nonBgRequest);
+        $budget[0]->dateUpdated = date('Y-m-d H:i:s');
 
         if (!$this->datacontext->updateObject($budget)) {
             $return = false;
@@ -386,13 +421,17 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
             $bgHead->setBudgetPeriodId($value->budgetPeriodId);
             $bgHead->setBudgetTypeCode($value->budgetTypeCode);
             $bgHead->setDeptId($value->deptId);
-            $bgHead->setPlanId($value->planId);
-            $bgHead->setProjectId($value->projectId);
+            //$bgHead->setPlanId($value->planId);
+            //$bgHead->setProjectId($value->projectId);
             $bgHead->setL3dPlanId($value->l3dPlanId);
             $bgHead->setL3dProjectId($value->l3dProjectId);
             $bgHead->setFundgroupId($value->fundgroupId);
             $bgHead->setActivityId($value->activityId);
 
+            $budgetPlanProject = $this->getBudgetPlanAndProject($value->budgetPeriodId, $value->l3dPlanId, $value->fundgroupId);
+            $bgHead->setPlanId($budgetPlanProject["budgetPlanId"]);
+            $bgHead->setProjectId($budgetPlanProject["budgetProjectId"]);
+            
             $dataHead = $this->datacontext->getObject($bgHead);
 
             if (!isset($dataHead) || $dataHead == null) {
@@ -404,6 +443,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
             }
 
             $value->budgetHeadId = $bgHeadId;
+            $value->planId = $budgetPlanProject["budgetPlanId"];
+            $value->projectId = $budgetPlanProject["budgetProjectId"];
             $value->bgSummary = $value->totalPrice;
             if ($value->remark == "") {
                 $value->remark = "-";
@@ -426,6 +467,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
         $return = true;
 
         $budget[0]->bgSummary = $budget[0]->totalPrice;
+        $budget[0]->dateUpdated = date('Y-m-d H:i:s');
 
         if (!$this->datacontext->updateObject($budget)) {
             $return = false;
@@ -444,14 +486,17 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
             $bgHead->setBudgetPeriodId($value->budgetPeriodId);
             $bgHead->setBudgetTypeCode($value->budgetTypeCode);
             $bgHead->setDeptId($value->deptId);
-            $bgHead->setPlanId($value->planId);
-            $bgHead->setProjectId($value->projectId);
+            //$bgHead->setPlanId($value->planId);
+            //$bgHead->setProjectId($value->projectId);
             $bgHead->setL3dPlanId($value->l3dPlanId);
-
             $bgHead->setL3dProjectId($value->l3dProjectId);
             $bgHead->setFundgroupId($value->fundgroupId);
             $bgHead->setActivityId($value->activityId);
 
+            $budgetPlanProject = $this->getBudgetPlanAndProject($value->budgetPeriodId, $value->l3dPlanId, $value->fundgroupId);
+            $bgHead->setPlanId($budgetPlanProject["budgetPlanId"]);
+            $bgHead->setProjectId($budgetPlanProject["budgetProjectId"]);
+            
             $dataHead = $this->datacontext->getObject($bgHead);
 
             if (!isset($dataHead) || $dataHead == null) {
@@ -463,6 +508,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
             }
 
             $value->budgetHeadId = $bgHeadId;
+            $value->planId = $budgetPlanProject["budgetPlanId"];
+            $value->projectId = $budgetPlanProject["budgetProjectId"];
             $value->bgSummary = $value->bgRequest;
             if ($value->remark == "") {
                 $value->remark = "-";
@@ -485,6 +532,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
         $return = true;
 
         $budget[0]->bgSummary = $budget[0]->bgRequest;
+        $budget[0]->dateUpdated = date('Y-m-d H:i:s');
 
         if (!$this->datacontext->updateObject($budget)) {
             $return = false;
@@ -1191,20 +1239,34 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
         return $result;
     }
 
-    private function getBudgetProject($budgetPeriodId, $L3DPlanId, $fundgroupId) {
-        $plan = new \apps\common\entity\MappingPlan();
+    private function getBudgetPlanAndProject($budgetPeriodId, $L3DPlanId, $fundgroupId) {
+        $project = new \apps\common\entity\MappingPlan();
 
-        $plan->setBudgetperiodId($budgetPeriodId);
-        $plan->setPlanId($L3DPlanId);
-        $plan->setFundgroupId($fundgroupId);
+        $project->setBudgetperiodId($budgetPeriodId);
+        $project->setPlanId($L3DPlanId);
+        $project->setFundgroupId($fundgroupId);
 
-        $data = $this->datacontext->getObject($plan);
+        $dataProject = $this->datacontext->getObject($project);
 
-        if ($data) {
-            return $data[0]->budgetProjectId;
+        $result = array();
+        
+        if ($dataProject) {
+            $projectId = $dataProject[0]->budgetProjectId;
+            
+            $plan = new \apps\common\entity\BudgetProject();
+            $plan->setId($projectId);
+            
+            $dataPlan = $this->datacontext->getObject($plan);
+            
+            if($dataPlan) {
+                $planId = $dataPlan[0]->planId;
+                
+                $result["budgetPlanId"] = $planId;
+                $result["budgetProjectId"] = $projectId;
+            }
         }
         
-        return 0;
+        return $result;
     }
 
 }

@@ -17,8 +17,9 @@ class BudgetFilter {
 
     public $budgetPeriodId;
     public $budgetTypeCode;
-    public $planId;
-    public $projectId;
+    public $l3dPlanId;
+    //public $planId;
+    //public $projectId;
     public $fundgroupId;
     public $deptId;
 
@@ -30,12 +31,8 @@ class BudgetFilter {
         return $this->budgetTypeCode;
     }
 
-    function getPlanId() {
-        return $this->planId;
-    }
-
-    function getProjectId() {
-        return $this->projectId;
+    function getL3dPlanId() {
+        return $this->l3dPlanId;
     }
 
     function getFundgroupId() {
@@ -54,12 +51,8 @@ class BudgetFilter {
         $this->budgetTypeCode = $budgetTypeCode;
     }
 
-    function setPlanId($planId) {
-        $this->planId = $planId;
-    }
-
-    function setProjectId($projectId) {
-        $this->projectId = $projectId;
+    function setL3dPlanId($l3dPlanId) {
+        $this->l3dPlanId = $l3dPlanId;
     }
 
     function setFundgroupId($fundgroupId) {

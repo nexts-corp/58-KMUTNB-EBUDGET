@@ -68,7 +68,7 @@ interface ILookupService {
      * @description ข้อมูลปีงบประมาณ
      */
     public function listYear();
-    
+
     /**
      * @name listBudgetSource
      * @uri /listBudgetSource
@@ -76,7 +76,7 @@ interface ILookupService {
      * @description แหล่งเงิน
      */
     public function listBudgetSource();
-    
+
     /**
      * @name listBudgetType
      * @uri /listBudgetType
@@ -84,8 +84,7 @@ interface ILookupService {
      * @description ประเภทแหล่งเงิน
      */
     public function listBudgetType();
-    
-    
+
     /**
      * @name listProjectType
      * @uri /listProjectType
@@ -93,7 +92,7 @@ interface ILookupService {
      * @description ประเภทโปรเจค
      */
     public function listProjectType();
-    
+
     /**
      * @name list3DPlan
      * @uri /list3DPlan
@@ -101,7 +100,7 @@ interface ILookupService {
      * @description รายชื่อแผนงานใน 3 มิติ
      */
     public function list3DPlan();
-    
+
     /**
      * @name list3DPproject
      * @uri /list3DPproject
@@ -110,11 +109,7 @@ interface ILookupService {
      * @description รายชื่อแผนงานใน 3 มิติ
      */
     public function list3DPproject($planId);
-    
-    
-    
-    
-    
+
     /**
      * @name listAffirmativeType
      * @uri /listAffirmativeType
@@ -122,7 +117,7 @@ interface ILookupService {
      * @description ข้อมูลแผนกลยุทธ์
      */
     public function listAffirmativeType();
-    
+
     /**
      * @name listAffirmativeIssue
      * @uri /listAffirmativeIssue
@@ -131,7 +126,7 @@ interface ILookupService {
      * @description ข้อมูลประเด็นยุทธศาสตร์
      */
     public function listAffirmativeIssue($id);
-    
+
     /**
      * @name listAffirmativeTarget
      * @uri /listAffirmativeTarget
@@ -140,7 +135,7 @@ interface ILookupService {
      * @description ข้อมูลแผนเป้าประสงค์
      */
     public function listAffirmativeTarget($id);
-    
+
     /**
      * @name listAffirmativeStrategy
      * @uri /listAffirmativeStrategy
@@ -149,12 +144,7 @@ interface ILookupService {
      * @description ข้อมูลกลยุทธ์
      */
     public function listAffirmativeStrategy($id);
-    
-    
-    
-    
-    
-    
+
     /**
      * @name listIntegration
      * @uri /listIntegration
@@ -162,10 +152,14 @@ interface ILookupService {
      * @description ข้อมูลบูรณาการโครงการ
      */
     public function listIntegration();
-    
-    
-    
-    
-    
-    
+
+    /**
+     * @name listFundgroupWithPlan
+     * @uri /listFundgroupWithPlan
+     * @param int budgetPeriodId
+     * @param int l3dPlanId
+     * @return String[] lists Description
+     * @description รายชื่อกองทุน
+     */
+    public function listFundgroupWithPlan($budgetPeriodId, $l3dPlanId);
 }

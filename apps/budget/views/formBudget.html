@@ -26,7 +26,7 @@
                 <li class="active">
                     <button class="btn btn-success goChoice"><i class="fa fa-plus-circle"> เพิ่มคำขอ</i></button>
                     <button class="btn btn-default backHome" style="display: none;"><i class="fa fa-angle-double-left">
-                        ย้อนกลับ</i></button>
+                            ย้อนกลับ</i></button>
                     <button class="btn btn-default backChoice" style="display: none;"><i
                             class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
                     <button class="btn btn-default backAttachment" style="display: none;"><i
@@ -43,16 +43,16 @@
             <div id="divHome" class="col-md-12">
                 <table id="table" class="table table-bordered table-striped table-condensed mb-none">
                     <thead>
-                    <tr>
-                        <th class="text-center col-lg-6">รายละเอียดคำของบประมาณ</th>
-                        <th class="text-center col-lg-3">สถานะ</th>
-                        <th class="text-center col-lg-3">เครื่องมือ</th>
-                    </tr>
+                        <tr>
+                            <th class="text-center col-lg-6">รายละเอียดคำของบประมาณ</th>
+                            <th class="text-center col-lg-3">สถานะ</th>
+                            <th class="text-center col-lg-3">เครื่องมือ</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td colspan="3" class="text-center">-</td>
-                    </tr>
+                        <tr>
+                            <td colspan="3" class="text-center">-</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -90,15 +90,16 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label text-right req" for="planId">แผนงาน : </label>
+                                    <label class="col-md-3 control-label text-right req" for="l3dPlanId">แผนงาน : </label>
 
                                     <div class="col-md-6">
-                                        <select id="planId" name="planId" class="form-control input-sm" required>
+                                        <select id="l3dPlanId" name="l3dPlanId" class="form-control input-sm" required>
                                             <option value="">เลือก</option>
                                         </select>
                                     </div>
                                 </div>
 
+                                <!--
                                 <div class="form-group">
                                     <label class="col-md-3 control-label text-right req" for="projectId">ผลผลิต/โครงการ
                                         : </label>
@@ -109,7 +110,7 @@
                                         </select>
                                     </div>
                                 </div>
-
+                                -->
                                 <!--<div class="form-group">
                                     <label class="col-md-3 control-label text-right" for="budgetPlanId">แผนงาน 3 มิติ : </label>
                                     <div class="col-md-6">
@@ -155,9 +156,9 @@
                             <div id="panel2" style="margin-top: 20px;">
                                 <table class="table table-hover">
                                     <thead>
-                                    <tr>
-                                        <th colspan="2" class="text-center">แบบฟอร์มคำของบประมาณแผ่นดิน</th>
-                                    </tr>
+                                        <tr>
+                                            <th colspan="2" class="text-center">แบบฟอร์มคำของบประมาณแผ่นดิน</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
                                     </tbody>
@@ -203,7 +204,7 @@
 </style>
 
 <script type="text/javascript">
-    var js_context_path = "{{_context_path}}";</script>
+            var js_context_path = "{{_context_path}}";</script>
 
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg140.js"></script>
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg141.js"></script>
@@ -239,20 +240,30 @@
 
         listsFormSaved();
         listsStatusTracking();
+        
         toggleShow("home");
-        $("#budgetPeriodId, #budgetTypeCode, #planId, #projectId, #fundgroupId, #facultyId, #deptId").select2().trigger("change");
+        
+        //$("#budgetPeriodId, #budgetTypeCode, #planId, #projectId, #fundgroupId, #facultyId, #deptId").select2().trigger("change");
+        $("#budgetPeriodId, #budgetTypeCode, #l3dPlanId, #fundgroupId, #facultyId, #deptId").select2().trigger("change");
+
         // choice changed
         $("#budgetPeriodId").change(function () {
             isForm = 0;
             listsForm($(this).val());
-            listsPlan($(this).val());
-            listsProject("");
+            listsPlan3D();
+            
+            //listsPlan($(this).val());
+            //listsProject("");
         });
         $("#budgetTypeCode").change(function () {
 
         });
-        $("#planId").change(function () {
-            listsProject($(this).val());
+        $("#l3dPlanId").change(function () {
+            //listsProject($(this).val());
+            
+            periodId = $("#budgetPeriodId").val();
+            plan = $(this).val();
+            listFundgroupWithPlan(periodId, plan);
         });
         $("#facultyId").change(function () {
             listsDepartment($(this).val());
@@ -428,13 +439,13 @@
 
                 /*
                  var form = $(this).attr("data-form");
-
+                 
                  var param = {};
                  $("#formChoice select").each(function () {
                  var name = $(this).attr("name");
                  param[name] = $(this).val();
                  });
-
+                 
                  var hasNg = $(this).attr("has-ng");
                  if (hasNg !== "true") {
                  // open Form for Jquery
@@ -483,6 +494,7 @@
         $("#budgetTypeCode").html(html).trigger("change");
     }
 
+    /*
     function listsPlan(budgetPeriodId) {
         var html = '<option value="" selected="selected">เลือก</option>';
         if (budgetPeriodId != "") {
@@ -498,7 +510,25 @@
 
         $("#planId").html(html).trigger("change");
     }
+    */
 
+    function listsPlan3D() {
+        var html = '<option value="" selected="selected">เลือก</option>';
+        if (budgetPeriodId != "") {
+            var datas = callAjax("{{_context_path}}/api/common/lookup/list3DPlan", "post", {}, "json");
+            if (typeof datas !== "undefined" && datas !== null) {
+                $.each(datas["lists"], function (key, value) {
+                    html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
+
+                    planArr[value["id"]] = value["name"];
+                });
+            }
+        }
+
+        $("#l3dPlanId").html(html).trigger("change");
+    }
+
+    /*
     function listsProject(planId) {
         var html = '<option value="" selected="selected">เลือก</option>';
         if (planId != "") {
@@ -514,10 +544,26 @@
 
         $("#projectId").html(html).trigger("change");
     }
+    */
 
+    /*
     function listsFundgroup() {
         var html = '<option value="" selected="selected">เลือก</option>';
         var datas = callAjax("{{_context_path}}/api/common/lookup/listFundgroup", "post", {}, "json");
+        if (typeof datas !== "undefined" && datas !== null) {
+            $.each(datas["lists"], function (key, value) {
+                html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
+
+                fundgroupArr[value["id"]] = value["name"];
+            });
+        }
+
+        $("#fundgroupId").html(html).trigger("change");
+    }
+    */
+    function listFundgroupWithPlan(periodId, l3dPlanId) {
+        var html = '<option value="" selected="selected">เลือก</option>';
+        var datas = callAjax("{{_context_path}}/api/common/lookup/listFundgroupWithPlan", "post", {budgetPeriodId: periodId, l3dPlanId: l3dPlanId}, "json");
         if (typeof datas !== "undefined" && datas !== null) {
             $.each(datas["lists"], function (key, value) {
                 html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
@@ -595,7 +641,7 @@
             if (!isForm) {
                 listsBudgetPeriod();
                 listsBudgetType();
-                listsFundgroup();
+                //listsFundgroup();
                 listsFaculty();
             }
         }
@@ -770,8 +816,10 @@
         fParam.deptId = param.deptId;
         fParam.facultyId = param.facultyId;
         fParam.fundgroupId = param.fundgroupId;
-        fParam.planId = param.planId;
-        fParam.projectId = param.projectId;
+        fParam.l3dPlanId = param.l3dPlanId;   //แผนใน 3 มิติ
+        
+        //fParam.planId = param.planId;  
+        //fParam.projectId = param.projectId;
         return fParam;
     }
 
