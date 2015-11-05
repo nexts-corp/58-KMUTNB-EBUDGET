@@ -35,7 +35,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
         foreach ($list1 as $key => $value) {
             $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = :masterId ";
+                . " WHERE typ.form140 = true and typ.masterId = :masterId ";
             $param2 = array(
                 "masterId" => $list1[$key]["id"]
             );
@@ -45,7 +45,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
             foreach ($list2 as $key => $value) {
                 $sql3 = " SELECT typ.id, typ.typeName, typ.masterId "
                     . " FROM " . $this->ent . "\\BudgetType typ "
-                    . " WHERE typ.masterId = :masterId ";
+                    . " WHERE typ.form140 = true and typ.masterId = :masterId ";
                 $param3 = array(
                     "masterId" => $list2[$key]["id"]
                 );
@@ -67,7 +67,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
         foreach ($list1 as $key => $value) {
             $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = :masterId ";
+                . " WHERE typ.form141 = true and typ.masterId = :masterId ";
             $param2 = array(
                 "masterId" => $list1[$key]["id"]
             );
@@ -77,7 +77,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
             foreach ($list2 as $key => $value) {
                 $sql3 = " SELECT typ.id, typ.typeName, typ.masterId "
                     . " FROM " . $this->ent . "\\BudgetType typ "
-                    . " WHERE typ.masterId = :masterId ";
+                    . " WHERE typ.form141 = true and typ.masterId = :masterId ";
                 $param3 = array(
                     "masterId" => $list2[$key]["id"]
                 );
@@ -99,7 +99,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
         foreach ($list1 as $key => $value) {
             $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = :masterId ";
+                . " WHERE typ.form142 = true and typ.masterId = :masterId ";
             $param2 = array(
                 "masterId" => $list1[$key]["id"]
             );
@@ -109,7 +109,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
             foreach ($list2 as $key => $value) {
                 $sql3 = " SELECT typ.id, typ.typeName, typ.masterId "
                     . " FROM " . $this->ent . "\\BudgetType typ "
-                    . " WHERE typ.masterId = :masterId ";
+                    . " WHERE typ.form142 = true and typ.masterId = :masterId ";
                 $param3 = array(
                     "masterId" => $list2[$key]["id"]
                 );
@@ -131,7 +131,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
         foreach ($list1 as $key => $value) {
             $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = :masterId ";
+                . " WHERE typ.form143 = true and typ.masterId = :masterId ";
             $param2 = array(
                 "masterId" => $list1[$key]["id"]
             );
@@ -141,7 +141,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
             foreach ($list2 as $key => $value) {
                 $sql3 = " SELECT typ.id, typ.typeName, typ.masterId "
                     . " FROM " . $this->ent . "\\BudgetType typ "
-                    . " WHERE typ.masterId = :masterId ";
+                    . " WHERE typ.form143 = true and typ.masterId = :masterId ";
                 $param3 = array(
                     "masterId" => $list2[$key]["id"]
                 );
@@ -163,7 +163,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
         foreach ($list1 as $key => $value) {
             $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = :masterId ";
+                . " WHERE typ.form144 = true and typ.masterId = :masterId ";
             $param2 = array(
                 "masterId" => $list1[$key]["id"]
             );
@@ -173,7 +173,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
             foreach ($list2 as $key => $value) {
                 $sql3 = " SELECT typ.id, typ.typeName, typ.masterId "
                     . " FROM " . $this->ent . "\\BudgetType typ "
-                    . " WHERE typ.masterId = :masterId ";
+                    . " WHERE typ.form144 = true and typ.masterId = :masterId ";
                 $param3 = array(
                     "masterId" => $list2[$key]["id"]
                 );
@@ -195,7 +195,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
         foreach ($list1 as $key => $value) {
             $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = :masterId ";
+                . " WHERE typ.form145 = true and typ.masterId = :masterId ";
             $param2 = array(
                 "masterId" => $list1[$key]["id"]
             );
@@ -205,7 +205,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
             foreach ($list2 as $key => $value) {
                 $sql3 = " SELECT typ.id, typ.typeName, typ.masterId "
                     . " FROM " . $this->ent . "\\BudgetType typ "
-                    . " WHERE typ.masterId = :masterId ";
+                    . " WHERE typ.form145 = true and typ.masterId = :masterId ";
                 $param3 = array(
                     "masterId" => $list2[$key]["id"]
                 );
@@ -227,7 +227,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
         foreach ($list1 as $key => $value) {
             $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = :masterId ";
+                . " WHERE typ.form146 = true and typ.masterId = :masterId ";
             $param2 = array(
                 "masterId" => $list1[$key]["id"]
             );
@@ -237,7 +237,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
             foreach ($list2 as $key => $value) {
                 $sql3 = " SELECT typ.id, typ.typeName, typ.masterId "
                     . " FROM " . $this->ent . "\\BudgetType typ "
-                    . " WHERE typ.masterId = :masterId ";
+                    . " WHERE typ.form146 = true and typ.masterId = :masterId ";
                 $param3 = array(
                     "masterId" => $list2[$key]["id"]
                 );
@@ -323,7 +323,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
         foreach ($list1 as $key1 => $value1) {
             $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = :masterId ";
+                . " WHERE typ.form141 = true and typ.masterId = :masterId ";
             $param2 = array(
                 "masterId" => $list1[$key1]["id"]
             );

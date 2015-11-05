@@ -60,6 +60,9 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
             $value->budgetHeadId = $bgHeadId;
             $value->bgSummary = $value->salaryTotal;
+            if ($value->remark == "") {
+                $value->remark = "-";
+            }
 
             if (!$this->datacontext->saveObject($budget[$key])) {
                 $return[$key]["result"] = false;
@@ -165,6 +168,9 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
             $value->budgetHeadId = $bgHeadId;
             $value->bgSummary = $value->salaryTotal;
+            if ($value->remark == "") {
+                $value->remark = "-";
+            }
 
             if (!$this->datacontext->saveObject($budget[$key])) {
                 $return[$key]["result"] = false;
@@ -218,6 +224,9 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
             $value->budgetHeadId = $bgHeadId;
             $value->bgSummary = $value->salaryTotal;
+            if ($value->remark == "") {
+                $value->remark = "-";
+            }
 
             if (!$this->datacontext->saveObject($budget[$key])) {
                 $return[$key]["result"] = false;
@@ -271,6 +280,9 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
             $value->budgetHeadId = $bgHeadId;
             $value->bgSummary = $value->bgRequest;
+            if ($value->remark == "") {
+                $value->remark = "-";
+            }
 
             if (!$this->datacontext->saveObject($budget[$key])) {
                 $return[$key]["result"] = false;
@@ -324,6 +336,9 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
             $value->budgetHeadId = $bgHeadId;
             $value->bgSummary = (float) ( $value->bgRequest) + (float) ( $value->nonBgRequest);
+            if ($value->remark == "") {
+                $value->remark = "-";
+            }
 
             if (!$this->datacontext->saveObject($budget[$key])) {
                 $return[$key]["result"] = false;
@@ -377,6 +392,9 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
             $value->budgetHeadId = $bgHeadId;
             $value->bgSummary = $value->totalPrice;
+            if ($value->remark == "") {
+                $value->remark = "-";
+            }
 
             if (!$this->datacontext->saveObject($budget[$key])) {
                 $return[$key]["result"] = false;
@@ -414,6 +432,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
             $bgHead->setPlanId($value->planId);
             $bgHead->setProjectId($value->projectId);
             $bgHead->setL3dPlanId($value->l3dPlanId);
+
             $bgHead->setL3dProjectId($value->l3dProjectId);
             $bgHead->setFundgroupId($value->fundgroupId);
             $bgHead->setActivityId($value->activityId);
@@ -430,6 +449,9 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
 
             $value->budgetHeadId = $bgHeadId;
             $value->bgSummary = $value->bgRequest;
+            if ($value->remark == "") {
+                $value->remark = "-";
+            }
 
             if (!$this->datacontext->saveObject($budget[$key])) {
                 $return[$key]["result"] = false;
@@ -1084,6 +1106,22 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         }
 
         return $result;
+    }
+
+    private function getBudgetProject($budgetPeriodId, $L3DPlanId, $fundgroupId) {
+        $plan = new \apps\common\entity\MappingPlan();
+
+        $plan->setBudgetperiodId($budgetPeriodId);
+        $plan->setPlanId($L3DPlanId);
+        $plan->setFundgroupId($fundgroupId);
+
+        $data = $this->datacontext->getObject($plan);
+
+        if ($data) {
+            return $data[0]->budgetProjectId;
+        }
+        
+        return 0;
     }
 
 }
