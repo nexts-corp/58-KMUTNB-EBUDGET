@@ -82,8 +82,8 @@
                     <thead>
                     <tr>
                         <th class="text-center">ใบคำของบประมาณ</th>
-                        <th class="text-center">คณะ</th>
-                        <th class="text-center">แหล่งเงิน</th>
+                        <th class="text-center">หน่วยงาน</th>
+                        <!--<th class="text-center">แหล่งเงิน</th>-->
                         <th class="text-center">แผนงาน</th>
                         <!--<th class="text-center">ผลผลิต/โครงการ</th>-->
                         <th class="text-center">กองทุน</th>
@@ -94,8 +94,8 @@
                     <tbody>
                     <tr ng-repeat="item in listsBudgetItem">
                         <td class="text-center">ง.{[item.formId]}</td>
-                        <td>{[item.deptName]}</td>
-                        <td>{[item.budgetTypeCode]}</td>
+                        <td>{[item.deptName]} / {[item.facultyName]}</td>
+                        <!--<td>{[item.budgetTypeName]}</td>-->
                         <td>{[item.l3dPlanName]}</td>
                         <!--<td>{[item.planName]}</td>
                         <td>{[item.projectName]}</td>-->
@@ -207,11 +207,13 @@
             param.budgetPeriodId = $scope.budgetPeriodId.year;
             param.budgetTypeCode = itemBudget.budgetTypeCode;
             param.deptId = itemBudget.deptId;
+            param.facultyId = itemBudget.facultyId;
             param.fundgroupId = itemBudget.fundgroupId;
             param.l3dPlanId = itemBudget.l3dPlanId;
             param.planId = itemBudget.planId;
             param.projectId = itemBudget.projectId;
             param.deptName = itemBudget.deptName;
+            param.facultyName = itemBudget.facultyName;
             param.planName = itemBudget.planName;
             param.projectName = itemBudget.projectName;
             param.l3dPlanName = itemBudget.l3dPlanName;

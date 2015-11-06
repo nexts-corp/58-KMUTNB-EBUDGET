@@ -315,8 +315,8 @@ class AllocateService extends CServiceBase implements IAllocateService {
 
         $bg = new entity\BudgetRevenuePlan();
         $bg->setId($id);
-        $bg->setDeptId($deptId);
-        $bg->setBudgetPeriodId($budgetPeriodId);
+        //$bg->setDeptId($deptId);
+        //$bg->setBudgetPeriodId($budgetPeriodId);
         $bg->setBudgetEducation($bgEducation);
         $bg->setBudgetService($bgService);
 
