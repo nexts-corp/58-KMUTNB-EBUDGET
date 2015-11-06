@@ -561,8 +561,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
                     . " bg.budgetTypeId = :budgetTypeId and "
                     . " bg.budgetPeriodId = :budgetPeriodId and "
                     . " bg.budgetTypeCode = :budgetTypeCode and "
-                    . " bg.planId = :planId and "
-                    . " bg.projectId = :projectId and "
+                    . " bg.l3dPlanId = :l3dPlanId and "
                     . " bg.fundgroupId = :fundgroupId and "
                     . " bg.deptId = :deptId";
                 $param2 = array(
@@ -570,8 +569,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
                     "budgetTypeId" => $list1[$key1]["id"],
                     "budgetPeriodId" => $param->budgetPeriodId,
                     "budgetTypeCode" => $param->budgetTypeCode,
-                    "planId" => $param->planId,
-                    "projectId" => $param->projectId,
+                    "l3dPlanId" => $param->l3dPlanId,
                     "fundgroupId" => $param->fundgroupId,
                     "deptId" => $param->deptId
                 );

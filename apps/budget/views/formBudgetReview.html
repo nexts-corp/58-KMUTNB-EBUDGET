@@ -218,11 +218,7 @@
             param.projectName = itemBudget.projectName;
             param.l3dPlanName = itemBudget.l3dPlanName;
             param.fundName = itemBudget.fundName;
-            if (itemBudget.budgetTypeCode === "G") {
-                param.budgetTypeName = "เงินงบประมาณแผ่นดิน";
-            } else {
-                param.budgetTypeName = "เงินรายได้";
-            }
+            param.budgetTypeName = itemBudget.budgetTypeName;
 
             paramObj = param;
 

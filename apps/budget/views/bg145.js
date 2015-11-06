@@ -32,7 +32,7 @@ function bg145Form(param) {
             + '<div class="col-md-6">' + fundgroupArr[param["fundgroupId"]] + '</div>'
             + '</div>'
             + '</div>'
-            
+
             + '<div class="form-group">'
             + ' <div class="col-md-6">'
             + '     <label class="col-md-4 control-label text-right">หน่วยงาน/สำนักงาน : </label>'
@@ -63,23 +63,23 @@ function bg145Form(param) {
             + '<div class="form-group">'
             + '<div class="col-md-6">'
             + '<label class="col-md-4 control-label text-right">แผนงาน : </label>'
-            + '<div class="col-md-6">' + param.planName + '</div>'
+            + '<div class="col-md-6">' + param.l3dPlanName + '</div>'
             + '</div>'
 
             + '<div class="col-md-6">'
-            + '<label class="col-md-4 control-label text-right">ผลผลิต/โครงการ : </label>'
-            + '<div class="col-md-6">' + param.projectName + '</div>'
+            + '<label class="col-md-4 control-label text-right">กองทุน : </label>'
+            + '<div class="col-md-6">' + param.fundName + '</div>'
             + '</div>'
             + '</div>'
 
             + '<div class="form-group">'
             + ' <div class="col-md-6">'
-            + '     <label class="col-md-4 control-label text-right">กองทุน : </label>'
-            + '     <div class="col-md-6">' + param.fundName + '</div>'
+            + '     <label class="col-md-4 control-label text-right">หน่วยงาน/สำนักงาน : </label>'
+            + '     <div class="col-md-6">' + param.facultyName + '</div>'
             + ' </div>'
 
             + ' <div class="col-md-6">'
-            + '     <label class="col-md-4 control-label text-right">หน่วยงาน : </label>'
+            + '     <label class="col-md-4 control-label text-right">ภาควิชา : </label>'
             + '     <div class="col-md-6">' + param.deptName + '</div>'
             + ' </div>'
             + '</div>';
@@ -382,6 +382,23 @@ function bg145Form(param) {
         + '     <div id="loadingModalApprove" class="col-md-12 text-center"></div>'
         + '</div>'
         + '</div>'
+        + '</div>'
+
+        + '<div id="panelShowAttachment" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">'
+        + '<div class="modal-dialog">'
+        + '<div class="modal-content">'
+        + '<div class="modal-header">'
+        + '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
+        + '<h4 class="modal-title" id="myModalLabel">เอกสารแนบ</h4>'
+        + '</div>'
+        + '<div class="modal-body bodyShowAttachment">'
+        + '  <div id="attLink"></div><br>'
+        + '  <label class="text-bold">คำอธิบายประกอบไฟล์</label>'
+        + '  <div id="descAttachment"></div>'
+        + '</div>'
+        + '<div id="loadingModalShowAttachment" class="col-md-12 text-center"></div>'
+        + '</div>'
+        + '</div>'
         + '</div>';
 
     $("#divForm").html(html);
@@ -411,6 +428,7 @@ function bg145Form(param) {
 //for department
 function bg145Detail(param) {
 
+    var isAdd = true;
     $(".requestBGbtn").attr('disabled', 'disabled');
     $("#table145 tbody").html('<td colspan="12" class="text-center">Loading...</td>');
 
@@ -514,6 +532,8 @@ function bg145Detail(param) {
                         html += '</td>'
                             + '</tr>';
 
+                        if (value2["statusId"] == STATUSWAITING)  isAdd = false;
+
                         list145Arr[value2["id"]] = value2;
                     }
 
@@ -560,6 +580,8 @@ function bg145Detail(param) {
                         html += '</td>'
                             + '</tr>';
 
+                        if (value3["statusId"] == STATUSWAITING)  isAdd = false;
+
                         list145Arr[value3["id"]] = value3;
                     });
                 });
@@ -568,6 +590,11 @@ function bg145Detail(param) {
             $("#table145 tbody").html(html);
             $('.number').number(true, 2);
             $(".requestBGbtn").removeAttr('disabled');
+            if (!isAdd) {
+                $(".addList").hide();
+            } else {
+                $(".addList").show();
+            }
 
             // set default table to tree table
             $("#table145").treetable({
@@ -689,14 +716,9 @@ function bg145DetailPlaningBudget(param) {
                     + '<td></td>'
                     + '<td></td>'
                     + '<td></td>'
-                    + '<td>';
-                if (value['id'] != '20300000') {
-                    html += '<div class="btn-group">';
-                    html += '<button class="btn btn-sm btn-success addList" data-pid="' + value["id"] + '"><i class="fa fa-plus"></i> เพิ่ม</button>';
-                    html += '</div>';
-                }
-                html += '</td>';
-                html += '</tr>';
+                    + '<td>'
+                    + '</td>'
+                    + '</tr>';
 
                 var cCount = 0;
                 $.each(value["lv2"], function (key2, value2) {
@@ -717,8 +739,6 @@ function bg145DetailPlaningBudget(param) {
                             + '<td></td>'
                             + '<td></td>'
                             + '<td>'
-                            + '<div class="btn-group">'
-                            + ' <button class="btn btn-sm btn-success addList" data-pid="' + value2["id"] + '"><i class="fa fa-plus"></i> เพิ่ม</button>'
                             + '</div>'
                             + '</td>'
                             + '</tr>'
@@ -739,13 +759,23 @@ function bg145DetailPlaningBudget(param) {
                             + '<td>';
                         if (value2["statusId"] == STATUSWAITING || value2["statusId"] == STATUSAPPROVE) {
 
-                            html += '<div class="btn-group">' +
-                                '<button class="btn btn-sm btn-warning approveEdit" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' +
-                                '</div>';
+                            if (value2["path"] != null) {
+                                //if have file attachement
+                                html += '<div class="btn-group">' +
+                                    '<button style="width: 85px;" class="btn btn-sm btn-warning approveEdit" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' +
+                                    '<div class="col-md-12"></div>' +
+                                    '<button style="width: 85px;" class="btn btn-sm btn-primary approveFile" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-file-zip-o"></i> เอกสารแนบ</button>' +
+                                    '</div>';
+                            } else {
+                                html += '<div class="btn-group">' +
+                                    '<button style="width: 85px;" class="btn btn-sm btn-warning approveEdit" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' +
+                                    '</div>';
+                            }
+
                         } else {
 
                             html += '<div class="btn-group">' +
-                                '<button class="btn btn-sm btn-warning approveEdit disabled" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' +
+                                '<button style="width: 85px;" class="btn btn-sm btn-warning approveEdit disabled" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' +
                                 '</div>';
                         }
                         html += '</td>'
@@ -772,13 +802,23 @@ function bg145DetailPlaningBudget(param) {
                             + '<td>';
                         if (value3["statusId"] == STATUSWAITING || value3["statusId"] == STATUSAPPROVE) {
 
-                            html += '<div class="btn-group">' +
-                                '<button class="btn btn-sm btn-warning approveEdit" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' +
-                                '</div>';
+                            if (value3["path"] != null) {
+                                //if have file attachement
+                                html += '<div class="btn-group">' +
+                                    '<button style="width: 85px;" class="btn btn-sm btn-warning approveEdit" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' +
+                                    '<div class="col-md-12"></div>' +
+                                    '<button style="width: 85px;" class="btn btn-sm btn-primary approveFile" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-file-zip-o"></i> เอกสารแนบ</button>' +
+                                    '</div>';
+                            } else {
+                                html += '<div class="btn-group">' +
+                                    '<button style="width: 85px;" class="btn btn-sm btn-warning approveEdit" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' +
+                                    '</div>';
+                            }
+
                         } else {
 
                             html += '<div class="btn-group">' +
-                                '<button class="btn btn-sm btn-warning approveEdit disabled" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' +
+                                '<button style="width: 85px;" class="btn btn-sm btn-warning approveEdit disabled" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' +
                                 '</div>';
                         }
                         html += '</td>'
@@ -846,12 +886,20 @@ function bg145DetailPlaningBudget(param) {
                             list145Arr[id]["statusId"] = STATUSEDITING;
                             $(objButton).addClass('disabled');
                             $(objButton).closest('tr').find('.status').html(listSTATUSTRACKING[STATUSEDITING]);
+                            $(objButton).closest('td').find('.approveFile').addClass('disabled');
                         }
                         $("#panelCommentApprove").modal("hide");
                     } else {
                         $("#loadingModalApprove").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
                     }
                 });
+            });
+
+            $("button.approveFile").unbind("click").click(function () {
+                var id = $(this).attr("data-id");
+                $("#panelShowAttachment").modal("show");
+                $("#attLink").html('<a href="' + js_context_path + "/uploads/ebudget/" + list145Arr[id]["path"] + '"><i class="fa fa-file-zip-o"></i> ดาวโหลดเอกสารที่แนบไว้</a>');
+                $("#descAttachment").html(list145Arr[id]["desc"]);
             });
 
             // when you press to add button
@@ -1116,6 +1164,7 @@ function bg145Insert(parentId, param, dataJSONEN, objAttment) {
                     list145Arr[data["id"]][$(this).attr("name")] = $(this).val();
                 });
 
+                list145Arr[data["id"]]["budgetHeadId"] = data["budgetHeadId"];
                 list145Arr[data["id"]]["durableDesc"] = $(".noteDurableDesc").code();
                 list145Arr[data["id"]]["remark"] = $(".noteRemark").code();
                 list145Arr[data["id"]]["statusId"] = STATUSPROGRESS;

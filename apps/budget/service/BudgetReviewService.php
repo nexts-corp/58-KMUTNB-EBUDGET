@@ -229,7 +229,7 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
 
     public function getAllBudgetRequest($budgetPeriodId) {
         $sql = "select bgh.id as bghId, bgh.budgetTypeCode, "
-                . "case when bgh.budgetTypeCode = 'G' then 'เงินงบประมาณแผ่นดิน' else 'เงินรายได้' end as budgetTypeCode, "
+                . "case when bgh.budgetTypeCode = 'G' then 'เงินงบประมาณแผ่นดิน' else 'เงินรายได้' end as budgetTypeName, "
                 . "bgh.formId as formId, dept.id as deptId, dept.deptName as deptName, "
                 . "faculty.id as facultyId, faculty.deptName as facultyName, "
                 . "l3dPlan.id as l3dPlanId, l3dPlan.planName as l3dPlanName, "
