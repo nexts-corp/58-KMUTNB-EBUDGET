@@ -292,7 +292,7 @@ class AllocateService extends CServiceBase implements IAllocateService {
         $data = $this->datacontext->getObject($bg);
 
         if ($data) {
-            return "duplicate department, pls use update function!";
+            return "duplicate department, pls use update function instead!";
         }
 
         $bg->setBudgetTypeCode("K");
