@@ -247,7 +247,7 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
                 . "left outer join " . $this->ent . "\\TrackingStatus status with status.id = bgh.statusId "
                 . "where bgh.budgetTypeCode = 'G' and bgh.statusId = 2 "
                 . "and bgh.budgetPeriodId = :budgetPeriodId "
-                . "order by bgh.formId, dept.id, bgPlan.id, bgProj.id, fund.id asc ";
+                . "order by bgh.formId, status.id, dept.id, l3dPlan.id, fund.id asc ";
 
         $param = array("budgetPeriodId" => $budgetPeriodId);
         $data = $this->datacontext->getObject($sql, $param);

@@ -15,6 +15,9 @@ class BudgetRevenue extends EntityBase {
      */
     public $id;
 
+    /** @Column(type="integer",length=11, name="REVENUEPLANID") */
+    public $revenuePlanId;
+
     /** @Column(type="integer",length=11, name="BUDGETHEADID") */
     public $budgetHeadId;
 
@@ -51,26 +54,41 @@ class BudgetRevenue extends EntityBase {
     /** @Column(type="integer",length=11, name="ATTACHMENTID") */
     public $attachmentId;
 
-    /** @Column(type="string",length=500, name="POSITIONNAME") */
-    public $positionName;
+    /** @Column(type="text", name="REVENUENAME") */
+    public $revenueName;
 
-    /** @Column(type="string",length=500, name="QUALIFICATION") */
-    public $qualify;
+    /** @Column(type="text", name="REVENUEDESC") */
+    public $revenueDesc;
 
-    /** @Column(type="integer",length=11, name="POSITIONOCCUPIED") */
-    public $occupy;
+    /** @Column(type="string",length=18, name="BUDGETPLAN_Q1") */
+    public $bgPlanQ1;
 
-    /** @Column(type="integer",length=11, name="POSITIONVACANCY") */
-    public $vacancy;
+    /** @Column(type="string",length=18, name="BUDGETPLAN_Q2") */
+    public $bgPlanQ2;
 
-    /** @Column(type="string",length=300, name="RATENO") */
-    public $rateNo;
+    /** @Column(type="string",length=18, name="BUDGETPLAN_Q3") */
+    public $bgPlanQ3;
 
-    /** @Column(type="float", name="SALARYPERMONTH") */
-    public $salary;
+    /** @Column(type="string",length=18, name="BUDGETPLAN_Q4") */
+    public $bgPlanQ4;
 
-    /** @Column(type="float", name="SALARYTOTAL") */
-    public $salaryTotal;
+    /** @Column(type="string",length=18, name="BUDGETPLAN_SUMMARY") */
+    public $bgPlanSum;
+
+    /** @Column(type="string",length=18, name="BUDGETUSED_Q1") */
+    public $bgUsedQ1;
+
+    /** @Column(type="string",length=18, name="BUDGETUSED_Q2") */
+    public $bgUsedQ2;
+
+    /** @Column(type="string",length=18, name="BUDGETUSED_Q3") */
+    public $bgUsedQ3;
+
+    /** @Column(type="string",length=18, name="BUDGETUSED_Q4") */
+    public $bgUsedQ4;
+
+    /** @Column(type="string",length=18, name="BUDGETUSED_SUMMARY") */
+    public $bgUsedSum;
 
     /** @Column(type="text", name="REMARK") */
     public $remark;
@@ -92,6 +110,10 @@ class BudgetRevenue extends EntityBase {
 
     function getId() {
         return $this->id;
+    }
+
+    function getRevenuePlanId() {
+        return $this->revenuePlanId;
     }
 
     function getBudgetHeadId() {
@@ -142,32 +164,52 @@ class BudgetRevenue extends EntityBase {
         return $this->attachmentId;
     }
 
-    function getPositionName() {
-        return $this->positionName;
+    function getRevenueName() {
+        return $this->revenueName;
     }
 
-    function getQualify() {
-        return $this->qualify;
+    function getRevenueDesc() {
+        return $this->revenueDesc;
     }
 
-    function getOccupy() {
-        return $this->occupy;
+    function getBgPlanQ1() {
+        return $this->bgPlanQ1;
     }
 
-    function getVacancy() {
-        return $this->vacancy;
+    function getBgPlanQ2() {
+        return $this->bgPlanQ2;
     }
 
-    function getRateNo() {
-        return $this->rateNo;
+    function getBgPlanQ3() {
+        return $this->bgPlanQ3;
     }
 
-    function getSalary() {
-        return $this->salary;
+    function getBgPlanQ4() {
+        return $this->bgPlanQ4;
     }
 
-    function getSalaryTotal() {
-        return $this->salaryTotal;
+    function getBgPlanSum() {
+        return $this->bgPlanSum;
+    }
+
+    function getBgUsedQ1() {
+        return $this->bgUsedQ1;
+    }
+
+    function getBgUsedQ2() {
+        return $this->bgUsedQ2;
+    }
+
+    function getBgUsedQ3() {
+        return $this->bgUsedQ3;
+    }
+
+    function getBgUsedQ4() {
+        return $this->bgUsedQ4;
+    }
+
+    function getBgUsedSum() {
+        return $this->bgUsedSum;
     }
 
     function getRemark() {
@@ -196,6 +238,10 @@ class BudgetRevenue extends EntityBase {
 
     function setId($id) {
         $this->id = $id;
+    }
+
+    function setRevenuePlanId($revenuePlanId) {
+        $this->revenuePlanId = $revenuePlanId;
     }
 
     function setBudgetHeadId($budgetHeadId) {
@@ -246,32 +292,52 @@ class BudgetRevenue extends EntityBase {
         $this->attachmentId = $attachmentId;
     }
 
-    function setPositionName($positionName) {
-        $this->positionName = $positionName;
+    function setRevenueName($revenueName) {
+        $this->revenueName = $revenueName;
     }
 
-    function setQualify($qualify) {
-        $this->qualify = $qualify;
+    function setRevenueDesc($revenueDesc) {
+        $this->revenueDesc = $revenueDesc;
     }
 
-    function setOccupy($occupy) {
-        $this->occupy = $occupy;
+    function setBgPlanQ1($bgPlanQ1) {
+        $this->bgPlanQ1 = $bgPlanQ1;
     }
 
-    function setVacancy($vacancy) {
-        $this->vacancy = $vacancy;
+    function setBgPlanQ2($bgPlanQ2) {
+        $this->bgPlanQ2 = $bgPlanQ2;
     }
 
-    function setRateNo($rateNo) {
-        $this->rateNo = $rateNo;
+    function setBgPlanQ3($bgPlanQ3) {
+        $this->bgPlanQ3 = $bgPlanQ3;
     }
 
-    function setSalary($salary) {
-        $this->salary = $salary;
+    function setBgPlanQ4($bgPlanQ4) {
+        $this->bgPlanQ4 = $bgPlanQ4;
     }
 
-    function setSalaryTotal($salaryTotal) {
-        $this->salaryTotal = $salaryTotal;
+    function setBgPlanSum($bgPlanSum) {
+        $this->bgPlanSum = $bgPlanSum;
+    }
+
+    function setBgUsedQ1($bgUsedQ1) {
+        $this->bgUsedQ1 = $bgUsedQ1;
+    }
+
+    function setBgUsedQ2($bgUsedQ2) {
+        $this->bgUsedQ2 = $bgUsedQ2;
+    }
+
+    function setBgUsedQ3($bgUsedQ3) {
+        $this->bgUsedQ3 = $bgUsedQ3;
+    }
+
+    function setBgUsedQ4($bgUsedQ4) {
+        $this->bgUsedQ4 = $bgUsedQ4;
+    }
+
+    function setBgUsedSum($bgUsedSum) {
+        $this->bgUsedSum = $bgUsedSum;
     }
 
     function setRemark($remark) {

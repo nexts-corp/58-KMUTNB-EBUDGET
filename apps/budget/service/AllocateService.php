@@ -96,33 +96,33 @@ class AllocateService extends CServiceBase implements IAllocateService {
         return $this->getRoute();
     }
 
-    public function fetchExpenseProject($budgetPeriodId,$depId) {
+    public function fetchExpenseProject($budgetPeriodId, $depId) {
         $sqlDep = "";
-        if($depId){
-            $sqlDep = "AND be.deptId = ".$depId;
+        if ($depId) {
+            $sqlDep = "AND be.deptId = " . $depId;
         }
-        
+
         $sql = "
             SELECT 
                 bh.id,
                 be.name AS pName,
                 be.deptId AS depId,
                 be.budgetEstAmount As depValue
-            FROM ".$this->pathEnt."BudgetHead bh
-            INNER JOIN ".$this->pathEnt."BudgetExpense be
+            FROM " . $this->pathEnt . "BudgetHead bh
+            INNER JOIN " . $this->pathEnt . "BudgetExpense be
             WITH bh.id = be.budgetHeadId
             WHERE bh.formId = 999
             AND bh.budgetTypeCode = 'K'
-            ".$sqlDep."
-            AND bh.budgetPeriodId = ".$budgetPeriodId."
+            " . $sqlDep . "
+            AND bh.budgetPeriodId = " . $budgetPeriodId . "
             ORDER BY bh.id,be.id
         ";
-        
+
         //return $sql;
 
         $dataIAT = $this->datacontext->getObject($sql);
 
-        
+
         $dataList = null;
         $idOld = null;
         $idNew = null;
@@ -136,17 +136,16 @@ class AllocateService extends CServiceBase implements IAllocateService {
             $idNew = $dataIAT[$i]["id"];
 
             if ($idOld != $idNew) {
-                
+
                 $dataList[$j]["id"] = $dataIAT[$i]["id"];
                 $dataList[$j]["pName"] = $dataIAT[$i]["pName"];
-                if(!$depId){
+                if (!$depId) {
                     $dataList[$j]["pNameC"] = $dataIAT[$i]["pName"];
                 }
 
                 $j++;
                 $k = 0;
                 $idOld = $idNew;
-                
             }
 
             if ($dataIAT[$i]["depId"] != "") {
@@ -154,20 +153,19 @@ class AllocateService extends CServiceBase implements IAllocateService {
                 $dataList[$j - 1]["sub"][$k]["depValue"] = $dataIAT[$i]["depValue"];
                 $dataList[$j - 1]["subC"][$k]["depId"] = $dataIAT[$i]["depId"];
                 $dataList[$j - 1]["subC"][$k]["depValue"] = $dataIAT[$i]["depValue"];
-                
-                if(!$depId){
-                    $dataList[$j - 1]["sub"][$k+1]["depId"] = '';
-                    $dataList[$j - 1]["sub"][$k+1]["depValue"] = 0;
-                    $dataList[$j - 1]["subC"][$k+1]["depId"] = '';
-                    $dataList[$j - 1]["subC"][$k+1]["depValue"] = 0;
+
+                if (!$depId) {
+                    $dataList[$j - 1]["sub"][$k + 1]["depId"] = '';
+                    $dataList[$j - 1]["sub"][$k + 1]["depValue"] = 0;
+                    $dataList[$j - 1]["subC"][$k + 1]["depId"] = '';
+                    $dataList[$j - 1]["subC"][$k + 1]["depValue"] = 0;
                 }
             }
-            
+
             $k++;
         }
-        
+
         return $dataList;
-        
     }
 
     public function addExpenseProject($projectName, $budgetPeriodId, $budgetTotal, $deptId) {
@@ -185,7 +183,7 @@ class AllocateService extends CServiceBase implements IAllocateService {
         }
 
         $dataHead = $this->datacontext->saveObject($bgHead);
-        if($dataHead){
+        if ($dataHead) {
             $return = $bgHead->id;
         }
         $headId = $bgHead->id;
@@ -339,6 +337,102 @@ class AllocateService extends CServiceBase implements IAllocateService {
         }
 
         return $return;
+    }
+
+    public function insertRevenueItem($budget) {
+        $return = array();
+
+        $revenuePlan = new entity\BudgetRevenuePlan();
+        $revenuePlan->setBudgetPeriodId($budget->budgetPeriodId);
+        $revenuePlan->setBudgetTypeCode("K");
+        $revenuePlan->setDeptId($budget->deptId);
+
+        $revenuePlanData = $this->datacontext->getObject($revenuePlan);
+
+        if ($revenuePlanData) {
+            $revenuePlanId = $revenuePlanData[0]->id;
+
+            $bgHead = new entity\BudgetHead();
+            $bgHead->setFormId(500);
+            $bgHead->setBudgetPeriodId($budget->budgetPeriodId);
+            $bgHead->setBudgetTypeCode("K");
+            $bgHead->setDeptId($budget->deptId);
+            $bgHead->setL3dPlanId($budget->l3dPlanId);
+            $bgHead->setL3dProjectId($budget->l3dProjectId);
+            $bgHead->setFundgroupId($budget->fundgroupId);
+            $bgHead->setActivityId($budget->activityId);
+
+            $bgHeadData = $this->datacontext->getObject($bgHead);
+            if (!isset($bgHeadData) || $bgHeadData == null) {
+                $bgHead->setStatusId(1);
+                $bgHeadData = $this->datacontext->saveObject($bgHead);
+                $bgHeadId = $bgHead->id;
+            } else {
+                $bgHeadId = $bgHeadData[0]->id;
+            }
+
+            $budget->revenuePlanId = $revenuePlanId;
+            $budget->budgetHeadId = $bgHeadId;
+            if ($budget->remark == "") {
+                $budget->remark = "-";
+            }
+
+            if (!$this->datacontext->saveObject($budget)) {
+                $return["result"] = false;
+                $return["msg"] = $this->datacontext->getLastMessage();
+            } else {
+                $return["result"] = true;
+                $return["msg"] = $budget->id;
+            }
+        }
+
+        return $return;
+    }
+
+    public function updateRevenueItem($budget) {
+        $return = true;
+
+        $budget->dateUpdated = date('Y-m-d H:i:s');
+
+        if (!$this->datacontext->updateObject($budget)) {
+            $return = false;
+        }
+
+        return $return;
+    }
+
+    public function deleteRevenueItem($budgetId) {
+        $result = true;
+
+        $repo = new entity\BudgetRevenue();
+        $repo->setId($budgetId);
+        $data = $this->datacontext->getObject($repo);
+        $bgHeadId = $data[0]->budgetHeadId;
+
+        if (!$this->datacontext->removeObject($repo)) {
+            $return = $this->datacontext->getLastMessage();
+        }
+
+        return $result;
+    }
+
+    public function getRevenueItemList($budgetPeriodId, $deptId, $l3dPlanId, $fundgroupId) {
+        $result = true;
+
+        $revenue = new entity\BudgetRevenue();
+        $revenue->setBudgetPeriodId($budgetPeriodId);
+        $revenue->setDeptId($deptId);
+        $revenue->setL3dPlanId($l3dPlanId);
+        $revenue->setFundgroupId($fundgroupId);
+
+        $revenueData = $this->datacontext->getObject($revenue);
+        if ($revenueData != null) {
+            return $revenueData;
+        } else {
+            $return = $this->datacontext->getLastMessage();
+        }
+
+        return $result;
     }
 
 }
