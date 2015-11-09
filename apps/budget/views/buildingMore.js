@@ -7,6 +7,7 @@ var indexDivFloor = 0;
 var buildingId;
 function buildingMoreForm(param) {
 
+    //+ '         <input type="text" id="product" name="product"  value="' + projectArr[param["projectId"]] + '" class="form-control input-sm" required>'
     var html = '<div class="col-md-12 text-center">'
         + '<h4>'
         + ' คำชี้แจงรายละเอียดรายการที่ดินและสิ่งก่อสร้าง'
@@ -16,23 +17,23 @@ function buildingMoreForm(param) {
         + '<form id="formBuildMore" onsubmit="return false">'
         + ' <input type="text" id="typeId" name="typeId" value="2" style="display: none;">'
         + ' <input type="text" id="bg145Id" name="bg145Id" value="' + param["bg145Id"] + '" style="display: none;">'
-        + ' <div class="form-group">'
-        + '     <div class="col-md-9">'
-        + '         <label class="col-md-4 control-label text-right" for="xxx">แผนงาน</label>'
-        + '         <div class="col-md-8">'
-        + '             <input type="text" id="plan" name="plan"  value="' + planArr[param["planId"]] + '" class="form-control input-sm" required>'
-        + '         </div>'
-        + '     </div>'
-        + '</div>'
-
-        + '<div class="form-group">'
-        + ' <div class="col-md-9">'
-        + '     <label class="col-md-4 control-label text-right" for="xxx">ผลผลิต</label>'
-        + '     <div class="col-md-8">'
-        + '         <input type="text" id="product" name="product"  value="' + projectArr[param["projectId"]] + '" class="form-control input-sm" required>'
-        + '     </div>'
-        + ' </div>'
-        + '</div>'
+            //+ ' <div class="form-group">'
+            //+ '     <div class="col-md-9">'
+            //+ '         <label class="col-md-4 control-label text-right" for="xxx">แผนงาน</label>'
+            //+ '         <div class="col-md-8">'
+            ////+ '         <input type="text" id="plan" name="plan"  value="' + planArr[param["l3dPlanId"]] + '" class="form-control input-sm" required>'
+            //+ '         </div>'
+            //+ '     </div>'
+            //+ '</div>'
+            //
+            //+ '<div class="form-group">'
+            //+ ' <div class="col-md-9">'
+            //+ '     <label class="col-md-4 control-label text-right" for="xxx">ผลผลิต</label>'
+            //+ '     <div class="col-md-8">'
+            //
+            //+ '     </div>'
+            //+ ' </div>'
+            //+ '</div>'
 
         + '<div class="form-group">'
         + ' <div class="col-md-9">'
@@ -75,7 +76,7 @@ function buildingMoreForm(param) {
         + ' <div class="col-md-9">'
         + '     <label class="col-md-4 control-label text-right" for="xxx">งบประมาณทั้งสิ้น</label>'
         + '     <div class="col-md-8">'
-        + '         <input type="text" id="costTotalBuilding" name="costTotal" class="form-control input-sm">'
+        + '         <input type="number" min="0" id="costTotalBuilding" name="costTotal" class="form-control input-sm">'
         + '     </div>'
         + ' </div>'
         + '</div>'
@@ -129,7 +130,7 @@ function buildingMoreForm(param) {
         + '         <label class="col-md-4 control-label text-right" for="xxx"><b>พื้นที่ใช้สอยอาคาร ประกอบด้วย</b></label>'
         + '     </div>'
         + ' </div>'
-        + '<div class="col-md-3 text-right"><button type="button" class="btn btn-success" style="margin-bottom: 5px;" onclick="addFloorPalnHtml({})"><i class="fa fa-plus-circle"></i> เพิ่ม</button></div>'
+        + '<div class="col-md-3 text-right"><button type="button" id="addFloor" class="btn btn-success" style="margin-bottom: 5px;" onclick="addFloorPalnHtml({})"><i class="fa fa-plus-circle"></i> เพิ่ม</button></div>'
         + '</div>'
 
         + '<div id="buildNo7Warpper" class="form-group">'
@@ -220,7 +221,7 @@ function buildingMoreForm(param) {
         + ' <div class = "col-md-12 form-group">'
         + '   <label class="col-md-5 text-right">จำนวนปีงบประมาณ</label>'
         + '   <div class="col-md-3"><input class="form-control input-sm" type="number" min="0" id="totalYear" name="totalYear"></div>'
-        + '   <button class="col-md-1 btn btn-default" type="button" onclick="addPeriodHTML({})">ตกลง</button>'
+        + '   <button id="addPeriod" class="col-md-1 btn btn-default" type="button" onclick="addPeriodHTML({})">ตกลง</button>'
         + ' </div>'
         + ' <div class="inner-installment"></div>'
         + '</div>'
@@ -237,8 +238,8 @@ function buildingMoreForm(param) {
         + '</div>'
 
         + '<div class="col-md-12 text-right">'
-        + '<button type="button" class="btn btn-success save"><i class="fa fa-save"></i> บันทึก</button>&nbsp;'
-        + '<button type="button" class="btn btn-default"><i class="fa fa-trash"></i> ล้างข้อมูล</button>'
+        + '<button id="saveBuildMore" type="button" class="btn btn-success save"><i class="fa fa-save"></i> บันทึก</button>&nbsp;'
+        + '<button id="clearBuildMore" type="button" class="btn btn-default"><i class="fa fa-trash"></i> ล้างข้อมูล</button>'
         + '</div>'
         + '</form>'
 
@@ -291,9 +292,18 @@ function buildingMoreForm(param) {
         + '</div>';
 
     $("#divAttachment").html(html);
+    if (PERMISSION == "DEPARTMENT") {
+        $("#saveBuildMore").show();
+        $("#clearBuildMore").show();
+
+    } else {
+        $("#saveBuildMore").hide();
+        $("#clearBuildMore").hide();
+    }
     showViewMore(param);
     toggleShow("attachment");
     buildingMoreAction();
+    if (PERMISSION != "DEPARTMENT") disableMoreEdit();
 }
 
 function showViewMore(param) {
@@ -492,8 +502,6 @@ function buildingMoreAction() {
         }
     });
 }
-
-
 function toolsEventMore() {
 
     $("button.edit-btnBOQ").unbind("click").click(function () {
@@ -789,5 +797,19 @@ function isEmptyObject(obj) {
     }
 
     return true;
+}
+
+function disableMoreEdit() {
+
+    $("#formBuildMore input, #formBuildMore textarea").each(function () {
+        $(this).attr('readonly', '');
+    });
+    $("#addFloor").hide();
+    $(".addBOQ").hide();
+    $(".btRemoveBuildDetail").hide();
+    $("#addPeriod").hide();
+    $(".edit-btnBOQ").hide();
+    $(".delete-btnBOQ").hide();
+
 }
 

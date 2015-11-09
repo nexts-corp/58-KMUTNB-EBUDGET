@@ -12,7 +12,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="none-padding">ตรวจสอบคำของบประมาณ</h1>
+                    <h1 id="navBgPlan" class="none-padding">ตรวจสอบคำของบประมาณ</h1>
                 </div>
             </div>
         </div>
@@ -24,8 +24,10 @@
         <div class="container">
             <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
                 <li class="active">
-                    <button class="btn btn-default backHome" style="display: none;"><i class="fa fa-angle-double-left">
-                        ย้อนกลับ</i></button>
+                    <button class="btn btn-default backHome" style="display: none;"><i class="fa fa-angle-double-left">ย้อนกลับ</i>
+                    </button>
+                    <button class="btn btn-default backAttachment" style="display: none;"><i
+                            class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
                 </li>
             </ul>
         </div>
@@ -110,6 +112,7 @@
                 </table>
             </div>
             <div ng-show="!activeNg" id="divForm" class="col-md-12" style="display: none;"></div>
+            <div id="divAttachment" class="col-md-12" style="display: none;"></div>
         </div>
         <!--  row  -->
     </div>
@@ -232,6 +235,7 @@
     function toggleShow(option) {
 
         if (option == "home") {
+            $("#navBgPlan").html("ตรวจสอบคำของบประมาณ");
             // panel show and hide
             $("#divForm").hide();
             $("#divHome,#divChoice").show();
@@ -248,12 +252,20 @@
             $("button.backHome").show();
         }
         else if (option == "form") {
+
             // panel show and hide
-            $("#divHome, #divChoice").hide();
+            $("#divHome, #divChoice,#divAttachment").hide();
             $("#divForm").show();
 
+            $("button.backAttachment").hide();
             // button show and hide
             $("button.backHome").show();
+        } else if (option == "attachment") {
+            // panel show and hide
+            $("#divHome, #divChoice, #divForm").hide();
+            $("#divAttachment").show();
+            $("button.goChoice,button.backChoice,button.backHome").hide();
+            $("button.backAttachment").show();
         }
     }
 
@@ -300,6 +312,9 @@
 
         $("button.backHome").unbind("click").click(function () {
             toggleShow("home");
+        });
+        $("button.backAttachment").unbind("click").click(function () {
+            toggleShow("form");
         });
 
     });

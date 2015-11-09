@@ -8,6 +8,7 @@ function bg144Form(param) {
         + '<div class="form-group">';
 
     if (budgetPeriodArr != null && budgetTypeArr != null && planArr != null && projectArr != null && fundgroupArr != null && departmentArr != null) {
+        $("#navBgDept").html("จัดทำคำของบประมาณแผ่นดิน ง.144");
 
         html += '<div class="col-md-6">'
             + '<label class="col-md-4 control-label text-right">ปีงบประมาณ : </label>'
@@ -45,7 +46,7 @@ function bg144Form(param) {
             + '</div>';
 
     } else {
-
+        $("#navBgPlan").html("ตรวจสอบคำของบประมาณ ง.144");
         //for กองแผน (Angular js)
         html += '<div class="col-md-6">'
             + '<label class="col-md-4 control-label text-right">ปีงบประมาณ : </label>'
@@ -465,6 +466,7 @@ function bg144Detail(param) {
 
             // when you press to add button
             $("button.addList").unbind("click").click(function () {
+                alert(999);
                 var parentId = $(this).attr("data-pid");
                 $('.summernote').code('');
                 // reset form for new insert
@@ -492,6 +494,8 @@ function bg144Detail(param) {
                         });
                         fParam["remark"] = $(".noteRemark").code();
                         fParam["utilDesc"] = $(".noteUtilDesc").code();
+                        fParam["statusId"] = STATUSPROGRESS;
+                        console.log(fParam);
 
                         var objAttment = InsertAttachment();
 
@@ -501,6 +505,7 @@ function bg144Detail(param) {
                             fParam["path"] = objAttment.path;
                             fParam["desc"] = objAttment.desc;
                         }
+
                         var fdata = [];
                         fdata.push(fParam);
                         var dataJSON = JSON.stringify({budget: fdata});
