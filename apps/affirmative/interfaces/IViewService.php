@@ -34,4 +34,11 @@ interface IViewService {
      * @description ยื่นคำของบประมาณ
      */ 
     public function center2();
+
+    /**
+     * @name tracking
+     * @uri /tracking
+     * @description ยื่นคำของบประมาณ
+     */
+    public function tracking();
 }
