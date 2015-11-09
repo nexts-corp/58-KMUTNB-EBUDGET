@@ -89,19 +89,19 @@
                                     <label class="col-md-3 control-label text-right req">ประเภทส่วนงาน</label>
                                     <div class="col-md-6">
                                         <div class="checkbox-custom checkbox-primary">
-                                            <input type="checkbox" name="centerGroup" value="GrpEdu" id="GrpEdu" checked>
+                                            <input type="checkbox" name="centerGroup" value="GrpEdu" id="GrpEdu" >
                                             <label for="GrpEdu">จัดการศึกษา</label>
                                         </div>
                                         <div class="checkbox-custom checkbox-primary">
-                                            <input type="checkbox" name="centerGroup" value="GrpSup" id="GrpSup" checked>
+                                            <input type="checkbox" name="centerGroup" value="GrpSup" id="GrpSup" >
                                             <label for="GrpSup">สนับสนุนการศึกษา</label>
                                         </div>
                                         <div class="checkbox-custom checkbox-primary">
-                                            <input type="checkbox" name="centerGroup" value="GrpServ" id="GrpServ" checked>
+                                            <input type="checkbox" name="centerGroup" value="GrpServ" id="GrpServ" >
                                             <label for="GrpServ">บริการวิชาการ</label>
                                         </div>
                                         <div class="checkbox-custom checkbox-primary">
-                                            <input type="checkbox" name="centerGroup" value="GrpOffice" id="GrpOffice" checked>
+                                            <input type="checkbox" name="centerGroup" value="GrpOffice" id="GrpOffice" >
                                             <label for="GrpOffice">หน่วยงานในสำนักงานอธิการบดี</label>
                                         </div>
                                     </div>
@@ -110,7 +110,7 @@
                                 <div class="form-group">
                                     <label class="col-md-3 control-label text-right req" for="remark">หมายเหตุ</label>
                                     <div class="col-md-6">
-                                        <textarea class="form-control input-sm" name="remark" id="remark" required></textarea>
+                                        <textarea class="form-control input-sm" name="remark" id="remark"></textarea>
                                     </div>
                                 </div>
                                 <div id="loadingForm" class="col-md-12 text-center"></div>
@@ -244,32 +244,33 @@
                         + '</table>'
                         + '</div>';
 //
-                contentArr[value1["mainId"]] += '<tr data-tt-id="main' + value1["mainId"] + '">' +
+                contentArr[value1["mainId"]] += '<tr data-tt-id="main' + value1["mainId"] + '"  data-seq="' + value1["mainSeq"] + '">' +
                         '<td colspan="5">' +
                         '<span class="text-bold" style="text-decoration: underline;">' +
                         'ส่วนที่ ' + value1["mainSeq"] + '</span> ' + value1["mainName"] +
                         '</td>' +
                         '</tr>';
                 $.each(value1["type"], function (key2, value2) {
-                    contentArr[value1["mainId"]] += '<tr data-tt-id="type' + value2["typeId"] + '" data-tt-parent-id="main' + value1["mainId"] + '">' +
-                            '<td colspan="5">' +
-                            '<span class="text-bold" style="text-decoration: underline;">' +
-                            'ส่วนที่ ' + value1["mainSeq"] + '.' + value2['typeSeq'] +
-                            '</span> ' + value2["typeName"] +
-                            '</td>' +
-                            '</tr>';
+
                     if (value2["hasIssue"] == "Y") {
+                        contentArr[value1["mainId"]] += '<tr data-tt-id="type' + value2["typeId"] + '" data-tt-parent-id="main' + value1["mainId"] + '" data-seq="' + value2["typeSeq"] + '">' +
+                                '<td colspan="5">' +
+                                '<span class="text-bold" style="text-decoration: underline;">' +
+                                'ส่วนที่ ' + value1["mainSeq"] + '.' + value2['typeSeq'] +
+                                '</span> ' + value2["typeName"] +
+                                '</td>' +
+                                '</tr>';
                         $.each(value2["issue"], function (key3, value3) {
-                            contentArr[value1["mainId"]] += '<tr data-tt-id="issue' + value3["issueId"] + '" data-tt-parent-id="type' + value2["typeId"] + '">' +
+                            contentArr[value1["mainId"]] += '<tr data-tt-id="issue' + value3["issueId"] + '" data-tt-parent-id="type' + value2["typeId"] + '" data-seq="' + value3["issueSeq"] + '">' +
                                     '<td colspan="5"><span class="text-bold" style="text-decoration: underline;">' +
                                     'ประเด็นยุทธศาสตร์ที่ ' + value3['issueSeq'] + '</span> ' + value3["issueName"] + '</td>' +
                                     '</tr>';
 //
                             $.each(value3["target"], function (key4, value4) {
-                                contentArr[value1["mainId"]] += '<tr data-tt-id="target' + value4["targetId"] + '" data-tt-parent-id="issue' + value3["issueId"] + '">'
+                                contentArr[value1["mainId"]] += '<tr data-tt-id="target' + value4["targetId"] + '" data-tt-parent-id="issue' + value3["issueId"] + '" data-seq="' + value4["targetSeq"] + '" >'
                                         + '<td colspan="4"><span class="text-bold" style="text-decoration: underline;">เป้าประสงค์ที่ ' + value3["issueSeq"] + '.' + value4["targetSeq"] + '</span> ' + value4["targetName"] + '</td>'
                                         + '<td class="text-center">'
-                                        + '<button class="btn btn-sm btn-success add" data-pid="' + value4["targetId"] + '">'
+                                        + '<button class="btn btn-sm btn-success add" data-pid="' + value4["targetId"] + '" data-pname="targetId">'
                                         + '<i class="fa fa-plus"></i> เพิ่ม</button></td>'
                                         + '</tr>';
                                 if (typeof value4["kpi"] !== "undefined" && value4["kpi"] !== null) {
@@ -278,7 +279,7 @@
                                         $.each(value5["centerGroup"], function (keyGroup, valueGroup) {
                                             group.push("-" + valueGroup["groupName"]);
                                         });
-                                        contentArr[value1["mainId"]] += '<tr data-tt-id="center' + value5["centerId"] + '" data-tt-parent-id="target' + value4["targetId"] + '">'
+                                        contentArr[value1["mainId"]] += '<tr data-tt-id="center' + value5["centerId"] + '" data-tt-parent-id="target' + value4["targetId"] + '"  data-seq="' + value5["kpiSeq"] + '">'
                                                 + '<td style="padding-left: 20px;">' + value3["issueSeq"] + '.' + value4["targetSeq"] + '.' + value5["kpiSeq"] + ' ' + value5["kpiName"] + '</td>'
                                                 + '<td class="center">' + value5["unit"]["unitName"] + '</td>'
                                                 + '<td>' + group.join('<br>') + '</td>'
@@ -291,6 +292,8 @@
                                                 + '</td>'
                                                 + '</tr>';
 
+                                        listArr[value5["centerId"]] = value5;
+
                                     });
                                 }
 //                             
@@ -298,13 +301,23 @@
                             });
                         });
                     } else if (value2["hasIssue"] == "N") {
+                        contentArr[value1["mainId"]] += '<tr data-tt-id="type' + value2["typeId"] + '" data-tt-parent-id="main' + value1["mainId"] + '"  data-seq="' + value2["typeSeq"] + '" >' +
+                                '<td colspan="4">' +
+                                '<span class="text-bold" style="text-decoration: underline;">' +
+                                'ส่วนที่ ' + value1["mainSeq"] + '.' + value2['typeSeq'] +
+                                '</span> ' + value2["typeName"] +
+                                '</td>' +
+                                '<td class="text-center">' +
+                                '<button class="btn btn-sm btn-success add" data-pid="' + value2["typeId"] + '" data-pname="typeId">' +
+                                '<i class="fa fa-plus"></i> เพิ่ม</button></td>' +
+                                '</tr>';
                         if (typeof value2["kpi"] !== "undefined" && value2["kpi"] !== null) {
                             $.each(value2["kpi"], function (key5, value5) {
                                 var group = [];
                                 $.each(value5["centerGroup"], function (keyGroup, valueGroup) {
                                     group.push(" - " + valueGroup["groupName"]);
                                 });
-                                contentArr[value1["mainId"]] += '<tr data-tt-id="center' + value5["centerId"] + '" data-tt-parent-id="type' + value2["typeId"] + '">'
+                                contentArr[value1["mainId"]] += '<tr data-tt-id="center' + value5["centerId"] + '" data-tt-parent-id="type' + value2["typeId"] + '"  data-seq="' + value5["kpiSeq"] + '" >'
                                         + '<td style="padding-left: 20px;">' + value5["kpiSeq"] + '.' + value5["kpiName"] + '</td>'
                                         + '<td class="center">' + value5["unit"]["unitName"] + '</td>'
                                         + '<td>' + group.join('<br>') + '</td>'
@@ -316,6 +329,7 @@
                                         + '</div>'
                                         + '</td>'
                                         + '</tr>';
+                                listArr[value5["centerId"]] = value5;
 
                             });
                         }
@@ -343,25 +357,33 @@
                 });
 
                 $("button.add").unbind().click(function () {
-                    var targetId = $(this).attr("data-pid");
+                    var pId = $(this).attr("data-pid");
+                    var pName = $(this).attr("data-pname");
 
                     // reset form for new insert
                     $("#loadingForm").html('');
                     $("#form").trigger('reset');
                     $("#panelForm").modal("show");
-                    listsKpi(targetId);
-                    listsUnit();
-                    $("button.save").click(function () {
-                        autoKpiName();
+                    listsKpi(pId);
+                    //   listsUnit();
+                    $("button.save").unbind().click(function () {
+                        //  autoKpiName();
                         var isValid = true;
                         $('#form input[required]').each(function () {
                             if ($(this).val() == "" && !$(this).prop("disabled"))
                                 isValid = false;
                         });
                         if (isValid) {
-                            var fdata = dataObject(targetId, null);
-                            console.log(fdata);
-                            //centerInsert(targetId, fdata);
+                            var fdata = dataObject(pId, pName, null);
+                            //   console.log(fdata[0].hasOwnProperty("centerGroup"));
+                            if (!fdata.hasOwnProperty("centerGroup") || typeof fdata["centerGroup"] === "undefined") {
+                                alert("กรุณาเลือกประเภทส่วนงาน");
+                            } else {
+                                centerInsert(pId, fdata);
+                            }
+                            // centerInsert(targetId, fdata);
+                        } else {
+                            alert("กรุณากรอกข้อมูลให้ครบ");
                         }
                     });
 
@@ -373,27 +395,22 @@
     }
 
     function centerAction() {
-        $("button.edit").unbind("click").click(function () {
-            var parentId = $(this).attr("data-pid");
-            var id = $(this).attr("data-id");
+        $("button.edit").unbind().click(function () {
+            var pId = $(this).attr("data-pid");
+            var centerId = $(this).attr("data-id");
 
             // reset form for new insert
             $("#loadingForm").html('');
             $("#form").trigger('reset');
             $("#panelForm").modal("show");
-            listsKpi(parentId);
-
+            listsKpi(pId);
+            console.log(listArr[centerId]);
             $("#form input[type=text], #form textarea, #form select").each(function () {
                 var fid = $(this).attr("id");
-                $("#" + fid).val(listArr[id][fid]);
+                $("#" + fid).val(listArr[centerId][fid]);
             });
-
-            $("#form input[type=checkbox]").each(function () {
-                var fid = $(this).attr("id");
-                if (listArr[id][fid] == 1)
-                    $("#" + fid).prop("checked", true);
-                else
-                    $("#" + fid).prop("checked", false);
+            $.each(listArr[centerId]["centerGroup"], function (k, v) {
+                $("#" + v["groupCode"]).prop("checked", true);
             });
 
             $("button.save").unbind("click").click(function () {
@@ -403,8 +420,9 @@
                         isValid = false;
                 });
                 if (isValid) {
-                    var fdata = dataObject(parentId, id);
-                    centerEdit(parentId, fdata);
+                    var fdata = dataObject(centerId, "centerId", null);
+                    console.log(fdata);
+                    centerEdit(centerId, fdata);
                 }
             });
         });
@@ -445,46 +463,61 @@
         $("#loadingForm").html("Loading...");
 
         setTimeout(function () {
-            var dataJSON = JSON.stringify({affirmative: fdata});
+            var dataJSON = JSON.stringify({center: fdata});
             var dataJSONEN = encodeURIComponent(dataJSON);
 
-            var datas = callAjax("{{_context_path}}/api/affirmative/center/insert", "post", dataJSONEN, "json");
+            var datas = callAjax("{{_context_path}}/api/affirmative/center/insert2", "post", dataJSONEN, "json");
+            //  console.log(datas);
             if (typeof datas !== "undefined" && datas !== null) {
-                var data = datas["insert"][0];
-                if (data["result"] == true) {
+                var data = datas["insert"];
+                if (data != false) {
                     $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
 
-                    var id = data["id"];
-                    listArr[id] = fdata[0];
-                    listArr[id]["id"] = id;
+                    listArr[data["centerId"]] = data;
 
-                    var org = [];
-                    if (listArr[id]["isEducation"] == "1")
-                        org.push("- จัดการศึกษา");
-                    if (listArr[id]["isSupport"] == "1")
-                        org.push("- สนับสนุนการศึกษา");
-                    if (listArr[id]["isService"] == "1")
-                        org.push("- บริการวิชาการ");
-
-                    // insert node in branch
-                    var input = '<tr data-tt-id="aff' + id + '" data-tt-parent-id="target' + parentId + '">'
-                            + '<td style="padding-left: 20px;">' + listArr[id]["no"] + ' ' + listArr[id]["name"] + '</td>'
-                            + '<td class="center">' + listArr[id]["unit"] + '</td>'
-                            + '<td>' + org.join('<br>') + '</td>'
-                            + '<td>' + listArr[id]["remark"] + '</td>'
-                            + '<td class="text-center">'
-                            + '<div class="btn-group">'
-                            + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-pencil"></i></button>'
-                            + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-trash"></i></button>'
-                            + '</div>'
-                            + '</td>'
-                            + '</tr>';
-
-                    var node = $("#tableall").treetable("node", "target" + parentId);
+                    var mainId = $("tr[data-tt-id=type" + data["typeId"] + "]").attr("data-tt-parent-id").substr(4);
+                    var input = "";
+                    var group = [];
+                    var node, node2;
+                    $.each(data["centerGroup"], function (keyGroup, valueGroup) {
+                        group.push(" - " + valueGroup["groupName"]);
+                    });
+                    if (data["targetId"] == 0) {
+                        input = '<tr data-tt-id="center' + data["centerId"] + '" data-tt-parent-id="type' + data["typeId"] + '" data-seq="' + data["kpiSeq"] + '">'
+                                + '<td style="padding-left: 20px;">' + data["kpiSeq"] + '.' + data["kpiName"] + '</td>'
+                                + '<td class="center">' + data["unit"]["unitName"] + '</td>'
+                                + '<td>' + group.join('<br>') + '</td>'
+                                + '<td class="text-center">' + (data["remark"] ? data["remark"] : "-") + '</td>'
+                                + '<td class="text-center">'
+                                + '<div class="btn-group">'
+                                + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                                + '</div>'
+                                + '</td>'
+                                + '</tr>';
+                        node = $("#tableall").treetable("node", "type" + data["typeId"]);
+                        node2 = $("#table" + mainId).treetable("node", "type" + data["typeId"]);
+                    } else {
+                        var targetSeq = $("tr[data-tt-id=target" + data["targetId"] + "]").attr("data-seq");
+                        var issueId = $("tr[data-tt-id=target" + data["targetId"] + "]").attr("data-tt-parent-id");
+                        var issueSeq = $("tr[data-tt-id=" + issueId + "]").attr("data-seq");
+                        input = '<tr data-tt-id="center' + data["centerId"] + '" data-tt-parent-id="target' + data["targetId"] + '" data-seq="' + data["kpiSeq"] + '">'
+                                + '<td style="padding-left: 20px;">' + issueSeq + '.' + targetSeq + '.' + data["kpiSeq"] + ' ' + data["kpiName"] + '</td>'
+                                + '<td class="center">' + data["unit"]["unitName"] + '</td>'
+                                + '<td>' + group.join('<br>') + '</td>'
+                                + '<td class="text-center">' + (data["remark"] ? data["remark"] : "-") + '</td>'
+                                + '<td class="text-center">'
+                                + '<div class="btn-group">'
+                                + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                                + '</div>'
+                                + '</td>'
+                                + '</tr>';
+                        node = $("#tableall").treetable("node", "target" + data["targetId"]);
+                        node2 = $("#table" + mainId).treetable("node", "target" + data["targetId"]);
+                    }
                     $("#tableall").treetable("loadBranch", node, input);
-
-                    var node2 = $("#table" + findNode[parentId]).treetable("node", "target" + parentId);
-                    $("#table" + findNode[parentId]).treetable("loadBranch", node2, input);
+                    $("#table" + mainId).treetable("loadBranch", node2, input);
 
                     $("#panelForm").modal("hide");
                     centerAction();
@@ -496,48 +529,74 @@
         }, 500);
     }
 
-    function centerEdit(parentId, fdata) {
+    function centerEdit(centerId, fdata) {
         $("#loadingForm").html("Loading...");
 
         setTimeout(function () {
-            var dataJSON = JSON.stringify({affirmative: fdata});
+            var dataJSON = JSON.stringify({center: fdata});
             var dataJSONEN = encodeURIComponent(dataJSON);
 
-            var datas = callAjax("{{_context_path}}/api/affirmative/center/update", "post", dataJSONEN, "json");
+            var datas = callAjax("{{_context_path}}/api/affirmative/center/update2", "post", dataJSONEN, "json");
+
             if (typeof datas !== "undefined" && datas !== null) {
-                if (datas["update"] == true) {
+                var data = datas["update"];
+                if (data != false) {
                     $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
+                    listArr[data["centerId"]] = data;
+                    var mainId = $("tr[data-tt-id=type" + data["typeId"] + "]").attr("data-tt-parent-id").substr(4);
+                    var input = "";
+                    var group = [];
+                    var node, node2;
+                    $.each(data["centerGroup"], function (keyGroup, valueGroup) {
+                        group.push(" - " + valueGroup["groupName"]);
+                    });
+                    if (data["targetId"] == 0) {
+                        input = '<tr data-tt-id="center' + data["centerId"] + '" data-tt-parent-id="type' + data["typeId"] + '" data-seq="' + data["kpiSeq"] + '">'
+                                + '<td style="padding-left: 20px;">' + data["kpiSeq"] + '.' + data["kpiName"] + '</td>'
+                                + '<td class="center">' + data["unit"]["unitName"] + '</td>'
+                                + '<td>' + group.join('<br>') + '</td>'
+                                + '<td class="text-center">' + (data["remark"] ? data["remark"] : "-") + '</td>'
+                                + '<td class="text-center">'
+                                + '<div class="btn-group">'
+                                + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                                + '</div>'
+                                + '</td>'
+                                + '</tr>';
+                        node = $("#tableall").treetable("node", "type" + data["typeId"]);
+                        node2 = $("#table" + mainId).treetable("node", "type" + data["typerId"]);
+                    } else {
+                        var targetSeq = $("tr[data-tt-id=target" + data["targetId"] + "]").attr("data-seq");
+                        var issueId = $("tr[data-tt-id=target" + data["targetId"] + "]").attr("data-tt-parent-id");
+                        var issueSeq = $("tr[data-tt-id=" + issueId + "]").attr("data-seq");
+                        input = '<tr data-tt-id="center' + data["centerId"] + '" data-tt-parent-id="target' + data["targetId"] + '" data-seq="' + data["kpiSeq"] + '">'
+                                + '<td style="padding-left: 20px;">' + issueSeq + '.' + targetSeq + '.' + data["kpiSeq"] + ' ' + data["kpiName"] + '</td>'
+                                + '<td class="center">' + data["unit"]["unitName"] + '</td>'
+                                + '<td>' + group.join('<br>') + '</td>'
+                                + '<td class="text-center">' + (data["remark"] ? data["remark"] : "-") + '</td>'
+                                + '<td class="text-center">'
+                                + '<div class="btn-group">'
+                                + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                                + '</div>'
+                                + '</td>'
+                                + '</tr>';
+                        node = $("#tableall").treetable("node", "target" + data["targetId"]);
+                        node2 = $("#table" + mainId).treetable("node", "target" + data["targetId"]);
 
-                    var id = fdata[0]["id"];
-                    listArr[id] = fdata[0];
-
-                    var org = [];
-                    if (listArr[id]["isEducation"] == "1")
-                        org.push("- จัดการศึกษา");
-                    if (listArr[id]["isSupport"] == "1")
-                        org.push("- สนับสนุนการศึกษา");
-                    if (listArr[id]["isService"] == "1")
-                        org.push("- บริการวิชาการ");
-
-                    // insert node in branch
-                    var input = '<tr data-tt-id="aff' + id + '" data-tt-parent-id="target' + parentId + '">'
-                            + '<td style="padding-left: 20px;">' + listArr[id]["no"] + ' ' + listArr[id]["name"] + '</td>'
-                            + '<td class="center">' + listArr[id]["unit"] + '</td>'
-                            + '<td>' + org.join('<br>') + '</td>'
-                            + '<td>' + listArr[id]["remark"] + '</td>'
-                            + '<td class="text-center">'
-                            + '<div class="btn-group">'
-                            + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-pencil"></i></button>'
-                            + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-trash"></i></button>'
-                            + '</div>'
-                            + '</td>'
-                            + '</tr>';
-
-                    var node = $("#tableall").treetable("node", "target" + parentId);
+                    }
+                    $("#tableall").treetable("removeNode", "center" + data["centerId"]);
+                    $("#table" + mainId).treetable("removeNode", "center" + data["centerId"]);
                     $("#tableall").treetable("loadBranch", node, input);
+                    $("#table" + mainId).treetable("loadBranch", node2, input);
+                    $("#tableall").treetable("sortBranch", node);
+                    $("#table" + mainId).treetable("sortBranch", node2);
+//                    $("#tableall").treetable("removeNode", "center" + data["centerId"]);
+//                    $("#table" + mainId).treetable("removeNode", "center" + data["centerId"]);
+//                    $("#tableall").treetable("loadBranch", node, input);
+//                    $("#table" + mainId).treetable("loadBranch", node2, input);
 
-                    var node2 = $("#table" + findNode[parentId]).treetable("node", "target" + parentId);
-                    $("#table" + findNode[parentId]).treetable("loadBranch", node2, input);
+
 
                     $("#panelForm").modal("hide");
                     centerAction();
@@ -582,15 +641,16 @@
             });
             $("#kpiId").html(html);
             autoKpiName();
+            listsUnit();
         }
     }
     function autoKpiName() {
         $("#kpiId").change(function () {
             if (this.value != 0) {
                 var text = $("#kpiId option:selected").text();
-                $("#kpiName").text(text);
+                $("#kpiName").val(text);
             } else {
-                $("#kpiName").text("");
+                $("#kpiName").val("");
             }
         });
     }
@@ -605,16 +665,20 @@
         }
     }
 
-    function dataObject(parentId, id) {
+    function dataObject(parentId, pName, id) {
         var fParam = {};
         if (id != null || id == 0) {
             fParam["kpiId"] = id;
         }
-        fParam["targetId"] = parentId;
+        fParam[pName] = parentId;
+        if (pName == "typeId") {
+            fParam["targetId"] = "0";
+        } else if (pName == "targetId") {
+            fParam["typeId"] = "0";
+        }
         $("#form select, #form input[type=text], #form textarea").each(function () {
             var name = $(this).attr("name");
             var val = $(this).val();
-
             fParam[name] = val;
         });
 
@@ -629,8 +693,8 @@
             }
         });
 
-        var fdata = [];
-        fdata.push(fParam);
+        var fdata = {};
+        fdata = fParam;
 
         return fdata;
     }

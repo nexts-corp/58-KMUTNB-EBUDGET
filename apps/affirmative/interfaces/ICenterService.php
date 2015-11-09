@@ -42,7 +42,7 @@ interface ICenterService {
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
     public function listsKpi2($targetId);
-    
+
     /**
      * @name listsUnit
      * @uri /listsUnit
@@ -61,6 +61,15 @@ interface ICenterService {
     public function insert($affirmative);
 
     /**
+     * @name insert2
+     * @uri /insert2
+     * @param apps\affirmative\entity\AffirmativeCenter center
+     * @return String[] insert Description
+     * @description ผู้เสนอราคาสูงสุดต่อคลัง
+     */
+    public function insert2($center);
+
+    /**
      * @name update
      * @uri /update
      * @param apps\common\entity\AffirmativePlanCentre affirmative Description
@@ -68,6 +77,14 @@ interface ICenterService {
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
     public function update($affirmative);
+     /**
+     * @name update2
+     * @uri /update2
+     * @param apps\affirmative\entity\AffirmativeCenter center
+     * @return String[] update Description
+     * @description ผู้เสนอราคาสูงสุดต่อคลัง
+     */
+    public function update2($center);
 
     /**
      * @name delete

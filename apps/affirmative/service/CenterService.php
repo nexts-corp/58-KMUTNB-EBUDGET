@@ -36,6 +36,24 @@ class CenterService extends CServiceBase implements ICenterService {
         return $this->datacontext->getObject($period)[0];
     }
 
+    function getGroup($centerGroupArr) {
+        $sqlGroup = "select g.groupId,g.groupCode,g.groupName from apps\\affirmative\\entity\\AffirmativeGroup g "
+                . " where g.groupCode in (:groupCode) ";
+        $paramGroup = array(
+            "groupCode" => $centerGroupArr
+        );
+        return $this->datacontext->getObject($sqlGroup, $paramGroup);
+    }
+
+    function getUnit($unit) {
+        $sqlUnit = "select g.unitId,g.unitName from apps\\affirmative\\entity\\AffirmativeUnit g "
+                . " where g.unitId = :unitId ";
+        $paramUnit = array(
+            "unitId" => $unit
+        );
+        return $this->datacontext->getObject($sqlUnit, $paramUnit)[0];
+    }
+
     function sortBy($by, $arr) {
         $return = array();
         foreach ($arr as $key => $object) {
@@ -251,6 +269,35 @@ class CenterService extends CServiceBase implements ICenterService {
         return $return;
     }
 
+    public function insert2($center) {
+        $centerGroup = $center->centerGroup;
+        $center->periodCode = $this->getPeriod()->periodCode;
+        $center->isApprove = "N";
+        if ($center->typeId == 0) {
+            $target = new \apps\affirmative\entity\AffirmativeTarget();
+            $target->targetId = $center->targetId;
+            $issueId = $this->datacontext->getObject($target)[0]->issueId;
+            $issue = new \apps\affirmative\entity\AffirmativeIssue();
+            $issue->issueId = $issueId;
+            $center->typeId = $this->datacontext->getObject($issue)[0]->typeId;
+        }
+        if ($this->datacontext->saveObject($center)) {
+            $centerId = $center->centerId;
+            foreach ($centerGroup as $keyGroup => $groupCode) {
+                $cGroup = new \apps\affirmative\entity\AffirmativeCenterGroup();
+                $cGroup->centerId = $centerId;
+                $cGroup->groupCode = $groupCode;
+                if (!$this->datacontext->saveObject($cGroup)) {
+                    $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+                    return false;
+                }
+            }
+            $center->centerGroup = $this->getGroup($centerGroup);
+            $center->unit = $this->getUnit($center->unitId);
+        }
+        return $center;
+    }
+
     public function update($affirmative) {
         $return = true;
 
@@ -261,6 +308,38 @@ class CenterService extends CServiceBase implements ICenterService {
         }
 
         return $return;
+    }
+
+    public function update2($center) {
+        $centerGroupArr = $center->centerGroup;
+        if ($this->datacontext->updateObject($center)) {
+            $centerGroup = new \apps\affirmative\entity\AffirmativeCenterGroup();
+            $centerGroup->centerId = $center->centerId;
+            $dataCenterGroup = $this->datacontext->getObject($centerGroup);
+            if ($this->datacontext->removeObject($dataCenterGroup)) {
+                foreach ($centerGroupArr as $keyGroup => $groupCode) {
+                    $newCenterGroup = new \apps\affirmative\entity\AffirmativeCenterGroup();
+                    $newCenterGroup->centerId = $center->centerId;
+                    $newCenterGroup->groupCode = $groupCode;
+                    if (!$this->datacontext->saveObject($newCenterGroup)) {
+                        $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+                        return false;
+                    }
+                }
+            } else {
+                $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+                return false;
+            }
+        } else {
+            $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+            return false;
+        }
+        $newCenter = new \apps\affirmative\entity\AffirmativeCenter();
+        $newCenter->centerId = $center->centerId;
+        $center = $this->datacontext->getObject($newCenter)[0];
+        $center->centerGroup = $this->getGroup($centerGroupArr);
+        $center->unit = $this->getUnit($center->unitId);
+        return $center;
     }
 
     public function delete($affirmativeId) {
