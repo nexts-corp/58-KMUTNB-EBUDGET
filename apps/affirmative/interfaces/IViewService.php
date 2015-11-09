@@ -27,4 +27,11 @@ interface IViewService {
      * @description ยื่นคำของบประมาณ
      */ 
     public function center();
+    
+    /**
+     * @name center2
+     * @uri /center2
+     * @description ยื่นคำของบประมาณ
+     */ 
+    public function center2();
 }

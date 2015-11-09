@@ -2,12 +2,13 @@
 
 namespace apps\affirmative\service;
 
-
 use apps\affirmative\interfaces\ICenterService;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
+use th\co\bpg\cde\collection\impl\CJSONDecodeImpl;
 
-class CenterService extends CServiceBase implements ICenterService{
+class CenterService extends CServiceBase implements ICenterService {
+
     public $datacontext;
     public $logger;
     public $md = "apps\\common\\model";
@@ -20,33 +21,53 @@ class CenterService extends CServiceBase implements ICenterService{
 
     function getYear() {
         $sql = "SELECT"
-                ." yr"
-            ." FROM ".$this->ent."\\Year yr"
-            ." WHERE yr.yearStatus = :active";
+                . " yr"
+                . " FROM " . $this->ent . "\\Year yr"
+                . " WHERE yr.yearStatus = :active";
         $param = array(
             "active" => "Y"
         );
-        $data = $this->datacontext->getObject($sql, $param); //get STATUS is Active
-
-        return $data[0];
+        return $this->datacontext->getObject($sql, $param)[0];  //get STATUS is Active
     }
 
-    public function listsAll(){
+    function getPeriod() {
+        $period = new \apps\affirmative\entity\AffirmativePeriod();
+        $period->setIsActive('Y');
+        return $this->datacontext->getObject($period)[0];
+    }
+
+    function sortBy($by, $arr) {
+        $return = array();
+        foreach ($arr as $key => $object) {
+            $return[$key] = array();
+            foreach ($object as $field => $value) {
+                if (is_object($value)) {
+                    $return[$key][$value->$by] = $value;
+                } elseif (is_array($value)) {
+                    $return[$key][$value[$by]] = $value;
+                }
+            }
+        }
+        return $return;
+    }
+
+    public function listsAll() {
         $sql = "SELECT"
-                ." tp.id AS typeId, tp.typeName,"
-                ." ai.id AS issueId, ai.issueName,"
-                ." tg.id AS targetId, tg.targetName,"
-                ." ac.id, ac.affKpiId as kpiId, ac.no, ac.name,"
-                ." ac.unit, ac.score1, ac.score2, ac.score3,"
-                ." ac.score4, ac.score5, ac.isEducation,"
-                ." ac.isSupport, ac.isService, ac.remark, ac.target"
-            ." FROM ".$this->ent."\\AffirmativeTarget tg"
-            ." JOIN ".$this->ent."\\AffirmativeIssue ai WITH ai.id = tg.issueId"
-            ." JOIN ".$this->ent."\\AffirmativeType tp WITH tp.id = ai.typeId"
-            ." LEFT JOIN ".$this->ent."\\AffirmativePlanCentre ac WITH ac.affTargetId = tg.id"
-            ." WHERE tp.budgetPeriodId = :year";
+                . " tp.id AS typeId, tp.typeName,"
+                . " ai.id AS issueId, ai.issueName,"
+                . " tg.id AS targetId, tg.targetName,"
+                . " ac.id, ac.affKpiId as kpiId, ac.no, ac.name,"
+                . " ac.unit, ac.score1, ac.score2, ac.score3,"
+                . " ac.score4, ac.score5, ac.isEducation,"
+                . " ac.isSupport, ac.isService, ac.remark, ac.target"
+                . " FROM " . $this->ent . "\\AffirmativeTarget tg"
+                . " JOIN " . $this->ent . "\\AffirmativeIssue ai WITH ai.id = tg.issueId"
+                . " JOIN " . $this->ent . "\\AffirmativeType tp WITH tp.id = ai.typeId"
+                . " LEFT JOIN " . $this->ent . "\\AffirmativePlanCentre ac WITH ac.affTargetId = tg.id"
+                . " WHERE tp.budgetPeriodId = :year";
         $param = array(
-            "year" => $this->getYear()->year
+            //"year" => $this->getYear()->year
+            "year" => $this->getPeriod()->periodName
         );
         $data = $this->datacontext->getObject($sql, $param);
 
@@ -54,7 +75,7 @@ class CenterService extends CServiceBase implements ICenterService{
         $typeKey = [];
         $issueKey = [];
         $targetKey = [];
-        foreach($data as $key => $val){
+        foreach ($data as $key => $val) {
             $typeKey[$val["typeId"]] = $val["typeName"];
             $issueKey[$val["issueId"]] = $val["issueName"];
             $targetKey[$val["targetId"]] = $val["targetName"];
@@ -76,19 +97,18 @@ class CenterService extends CServiceBase implements ICenterService{
                 "remark" => $val["remark"]
             );
         }
-
         $result = [];
-        foreach($group as $key1 => $type){
+        foreach ($group as $key1 => $type) {
             $issueArr = [];
 
-            foreach($type as $key2 => $issue){
+            foreach ($type as $key2 => $issue) {
                 $targetArr = [];
 
-                foreach($issue as $key3 => $target){
+                foreach ($issue as $key3 => $target) {
                     $kpiArr = [];
 
-                    foreach($target as $key4 => $kpi){
-                        if($kpi["id"] != ""){
+                    foreach ($target as $key4 => $kpi) {
+                        if ($kpi["id"] != "") {
                             $kpiArr[] = $kpi;
                         }
                     }
@@ -115,11 +135,86 @@ class CenterService extends CServiceBase implements ICenterService{
         return $result;
     }
 
-    public function listsKpi($targetId){
+    public function listsAll2() {
+        $json = new CJSONDecodeImpl();
+        //  $viewCenter = new \apps\affirmative\model\ViewAffirmativeCenter();
+        $viewSql = "select v from apps\\affirmative\\model\\ViewAffirmativeCenter v "
+                . " where v.periodCode = :periodCode "
+                . " order by v.periodCode,v.mainSeq,v.typeSeq,v.issueSeq,v.targetSeq,v.kpiSeq";
+        $viewParam = array("periodCode" => $this->getPeriod()->periodCode);
+        $centerData = $this->datacontext->getObject($viewSql, $viewParam);
+
+        $typeArr = array();
+        $targetArr = array();
+        foreach ($centerData as $keyCenter => $valueCenter) {
+            if ($valueCenter->centerId != NULL) {
+                $center = $json->decode(new \apps\affirmative\entity\AffirmativeCenter(), $valueCenter);
+                $centerGroup = $json->decode(new \apps\affirmative\entity\AffirmativeCenterGroup(), $valueCenter);
+                $unit = $json->decode(new \apps\affirmative\entity\AffirmativeUnit(), $valueCenter);
+                $name = "";
+                if ($valueCenter->hasIssue == "Y") {
+                    if (empty($targetArr[$valueCenter->targetId][$valueCenter->centerId])) {
+                        $targetArr[$valueCenter->targetId][$valueCenter->centerId] = $center;
+                    }
+                    $targetArr[$valueCenter->targetId][$valueCenter->centerId]->centerGroup[] = $centerGroup;
+                    $targetArr[$valueCenter->targetId][$valueCenter->centerId]->unit = $unit;
+                } elseif ($valueCenter->hasIssue == "N") {
+                    if (empty($typeArr[$valueCenter->typeId][$valueCenter->centerId])) {
+                        $typeArr[$valueCenter->typeId][$valueCenter->centerId] = $center;
+                    }
+                    $typeArr[$valueCenter->typeId][$valueCenter->centerId]->centerGroup[] = $centerGroup;
+                    $typeArr[$valueCenter->typeId][$valueCenter->centerId]->unit = $unit;
+                }
+            }
+        }
+        $typeArr = $this->sortBy("kpiSeq", $typeArr);
+        $targetArr = $this->sortBy("kpiSeq", $targetArr);
+
+//        $main = new \apps\affirmative\entity\AffirmativeMain();
+//        $main->periodCode = $this->getPeriod()->periodCode;
+        $mainSql = "select v from apps\\affirmative\\entity\\AffirmativeMain v where v.periodCode = :periodCode  order by v.mainSeq";
+        $mainParam = array("periodCode" => $this->getPeriod()->periodCode);
+        $mainData = $this->datacontext->getObject($mainSql, $mainParam);
+        foreach ($mainData as $keyMain => $valueMain) {
+//            $type = new \apps\affirmative\entity\AffirmativeType();
+//            $type->mainId = $valueMain->mainId;
+            $typeSql = "select v from apps\\affirmative\\entity\\AffirmativeType v where v.mainId = :mainId  order by v.typeSeq";
+            $typeParam = array("mainId" => $valueMain->mainId);
+            $typeData = $this->datacontext->getObject($typeSql, $typeParam);
+            $mainData[$keyMain]->type = $typeData;
+            foreach ($typeData as $keyType => $valueType) {
+//                $issue = new \apps\affirmative\entity\AffirmativeIssue();
+//                $issue->typeId = $valueType->typeId;
+                $issueSql = "select v from apps\\affirmative\\entity\\AffirmativeIssue v where v.typeId = :typeId  order by v.issueSeq";
+                $issueParam = array("typeId" => $valueType->typeId);
+                $issueData = $this->datacontext->getObject($issueSql, $issueParam);
+                $mainData[$keyMain]->type[$keyType]->issue = $issueData;
+                if (array_key_exists($valueType->typeId, $typeArr)) {
+                    $mainData[$keyMain]->type[$keyType]->kpi = $typeArr[$valueType->typeId];
+                }
+                foreach ($issueData as $keyIssue => $valueIssue) {
+//                    $target = new \apps\affirmative\entity\AffirmativeTarget();
+//                    $target->issueId = $valueIssue->issueId;
+                    $targetSql = "select v from apps\\affirmative\\entity\\AffirmativeTarget v where v.issueId = :issueId  order by v.targetSeq";
+                    $targetParam = array("issueId" => $valueIssue->issueId);
+                    $targetData = $this->datacontext->getObject($targetSql, $targetParam);
+                    $mainData[$keyMain]->type[$keyType]->issue[$keyIssue]->target = $targetData;
+                    foreach ($targetData as $keyTarget => $valueTarget) {
+                        if (array_key_exists($valueTarget->targetId, $targetArr)) {
+                            $mainData[$keyMain]->type[$keyType]->issue[$keyIssue]->target[$keyTarget]->kpi = $targetArr[$valueTarget->targetId];
+                        }
+                    }
+                }
+            }
+        }
+        return $mainData;
+    }
+
+    public function listsKpi($targetId) {
         $sql = "SELECT"
-                ." ak.id, ak.kpiName"
-            ." FROM ".$this->ent."\\AffirmativeKpi ak"
-            ." WHERE ak.targetId = :targetId";
+                . " ak.id, ak.kpiName"
+                . " FROM " . $this->ent . "\\AffirmativeKpi ak"
+                . " WHERE ak.targetId = :targetId";
         $param = array(
             "targetId" => $targetId
         );
@@ -128,10 +223,20 @@ class CenterService extends CServiceBase implements ICenterService{
         return $data;
     }
 
-    public function insert($affirmative){
+    public function listsKpi2($targetId) {
+        $kpi = new \apps\affirmative\entity\AffirmativeKpi();
+        $kpi->targetId = $targetId;
+        return $this->datacontext->getObject($kpi);
+    }
+
+    public function listsUnit() {
+        return $this->datacontext->getObject(new \apps\affirmative\entity\AffirmativeUnit());
+    }
+
+    public function insert($affirmative) {
         $return = array();
 
-        foreach($affirmative as $key => $val){
+        foreach ($affirmative as $key => $val) {
             $val->budgetPeriodId = $this->getYear()->year;
 
             if (!$this->datacontext->saveObject($val)) {
@@ -146,7 +251,7 @@ class CenterService extends CServiceBase implements ICenterService{
         return $return;
     }
 
-    public function update($affirmative){
+    public function update($affirmative) {
         $return = true;
 
         $affirmative[0]->budgetPeriodId = $this->getYear()->year;
@@ -158,7 +263,7 @@ class CenterService extends CServiceBase implements ICenterService{
         return $return;
     }
 
-    public function delete($affirmativeId){
+    public function delete($affirmativeId) {
         $return = true;
 
         $aff = new \apps\common\entity\AffirmativePlanCentre();
@@ -170,4 +275,5 @@ class CenterService extends CServiceBase implements ICenterService{
 
         return $return;
     }
-} 
+
+}

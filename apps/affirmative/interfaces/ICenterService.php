@@ -8,6 +8,7 @@ namespace apps\affirmative\interfaces;
  * @description ประมูล
  */
 interface ICenterService {
+
     /**
      * @name listsAll
      * @uri /listsAll
@@ -17,6 +18,14 @@ interface ICenterService {
     public function listsAll();
 
     /**
+     * @name listsAll2
+     * @uri /listsAll2
+     * @return String[] lists Description
+     * @description ผู้เสนอราคาสูงสุดต่อคลัง
+     */
+    public function listsAll2();
+
+    /**
      * @name listsKpi
      * @uri /listsKpi
      * @param int targetId Description
@@ -24,6 +33,23 @@ interface ICenterService {
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
     public function listsKpi($targetId);
+
+    /**
+     * @name listsKpi2
+     * @uri /listsKpi2
+     * @param int targetId Description
+     * @return String[] lists Description
+     * @description ผู้เสนอราคาสูงสุดต่อคลัง
+     */
+    public function listsKpi2($targetId);
+    
+    /**
+     * @name listsUnit
+     * @uri /listsUnit
+     * @return String[] lists Description
+     * @description ผู้เสนอราคาสูงสุดต่อคลัง
+     */
+    public function listsUnit();
 
     /**
      * @name insert
@@ -51,4 +77,4 @@ interface ICenterService {
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
     public function delete($affirmativeId);
-} 
+}
