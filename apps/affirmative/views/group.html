@@ -58,37 +58,72 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label text-right" for="kpiId">ตัวชี้วัด</label>
-                                    <div class="col-md-6">
+                                    <label class="col-md-4 control-label text-right" for="kpiId">ตัวชี้วัด</label>
+                                    <div class="col-md-8">
                                         <select class="form-control input-sm" name="kpiId" id="kpiId"></select>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label text-right req" for="kpiSeq">ลำดับที่</label>
-                                    <div class="col-md-6">
+                                    <label class="col-md-4 control-label text-right " for="kpiSeq">ลำดับที่</label>
+                                    <div class="col-md-8">
                                         <input type="text" class="form-control input-sm" name="kpiSeq" id="kpiSeq" required>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label text-right req" for="kpiName">ตัวชี้วัดคำรับรอง</label>
-                                    <div class="col-md-6">
+                                    <label class="col-md-4 control-label text-right" for="kpiName">ตัวชี้วัดคำรับรอง</label>
+                                    <div class="col-md-8">
                                         <textarea class="form-control input-sm" name="kpiName" id="kpiName" required></textarea>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label text-right req" for="unit">หน่วยนับ</label>
-                                    <div class="col-md-6">
+                                    <label class="col-md-4 control-label text-right" for="unit">หน่วยนับ</label>
+                                    <div class="col-md-8">
                                         <select  class="form-control input-sm" name="unitId" id="unitId"></select>
                                     </div>
                                 </div>
-
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right" for="kpiGoal">ค่าเป้าหมายตัวชี้วัด</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-sm" name="kpiGoal" id="kpiGoal" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right" for="score1">คะแนน1</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-sm" name="score1" id="score1" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right" for="score2">คะแนน2</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-sm" name="score2" id="score2" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right" for="score3">คะแนน3</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-sm" name="score3" id="score3" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right" for="score4">คะแนน4</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-sm" name="score4" id="score4" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right" for="score5">คะแนน5</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-sm" name="score5" id="score5" required>
+                                    </div>
+                                </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label text-right req" for="remark">หมายเหตุ</label>
-                                    <div class="col-md-6">
+                                    <label class="col-md-4 control-label text-right" for="remark">หมายเหตุ</label>
+                                    <div class="col-md-8">
                                         <textarea class="form-control input-sm" name="remark" id="remark"></textarea>
                                     </div>
                                 </div>
@@ -164,6 +199,7 @@
 <script type="text/javascript">
     var findNode = {};
     var listArr = {};
+    var unit = {};
     $(function () {
         centerForm();
         /*$("button.back").unbind("click").click(function () {
@@ -377,6 +413,7 @@
                 $("button.add").unbind().click(function () {
                     var pId = $(this).attr("data-pid");
                     var pName = $(this).attr("data-pname");
+
                     // reset form for new insert
                     $("#loadingForm").html('');
                     $("#form").trigger('reset');
@@ -413,20 +450,19 @@
     function centerAction() {
         $("button.edit").unbind().click(function () {
             var pId = $(this).attr("data-pid");
-            var centerId = $(this).attr("data-id");
+            var draftId = $(this).attr("data-id");
+            var edit = $(this).attr("data-edit");
             // reset form for new insert
             $("#loadingForm").html('');
             $("#form").trigger('reset');
             $("#panelForm").modal("show");
             listsKpi(pId);
-            //   console.log(listArr[centerId]);
+            //   console.log(listArr[draftId]);
             $("#form input[type=text], #form textarea, #form select").each(function () {
                 var fid = $(this).attr("id");
-                $("#" + fid).val(listArr[centerId][fid]);
+                $("#" + fid).val(listArr[draftId][fid]);
             });
-            $.each(listArr[centerId]["centerGroup"], function (k, v) {
-                $("#" + v["actTypeCode"]).prop("checked", true);
-            });
+
             $("button.save").unbind("click").click(function () {
                 var isValid = true;
                 $('#form input[required]').each(function () {
@@ -434,35 +470,29 @@
                         isValid = false;
                 });
                 if (isValid) {
-                    var fdata = dataObject(centerId, "centerId", null);
-                    // console.log(fdata);
+                    var fdata = dataObject(draftId, "draftId", null);
+                    //console.log(fdata);
                     centerEdit(fdata);
                 }
             });
         });
         $("button.delete").unbind("click").click(function () {
-            var centerId = $(this).attr("data-id");
+            var draftId = $(this).attr("data-id");
             $("#panelDeleteForm").modal("show");
             $("#panelDeleteForm").find('td').each(function () {
                 if ($(this).attr("id")) {
                     var aId = $(this).attr("id");
-                    if ($(this).attr("id") == "centerGroupDel") {
-                        var group = [];
-                        $.each(listArr[centerId]["centerGroup"], function (keyGroup, valueGroup) {
-                            group.push(" - " + valueGroup["actTypeName"]);
-                        });
-                        $("#centerGroupDel").html(group.join("<br>"));
-                    } else if ($(this).attr("id") == "unitDel") {
-                        $("#" + aId).html(listArr[centerId]["unit"]["unitName"]);
+                    if ($(this).attr("id") == "unitDel") {
+                        $("#" + aId).html(listArr[draftId]["unit"]["unitName"]);
                     } else {
                         var name = aId.replace('Del', '');
-                        $("#" + aId).html(getTag(listArr[centerId][name], "-"));
+                        $("#" + aId).html(getTag(listArr[draftId][name], "-"));
                     }
                 }
             });
             $("button.save").unbind("click").click(function () {
 
-                centerDelete(centerId);
+                centerDelete(draftId);
             });
         });
     }
@@ -478,7 +508,7 @@
                 var data = datas["insert"];
                 if (data != false) {
                     $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
-                    listArr[data["centerId"]] = data;
+                    listArr[data["draftId"]] = data;
                     var mainId = $("tr[data-tt-id=type" + data["typeId"] + "]").attr("data-tt-parent-id").substr(4);
                     var input = "";
                     var group = [];
@@ -487,15 +517,15 @@
                         group.push(" - " + valueGroup["actTypeName"]);
                     });
                     if (data["targetId"] == 0) {
-                        input = '<tr data-tt-id="center' + data["centerId"] + '" data-tt-parent-id="type' + data["typeId"] + '" data-seq="' + data["kpiSeq"] + '">'
+                        input = '<tr data-tt-id="center' + data["draftId"] + '" data-tt-parent-id="type' + data["typeId"] + '" data-seq="' + data["kpiSeq"] + '">'
                                 + '<td style="padding-left: 20px;">' + data["kpiSeq"] + '.' + data["kpiName"] + '</td>'
                                 + '<td class="center">' + data["unit"]["unitName"] + '</td>'
                                 + '<td>' + group.join('<br>') + '</td>'
                                 + '<td class="text-center">' + (data["remark"] ? data["remark"] : "-") + '</td>'
                                 + '<td class="text-center">'
                                 + '<div class="btn-group">'
-                                + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                                + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["typeId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["typeId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>'
                                 + '</div>'
                                 + '</td>'
                                 + '</tr>';
@@ -505,15 +535,15 @@
                         var targetSeq = $("tr[data-tt-id=target" + data["targetId"] + "]").attr("data-seq");
                         var issueId = $("tr[data-tt-id=target" + data["targetId"] + "]").attr("data-tt-parent-id");
                         var issueSeq = $("tr[data-tt-id=" + issueId + "]").attr("data-seq");
-                        input = '<tr data-tt-id="center' + data["centerId"] + '" data-tt-parent-id="target' + data["targetId"] + '" data-seq="' + data["kpiSeq"] + '">'
+                        input = '<tr data-tt-id="center' + data["draftId"] + '" data-tt-parent-id="target' + data["targetId"] + '" data-seq="' + data["kpiSeq"] + '">'
                                 + '<td style="padding-left: 20px;">' + issueSeq + '.' + targetSeq + '.' + data["kpiSeq"] + ' ' + data["kpiName"] + '</td>'
                                 + '<td class="center">' + data["unit"]["unitName"] + '</td>'
                                 + '<td>' + group.join('<br>') + '</td>'
                                 + '<td class="text-center">' + (data["remark"] ? data["remark"] : "-") + '</td>'
                                 + '<td class="text-center">'
                                 + '<div class="btn-group">'
-                                + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                                + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["targetId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["targetId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>'
                                 + '</div>'
                                 + '</td>'
                                 + '</tr>';
@@ -537,12 +567,12 @@
         setTimeout(function () {
             var dataJSON = JSON.stringify({center: fdata});
             var dataJSONEN = encodeURIComponent(dataJSON);
-            var datas = callAjax("{{_context_path}}/api/affirmative/center/update", "post", dataJSONEN, "json");
+            var datas = callAjax("{{_context_path}}/api/affirmative/group/update", "post", dataJSONEN, "json");
             if (typeof datas !== "undefined" && datas !== null) {
                 var data = datas["update"];
                 if (data != false) {
                     $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
-                    listArr[data["centerId"]] = data;
+                    listArr[data["draftId"]] = data;
                     var mainId = $("tr[data-tt-id=type" + data["typeId"] + "]").attr("data-tt-parent-id").substr(4);
                     var input = "";
                     var group = [];
@@ -551,15 +581,15 @@
                         group.push(" - " + valueGroup["actTypeName"]);
                     });
                     if (data["targetId"] == 0) {
-                        input = '<tr data-tt-id="center' + data["centerId"] + '" data-tt-parent-id="type' + data["typeId"] + '" data-seq="' + data["kpiSeq"] + '">'
+                        input = '<tr data-tt-id="center' + data["draftId"] + '" data-tt-parent-id="type' + data["typeId"] + '" data-seq="' + data["kpiSeq"] + '">'
                                 + '<td style="padding-left: 20px;">' + data["kpiSeq"] + '.' + data["kpiName"] + '</td>'
                                 + '<td class="center">' + data["unit"]["unitName"] + '</td>'
                                 + '<td>' + group.join('<br>') + '</td>'
                                 + '<td class="text-center">' + (data["remark"] ? data["remark"] : "-") + '</td>'
                                 + '<td class="text-center">'
                                 + '<div class="btn-group">'
-                                + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                                + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["typeId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["typeId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>'
                                 + '</div>'
                                 + '</td>'
                                 + '</tr>';
@@ -569,23 +599,23 @@
                         var targetSeq = $("tr[data-tt-id=target" + data["targetId"] + "]").attr("data-seq");
                         var issueId = $("tr[data-tt-id=target" + data["targetId"] + "]").attr("data-tt-parent-id");
                         var issueSeq = $("tr[data-tt-id=" + issueId + "]").attr("data-seq");
-                        input = '<tr data-tt-id="center' + data["centerId"] + '" data-tt-parent-id="target' + data["targetId"] + '" data-seq="' + data["kpiSeq"] + '">'
+                        input = '<tr data-tt-id="center' + data["draftId"] + '" data-tt-parent-id="target' + data["targetId"] + '" data-seq="' + data["kpiSeq"] + '">'
                                 + '<td style="padding-left: 20px;">' + issueSeq + '.' + targetSeq + '.' + data["kpiSeq"] + ' ' + data["kpiName"] + '</td>'
                                 + '<td class="center">' + data["unit"]["unitName"] + '</td>'
                                 + '<td>' + group.join('<br>') + '</td>'
                                 + '<td class="text-center">' + (data["remark"] ? data["remark"] : "-") + '</td>'
                                 + '<td class="text-center">'
                                 + '<div class="btn-group">'
-                                + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                                + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["targetId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["targetId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>'
                                 + '</div>'
                                 + '</td>'
                                 + '</tr>';
                         node = $("#tableall").treetable("node", "target" + data["targetId"]);
                         node2 = $("#table" + mainId).treetable("node", "target" + data["targetId"]);
                     }
-                    $("#tableall").treetable("removeNode", "center" + data["centerId"]);
-                    $("#table" + mainId).treetable("removeNode", "center" + data["centerId"]);
+                    $("#tableall").treetable("removeNode", "center" + data["draftId"]);
+                    $("#table" + mainId).treetable("removeNode", "center" + data["draftId"]);
                     $("#tableall").treetable("loadBranch", node, input);
                     $("#table" + mainId).treetable("loadBranch", node2, input);
 //                    var nodeSort = $("#tableall").treetable("node", $(this).attr('data-seq'));
@@ -607,19 +637,19 @@
         }, 500);
     }
 
-    function centerDelete(centerId) {
-        var dataJSON = JSON.stringify({center: {centerId: centerId}});
+    function centerDelete(draftId) {
+        var dataJSON = JSON.stringify({center: {draftId: draftId}});
         var dataJSONEN = encodeURIComponent(dataJSON);
         var datas = callAjax("{{_context_path}}/api/affirmative/center/delete", "post", dataJSONEN, "json");
         if (typeof datas !== "undefined" && datas !== null) {
             if (datas["delete"] == true) {
-                $("#tableall").treetable("removeNode", "center" + centerId);
+                $("#tableall").treetable("removeNode", "center" + draftId);
 //                var parent = $('#tableall').treetable('node', "target" + parentId);
 //                if (parent.children.length == 0) {
 //                    parent.row.find('.indenter').html('');
 //                }
-                var mainId = $("tr[data-tt-id=type" + listArr[centerId]["typeId"] + "]").attr("data-tt-parent-id").substr(4);
-                $("#table" + mainId).treetable("removeNode", "center" + centerId);
+                var mainId = $("tr[data-tt-id=type" + listArr[draftId]["typeId"] + "]").attr("data-tt-parent-id").substr(4);
+                $("#table" + mainId).treetable("removeNode", "center" + draftId);
 //                var parent = $("#table" + findNode[parentId]).treetable('node', "target" + parentId);
 //                if (parent.children.length == 0) {
 //                    parent.row.find('.indenter').html('');
@@ -654,12 +684,21 @@
     }
     function listsUnit() {
         var datas = callAjax("{{_context_path}}/api/affirmative/center/listsUnit", "post", {}, "json");
-        if (typeof datas !== "undefined" && datas !== null) {
+        if (typeof datas["lists"] !== "undefined" && datas["lists"] !== null) {
+            //unit = datas["lists"];
             var html;
             $.each(datas["lists"], function (key, value) {
-                html += '<option value="' + value["unitId"] + '">' + value["unitName"] + '</option>'
+                html += '<option value="' + value["unitId"] + '">' + value["unitName"] + '</option>';
+                unit[value["unitId"]] = value;
             });
             $("#unitId").html(html);
+
+            $("#unitId").change(function () {
+                var unitId = this.value;
+                $.each(unit[unitId], function (k, v) {
+                    $("#" + k).val(v);
+                });
+            });
         }
     }
 
