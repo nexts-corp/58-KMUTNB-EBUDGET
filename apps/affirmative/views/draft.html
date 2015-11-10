@@ -89,20 +89,20 @@
                                     <label class="col-md-3 control-label text-right req">ประเภทส่วนงาน</label>
                                     <div class="col-md-6">
                                         <div class="checkbox-custom checkbox-primary">
-                                            <input type="checkbox" name="centerGroup" value="GrpEdu" id="GrpEdu" >
-                                            <label for="GrpEdu">จัดการศึกษา</label>
+                                            <input type="checkbox" name="centerGroup" value="IS_EDUCATION" id="IS_EDUCATION" >
+                                            <label for="IS_EDUCATION">จัดการศึกษา</label>
                                         </div>
                                         <div class="checkbox-custom checkbox-primary">
-                                            <input type="checkbox" name="centerGroup" value="GrpSup" id="GrpSup" >
-                                            <label for="GrpSup">สนับสนุนการศึกษา</label>
+                                            <input type="checkbox" name="centerGroup" value="IS_SUPPORT" id="IS_SUPPORT" >
+                                            <label for="IS_SUPPORT">สนับสนุนการศึกษา</label>
                                         </div>
                                         <div class="checkbox-custom checkbox-primary">
-                                            <input type="checkbox" name="centerGroup" value="GrpServ" id="GrpServ" >
-                                            <label for="GrpServ">บริการวิชาการ</label>
+                                            <input type="checkbox" name="centerGroup" value="IS_SERVICE" id="IS_SERVICE" >
+                                            <label for="IS_SERVICE">บริการวิชาการ</label>
                                         </div>
                                         <div class="checkbox-custom checkbox-primary">
-                                            <input type="checkbox" name="centerGroup" value="GrpOffice" id="GrpOffice" >
-                                            <label for="GrpOffice">หน่วยงานในสำนักงานอธิการบดี</label>
+                                            <input type="checkbox" name="centerGroup" value="IS_DEPT" id="IS_DEPT" >
+                                            <label for="IS_DEPT">หน่วยงานในสำนักงานอธิการบดี</label>
                                         </div>
                                     </div>
                                 </div>
@@ -141,24 +141,24 @@
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td class="col-md-3 text-right" style="vertical-align: top;">ลำดับที่ : </td>
-                                        <td class="col-md-9 text-bold" id="noDel"></td>
+                                        <td class="col-md-3 text-right text-bold" style="vertical-align: top;">ลำดับที่ : </td>
+                                        <td class="col-md-9" id="kpiSeqDel"></td>
                                     </tr>
                                     <tr>
-                                        <td class="col-md-3 text-right" style="vertical-align: top;">ตัวชี้วัดคำรับรอง : </td>
-                                        <td class="col-md-9 text-bold" id="nameDel"></td>
+                                        <td class="col-md-3 text-right text-bold" style="vertical-align: top;">ตัวชี้วัดคำรับรอง : </td>
+                                        <td class="col-md-9" id="kpiNameDel"></td>
                                     </tr>
                                     <tr>
-                                        <td class="col-md-3 text-right" style="vertical-align: top;">หน่วยนับ : </td>
-                                        <td class="col-md-9 text-bold" id="unitDel"></td>
+                                        <td class="col-md-3 text-right text-bold" style="vertical-align: top;">หน่วยนับ : </td>
+                                        <td class="col-md-9" id="unitDel"></td>
                                     </tr>
                                     <tr>
-                                        <td class="col-md-3 text-right" style="vertical-align: top;">ประเภทส่วนงาน : </td>
-                                        <td class="col-md-9 text-bold" id="workTypeDel"></td>
+                                        <td class="col-md-3 text-right text-bold" style="vertical-align: top;">ประเภทส่วนงาน : </td>
+                                        <td class="col-md-9" id="centerGroupDel"></td>
                                     </tr>
                                     <tr>
-                                        <td class="col-md-3 text-right" style="vertical-align: top;">หมายเหตุ : </td>
-                                        <td class="col-md-9 text-bold" id="remarkDel"></td>
+                                        <td class="col-md-3 text-right text-bold" style="vertical-align: top;">หมายเหตุ : </td>
+                                        <td class="col-md-9" id="remarkDel"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -197,7 +197,7 @@
     function centerForm() {
         var contentArr = {};
 
-        var datas = callAjax("{{_context_path}}/api/affirmative/center/listsAll2", "post", {}, "json");
+        var datas = callAjax("{{_context_path}}/api/affirmative/center/listsAll", "post", {}, "json");
         if (typeof datas !== "undefined" && datas !== null) {
             var menu = '<li class="active">'
                     + '<a href="#taball" data-toggle="tab"><i class="fa fa-star"></i> ทั้งหมด</a>'
@@ -379,7 +379,7 @@
                             if (!fdata.hasOwnProperty("centerGroup") || typeof fdata["centerGroup"] === "undefined") {
                                 alert("กรุณาเลือกประเภทส่วนงาน");
                             } else {
-                                centerInsert(pId, fdata);
+                                centerInsert(fdata);
                             }
                             // centerInsert(targetId, fdata);
                         } else {
@@ -404,13 +404,13 @@
             $("#form").trigger('reset');
             $("#panelForm").modal("show");
             listsKpi(pId);
-            console.log(listArr[centerId]);
+            //   console.log(listArr[centerId]);
             $("#form input[type=text], #form textarea, #form select").each(function () {
                 var fid = $(this).attr("id");
                 $("#" + fid).val(listArr[centerId][fid]);
             });
             $.each(listArr[centerId]["centerGroup"], function (k, v) {
-                $("#" + v["groupCode"]).prop("checked", true);
+                $("#" + v["actTypeCode"]).prop("checked", true);
             });
 
             $("button.save").unbind("click").click(function () {
@@ -421,52 +421,47 @@
                 });
                 if (isValid) {
                     var fdata = dataObject(centerId, "centerId", null);
-                    console.log(fdata);
-                    centerEdit(centerId, fdata);
+                    // console.log(fdata);
+                    centerEdit(fdata);
                 }
             });
         });
 
         $("button.delete").unbind("click").click(function () {
-            var parentId = $(this).attr("data-pid");
-            var id = $(this).attr("data-id");
-
+            var centerId = $(this).attr("data-id");
             $("#panelDeleteForm").modal("show");
             $("#panelDeleteForm").find('td').each(function () {
                 if ($(this).attr("id")) {
                     var aId = $(this).attr("id");
-
-                    if ($(this).attr("id") == "workTypeDel") {
-                        var org = [];
-                        if (listArr[id]["isEducation"] == "1")
-                            org.push("- จัดการศึกษา");
-                        if (listArr[id]["isSupport"] == "1")
-                            org.push("- สนับสนุนการศึกษา");
-                        if (listArr[id]["isService"] == "1")
-                            org.push("- บริการวิชาการ");
-
-                        $("#workTypeDel").html(org.join("<br>"));
-                    }
-                    else {
+                    if ($(this).attr("id") == "centerGroupDel") {
+                        var group = [];
+                        $.each(listArr[centerId]["centerGroup"], function (keyGroup, valueGroup) {
+                            group.push(" - " + valueGroup["actTypeName"]);
+                        });
+                        $("#centerGroupDel").html(group.join("<br>"));
+                    } else if ($(this).attr("id") == "unitDel") {
+                        $("#" + aId).html(listArr[centerId]["unit"]["unitName"]);
+                    } else {
                         var name = aId.replace('Del', '');
-                        $("#" + aId).html(getTag(listArr[id][name], "-"));
+                        $("#" + aId).html(getTag(listArr[centerId][name], "-"));
                     }
                 }
             });
             $("button.save").unbind("click").click(function () {
-                centerDelete(parentId, id);
+
+                centerDelete(centerId);
             });
         });
     }
 
-    function centerInsert(parentId, fdata) {
+    function centerInsert(fdata) {
         $("#loadingForm").html("Loading...");
 
         setTimeout(function () {
             var dataJSON = JSON.stringify({center: fdata});
             var dataJSONEN = encodeURIComponent(dataJSON);
 
-            var datas = callAjax("{{_context_path}}/api/affirmative/center/insert2", "post", dataJSONEN, "json");
+            var datas = callAjax("{{_context_path}}/api/affirmative/center/insert", "post", dataJSONEN, "json");
             //  console.log(datas);
             if (typeof datas !== "undefined" && datas !== null) {
                 var data = datas["insert"];
@@ -480,7 +475,7 @@
                     var group = [];
                     var node, node2;
                     $.each(data["centerGroup"], function (keyGroup, valueGroup) {
-                        group.push(" - " + valueGroup["groupName"]);
+                        group.push(" - " + valueGroup["actTypeName"]);
                     });
                     if (data["targetId"] == 0) {
                         input = '<tr data-tt-id="center' + data["centerId"] + '" data-tt-parent-id="type' + data["typeId"] + '" data-seq="' + data["kpiSeq"] + '">'
@@ -529,14 +524,14 @@
         }, 500);
     }
 
-    function centerEdit(centerId, fdata) {
+    function centerEdit(fdata) {
         $("#loadingForm").html("Loading...");
 
         setTimeout(function () {
             var dataJSON = JSON.stringify({center: fdata});
             var dataJSONEN = encodeURIComponent(dataJSON);
 
-            var datas = callAjax("{{_context_path}}/api/affirmative/center/update2", "post", dataJSONEN, "json");
+            var datas = callAjax("{{_context_path}}/api/affirmative/center/update", "post", dataJSONEN, "json");
 
             if (typeof datas !== "undefined" && datas !== null) {
                 var data = datas["update"];
@@ -548,7 +543,7 @@
                     var group = [];
                     var node, node2;
                     $.each(data["centerGroup"], function (keyGroup, valueGroup) {
-                        group.push(" - " + valueGroup["groupName"]);
+                        group.push(" - " + valueGroup["actTypeName"]);
                     });
                     if (data["targetId"] == 0) {
                         input = '<tr data-tt-id="center' + data["centerId"] + '" data-tt-parent-id="type' + data["typeId"] + '" data-seq="' + data["kpiSeq"] + '">'
@@ -564,7 +559,7 @@
                                 + '</td>'
                                 + '</tr>';
                         node = $("#tableall").treetable("node", "type" + data["typeId"]);
-                        node2 = $("#table" + mainId).treetable("node", "type" + data["typerId"]);
+                        node2 = $("#table" + mainId).treetable("node", "type" + data["typeId"]);
                     } else {
                         var targetSeq = $("tr[data-tt-id=target" + data["targetId"] + "]").attr("data-seq");
                         var issueId = $("tr[data-tt-id=target" + data["targetId"] + "]").attr("data-tt-parent-id");
@@ -589,12 +584,12 @@
                     $("#table" + mainId).treetable("removeNode", "center" + data["centerId"]);
                     $("#tableall").treetable("loadBranch", node, input);
                     $("#table" + mainId).treetable("loadBranch", node2, input);
+//                    var nodeSort = $("#tableall").treetable("node", $(this).attr('data-seq'));
+//                    var nodeSort2 = $("#table" + mainId).treetable("node", $(this).attr('data-seq'));
                     $("#tableall").treetable("sortBranch", node);
                     $("#table" + mainId).treetable("sortBranch", node2);
-//                    $("#tableall").treetable("removeNode", "center" + data["centerId"]);
-//                    $("#table" + mainId).treetable("removeNode", "center" + data["centerId"]);
-//                    $("#tableall").treetable("loadBranch", node, input);
-//                    $("#table" + mainId).treetable("loadBranch", node2, input);
+                    //  console.log(node2);
+
 
 
 
@@ -608,24 +603,24 @@
         }, 500);
     }
 
-    function centerDelete(parentId, id) {
-        var dataJSON = JSON.stringify({affirmativeId: id});
+    function centerDelete(centerId) {
+        var dataJSON = JSON.stringify({center: {centerId: centerId}});
         var dataJSONEN = encodeURIComponent(dataJSON);
 
         var datas = callAjax("{{_context_path}}/api/affirmative/center/delete", "post", dataJSONEN, "json");
         if (typeof datas !== "undefined" && datas !== null) {
             if (datas["delete"] == true) {
-                $("#tableall").treetable("removeNode", "aff" + id);
-                var parent = $('#tableall').treetable('node', "target" + parentId);
-                if (parent.children.length == 0) {
-                    parent.row.find('.indenter').html('');
-                }
-
-                $("#table" + findNode[parentId]).treetable("removeNode", "aff" + id);
-                var parent = $("#table" + findNode[parentId]).treetable('node', "target" + parentId);
-                if (parent.children.length == 0) {
-                    parent.row.find('.indenter').html('');
-                }
+                $("#tableall").treetable("removeNode", "center" + centerId);
+//                var parent = $('#tableall').treetable('node', "target" + parentId);
+//                if (parent.children.length == 0) {
+//                    parent.row.find('.indenter').html('');
+//                }
+                var mainId = $("tr[data-tt-id=type" + listArr[centerId]["typeId"] + "]").attr("data-tt-parent-id").substr(4);
+                $("#table" + mainId).treetable("removeNode", "center" + centerId);
+//                var parent = $("#table" + findNode[parentId]).treetable('node', "target" + parentId);
+//                if (parent.children.length == 0) {
+//                    parent.row.find('.indenter').html('');
+//                }
 
                 $("#panelDeleteForm").modal("hide");
             }
@@ -633,7 +628,7 @@
     }
 
     function listsKpi(targetId) {
-        var datas = callAjax("{{_context_path}}/api/affirmative/center/listsKpi2", "post", {targetId: targetId}, "json");
+        var datas = callAjax("{{_context_path}}/api/affirmative/center/listsKpi", "post", {targetId: targetId}, "json");
         if (typeof datas !== "undefined" && datas !== null) {
             var html = '<option value="0">เลือกตัวชี้วัด</option>';
             $.each(datas["lists"], function (key, value) {

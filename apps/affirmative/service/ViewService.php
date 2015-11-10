@@ -24,8 +24,8 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
-    public function center2() {
-        $view = new CJView("center2", CJViewType::HTML_VIEW_ENGINE);
+    public function draft() {
+        $view = new CJView("draft", CJViewType::HTML_VIEW_ENGINE);
         return $view;
     }
 
@@ -33,4 +33,5 @@ class ViewService extends CServiceBase implements IViewService {
         $view = new CJView("tracking", CJViewType::HTML_VIEW_ENGINE);
         return $view;
     }
+
 }
