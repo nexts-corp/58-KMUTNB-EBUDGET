@@ -63,18 +63,18 @@
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped table-condensed mb-none">
                                     <tbody>
-                                    <tr>
-                                        <td>คิวที่</td><td class="text-left"><div id="queueDel"></div></td>
-                                    </tr>
-                                    <tr>
-                                        <td>เลขผู้เสียภาษี</td><td class="text-left"><div id="taxIdDel"></div></td>
-                                    </tr>
-                                    <tr>
-                                        <td>ชื่อผู้เสนอซื้อ</td><td class="text-left"><div id="bidderNameDel"></div></td>
-                                    </tr>
-                                    <tr>
-                                        <td>ชื่อผู้ยื่น</td><td class="text-left"><div id="agentNameDel"></div></td>
-                                    </tr>
+                                        <tr>
+                                            <td>คิวที่</td><td class="text-left"><div id="queueDel"></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td>เลขผู้เสียภาษี</td><td class="text-left"><div id="taxIdDel"></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td>ชื่อผู้เสนอซื้อ</td><td class="text-left"><div id="bidderNameDel"></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td>ชื่อผู้ยื่น</td><td class="text-left"><div id="agentNameDel"></div></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -101,6 +101,7 @@
                                         <tr>
                                             <th class="text-center">ลำดับ</th>
                                             <th class="text-center">หน่วยงาน</th>
+                                            <th class="text-center">ประเภทหน่วยงาน</th>
                                             <th class="text-center">สถานะ</th>
                                             <th class="text-center">เครื่องมือ</th>
                                         </tr>
@@ -127,69 +128,71 @@
 <script src="{{_context_path}}/apps/budget/views/bg140.js"></script>
 
 <script type="text/javascript">
-    $(function () {
-        listsCenter();
-    });
+$(function () {
+    listsCenter();
+});
 
-    function listsCenter(){
-        var html = '<tr>'
+function listsCenter() {
+    var html = '<tr>'
             + '<td class="text-center">1</td>'
             + '<td>ตัวชี้วัดคำรับรองการปฏิบัติงานส่วนงานภายในมหาวิทยาลัย</td>'
             + '<td class="text-center">-</td>'
             + '<td class="text-center"><button id="center" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
-        + '</tr>'
-        + '<tr>'
+            + '</tr>'
+            + '<tr>'
             + '<td class="text-center">2</td>'
             + '<td>ร่างตัวชี้วัดคำรับรองของส่วนงาน</td>'
             + '<td class="text-center">-</td>'
-            + '<td class="text-center"><button id="draft" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
-        + '</tr>'
-        + '<tr>'
+            + '<td class="text-center"><button id="group" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
+            + '</tr>'
+            + '<tr>'
             + '<td class="text-center">3</td>'
             + '<td>จัดทำตัวชี้วัดคำรับรองของส่วนงาน</td>'
             + '<td class="text-center">-</td>'
             + '<td class="text-center"><button id="create" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
-        + '</tr>'
-        + '<tr>'
+            + '</tr>'
+            + '<tr>'
             + '<td class="text-center">4</td>'
             + '<td>รายงานผลตัวชี้วัด</td>'
             + '<td class="text-center">-</td>'
             + '<td class="text-center"><button class="btn btn-primary manage" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
-        + '</tr>';
+            + '</tr>';
 
-        $("#homeBody").html(html);
+    $("#homeBody").html(html);
 
-        rowDetail();
 
-        $("#center").click(function(){
-            window.location = "center";
-        });
+    $("#center").click(function () {
+        window.location = "center";
+    });
 
-        $("#draft").click(function(){
-            $("#listsDepartment").modal("show");
+    $("#group").click(function () {
+        $("#listsDepartment").modal("show");
 
-            setTimeout(function(){
-                var datas = callAjax("{{_context_path}}/api/affirmative/admin/listsDraft", "post", {}, "json");
-                if(typeof datas !== "undefined" && datas !== null){
-                    var html = '';
-                    var count = 0;
-                    $.each(datas["lists"], function(key, value){
-                        html += '<tr>'
-                            + '<td>'+(++count)+'</td>'
-                            + '<td>'+value["name"]+'</td>'
-                            + '<td>-</td>'
-                            + '<td><button class="btn btn-sm btn-success">จัดทำ</button></td>'
+//        setTimeout(function () {
+        var datas = callAjax("{{_context_path}}/api/affirmative/group/listsDept", "post", {}, "json")["lists"];
+        if (typeof datas !== "undefined" && datas !== null) {
+            var html = '';
+            var count = 0;
+            $.each(datas, function (key, value) {
+                html += '<tr>'
+                        + '<td>' + (++count) + '</td>'
+                        + '<td>' + value["departmentName"] + '</td>'
+                        + '<td>' + value["activityName"] + '</td>'
+                        + '<td>-</td>'
+                        + '<td><button class="btn btn-sm btn-success btnGroup" data-deptId="' + value["departmentId"] + '">จัดทำ</button></td>'
                         + '</tr>';
-                    });
+            });
 
-                    $("#tableDepartment tbody").html(html);
-                }
-            }, 1000);
-        });
+            $("#tableDepartment tbody").html(html);
 
-    }
+            $(".btnGroup").click(function () {
+                var deptId = $(this).attr("data-deptId");
+                window.location = "{{_context_path}}/api/affirmative/view/group/" + deptId;
+            });
+        }
+//        }, 1000);
+    });
 
-    function rowDetail(){
+}
 
-    }
 </script>

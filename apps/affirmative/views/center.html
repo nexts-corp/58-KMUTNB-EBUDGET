@@ -198,7 +198,7 @@
         var contentArr = {};
 
         var datas = callAjax("{{_context_path}}/api/affirmative/center/listsAll", "post", {}, "json");
-        if (typeof datas !== "undefined" && datas !== null) {
+        if (typeof datas["lists"] !== "undefined" && datas["lists"] !== null) {
             var menu = '<li class="active">'
                     + '<a href="#taball" data-toggle="tab"><i class="fa fa-star"></i> ทั้งหมด</a>'
                     + '</li>';
@@ -391,6 +391,9 @@
 //
                 centerAction();
             });
+        } else {
+            console.log('xx');
+            $("#panelHome").html("<div class='text-center text-default col-sm-12'>ตัวชี้วัดคำรับรองการปฏิบัติงาน อนุมัติเรียบร้อยแล้ว</div>");
         }
     }
 
@@ -462,9 +465,8 @@
             var dataJSONEN = encodeURIComponent(dataJSON);
 
             var datas = callAjax("{{_context_path}}/api/affirmative/center/insert", "post", dataJSONEN, "json");
-            //  console.log(datas);
-            if (typeof datas !== "undefined" && datas !== null) {
-                var data = datas["insert"];
+            var data = datas["insert"];
+            if (typeof data !== "undefined" && data !== null) {
                 if (data != false) {
                     $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
 
@@ -532,9 +534,8 @@
             var dataJSONEN = encodeURIComponent(dataJSON);
 
             var datas = callAjax("{{_context_path}}/api/affirmative/center/update", "post", dataJSONEN, "json");
-
-            if (typeof datas !== "undefined" && datas !== null) {
-                var data = datas["update"];
+            var data = datas["update"];
+            if (typeof data !== "undefined" && data !== null) {
                 if (data != false) {
                     $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
                     listArr[data["centerId"]] = data;
@@ -608,7 +609,7 @@
         var dataJSONEN = encodeURIComponent(dataJSON);
 
         var datas = callAjax("{{_context_path}}/api/affirmative/center/delete", "post", dataJSONEN, "json");
-        if (typeof datas !== "undefined" && datas !== null) {
+        if (typeof datas["delete"] !== "undefined" && datas["delete"] !== null) {
             if (datas["delete"] == true) {
                 $("#tableall").treetable("removeNode", "center" + centerId);
 //                var parent = $('#tableall').treetable('node', "target" + parentId);
@@ -629,7 +630,7 @@
 
     function listsKpi(targetId) {
         var datas = callAjax("{{_context_path}}/api/affirmative/center/listsKpi", "post", {targetId: targetId}, "json");
-        if (typeof datas !== "undefined" && datas !== null) {
+        if (typeof datas["lists"] !== "undefined" && datas["lists"] !== null) {
             var html = '<option value="0">เลือกตัวชี้วัด</option>';
             $.each(datas["lists"], function (key, value) {
                 html += '<option value="' + value["kpiId"] + '">' + value["kpiName"] + '</option>'
@@ -651,7 +652,7 @@
     }
     function listsUnit() {
         var datas = callAjax("{{_context_path}}/api/affirmative/center/listsUnit", "post", {}, "json");
-        if (typeof datas !== "undefined" && datas !== null) {
+        if (typeof datas["lists"] !== "undefined" && datas["lists"] !== null) {
             var html;
             $.each(datas["lists"], function (key, value) {
                 html += '<option value="' + value["unitId"] + '">' + value["unitName"] + '</option>'

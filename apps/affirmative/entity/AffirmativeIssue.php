@@ -17,11 +17,11 @@ class AffirmativeIssue extends EntityBase {
      */
     public $issueId;
 
-    /** @Column(type="integer",length=11, name="TypeId") */
-    public $typeId;
-
     /** @Column(type="integer",length=11, name="IssueSeq") */
     public $issueSeq;
+
+    /** @Column(type="integer",length=11, name="TypeId") */
+    public $typeId;
 
     /** @Column(type="text", name="IssueName") */
     public $issueName;

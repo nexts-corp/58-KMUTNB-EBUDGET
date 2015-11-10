@@ -11,7 +11,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="none-padding">ส่วนงานภายในมหาวิทยาลัย</h1>
+                    <h1 class="none-padding">{{#department}}{{departmentName}}{{/department}}</h1>
                 </div>
             </div>
         </div>
@@ -85,27 +85,6 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label text-right req">ประเภทส่วนงาน</label>
-                                    <div class="col-md-6">
-                                        <div class="checkbox-custom checkbox-primary">
-                                            <input type="checkbox" name="centerGroup" value="IS_EDUCATION" id="IS_EDUCATION" >
-                                            <label for="IS_EDUCATION">จัดการศึกษา</label>
-                                        </div>
-                                        <div class="checkbox-custom checkbox-primary">
-                                            <input type="checkbox" name="centerGroup" value="IS_SUPPORT" id="IS_SUPPORT" >
-                                            <label for="IS_SUPPORT">สนับสนุนการศึกษา</label>
-                                        </div>
-                                        <div class="checkbox-custom checkbox-primary">
-                                            <input type="checkbox" name="centerGroup" value="IS_SERVICE" id="IS_SERVICE" >
-                                            <label for="IS_SERVICE">บริการวิชาการ</label>
-                                        </div>
-                                        <div class="checkbox-custom checkbox-primary">
-                                            <input type="checkbox" name="centerGroup" value="IS_DEPT" id="IS_DEPT" >
-                                            <label for="IS_DEPT">หน่วยงานในสำนักงานอธิการบดี</label>
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <div class="form-group">
                                     <label class="col-md-3 control-label text-right req" for="remark">หมายเหตุ</label>
@@ -185,19 +164,17 @@
 <script type="text/javascript">
     var findNode = {};
     var listArr = {};
-
     $(function () {
         centerForm();
-
         /*$("button.back").unbind("click").click(function () {
          toggleShow("home");
          })*/
     });
-
     function centerForm() {
         var contentArr = {};
-
-        var datas = callAjax("{{_context_path}}/api/affirmative/center/listsAll", "post", {}, "json");
+        var deptId = '{{#department}}{{departmentId}}{{/department}}';
+        var datas = callAjax("{{_context_path}}/api/affirmative/group/listsAll", "post", {departmentId: deptId}, "json");
+        //  console.log(datas);
         if (typeof datas !== "undefined" && datas !== null) {
             var menu = '<li class="active">'
                     + '<a href="#taball" data-toggle="tab"><i class="fa fa-star"></i> ทั้งหมด</a>'
@@ -206,11 +183,19 @@
                     + '<table id="tableall" class="table table-hover table-bordered">'
                     + '<thead>'
                     + '<tr>'
-                    + '<th class="text-center col-md-5" style="vertical-align: middle;">ตัวชี้วัดคำรับรอง ปี 2558</th>'
-                    + '<th class="text-center col-md-1" style="vertical-align: middle;">หน่วยนับ</th>'
-                    + '<th class="text-center col-md-2" style="vertical-align: middle;">ประเภทส่วนงานที่ต้องดำเนินการ</th>'
-                    + '<th class="text-center col-md-2" style="vertical-align: middle;">หมายเหตุ</th>'
-                    + '<th class="text-center col-md-2" style="vertical-align: middle;">เครื่องมือ</th>'
+                    + '<th class="text-center col-md-4" style="vertical-align: middle;" rowspan="2">ตัวชี้วัดคำรับรอง ปี {{year}}</th>'
+                    + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">หน่วยนับ</th>'
+                    + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">ค่าเป้าหมายตัวชี้วัด</th>'
+                    + '<th class="text-center col-md-3" style="vertical-align: middle;" colspan="5">เกณฑ์การให้คะแนนผลลัพธ์ของตัวชี้วัด (ระดับคะแนน)</th>'
+                    + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">หมายเหตุ</th>'
+                    + '<th class="text-center col-md-2" style="vertical-align: middle;" rowspan="2">จัดการ</th>'
+                    + '</tr>'
+                    + '<tr>'
+                    + '<th class="text-center" style="vertical-align: middle;">คะแนน 1</th>'
+                    + '<th class="text-center" style="vertical-align: middle;">คะแนน 2</th>'
+                    + '<th class="text-center" style="vertical-align: middle;">คะแนน 3</th>'
+                    + '<th class="text-center" style="vertical-align: middle;">คะแนน 4</th>'
+                    + '<th class="text-center" style="vertical-align: middle;">คะแนน 5</th>'
                     + '</tr>'
                     + '</thead>'
                     + '<tbody>'
@@ -221,79 +206,100 @@
                     + '</table>'
                     + '</div>';
             $.each(datas["lists"], function (key1, value1) {
+                //  console.log(value1);
                 menu += '<li>'
-                        + '<a href="#tab' + value1["mainId"] + '" data-toggle="tab">ส่วนที่ ' + value1["mainSeq"] + ' ' + value1["mainName"] + '</a>'
+                        + '<a href="#tab' + value1["mainSeq"] + '" data-toggle="tab">ส่วนที่ ' + value1["mainSeq"] + ' ' + value1["mainName"] + '</a>'
                         + '</li>';
-
-                content += '<div id="tab' + value1["mainId"] + '" class="tab-pane">'
-                        + '<table id="table' + value1["mainId"] + '" class="table table-hover table-bordered">'
+                content += '<div id="tab' + value1["mainSeq"] + '" class="tab-pane">'
+                        + '<table id="table' + value1["mainSeq"] + '" class="table table-hover table-bordered">'
                         + '<thead>'
                         + '<tr>'
-                        + '<th class="text-center col-md-5" style="vertical-align: middle;">ตัวชี้วัดคำรับรอง ปี 2558</th>'
-                        + '<th class="text-center col-md-1" style="vertical-align: middle;">หน่วยนับ</th>'
-                        + '<th class="text-center col-md-2" style="vertical-align: middle;">ประเภทส่วนงานที่ต้องดำเนินการ</th>'
-                        + '<th class="text-center col-md-2" style="vertical-align: middle;">หมายเหตุ</th>'
-                        + '<th class="text-center col-md-2" style="vertical-align: middle;">เครื่องมือ</th>'
+                        + '<th class="text-center col-md-4" style="vertical-align: middle;" rowspan="2">ตัวชี้วัดคำรับรอง ปี {{year}}</th>'
+                        + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">หน่วยนับ</th>'
+                        + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">ค่าเป้าหมายตัวชี้วัด</th>'
+                        + '<th class="text-center col-md-3" style="vertical-align: middle;" colspan="5">เกณฑ์การให้คะแนนผลลัพธ์ของตัวชี้วัด (ระดับคะแนน)</th>'
+                        + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">หมายเหตุ</th>'
+                        + '<th class="text-center col-md-2" style="vertical-align: middle;" rowspan="2">จัดการ</th>'
+                        + '</tr>'
+                        + '<tr>'
+                        + '<th class="text-center" style="vertical-align: middle;">คะแนน 1</th>'
+                        + '<th class="text-center" style="vertical-align: middle;">คะแนน 2</th>'
+                        + '<th class="text-center" style="vertical-align: middle;">คะแนน 3</th>'
+                        + '<th class="text-center" style="vertical-align: middle;">คะแนน 4</th>'
+                        + '<th class="text-center" style="vertical-align: middle;">คะแนน 5</th>'
                         + '</tr>'
                         + '</thead>'
                         + '<tbody>'
                         + '<tr>'
-                        + '<td colspan="5" class="text-center">-</td>'
+                        + '<td colspan="10" class="text-center">-</td>'
                         + '</tr>'
                         + '</tbody>'
                         + '</table>'
                         + '</div>';
 //
-                contentArr[value1["mainId"]] += '<tr data-tt-id="main' + value1["mainId"] + '"  data-seq="' + value1["mainSeq"] + '">' +
-                        '<td colspan="5">' +
+                contentArr[value1["mainSeq"]] += '<tr data-tt-id="main' + value1["mainSeq"] + '"  data-seq="' + value1["mainSeq"] + '">' +
+                        '<td colspan="10" class="text-center">' +
                         '<span class="text-bold" style="text-decoration: underline;">' +
                         'ส่วนที่ ' + value1["mainSeq"] + '</span> ' + value1["mainName"] +
                         '</td>' +
                         '</tr>';
-                $.each(value1["type"], function (key2, value2) {
+                $.each(value1.type, function (key2, value2) {
 
                     if (value2["hasIssue"] == "Y") {
-                        contentArr[value1["mainId"]] += '<tr data-tt-id="type' + value2["typeId"] + '" data-tt-parent-id="main' + value1["mainId"] + '" data-seq="' + value2["typeSeq"] + '">' +
-                                '<td colspan="5">' +
+                        contentArr[value1["mainSeq"]] += '<tr data-tt-id="type' + value2["typeId"] + '" data-tt-parent-id="main' + value1["mainSeq"] + '" data-seq="' + value2["typeSeq"] + '">' +
+                                '<td colspan="10">' +
                                 '<span class="text-bold" style="text-decoration: underline;">' +
                                 'ส่วนที่ ' + value1["mainSeq"] + '.' + value2['typeSeq'] +
                                 '</span> ' + value2["typeName"] +
                                 '</td>' +
                                 '</tr>';
+                        if (value2["title"] != "") {
+                            contentArr[value1["mainSeq"]] += '<tr data-tt-id="typeTitle' + value2["typeId"] + '" data-tt-parent-id="type' + value2["typeId"] + '" data-seq="' + value2["typeSeq"] + '">' +
+                                    '<td colspan="10">' +
+                                    value2["title"] +
+                                    '</td>' +
+                                    '</tr>';
+                        }
                         $.each(value2["issue"], function (key3, value3) {
-                            contentArr[value1["mainId"]] += '<tr data-tt-id="issue' + value3["issueId"] + '" data-tt-parent-id="type' + value2["typeId"] + '" data-seq="' + value3["issueSeq"] + '">' +
-                                    '<td colspan="5"><span class="text-bold" style="text-decoration: underline;">' +
+                            contentArr[value1["mainSeq"]] += '<tr data-tt-id="issue' + value3["issueId"] + '" data-tt-parent-id="type' + value2["typeId"] + '" data-seq="' + value3["issueSeq"] + '">' +
+                                    '<td colspan="10"><span class="text-bold" style="text-decoration: underline;">' +
                                     'ประเด็นยุทธศาสตร์ที่ ' + value3['issueSeq'] + '</span> ' + value3["issueName"] + '</td>' +
                                     '</tr>';
 //
                             $.each(value3["target"], function (key4, value4) {
-                                contentArr[value1["mainId"]] += '<tr data-tt-id="target' + value4["targetId"] + '" data-tt-parent-id="issue' + value3["issueId"] + '" data-seq="' + value4["targetSeq"] + '" >'
-                                        + '<td colspan="4"><span class="text-bold" style="text-decoration: underline;">เป้าประสงค์ที่ ' + value3["issueSeq"] + '.' + value4["targetSeq"] + '</span> ' + value4["targetName"] + '</td>'
+                                contentArr[value1["mainSeq"]] += '<tr data-tt-id="target' + value4["targetId"] + '" data-tt-parent-id="issue' + value3["issueId"] + '" data-seq="' + value4["targetSeq"] + '" >'
+                                        + '<td colspan="9"><span class="text-bold" style="text-decoration: underline;">เป้าประสงค์ที่ ' + value3["issueSeq"] + '.' + value4["targetSeq"] + '</span> ' + value4["targetName"] + '</td>'
                                         + '<td class="text-center">'
                                         + '<button class="btn btn-sm btn-success add" data-pid="' + value4["targetId"] + '" data-pname="targetId">'
                                         + '<i class="fa fa-plus"></i> เพิ่ม</button></td>'
                                         + '</tr>';
                                 if (typeof value4["kpi"] !== "undefined" && value4["kpi"] !== null) {
                                     $.each(value4["kpi"], function (key5, value5) {
-                                        var group = [];
-                                        $.each(value5["centerGroup"], function (keyGroup, valueGroup) {
-                                            group.push("-" + valueGroup["groupName"]);
-                                        });
-                                        contentArr[value1["mainId"]] += '<tr data-tt-id="center' + value5["centerId"] + '" data-tt-parent-id="target' + value4["targetId"] + '"  data-seq="' + value5["kpiSeq"] + '">'
+
+                                        contentArr[value1["mainSeq"]] += '<tr data-tt-id="draft' + value5["draftId"] + '" data-tt-parent-id="target' + value4["targetId"] + '"  data-seq="' + value5["kpiSeq"] + '">'
                                                 + '<td style="padding-left: 20px;">' + value3["issueSeq"] + '.' + value4["targetSeq"] + '.' + value5["kpiSeq"] + ' ' + value5["kpiName"] + '</td>'
-                                                + '<td class="center">' + value5["unit"]["unitName"] + '</td>'
-                                                + '<td>' + group.join('<br>') + '</td>'
+                                                + '<td class="center">' + value5["unitName"] + '</td>'
+                                                + '<td class="center">' + value5["kpiGoal"] + '</td>'
+                                                + '<td class="center">' + value5["score1"] + '</td>'
+                                                + '<td class="center">' + value5["score2"] + '</td>'
+                                                + '<td class="center">' + value5["score3"] + '</td>'
+                                                + '<td class="center">' + value5["score4"] + '</td>'
+                                                + '<td class="center">' + value5["score5"] + '</td>'
+                                                //   + '<td>' + group.join('<br>') + '</td>'
                                                 + '<td class="text-center">' + (value5["remark"] ? value5["remark"] : "-") + '</td>'
                                                 + '<td class="text-center">'
                                                 + '<div class="btn-group">'
-                                                + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + value4["targetId"] + '" data-id="' + value5["centerId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                                + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + value4["targetId"] + '" data-id="' + value5["centerId"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                                                + (
+                                                        value5["isApprove"] == "N" ?
+                                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="N" data-pid="' + value4["targetId"] + '" data-id = "' + value5["draftId"] + '" > <i class="fa fa-pencil"></i>แก้ไข</button>'
+                                                        :
+                                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + value4["targetId"] + '" data-id="' + value5["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                                        )
+                                                + (value5["isApprove"] == "N" ? "" : '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + value4["targetId"] + '" data-id="' + value5["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>')
                                                 + '</div>'
                                                 + '</td>'
                                                 + '</tr>';
-
-                                        listArr[value5["centerId"]] = value5;
-
+                                        listArr[value5["draftId"]] = value5;
                                     });
                                 }
 //                             
@@ -301,8 +307,9 @@
                             });
                         });
                     } else if (value2["hasIssue"] == "N") {
-                        contentArr[value1["mainId"]] += '<tr data-tt-id="type' + value2["typeId"] + '" data-tt-parent-id="main' + value1["mainId"] + '"  data-seq="' + value2["typeSeq"] + '" >' +
-                                '<td colspan="4">' +
+
+                        contentArr[value1["mainSeq"]] += '<tr data-tt-id="type' + value2["typeId"] + '" data-tt-parent-id="main' + value1["mainSeq"] + '"  data-seq="' + value2["typeSeq"] + '" >' +
+                                '<td colspan="9">' +
                                 '<span class="text-bold" style="text-decoration: underline;">' +
                                 'ส่วนที่ ' + value1["mainSeq"] + '.' + value2['typeSeq'] +
                                 '</span> ' + value2["typeName"] +
@@ -311,26 +318,40 @@
                                 '<button class="btn btn-sm btn-success add" data-pid="' + value2["typeId"] + '" data-pname="typeId">' +
                                 '<i class="fa fa-plus"></i> เพิ่ม</button></td>' +
                                 '</tr>';
+                        if (value2["title"] != "") {
+
+                            contentArr[value1["mainSeq"]] += '<tr data-tt-id="typeTitle' + value2["typeId"] + '" data-tt-parent-id="main' + value1["mainSeq"] + '" data-seq="' + value2["typeSeq"] + '">' +
+                                    '<td colspan="10">' +
+                                    value2["title"] +
+                                    '</td>' +
+                                    '</tr>';
+                        }
                         if (typeof value2["kpi"] !== "undefined" && value2["kpi"] !== null) {
                             $.each(value2["kpi"], function (key5, value5) {
-                                var group = [];
-                                $.each(value5["centerGroup"], function (keyGroup, valueGroup) {
-                                    group.push(" - " + valueGroup["groupName"]);
-                                });
-                                contentArr[value1["mainId"]] += '<tr data-tt-id="center' + value5["centerId"] + '" data-tt-parent-id="type' + value2["typeId"] + '"  data-seq="' + value5["kpiSeq"] + '" >'
+                                contentArr[value1["mainSeq"]] += '<tr data-tt-id="draft' + value5["draftId"] + '" data-tt-parent-id="type' + value2["typeId"] + '"  data-seq="' + value5["kpiSeq"] + '" >'
                                         + '<td style="padding-left: 20px;">' + value5["kpiSeq"] + '.' + value5["kpiName"] + '</td>'
-                                        + '<td class="center">' + value5["unit"]["unitName"] + '</td>'
-                                        + '<td>' + group.join('<br>') + '</td>'
+                                        + '<td class="center">' + value5["unitName"] + '</td>'
+                                        + '<td class="center">' + (value5["kpiGoal"] ? value5["kpiGoal"] : "?") + '</td>'
+                                        + '<td class="center">' + (value5["score1"] ? value5["score1"] : "?") + '</td>'
+                                        + '<td class="center">' + (value5["score2"] ? value5["score2"] : "?") + '</td>'
+                                        + '<td class="center">' + (value5["score3"] ? value5["score3"] : "?") + '</td>'
+                                        + '<td class="center">' + (value5["score4"] ? value5["score4"] : "?") + '</td>'
+                                        + '<td class="center">' + (value5["score5"] ? value5["score5"] : "?") + '</td>'
+                                        //   + '<td>' + group.join('<br>') + '</td>'
                                         + '<td class="text-center">' + (value5["remark"] ? value5["remark"] : "-") + '</td>'
                                         + '<td class="text-center">'
                                         + '<div class="btn-group">'
-                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + value2["typeId"] + '" data-id="' + value5["centerId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + value2["typeId"] + '" data-id="' + value5["centerId"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                                        + (
+                                                value5["isApprove"] == "N" ?
+                                                '<button type="button" class="btn btn-sm btn-warning edit" data-edit="N" data-pid="' + value2["typeId"] + '" data-id = "' + value5["draftId"] + '" > <i class="fa fa-pencil"></i>แก้ไข</button>'
+                                                :
+                                                '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + value2["typeId"] + '" data-id="' + value5["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                                )
+                                        + (value5["isApprove"] == "N" ? "" : '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + value2["typeId"] + '" data-id="' + value5["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>')
                                         + '</div>'
                                         + '</td>'
                                         + '</tr>';
-                                listArr[value5["centerId"]] = value5;
-
+                                listArr[value5["draftId"]] = value5;
                             });
                         }
                     }
@@ -343,23 +364,19 @@
                 $.each(contentArr, function (key, value) {
                     contentAll += value
                     $("#table" + key + " tbody").html(value);
-
                     $("#table" + key).treetable({
                         expandable: true,
                         initialState: "expanded"
                     });
                 });
-
                 $("#tableall tbody").html(contentAll);
                 $("#tableall").treetable({
                     expandable: true,
                     initialState: "expanded"
                 });
-
                 $("button.add").unbind().click(function () {
                     var pId = $(this).attr("data-pid");
                     var pName = $(this).attr("data-pname");
-
                     // reset form for new insert
                     $("#loadingForm").html('');
                     $("#form").trigger('reset');
@@ -386,7 +403,6 @@
                             alert("กรุณากรอกข้อมูลให้ครบ");
                         }
                     });
-
                 });
 //
                 centerAction();
@@ -398,7 +414,6 @@
         $("button.edit").unbind().click(function () {
             var pId = $(this).attr("data-pid");
             var centerId = $(this).attr("data-id");
-
             // reset form for new insert
             $("#loadingForm").html('');
             $("#form").trigger('reset');
@@ -412,7 +427,6 @@
             $.each(listArr[centerId]["centerGroup"], function (k, v) {
                 $("#" + v["actTypeCode"]).prop("checked", true);
             });
-
             $("button.save").unbind("click").click(function () {
                 var isValid = true;
                 $('#form input[required]').each(function () {
@@ -426,7 +440,6 @@
                 }
             });
         });
-
         $("button.delete").unbind("click").click(function () {
             var centerId = $(this).attr("data-id");
             $("#panelDeleteForm").modal("show");
@@ -456,20 +469,16 @@
 
     function centerInsert(fdata) {
         $("#loadingForm").html("Loading...");
-
         setTimeout(function () {
             var dataJSON = JSON.stringify({center: fdata});
             var dataJSONEN = encodeURIComponent(dataJSON);
-
             var datas = callAjax("{{_context_path}}/api/affirmative/center/insert", "post", dataJSONEN, "json");
             //  console.log(datas);
             if (typeof datas !== "undefined" && datas !== null) {
                 var data = datas["insert"];
                 if (data != false) {
                     $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
-
                     listArr[data["centerId"]] = data;
-
                     var mainId = $("tr[data-tt-id=type" + data["typeId"] + "]").attr("data-tt-parent-id").substr(4);
                     var input = "";
                     var group = [];
@@ -513,7 +522,6 @@
                     }
                     $("#tableall").treetable("loadBranch", node, input);
                     $("#table" + mainId).treetable("loadBranch", node2, input);
-
                     $("#panelForm").modal("hide");
                     centerAction();
                 }
@@ -526,13 +534,10 @@
 
     function centerEdit(fdata) {
         $("#loadingForm").html("Loading...");
-
         setTimeout(function () {
             var dataJSON = JSON.stringify({center: fdata});
             var dataJSONEN = encodeURIComponent(dataJSON);
-
             var datas = callAjax("{{_context_path}}/api/affirmative/center/update", "post", dataJSONEN, "json");
-
             if (typeof datas !== "undefined" && datas !== null) {
                 var data = datas["update"];
                 if (data != false) {
@@ -578,7 +583,6 @@
                                 + '</tr>';
                         node = $("#tableall").treetable("node", "target" + data["targetId"]);
                         node2 = $("#table" + mainId).treetable("node", "target" + data["targetId"]);
-
                     }
                     $("#tableall").treetable("removeNode", "center" + data["centerId"]);
                     $("#table" + mainId).treetable("removeNode", "center" + data["centerId"]);
@@ -606,7 +610,6 @@
     function centerDelete(centerId) {
         var dataJSON = JSON.stringify({center: {centerId: centerId}});
         var dataJSONEN = encodeURIComponent(dataJSON);
-
         var datas = callAjax("{{_context_path}}/api/affirmative/center/delete", "post", dataJSONEN, "json");
         if (typeof datas !== "undefined" && datas !== null) {
             if (datas["delete"] == true) {
@@ -676,7 +679,6 @@
             var val = $(this).val();
             fParam[name] = val;
         });
-
         //  fParam["centerGroup"] = [];
         $("#form input[type=checkbox]").each(function () {
             var name = $(this).attr("name");
@@ -687,10 +689,8 @@
                 fParam[name].push(this.value);
             }
         });
-
         var fdata = {};
         fdata = fParam;
-
         return fdata;
     }
 </script>

@@ -31,11 +31,12 @@ interface IViewService {
     public function center();
 
     /**
-     * @name draft
-     * @uri /draft
+     * @name group
+     * @uri /group
+     * @param string deptId
      * @description ยื่นคำของบประมาณ
      */
-    public function draft();
+    public function group($deptId);
 
     /**
      * @name tracking

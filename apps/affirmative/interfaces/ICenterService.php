@@ -10,6 +10,14 @@ namespace apps\affirmative\interfaces;
 interface ICenterService {
 
     /**
+     * @name checkApprove
+     * @uri /checkApprove
+     * @return String[] lists Description
+     * @description ผู้เสนอราคาสูงสุดต่อคลัง
+     */
+    public function checkApprove();
+
+    /**
      * @name listsAll
      * @uri /listsAll
      * @return String[] lists Description
@@ -60,4 +68,15 @@ interface ICenterService {
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
     public function delete($center);
+    
+    /**
+     * @name approve
+     * @uri /approve
+     * @param string status
+     * @return boolean approve
+     * @description ผู้เสนอราคาสูงสุดต่อคลัง
+     */
+    public function approve($status);
+    
+    
 }
