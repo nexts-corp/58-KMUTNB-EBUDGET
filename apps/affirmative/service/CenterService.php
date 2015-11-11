@@ -245,6 +245,8 @@ class CenterService extends CServiceBase implements ICenterService {
                 $data = $this->datacontext->getObject($view);
                 foreach ($data as $key => $value) {
                     $data[$key]->isApprove = "N";
+                    $data[$key]->isCenter = "Y";
+                    $data[$key]->isActive = "Y";
                 }
                 $draft = $json->decode(new \apps\affirmative\entity\AffirmativeDraft(), $data);
                 if (!$this->datacontext->saveObject($draft)) {

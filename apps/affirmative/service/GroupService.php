@@ -18,10 +18,10 @@ class GroupService extends CServiceBase implements IGroupService {
     }
 
     public function checkApprove() {
-        $center = new \apps\affirmative\entity\AffirmativeDraft();
-        $center->periodCode = $this->getPeriod()->year;
-        $data = $this->datacontext->getObject($center);
-        // $center->isApprove = "Y";
+        $draft = new \apps\affirmative\entity\AffirmativeDraft();
+        $draft->periodCode = $this->getPeriod()->year;
+        $data = $this->datacontext->getObject($draft);
+        // $draft->isApprove = "Y";
         if (count($data) > 0) {
             if ($data[0]->isApprove == $status) {
                 return true;
@@ -168,6 +168,112 @@ class GroupService extends CServiceBase implements IGroupService {
         }
 
         return $mainData;
+    }
+
+    public function insert($draft) {
+        $dept = new \apps\affirmative\model\ViewActivityDepartment();
+        $dept->departmentId = $draft->departmentId;
+        $deptData = $this->datacontext->getObject($dept)[0];
+        if ($draft->typeId == 0) {
+            $target = new \apps\affirmative\entity\AffirmativeTarget();
+            $target->targetId = $draft->targetId;
+            $targetData = $this->datacontext->getObject($target)[0];
+            $draft->targetSeq = $targetData->targetSeq;
+
+            $issue = new \apps\affirmative\entity\AffirmativeIssue();
+            $issue->issueId = $targetData->issueId;
+            $issueData = $this->datacontext->getObject($issue)[0];
+            $draft->issueId = $issueData->issueId;
+            $draft->issueSeq = $issueData->issueSeq;
+
+            $draft->typeId = $issueData->typeId;
+            $draft->hasIssue = "Y";
+        } else {
+            $draft->hasIssue = "N";
+        }
+        $setting = new \apps\affirmative\entity\AffirmativeSetting();
+        $setting->typeId = $draft->typeId;
+        $setting->groupCode = $deptData->activityCode;
+        $setting->periodCode = $this->getPeriod()->year;
+        $settingData = $this->datacontext->getObject($setting)[0];
+        $draft->mainId = $settingData->mainId;
+        $draft->mainSeq = $settingData->mainSeq;
+        $draft->typeId = $settingData->typeId;
+        $draft->typeSeq = $settingData->typeSeq;
+
+        $draft->periodCode = $this->getPeriod()->year;
+        $draft->isApprove = "N";
+        $draft->isCenter = 'N';
+        $draft->unitName = $this->getUnit($draft->unitId)["unitName"];
+        if (!$this->datacontext->saveObject($draft)) {
+            $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+            return false;
+        } else {
+            return $draft;
+        }
+    }
+
+    public function update($draft) {
+        if ($this->datacontext->updateObject($draft)) {
+            return $this->datacontext->getObject($draft)[0];
+        } else {
+            $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+            return false;
+        }
+    }
+
+    public function delete($draft) {
+        if ($this->datacontext->removeObject($draft)) {
+            return true;
+        } else {
+            $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+            return false;
+        }
+    }
+
+    public function approve($departmentId, $status) {
+        $json = new CJSONDecodeImpl();
+        $draft = new \apps\affirmative\entity\AffirmativeDraft();
+        $draft->periodCode = $this->getPeriod()->year;
+        $draft->departmentId = $departmentId;
+        $draft->isActive = "Y";
+        $dataDraft = $this->datacontext->getObject($draft);
+        if ($status == "Y") {
+            foreach ($dataDraft as $keyDraft => $valueDraft) {
+                if ($valueDraft->kpiGoal != NULL && $valueDraft->score1 != NULL && $valueDraft->score2 != NULL && $valueDraft->score3 != NULL && $valueDraft->score4 != NULL && $valueDraft->score5 != NULL) {
+                    $valueDraft->isApprove = $status;
+                    if ($this->datacontext->updateObject($valueDraft)) {
+                        $final = $json->decode(new \apps\affirmative\entity\AffirmativeFinal(), $valueDraft);
+                        $final->isApprove = "N";
+                        if (!$this->datacontext->saveObject($final)) {
+                            $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+                            return false;
+                        }
+                    } else {
+                        $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+                        return false;
+                    }
+                }
+            }
+        } elseif ($status == "N") {
+            foreach ($dataDraft as $keyDraft => $valueDraft) {
+                $dataDraft[$keyDraft]->isApprove = $status;
+            }
+            if ($this->datacontext->updateObject($dataDraft)) {
+                $final = new \apps\affirmative\entity\AffirmativeFinal();
+                $final->periodCode = $this->getPeriod()->year;
+                $final->departmentId = $departmentId;
+                $del = $this->datacontext->getObject($final);
+                if (!$this->datacontext->removeObject($del)) {
+                    $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+                    return false;
+                }
+            } else {
+                $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+                return false;
+            }
+        }
+        return true;
     }
 
 }
