@@ -6,19 +6,24 @@ use apps\common\entity\EntityBase;
 
 /**
  * @Entity
- * @Table(name="Affirmative_Draft")
+ * @Table(name="Affirmative_Final")
  */
-class AffirmativeDraft extends EntityBase {
+class AffirmativeFinal extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="DraftId")
+     * @Column(type="integer",length=11,name="FinalId")
      * @GeneratedValue
      */
-    public $draftId;
+    public $finalId;
 
     /** @Column(type="string",length=255, name="PeriodCode") */
     public $periodCode;
+
+    /**
+     * @Column(type="integer",length=11,name="DraftId")
+     */
+    public $draftId;
 
     /**
      * @Column(type="integer",length=11,name="DepartmentId")
@@ -97,18 +102,19 @@ class AffirmativeDraft extends EntityBase {
     /** @Column(type="string",length=10, name="IsApprove") */
     public $isApprove;
 
-    /** @Column(type="string",length=10, name="IsCenter") */
-    public $isCenter;
-
     /** @Column(type="string",length=10, name="IsActive") */
     public $isActive;
 
-    function getDraftId() {
-        return $this->draftId;
+    function getFinalId() {
+        return $this->finalId;
     }
 
     function getPeriodCode() {
         return $this->periodCode;
+    }
+
+    function getDraftId() {
+        return $this->draftId;
     }
 
     function getDepartmentId() {
@@ -203,20 +209,20 @@ class AffirmativeDraft extends EntityBase {
         return $this->isApprove;
     }
 
-    function getIsCenter() {
-        return $this->isCenter;
-    }
-
     function getIsActive() {
         return $this->isActive;
     }
 
-    function setDraftId($draftId) {
-        $this->draftId = $draftId;
+    function setFinalId($finalId) {
+        $this->finalId = $finalId;
     }
 
     function setPeriodCode($periodCode) {
         $this->periodCode = $periodCode;
+    }
+
+    function setDraftId($draftId) {
+        $this->draftId = $draftId;
     }
 
     function setDepartmentId($departmentId) {
@@ -309,10 +315,6 @@ class AffirmativeDraft extends EntityBase {
 
     function setIsApprove($isApprove) {
         $this->isApprove = $isApprove;
-    }
-
-    function setIsCenter($isCenter) {
-        $this->isCenter = $isCenter;
     }
 
     function setIsActive($isActive) {
