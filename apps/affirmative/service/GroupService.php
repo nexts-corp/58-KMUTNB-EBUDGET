@@ -240,7 +240,7 @@ class GroupService extends CServiceBase implements IGroupService {
         $dataDraft = $this->datacontext->getObject($draft);
         if ($status == "Y") {
             foreach ($dataDraft as $keyDraft => $valueDraft) {
-                if ($valueDraft->kpiGoal != NULL && $valueDraft->score1 != NULL && $valueDraft->score2 != NULL && $valueDraft->score3 != NULL && $valueDraft->score4 != NULL && $valueDraft->score5 != NULL) {
+                if ($valueDraft->kpiGoal != NULL && $valueDraft->score1 != NULL && $valueDraft->score2 != NULL && $valueDraft->score3 != NULL && $valueDraft->score4 != NULL && $valueDraft->score5 != NULL && $valueDraft->isApprove != "Y") {
                     $valueDraft->isApprove = $status;
                     if ($this->datacontext->updateObject($valueDraft)) {
                         $final = $json->decode(new \apps\affirmative\entity\AffirmativeFinal(), $valueDraft);
