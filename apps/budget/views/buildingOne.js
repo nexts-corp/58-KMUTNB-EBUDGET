@@ -17,23 +17,23 @@ function buildingOneForm(param) {
         + ' <input type="text" id="id" name="id" style="display: none;">'
         + ' <input type="text" id="typeId" name="typeId" value="1" style="display: none;">'
         + ' <input type="text" id="bg145Id" name="bg145Id" value="' + param["bg145Id"] + '" style="display: none;">'
-        + ' <div class="form-group">'
-        + '     <div class="col-md-9">'
-        + '         <label class="col-md-4 control-label text-right" for="xxx">แผนงาน</label>'
-        + '         <div class="col-md-8">'
-        + '             <input type="text" id="plan" name="plan"  value="' + planArr[param["planId"]] + '" class="form-control input-sm" required>'
-        + '         </div>'
-        + '     </div>'
-        + ' </div>'
-
-        + ' <div class="form-group">'
-        + '     <div class="col-md-9">'
-        + '         <label class="col-md-4 control-label text-right" for="xxx">ผลผลิต</label>'
-        + '         <div class="col-md-8">'
-        + '             <input type="text" id="product" name="product" value="' + projectArr[param["projectId"]] + '" class="form-control input-sm" required>'
-        + '         </div>'
-        + '     </div>'
-        + ' </div>'
+            //+ ' <div class="form-group">'
+            //+ '     <div class="col-md-9">'
+            //+ '         <label class="col-md-4 control-label text-right" for="xxx">แผนงาน</label>'
+            //+ '         <div class="col-md-8">'
+            ////+ '             <input type="text" id="plan" name="plan"  value="' + planArr[param["l3dPlanId"]] + '" class="form-control input-sm" required>'
+            //+ '         </div>'
+            //+ '     </div>'
+            //+ ' </div>'
+            //
+            //+ ' <div class="form-group">'
+            //+ '     <div class="col-md-9">'
+            //+ '         <label class="col-md-4 control-label text-right" for="xxx">ผลผลิต</label>'
+            //+ '         <div class="col-md-8">'
+            //    //+ '             <input type="text" id="product" name="product" value="' + projectArr[param["projectId"]] + '" class="form-control input-sm" required>'
+            //+ '         </div>'
+            //+ '     </div>'
+            //+ ' </div>'
 
         + ' <div class="form-group">'
         + '     <div class="col-md-9">'
@@ -211,7 +211,7 @@ function buildingOneForm(param) {
 
         + ' <div class="col-md-12 text-right">'
         + '     <button type="button" class="btn btn-success saveBuildOne"><i class="fa fa-save"></i> บันทึก</button>&nbsp;'
-        + '     <button type="button" class="btn btn-default"><i class="fa fa-trash"></i> ล้างข้อมูล</button>'
+        + '     <button type="button" class="btn btn-default clearBuildOne"><i class="fa fa-trash"></i> ล้างข้อมูล</button>'
         + ' </div>'
         + '</form>'
 
@@ -220,9 +220,18 @@ function buildingOneForm(param) {
         + '</div>'
 
     $("#divAttachment").html(html);
+    if (PERMISSION == "DEPARTMENT") {
+        $(".saveBuildOne").show();
+        $(".clearBuildOne").show();
+
+    } else {
+        $(".saveBuildOne").hide();
+        $(".clearBuildOne").hide();
+    }
     showView(param);
     toggleShow("attachment");
     buildingOneAction();
+    if (PERMISSION != "DEPARTMENT") disableOneEdit();
 }
 
 function showView(param) {
@@ -280,12 +289,16 @@ function showView(param) {
                 $('.number').number(true, 2);
                 listBuilding.push(obj)
             }
+
             toolsEvent();
+
         });
+
     } else {
 
         STATUSFORM = "INSERT";
     }
+
 }
 
 
@@ -430,7 +443,6 @@ function buildingOneAction() {
         }
     });
 }
-
 
 function toolsEvent() {
 
@@ -682,5 +694,20 @@ function keyPressedBuilding(obj) {
     if (isNaN(total)) total = 0;
 
     $("#costTotalBuild").html(total);
+}
+
+function disableOneEdit() {
+
+    $("#formBuildOne input, #formBuildOne textarea").each(function () {
+        $(this).attr('readonly', '');
+    });
+
+    $(".addBOQ").hide();
+    $(".edit-btnBOQ").hide();
+    $(".delete-btnBOQ").hide();
+    $(".add-btn").hide();
+    $(".edit-btn").hide();
+    $(".delete-btn").hide();
+
 }
 

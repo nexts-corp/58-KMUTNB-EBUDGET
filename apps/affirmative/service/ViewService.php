@@ -9,6 +9,12 @@ use apps\affirmative\interfaces\IViewService;
 
 class ViewService extends CServiceBase implements IViewService {
 
+    public $datacontext;
+
+    public function __construct() {
+        $this->datacontext = new \th\co\bpg\cde\data\CDataContext(null);
+    }
+
     public function home() {
         $view = new CJView("home", CJViewType::HTML_VIEW_ENGINE);
         return $view;
@@ -24,8 +30,14 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
-    public function center2() {
-        $view = new CJView("center2", CJViewType::HTML_VIEW_ENGINE);
+    public function group($deptId) {
+        $viewDept = new \apps\affirmative\model\ViewActivityDepartment();
+        $viewDept->departmentId = $deptId;
+        $data = $this->datacontext->getObject($viewDept)[0];
+        $view = new CJView("group", CJViewType::HTML_VIEW_ENGINE);
+        $view->department = $data;
+        $groupS = new GroupService();
+        $view->year = $groupS->getPeriod()->year;
         return $view;
     }
 
@@ -33,4 +45,5 @@ class ViewService extends CServiceBase implements IViewService {
         $view = new CJView("tracking", CJViewType::HTML_VIEW_ENGINE);
         return $view;
     }
+
 }

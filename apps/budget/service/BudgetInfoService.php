@@ -5,6 +5,7 @@ namespace apps\budget\service;
 use apps\budget\interfaces\apps;
 use apps\budget\interfaces\bg145Id;
 use apps\budget\interfaces\type;
+use apps\common\entity\Building;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
 use apps\budget\interfaces\IBudgetInfoService;
@@ -548,6 +549,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
                     );
                     $list3 = $this->datacontext->getObject($sql3, $param3);
                     $list1[$key1]["lv2"][$key2]["budget"] = $list3;
+
                 }
             } else {
 
@@ -557,6 +559,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
                     . " left join " . $this->ent . "\\BudgetHead head with head.id = bg.budgetHeadId "
                     . " left join " . $this->ent . "\\Attachment att with bg.attachmentId = att.id "
                     . " left join " . $this->ent . "\\TrackingStatus ts with bg.statusId = ts.id "
+                    . " left join " . $this->ent . "\\Building build with bg.id = build.id "
                     . " where head.formId = :formId and "
                     . " bg.budgetTypeId = :budgetTypeId and "
                     . " bg.budgetPeriodId = :budgetPeriodId and "
@@ -573,9 +576,19 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
                     "fundgroupId" => $param->fundgroupId,
                     "deptId" => $param->deptId
                 );
+
                 $list2 = $this->datacontext->getObject($sql2, $param2);
+
+                foreach ($list2 as $key2 => $value2) {
+                    //add listBuild
+                    $sql = "select build.id,build.typeId from " . $this->ent . "\\Building build where build.bg145Id =" . $value2["id"];
+                    $listBuild = $this->datacontext->getObject($sql);
+                    $list2[$key2]["listBuild"] = $listBuild;
+                }
+
                 $list1[$key1]["lv2"] = $list2;
                 foreach ($list2 as $key2 => $value2) {
+                    //add empty value
                     $list1[$key1]["lv2"][$key2]["budget"] = array();
                 }
             }

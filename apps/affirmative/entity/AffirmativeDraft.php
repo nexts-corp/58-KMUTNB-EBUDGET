@@ -21,12 +21,42 @@ class AffirmativeDraft extends EntityBase {
     public $periodCode;
 
     /**
+     * @Column(type="integer",length=11,name="DepartmentId")
+     */
+    public $departmentId;
+
+    /**
+     * @Column(type="integer",length=11,name="MainId")
+     */
+    public $mainId;
+
+    /** @Column(type="integer",length=11, name="MainSeq") */
+    public $mainSeq;
+
+    /**
      * @Column(type="integer",length=11,name="TypeId")
      */
     public $typeId;
 
+    /** @Column(type="integer",length=11, name="TypeSeq") */
+    public $typeSeq;
+
+    /** @Column(type="string",length=1, name="HasIssue") */
+    public $hasIssue;
+
+    /**
+     * @Column(type="integer",length=11,name="IssueId")
+     */
+    public $issueId;
+
+    /** @Column(type="integer",length=11, name="IssueSeq") */
+    public $issueSeq;
+
     /** @Column(type="integer",length=11, name="TargetId") */
     public $targetId;
+
+    /** @Column(type="integer",length=11, name="TargetSeq") */
+    public $targetSeq;
 
     /** @Column(type="integer",length=11, name="KpiId") */
     public $kpiId;
@@ -40,13 +70,32 @@ class AffirmativeDraft extends EntityBase {
     /** @Column(type="integer",length=11, name="UnitId") */
     public $unitId;
 
+    /** @Column(type="string",length=255, name="UnitName") */
+    public $unitName;
+
+    /** @Column(type="string",length=255, name="KpiGoal") */
+    public $kpiGoal;
+
+    /** @Column(type="string",length=255, name="Score1") */
+    public $score1;
+
+    /** @Column(type="string",length=255, name="Score2") */
+    public $score2;
+
+    /** @Column(type="string",length=255, name="Score3") */
+    public $score3;
+
+    /** @Column(type="string",length=255, name="Score4") */
+    public $score4;
+
+    /** @Column(type="string",length=255, name="Score5") */
+    public $score5;
+
     /** @Column(type="string",length=255, name="Remark") */
     public $remark;
 
     /** @Column(type="string",length=10, name="IsApprove") */
     public $isApprove;
-    public $draftGroup;
-    public $unit;
 
     function getDraftId() {
         return $this->draftId;
@@ -56,12 +105,44 @@ class AffirmativeDraft extends EntityBase {
         return $this->periodCode;
     }
 
+    function getDepartmentId() {
+        return $this->departmentId;
+    }
+
+    function getMainId() {
+        return $this->mainId;
+    }
+
+    function getMainSeq() {
+        return $this->mainSeq;
+    }
+
     function getTypeId() {
         return $this->typeId;
     }
 
+    function getTypeSeq() {
+        return $this->typeSeq;
+    }
+
+    function getHasIssue() {
+        return $this->hasIssue;
+    }
+
+    function getIssueId() {
+        return $this->issueId;
+    }
+
+    function getIssueSeq() {
+        return $this->issueSeq;
+    }
+
     function getTargetId() {
         return $this->targetId;
+    }
+
+    function getTargetSeq() {
+        return $this->targetSeq;
     }
 
     function getKpiId() {
@@ -80,20 +161,40 @@ class AffirmativeDraft extends EntityBase {
         return $this->unitId;
     }
 
+    function getUnitName() {
+        return $this->unitName;
+    }
+
+    function getKpiGoal() {
+        return $this->kpiGoal;
+    }
+
+    function getScore1() {
+        return $this->score1;
+    }
+
+    function getScore2() {
+        return $this->score2;
+    }
+
+    function getScore3() {
+        return $this->score3;
+    }
+
+    function getScore4() {
+        return $this->score4;
+    }
+
+    function getScore5() {
+        return $this->score5;
+    }
+
     function getRemark() {
         return $this->remark;
     }
 
     function getIsApprove() {
         return $this->isApprove;
-    }
-
-    function getDraftGroup() {
-        return $this->draftGroup;
-    }
-
-    function getUnit() {
-        return $this->unit;
     }
 
     function setDraftId($draftId) {
@@ -104,12 +205,44 @@ class AffirmativeDraft extends EntityBase {
         $this->periodCode = $periodCode;
     }
 
+    function setDepartmentId($departmentId) {
+        $this->departmentId = $departmentId;
+    }
+
+    function setMainId($mainId) {
+        $this->mainId = $mainId;
+    }
+
+    function setMainSeq($mainSeq) {
+        $this->mainSeq = $mainSeq;
+    }
+
     function setTypeId($typeId) {
         $this->typeId = $typeId;
     }
 
+    function setTypeSeq($typeSeq) {
+        $this->typeSeq = $typeSeq;
+    }
+
+    function setHasIssue($hasIssue) {
+        $this->hasIssue = $hasIssue;
+    }
+
+    function setIssueId($issueId) {
+        $this->issueId = $issueId;
+    }
+
+    function setIssueSeq($issueSeq) {
+        $this->issueSeq = $issueSeq;
+    }
+
     function setTargetId($targetId) {
         $this->targetId = $targetId;
+    }
+
+    function setTargetSeq($targetSeq) {
+        $this->targetSeq = $targetSeq;
     }
 
     function setKpiId($kpiId) {
@@ -128,20 +261,40 @@ class AffirmativeDraft extends EntityBase {
         $this->unitId = $unitId;
     }
 
+    function setUnitName($unitName) {
+        $this->unitName = $unitName;
+    }
+
+    function setKpiGoal($kpiGoal) {
+        $this->kpiGoal = $kpiGoal;
+    }
+
+    function setScore1($score1) {
+        $this->score1 = $score1;
+    }
+
+    function setScore2($score2) {
+        $this->score2 = $score2;
+    }
+
+    function setScore3($score3) {
+        $this->score3 = $score3;
+    }
+
+    function setScore4($score4) {
+        $this->score4 = $score4;
+    }
+
+    function setScore5($score5) {
+        $this->score5 = $score5;
+    }
+
     function setRemark($remark) {
         $this->remark = $remark;
     }
 
     function setIsApprove($isApprove) {
         $this->isApprove = $isApprove;
-    }
-
-    function setDraftGroup($draftGroup) {
-        $this->draftGroup = $draftGroup;
-    }
-
-    function setUnit($unit) {
-        $this->unit = $unit;
     }
 
 }

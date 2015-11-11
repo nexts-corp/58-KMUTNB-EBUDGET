@@ -8,6 +8,7 @@ function bg146Form(param) {
         + '<div class="form-group">';
 
     if (budgetPeriodArr != null && budgetTypeArr != null && planArr != null && projectArr != null && fundgroupArr != null && departmentArr != null) {
+        $("#navBgDept").html("จัดทำคำของบประมาณแผ่นดิน ง.146");
 
         html += '<div class="col-md-6">'
             + '<label class="col-md-4 control-label text-right">ปีงบประมาณ : </label>'
@@ -45,7 +46,7 @@ function bg146Form(param) {
             + '</div>';
 
     } else {
-
+        $("#navBgPlan").html("ตรวจสอบคำของบประมาณ ง.146");
         //for กองแผน (Angular js)
         html += '<div class="col-md-6">'
             + '<label class="col-md-4 control-label text-right">ปีงบประมาณ : </label>'
@@ -436,6 +437,7 @@ function bg146Detail(param) {
 
                         fParam["remark"] = $(".noteRemark").code();
                         fParam["bursaryDesc"] = $(".noteBursaryDesc").code();
+                        fParam["statusId"] = STATUSPROGRESS;
 
                         var objAttment = InsertAttachment();
 
@@ -497,23 +499,23 @@ function bg146DetailPlaningBudget(param) {
                         + '<td>';
                     if (value2["statusId"] == STATUSWAITING || value2["statusId"] == STATUSAPPROVE) {
 
-                        if (value3["path"] != null) {
+                        if (value2["path"] != null) {
                             //if have file attachement
                             html += '<div class="btn-group">' +
-                                '<button style="width: 85px;" class="btn btn-sm btn-warning approveEdit" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' +
+                                '<button style="width: 85px;" class="btn btn-sm btn-warning approveEdit" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' +
                                 '<div class="col-md-12"></div>' +
-                                '<button style="width: 85px;" class="btn btn-sm btn-primary approveFile" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-file-zip-o"></i> เอกสารแนบ</button>' +
+                                '<button style="width: 85px;" class="btn btn-sm btn-primary approveFile" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-file-zip-o"></i> เอกสารแนบ</button>' +
                                 '</div>';
                         } else {
                             html += '<div class="btn-group">' +
-                                '<button style="width: 85px;" class="btn btn-sm btn-warning approveEdit" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' +
+                                '<button style="width: 85px;" class="btn btn-sm btn-warning approveEdit" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' +
                                 '</div>';
                         }
 
                     } else {
 
                         html += '<div class="btn-group">' +
-                            '<button style="width: 85px;" class="btn btn-sm btn-warning approveEdit disabled" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' +
+                            '<button style="width: 85px;" class="btn btn-sm btn-warning approveEdit disabled" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' +
                             '</div>';
                     }
                     html += '</td>'

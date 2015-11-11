@@ -8,6 +8,7 @@ function bg142Form(param) {
         + '<div class="form-group">';
 
     if (budgetPeriodArr != null && budgetTypeArr != null && planArr != null && projectArr != null && fundgroupArr != null && departmentArr != null) {
+        $("#navBgDept").html("จัดทำคำของบประมาณแผ่นดิน ง.142");
         html += '<div class="col-md-6">'
             + '<label class="col-md-4 control-label text-right">ปีงบประมาณ : </label>'
             + '<div class="col-md-6">' + budgetPeriodArr[param["budgetPeriodId"]] + '</div>'
@@ -44,7 +45,7 @@ function bg142Form(param) {
             + '</div>';
 
     } else {
-
+        $("#navBgPlan").html("ตรวจสอบคำของบประมาณ ง.142");
         //for กองแผน (Angular js)
         html += '<div class="col-md-6">'
             + '<label class="col-md-4 control-label text-right">ปีงบประมาณ : </label>'
@@ -641,11 +642,6 @@ function bg142DetailPlaningBudget(param) {
             $("#table142 tbody").html(html);
             $('.number').number(true, 2);
             $(".approveBGbtn").removeAttr('disabled');
-            if (!isAdd) {
-                $(".addList").hide();
-            } else {
-                $(".addList").hide();
-            }
 
             // set default table to tree table
             $("#table142").treetable({

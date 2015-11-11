@@ -2,13 +2,14 @@ var typeName140Arr = [];
 var list140Arr = [];
 
 function bg140Form(param) {
-    console.log(param);
+
     typeName140Arr = [];
     list140Arr = [];
     var html = '<div id="panelTable" class="col-md-12">'
         + '<div class="form-group">';
 
     if (budgetPeriodArr != null && budgetTypeArr != null && planArr != null && projectArr != null && fundgroupArr != null && departmentArr != null) {
+        $("#navBgDept").html("จัดทำคำของบประมาณแผ่นดิน ง.140");
         html += '<div class="col-md-6">'
             + '<label class="col-md-4 control-label text-right">ปีงบประมาณ : </label>'
             + '<div class="col-md-6">' + budgetPeriodArr[param["budgetPeriodId"]] + '</div>'
@@ -45,7 +46,7 @@ function bg140Form(param) {
             + '</div>';
 
     } else {
-
+        $("#navBgPlan").html("ตรวจสอบคำของบประมาณ ง.140");
         //for กองแผน (Angular js)
         html += '<div class="col-md-6">'
             + '<label class="col-md-4 control-label text-right">ปีงบประมาณ : </label>'

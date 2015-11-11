@@ -10,20 +10,20 @@ namespace apps\affirmative\interfaces;
 interface ICenterService {
 
     /**
+     * @name checkApprove
+     * @uri /checkApprove
+     * @return String[] lists Description
+     * @description ผู้เสนอราคาสูงสุดต่อคลัง
+     */
+    public function checkApprove();
+
+    /**
      * @name listsAll
      * @uri /listsAll
      * @return String[] lists Description
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
     public function listsAll();
-
-    /**
-     * @name listsAll2
-     * @uri /listsAll2
-     * @return String[] lists Description
-     * @description ผู้เสนอราคาสูงสุดต่อคลัง
-     */
-    public function listsAll2();
 
     /**
      * @name listsKpi
@@ -35,15 +35,6 @@ interface ICenterService {
     public function listsKpi($targetId);
 
     /**
-     * @name listsKpi2
-     * @uri /listsKpi2
-     * @param int targetId Description
-     * @return String[] lists Description
-     * @description ผู้เสนอราคาสูงสุดต่อคลัง
-     */
-    public function listsKpi2($targetId);
-    
-    /**
      * @name listsUnit
      * @uri /listsUnit
      * @return String[] lists Description
@@ -54,27 +45,38 @@ interface ICenterService {
     /**
      * @name insert
      * @uri /insert
-     * @param apps\common\entity\AffirmativePlanCentre affirmative Description
+     * @param apps\affirmative\entity\AffirmativeCenter center
      * @return String[] insert Description
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
-    public function insert($affirmative);
+    public function insert($center);
 
     /**
      * @name update
      * @uri /update
-     * @param apps\common\entity\AffirmativePlanCentre affirmative Description
-     * @return boolean update Description
+     * @param apps\affirmative\entity\AffirmativeCenter center
+     * @return String[] update Description
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
-    public function update($affirmative);
+    public function update($center);
 
     /**
      * @name delete
      * @uri /delete
-     * @param integer affirmativeId Description
+     * @param apps\affirmative\entity\AffirmativeCenter center
      * @return boolean delete Description
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
-    public function delete($affirmativeId);
+    public function delete($center);
+    
+    /**
+     * @name approve
+     * @uri /approve
+     * @param string status
+     * @return boolean approve
+     * @description ผู้เสนอราคาสูงสุดต่อคลัง
+     */
+    public function approve($status);
+    
+    
 }

@@ -8,6 +8,7 @@ function bg143Form(param) {
         + '<div class="form-group">';
 
     if (budgetPeriodArr != null && budgetTypeArr != null && planArr != null && projectArr != null && fundgroupArr != null && departmentArr != null) {
+        $("#navBgDept").html("จัดทำคำของบประมาณแผ่นดิน ง.143");
 
         html += '<div class="col-md-6">'
             + '<label class="col-md-4 control-label text-right">ปีงบประมาณ : </label>'
@@ -45,7 +46,7 @@ function bg143Form(param) {
             + '</div>';
 
     } else {
-
+        $("#navBgPlan").html("ตรวจสอบคำของบประมาณ ง.142");
         //for กองแผน (Angular js)
         html += '<div class="col-md-6">'
             + '<label class="col-md-4 control-label text-right">ปีงบประมาณ : </label>'

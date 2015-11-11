@@ -1,4 +1,5 @@
 <?php
+
 namespace apps\affirmative\interfaces;
 
 /**
@@ -7,6 +8,7 @@ namespace apps\affirmative\interfaces;
  * @description ViewService
  */
 interface IViewService {
+
     /**
      * @name home
      * @uri /home
@@ -25,15 +27,16 @@ interface IViewService {
      * @name center
      * @uri /center
      * @description ยื่นคำของบประมาณ
-     */ 
+     */
     public function center();
-    
+
     /**
-     * @name center2
-     * @uri /center2
+     * @name group
+     * @uri /group
+     * @param string deptId
      * @description ยื่นคำของบประมาณ
-     */ 
-    public function center2();
+     */
+    public function group($deptId);
 
     /**
      * @name tracking

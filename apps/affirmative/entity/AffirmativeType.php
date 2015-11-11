@@ -17,11 +17,13 @@ class AffirmativeType extends EntityBase {
      */
     public $typeId;
 
+    /** @Column(type="integer",length=11, name="TypeSeq") */
+    public $typeSeq;
+
     /** @Column(type="integer",length=11, name="MainId") */
     public $mainId;
 
-    /** @Column(type="integer",length=11, name="TypeSeq") */
-    public $typeSeq;
+   
 
     /** @Column(type="text", name="TypeName") */
     public $typeName;
