@@ -2,12 +2,12 @@
 
 namespace apps\affirmative\service;
 
-use apps\affirmative\interfaces\IGroupService;
+use apps\affirmative\interfaces\IFinalService;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
 use th\co\bpg\cde\collection\impl\CJSONDecodeImpl;
 
-class GroupService extends CServiceBase implements IGroupService {
+class FinalService extends CServiceBase implements IFinalService {
 
     public $datacontext;
     public $logger;
@@ -17,35 +17,19 @@ class GroupService extends CServiceBase implements IGroupService {
         $this->datacontext = new CDataContext(NULL);
     }
 
-    public function checkApprove() {
-        $draft = new \apps\affirmative\entity\AffirmativeDraft();
-        $draft->periodCode = $this->getPeriod()->year;
-        $data = $this->datacontext->getObject($draft);
-        // $draft->isApprove = "Y";
-        if (count($data) > 0) {
-            if ($data[0]->isApprove == $status) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
-
     function getPeriod() {
         $year = new \apps\common\entity\Year();
         $year->yearStatus = 'Y';
         return $this->datacontext->getObject($year)[0];
     }
 
-    function getGroup($centerGroupArr) {
-        $sqlGroup = "select g.id,g.actTypeName,g.actTypeCode from apps\\common\\entity\\ActivityType g "
+    function getGroup($group) {
+        $sqlGroupl = "select g.id,g.actTypeName,g.actTypeCode from apps\\common\\entity\\ActivityType g "
                 . " where g.actTypeCode in (:actTypeCode) ";
         $paramGroup = array(
-            "actTypeCode" => $centerGroupArr
+            "actTypeCode" => $group
         );
-        return $this->datacontext->getObject($sqlGroup, $paramGroup);
+        return $this->datacontext->getObject($sqlGroupl, $paramGroup);
     }
 
     function getUnit($unit) {
@@ -77,7 +61,24 @@ class GroupService extends CServiceBase implements IGroupService {
                     $status = "N";
                 }
             }
-            $dept[$keyDept]->status = $status;
+            $dept[$keyDept]->statusDept = $status;
+
+            $final = new \apps\affirmative\entity\AffirmativeFinal();
+            $final->periodCode = $periodCode;
+            $final->departmentId = $valDept->departmentId;
+            $final->isActive = "Y";
+            $get = $this->datacontext->getObject($final);
+            if (count($get) > 0) {
+                $status = "Y";
+            } else {
+                $status = "N";
+            }
+            foreach ($get as $keyGet => $valGet) {
+                if ($valGet->isApprove == "N") {
+                    $status = "N";
+                }
+            }
+            $dept[$keyDept]->statusFinal = $status;
         }
         return $dept;
     }
@@ -111,18 +112,18 @@ class GroupService extends CServiceBase implements IGroupService {
 
         $typeArr = array();
         $targetArr = array();
-        $draft = new \apps\affirmative\entity\AffirmativeDraft();
-        $draft->periodCode = $this->getPeriod()->year;
-        $draft->departmentId = $departmentId;
-        $draftData = $this->datacontext->getObject($draft);
-        foreach ($draftData as $keyDraft => $valueDraft) {
-            if ($valueDraft->hasIssue == "Y") {
-                if (empty($targetArr[$valueDraft->targetId][$valueDraft->draftId])) {
-                    $targetArr[$valueDraft->targetId][$valueDraft->draftId] = $valueDraft;
+        $final = new \apps\affirmative\entity\AffirmativeFinal();
+        $final->periodCode = $this->getPeriod()->year;
+        $final->departmentId = $departmentId;
+        $finalData = $this->datacontext->getObject($final);
+        foreach ($finalData as $keyFinal => $valueFinal) {
+            if ($valueFinal->hasIssue == "Y") {
+                if (empty($targetArr[$valueFinal->targetId][$valueFinal->finalId])) {
+                    $targetArr[$valueFinal->targetId][$valueFinal->finalId] = $valueFinal;
                 }
-            } elseif ($valueDraft->hasIssue == "N") {
-                if (empty($typeArr[$valueDraft->typeId][$valueDraft->draftId])) {
-                    $typeArr[$valueDraft->typeId][$valueDraft->draftId] = $valueDraft;
+            } elseif ($valueFinal->hasIssue == "N") {
+                if (empty($typeArr[$valueFinal->typeId][$valueFinal->finalId])) {
+                    $typeArr[$valueFinal->typeId][$valueFinal->finalId] = $valueFinal;
                 }
             }
         }
@@ -190,60 +191,73 @@ class GroupService extends CServiceBase implements IGroupService {
         return $mainData;
     }
 
-    public function insert($draft) {
+    public function insert($final) {
         $dept = new \apps\affirmative\model\ViewActivityDepartment();
-        $dept->departmentId = $draft->departmentId;
+        $dept->departmentId = $final->departmentId;
         $deptData = $this->datacontext->getObject($dept)[0];
-        if ($draft->typeId == 0) {
+        if ($final->typeId == 0) {
             $target = new \apps\affirmative\entity\AffirmativeTarget();
-            $target->targetId = $draft->targetId;
+            $target->targetId = $final->targetId;
             $targetData = $this->datacontext->getObject($target)[0];
-            $draft->targetSeq = $targetData->targetSeq;
+            $final->targetSeq = $targetData->targetSeq;
 
             $issue = new \apps\affirmative\entity\AffirmativeIssue();
             $issue->issueId = $targetData->issueId;
             $issueData = $this->datacontext->getObject($issue)[0];
-            $draft->issueId = $issueData->issueId;
-            $draft->issueSeq = $issueData->issueSeq;
+            $final->issueId = $issueData->issueId;
+            $final->issueSeq = $issueData->issueSeq;
 
-            $draft->typeId = $issueData->typeId;
-            $draft->hasIssue = "Y";
+            $final->typeId = $issueData->typeId;
+            $final->hasIssue = "Y";
         } else {
-            $draft->hasIssue = "N";
+            $final->hasIssue = "N";
         }
         $setting = new \apps\affirmative\entity\AffirmativeSetting();
-        $setting->typeId = $draft->typeId;
+        $setting->typeId = $final->typeId;
         $setting->groupCode = $deptData->activityCode;
         $setting->periodCode = $this->getPeriod()->year;
         $settingData = $this->datacontext->getObject($setting)[0];
-        $draft->mainId = $settingData->mainId;
-        $draft->mainSeq = $settingData->mainSeq;
-        $draft->typeId = $settingData->typeId;
-        $draft->typeSeq = $settingData->typeSeq;
+        $final->mainId = $settingData->mainId;
+        $final->mainSeq = $settingData->mainSeq;
+        $final->typeId = $settingData->typeId;
+        $final->typeSeq = $settingData->typeSeq;
 
-        $draft->periodCode = $this->getPeriod()->year;
-        $draft->isApprove = "N";
-        $draft->isCenter = 'N';
-        $draft->unitName = $this->getUnit($draft->unitId)["unitName"];
-        if (!$this->datacontext->saveObject($draft)) {
+        $final->periodCode = $this->getPeriod()->year;
+        $final->isApprove = "N";
+        $final->draftId = 0;
+        $final->unitName = $this->getUnit($final->unitId)["unitName"];
+        if (!$this->datacontext->saveObject($final)) {
             $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
             return false;
         } else {
-            return $draft;
+            return $final;
         }
     }
 
-    public function update($draft) {
-        if ($this->datacontext->updateObject($draft)) {
-            return $this->datacontext->getObject($draft)[0];
+    public function update($final) {
+        if ($this->datacontext->updateObject($final)) {
+            return $this->datacontext->getObject($final)[0];
         } else {
             $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
             return false;
         }
     }
 
-    public function delete($draft) {
-        if ($this->datacontext->removeObject($draft)) {
+    public function delete($final) {
+        $get = new \apps\affirmative\entity\AffirmativeFinal();
+        $get->finalId = $final->finalId;
+        $data = $this->datacontext->getObject($get)[0];
+        if ($data->draftId != 0) {
+            $draft = new \apps\affirmative\entity\AffirmativeDraft();
+            $draft->draftId = $data->draftId;
+            $data = $this->datacontext->getObject($draft)[0];
+            $data->isApprove = "N";
+            if (!$this->datacontext->updateObject($data)) {
+                $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+                return false;
+            }
+        }
+        if ($this->datacontext->removeObject($final)) {
             return true;
         } else {
             $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
@@ -253,47 +267,20 @@ class GroupService extends CServiceBase implements IGroupService {
 
     public function approve($departmentId, $status) {
         $json = new CJSONDecodeImpl();
-        $draft = new \apps\affirmative\entity\AffirmativeDraft();
-        $draft->periodCode = $this->getPeriod()->year;
-        $draft->departmentId = $departmentId;
-        $draft->isActive = "Y";
-        $dataDraft = $this->datacontext->getObject($draft);
-        if ($status == "Y") {
-            foreach ($dataDraft as $keyDraft => $valueDraft) {
-                if ($valueDraft->kpiGoal != NULL && $valueDraft->score1 != NULL && $valueDraft->score2 != NULL && $valueDraft->score3 != NULL && $valueDraft->score4 != NULL && $valueDraft->score5 != NULL && $valueDraft->isApprove != "Y") {
-                    $valueDraft->isApprove = $status;
-                    if ($this->datacontext->updateObject($valueDraft)) {
-                        $final = $json->decode(new \apps\affirmative\entity\AffirmativeFinal(), $valueDraft);
-                        $final->isApprove = "N";
-                        if (!$this->datacontext->saveObject($final)) {
-                            $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
-                            return false;
-                        }
-                    } else {
-                        $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
-                        return false;
-                    }
-                }
-            }
-        } elseif ($status == "N") {
-            foreach ($dataDraft as $keyDraft => $valueDraft) {
-                $dataDraft[$keyDraft]->isApprove = $status;
-            }
-            if ($this->datacontext->updateObject($dataDraft)) {
-                $final = new \apps\affirmative\entity\AffirmativeFinal();
-                $final->periodCode = $this->getPeriod()->year;
-                $final->departmentId = $departmentId;
-                $del = $this->datacontext->getObject($final);
-                if (!$this->datacontext->removeObject($del)) {
-                    $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
-                    return false;
-                }
-            } else {
-                $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
-                return false;
-            }
+        $final = new \apps\affirmative\entity\AffirmativeFinal();
+        $final->periodCode = $this->getPeriod()->year;
+        $final->departmentId = $departmentId;
+        $final->isActive = "Y";
+        $dataFinal = $this->datacontext->getObject($final);
+        foreach ($dataFinal as $keyFinal => $valFinal) {
+            $dataFinal[$keyFinal]->isApprove = $status;
         }
-        return true;
+        if (!$this->datacontext->updateObject($dataFinal)) {
+            $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }

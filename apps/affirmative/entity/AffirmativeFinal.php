@@ -105,6 +105,9 @@ class AffirmativeFinal extends EntityBase {
     /** @Column(type="string",length=10, name="IsActive") */
     public $isActive;
 
+    /** @Column(type="string",length=10, name="IsFinal") */
+    public $isFinal;
+
     function getFinalId() {
         return $this->finalId;
     }
@@ -213,6 +216,10 @@ class AffirmativeFinal extends EntityBase {
         return $this->isActive;
     }
 
+    function getIsFinal() {
+        return $this->isFinal;
+    }
+
     function setFinalId($finalId) {
         $this->finalId = $finalId;
     }
@@ -319,6 +326,10 @@ class AffirmativeFinal extends EntityBase {
 
     function setIsActive($isActive) {
         $this->isActive = $isActive;
+    }
+
+    function setIsFinal($isFinal) {
+        $this->isFinal = $isFinal;
     }
 
 }
