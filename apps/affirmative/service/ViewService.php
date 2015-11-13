@@ -52,8 +52,19 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
-    public function result() {
+    public function resultAll() {
+        $view = new CJView("resultAll", CJViewType::HTML_VIEW_ENGINE);
+        return $view;
+    }
+
+    public function result($deptId) {
+        $viewDept = new \apps\affirmative\model\ViewActivityDepartment();
+        $viewDept->departmentId = $deptId;
+        $data = $this->datacontext->getObject($viewDept)[0];
         $view = new CJView("result", CJViewType::HTML_VIEW_ENGINE);
+        $view->department = $data;
+        $groupS = new GroupService();
+        $view->year = $groupS->getPeriod()->year;
         return $view;
     }
 
