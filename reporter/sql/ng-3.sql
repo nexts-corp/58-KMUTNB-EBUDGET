@@ -1,4 +1,4 @@
--- รายงานแบบ ง.3
+﻿-- รายงานแบบ ง.3
 
 select 
 	faculty.DEPARTMENTID as facultyId, faculty.DEPARTMENTNAME as facultyName,
