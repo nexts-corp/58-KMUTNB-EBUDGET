@@ -24,4 +24,14 @@ interface IResultService {
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
     public function listsRound();
+
+    /**
+     * @name department
+     * @uri /department
+     * @param integer deptId Description
+     * @param integer roundId Description
+     * @return String[] lists Description
+     * @description ผู้เสนอราคาสูงสุดต่อคลัง
+     */
+    public function department($deptId, $roundId);
 }

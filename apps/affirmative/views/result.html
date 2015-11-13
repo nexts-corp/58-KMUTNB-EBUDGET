@@ -218,92 +218,105 @@
     var unit = {};
     var deptId = '{{#department}}{{departmentId}}{{/department}}';
     $(function () {
+        $("#roundId").change(function(){
+            console.log($(this).val());
+        });
+
         listsRound();
+
         resultForm();
     });
 
     function listsRound(){
         var datas = callAjax("{{_context_path}}/api/affirmative/result/listsRound", "post", {}, "json");
         if (typeof datas["lists"] !== "undefined" && datas["lists"] !== null) {
+            var html = '';
 
+            $.each(datas["lists"], function(key, val){
+                html += '<option value="'+val["roundId"]+'">'+val["roundName"]+'</option>';
+            });
+
+            $("#roundId").html(html).trigger("change");
         }
     }
 
     function resultForm() {
         var contentArr = {};
 
-        var datas = callAjax("{{_context_path}}/api/affirmative/result/listsAll", "post", {departmentId: deptId}, "json");
+        var datas = callAjax("{{_context_path}}/api/affirmative/result/department", "post", {deptId: deptId}, "json");
         //  console.log(datas);
         if (typeof datas["lists"] !== "undefined" && datas["lists"] !== null) {
             var menu = '<li class="active">'
                     + '<a href="#taball" data-toggle="tab"><i class="fa fa-star"></i> ทั้งหมด</a>'
-                    + '</li>';
+                + '</li>';
+
             var content = '<div id="taball" class="tab-pane active">'
                     + '<table id="tableall" class="table table-hover table-bordered">'
-                    + '<thead>'
-                    + '<tr>'
-                    + '<td rowspan="3" style="width: 20%;">ตัวชี้วัดคำรับรอง ปี {{year}}</td>'
-                    + '<td rowspan="3" style="width: 5%;">หน่วยนับ</td>'
-                    + '<td rowspan="3" style="width: 5%;">ค่าเป้าหมาย<br>ตัวชี้วัด</td>'
-                    + '<td rowspan="3" style="width: 5%;">ระดับ<br>คะแนน</td>'
-                    + '<td rowspan="3" style="width: 20%;">รายละเอียดผลการดำเนินงาน<br>ตามตัวชี้วัด</td>'
-                    + '<td colspan="4" style="width: 18%;">คำนวนผลการดำเนินงานตามตัวชี้วัด</td>'
-                    + '<td rowspan="3" style="width: 17%;">หมายเหตุ</td>'
-                    + '<td rowspan="3" style="width: 10%;">ไฟล์แนบ</td>'
-                    + '</tr>'
-                    + '<tr>'
-                    + '<td>ตัวตั้ง</td>'
-                    + '<td rowspan="2">ผลลัพธ์<br>ตัวชี้วัด</td>'
-                    + '<td rowspan="2">ระดับ<br>คะแนน</td>'
-                    + '<td style="text-align: left;" rowspan="2">✔ = บรรลุ<br>✘ = ไม่บรรลุ</td>'
-                    + '</tr>'
-                    + '<tr>'
-                    + '<td>ตัวหาร</td>'
-                    + '</tr>'
-                    + '</thead>'
+                        + '<thead>'
+                            + '<tr>'
+                                + '<td rowspan="3" style="width: 20%;">ตัวชี้วัดคำรับรอง ปี {{year}}</td>'
+                                + '<td rowspan="3" style="width: 5%;">หน่วยนับ</td>'
+                                + '<td rowspan="3" style="width: 5%;">ค่าเป้าหมาย<br>ตัวชี้วัด</td>'
+                                + '<td rowspan="3" style="width: 5%;">ระดับ<br>คะแนน</td>'
+                                + '<td rowspan="3" style="width: 20%;">รายละเอียดผลการดำเนินงาน<br>ตามตัวชี้วัด</td>'
+                                + '<td colspan="4" style="width: 18%;">คำนวนผลการดำเนินงานตามตัวชี้วัด</td>'
+                                + '<td rowspan="3" style="width: 17%;">หมายเหตุ</td>'
+                                + '<td rowspan="3" style="width: 10%;">ไฟล์แนบ</td>'
+                            + '</tr>'
+                            + '<tr>'
+                                + '<td>ตัวตั้ง</td>'
+                                + '<td rowspan="2">ผลลัพธ์<br>ตัวชี้วัด</td>'
+                                + '<td rowspan="2">ระดับ<br>คะแนน</td>'
+                                + '<td style="text-align: left;" rowspan="2">✔ = บรรลุ<br>✘ = ไม่บรรลุ</td>'
+                            + '</tr>'
+                            + '<tr>'
+                                + '<td>ตัวหาร</td>'
+                            + '</tr>'
+                        + '</thead>'
 
-                    + '<tbody>'
-                    + '<tr>'
-                    + '<td colspan="5" class="text-center">-</td>'
-                    + '</tr>'
-                    + '</tbody>'
+                        + '<tbody>'
+                            + '<tr>'
+                                + '<td colspan="5" class="text-center">-</td>'
+                            + '</tr>'
+                        + '</tbody>'
                     + '</table>'
-                    + '</div>';
+                + '</div>';
+
             $.each(datas["lists"], function (key1, value1) {
-                //  console.log(value1);
                 menu += '<li>'
                         + '<a href="#tab' + value1["mainSeq"] + '" data-toggle="tab">ส่วนที่ ' + value1["mainSeq"] + ' ' + value1["mainName"] + '</a>'
-                        + '</li>';
+                    + '</li>';
+
                 content += '<div id="tab' + value1["mainSeq"] + '" class="tab-pane">'
                         + '<table id="table' + value1["mainSeq"] + '" class="table table-hover table-bordered">'
-                        + '<thead>'
-                        + '<tr>'
-                        + '<td rowspan="3" style="width: 20%;">ตัวชี้วัดคำรับรอง ปี {{year}}</td>'
-                        + '<td rowspan="3" style="width: 5%;">หน่วยนับ</td>'
-                        + '<td rowspan="3" style="width: 5%;">ค่าเป้าหมาย<br>ตัวชี้วัด</td>'
-                        + '<td rowspan="3" style="width: 5%;">ระดับ<br>คะแนน</td>'
-                        + '<td rowspan="3" style="width: 20%;">รายละเอียดผลการดำเนินงาน<br>ตามตัวชี้วัด</td>'
-                        + '<td colspan="4" style="width: 18%;">คำนวนผลการดำเนินงานตามตัวชี้วัด</td>'
-                        + '<td rowspan="3" style="width: 17%;">หมายเหตุ</td>'
-                        + '<td rowspan="3" style="width: 10%;">ไฟล์แนบ</td>'
-                        + '</tr>'
-                        + '<tr>'
-                        + '<td>ตัวตั้ง</td>'
-                        + '<td rowspan="2">ผลลัพธ์<br>ตัวชี้วัด</td>'
-                        + '<td rowspan="2">ระดับ<br>คะแนน</td>'
-                        + '<td style="text-align: left;" rowspan="2">✔ = บรรลุ<br>✘ = ไม่บรรลุ</td>'
-                        + '</tr>'
-                        + '<tr>'
-                        + '<td>ตัวหาร</td>'
-                        + '</tr>'
-                        + '</thead>'
-                        + '<tbody>'
-                        + '<tr>'
-                        + '<td colspan="10" class="text-center">-</td>'
-                        + '</tr>'
-                        + '</tbody>'
+                            + '<thead>'
+                                + '<tr>'
+                                    + '<td rowspan="3" style="width: 20%;">ตัวชี้วัดคำรับรอง ปี {{year}}</td>'
+                                    + '<td rowspan="3" style="width: 5%;">หน่วยนับ</td>'
+                                    + '<td rowspan="3" style="width: 5%;">ค่าเป้าหมาย<br>ตัวชี้วัด</td>'
+                                    + '<td rowspan="3" style="width: 5%;">ระดับ<br>คะแนน</td>'
+                                    + '<td rowspan="3" style="width: 20%;">รายละเอียดผลการดำเนินงาน<br>ตามตัวชี้วัด</td>'
+                                    + '<td colspan="4" style="width: 18%;">คำนวนผลการดำเนินงานตามตัวชี้วัด</td>'
+                                    + '<td rowspan="3" style="width: 17%;">หมายเหตุ</td>'
+                                    + '<td rowspan="3" style="width: 10%;">ไฟล์แนบ</td>'
+                                + '</tr>'
+                                + '<tr>'
+                                    + '<td>ตัวตั้ง</td>'
+                                    + '<td rowspan="2">ผลลัพธ์<br>ตัวชี้วัด</td>'
+                                    + '<td rowspan="2">ระดับ<br>คะแนน</td>'
+                                    + '<td style="text-align: left;" rowspan="2">✔ = บรรลุ<br>✘ = ไม่บรรลุ</td>'
+                                + '</tr>'
+                                + '<tr>'
+                                    + '<td>ตัวหาร</td>'
+                                + '</tr>'
+                            + '</thead>'
+                            + '<tbody>'
+                                + '<tr>'
+                                    + '<td colspan="10" class="text-center">-</td>'
+                                + '</tr>'
+                            + '</tbody>'
                         + '</table>'
-                        + '</div>';
+                    + '</div>';
 //
                 contentArr[value1["mainSeq"]] += '<tr data-tt-id="main' + value1["mainSeq"] + '"  data-seq="' + value1["mainSeq"] + '">' +
                         '<td colspan="10" class="text-center">' +
