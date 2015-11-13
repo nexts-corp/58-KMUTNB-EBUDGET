@@ -182,7 +182,7 @@
         };
 
         $scope.fetchBudgetItem = function (BudgetPeriodId) {
-            var param = {budgetPeriodId: BudgetPeriodId};
+            var param = {budgetPeriodId: BudgetPeriodId, deptId: 0};
 
             $http.post("{{_context_path}}/api/budget/budgetReview/getAllBudgetRequest", param).then(function (response) {
 
