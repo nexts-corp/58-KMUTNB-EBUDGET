@@ -3,7 +3,6 @@ namespace apps\affirmative\entity;
 
 use apps\common\entity\EntityBase;
 
-
 /**
  * @Entity
  * @Table(name="Affirmative_Round")
