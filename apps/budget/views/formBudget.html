@@ -216,7 +216,7 @@
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg146.js"></script>
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/buildingOne.js"></script>
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/buildingMore.js"></script>
-
+<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBv9gXQrEbOEH_JGiqm_rO5Mv67nzs8m8g&callback=initMap" async defer></script>-->
 <!-- initial AngularJS file -->
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/initNg.js"></script>
 <!--     <script type="text/javascript" src="{{_context_path}}/apps/budget/views/project/project.js"></script>
@@ -680,8 +680,9 @@
         param.bgType = bgType;
         param.listBg = listBg;
         param.status = status;
+        var dataJSONEN = encodeURIComponent(JSON.stringify(param));
 
-        var datas = callAjax(js_context_path + "/api/budget/budgetSave/updateStatus", "post", JSON.stringify(param), "json");
+        var datas = callAjax(js_context_path + "/api/budget/budgetSave/updateStatus", "post", dataJSONEN, "json");
         if (datas != undefined && datas !== null) {
             if (datas["results"]["status"] == true) {
                 alert("ส่งคำขอสำเร็จ");
@@ -849,6 +850,14 @@
 
         return true;
     }
+
+//    var map;
+//    function initMap() {
+//        var map = new google.maps.Map(document.getElementById('map'), {
+//            center: {lat: 13.809842, lng: 100.461178},
+//            zoom: 14
+//        });
+//    }
 
 
 </script>

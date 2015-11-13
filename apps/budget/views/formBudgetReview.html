@@ -104,7 +104,7 @@
                         <td>{[item.fundName]}</td>
                         <td>{[item.statusDesc]}</td>
                         <td style="text-align: center">
-                            <button class="btn btn-primary edit-btn" ng-click="toFormBudget(item)" title="ดูข้อมูล"><i
+                            <button class="btn btn-primary" ng-click="toFormBudget(item)" title="ดูข้อมูล"><i
                                     class="fa fa-search"></i>ดูข้อมูล</i></button>
                         </td>
                     </tr>
@@ -290,11 +290,7 @@
             if (datas["results"]["status"] == true) {
                 alert("ส่งคำขอสำเร็จ");
                 if (isRefresh) {
-//                    var param = {};
-//                    $("#formChoice select").each(function () {
-//                        var name = $(this).attr("name");
-//                        param[name] = $(this).val();
-//                    });
+
                     var param = paramObj;
                     eval(form[bgType] + "(param);");
                 }

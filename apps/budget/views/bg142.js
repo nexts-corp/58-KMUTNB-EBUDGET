@@ -933,6 +933,7 @@ function bg142delete(id, parentId, dataJSONEN) {
             if (parent.children.length == 0) {
                 parent.row.find('.indenter').html('');
             }
+            $("#panelDeleteForm").modal("hide");
         }
     }
 }
