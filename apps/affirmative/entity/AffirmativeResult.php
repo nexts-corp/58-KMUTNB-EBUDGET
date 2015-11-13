@@ -23,9 +23,9 @@ class AffirmativeResult extends EntityBase{
     public $finalId;
 
     /**
-     * @Column(type="integer",length=11,name="Round")
+     * @Column(type="integer",length=11,name="RoundId")
      */
-    public $round;
+    public $roundId;
 
     /**
      * @Column(type="string",name="FinalId")
@@ -75,8 +75,8 @@ class AffirmativeResult extends EntityBase{
         return $this->finalId;
     }
 
-    function getRound(){
-        return $this->round;
+    function getRoundId(){
+        return $this->roundId;
     }
 
     function getDetail(){
@@ -119,8 +119,8 @@ class AffirmativeResult extends EntityBase{
         $this->finalId = $finalId;
     }
 
-    function setRound($round){
-        $this->round = $round;
+    function setRoundId($roundId){
+        $this->roundId = $roundId;
     }
 
     function setDetail($detail){

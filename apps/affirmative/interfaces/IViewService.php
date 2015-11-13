@@ -47,9 +47,17 @@ interface IViewService {
     public function finalz($deptId);
 
     /**
-     * @name result
-     * @uri /result
+     * @name resultAll
+     * @uri /resultAll
      * @description ยื่นคำของบประมาณ
      */
-    public function result();
+    public function resultAll();
+
+    /**
+     * @name result
+     * @uri /result
+     * @param string deptId
+     * @description ยื่นคำของบประมาณ
+     */
+    public function result($deptId);
 }
