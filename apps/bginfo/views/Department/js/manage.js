@@ -202,12 +202,31 @@ myApp.controller('tableController', function ($scope, $http, $controller) {
 
         } else if ($scope.action == 'delete') {
 
-            if (data.mapID == null || data.mapID == "null") data.mapID = -1;
+            if (data.mapID == null || data.mapID == "null")
+                data.mapID = -1;
             console.log(data.mapID);
 
-            if (confirm('Do you want to remove ' + data.deptName)) {
+            if (confirm('ต้องการปิดการใช้งาน ' + data.deptName + ' หรือไม่?')) {
                 // Save it!
                 $http.post("removeDept", {idDept: data.deptID, mapId: data.mapID}).then(function (response) {
+
+                    if (response.data.result.status == true) {
+                        $scope.listDept.splice($scope.index, 1);
+                        alert('Success');
+                    } else {
+                        alert('Error :' + response.data.result.msg);
+                    }
+                });
+            } else {
+                // Do nothing!
+            }
+        } else if ($scope.action == 'enable') {
+            if (data.mapID == null || data.mapID == "null")
+                data.mapID = -1;
+
+            if (confirm('ต้องการเปิดการใช้งาน ' + data.deptName + ' หรือไม่?')) {
+                // Save it!
+                $http.post("enableDepartment", {idDept: data.deptID, mapId: data.mapID}).then(function (response) {
 
                     if (response.data.result.status == true) {
                         $scope.listDept.splice($scope.index, 1);

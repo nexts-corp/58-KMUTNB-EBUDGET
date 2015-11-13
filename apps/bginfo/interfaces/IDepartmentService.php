@@ -85,6 +85,16 @@ interface IDepartmentService
      * @description ลบหน่วยงาน
      */
     public function removeDepartment($idDept, $mapId);
+    
+    /**
+     * @name enableDepartment
+     * @uri /enableDepartment
+     * @param string idDept Description
+     * @param string mapId Description
+     * @return boolean result
+     * @description เปิดการใช้งานหน่วยงาน
+     */
+    public function enableDepartment($idDept, $mapId);
 
     /**
      * @name saveCam

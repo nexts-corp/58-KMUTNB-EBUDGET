@@ -140,6 +140,7 @@ class DepartmentService extends CServiceBase implements IDepartmentService {
         $obj->setDeptStatus('N');
 
         if ($this->datacontext->updateObject($obj)) {
+            /*
             if ($mapId != -1) {
                 $obj2 = new MappingDepartmentType();
                 $obj2->setId($mapId);
@@ -151,6 +152,24 @@ class DepartmentService extends CServiceBase implements IDepartmentService {
                     $return["status"] = false;
                 }
             }
+            */
+            $return["msg"] = $this->datacontext->getLastMessage();
+            $return["status"] = true;
+        } else {
+            $return["msg"] = $this->datacontext->getLastMessage();
+            $return["status"] = false;
+        }
+
+        return $return;
+    }
+
+    public function enableDepartment($idDept, $mapId) {
+        $return = array();
+        $obj = new Department();
+        $obj->setId($idDept);
+        $obj->setDeptStatus('Y');
+
+        if ($this->datacontext->updateObject($obj)) {
             $return["msg"] = $this->datacontext->getLastMessage();
             $return["status"] = true;
         } else {
