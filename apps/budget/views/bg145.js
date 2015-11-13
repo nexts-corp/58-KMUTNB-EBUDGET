@@ -102,7 +102,7 @@ function bg145Form(param) {
         + '<th rowspan="3" class="text-center" style="vertical-align: middle;">ลำดับ</th>'
         + '<th class="text-center" rowspan="3" style="vertical-align: middle;">หมวดรายจ่ายรายการและรายละเอียดประกอบ</th>'
         + '<th class="text-center" rowspan="3" style="vertical-align: middle;">จำนวนหน่วย</th>'
-        + '<th class="text-center" rowspan="3" style="vertical-align: middle;">หน่วยนับ Unit</th>'
+        + '<th class="text-center" rowspan="3" style="vertical-align: middle;">หน่วยนับ</th>'
         + '<th class="text-center" rowspan="3" style="vertical-align: middle;">ราคาต่อหน่วย</th>'
         + '<th class="text-center" rowspan="3" style="vertical-align: middle;">รวมเงิน</th>'
         + '<th class="text-center" colspan="3">คำชี้แจง</th><th class="text-center" rowspan="3" style="vertical-align: middle;">เหตุผลความจำเป็น</th>'

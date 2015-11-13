@@ -1,25 +1,27 @@
-
+﻿
 -- รายงานแบบ ง.2-2
 
 select 
 	bg.planId, l3dPlan.PLANNAME as planName,
 	bg.facultyId, faculty.DEPARTMENTNAME as facultyName, bg.deptId, dept.DEPARTMENTNAME as deptName,
-	sum(case when bg.fundgroupId = 100 then bg.budgetSummary else 0 end) as 'กองทุนทั่วไป',
-	sum(case when bg.fundgroupId = 200 then bg.budgetSummary else 0 end) as 'กองทุนเพื่อการศึกษา',
-	sum(case when bg.fundgroupId = 300 then bg.budgetSummary else 0 end) as 'กองทุนวิจัย',
-	sum(case when bg.fundgroupId = 400 then bg.budgetSummary else 0 end) as 'กองทุนบริการวิชาการ',
-	sum(case when bg.fundgroupId = 500 then bg.budgetSummary else 0 end) as 'กองทุนกิจการนักศึกษา',
-	sum(case when bg.fundgroupId = 600 then bg.budgetSummary else 0 end) as 'กองทุนสินทรัพย์ถาวร',
-	sum(case when bg.fundgroupId = 700 then bg.budgetSummary else 0 end) as 'กองทุนอื่น ๆ',
-	sum(case when bg.fundgroupId = 701 then bg.budgetSummary else 0 end) as 'กองทุนทำนุบำรุงศิลปวัฒนธรรม',
-	sum(case when bg.fundgroupId = 702 then bg.budgetSummary else 0 end) as 'กองทุนสำรอง',
-	sum(case when bg.fundgroupId = 703 then bg.budgetSummary else 0 end) as 'กองทุนสวัสดิการ',
-	sum(case when bg.fundgroupId = 704 then bg.budgetSummary else 0 end) as 'กองทุนพัฒนาบุคลากร',
-	sum(case when bg.fundgroupId = 705 then bg.budgetSummary else 0 end) as 'กองทุนคณะ',
-	sum(case when bg.fundgroupId = 706 then bg.budgetSummary else 0 end) as 'กองทุนพัฒนาสถาบัน',
-	sum(case when bg.fundgroupId = 707 then bg.budgetSummary else 0 end) as 'กองทุนเพื่อวัตถุประสงค์เฉพาะ',
-	sum(case when bg.fundgroupId = 708 then bg.budgetSummary else 0 end) as 'กองทุนคงคลังสถาบัน',
-	sum(case when bg.fundgroupId = 709 then bg.budgetSummary else 0 end) as 'กองทุนส่งเสริมการศึกษาและพัฒนาเทคโนโลยี มจพ.'
+		sum(case when bg.fundgroupId = 100 then bg.budgetSummary else 0 end) as 'generalFund', 
+	sum(case when bg.fundgroupId = 200 then bg.budgetSummary else 0 end) as 'eduFund', 
+	sum(case when bg.fundgroupId = 300 then bg.budgetSummary else 0 end) as 'researchFunds', 
+	sum(case when bg.fundgroupId = 400 then bg.budgetSummary else 0 end) as 'outreachFund',
+	sum(case when bg.fundgroupId = 500 then bg.budgetSummary else 0 end) as 'affairsFund', 
+	sum(case when bg.fundgroupId = 600 then bg.budgetSummary else 0 end) as 'assetsFund', 
+	sum(case when bg.fundgroupId = 700 then bg.budgetSummary else 0 end) as 'otherFund', 
+	sum(case when bg.fundgroupId = 701 then bg.budgetSummary else 0 end) as 'culturalFund', 
+	sum(case when bg.fundgroupId = 702 then bg.budgetSummary else 0 end) as 'funds',
+	sum(case when bg.fundgroupId = 703 then bg.budgetSummary else 0 end) as 'welfareFund', 
+	sum(case when bg.fundgroupId = 704 then bg.budgetSummary else 0 end) as 'devFund', 
+	sum(case when bg.fundgroupId = 705 then bg.budgetSummary else 0 end) as 'boardFund', 
+	sum(case when bg.fundgroupId = 706 then bg.budgetSummary else 0 end) as 'institutionsFund', 
+	sum(case when bg.fundgroupId = 707 then bg.budgetSummary else 0 end) as 'purposeFund', 
+	sum(case when bg.fundgroupId = 708 then bg.budgetSummary else 0 end) as 'inventoryFund', 
+	sum(case when bg.fundgroupId = 709 then bg.budgetSummary else 0 end) as 'techKMUTNBFund' 
+
+
 from (
 	select 
 	l3dPlan.PLANID as planId,
