@@ -39,6 +39,14 @@ interface IViewService {
     public function group($deptId);
 
     /**
+     * @name final
+     * @uri /final
+     * @param string deptId
+     * @description ยื่นคำของบประมาณ
+     */
+    public function finalz($deptId);
+
+    /**
      * @name tracking
      * @uri /tracking
      * @description ยื่นคำของบประมาณ
