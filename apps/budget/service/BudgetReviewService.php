@@ -245,9 +245,10 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
                 . "left outer join " . $this->ent . "\\BudgetProject bgProj with bgProj.id = bgh.projectId "
                 . "left outer join " . $this->ent . "\\L3D\\FundGroup fund with fund.id = bgh.fundgroupId "
                 . "left outer join " . $this->ent . "\\TrackingStatus status with status.id = bgh.statusId "
-                . "where bgh.budgetTypeCode = 'G' and bgh.statusId = 2 "
+                . "where bgh.budgetTypeCode = 'G' "
+                . "and bgh.statusId <> 1 "
                 . "and bgh.budgetPeriodId = :budgetPeriodId "
-                . "order by bgh.formId, status.id, dept.id, l3dPlan.id, fund.id asc ";
+                . "order by status.id, bgh.formId, dept.id, l3dPlan.id, fund.id asc ";
 
         $param = array("budgetPeriodId" => $budgetPeriodId);
         $data = $this->datacontext->getObject($sql, $param);
