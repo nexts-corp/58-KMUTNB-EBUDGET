@@ -35,9 +35,9 @@
             <div id="panelHome" class="col-md-12">
                 <div class="row">
                     <div class="form-group">
-                        <label class="col-md-3 control-label text-right" for="affKpiId">รอบ : </label>
+                        <label class="col-md-3 control-label text-right" for="roundId">รอบ : </label>
                         <div class="col-md-6">
-                            <select type="text" class="form-control input-sm" name="affKpiId" id="affKpiId"></select>
+                            <select type="text" class="form-control input-sm" name="roundId" id="roundId"></select>
                         </div>
                     </div>
 
@@ -218,15 +218,21 @@
     var unit = {};
     var deptId = '{{#department}}{{departmentId}}{{/department}}';
     $(function () {
-        centerForm();
-        /*$("button.back").unbind("click").click(function () {
-         toggleShow("home");
-         })*/
+        listsRound();
+        resultForm();
     });
-    function centerForm() {
+
+    function listsRound(){
+        var datas = callAjax("{{_context_path}}/api/affirmative/result/listsRound", "post", {}, "json");
+        if (typeof datas["lists"] !== "undefined" && datas["lists"] !== null) {
+
+        }
+    }
+
+    function resultForm() {
         var contentArr = {};
 
-        var datas = callAjax("{{_context_path}}/api/affirmative/group/listsAll", "post", {departmentId: deptId}, "json");
+        var datas = callAjax("{{_context_path}}/api/affirmative/result/listsAll", "post", {departmentId: deptId}, "json");
         //  console.log(datas);
         if (typeof datas["lists"] !== "undefined" && datas["lists"] !== null) {
             var menu = '<li class="active">'

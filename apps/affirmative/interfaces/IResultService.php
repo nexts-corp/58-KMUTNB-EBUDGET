@@ -17,5 +17,11 @@ interface IResultService {
      */
     public function listsDepartment();
 
-
+    /**
+     * @name listsRound
+     * @uri /listsRound
+     * @return String[] lists Description
+     * @description ผู้เสนอราคาสูงสุดต่อคลัง
+     */
+    public function listsRound();
 }
