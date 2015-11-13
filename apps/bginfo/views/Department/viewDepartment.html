@@ -66,17 +66,19 @@
                     <table class="table table-bordered mb-none">
                         <thead>
                         <tr>
-                            <th class="col-md-2">รหัสหน่วยงาน</th>
-                            <th class="col-md-6">หน่วยงาน</th>
-                            <th class="col-md-2">ประเภทส่วนงาน</th>
-                            <th class="col-md-2">Manage Function</th>
+                            <th class="col-md-2 text-center">รหัสหน่วยงาน</th>
+                            <th class="col-md-4 text-center">หน่วยงาน</th>
+                            <th class="col-md-3 text-center">ประเภทส่วนงาน</th>
+                            <th class="col-md-1 text-center">สถานะ</th>
+                            <th class="col-md-2 text-center">เครื่องมือ</th>
                         </tr>
                         </thead>
                         <tbody id="table-body" ng-hide="isLoding">
                         <tr ng-repeat="item_tr in listDept | filter:{ masterId: selectMainDept.id||undefined} |filter:searchDept">
-                            <td>{[item_tr.deptID]}</td>
+                            <td class="text-center">{[item_tr.deptID]}</td>
                             <td>{[item_tr.deptName]}</td>
-                            <td>{[item_tr.actTypeName]}</td>
+                            <td class="text-center">{[item_tr.actTypeName]}</td>
+                            <td class="text-center">{[item_tr.deptStatus]}</td>
                             <td style="text-align: center">
                                 <button class="btn btn-warning edit-btn" title="แก้ไข" ng-click="showModal('edit',item_tr,$index);"><i class="fa fa-pencil"></i></button>
                                 <button class="btn btn-default delete-btn" title="ลบ" ng-click="showModal('delete',item_tr,$index);"><i class="fa fa-trash"></i></button>
