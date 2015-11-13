@@ -79,4 +79,10 @@ class ResultService extends CServiceBase implements IResultService {
         return $result;
     }
 
+    public function listsRound(){
+        $sql = "SELECT"
+                ." "
+            ." FROM ".$this->ent."\\AffirmativeRound";
+    }
+
 }
