@@ -47,9 +47,9 @@ interface IViewService {
     public function finalz($deptId);
 
     /**
-     * @name tracking
-     * @uri /tracking
+     * @name result
+     * @uri /result
      * @description ยื่นคำของบประมาณ
      */
-    public function tracking();
+    public function result();
 }

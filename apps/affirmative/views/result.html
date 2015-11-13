@@ -87,13 +87,13 @@
     });
 
     function listsDepartment(){
-        var datas = callAjax("{{_context_path}}/api/affirmative/tracking/listsDepartment", "post", {}, "json");
+        var datas = callAjax("{{_context_path}}/api/affirmative/result/listsDepartment", "post", {}, "json");
         if (typeof datas !== "undefined" && datas !== null) {
             var html = '';
             $.each(datas["lists"], function(key, val){
                 $.each(val["dept"], function(key2, val2){
                     html += '<tr>'
-                            + '<td>'+val["actTypeName"]+'</td>'
+                            + '<td>'+val["actName"]+'</td>'
                             + '<td>'+val2["deptName"]+'</td>'
                             + '<td>-</td>'
                             + '<td>'

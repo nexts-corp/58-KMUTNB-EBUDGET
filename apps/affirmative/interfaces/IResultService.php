@@ -3,11 +3,11 @@
 namespace apps\affirmative\interfaces;
 
 /**
- * @name ITrackingService
- * @uri /tracking
+ * @name IResultService
+ * @uri /result
  * @description ประมูล
  */
-interface ITrackingService {
+interface IResultService {
 
     /**
      * @name listsDepartment

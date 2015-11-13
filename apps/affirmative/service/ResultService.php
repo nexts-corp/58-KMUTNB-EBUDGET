@@ -2,11 +2,11 @@
 
 namespace apps\affirmative\service;
 
-use apps\affirmative\interfaces\ITrackingService;
+use apps\affirmative\interfaces\IResultService;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
 
-class TrackingService extends CServiceBase implements ITrackingService {
+class ResultService extends CServiceBase implements IResultService {
 
     public $datacontext;
     public $logger;
@@ -51,22 +51,18 @@ class TrackingService extends CServiceBase implements ITrackingService {
     }
 
     public function listsDepartment(){
-        $sql = "SELECT dp.id, mt.actId, ac.actTypeName, dp.deptName"
-            ." FROM ".$this->ent."\\MappingDepartmentType mt"
-            ." JOIN ".$this->ent."\\ActivityType ac WITH ac.id = mt.actId"
-            ." JOIN ".$this->ent."\\L3D\\Department dp WITH dp.id = mt.deptId"
-            ." ORDER BY mt.actId, mt.deptId ASC";
-        $data = $this->datacontext->getObject($sql);
+        $sql = "SELECT * FROM View_Activity_Department ORDER BY ActivityId ASC";
+        $data = $this->datacontext->pdoQuery($sql);
 
         $group = array();
         $actKey = array();
 
         foreach($data as $key => $value){
-            $actKey[$value["actId"]] = $value["actTypeName"];
+            $actKey[$value["ActivityId"]] = $value["ActivityName"];
 
-            $group[$value["actId"]][] = array(
-                "deptId" => $value["id"],
-                "deptName" => $value["deptName"]
+            $group[$value["ActivityId"]][] = array(
+                "deptId" => $value["DepartmentId"],
+                "deptName" => $value["DepartmentName"]
             );
         }
 
@@ -75,7 +71,7 @@ class TrackingService extends CServiceBase implements ITrackingService {
         foreach($group as $key => $value){
             $result[] = array(
                 "actId" => $key,
-                "actTypeName" => $actKey[$key],
+                "actName" => $actKey[$key],
                 "dept" => $value
             );
         }
