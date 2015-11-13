@@ -1,4 +1,4 @@
-
+﻿
 -- รายงานแบบ ง.2-1
 
 select
@@ -7,18 +7,18 @@ bgAll.facultyId, bgAll.facultyName,
 bgAll.deptId, bgAll.deptName,
 bgAll.budgetTypeMasterId, bgAll.budgetTypeMasterName,
 bgAll.budgetTypeMainId, bgAll.budgetTypeMainName,
-sum(case when bgAll.budgetTypeMainId = 10100000 then bgAll.budgetSummary else 0 end) as 'เงินเดือน',
-sum(case when bgAll.budgetTypeMainId = 10200000 then bgAll.budgetSummary else 0 end) as 'ค่าจ้างประจำ',
-sum(case when bgAll.budgetTypeMainId = 10300000 then bgAll.budgetSummary else 0 end) as 'ค่าตอบแทนพนักงานราชการ',
-sum(case when bgAll.budgetTypeMainId = 20101000 then bgAll.budgetSummary else 0 end) as 'เงินเดือนพนักงานมหาวิทยาลัย',
-sum(case when bgAll.budgetTypeMainId = 20102000 then bgAll.budgetSummary else 0 end) as 'ค่าจ้างชั่วคราว',
-sum(case when bgAll.budgetTypeMainId = 20201000 then bgAll.budgetSummary else 0 end) as 'ค่าตอบแทน',
-sum(case when bgAll.budgetTypeMainId = 20202000 then bgAll.budgetSummary else 0 end) as 'ค่าใช้สอย',
-sum(case when bgAll.budgetTypeMainId = 20203000 then bgAll.budgetSummary else 0 end) as 'ค่าวัสดุ',
-sum(case when bgAll.budgetTypeMainId = 20204000 then bgAll.budgetSummary else 0 end) as 'ค่าสาธารณูปโภค',
-sum(case when bgAll.budgetTypeMainId = 20300000 then bgAll.budgetSummary else 0 end) as 'เงินอุดหนุนเป็นค่าครุภัณฑ์',
-sum(case when bgAll.budgetTypeMainId = 20400000 then bgAll.budgetSummary else 0 end) as 'เงินอุดหนุนเป็นค่าที่ดิน/สิ่งก่อสร้าง',
-sum(case when bgAll.budgetTypeMainId = 20500000 then bgAll.budgetSummary else 0 end) as 'เงินอุดหนุนอื่นๆ'
+sum(case when bgAll.budgetTypeMainId = 10100000 then bgAll.budgetSummary else 0 end) as 'salary',
+sum(case when bgAll.budgetTypeMainId = 10200000 then bgAll.budgetSummary else 0 end) as 'wages',
+sum(case when bgAll.budgetTypeMainId = 10300000 then bgAll.budgetSummary else 0 end) as 'compensationEmp',
+sum(case when bgAll.budgetTypeMainId = 20101000 then bgAll.budgetSummary else 0 end) as 'staffSalary',
+sum(case when bgAll.budgetTypeMainId = 20102000 then bgAll.budgetSummary else 0 end) as 'tempWages',
+sum(case when bgAll.budgetTypeMainId = 20201000 then bgAll.budgetSummary else 0 end) as 'compensation',
+sum(case when bgAll.budgetTypeMainId = 20202000 then bgAll.budgetSummary else 0 end) as 'livingCost',
+sum(case when bgAll.budgetTypeMainId = 20203000 then bgAll.budgetSummary else 0 end) as 'matCost',
+sum(case when bgAll.budgetTypeMainId = 20204000 then bgAll.budgetSummary else 0 end) as 'utilityCost',
+sum(case when bgAll.budgetTypeMainId = 20300000 then bgAll.budgetSummary else 0 end) as 'durableCost',
+sum(case when bgAll.budgetTypeMainId = 20400000 then bgAll.budgetSummary else 0 end) as 'buildingCost',
+sum(case when bgAll.budgetTypeMainId = 20500000 then bgAll.budgetSummary else 0 end) as 'otherCost'
 from 
 (
 select 
