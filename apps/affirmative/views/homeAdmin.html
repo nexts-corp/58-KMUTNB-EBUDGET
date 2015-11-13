@@ -186,7 +186,7 @@ function listsCenter() {
             + '<td class="text-center">4</td>'
             + '<td>รายงานผลตัวชี้วัด</td>'
             + '<td class="text-center">-</td>'
-            + '<td class="text-center"><button class="btn btn-primary manage" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
+            + '<td class="text-center"><button id="result" class="btn btn-primary manage" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
             + '</tr>';
 
     $("#homeBody").html(html);
@@ -239,6 +239,10 @@ function listsCenter() {
                 window.location = "{{_context_path}}/api/affirmative/view/final/" + deptId;
             });
         }
+    });
+
+    $("#result").click(function () {
+        window.location = "result";
     });
 
 }
