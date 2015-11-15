@@ -118,15 +118,23 @@ myApp.controller('mappingPlanController', function ($scope, $http, $controller,c
         $scope.waitDataList = true;
         $scope.dataPlan=[];
         $scope.addPlanText = "";
-        $http.post(cde.getPath("fetchPlan"),{year:$scope.selectYear}).then(function(response) {
-            if(response.data.dataList){
-                $scope.dataPlan = response.data.dataList;
-            }else{
-                $scope.dataPlan=[];
-            }
+        
+        if($scope.selectYear!==''){
             
-            $scope.waitDataList = false;
-        });
+           $http.post(cde.getPath("fetchPlan"),{year:$scope.selectYear}).then(function(response) {
+                if(response.data.dataList){
+                    $scope.dataPlan = response.data.dataList;
+                }else{
+                    $scope.dataPlan=[];
+                }
+
+                $scope.waitDataList = false;
+            });
+            
+        }
+        
+        
+        
     };
     
     
