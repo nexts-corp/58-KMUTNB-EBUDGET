@@ -9,17 +9,16 @@ myApp.controller('manageDepartment', function($scope,$http,$controller,cde) {
     $controller('cmListController', {$scope: $scope});
     
     $scope.init = function(){
+        cde.setPath("budget","allocate");
         $('[ng-app]').show();
         //$scope.cmListYear();
         //$scope.cmListBudgetType();
         $scope.cmListDepartment();
         $scope.cmListFundgroup();
-        $scope.cmListBudgetPlan();
+        $scope.cmList3dPlan();
         $scope.fetchBudgetTypeTree();
         
-        $scope.testPath = cde.path("user//delete");
-        //
-        //$('[ng-model=education],[ng-model=academic]').number( true, 2 );
+        
     };
     
     $scope.fetchBudgetTypeTree = function () {
@@ -30,15 +29,7 @@ myApp.controller('manageDepartment', function($scope,$http,$controller,cde) {
             
             $scope.loadBttP1 = 0;
             $scope.dataBttP1 = response.data.dataList;
-//            $scope.preDataBttP1 = response.data.dataList;
-//            for(var i=0;i<$scope.preDataBttP1.length;i++){
-//                for(var j=0;j<$scope.preDataBttP1[i].sub.length;j++){
-//                    for(var k=0;k<$scope.preDataBttP1[i].sub[j].data.length;j++){
-//                        $scope.preDataBttP1[i].sub[j].data[k].nameC = $scope.preDataBttP1[i].sub[j].data[k].name;
-//                    }
-//                }
-//            }
-//            $scope.dataBttP1 = $scope.preDataBttP1;
+
             
         });
     };

@@ -173,6 +173,12 @@ commonApp.controller('cmListController', function ($scope, $http) {
         });
     };
     
+    $scope.cmList3dPlan = function (budgetYear) {
+        $http.post(ngContextPath+"/api/common/lookup/list3DPlan", {}).then(function (response) {
+            $scope.cmDataList3dPlan = response.data.lists;
+        });
+    };
+    
     $scope.cmListBudgetType = function () {
         $http.post(ngContextPath+"/api/common/lookup/listBudgetType").then(function (response) {
             $scope.cmDataListBudgetType = response.data.lists;
