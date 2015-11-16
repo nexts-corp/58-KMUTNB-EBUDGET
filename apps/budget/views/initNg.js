@@ -164,7 +164,7 @@ myApp.controller('mainController', function($scope,$http,$controller) {
 //                deptId: "30101"
 //            };
 //
-//            $scope.openForm("project",$scope.tParam);
+//            $scope.openForm("manageDepartment",$scope.tParam);
 //
 //        }
 //

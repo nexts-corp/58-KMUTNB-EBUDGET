@@ -1,4 +1,4 @@
-{{>header}}
+{{> header}}
 <div ng-app="Department" ng-controller="tableController" data-ng-init="init()" style="display:none;">
     <div role="main" class="main">
         <section class="page-top none-margin">
@@ -36,7 +36,9 @@
         <div class="tabs">
             <ul id="tabMenu" class="nav nav-tabs">
                 <li ng-repeat="item in listCampus" ng-class='{active:$first}'>
-                    <a href="{['tab'+item.id]}" data-toggle="tab" aria-expanded="false"  ng-click="fetchDept(item.id);fetchDeptMain(item.id);tabShow(false);">{[item.campusName]}</a>
+                    <a href="{['tab'+item.id]}" data-toggle="tab" aria-expanded="false"  ng-click="fetchDept(item.id);
+                                        fetchDeptMain(item.id);
+                                        tabShow(false);">{[item.campusName]}</a>
                 </li>
                 <li>
                     <a href="#addCampus" data-toggle="tab"  ng-click = "tabShow(true)"  aria-expanded="false">เพิ่มวิทยาเขต</a>
@@ -54,34 +56,37 @@
                             </div>
                         </div>
                         <div class="col-md-5">
-                                <label class="col-md-3">ค้นหา :</label>
-                                <div class="col-md-9"><input ng-model="searchDept" type="text" class="form-control input-sm" placeholder="ใส่คำค้นหา"></div>
+                            <label class="col-md-3">ค้นหา :</label>
+                            <div class="col-md-9"><input ng-model="searchDept" type="text" class="form-control input-sm" placeholder="ใส่คำค้นหา"></div>
                         </div>
                         <div class="col-md-2 form-group text-right">
                             <!--add button-->
-                            <button ng-click="showModal('add',null,-1)" class="btn btn-success" type="button"><i class="fa fa-plus-circle" > เพิ่ม</i></button>
+                            <button ng-click="showModal('add', null, -1)" class="btn btn-success" type="button"><i class="fa fa-plus-circle" > เพิ่ม</i></button>
                         </div>
                     </div>
                     &nbsp;
                     <table class="table table-bordered mb-none">
                         <thead>
-                        <tr>
-                            <th class="col-md-2">รหัสหน่วยงาน</th>
-                            <th class="col-md-6">หน่วยงาน</th>
-                            <th class="col-md-2">ประเภทส่วนงาน</th>
-                            <th class="col-md-2">Manage Function</th>
-                        </tr>
+                            <tr>
+                                <th class="col-md-2 text-center">รหัสหน่วยงาน</th>
+                                <th class="col-md-4 text-center">หน่วยงาน</th>
+                                <th class="col-md-3 text-center">ประเภทส่วนงาน</th>
+                                <th class="col-md-1 text-center">สถานะ</th>
+                                <th class="col-md-2 text-center">เครื่องมือ</th>
+                            </tr>
                         </thead>
                         <tbody id="table-body" ng-hide="isLoding">
-                        <tr ng-repeat="item_tr in listDept | filter:{ masterId: selectMainDept.id||undefined} |filter:searchDept">
-                            <td>{[item_tr.deptID]}</td>
-                            <td>{[item_tr.deptName]}</td>
-                            <td>{[item_tr.actTypeName]}</td>
-                            <td style="text-align: center">
-                                <button class="btn btn-warning edit-btn" title="แก้ไข" ng-click="showModal('edit',item_tr,$index);"><i class="fa fa-pencil"></i></button>
-                                <button class="btn btn-default delete-btn" title="ลบ" ng-click="showModal('delete',item_tr,$index);"><i class="fa fa-trash"></i></button>
-                            </td>
-                        </tr>
+                            <tr ng-repeat="item_tr in listDept| filter:{ masterId: selectMainDept.id||undefined} |filter:searchDept">
+                                <td class="text-center">{[item_tr.deptID]}</td>
+                                <td>{[item_tr.deptName]}</td>
+                                <td class="text-center">{[item_tr.actTypeName]}</td>
+                                <td class="text-center">{[item_tr.deptStatus]}</td>
+                                <td style="text-align: center">
+                                    <button class="btn btn-warning edit-btn" title="แก้ไข" ng-click="showModal('edit', item_tr, $index);"><i class="fa fa-pencil"></i></button>
+                                    <button class="btn btn-success on-background" title="เปิดการใช้งาน" ng-click="showModal('enable', item_tr, $index);"><i class="fa fa-angle-double-left"></i></button>
+                                    <button class="btn btn-default delete-btn" title="ปิดการใช้งาน" ng-click="showModal('delete', item_tr, $index);"><i class="fa fa-trash"></i></button>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <div class="col-md-12 text-center text-bold" ng-show="isLoding"><i class="fa fa-spinner fa-spin"></i> กรุณารอสักครู่</div>
@@ -156,5 +161,5 @@
     </div>
     <!--  container  -->
 </div>
-{{>footer}}
+{{> footer}}
 <script src="{{_context_path}}/apps/bginfo/views/Department/js/manage.js"></script>

@@ -36,12 +36,16 @@ class DepartmentService extends CServiceBase implements IDepartmentService {
 
     public function fetchDepartment($campusID) {
 
-        $sql = "SELECT dept.id AS deptID,dept.deptName,dept.masterId,dept.campusId,maping.id as mapID,act.id AS actTypeID,act.actTypeName "
+        $sql = "SELECT dept.id AS deptID, dept.deptName, dept.masterId, dept.campusId, "
+                . "maping.id as mapID, act.id AS actTypeID, act.actTypeName, "
+                . "case when dept.deptStatus = 'Y' then 'ใช้งาน' else 'ไม่ใช้งาน' end as deptStatus "
                 . "FROM " . $this->pathEnt . "\\L3D\\Department dept "
                 . "LEFT JOIN " . $this->pathEnt . "\\MappingDepartmentType maping "
                 . "WITH dept.id = maping.deptId "
                 . "LEFT JOIN " . $this->pathEnt . "\\ActivityType act "
-                . "WITH maping.actId = act.id WHERE dept.deptStatus = 'Y' AND (dept.campusId is null OR dept.campusId=" . $campusID . ")";
+                . "WITH maping.actId = act.id "
+                . "WHERE dept.id != 0 and dept.campusId = " . $campusID . " "
+                . "order by dept.deptStatus desc, dept.id asc ";
 
         return $this->datacontext->getObject($sql);
     }
@@ -64,14 +68,14 @@ class DepartmentService extends CServiceBase implements IDepartmentService {
           $obj->setDeptStatus('Y');
 
           return $this->datacontext->getObject($obj);
-        */ 
-        
-        
-    
-        $sql = "select dept.id, dept.deptName from " . $this->pathEnt . "\\L3D\\Department dept "
-                . "where dept.masterId = 0 and dept.deptStatus = 'Y' and (dept.campusId is null or dept.campusId = " . $campusID . ")";
+         */
+
+
+
+        $sql = "select dept.id, dept.deptName "
+                . " from " . $this->pathEnt . "\\L3D\\Department dept "
+                . "where dept.masterId = 0 and dept.deptGroup = 'A' and dept.campusId = " . $campusID . " ";
         return $this->datacontext->getObject($sql);
-        
     }
 
     public function fetchActivityType() {
@@ -136,6 +140,7 @@ class DepartmentService extends CServiceBase implements IDepartmentService {
         $obj->setDeptStatus('N');
 
         if ($this->datacontext->updateObject($obj)) {
+            /*
             if ($mapId != -1) {
                 $obj2 = new MappingDepartmentType();
                 $obj2->setId($mapId);
@@ -147,6 +152,24 @@ class DepartmentService extends CServiceBase implements IDepartmentService {
                     $return["status"] = false;
                 }
             }
+            */
+            $return["msg"] = $this->datacontext->getLastMessage();
+            $return["status"] = true;
+        } else {
+            $return["msg"] = $this->datacontext->getLastMessage();
+            $return["status"] = false;
+        }
+
+        return $return;
+    }
+
+    public function enableDepartment($idDept, $mapId) {
+        $return = array();
+        $obj = new Department();
+        $obj->setId($idDept);
+        $obj->setDeptStatus('Y');
+
+        if ($this->datacontext->updateObject($obj)) {
             $return["msg"] = $this->datacontext->getLastMessage();
             $return["status"] = true;
         } else {

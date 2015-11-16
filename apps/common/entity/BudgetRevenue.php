@@ -54,6 +54,9 @@ class BudgetRevenue extends EntityBase {
     /** @Column(type="integer",length=11, name="ATTACHMENTID") */
     public $attachmentId;
 
+    /** @Column(type="string",length=18, name="BUDGETCATEGORY") */
+    public $bgCategory;
+
     /** @Column(type="text", name="REVENUENAME") */
     public $revenueName;
 
@@ -162,6 +165,10 @@ class BudgetRevenue extends EntityBase {
 
     function getAttachmentId() {
         return $this->attachmentId;
+    }
+
+    function getBgCategory() {
+        return $this->bgCategory;
     }
 
     function getRevenueName() {
@@ -290,6 +297,10 @@ class BudgetRevenue extends EntityBase {
 
     function setAttachmentId($attachmentId) {
         $this->attachmentId = $attachmentId;
+    }
+
+    function setBgCategory($bgCategory) {
+        $this->bgCategory = $bgCategory;
     }
 
     function setRevenueName($revenueName) {

@@ -100,7 +100,7 @@ function bg140Form(param) {
         + '     <tr>'
         + '         <th rowspan="3" class="text-center" style="vertical-align: middle;">ลำดับ</th>'
         + '         <th rowspan="3" class="text-center" style="vertical-align: middle;">ชื่อตำแหน่ง</th>'
-        + '         <th colspan="5" class="text-center" style="vertical-align: middle;">อัตราเดิม (ตามบัญชีถือจ่าย ณ ต.ค.57)</th>'
+        + '         <th colspan="5" class="text-center" style="vertical-align: middle;">อัตราเดิม</th>'
         + '         <th rowspan="3" class="text-center" style="vertical-align: middle;">คำชี้แจง</th>'
         + '         <th rowspan="3" class="text-center" style="vertical-align: middle;">สถานะคำขอ</th>'
         + '         <th rowspan="3" class="text-center" style="vertical-align: middle; min-width: 130px;">เครื่องมือ</th>'

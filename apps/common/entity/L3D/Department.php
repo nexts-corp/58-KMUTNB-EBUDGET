@@ -1,6 +1,7 @@
 <?php
 
 namespace apps\common\entity\L3D;
+
 use apps\common\entity\EntityBase;
 
 /**
@@ -32,6 +33,9 @@ class Department extends EntityBase {
 
     /** @Column(type="integer",length=11, name="CAMPUSID") */
     public $campusId;
+
+    /** @Column(type="string",length=1, name="ISREVENUE") */
+    public $isRevenue;
 
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
@@ -65,6 +69,10 @@ class Department extends EntityBase {
 
     function getCampusId() {
         return $this->campusId;
+    }
+
+    function getIsRevenue() {
+        return $this->isRevenue;
     }
 
     function getCreator() {
@@ -101,6 +109,10 @@ class Department extends EntityBase {
 
     function setCampusId($campusId) {
         $this->campusId = $campusId;
+    }
+
+    function setIsRevenue($isRevenue) {
+        $this->isRevenue = $isRevenue;
     }
 
     function setCreator($creator) {

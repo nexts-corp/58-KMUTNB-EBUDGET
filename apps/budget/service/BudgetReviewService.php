@@ -228,13 +228,13 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
     }
 
     public function getAllBudgetRequest($budgetPeriodId, $deptId) {
-        if (isset($deptId) && $deptId > 0) {
+        if ($deptId > 0) {
             $sqlExt = "and bgh.statusId = 1 ";
         } else {
             $sqlExt = "and bgh.statusId <> 1 ";
         }
 
-        $sql = "select bgh.id as bghId, bgh.budgetTypeCode, "
+        $sql = "select bgh.id as bghId, bgh.budgetTypeCode, bgh.budgetPeriodId, "
                 . "case when bgh.budgetTypeCode = 'G' then 'เงินงบประมาณแผ่นดิน' else 'เงินรายได้' end as budgetTypeName, "
                 . "bgh.formId as formId, dept.id as deptId, dept.deptName as deptName, "
                 . "faculty.id as facultyId, faculty.deptName as facultyName, "
@@ -253,7 +253,6 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
                 . "left outer join " . $this->ent . "\\TrackingStatus status with status.id = bgh.statusId "
                 . "where bgh.budgetTypeCode = 'G' "
                 . $sqlExt
-                . "and bgh.statusId <> 1 "
                 . "and bgh.budgetPeriodId = :budgetPeriodId "
                 . "order by status.id, bgh.formId, dept.id, l3dPlan.id, fund.id asc ";
 
