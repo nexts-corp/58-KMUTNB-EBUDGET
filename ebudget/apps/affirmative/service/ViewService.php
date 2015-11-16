@@ -36,7 +36,7 @@ class ViewService extends CServiceBase implements IViewService {
         $data = $this->datacontext->getObject($viewDept)[0];
         $view = new CJView("draft", CJViewType::HTML_VIEW_ENGINE);
         $view->department = $data;
-        $groupS = new GroupService();
+        $groupS = new DraftService();
         $view->year = $groupS->getPeriod()->year;
         return $view;
     }
@@ -47,7 +47,7 @@ class ViewService extends CServiceBase implements IViewService {
         $data = $this->datacontext->getObject($viewDept)[0];
         $view = new CJView("final", CJViewType::HTML_VIEW_ENGINE);
         $view->department = $data;
-        $groupS = new GroupService();
+        $groupS = new DraftService();
         $view->year = $groupS->getPeriod()->year;
         return $view;
     }
@@ -63,7 +63,7 @@ class ViewService extends CServiceBase implements IViewService {
         $data = $this->datacontext->getObject($viewDept)[0];
         $view = new CJView("result", CJViewType::HTML_VIEW_ENGINE);
         $view->department = $data;
-        $groupS = new GroupService();
+        $groupS = new DraftService();
         $view->year = $groupS->getPeriod()->year;
         return $view;
     }

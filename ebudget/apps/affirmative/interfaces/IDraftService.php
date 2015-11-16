@@ -10,14 +10,6 @@ namespace apps\affirmative\interfaces;
 interface IDraftService {
 
     /**
-     * @name checkApprove
-     * @uri /checkApprove
-     * @return String[] lists Description
-     * @description ผู้เสนอราคาสูงสุดต่อคลัง
-     */
-    public function checkApprove();
-
-    /**
      * @name listsDept
      * @uri /listsDept
      * @return String[] lists Description
