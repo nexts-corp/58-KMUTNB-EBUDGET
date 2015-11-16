@@ -3,11 +3,11 @@
 namespace apps\affirmative\interfaces;
 
 /**
- * @name IGroupService
- * @uri /group
+ * @name IDraftService
+ * @uri /draft
  * @description ประมูล
  */
-interface IGroupService {
+interface IDraftService {
 
     /**
      * @name checkApprove

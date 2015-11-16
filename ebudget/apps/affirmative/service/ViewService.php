@@ -30,11 +30,11 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
-    public function group($deptId) {
+    public function draft($deptId) {
         $viewDept = new \apps\affirmative\model\ViewActivityDepartment();
         $viewDept->departmentId = $deptId;
         $data = $this->datacontext->getObject($viewDept)[0];
-        $view = new CJView("group", CJViewType::HTML_VIEW_ENGINE);
+        $view = new CJView("draft", CJViewType::HTML_VIEW_ENGINE);
         $view->department = $data;
         $groupS = new GroupService();
         $view->year = $groupS->getPeriod()->year;

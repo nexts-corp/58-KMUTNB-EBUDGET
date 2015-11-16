@@ -174,7 +174,7 @@ function listsCenter() {
             + '<td class="text-center">2</td>'
             + '<td>ร่างตัวชี้วัดคำรับรองของส่วนงาน</td>'
             + '<td class="text-center">-</td>'
-            + '<td class="text-center"><button id="group" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
+            + '<td class="text-center"><button id="draft" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
             + '</tr>'
             + '<tr>'
             + '<td class="text-center">3</td>'
@@ -196,9 +196,9 @@ function listsCenter() {
         window.location = "center";
     });
 
-    $("#group").click(function () {
+    $("#draft").click(function () {
         $("#modalDept").modal("show");
-        var datas = callAjax("{{_context_path}}/api/affirmative/group/listsDept", "post", {}, "json")["lists"];
+        var datas = callAjax("{{_context_path}}/api/affirmative/draft/listsDept", "post", {}, "json")["lists"];
         if (typeof datas !== "undefined" && datas !== null) {
             var html = '';
             $.each(datas, function (key, value) {
@@ -207,13 +207,13 @@ function listsCenter() {
                         + '<td>' + value["departmentName"] + '</td>'
                         + '<td class="text-center">' + value["activityName"] + '</td>'
                         + '<td class="text-center">' + (value["status"] == "Y" ? "<span class='text-success'>อนุมัติแล้ว" : "<span class='text-danger'>ยังไม่อนุมัติ") + '</span></td>'
-                        + '<td>' + (value["status"] == "Y" ? "" : '<button class="btn btn-sm btn-success btnGroup" data-deptId="' + value["departmentId"] + '">จัดทำ</button>') + '</td>'
+                        + '<td>' + (value["status"] == "Y" ? "" : '<button class="btn btn-sm btn-success btnDraft" data-deptId="' + value["departmentId"] + '">จัดทำ</button>') + '</td>'
                         + '</tr>';
             });
             $("#tableDept tbody").html(html);
-            $(".btnGroup").click(function () {
+            $(".btnDraft").click(function () {
                 var deptId = $(this).attr("data-deptId");
-                window.location = "{{_context_path}}/api/affirmative/view/group/" + deptId;
+                window.location = "{{_context_path}}/api/affirmative/view/draft/" + deptId;
             });
         }
     });

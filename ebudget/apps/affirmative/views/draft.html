@@ -23,13 +23,14 @@
         <div class="container">
             <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
                 <li class="active">
-                    <button class="btn btn-default back" style="display: none;"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
+                    <button class="btn btn-primary" id="btnApprove"><i class="fa fa-send"> ส่งแบบตัวชี้วัด</i></button>
                 </li>
             </ul>
         </div>
     </div><!-- end button action on header -->
 
     <div class="container">
+
         <div class="row">
 
             <div id="panelHome" class="col-md-12">
@@ -212,14 +213,14 @@
     var deptId = '{{#department}}{{departmentId}}{{/department}}';
     $(function () {
         centerForm();
-        /*$("button.back").unbind("click").click(function () {
-         toggleShow("home");
-         })*/
+        $("#btnApprove").click(function () {
+            var result = callAjax("{{_context_path}}/api/affirmative/draft/approve", "post", {departmentId: deptId, status: "Y"}, "json");
+        });
     });
     function centerForm() {
         var contentArr = {};
 
-        var datas = callAjax("{{_context_path}}/api/affirmative/group/listsAll", "post", {departmentId: deptId}, "json");
+        var datas = callAjax("{{_context_path}}/api/affirmative/draft/listsAll", "post", {departmentId: deptId}, "json");
         //  console.log(datas);
         if (typeof datas["lists"] !== "undefined" && datas["lists"] !== null) {
             var menu = '<li class="active">'
@@ -525,7 +526,7 @@
         setTimeout(function () {
             var dataJSON = JSON.stringify({draft: fdata});
             var dataJSONEN = encodeURIComponent(dataJSON);
-            var datas = callAjax("{{_context_path}}/api/affirmative/group/insert", "post", dataJSONEN, "json");
+            var datas = callAjax("{{_context_path}}/api/affirmative/draft/insert", "post", dataJSONEN, "json");
             var data = datas["insert"];
 
             if (typeof data !== "undefined" && data !== null) {
@@ -607,7 +608,7 @@
         setTimeout(function () {
             var dataJSON = JSON.stringify({draft: fdata});
             var dataJSONEN = encodeURIComponent(dataJSON);
-            var datas = callAjax("{{_context_path}}/api/affirmative/group/update", "post", dataJSONEN, "json");
+            var datas = callAjax("{{_context_path}}/api/affirmative/draft/update", "post", dataJSONEN, "json");
             var data = datas["update"];
             if (typeof data !== "undefined" && data !== null) {
                 if (data != false) {
@@ -697,7 +698,7 @@
     function centerDelete(draftId) {
         var dataJSON = JSON.stringify({draft: {draftId: draftId}});
         var dataJSONEN = encodeURIComponent(dataJSON);
-        var datas = callAjax("{{_context_path}}/api/affirmative/group/delete", "post", dataJSONEN, "json");
+        var datas = callAjax("{{_context_path}}/api/affirmative/draft/delete", "post", dataJSONEN, "json");
         if (typeof datas !== "undefined" && datas !== null) {
             if (datas["delete"] == true) {
                 $("#tableall").treetable("removeNode", "draft" + draftId);

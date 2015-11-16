@@ -2,12 +2,12 @@
 
 namespace apps\affirmative\service;
 
-use apps\affirmative\interfaces\IGroupService;
+use apps\affirmative\interfaces\IDraftService;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
 use th\co\bpg\cde\collection\impl\CJSONDecodeImpl;
 
-class GroupService extends CServiceBase implements IGroupService {
+class DraftService extends CServiceBase implements IDraftService {
 
     public $datacontext;
     public $logger;
