@@ -79,7 +79,7 @@ class ResultService extends CServiceBase implements IResultService {
     public function listsRound(){
         $sql = "SELECT"
                 ." rd"
-            ." FROM ".$this->ent."\\AffirmativeRound rd"
+            ." FROM ".$this->entA."\\AffirmativeRound rd"
             ." WHERE rd.periodCode = :period";
         $param = array(
             "period" => $this->getPeriod()->year
@@ -91,7 +91,7 @@ class ResultService extends CServiceBase implements IResultService {
     }
 
     public function department($deptId, $roundId){
-        $json = new CJSONDecodeImpl();
+       // $json = new CJSONDecodeImpl();
         $dept = new \apps\affirmative\model\ViewActivityDepartment();
         $dept->departmentId = $deptId;
         $dataDept = $this->datacontext->getObject($dept)[0];
@@ -104,10 +104,13 @@ class ResultService extends CServiceBase implements IResultService {
         $draft->departmentId = $deptId;
         $draftData = $this->datacontext->getObject($draft);*/
         $sql = "SELECT"
-                ." fn"
-            ." FROM ".$this->entA."\\AffirmativeFinal fn"
-            ." LEFT OUTER JOIN ".$this->entA."\\AffirmativeResult rt WITH rt.finalId = fn.finalId AND rt.roundId = :round"
-            ." WHERE fn.periodCode = :period AND fn.departmentId = :dept";
+                ." fl.finalId, fl.periodCode, fl.departmentId, fl.mainId, fl.mainSeq, fl.typeId, fl.typeSeq, fl.hasIssue,"
+                ." fl.issueId, fl.issueSeq, fl.targetId, fl.targetSeq, fl.kpiId, fl.kpiSeq, fl.kpiName, fl.unitId, fl.unitName,"
+                ." fl.kpiGoal, fl.score1, fl.score2, fl.score3, fl.score4, fl.score5, rt.resultId, rt.roundId, rt.detail,"
+                ." rt.dividend, rt.divisor, rt.result, rt.score, rt.isSuccess, rt.remark, rt.attachment"
+            ." FROM ".$this->entA."\\AffirmativeFinal fl"
+            ." LEFT OUTER JOIN ".$this->entA."\\AffirmativeResult rt WITH rt.finalId = fl.finalId AND rt.roundId = :round"
+            ." WHERE fl.periodCode = :period AND fl.departmentId = :dept";
         $param = array(
             "round" => $roundId,
             "period" => $this->getPeriod()->year,
@@ -115,15 +118,15 @@ class ResultService extends CServiceBase implements IResultService {
         );
 
         $draftData = $this->datacontext->getObject($sql, $param);
-        return $sql;
+        //return $draftData;
         foreach ($draftData as $keyDraft => $valueDraft) {
-            if ($valueDraft->hasIssue == "Y") {
-                if (empty($targetArr[$valueDraft->targetId][$valueDraft->draftId])) {
-                    $targetArr[$valueDraft->targetId][$valueDraft->draftId] = $valueDraft;
+            if ($valueDraft["hasIssue"] == "Y") {
+                if (empty($targetArr[$valueDraft["targetId"]][$valueDraft["finalId"]])) {
+                    $targetArr[$valueDraft["targetId"]][$valueDraft["finalId"]] = $valueDraft;
                 }
-            } elseif ($valueDraft->hasIssue == "N") {
-                if (empty($typeArr[$valueDraft->typeId][$valueDraft->draftId])) {
-                    $typeArr[$valueDraft->typeId][$valueDraft->draftId] = $valueDraft;
+            } elseif ($valueDraft["hasIssue"] == "N") {
+                if (empty($typeArr[$valueDraft["typeId"]][$valueDraft["finalId"]])) {
+                    $typeArr[$valueDraft["typeId"]][$valueDraft["finalId"]] = $valueDraft;
                 }
             }
         }
@@ -192,4 +195,86 @@ class ResultService extends CServiceBase implements IResultService {
         return $mainData;
     }
 
+    public function result($result, $file)
+    {
+        $return = true;
+
+        $check = new \apps\affirmative\entity\AffirmativeResult();
+        $check->finalId = $result["finalId"];
+        $check->roundId = $result["roundId"];
+        $dataCk = $this->datacontext->getObject($check);
+
+        $hasFile = $dataCk[0]->attachment;
+
+        $fileReturn = $dataCk[0]->attachment;
+
+        if(count($dataCk) == 0){
+            $check->detail = $result["detail"];
+            $check->dividend = $result["dividend"];
+            $check->divisor = $result["divisor"];
+            $check->result = $result["result"];
+            $check->score = $result["score"];
+            $check->isSuccess = $result["isSuccess"];
+            $check->remark = $result["remark"];
+
+            if (!$this->datacontext->saveObject($check)) {
+                $return = $this->datacontext->getLastMessage();
+            }
+        }
+        else{
+            $dataCk[0]->detail = $result["detail"];
+            $dataCk[0]->dividend = $result["dividend"];
+            $dataCk[0]->divisor = $result["divisor"];
+            $dataCk[0]->result = $result["result"];
+            $dataCk[0]->score = $result["score"];
+            $dataCk[0]->isSuccess = $result["isSuccess"];
+            $dataCk[0]->remark = $result["remark"];
+
+            if (!$this->datacontext->updateObject($dataCk[0])) {
+                $return = $this->datacontext->getLastMessage();
+            }
+        }
+        if($result["fileUpload"] == 1 && $file != "undefined"){
+            $time = date("YmdHis");
+            $target_dir = "apps\\affirmative\\views\\result\\";
+
+            $target_file = $target_dir . "RS" . $time . "-" . $file["name"];
+            $fileN = "RS" . $time . "-" . $file["name"];
+
+            $update = new \apps\affirmative\entity\AffirmativeResult();
+            $update->finalId = $result["finalId"];
+            $update->roundId = $result["roundId"];
+            $data = $this->datacontext->getObject($update);
+
+            if($hasFile !=  ""){
+                if (file_exists($target_dir.$hasFile)){
+                    unlink($target_dir.$hasFile);
+                    $fileReturn = '';
+
+                    $data[0]->attachment = '';
+
+                    if (!$this->datacontext->updateObject($data[0])) {
+                        $return = $this->datacontext->getLastMessage();
+                    }
+                }
+            }
+
+            if (move_uploaded_file($file["tmp_name"], $target_file)) {
+
+
+                $data[0]->attachment = $fileN;
+
+                if (!$this->datacontext->updateObject($data[0])) {
+                    $return = $this->datacontext->getLastMessage();
+                }
+
+                $fileReturn = $fileN;
+            }
+        }
+
+
+
+        $this->getResponse()->add("filename", $fileReturn);
+        return $return;
+    }
 }

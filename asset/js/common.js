@@ -94,6 +94,35 @@ function dataJson(formId) {
     return dataJSONEN;
 }
 
+function callAjaxFile(url, type, data, dataType) {
+    var value = "";
+    $.ajax({
+        url: url,
+        type: type,
+        async: false,
+        timeout: 60000, // 1000 = 1 s
+        dataType: dataType,
+        data: data,
+        enctype: 'multipart/form-data',
+        processData: false,  // tell jQuery not to process the data
+        contentType: false,  // tell jQuery not to set contentType
+        error: function (xhr) {
+            if (xhr.status == 401) {
+                window.location.href = xhr.getResponseHeader('Location');
+            }
+            else if (xhr.status == 403) {
+                alert("ไม่มีสิทธิ์ใช้งานส่วนนี้");
+            }
+            value = "Time Out!!";
+
+        },
+        success: function (result) {
+            value = result;
+        }
+    });
+    return value;
+}
+
 function callAjax(url, type, data, dataType) {
     var value = "";
     $.ajax({

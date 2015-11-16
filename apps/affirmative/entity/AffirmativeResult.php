@@ -5,7 +5,7 @@ use apps\common\entity\EntityBase;
 
 /**
  * @Entity
- * @Table(name="Affirmative_Final")
+ * @Table(name="Affirmative_Result")
  */
 class AffirmativeResult extends EntityBase{
 
@@ -27,7 +27,7 @@ class AffirmativeResult extends EntityBase{
     public $roundId;
 
     /**
-     * @Column(type="string",name="FinalId")
+     * @Column(type="string",name="Detail")
      */
     public $detail;
 
