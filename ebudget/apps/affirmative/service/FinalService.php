@@ -17,6 +17,19 @@ class FinalService extends CServiceBase implements IFinalService {
         $this->datacontext = new CDataContext(NULL);
     }
 
+    function checkApprove($departmentId) {
+        $final = new \apps\affirmative\entity\AffirmativeFinal();
+        $final->periodCode = $this->getPeriod()->year;
+        $final->departmentId = $departmentId;
+        $final->isApprove = 'Y';
+        $data = $this->datacontext->getObject($final);
+        if (count($data) > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     function getPeriod() {
         $year = new \apps\common\entity\Year();
         $year->yearStatus = 'Y';
@@ -105,90 +118,94 @@ class FinalService extends CServiceBase implements IFinalService {
     }
 
     public function listsAll($departmentId) {
-        $json = new CJSONDecodeImpl();
-        $dept = new \apps\affirmative\model\ViewActivityDepartment();
-        $dept->departmentId = $departmentId;
-        $dataDept = $this->datacontext->getObject($dept)[0];
+        if ($this->checkApprove($departmentId)) {
+            $json = new CJSONDecodeImpl();
+            $dept = new \apps\affirmative\model\ViewActivityDepartment();
+            $dept->departmentId = $departmentId;
+            $dataDept = $this->datacontext->getObject($dept)[0];
 
-        $typeArr = array();
-        $targetArr = array();
-        $final = new \apps\affirmative\entity\AffirmativeFinal();
-        $final->periodCode = $this->getPeriod()->year;
-        $final->departmentId = $departmentId;
-        $finalData = $this->datacontext->getObject($final);
-        foreach ($finalData as $keyFinal => $valueFinal) {
-            if ($valueFinal->hasIssue == "Y") {
-                if (empty($targetArr[$valueFinal->targetId][$valueFinal->finalId])) {
-                    $targetArr[$valueFinal->targetId][$valueFinal->finalId] = $valueFinal;
-                }
-            } elseif ($valueFinal->hasIssue == "N") {
-                if (empty($typeArr[$valueFinal->typeId][$valueFinal->finalId])) {
-                    $typeArr[$valueFinal->typeId][$valueFinal->finalId] = $valueFinal;
+            $typeArr = array();
+            $targetArr = array();
+            $final = new \apps\affirmative\entity\AffirmativeFinal();
+            $final->periodCode = $this->getPeriod()->year;
+            $final->departmentId = $departmentId;
+            $finalData = $this->datacontext->getObject($final);
+            foreach ($finalData as $keyFinal => $valueFinal) {
+                if ($valueFinal->hasIssue == "Y") {
+                    if (empty($targetArr[$valueFinal->targetId][$valueFinal->finalId])) {
+                        $targetArr[$valueFinal->targetId][$valueFinal->finalId] = $valueFinal;
+                    }
+                } elseif ($valueFinal->hasIssue == "N") {
+                    if (empty($typeArr[$valueFinal->typeId][$valueFinal->finalId])) {
+                        $typeArr[$valueFinal->typeId][$valueFinal->finalId] = $valueFinal;
+                    }
                 }
             }
-        }
-        $targetArr = $this->sortBy("kpiSeq", $targetArr);
-        $typeArr = $this->sortBy("kpiSeq", $typeArr);
+            $targetArr = $this->sortBy("kpiSeq", $targetArr);
+            $typeArr = $this->sortBy("kpiSeq", $typeArr);
 
-        $sqlMain = "select s.mainId,s.mainSeq,m.mainName "
-                . "from apps\\affirmative\\entity\\AffirmativeSetting s "
-                . "join apps\\affirmative\\entity\\AffirmativeMain m with m.mainId = s.mainId "
-                . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
-                . "group by s.mainId,s.mainSeq,m.mainName "
-                . "order by s.mainSeq";
-        $paramMain = array(
-            "periodCode" => $this->getPeriod()->year,
-            "groupCode" => $dataDept->activityCode
-        );
-        $mainData = $this->datacontext->getObject($sqlMain, $paramMain);
-        $sqlType = "select s.mainId,s.mainSeq,s.typeId,s.typeSeq,m.typeName,m.hasIssue "
-                . "from apps\\affirmative\\entity\\AffirmativeSetting s "
-                . "join apps\\affirmative\\entity\\AffirmativeType m with m.typeId = s.typeId "
-                . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
-                . "group by s.mainId,s.mainSeq,s.typeId,s.typeSeq,m.typeName,m.hasIssue "
-                . "order by s.mainSeq,s.typeSeq";
-        $paramType = array(
-            "periodCode" => $this->getPeriod()->year,
-            "groupCode" => $dataDept->activityCode
-        );
-        $typeData = $this->datacontext->getObject($sqlType, $paramType);
-        foreach ($mainData as $keyMain => $valMain) {
-            foreach ($typeData as $keyType => $valueType) {
-                if ($valMain["mainSeq"] == $valueType["mainSeq"]) {
-                    $mainData[$keyMain]["type"][$valueType["typeSeq"]] = $valueType;
-                    $issueSql = "select v from apps\\affirmative\\entity\\AffirmativeIssue v where v.typeId = :typeId  order by v.issueSeq";
-                    $issueParam = array("typeId" => $valueType["typeId"]);
-                    $issueData = $this->datacontext->getObject($issueSql, $issueParam);
-                    $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"] = $issueData;
+            $sqlMain = "select s.mainId,s.mainSeq,m.mainName "
+                    . "from apps\\affirmative\\entity\\AffirmativeSetting s "
+                    . "join apps\\affirmative\\entity\\AffirmativeMain m with m.mainId = s.mainId "
+                    . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
+                    . "group by s.mainId,s.mainSeq,m.mainName "
+                    . "order by s.mainSeq";
+            $paramMain = array(
+                "periodCode" => $this->getPeriod()->year,
+                "groupCode" => $dataDept->activityCode
+            );
+            $mainData = $this->datacontext->getObject($sqlMain, $paramMain);
+            $sqlType = "select s.mainId,s.mainSeq,s.typeId,s.typeSeq,m.typeName,m.hasIssue "
+                    . "from apps\\affirmative\\entity\\AffirmativeSetting s "
+                    . "join apps\\affirmative\\entity\\AffirmativeType m with m.typeId = s.typeId "
+                    . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
+                    . "group by s.mainId,s.mainSeq,s.typeId,s.typeSeq,m.typeName,m.hasIssue "
+                    . "order by s.mainSeq,s.typeSeq";
+            $paramType = array(
+                "periodCode" => $this->getPeriod()->year,
+                "groupCode" => $dataDept->activityCode
+            );
+            $typeData = $this->datacontext->getObject($sqlType, $paramType);
+            foreach ($mainData as $keyMain => $valMain) {
+                foreach ($typeData as $keyType => $valueType) {
+                    if ($valMain["mainSeq"] == $valueType["mainSeq"]) {
+                        $mainData[$keyMain]["type"][$valueType["typeSeq"]] = $valueType;
+                        $issueSql = "select v from apps\\affirmative\\entity\\AffirmativeIssue v where v.typeId = :typeId  order by v.issueSeq";
+                        $issueParam = array("typeId" => $valueType["typeId"]);
+                        $issueData = $this->datacontext->getObject($issueSql, $issueParam);
+                        $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"] = $issueData;
 
-                    if (array_key_exists($valueType["typeId"], $typeArr)) {
-                        $mainData[$keyMain]["type"][$valueType["typeSeq"]]["kpi"] = $typeArr[$valueType["typeId"]];
-                    }
-                    $title = new \apps\affirmative\entity\AffirmativeSetting();
-                    $title->typeId = $valueType["typeId"];
-                    $title->periodCode = $this->getPeriod()->year;
-                    $title->mainId = $valMain["mainId"];
-                    $title->groupCode = $dataDept->activityCode;
-                    $title = $this->datacontext->getObject($title);
-                    if (count($title) > 0) {
-                        $mainData[$keyMain]["type"][$valueType["typeSeq"]]["title"] = $title[0]->title;
-                    }
-                    foreach ($issueData as $keyIssue => $valueIssue) {
-                        $targetSql = "select v from apps\\affirmative\\entity\\AffirmativeTarget v where v.issueId = :issueId  order by v.targetSeq";
-                        $targetParam = array("issueId" => $valueIssue->issueId);
-                        $targetData = $this->datacontext->getObject($targetSql, $targetParam);
-                        $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"][$keyIssue]->target = $targetData;
-                        foreach ($targetData as $keyTarget => $valueTarget) {
-                            if (array_key_exists($valueTarget->targetId, $targetArr)) {
-                                $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"][$keyIssue]->target[$keyTarget]->kpi = $targetArr[$valueTarget->targetId];
+                        if (array_key_exists($valueType["typeId"], $typeArr)) {
+                            $mainData[$keyMain]["type"][$valueType["typeSeq"]]["kpi"] = $typeArr[$valueType["typeId"]];
+                        }
+                        $title = new \apps\affirmative\entity\AffirmativeSetting();
+                        $title->typeId = $valueType["typeId"];
+                        $title->periodCode = $this->getPeriod()->year;
+                        $title->mainId = $valMain["mainId"];
+                        $title->groupCode = $dataDept->activityCode;
+                        $title = $this->datacontext->getObject($title);
+                        if (count($title) > 0) {
+                            $mainData[$keyMain]["type"][$valueType["typeSeq"]]["title"] = $title[0]->title;
+                        }
+                        foreach ($issueData as $keyIssue => $valueIssue) {
+                            $targetSql = "select v from apps\\affirmative\\entity\\AffirmativeTarget v where v.issueId = :issueId  order by v.targetSeq";
+                            $targetParam = array("issueId" => $valueIssue->issueId);
+                            $targetData = $this->datacontext->getObject($targetSql, $targetParam);
+                            $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"][$keyIssue]->target = $targetData;
+                            foreach ($targetData as $keyTarget => $valueTarget) {
+                                if (array_key_exists($valueTarget->targetId, $targetArr)) {
+                                    $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"][$keyIssue]->target[$keyTarget]->kpi = $targetArr[$valueTarget->targetId];
+                                }
                             }
                         }
                     }
                 }
             }
-        }
 
-        return $mainData;
+            return $mainData;
+        } else {
+            return false;
+        }
     }
 
     public function insert($final) {
