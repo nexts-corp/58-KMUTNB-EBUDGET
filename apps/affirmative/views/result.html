@@ -125,9 +125,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-4 control-label text-right text-bold">แนบไฟล์ (ถ้ามี) :</label>
-                                    <div class="col-md-8">
-                                        <div id="fileNew"></div>
-                                        <div id="fileBak" class="sol"></div>
+                                    <div id="fileGroup" class="col-md-8">
                                     </div>
                                 </div>
                                 <div id="loading" class="col-md-12 text-center"></div>
@@ -334,7 +332,7 @@
                                             + '</tr>';
 
                                         if(getTag(value5["divisor"], "") != ""){
-                                            contentArr[value1["mainSeq"]] += '<tr data-tt-id="final2' + value5["finalId"] + '" data-tt-parent-id="target' + value4["targetId"] + '">'
+                                            contentArr[value1["mainSeq"]] += '<tr data-tt-id="final' + value5["finalId"] + '-2" data-tt-parent-id="target' + value4["targetId"] + '">'
                                                     + '<td style="text-align: center;" >'+getTag(value5["divisor"], "")+'</td>'
                                                 + '</tr>';
                                         }
@@ -386,7 +384,7 @@
                                     + '</tr>';
 
                                 if(getTag(value5["divisor"], "") != ""){
-                                    contentArr[value1["mainSeq"]] += '<tr data-tt-id="final2' + value5["finalId"] + '2" data-tt-parent-id="target' + value4["targetId"] + '">'
+                                    contentArr[value1["mainSeq"]] += '<tr data-tt-id="final' + value5["finalId"] + '-2" data-tt-parent-id="target' + value4["targetId"] + '">'
                                             + '<td style="text-align: center;" >'+getTag(value5["divisor"], "")+'</td>'
                                         + '</tr>';
                                 }
@@ -441,6 +439,9 @@
 
                     //attachment
                     var fileUpload = 0;
+
+                    $("#fileGroup").html('<div id="fileNew"></div><div id="fileBak"></div>');
+
                     if(getTag(data["attachment"], "") != ""){
                         $("#fileNew").hide();
                         $("#fileBak").html(
@@ -510,6 +511,7 @@
                                 if(datas["result"] == true){
                                     $("#loading").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
                                     setTimeout(function(){
+                                        $("#loading").html("");
                                         $("#panelForm").modal("hide");
 
                                         showInRow(finalId, object, datas["filename"]);
@@ -613,6 +615,8 @@
         var row = 1;
         if(getTag(listArr[finalId]["divisor"], "") != "") row = 2;
 
+
+
         var link = '';
         if(getTag(listArr[finalId]["attachment"], "") != "")
             link = '<i class="fa fa-file-o"></i> <a href="javascript: void(0);" onclick="downloadFile(\''+listArr[finalId]["attachment"]+'\');">'+fileNameCut(listArr[finalId]["attachment"])+'</a>';
@@ -626,15 +630,17 @@
         $('tr[data-tt-id=final'+finalId+']').find("td").eq(5).html(listArr[finalId]["dividend"]);
         $('tr[data-tt-id=final'+finalId+']').find("td").eq(6).attr("rowspan", row).html(listArr[finalId]["result"]);
         $('tr[data-tt-id=final'+finalId+']').find("td").eq(7).attr("rowspan", row).html(listArr[finalId]["score"]);
-        $('tr[data-tt-id=final'+finalId+']').find("td").eq(8).attr("rowspan", row).html(listArr[finalId]["isSuccess"]);
         $('tr[data-tt-id=final'+finalId+']').find("td").eq(9).attr("rowspan", row).html(listArr[finalId]["remark"]);
         $('tr[data-tt-id=final'+finalId+']').find("td").eq(10).attr("rowspan", row).html(link);
 
+        if(listArr[finalId]["isSuccess"]== "1") $('tr[data-tt-id=final'+finalId+']').find("td").eq(8).attr("rowspan", row).html('✔').removeClass("text-success text-danger").addClass("text-success");
+        else if(listArr[finalId]["isSuccess"]== "0") $('tr[data-tt-id=final'+finalId+']').find("td").eq(8).attr("rowspan", row).html('✘').removeClass("text-success text-danger").addClass("text-danger");
+        else $('tr[data-tt-id=final'+finalId+']').find("td").eq(8).attr("rowspan", row).html('');
 
         if(row == 2){
-            $('tr[data-tt-id=final2'+finalId+']').remove();
+            $('tr[data-tt-id=final'+finalId+'-2]').remove();
 
-            $('tr[data-tt-id=final'+finalId+']').after('<tr data-tt-id="final2' + listArr[finalId]["finalId"] + '2" data-tt-parent-id="target' + listArr[finalId]["targetId"] + '">'
+            $('tr[data-tt-id=final'+finalId+']').after('<tr data-tt-id="final' + listArr[finalId]["finalId"] + '-2" data-tt-parent-id="target' + listArr[finalId]["targetId"] + '">'
                 + '<td style="text-align: center;" >'+getTag(listArr[finalId]["divisor"], "")+'</td>'
             + '</tr>');
         }

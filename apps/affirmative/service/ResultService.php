@@ -234,21 +234,18 @@ class ResultService extends CServiceBase implements IResultService {
                 $return = $this->datacontext->getLastMessage();
             }
         }
-        if($result["fileUpload"] == 1 && $file != "undefined"){
+        if($result["fileUpload"] == 1){
             $time = date("YmdHis");
             $target_dir = "apps\\affirmative\\views\\result\\";
-
-            $target_file = $target_dir . "RS" . $time . "-" . $file["name"];
-            $fileN = "RS" . $time . "-" . $file["name"];
 
             $update = new \apps\affirmative\entity\AffirmativeResult();
             $update->finalId = $result["finalId"];
             $update->roundId = $result["roundId"];
             $data = $this->datacontext->getObject($update);
 
-            if($hasFile !=  ""){
-                if (file_exists($target_dir.$hasFile)){
-                    unlink($target_dir.$hasFile);
+            if ($hasFile != "") {
+                if (file_exists($target_dir . $hasFile)) {
+                    unlink($target_dir . $hasFile);
                     $fileReturn = '';
 
                     $data[0]->attachment = '';
@@ -259,20 +256,23 @@ class ResultService extends CServiceBase implements IResultService {
                 }
             }
 
-            if (move_uploaded_file($file["tmp_name"], $target_file)) {
+            if($file != "undefined") {
+                $target_file = $target_dir . "RS" . $time . "-" . $file["name"];
+                $fileN = "RS" . $time . "-" . $file["name"];
+
+                if (move_uploaded_file($file["tmp_name"], $target_file)) {
 
 
-                $data[0]->attachment = $fileN;
+                    $data[0]->attachment = $fileN;
 
-                if (!$this->datacontext->updateObject($data[0])) {
-                    $return = $this->datacontext->getLastMessage();
+                    if (!$this->datacontext->updateObject($data[0])) {
+                        $return = $this->datacontext->getLastMessage();
+                    }
+
+                    $fileReturn = $fileN;
                 }
-
-                $fileReturn = $fileN;
             }
         }
-
-
 
         $this->getResponse()->add("filename", $fileReturn);
         return $return;
