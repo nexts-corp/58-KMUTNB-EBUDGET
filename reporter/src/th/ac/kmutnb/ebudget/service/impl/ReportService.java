@@ -21,6 +21,9 @@ import th.co.bpg.cde.collection.CJFile;
 import th.co.bpg.cde.core.CServiceBase;
 import th.co.bpg.cde.data.CDataContext;
 import th.co.bpg.cde.report.CReportGenerater;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import java.io.UnsupportedEncodingException;
+import th.co.bpg.cde.collection.CJMessage;
 
 /**
  *
@@ -99,44 +102,49 @@ public class ReportService extends CServiceBase implements IReportService {
         return sb.toString();
     }
 //String REPORT_CODE, String EXPORT_TYPE, String PERIOD_ID,String BUDGET_TYPE
+
     @Override
-    public CJFile export(String REPORT_CODE, String EXPORT_TYPE, String PERIOD_ID, String BUDGET_TYPE, String FAC_ID, String FAC_NAME, String DEPT_ID, String DEPT_NAME, String PLAN_ID, String PLAN_NAME, String FUND_ID, String FUND_NAME,String PRODUCT_ID,String PRODUCT_NAME) {
+    public CJFile export(String sparam) {
+    //public CJFile export(String REPORT_CODE, String EXPORT_TYPE
+        //  , String PERIOD_ID, String BUDGET_TYPE, String FAC_ID, String FAC_NAME
+        //        , String DEPT_ID, String DEPT_NAME, String PLAN_ID, String PLAN_NAME
+        //              , String FUND_ID, String FUND_NAME
+        //                    ,String PRODUCT_ID,String PRODUCT_NAME) {
         try {
-//           sparam = sparam.replaceAll(" ", "+");
-//            sparam = new String(Base64.decode(sparam), "UTF-8");
-//            CJMessage json = new CJMessage();
-//            json.parse(sparam);
-//            BaseParameter param = (BaseParameter) json.getValue(BaseParameter.class, "");
+            sparam = sparam.replaceAll(" ", "+");
+            sparam = new String(Base64.decode(sparam), "UTF-8");
+            CJMessage json = new CJMessage();
+            json.parse(sparam);
+            BaseParameter param = (BaseParameter) json.getValue(BaseParameter.class, "");
 //            BaseParameter param = new BaseParameter();
 //            param.setREPORT_CODE("RPT_01");
 //            param.setEXPORT_TYPE("pdfview");
-            BaseParameter param = new BaseParameter();
-            param.setREPORT_CODE(REPORT_CODE);
-            param.setEXPORT_TYPE(EXPORT_TYPE);
-            param.setPERIOD_ID(PERIOD_ID);
-            param.setBUDGET_TYPE(BUDGET_TYPE);
-            
+
+//            BaseParameter param = new BaseParameter();
+//            param.setREPORT_CODE(REPORT_CODE);
+//            param.setEXPORT_TYPE(EXPORT_TYPE);
+//            param.setPERIOD_ID(PERIOD_ID);
+//            param.setBUDGET_TYPE(BUDGET_TYPE);
             param.setREPORT_NAME(param.getREPORT_CODE());
             param.setPUBLISHER("Admin");
             param.setREPORT_TYPE(param.getEXPORT_TYPE());
-            param.setDEPT_ID(DEPT_ID);
-            param.setDEPT_NAME(DEPT_NAME);
-            param.setFACULTY_ID(FAC_ID);
-            param.setFACULTY_NAME(FAC_NAME);
-            param.setPLAN_ID(PLAN_ID);
-            param.setPLAN_NAME(PLAN_NAME);
-            param.setFUND_ID(FUND_ID);
-            param.setFUND_NAME(FUND_NAME);
-            param.setPRODUCT_ID(PRODUCT_ID);
-            param.setPRODUCT_NAME(PRODUCT_NAME);
+//            param.setDEPT_ID(DEPT_ID);
+//            param.setDEPT_NAME(DEPT_NAME);
+//            param.setFACULTY_ID(FAC_ID);
+//            param.setFACULTY_NAME(FAC_NAME);
+//            param.setPLAN_ID(PLAN_ID);
+//            param.setPLAN_NAME(PLAN_NAME);
+//            param.setFUND_ID(FUND_ID);
+//            param.setFUND_NAME(FUND_NAME);
+//            param.setPRODUCT_ID(PRODUCT_ID);
+//            param.setPRODUCT_NAME(PRODUCT_NAME);
             param.setREPORT_LOCALE(this.locale);
-            
+
             String reportCode = param.getREPORT_CODE();
             String exportType = param.getEXPORT_TYPE();
-            
-            
-            String reportName = REPORT_CODE;
-            Class reportClass = Class.forName("th.ac.kmutnb.ebudget.model."+reportCode.toUpperCase()+"_model");
+
+            String reportName = param.getREPORT_CODE();// REPORT_CODE;
+            Class reportClass = Class.forName("th.ac.kmutnb.ebudget.model." + reportCode.toUpperCase() + "_model");
             String reportSQL = this.readSQL(reportName, param);
             List<BaseReport> datas = (List<BaseReport>) this.dbcon.nativeQuery(reportClass, reportSQL);
             //this.dbcon.nativeQuery(reportClass, sparam, Parameters);
@@ -164,16 +172,18 @@ public class ReportService extends CServiceBase implements IReportService {
         } catch (ClassNotFoundException ex) {
             CJFile file = new CJFile("<b>Report Error</b>", CJFile.CJFileType.HTML, CJFile.CJFileSourceType.STRING);
             return file;
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(ReportService.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
+        
+        CJFile file = new CJFile("<b>Invalid Parameter</b>", CJFile.CJFileType.HTML, CJFile.CJFileSourceType.STRING);
+        return file;
     }
 
-    @Override
+    //  @Override
     public CJFile test(String tParam) {
-      CJFile file = new CJFile("<html><b>Hello "+tParam+"</b></html>", CJFile.CJFileType.HTML, CJFile.CJFileSourceType.STRING);
-      return  file;
+        CJFile file = new CJFile("<html><b>Hello " + tParam + "</b></html>", CJFile.CJFileType.HTML, CJFile.CJFileSourceType.STRING);
+        return file;
     }
-
-  
 
 }

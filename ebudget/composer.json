@@ -3,8 +3,8 @@
     "description": "Description of project kmutnb-ebudget.",
     "authors": [
         {
-            "name": "Palida",
-            "email": "your@email.here"
+            "name": "somchit  chanudom",
+            "email": "somchit.chanudom@gmail.com"
         }
     ],
     "require": {
@@ -12,6 +12,8 @@
         "isoft/mssql-bundle": "dev-master",
         "mustache/mustache": "v2.5.0",
         "apache/log4php": "2.3.0",
+        "firebase/php-jwt": "v3.0.0",
         "bpg/cde": "3.5.8.1-dev"
+      
     }
 }
