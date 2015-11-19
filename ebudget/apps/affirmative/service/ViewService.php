@@ -25,6 +25,13 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
+    public function setting() {
+        $view = new CJView("setting", CJViewType::HTML_VIEW_ENGINE);
+        $groupS = new DraftService();
+        $view->year = $groupS->getPeriod()->year;
+        return $view;
+    }
+
     public function center() {
         $view = new CJView("center", CJViewType::HTML_VIEW_ENGINE);
         return $view;

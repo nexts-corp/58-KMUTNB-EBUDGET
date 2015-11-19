@@ -361,8 +361,13 @@ class AllocateService extends CServiceBase implements IAllocateService {
             $bgHead->setL3dProjectId($budget->l3dProjectId);
             $bgHead->setFundgroupId($budget->fundgroupId);
             $bgHead->setActivityId($budget->activityId);
+            
+            $bgPlanProject = $this->getBudgetPlanAndProject($budget->budgetPeriodId, $budget->l3dPlanId, $budget->fundgroupId);
+            $bgHead->setPlanId($bgPlanProject["budgetPlanId"]);
+            $bgHead->setProjectId($bgPlanProject["budgetProjectId"]);
 
             $bgHeadData = $this->datacontext->getObject($bgHead);
+            
             if (!isset($bgHeadData) || $bgHeadData == null) {
                 $bgHead->setStatusId(1);
                 $bgHeadData = $this->datacontext->saveObject($bgHead);
@@ -371,8 +376,11 @@ class AllocateService extends CServiceBase implements IAllocateService {
                 $bgHeadId = $bgHeadData[0]->id;
             }
 
-            $budget->revenuePlanId = $revenuePlanId;
             $budget->budgetHeadId = $bgHeadId;
+            $budget->revenuePlanId = $revenuePlanId;
+            $budget->planId = $bgPlanProject["budgetPlanId"];
+            $budget->projectId = $bgPlanProject["budgetProjectId"];
+            
             if ($budget->remark == "") {
                 $budget->remark = "-";
             }
@@ -486,4 +494,33 @@ class AllocateService extends CServiceBase implements IAllocateService {
         return $list1;
     }
 
+    private function getBudgetPlanAndProject($budgetPeriodId, $L3DPlanId, $fundgroupId) {
+        $project = new \apps\common\entity\MappingPlan();
+
+        $project->setBudgetperiodId($budgetPeriodId);
+        $project->setPlanId($L3DPlanId);
+        $project->setFundgroupId($fundgroupId);
+
+        $dataProject = $this->datacontext->getObject($project);
+
+        $result = array();
+
+        if ($dataProject) {
+            $projectId = $dataProject[0]->budgetProjectId;
+
+            $plan = new \apps\common\entity\BudgetProject();
+            $plan->setId($projectId);
+
+            $dataPlan = $this->datacontext->getObject($plan);
+
+            if ($dataPlan) {
+                $planId = $dataPlan[0]->planId;
+
+                $result["budgetPlanId"] = $planId;
+                $result["budgetProjectId"] = $projectId;
+            }
+        }
+
+        return $result;
+    }
 }

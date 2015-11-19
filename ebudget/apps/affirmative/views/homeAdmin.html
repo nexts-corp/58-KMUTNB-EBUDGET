@@ -37,7 +37,7 @@
                     <table id="homeTable" class="table table-bordered table-striped table-condensed mb-none">
                         <thead>
                             <tr>
-                                <th class="text-center col-lg-1">ลำดับที่</th>
+                                <th class="text-center col-lg-1">ลำดับ</th>
                                 <th class="text-center col-lg-6">รายละเอียด</th>
                                 <th class="text-center col-lg-3">สถานะ</th>
                                 <th class="text-center col-lg-2">เครื่องมือ</th>
@@ -52,104 +52,6 @@
                 </div><!-- end table shown bidder information list -->
             </div>
 
-            <div id="bidderModal" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"><!-- delete bidder info form -->
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">ลบข้อมูล : ผู้เสนอซื้อ</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-condensed mb-none">
-                                    <tbody>
-                                        <tr>
-                                            <td>คิวที่</td><td class="text-left"><div id="queueDel"></div></td>
-                                        </tr>
-                                        <tr>
-                                            <td>เลขผู้เสียภาษี</td><td class="text-left"><div id="taxIdDel"></div></td>
-                                        </tr>
-                                        <tr>
-                                            <td>ชื่อผู้เสนอซื้อ</td><td class="text-left"><div id="bidderNameDel"></div></td>
-                                        </tr>
-                                        <tr>
-                                            <td>ชื่อผู้ยื่น</td><td class="text-left"><div id="agentNameDel"></div></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                            <button type="button" id="confirmDelete" class="btn btn-primary" data-dismiss="modal">ยืนยันการลบ</button>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- end delete bidder info form -->
-
-            <div id="modalDept" aria-labelledby="Label" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"><!-- lists department -->
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">รายชื่อหน่วยงาน</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="table-responsive">
-                                <table id="tableDept" class="table table-bordered table-striped table-condensed mb-none">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center">ลำดับ</th>
-                                            <th class="text-center">หน่วยงาน</th>
-                                            <th class="text-center">ประเภทหน่วยงาน</th>
-                                            <th class="text-center col-sm-2">สถานะ</th>
-                                            <th class="text-center">เครื่องมือ</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">ปิด</button>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- end modal -->
-            <div id="modalFinal" aria-labelledby="Label" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"><!-- lists department -->
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">รายชื่อหน่วยงาน</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="table-responsive">
-                                <table id="tableFinal" class="table table-bordered table-striped table-condensed mb-none">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center">ลำดับ</th>
-                                            <th class="text-center">หน่วยงาน</th>
-                                            <th class="text-center">ประเภทหน่วยงาน</th>
-                                            <th class="text-center col-sm-2">สถานะหน่วยงาน</th>
-                                            <th class="text-center col-sm-2">สถานะกองแผน</th>
-                                            <th class="text-center">เครื่องมือ</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">ปิด</button>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- end modal -->
         </div><!--  row  -->
     </div><!--  container  -->
 </div><!-- main -->
@@ -161,121 +63,51 @@
 <script type="text/javascript">
 $(function () {
     listsCenter();
-    status();
 });
-function status() {
-    var datas = callAjax("{{_context_path}}/api/affirmative/center/checkApprove", "post", {}, "json")["lists"];
-    if (datas === true) {
-        $(".status1").html("<span class='text-danger text-bold'>ยังไม่อนุมัติ</span>");
-    } else {
-        $(".status1").html("<span class='text-success text-bold'>อนุมัติแล้ว</span>");
-    }
-    var datas = callAjax("{{_context_path}}/api/affirmative/final/listsDept", "post", {}, "json")["lists"];
-    var s2 = 0, s3 = 0, c = 0;
-    $.each(datas, function (k, v) {
-        if (v.statusDept == "Y") {
-            s2++;
-        }
-        if (v.statusFinal == "Y") {
-            s3++;
-        }
-        c = k + 1;
-    });
-    if (s2 == c) {
-        s2 = "<span class='text-success text-bold'>" + s2 + " / " + c + "</span>";
-    } else {
-        s2 = "<span class='text-danger text-bold'>" + s2 + " / " + c + "</span>";
-    }
-    if (s3 == c) {
-        s3 = "<span class='text-success text-bold'>" + s3 + " / " + c + "</span>";
-    } else {
-        s3 = "<span class='text-danger text-bold'>" + s3 + " / " + c + "</span>";
-    }
-    $(".status2").html(s2);
-    $(".status3").html(s3);
-}
+
 function listsCenter() {
     var html = '<tr>'
             + '<td class="text-center">1</td>'
             + '<td>ตัวชี้วัดคำรับรองการปฏิบัติงานส่วนงานภายในมหาวิทยาลัย</td>'
-            + '<td class="text-center status1">-</td>'
+            + '<td class="text-center">-</td>'
             + '<td class="text-center"><button id="center" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
-            + '</tr>'
-            + '<tr>'
+        + '</tr>'
+        + '<tr>'
             + '<td class="text-center">2</td>'
             + '<td>ร่างตัวชี้วัดคำรับรองของส่วนงาน</td>'
-            + '<td class="text-center status2">-</td>'
-            + '<td class="text-center"><button id="draft" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
-            + '</tr>'
-            + '<tr>'
+            + '<td class="text-center">-</td>'
+            + '<td class="text-center"><button id="group" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
+        + '</tr>'
+        + '<tr>'
             + '<td class="text-center">3</td>'
             + '<td>จัดทำตัวชี้วัดคำรับรองของส่วนงาน</td>'
-            + '<td class="text-center status3">-</td>'
+            + '<td class="text-center">-</td>'
             + '<td class="text-center"><button id="final" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
-            + '</tr>'
-            + '<tr>'
+        + '</tr>'
+        + '<tr>'
             + '<td class="text-center">4</td>'
             + '<td>รายงานผลตัวชี้วัด</td>'
-            + '<td class="text-center status4">-</td>'
+            + '<td class="text-center">-</td>'
             + '<td class="text-center"><button id="result" class="btn btn-primary manage" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
-            + '</tr>';
+        + '</tr>';
 
     $("#homeBody").html(html);
-
 
     $("#center").click(function () {
         window.location = "center";
     });
 
-    $("#draft").click(function () {
-        $("#modalDept").modal("show");
-        var datas = callAjax("{{_context_path}}/api/affirmative/draft/listsDept", "post", {}, "json")["lists"];
-        if (typeof datas !== "undefined" && datas !== null) {
-            var html = '';
-            $.each(datas, function (key, value) {
-                html += '<tr>'
-                        + '<td  class="text-center">' + (key + 1) + '</td>'
-                        + '<td>' + value["departmentName"] + '</td>'
-                        + '<td class="text-center">' + value["activityName"] + '</td>'
-                        + '<td class="text-center">' + (value["status"] == "Y" ? "<span class='text-success'>อนุมัติแล้ว" : "<span class='text-danger'>ยังไม่อนุมัติ") + '</span></td>'
-                        + '<td>' + (value["status"] == "Y" ? "" : '<button class="btn btn-sm btn-success btnDraft" data-deptId="' + value["departmentId"] + '">จัดทำ</button>') + '</td>'
-                        + '</tr>';
-            });
-            $("#tableDept tbody").html(html);
-            $(".btnDraft").click(function () {
-                var deptId = $(this).attr("data-deptId");
-                window.location = "draft/" + deptId;
-            });
-        }
+    $("#group").click(function () {
+        window.location = "groupAll";
     });
 
     $("#final").click(function () {
-        $("#modalFinal").modal("show");
-        var datas = callAjax("{{_context_path}}/api/affirmative/final/listsDept", "post", {}, "json")["lists"];
-        if (typeof datas !== "undefined" && datas !== null) {
-            var html = '';
-            $.each(datas, function (key, value) {
-                html += '<tr>'
-                        + '<td  class="text-center">' + (key + 1) + '</td>'
-                        + '<td>' + value["departmentName"] + '</td>'
-                        + '<td class="text-center">' + value["activityName"] + '</td>'
-                        + '<td class="text-center">' + (value["statusDept"] == "Y" ? "<span class='text-success'>อนุมัติแล้ว" : "<span class='text-danger'>ยังไม่อนุมัติ") + '</span></td>'
-                        + '<td class="text-center">' + (value["statusFinal"] == "Y" ? "<span class='text-success'>อนุมัติแล้ว" : "<span class='text-danger'>ยังไม่อนุมัติ") + '</span></td>'
-                        + '<td>' + (value["statusDept"] == "N" || value["statusFinal"] == "Y" ? "" : '<button class="btn btn-sm btn-success btnFinal" data-deptId="' + value["departmentId"] + '">จัดทำ</button>') + '</td>'
-                        + '</tr>';
-            });
-            $("#tableFinal tbody").html(html);
-            $(".btnFinal").click(function () {
-                var deptId = $(this).attr("data-deptId");
-                window.location = "final/" + deptId;
-            });
-        }
+        window.location = "finalAll";
     });
 
     $("#result").click(function () {
         window.location = "resultAll";
     });
-
 }
 
 </script>

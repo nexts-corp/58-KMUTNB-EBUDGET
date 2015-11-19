@@ -9,37 +9,28 @@ myApp.controller('manageDepartment', function($scope,$http,$controller,cde) {
     $controller('cmListController', {$scope: $scope});
     
     $scope.init = function(){
+        cde.setPath("budget","allocate");
         $('[ng-app]').show();
-        //$scope.cmListYear();
-        //$scope.cmListBudgetType();
         $scope.cmListDepartment();
         $scope.cmListFundgroup();
-        $scope.cmListBudgetPlan();
-        $scope.fetchBudgetTypeTree();
-        
-        $scope.testPath = cde.path("user//delete");
-        //
-        //$('[ng-model=education],[ng-model=academic]').number( true, 2 );
+        $scope.cmList3dPlan();
+        $scope.fetchRevenueItemList();
     };
     
-    $scope.fetchBudgetTypeTree = function () {
+    $scope.fetchRevenueItemList = function () {
         $scope.loadBttP1 = 1;
-        $http.post(ngContextPath+"/api/budget/allocate/budgetTypeTree").then(function (response) {
-            
-            $scope.dataBudgetTypeTree = response.data.dataList;
+        $http.post(cde.getPath("getRevenueItemList"),{
+            budgetPeriodId:2558,
+//            deptId:$scope.department,
+//            l3dPlanId:$scope.plan3dId,
+//            fundgroupId:$scope.fundgroupId
+            deptId:20100,
+            l3dPlanId:40,
+            fundgroupId:100
+        }).then(function (response) {
+            $scope.dataRevenueItemList = response.data.dataList;
             
             $scope.loadBttP1 = 0;
-            $scope.dataBttP1 = response.data.dataList;
-//            $scope.preDataBttP1 = response.data.dataList;
-//            for(var i=0;i<$scope.preDataBttP1.length;i++){
-//                for(var j=0;j<$scope.preDataBttP1[i].sub.length;j++){
-//                    for(var k=0;k<$scope.preDataBttP1[i].sub[j].data.length;j++){
-//                        $scope.preDataBttP1[i].sub[j].data[k].nameC = $scope.preDataBttP1[i].sub[j].data[k].name;
-//                    }
-//                }
-//            }
-//            $scope.dataBttP1 = $scope.preDataBttP1;
-            
         });
     };
     
