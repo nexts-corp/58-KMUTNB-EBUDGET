@@ -227,7 +227,7 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
         return $result;
     }
 
-    public function getAllBudgetRequest($budgetPeriodId, $deptId) {
+    public function getAllBudgetRequest($budgetPeriodId, $deptId, $budgetTypeCode) {
         if ($deptId > 0) {
             $sqlExt = "and bgh.statusId = 1 ";
         } else {
@@ -251,12 +251,15 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
                 . "left outer join " . $this->ent . "\\BudgetProject bgProj with bgProj.id = bgh.projectId "
                 . "left outer join " . $this->ent . "\\L3D\\FundGroup fund with fund.id = bgh.fundgroupId "
                 . "left outer join " . $this->ent . "\\TrackingStatus status with status.id = bgh.statusId "
-                . "where bgh.budgetTypeCode = 'G' "
+                . "where bgh.budgetTypeCode = :budgetTypeCode "
                 . $sqlExt
                 . "and bgh.budgetPeriodId = :budgetPeriodId "
                 . "order by status.id, bgh.formId, dept.id, l3dPlan.id, fund.id asc ";
 
-        $param = array("budgetPeriodId" => $budgetPeriodId);
+        $param = array(
+            "budgetPeriodId" => $budgetPeriodId,
+            "budgetTypeCode" => $budgetTypeCode
+        );
         $data = $this->datacontext->getObject($sql, $param);
 
         return $data;

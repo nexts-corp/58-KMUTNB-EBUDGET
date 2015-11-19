@@ -279,7 +279,7 @@
         });
         $(document).on('click', '#btnViewForm', function (event) {
             var id = $(this).attr('data-id');
-            alert(id);
+            //alert(id);
             //go to form
         });
     });
@@ -298,7 +298,8 @@
 
         var param = {
             budgetPeriodId: 2558,
-            deptId: 1
+            deptId: 1,
+            budgetTypeCode: 'G'
         };
         var datas = callAjax("{{_context_path}}/api/budget/budgetReview/getAllBudgetRequest", "post", param, "json");
         var html = '';
