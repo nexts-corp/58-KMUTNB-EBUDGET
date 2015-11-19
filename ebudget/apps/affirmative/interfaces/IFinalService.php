@@ -63,5 +63,12 @@ interface IFinalService {
      */
     public function approve($departmentId, $status);
 
-
+    /**
+     * @name export
+     * @uri /export
+     * @param string departmentId
+     * @return file export Description
+     * @description ผู้เสนอราคาสูงสุดต่อคลัง
+     */
+    public function export($departmentId);
 }

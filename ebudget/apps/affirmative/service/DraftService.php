@@ -369,7 +369,7 @@ class DraftService extends CServiceBase implements IDraftService {
         $objWorkSheet->mergeCells('A'.$row.':A'.($row+1))->setCellValueByColumnAndRow(0, $row, "ตัวชี้วัดคำรับรอง ปี ".$this->getPeriod()->year)
             ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($center);
 
-        $objWorkSheet->mergeCells('B'.$row.':B'.($row+1))->setCellValueByColumnAndRow(1, $row, "หน่วยนับตัวชี้วัด")
+        $objWorkSheet->mergeCells('B'.$row.':B'.($row+1))->setCellValueByColumnAndRow(1, $row, "หน่วยนับ")
             ->getStyleByColumnAndRow(1, $row)->getAlignment()->applyFromArray($center);
 
         $objWorkSheet->mergeCells('C'.$row.':C'.($row+1))->setCellValueByColumnAndRow(2, $row, "ค่าเป้าหมาย\nตัวชี้วัด")
@@ -469,8 +469,6 @@ class DraftService extends CServiceBase implements IDraftService {
                 }
             }
         }
-
-
 
         $objPHPExcel->getDefaultStyle()->getAlignment()->setWrapText(true);
 
