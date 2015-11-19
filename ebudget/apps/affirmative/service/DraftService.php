@@ -323,4 +323,7 @@ class DraftService extends CServiceBase implements IDraftService {
         return true;
     }
 
+    public function export($activityId){
+
+    }
 }

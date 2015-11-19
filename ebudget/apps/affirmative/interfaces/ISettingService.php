@@ -51,4 +51,13 @@ interface ISettingService {
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
     public function set($setting);
+
+    /**
+     * @name delete
+     * @uri /delete
+     * @param apps\affirmative\entity\AffirmativeSetting setting
+     * @return String[] delete
+     * @description ผู้เสนอราคาสูงสุดต่อคลัง
+     */
+    public function delete($setting);
 }

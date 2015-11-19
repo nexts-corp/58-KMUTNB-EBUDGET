@@ -74,72 +74,76 @@ class CenterService extends CServiceBase implements ICenterService {
         return $return;
     }
 
+    function centerData(){
+        $json = new CJSONDecodeImpl();
+        //  $viewCenter = new \apps\affirmative\model\ViewAffirmativeCenter();
+        $viewSql = "select v from apps\\affirmative\\model\\ViewAffirmativeCenter v "
+            . " where v.periodCode = :periodCode "
+            . " order by v.periodCode,v.mainSeq,v.typeSeq,v.issueSeq,v.targetSeq,v.kpiSeq";
+        $viewParam = array("periodCode" => $this->getPeriod()->year);
+        $centerData = $this->datacontext->getObject($viewSql, $viewParam);
+
+        $typeArr = array();
+        $targetArr = array();
+        foreach ($centerData as $keyCenter => $valueCenter) {
+            if ($valueCenter->centerId != NULL) {
+                $center = $json->decode(new \apps\affirmative\entity\AffirmativeCenter(), $valueCenter);
+                $centerGroup = $json->decode(new \apps\affirmative\entity\AffirmativeCenterGroup(), $valueCenter);
+                $unit = $json->decode(new \apps\affirmative\entity\AffirmativeUnit(), $valueCenter);
+                $name = "";
+                if ($valueCenter->hasIssue == "Y") {
+                    if (empty($targetArr[$valueCenter->targetId][$valueCenter->centerId])) {
+                        $targetArr[$valueCenter->targetId][$valueCenter->centerId] = $center;
+                    }
+                    $targetArr[$valueCenter->targetId][$valueCenter->centerId]->centerGroup[] = $centerGroup;
+                    $targetArr[$valueCenter->targetId][$valueCenter->centerId]->unit = $unit;
+                } elseif ($valueCenter->hasIssue == "N") {
+                    if (empty($typeArr[$valueCenter->typeId][$valueCenter->centerId])) {
+                        $typeArr[$valueCenter->typeId][$valueCenter->centerId] = $center;
+                    }
+                    $typeArr[$valueCenter->typeId][$valueCenter->centerId]->centerGroup[] = $centerGroup;
+                    $typeArr[$valueCenter->typeId][$valueCenter->centerId]->unit = $unit;
+                }
+            }
+        }
+        $typeArr = $this->sortBy("kpiSeq", $typeArr);
+        $targetArr = $this->sortBy("kpiSeq", $targetArr);
+
+        $mainSql = "select v from apps\\affirmative\\entity\\AffirmativeMain v where v.periodCode = :periodCode  order by v.mainSeq";
+        $mainParam = array("periodCode" => $this->getPeriod()->year);
+        $mainData = $this->datacontext->getObject($mainSql, $mainParam);
+        foreach ($mainData as $keyMain => $valueMain) {
+            $typeSql = "select v from apps\\affirmative\\entity\\AffirmativeType v where v.mainId = :mainId  order by v.typeSeq";
+            $typeParam = array("mainId" => $valueMain->mainId);
+            $typeData = $this->datacontext->getObject($typeSql, $typeParam);
+            $mainData[$keyMain]->type = $typeData;
+            foreach ($typeData as $keyType => $valueType) {
+                $issueSql = "select v from apps\\affirmative\\entity\\AffirmativeIssue v where v.typeId = :typeId  order by v.issueSeq";
+                $issueParam = array("typeId" => $valueType->typeId);
+                $issueData = $this->datacontext->getObject($issueSql, $issueParam);
+                $mainData[$keyMain]->type[$keyType]->issue = $issueData;
+                if (array_key_exists($valueType->typeId, $typeArr)) {
+                    $mainData[$keyMain]->type[$keyType]->kpi = $typeArr[$valueType->typeId];
+                }
+                foreach ($issueData as $keyIssue => $valueIssue) {
+                    $targetSql = "select v from apps\\affirmative\\entity\\AffirmativeTarget v where v.issueId = :issueId  order by v.targetSeq";
+                    $targetParam = array("issueId" => $valueIssue->issueId);
+                    $targetData = $this->datacontext->getObject($targetSql, $targetParam);
+                    $mainData[$keyMain]->type[$keyType]->issue[$keyIssue]->target = $targetData;
+                    foreach ($targetData as $keyTarget => $valueTarget) {
+                        if (array_key_exists($valueTarget->targetId, $targetArr)) {
+                            $mainData[$keyMain]->type[$keyType]->issue[$keyIssue]->target[$keyTarget]->kpi = $targetArr[$valueTarget->targetId];
+                        }
+                    }
+                }
+            }
+        }
+        return $mainData;
+    }
+
     public function listsAll() {
         if ($this->checkApprove()) {
-            $json = new CJSONDecodeImpl();
-            //  $viewCenter = new \apps\affirmative\model\ViewAffirmativeCenter();
-            $viewSql = "select v from apps\\affirmative\\model\\ViewAffirmativeCenter v "
-                    . " where v.periodCode = :periodCode "
-                    . " order by v.periodCode,v.mainSeq,v.typeSeq,v.issueSeq,v.targetSeq,v.kpiSeq";
-            $viewParam = array("periodCode" => $this->getPeriod()->year);
-            $centerData = $this->datacontext->getObject($viewSql, $viewParam);
-
-            $typeArr = array();
-            $targetArr = array();
-            foreach ($centerData as $keyCenter => $valueCenter) {
-                if ($valueCenter->centerId != NULL) {
-                    $center = $json->decode(new \apps\affirmative\entity\AffirmativeCenter(), $valueCenter);
-                    $centerGroup = $json->decode(new \apps\affirmative\entity\AffirmativeCenterGroup(), $valueCenter);
-                    $unit = $json->decode(new \apps\affirmative\entity\AffirmativeUnit(), $valueCenter);
-                    $name = "";
-                    if ($valueCenter->hasIssue == "Y") {
-                        if (empty($targetArr[$valueCenter->targetId][$valueCenter->centerId])) {
-                            $targetArr[$valueCenter->targetId][$valueCenter->centerId] = $center;
-                        }
-                        $targetArr[$valueCenter->targetId][$valueCenter->centerId]->centerGroup[] = $centerGroup;
-                        $targetArr[$valueCenter->targetId][$valueCenter->centerId]->unit = $unit;
-                    } elseif ($valueCenter->hasIssue == "N") {
-                        if (empty($typeArr[$valueCenter->typeId][$valueCenter->centerId])) {
-                            $typeArr[$valueCenter->typeId][$valueCenter->centerId] = $center;
-                        }
-                        $typeArr[$valueCenter->typeId][$valueCenter->centerId]->centerGroup[] = $centerGroup;
-                        $typeArr[$valueCenter->typeId][$valueCenter->centerId]->unit = $unit;
-                    }
-                }
-            }
-            $typeArr = $this->sortBy("kpiSeq", $typeArr);
-            $targetArr = $this->sortBy("kpiSeq", $targetArr);
-
-            $mainSql = "select v from apps\\affirmative\\entity\\AffirmativeMain v where v.periodCode = :periodCode  order by v.mainSeq";
-            $mainParam = array("periodCode" => $this->getPeriod()->year);
-            $mainData = $this->datacontext->getObject($mainSql, $mainParam);
-            foreach ($mainData as $keyMain => $valueMain) {
-                $typeSql = "select v from apps\\affirmative\\entity\\AffirmativeType v where v.mainId = :mainId  order by v.typeSeq";
-                $typeParam = array("mainId" => $valueMain->mainId);
-                $typeData = $this->datacontext->getObject($typeSql, $typeParam);
-                $mainData[$keyMain]->type = $typeData;
-                foreach ($typeData as $keyType => $valueType) {
-                    $issueSql = "select v from apps\\affirmative\\entity\\AffirmativeIssue v where v.typeId = :typeId  order by v.issueSeq";
-                    $issueParam = array("typeId" => $valueType->typeId);
-                    $issueData = $this->datacontext->getObject($issueSql, $issueParam);
-                    $mainData[$keyMain]->type[$keyType]->issue = $issueData;
-                    if (array_key_exists($valueType->typeId, $typeArr)) {
-                        $mainData[$keyMain]->type[$keyType]->kpi = $typeArr[$valueType->typeId];
-                    }
-                    foreach ($issueData as $keyIssue => $valueIssue) {
-                        $targetSql = "select v from apps\\affirmative\\entity\\AffirmativeTarget v where v.issueId = :issueId  order by v.targetSeq";
-                        $targetParam = array("issueId" => $valueIssue->issueId);
-                        $targetData = $this->datacontext->getObject($targetSql, $targetParam);
-                        $mainData[$keyMain]->type[$keyType]->issue[$keyIssue]->target = $targetData;
-                        foreach ($targetData as $keyTarget => $valueTarget) {
-                            if (array_key_exists($valueTarget->targetId, $targetArr)) {
-                                $mainData[$keyMain]->type[$keyType]->issue[$keyIssue]->target[$keyTarget]->kpi = $targetArr[$valueTarget->targetId];
-                            }
-                        }
-                    }
-                }
-            }
-            return $mainData;
+            return $this->centerData();
         } else {
             return false;
         }
@@ -263,5 +267,124 @@ class CenterService extends CServiceBase implements ICenterService {
         }
         return true;
     }
+
+    public function export(){
+        //style
+        $center = array(
+            'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+            'vertical' => \PHPExcel_Style_Alignment::VERTICAL_CENTER
+        );
+
+        $topLeft = array(
+            'vertical' => \PHPExcel_Style_Alignment::VERTICAL_TOP
+        );
+
+        $topCenter = array(
+            'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+            'vertical' => \PHPExcel_Style_Alignment::VERTICAL_TOP
+        );
+        $underline = array(
+            'font' => array(
+                'underline' => \PHPExcel_Style_Font::UNDERLINE_SINGLE
+            )
+        );
+
+        $objPHPExcel = new \PHPExcel();
+        $objWorkSheet = $objPHPExcel->createSheet(0);
+        $objWorkSheet = $objPHPExcel->setActiveSheetIndex(0);
+        $objWorkSheet = $objPHPExcel->getActiveSheet();
+
+        $title = "Sheet 1";
+        $objWorkSheet -> setTitle($title);
+
+        $row = 1;
+        $objWorkSheet->mergeCells('A1:D2')
+            ->setCellValueByColumnAndRow(0, $row, "ตัวชี้วัดคำรับรองการปฏิบัติงาน ประจำปีงบประมาณ พ.ศ.".$this->getPeriod()->year." ของส่วนงานภายในมหาวิทยาลัย")
+            ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($center);
+
+        $columnT = ["ตัวชี้วัดคำรับรอง ปี ".$this->getPeriod()->year, "หน่วยนับตัวชี้วัด" , "ประเภทส่วนงานที่ดำเนินการ", "หมายเหตุ"];
+
+        $row =  3;
+        foreach($columnT as $col => $val){
+            if($col == 0) $width = 50;
+            elseif($col == 1) $width = 20;
+            elseif($col == 2) $width = 30;
+            elseif($col == 3) $width = 30;
+
+            $objWorkSheet->getColumnDimensionByColumn($col)->setWidth($width);
+            $objWorkSheet->setCellValueByColumnAndRow($col, $row, $val)->getStyleByColumnAndRow($col, $row)->getAlignment()->applyFromArray($center);
+        }
+
+        $data = $this->centerData();
+        //return $data;
+        $row = 4;
+        foreach($data as $key => $value){
+            $objWorkSheet->mergeCells('A'.$row.':D'.$row)
+                ->setCellValueByColumnAndRow(0, $row, "ส่วนที่ ".$value->mainSeq." ".$value->mainName)
+                ->getStyleByColumnAndRow(0, $row)->applyFromArray($underline)->getAlignment()->applyFromArray($center);
+
+            $row++;
+            foreach($value->type as $key2 => $value2){
+                $objWorkSheet->mergeCells('A'.$row.':D'.$row)
+                    ->setCellValueByColumnAndRow(0, $row, "ส่วนที่ ".$value->mainSeq.".".$value2->typeSeq." ".$value2->typeName)
+                    ->getStyleByColumnAndRow(0, $row)->applyFromArray($underline);
+
+                $row++;
+                foreach($value2->issue as $key3 => $value3){
+                    $objWorkSheet->mergeCells('A'.$row.':D'.$row)
+                        ->setCellValueByColumnAndRow(0, $row, "ประเด็นยุทธศาสตร์ที่ ".$value3->issueSeq." ".$value3->issueName);
+
+                    $row++;
+                    foreach($value3->target as $key4 => $value4){
+                        $objWorkSheet->mergeCells('A'.$row.':D'.$row)
+                            ->setCellValueByColumnAndRow(0, $row, "เป้าประสงค์ที่ ".$value3->issueSeq.".".$value4->targetSeq." ".$value4->targetName);
+
+                        $row++;
+                        if(is_array( $value4->kpi) && count( $value4->kpi ) > 0 ) {
+                            foreach ($value4->kpi as $key5 => $value5) {
+
+                                $objWorkSheet->setCellValueByColumnAndRow(0, $row, $value3->issueSeq . "." . $value4->targetSeq . "." . $value5->kpiSeq . " " . $value5->kpiName)
+                                    ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+
+                                $objWorkSheet->setCellValueByColumnAndRow(1, $row, $value5->unit->unitName)
+                                    ->getStyleByColumnAndRow(1, $row)->getAlignment()->applyFromArray($topCenter);
+
+                                $group = [];
+                                foreach($value5->centerGroup as $key6 => $value6) {
+                                    $group[] = "- ".$value6->groupName;
+                                }
+
+                                $objWorkSheet->setCellValueByColumnAndRow(2, $row, implode("\n", $group))
+                                    ->getStyleByColumnAndRow(2, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+
+                                $objWorkSheet->setCellValueByColumnAndRow(3, $row, $value5->remark)
+                                    ->getStyleByColumnAndRow(3, $row)->getAlignment()->applyFromArray($topLeft);
+
+
+                                $row++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+        $objPHPExcel->getDefaultStyle()->getAlignment()->setWrapText(true);
+
+        //create excel file
+        ob_clean();
+
+        header('Content-Type: application/vnd.ms-excel');
+        header("Content-Disposition: attachment;filename=ตัวชี้วัดคำรับรองการปฏิบัติงาน_ส่วนงานภายในมหาวิทยาลัย_".$this->getPeriod()->year.".xls");
+
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('php://output');
+
+        ob_end_flush();
+        exit();
+    }
+
 
 }

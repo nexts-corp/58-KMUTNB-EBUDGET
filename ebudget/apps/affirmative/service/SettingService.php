@@ -48,7 +48,44 @@ class SettingService extends CServiceBase implements ISettingService {
     }
 
     public function set($setting) {
-        return $setting;
+        $periodCode = $this->getPeriod()->year;
+        foreach ($setting as $key => $val) {
+            $val->periodCode = $periodCode;
+            $set = new \apps\affirmative\entity\AffirmativeSetting();
+            $set->periodCode = $periodCode;
+            $set->groupCode = $val->groupCode;
+            $set->mainId = $val->mainId;
+            $set->typeId = $val->typeId;
+            $data = $this->datacontext->getObject($set);
+            if (count($data) > 0 && $val->typeSeq == 0) { //ถ้ามีข้อมูลเดิม แต่ข้อมูลใหม่ typeSeq = 0 ก็ลบข้อมูลเดิมทิ้ง
+                if (!$this->datacontext->removeObject($data)) {
+                    $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+                    return false;
+                }
+            } elseif (count($data) > 0 && $val->typeSeq != 0) { //ถ้ามีข้อมูลเดิม แต่ข้อมูลใหม่ typeSeq != 0 ให้อัพเดทข้อมูลใหม่
+                $val->settingId = $data[0]->settingId; // setting id ให้ ข้อมูลใหม่ จะได้ update ได้เลย
+                if (!$this->datacontext->updateObject($val)) {
+                    $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+                    return false;
+                }
+            } elseif (count($data) == 0 && $val->typeSeq != 0) { //ถ้าไม่มีข้อมูลเดิม แล้วข้อมูลใหม่ typeSeq != 0 ให้เพิ่มข้อมูล
+                if (!$this->datacontext->saveObject($val)) {
+                    $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public function delete($setting) {
+        $setting->periodCode = $this->getPeriod()->year;
+        $data = $this->datacontext->getObject($setting);
+        if (!$this->datacontext->removeObject($data)) {
+            $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+            return false;
+        }
+        return true;
     }
 
 }
