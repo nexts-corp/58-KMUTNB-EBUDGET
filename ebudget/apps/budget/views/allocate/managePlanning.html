@@ -1,6 +1,6 @@
 {{> header}}
 
-<div ng-app="managePlanning" ng-controller="mainCtrl" data-ng-init="init()" nk-cloak>
+<div ng-app="managePlanning" ng-controller="mainCtrl" data-ng-init="init()" style="display:none;">
     <div role="main" class="main">
         <section class="page-top none-margin">
             <div class="container">
@@ -23,7 +23,7 @@
             <div class="container">
                 <ul data-option-key="filter" data-sort-id="portfolio" class="nav nav-pills sort-source menu-top pull-right">
                     <li class="active">
-                        <button ng-click="back()" ng-show="idLevel.length >= 1" class="btn btn-default back"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
+                        <!--button ng-click="back()" ng-show="idLevel.length >= 1" class="btn btn-default back"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button-->
                     </li>
                 </ul>
             </div>
@@ -195,7 +195,7 @@
 
 
     </div>
-
+    {[nkCloak()]}
 </div>
 
 
