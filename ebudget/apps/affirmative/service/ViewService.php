@@ -37,6 +37,11 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
+    public function draftAll() {
+        $view = new CJView("draftAll", CJViewType::HTML_VIEW_ENGINE);
+        return $view;
+    }
+
     public function draft($deptId) {
         $viewDept = new \apps\affirmative\model\ViewActivityDepartment();
         $viewDept->departmentId = $deptId;
@@ -45,6 +50,11 @@ class ViewService extends CServiceBase implements IViewService {
         $view->department = $data;
         $groupS = new DraftService();
         $view->year = $groupS->getPeriod()->year;
+        return $view;
+    }
+
+    public function finalAll() {
+        $view = new CJView("finalAll", CJViewType::HTML_VIEW_ENGINE);
         return $view;
     }
 

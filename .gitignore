@@ -8,3 +8,15 @@
 /reporter/dist
 
 
+/nbproject
+/logs
+/composer.lock
+/manifest.server.json
+/vendor
+/composer.json
+/.idea
+<<<<<<< HEAD
+/apps
+=======
+/apps
+>>>>>>> origin/Report

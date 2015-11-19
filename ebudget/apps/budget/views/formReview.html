@@ -240,7 +240,6 @@
             listBudgetCode();
             listFaculty(0);
             listPlan3D();
-            listFundGroup();
 
             $("#table").hide();
 
@@ -252,7 +251,7 @@
 
                         html += '<option value="' + data.lists[i].year + '">' + data.lists[i].year + '</option>';
                     }
-                    $("#budgetPeriodId").html(html);
+                    $("#budgetPeriodId").html(html).trigger("change");
                 });
             }
 
@@ -260,7 +259,7 @@
                 var html = '<option value="0">- เลือกแหล่งเงิน -</option>';
                 html += '<option value="G">งบประมาณแผ่นดิน</option>';
                 html += '<option value="K">เงินรายได้</option>';
-                $("#budgetTypeCode").html(html);
+                $("#budgetTypeCode").html(html).trigger("change");
             }
 
             function listFaculty(campusId) {
@@ -270,7 +269,7 @@
 
                         html += '<option value="' + data.lists[i].id + '">' + data.lists[i].name + '</option>';
                     }
-                    $("#facultyId").html(html);
+                    $("#facultyId").html(html).trigger("change");
                 });
             }
 
@@ -281,7 +280,7 @@
 
                         html += '<option value="' + data.lists[i].id + '">' + data.lists[i].name + '</option>';
                     }
-                    $("#deptId").html(html);
+                    $("#deptId").html(html).trigger("change");
                 });
             }
 
@@ -309,7 +308,7 @@
 
                         html += '<option value="' + data.lists[i].id + '">' + data.lists[i].name + '</option>';
                     }
-                    $("#l3dPlanId").html(html);
+                    $("#l3dPlanId").html(html).trigger("change");
                 });
             }
 
@@ -365,6 +364,19 @@
                  }
                  */
             });
+
+            $("#facultyId").change(function () {
+                listDepartment($(this).val());
+            });
+            $("#l3dPlanId").change(function () {
+                var periodId = $("#budgetPeriodId").val();
+                var plan = $(this).val();
+                listFundgroupWithPlan(periodId, plan);
+            });
+            
+
+
+
 
             $("#expenses-select").change(function () {
                 $("#expenses-select").parent().removeClass("has-error")

@@ -38,12 +38,26 @@ interface IViewService {
     public function center();
 
     /**
+     * @name draftAll
+     * @uri /draftAll
+     * @description ยื่นคำของบประมาณ
+     */
+    public function draftAll();
+
+    /**
      * @name draft
      * @uri /draft
      * @param string deptId
      * @description ยื่นคำของบประมาณ
      */
     public function draft($deptId);
+
+    /**
+     * @name finalAll
+     * @uri /finalAll
+     * @description ยื่นคำของบประมาณ
+     */
+    public function finalAll();
 
     /**
      * @name final

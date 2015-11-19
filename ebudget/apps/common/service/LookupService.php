@@ -200,7 +200,7 @@ class LookupService extends CServiceBase implements ILookupService {
             ."where BUDGETPERIODID = '".$budgetPeriodId."'"
             ."and PLANID = '".$l3dPlanId."'";
 
-        $data = $this->datacontext->pdoExecute($sql);
+        $data = $this->datacontext->pdoQuery($sql);
 
         $result = array();
         
