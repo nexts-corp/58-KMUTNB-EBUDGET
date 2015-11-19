@@ -31,12 +31,26 @@ interface IViewService {
     public function center();
 
     /**
+     * @name groupAll
+     * @uri /groupAll
+     * @description ยื่นคำของบประมาณ
+     */
+    public function groupAll();
+
+    /**
      * @name group
      * @uri /group
      * @param string deptId
      * @description ยื่นคำของบประมาณ
      */
     public function group($deptId);
+
+    /**
+     * @name finalAll
+     * @uri /finalAll
+     * @description ยื่นคำของบประมาณ
+     */
+    public function finalAll();
 
     /**
      * @name final

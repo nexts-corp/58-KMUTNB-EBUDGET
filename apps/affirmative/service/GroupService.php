@@ -61,6 +61,10 @@ class GroupService extends CServiceBase implements IGroupService {
         $sql = "select r from apps\\affirmative\\model\\ViewActivityDepartment r order by r.activityCode";
         $dept = $this->datacontext->getObject($sql);
         $periodCode = $this->getPeriod()->year;
+
+        $group = array();
+        $actKey = array();
+
         foreach ($dept as $keyDept => $valDept) {
             $draft = new \apps\affirmative\entity\AffirmativeDraft();
             $draft->periodCode = $periodCode;
@@ -78,8 +82,23 @@ class GroupService extends CServiceBase implements IGroupService {
                 }
             }
             $dept[$keyDept]->status = $status;
+
+            $actKey[$valDept->activityId] = $valDept->activityName;
+
+            $group[$valDept->activityId][] = $dept[$keyDept];
         }
-        return $dept;
+
+        $result = array();
+
+        foreach($group as $key => $value){
+            $result[] = array(
+                "actId" => $key,
+                "actName" => $actKey[$key],
+                "dept" => $value
+            );
+        }
+
+        return $result;
     }
 
     function sortBy($by, $arr) {
