@@ -90,6 +90,7 @@
                                     </div>
                                 </div>
 
+                                <!--
                                 <div class="form-group">
                                     <label class="col-md-3 control-label text-right req" for="l3dPlanId">แผนงาน
                                         : </label>
@@ -112,7 +113,7 @@
                                         </select>
                                     </div>
                                 </div>
-
+                                -->
                                 <div class="form-group">
                                     <label class="col-md-3 control-label text-right req" for="facultyId">คณะ : </label>
 
@@ -239,13 +240,14 @@
         $("#budgetPeriodId").change(function () {
             isForm = 0;
             listsForm($(this).val());
-            listsPlan3D();
         });
+        /*
         $("#l3dPlanId").change(function () {
             periodId = $("#budgetPeriodId").val();
             plan = $(this).val();
             listFundgroupWithPlan(periodId, plan);
         });
+        */
         $("#facultyId").change(function () {
             listsDepartment($(this).val());
         });
@@ -314,13 +316,13 @@
             formArr = [
                 {
                     ng: "true",
-                    form: "project",
-                    name: "โครงการที่ตอบสนองยุทธศาสตร์"
+                    form: "manageDepartment",
+                    name: "จัดสรรงบประมาณ"
                 },
                 {
                     ng: "true",
-                    form: "manageDepartment",
-                    name: "จัดสรรงบประมาณ"
+                    form: "project",
+                    name: "โครงการที่ตอบสนองยุทธศาสตร์"
                 }
             ];            
 

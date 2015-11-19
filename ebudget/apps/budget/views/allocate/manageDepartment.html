@@ -11,10 +11,10 @@
                 </div>
             </div>
         </div>
+        
         <div class="col-md-4">
             <div class="form-group">
                 <label class="col-md-8 control-label">เงินต้น&nbsp;&nbsp;xxxxxxxxx.xx&nbsp;&nbsp;บาท</label>
-
             </div>
         </div>
     </div><br>
@@ -213,9 +213,8 @@
             <div class="form-group">
                 <label class="col-md-3 control-label" for="department">แผนงาน</label>
                 <div class="col-md-9">
-                    <select ng-model="department" ng-init="department = 'udf'" class="form-control input-sm selChange" ng-change="fetchPlan()">
-                        <option value="udf">- เลือกแผนงาน -</option>
-                        <option ng-repeat="list in cmDataListBudgetPlan" value="{[list.id]}">{[list.name]}</option>
+                    <select ng-model="plan3dId" class="form-control input-sm" ng-options="plan3d.id as plan3d.name for plan3d in cmDataList3dPlan">
+                        <option value="">- เลือกแผนงาน -</option>
                     </select>
                 </div>
             </div>
@@ -224,9 +223,8 @@
             <div class="form-group">
                 <label class="col-md-3 control-label" for="department">กองทุน</label>
                 <div class="col-md-9">
-                    <select ng-model="department" ng-init="department = 'udf'" class="form-control input-sm selChange" ng-change="fetchPlan()">
-                        <option value="udf">- เลือกกองทุน -</option>
-                        <option ng-repeat="list in cmDataListFundgroup" value="{[list.id]}">{[list.name]}</option>
+                    <select ng-model="fundgroupId" class="form-control input-sm" ng-options="fundgroup.id as fundgroup.name for fundgroup in cmDataListFundgroup">
+                        <option value="">- เลือกกองทุน -</option>
                     </select>
                 </div>
             </div>
