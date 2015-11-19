@@ -116,8 +116,10 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        var mainArr = [];
-        var typeArr = [];
+        var arrMainSeq = [];
+        var arrTypeSeq = [];
+        var arrTypeTitle = [];
+        var arrTypeRemark = [];
         var data = [];
         listsGroup();
         $("#listsGroup").change(function () {
@@ -125,8 +127,8 @@
             $("#tbodyType").html('<td colspan="5" class="text-center">-</td>');
             $("#btnSave").hide();
             if ($(this).val() != 0) {
-                mainArr = [];
-                typeArr = [];
+                arrMainSeq = [];
+                arrTypeSeq = [];
                 var main = callAjax("{{_context_path}}/api/affirmative/setting/listsMain", "post", {}, "json")["lists"];
                 var html = "";
                 var sort = "<option value='0'>0</option>";
@@ -152,12 +154,12 @@
                         html = "";
                         sort = "<option value='0'>0</option>";
                         $.each(type, function (kt, vt) {
-                            html += "<tr class='type  data-object' data-value='" + vt.typeId + "' data-name='typeId' data-mainId='" + mainId + "' data-mainSeq='" + mainSeq + "'>" +
+                            html += "<tr class='type  data-object' data-value='" + vt.typeId + "' row-index='" + kt + "' data-name='typeId' data-mainId='" + mainId + "' data-mainSeq='" + mainSeq + "'>" +
                                     "<td>" + (kt + 1) + "</td>" +
                                     "<td>" + vt.typeName + "</td>" +
-                                    "<td><select class='sortType form-control data-object' data-name='typeSeq'></select></td>" +
-                                    "<td><textarea class='form-control data-object' data-name='title' data-value='" + vt.typeId + "'></textarea></td>" +
-                                    "<td><input type='text' class='form-control data-object' data-name='remark' data-value='" + vt.typeId + "' /></td>" +
+                                    "<td><select class='sortType form-control data-object' data-name='typeSeq' row-index='" + kt + "'></select></td>" +
+                                    "<td><textarea class='form-control data-object' data-name='title' data-value='" + vt.typeId + "' row-index='" + kt + "'>" + (typeof arrTypeTitle[vt.typeId] === "undefined" || arrTypeTitle[vt.typeId] == null ? "" : arrTypeTitle[vt.typeId]) + "</textarea></td>" +
+                                    "<td><input type='text' class='form-control data-object' data-name='remark' data-value='" + vt.typeId + "' row-index='" + kt + "' value='" + (typeof arrTypeRemark[vt.typeId] === "undefined" || arrTypeRemark[vt.typeId] == null ? "" : arrTypeRemark[vt.typeId]) + "' /></td>" +
                                     "</tr>";
                             sort += "<option value='" + (kt + 1) + "'>" + (kt + 1) + "</option>";
                         });
@@ -165,12 +167,12 @@
                         $(".sortType").html(sort);
                         $(".sortType").each(function (k, v) {
                             var typeId = $(this).closest(".type").attr("data-value");
-                            if (typeof typeArr[typeId] === "undefined") {
+                            if (typeof arrTypeSeq[typeId] === "undefined") {
                                 $(this).val("0");
                                 $("textarea[data-value='" + typeId + "']").attr("disabled", true);
                                 $("input[data-value='" + typeId + "']").attr("disabled", true);
                             } else {
-                                $(this).val(typeArr[typeId]);
+                                $(this).val(arrTypeSeq[typeId]);
                             }
                         });
                         $(".sortType").unbind().change(function () {
@@ -185,26 +187,47 @@
                             }
                         });
                     } else {
-                        alert("....");
+                        $("#btnSave").hide();
+                        $("#tbodyType").html('<td colspan="5" class="text-center">กำลังบันทึกข้อมูล</td>');
+                        var fdata = {};
+                        var groupCode = $("#listsGroup").val();
+                        fdata["setting"] = {mainId: mainId, groupCode: groupCode};
+                        var dataJSON = JSON.stringify(fdata);
+                        var dataJSONEN = encodeURIComponent(dataJSON);
+                        setTimeout(function () {
+                            var msg = callAjax("{{_context_path}}/api/affirmative/setting/delete", "post", dataJSONEN, "json")["delete"];
+                            if (msg == true) {
+                                $("#tbodyType").html('<td colspan="5" class="text-center text-success">บันทึกสำเร็จ</td>');
+                            } else {
+                                $("#tbodyType").html('<td colspan="5" class="text-center text-danger">บันทึกไม่สำเร็จ</td>');
+                            }
+                            getSetting();
+                        }, 1000);
                     }
                 });
             }
         });
         function getSetting() {
+            arrMainSeq = [];
+            arrTypeSeq = [];
+            arrTypeTitle = [];
+            arrTypeRemark = [];
             var groupCode = $("#listsGroup").val();
             if (groupCode != 0) {
                 var setting = callAjax("{{_context_path}}/api/affirmative/setting/listsSetting", "post", {groupCode: groupCode}, "json")["lists"];
                 $.each(setting, function (ks, vs) {
-                    mainArr[vs.mainId] = vs.mainSeq;
-                    typeArr[vs.typeId] = vs.typeSeq;
+                    arrMainSeq[vs.mainId] = vs.mainSeq;
+                    arrTypeSeq[vs.typeId] = vs.typeSeq;
+                    arrTypeTitle[vs.typeId] = vs.title;
+                    arrTypeRemark[vs.typeId] = vs.remark;
                 });
                 $(".sortMain").each(function (k, v) {
                     var mainId = $(this).closest(".main").attr("data-value");
-                    if (typeof mainArr[mainId] === "undefined") {
+                    if (typeof arrMainSeq[mainId] === "undefined") {
                         $(this).val("0");
                         $(".btnDetail[value='" + mainId + "']").text("บันทึก");
                     } else {
-                        $(this).val(mainArr[mainId]);
+                        $(this).val(arrMainSeq[mainId]);
                         $(".btnDetail[value='" + mainId + "']").text("จัดการส่วนย่อย");
                     }
                 });
@@ -217,7 +240,6 @@
                         row.find(".btnDetail").text("จัดการส่วนย่อย");
                     }
                 });
-
             }
         }
         function listsGroup() {
@@ -232,28 +254,37 @@
         $("#btnSave").click(function () {
             data = [];
             var typeId = 0;
+            var groupCode = $("#listsGroup").val();
             $(".data-object").each(function (k, v) {
-                if ($(this).attr("data-name") == "typeId") {
-                    typeId = $(this).attr("data-value");
-                    data[typeId] = {};
-                    data[typeId]["typeId"] = $(this).attr("data-value");
-                    data[typeId]["mainId"] = $(this).attr("data-mainId");
-                    data[typeId]["mainSeq"] = $(this).attr("data-mainSeq");
+                var dname = $(this).attr("data-name");
+                var index = $(this).attr("row-index");
+                if (dname == "typeId") {
+                    data[index] = {};
+                    data[index]["typeId"] = $(this).attr("data-value");
+                    data[index]["mainId"] = $(this).attr("data-mainId");
+                    data[index]["mainSeq"] = $(this).attr("data-mainSeq");
+                    data[index]["groupCode"] = groupCode;
                 } else {
-                    data[typeId][$(this).attr("data-name")] = $(this).val();
+                    data[index][dname] = $(this).val();
                 }
-
             });
-            //  console.log(data);
             var fdata = {};
             fdata["setting"] = data;
             var dataJSON = JSON.stringify(fdata);
             var dataJSONEN = encodeURIComponent(dataJSON);
-            var msg = callAjax("{{_context_path}}/api/affirmative/setting/set", "post", dataJSONEN, "json")["set"];
-            console.log(msg);
+            var msg;
+            $("#btnSave").hide();
+            $("#tbodyType").html('<td colspan="5" class="text-center">กำลังบันทึกข้อมูล</td>');
+            setTimeout(function () {
+                msg = callAjax("{{_context_path}}/api/affirmative/setting/set", "post", dataJSONEN, "json")["set"];
+                if (msg == true) {
+                    $("#tbodyType").html('<td colspan="5" class="text-center text-success">บันทึกสำเร็จ</td>');
+                } else {
+                    $("#tbodyType").html('<td colspan="5" class="text-center text-danger">บันทึกไม่สำเร็จ</td>');
+                }
+                getSetting();
+            }, 1000);
         });
-
-
     });
 </script>
 
