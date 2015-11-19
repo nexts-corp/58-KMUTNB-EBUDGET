@@ -62,4 +62,13 @@ interface IDraftService {
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
     public function approve($departmentId, $status);
+
+    /**
+     * @name export
+     * @uri /export
+     * @param string activityId
+     * @return file export Description
+     * @description ผู้เสนอราคาสูงสุดต่อคลัง
+     */
+    public function export($activityId);
 }

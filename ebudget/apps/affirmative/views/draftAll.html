@@ -74,7 +74,7 @@
                 var count = 0;
                 $.each(datas["lists"], function (key, val) {
                     html += '<tr>'
-                            + '<td class="bg-default"><button type="button" class="btn btn-success btn-sm" data-type="'+val["actName"]+'"><i class="fa fa-file-excel-o"></i> ร่างตัวชี้วัด</button></td>'
+                            + '<td class="bg-default"><button type="button" class="btn btn-success btn-sm activity" data-type="'+val["actId"]+'"><i class="fa fa-file-excel-o"></i> ร่างตัวชี้วัด</button></td>'
                             + '<td colspan="3" class="bg-default text-dark text-bold" style="vertical-align: middle;">' + val["actName"] + '</td>'
                         + '</tr>';
                     $.each(val["dept"], function (key2, val2) {
@@ -88,6 +88,12 @@
                 });
 
                 $("#deptList table tbody").html(html);
+
+                $("button.activity").unbind().click(function(){
+                    var id = $(this).attr("data-type");
+
+                    window.open( "{{_context_path}}/api/affirmative/draft/export?activityId="+id);
+                });
 
                 $("button.btnGroup").click(function () {
                     var deptId = $(this).attr("data-deptId");
