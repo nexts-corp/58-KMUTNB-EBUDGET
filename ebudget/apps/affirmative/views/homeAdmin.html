@@ -76,7 +76,7 @@ function listsCenter() {
             + '<td class="text-center">2</td>'
             + '<td>ร่างตัวชี้วัดคำรับรองของส่วนงาน</td>'
             + '<td class="text-center">-</td>'
-            + '<td class="text-center"><button id="group" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
+            + '<td class="text-center"><button id="draft" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
         + '</tr>'
         + '<tr>'
             + '<td class="text-center">3</td>'
@@ -97,8 +97,8 @@ function listsCenter() {
         window.location = "center";
     });
 
-    $("#group").click(function () {
-        window.location = "groupAll";
+    $("#draft").click(function () {
+        window.location = "draftAll";
     });
 
     $("#final").click(function () {
