@@ -82,21 +82,12 @@ interface IBudgetReviewService
      * @description แสดงข้อมูลแผนผลตามแหล่งเงิน
      */
     public function getBudgetScheme($budgetPeriodId, $budgetTypeCode, $deptId, $fundgroupId, $planId);
-    
-    /**
-     * @name insertScheme
-     * @uri /insertScheme
-     * @param apps\common\entity\BudgetScheme budget
-     * @return string[] result
-     * @description เพิ่มข้อมูลแผนผล
-     */
-    public function insertScheme($budget);
-    
+        
     /**
      * @name updateScheme
      * @uri /updateScheme
      * @param apps\common\entity\BudgetScheme budget
-     * @return string[] result
+     * @return boolean result Description
      * @description ปรับปรุงข้อมูลแผนผล
      */
     public function updateScheme($budget);

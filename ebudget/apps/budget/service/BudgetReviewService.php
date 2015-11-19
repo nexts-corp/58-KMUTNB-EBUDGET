@@ -365,19 +365,22 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
     public function getBudgetScheme($budgetPeriodId, $budgetTypeCode, $deptId, $fundgroupId, $planId) {
         if ($budgetTypeCode == "G") {
             $sql = "select
-                bg.planId,
-                bg.deptId, 
-                bg.fundgroupId,
-                bgType.bgTypeMasterId, bgType.bgTypeMasterName,
-                bgType.bgTypeMainId, bgType.bgTypeMainName,
-                bgType.bgTypeId, bgType.bgTypeName,
-                bgType.bgTypeSubId, bgType.bgTypeSubName,
-                bg.budgetSummary, 
-                bgScheme.BUDGETPLAN_SUMMARY as planSummary, bgScheme.BUDGETUSED_SUMMARY as usedSummary,
-                bgScheme.BUDGETPLAN_Q1 as planQ1, bgScheme.BUDGETUSED_Q1 as usedQ1,
-                bgScheme.BUDGETPLAN_Q2 as planQ2, bgScheme.BUDGETUSED_Q2 as usedQ2,
-                bgScheme.BUDGETPLAN_Q3 as planQ3, bgScheme.BUDGETUSED_Q3 as usedQ3,
-                bgScheme.BUDGETPLAN_Q4 as planQ4, bgScheme.BUDGETUSED_Q4 as usedQ4
+                planId,
+                deptId, 
+                fundgroupId,
+                bgTypeMasterId, bgTypeMasterName,
+                bgTypeMainId, bgTypeMainName,
+                bgTypeId, bgTypeName,
+                bgTypeSubId, bgTypeSubName,
+                case when bgType.bgTypeMainId in (20201000,20202000,20203000,20204000) then 1
+		when bgType.bgTypeMainId in (10100000,10200000,10300000,20200000,20300000,20400000) then 2
+		when bgType.bgTypeMainId in (20100000,20500000) then 3 else 0 end as bgLevel,
+                budgetSummary, 
+                planSummary, usedSummary,
+                planQ1, usedQ1,
+                planQ2, usedQ2,
+                planQ3, usedQ3,
+                planQ4, usedQ4
                 from (
                     select 
                         bgTypeTmp.bgTypeMasterId, bgTypeTmp.bgTypeMasterName,
@@ -397,8 +400,8 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
                         left outer join BUDGETTYPE bgType on bgTypeMain.BUDGETTYPEID = bgType.MASTERID
                         left outer join BUDGETTYPE bgTypeSub on bgType.BUDGETTYPEID = bgTypeSub.MASTERID
                         where bgTypeMaster.MASTERID = 0
-                        and bgTypeMaster.BUDGETTYPECODE = '".$budgetTypeCode."'
-                        and bgTypeMain.BUDGETTYPECODE = '".$budgetTypeCode."'
+                        and bgTypeMaster.BUDGETTYPECODE = '" . $budgetTypeCode . "'
+                        and bgTypeMain.BUDGETTYPECODE = '" . $budgetTypeCode . "'
                     ) bgTypeTmp
                 ) bgType
                 left outer join BUDGETSCHEME bgScheme on bgScheme.BUDGETTYPEID = bgType.bgTypeSubId
@@ -431,19 +434,18 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
                     left outer join BUDGET144 bg144 on bgh.BUDGETHEADID = bg144.BUDGETHEADID
                     left outer join BUDGET145 bg145 on bgh.BUDGETHEADID = bg145.BUDGETHEADID
                     left outer join BUDGET146 bg146 on bgh.BUDGETHEADID = bg146.BUDGETHEADID
-                    where bgh.BUDGETTYPECODE = '".$budgetTypeCode."'
-                    and bgh.BUDGETPERIODID = '".$budgetPeriodId."'
-                    and bgh.DEPARTMENTID = '".$deptId."'
-                    and bgh.FUNDGROUPID = '".$fundgroupId."'
-                    and bgh.L3D_PLANID = '".$planId."'
+                    where bgh.BUDGETTYPECODE = '" . $budgetTypeCode . "'
+                    and bgh.BUDGETPERIODID = '" . $budgetPeriodId . "'
+                    and bgh.DEPARTMENTID = '" . $deptId . "'
+                    and bgh.FUNDGROUPID = '" . $fundgroupId . "'
+                    and bgh.L3D_PLANID = '" . $planId . "'
                     group by bgh.DEPARTMENTID, bgh.L3D_PLANID, bgh.FUNDGROUPID, bgh.FORMBUDGET, 
                     bg140.BUDGETTYPEID, bg141.BUDGETTYPEID, bg142.BUDGETTYPEID, bg143.BUDGETTYPEID, bg144.BUDGETTYPEID, bg145.BUDGETTYPEID, bg146.BUDGETTYPEID
                 ) bg on bg.budgetTypeId = bgType.bgTypeSubId";
-           
+
             $data = $this->datacontext->pdoQuery($sql);
-            
+
             return $data;
-            
         } else if ($budgetTypeCode == "K") {
             $sql = "select
                 bg.planId,
@@ -451,6 +453,7 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
                 bg.fundgroupId,
                 bgType.bgTypeMasterId, bgType.bgTypeMasterName,
                 bgType.bgTypeMainId, bgType.bgTypeMainName,
+                2 as bgLevel,
                 bg.budgetSummary, 
                 bgScheme.BUDGETPLAN_SUMMARY as planSummary, bgScheme.BUDGETUSED_SUMMARY as usedSummary,
                 bgScheme.BUDGETPLAN_Q1 as planQ1, bgScheme.BUDGETUSED_Q1 as usedQ1,
@@ -476,8 +479,8 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
                         left outer join BUDGETTYPE bgType on bgTypeMain.BUDGETTYPEID = bgType.MASTERID
                         left outer join BUDGETTYPE bgTypeSub on bgType.BUDGETTYPEID = bgTypeSub.MASTERID
                         where bgTypeMaster.MASTERID = 0
-                        and bgTypeMaster.BUDGETTYPECODE = '".$budgetTypeCode."'
-                        and bgTypeMain.BUDGETTYPECODE = '".$budgetTypeCode."'
+                        and bgTypeMaster.BUDGETTYPECODE = '" . $budgetTypeCode . "'
+                        and bgTypeMain.BUDGETTYPECODE = '" . $budgetTypeCode . "'
                     ) bgTypeTmp
                 ) bgType
                 left outer join BUDGETSCHEME bgScheme on bgScheme.BUDGETTYPEID = bgType.bgTypeSubId
@@ -490,11 +493,11 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
                         coalesce(sum(rv.BUDGETAMOUNT), 0) as budgetSummary
                     from BUDGETHEAD bgh
                     left outer join BUDGETREVENUE rv on rv.BUDGETHEADID = bgh.BUDGETHEADID
-                    where bgh.BUDGETTYPECODE = '".$budgetTypeCode."'
-                    and bgh.BUDGETPERIODID = '".$budgetPeriodId."'
-                    and bgh.DEPARTMENTID = '".$deptId."'
-                    and bgh.FUNDGROUPID = '".$fundgroupId."'
-                    and bgh.L3D_PLANID = '".$planId."'
+                    where bgh.BUDGETTYPECODE = '" . $budgetTypeCode . "'
+                    and bgh.BUDGETPERIODID = '" . $budgetPeriodId . "'
+                    and bgh.DEPARTMENTID = '" . $deptId . "'
+                    and bgh.FUNDGROUPID = '" . $fundgroupId . "'
+                    and bgh.L3D_PLANID = '" . $planId . "'
                     group by bgh.DEPARTMENTID, bgh.L3D_PLANID, bgh.FUNDGROUPID, rv.BUDGETTYPEID
                 ) bg on bg.budgetTypeId = bgType.bgTypeSubId
                 group by bg.planId,
@@ -510,19 +513,27 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
                 bgScheme.BUDGETPLAN_Q2, bgScheme.BUDGETUSED_Q2,
                 bgScheme.BUDGETPLAN_Q3, bgScheme.BUDGETUSED_Q3,
                 bgScheme.BUDGETPLAN_Q4, bgScheme.BUDGETUSED_Q4";
-            
+
             $data = $this->datacontext->pdoQuery($sql);
-            
+
             return $data;
         }
     }
 
-    public function insertScheme($budget) {
-        
-    }
-
     public function updateScheme($budget) {
-        
+        $bg = new entity\BudgetScheme();
+        $data = $this->datacontext->getObject($budget);
+        if (!isset($data) || $data == null) {
+            if (!$this->datacontext->saveObject($budget)) {
+                return false;
+            }
+        } else {
+            if (!$this->datacontext->updateObject($budget)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 }
