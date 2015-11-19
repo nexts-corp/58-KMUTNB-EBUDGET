@@ -141,7 +141,7 @@ class CenterService extends CServiceBase implements ICenterService {
             }
             return $mainData;
         } else {
-            return null;
+            return false;
         }
     }
 

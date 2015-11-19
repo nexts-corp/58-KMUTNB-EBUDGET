@@ -25,29 +25,26 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
+    public function setting() {
+        $view = new CJView("setting", CJViewType::HTML_VIEW_ENGINE);
+        $groupS = new DraftService();
+        $view->year = $groupS->getPeriod()->year;
+        return $view;
+    }
+
     public function center() {
         $view = new CJView("center", CJViewType::HTML_VIEW_ENGINE);
         return $view;
     }
 
-    public function groupAll() {
-        $view = new CJView("groupAll", CJViewType::HTML_VIEW_ENGINE);
-        return $view;
-    }
-
-    public function group($deptId) {
+    public function draft($deptId) {
         $viewDept = new \apps\affirmative\model\ViewActivityDepartment();
         $viewDept->departmentId = $deptId;
         $data = $this->datacontext->getObject($viewDept)[0];
-        $view = new CJView("group", CJViewType::HTML_VIEW_ENGINE);
+        $view = new CJView("draft", CJViewType::HTML_VIEW_ENGINE);
         $view->department = $data;
-        $groupS = new GroupService();
+        $groupS = new DraftService();
         $view->year = $groupS->getPeriod()->year;
-        return $view;
-    }
-
-    public function finalAll() {
-        $view = new CJView("finalAll", CJViewType::HTML_VIEW_ENGINE);
         return $view;
     }
 
@@ -57,7 +54,7 @@ class ViewService extends CServiceBase implements IViewService {
         $data = $this->datacontext->getObject($viewDept)[0];
         $view = new CJView("final", CJViewType::HTML_VIEW_ENGINE);
         $view->department = $data;
-        $groupS = new GroupService();
+        $groupS = new DraftService();
         $view->year = $groupS->getPeriod()->year;
         return $view;
     }
@@ -73,7 +70,7 @@ class ViewService extends CServiceBase implements IViewService {
         $data = $this->datacontext->getObject($viewDept)[0];
         $view = new CJView("result", CJViewType::HTML_VIEW_ENGINE);
         $view->department = $data;
-        $groupS = new GroupService();
+        $groupS = new DraftService();
         $view->year = $groupS->getPeriod()->year;
         return $view;
     }

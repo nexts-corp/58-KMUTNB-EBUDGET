@@ -30,6 +30,7 @@
     </div><!-- end button action on header -->
 
     <div class="container">
+
         <div class="row">
 
             <div id="panelHome" class="col-md-12">
@@ -158,7 +159,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">ยืนยันตัวชี้วัดคำรับรองการปฏิบัติงาน</h4>
+                            <h4 class="modal-title">ลบตัวชี้วัดคำรับรองการปฏิบัติงาน</h4>
                         </div>
                         <div class="modal-body">
                             <table>
@@ -189,7 +190,7 @@
                         <div class="modal-footer">
                             <ul class="nav nav-pills sort-source pull-right" data-option-key="filter">
                                 <li data-option-value="*" class="">
-                                    <button class="btn btn-danger save"><i class="fa fa-check"></i> ยืนยัน</button>
+                                    <button class="btn btn-danger save"><i class="fa fa-trash"></i> ยืนยันการลบ</button>
                                 </li>
                                 <li data-option-value="" class="padding-left">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
@@ -213,7 +214,7 @@
     $(function () {
         centerForm();
         $("#btnApprove").click(function () {
-            var result = callAjax("{{_context_path}}/api/affirmative/final/approve", "post", {departmentId: deptId, status: "Y"}, "json");
+            var result = callAjax("{{_context_path}}/api/affirmative/draft/approve", "post", {departmentId: deptId, status: "Y"}, "json");
             if (result["approve"] == true) {
                 alert("อนุมัติสำเร็จ!");
                 window.location = "{{_context_path}}/api/affirmative/view/homeAdmin";
@@ -224,7 +225,8 @@
     });
     function centerForm() {
         var contentArr = {};
-        var datas = callAjax("{{_context_path}}/api/affirmative/final/listsAll", "post", {departmentId: deptId}, "json");
+
+        var datas = callAjax("{{_context_path}}/api/affirmative/draft/listsAll", "post", {departmentId: deptId}, "json");
         //  console.log(datas);
         if (typeof datas["lists"] !== "undefined" && datas["lists"] !== null && datas["lists"] !== false) {
             $("#btnApprove").show();
@@ -328,7 +330,7 @@
                                 if (typeof value4["kpi"] !== "undefined" && value4["kpi"] !== null) {
                                     $.each(value4["kpi"], function (key5, value5) {
 
-                                        contentArr[value1["mainSeq"]] += '<tr data-tt-id="final' + value5["finalId"] + '" data-tt-parent-id="target' + value4["targetId"] + '"  data-seq="' + value5["kpiSeq"] + '">'
+                                        contentArr[value1["mainSeq"]] += '<tr data-tt-id="draft' + value5["draftId"] + '" data-tt-parent-id="target' + value4["targetId"] + '"  data-seq="' + value5["kpiSeq"] + '">'
                                                 + (value5["isActive"] == "Y" ? '<td style="padding-left: 20px;">' : '<td style="padding-left: 20px;" class="text-primary">') + value3["issueSeq"] + '.' + value4["targetSeq"] + '.' + value5["kpiSeq"] + ' ' + value5["kpiName"] + '</td>'
                                                 + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + value5["unitName"] + '</td>'
                                                 + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value5["kpiGoal"] ? value5["kpiGoal"] : "") + '</td>'
@@ -341,12 +343,27 @@
                                                 + '<td class="text-center">' + (value5["remark"] ? value5["remark"] : "") + '</td>'
                                                 + '<td class="text-center">'
                                                 + '<div class="btn-group">'
-                                                + (value5["isApprove"] == "N" ? '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + value4["targetId"] + '" data-id="' + value5["finalId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' : "")
-                                                + (value5["isApprove"] == "N" ? '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + value4["targetId"] + '" data-id="' + value5["finalId"] + '">' + (value5["draftId"] == "0" ? '<i class="fa fa-trash"></i> ลบ' : '<i class="fa fa-repeat"></i> ส่งกลับ') + '</button>' : "")
+                                                + (value5["isApprove"] == "N" ?
+                                                        (
+                                                                value5["isCenter"] == "Y" ?
+                                                                '<button type="button" class="btn btn-sm btn-warning edit" data-edit="N" data-pid="' + value4["targetId"] + '" data-id = "' + value5["draftId"] + '" > <i class="fa fa-pencil"></i>แก้ไข</button>'
+                                                                :
+                                                                '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + value4["targetId"] + '" data-id="' + value5["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                                                )
+                                                        :
+                                                        ""
+                                                        )
+                                                + (value5["isApprove"] == "N" ?
+                                                        (value5["isCenter"] == "Y" ?
+                                                                ""
+                                                                :
+                                                                '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + value4["targetId"] + '" data-id="' + value5["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                                                                )
+                                                        : "")
                                                 + '</div>'
                                                 + '</td>'
                                                 + '</tr>';
-                                        listArr[value5["finalId"]] = value5;
+                                        listArr[value5["draftId"]] = value5;
                                     });
                                 }
 //                             
@@ -375,7 +392,7 @@
 //                        }
                         if (typeof value2["kpi"] !== "undefined" && value2["kpi"] !== null) {
                             $.each(value2["kpi"], function (key5, value5) {
-                                contentArr[value1["mainSeq"]] += '<tr data-tt-id="final' + value5["finalId"] + '" data-tt-parent-id="type' + value2["typeId"] + '"  data-seq="' + value5["kpiSeq"] + '" >'
+                                contentArr[value1["mainSeq"]] += '<tr data-tt-id="draft' + value5["draftId"] + '" data-tt-parent-id="type' + value2["typeId"] + '"  data-seq="' + value5["kpiSeq"] + '" >'
                                         + (value5["isActive"] == "Y" ? '<td style="padding-left: 20px;">' : '<td style="padding-left: 20px;" class="text-primary">') + value5["kpiSeq"] + '.' + value5["kpiName"] + '</td>'
                                         + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + value5["unitName"] + '</td>'
                                         + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value5["kpiGoal"] ? value5["kpiGoal"] : "") + '</td>'
@@ -388,12 +405,20 @@
                                         + '<td class="text-center">' + (value5["remark"] ? value5["remark"] : "") + '</td>'
                                         + '<td class="text-center">'
                                         + '<div class="btn-group">'
-                                        + (value5["isApprove"] == "N" ? '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + value2["typeId"] + '" data-id="' + value5["finalId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>' : "")
-                                        + (value5["isApprove"] == "N" ? '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + value2["typeId"] + '" data-id="' + value5["finalId"] + '">' + (value5["draftId"] == "0" ? '<i class="fa fa-trash"></i> ลบ' : '<i class="fa fa-repeat"></i> ส่งกลับ') + '</button>' : "")
+                                        + (value5["isApprove"] == "N" ?
+                                                (
+                                                        value5["isCenter"] == "Y" ?
+                                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="N" data-pid="' + value2["typeId"] + '" data-id = "' + value5["draftId"] + '" > <i class="fa fa-pencil"></i>แก้ไข</button>'
+                                                        :
+                                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + value2["typeId"] + '" data-id="' + value5["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                                        ) : "")
+                                        + (value5["isApprove"] == "N" ?
+                                                (value5["isCenter"] == "Y" ? "" : '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + value2["typeId"] + '" data-id="' + value5["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>')
+                                                : "")
                                         + '</div>'
                                         + '</td>'
                                         + '</tr>';
-                                listArr[value5["finalId"]] = value5;
+                                listArr[value5["draftId"]] = value5;
                             });
                         }
                     }
@@ -435,8 +460,9 @@
                         });
                         if (isValid) {
                             var fdata = dataObject(pId, pName, null);
-                            // console.log(fdata);
+                            //console.log(fdata);
                             centerInsert(fdata);
+
                         } else {
                             alert("กรุณากรอกข้อมูลให้ครบ");
                         }
@@ -445,8 +471,8 @@
 //
                 centerAction();
             });
-        }
-        else {
+        } else {
+
             $("#panelHome").html("<div class='text-center text-default col-sm-12'>ตัวชี้วัดคำรับรองการปฏิบัติงาน อนุมัติเรียบร้อยแล้ว</div>");
         }
     }
@@ -454,18 +480,18 @@
     function centerAction() {
         $("button.edit").unbind().click(function () {
             var pId = $(this).attr("data-pid");
-            var finalId = $(this).attr("data-id");
+            var draftId = $(this).attr("data-id");
             var edit = $(this).attr("data-edit");
             // reset form for new insert
             $("#loadingForm").html('');
             $("#form").trigger('reset');
             $("#panelForm").modal("show");
             listsKpi(pId);
-            //   console.log(listArr[finalId]);
+            //   console.log(listArr[draftId]);
             $("#form input[type=text], #form textarea, #form select").each(function () {
                 var fid = $(this).attr("id");
                 var lock = $(this).attr("data-lock");
-                $("#" + fid).val(listArr[finalId][fid]);
+                $("#" + fid).val(listArr[draftId][fid]);
                 if (edit == "N" && lock == "Y") {
                     $("#" + fid).attr("disabled", true);
                 } else {
@@ -482,25 +508,25 @@
                     });
                 }
                 if (isValid) {
-                    var fdata = dataObject(finalId, "finalId", null);
+                    var fdata = dataObject(draftId, "draftId", null);
                     //console.log(fdata);
                     centerEdit(fdata);
                 }
             });
         });
         $("button.delete").unbind("click").click(function () {
-            var finalId = $(this).attr("data-id");
+            var draftId = $(this).attr("data-id");
             $("#panelDeleteForm").modal("show");
             $("#panelDeleteForm").find('td').each(function () {
                 if ($(this).attr("id")) {
                     var aId = $(this).attr("id");
                     var name = aId.replace('Del', '');
-                    $("#" + aId).html(getTag(listArr[finalId][name], "-"));
+                    $("#" + aId).html(getTag(listArr[draftId][name], "-"));
                 }
             });
             $("button.save").unbind("click").click(function () {
 
-                centerDelete(finalId);
+                centerDelete(draftId);
             });
         });
     }
@@ -508,20 +534,20 @@
     function centerInsert(fdata) {
         $("#loadingForm").html("Loading...");
         setTimeout(function () {
-            var dataJSON = JSON.stringify({final: fdata});
+            var dataJSON = JSON.stringify({draft: fdata});
             var dataJSONEN = encodeURIComponent(dataJSON);
-            var datas = callAjax("{{_context_path}}/api/affirmative/final/insert", "post", dataJSONEN, "json");
+            var datas = callAjax("{{_context_path}}/api/affirmative/draft/insert", "post", dataJSONEN, "json");
             var data = datas["insert"];
 
             if (typeof data !== "undefined" && data !== null) {
                 if (data != false) {
                     $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
-                    listArr[data["finalId"]] = data;
+                    listArr[data["draftId"]] = data;
                     var mainSeq = data["mainSeq"];
                     var input = "";
                     var node, node2;
                     if (data["targetId"] == 0) {
-                        input = '<tr data-tt-id="final' + data["finalId"] + '" data-tt-parent-id="type' + data["typeId"] + '"  data-seq="' + data["kpiSeq"] + '" >'
+                        input = '<tr data-tt-id="draft' + data["draftId"] + '" data-tt-parent-id="type' + data["typeId"] + '"  data-seq="' + data["kpiSeq"] + '" >'
                                 + (data["isActive"] == "Y" ? '<td style="padding-left: 20px;">' : '<td style="padding-left: 20px;" class="text-primary">') + data["kpiSeq"] + '.' + data["kpiName"] + '</td>'
                                 + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + data["unitName"] + '</td>'
                                 + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["kpiGoal"] ? data["kpiGoal"] : "") + '</td>'
@@ -534,15 +560,20 @@
                                 + '<td class="text-center">' + (data["remark"] ? data["remark"] : "") + '</td>'
                                 + '<td class="text-center">'
                                 + '<div class="btn-group">'
-                                + '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + data["typeId"] + '" data-id="' + data["finalId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["typeId"] + '" data-id="' + data["finalId"] + '">' + (data["draftId"] == "0" ? '<i class="fa fa-trash"></i> ลบ' : '<i class="fa fa-repeat"></i> ส่งกลับ') + '</button>'
+                                + (
+                                        data["isCenter"] == "Y" ?
+                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="N" data-pid="' + data["typeId"] + '" data-id = "' + data["draftId"] + '" > <i class="fa fa-pencil"></i>แก้ไข</button>'
+                                        :
+                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + data["typeId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                        )
+                                + (data["isCenter"] == "Y" ? "" : '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["typeId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>')
                                 + '</div>'
                                 + '</td>'
                                 + '</tr>';
                         node = $("#tableall").treetable("node", "type" + data["typeId"]);
                         node2 = $("#table" + mainSeq).treetable("node", "type" + data["typeId"]);
                     } else {
-                        input = '<tr data-tt-id="final' + data["finalId"] + '" data-tt-parent-id="target' + data["targetId"] + '"  data-seq="' + data["kpiSeq"] + '">'
+                        input = '<tr data-tt-id="draft' + data["draftId"] + '" data-tt-parent-id="target' + data["targetId"] + '"  data-seq="' + data["kpiSeq"] + '">'
                                 + (data["isActive"] == "Y" ? '<td style="padding-left: 20px;">' : '<td style="padding-left: 20px;" class="text-primary">') + data["issueSeq"] + '.' + data["targetSeq"] + '.' + data["kpiSeq"] + ' ' + data["kpiName"] + '</td>'
                                 + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + data["unitName"] + '</td>'
                                 + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["kpiGoal"] ? data["kpiGoal"] : "") + '</td>'
@@ -555,8 +586,13 @@
                                 + '<td class="text-center">' + (data["remark"] ? data["remark"] : "") + '</td>'
                                 + '<td class="text-center">'
                                 + '<div class="btn-group">'
-                                + '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + data["targetId"] + '" data-id="' + data["finalId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["targetId"] + '" data-id="' + data["finalId"] + '">' + (data["draftId"] == "0" ? '<i class="fa fa-trash"></i> ลบ' : '<i class="fa fa-repeat"></i> ส่งกลับ') + '</button>'
+                                + (
+                                        data["isCenter"] == "Y" ?
+                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="N" data-pid="' + data["targetId"] + '" data-id = "' + data["draftId"] + '" > <i class="fa fa-pencil"></i>แก้ไข</button>'
+                                        :
+                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + data["targetId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                        )
+                                + (data["isCenter"] == "Y" ? "" : '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["targetId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>')
                                 + '</div>'
                                 + '</td>'
                                 + '</tr>';
@@ -580,20 +616,20 @@
     function centerEdit(fdata) {
         $("#loadingForm").html("Loading...");
         setTimeout(function () {
-            var dataJSON = JSON.stringify({final: fdata});
+            var dataJSON = JSON.stringify({draft: fdata});
             var dataJSONEN = encodeURIComponent(dataJSON);
-            var datas = callAjax("{{_context_path}}/api/affirmative/final/update", "post", dataJSONEN, "json");
+            var datas = callAjax("{{_context_path}}/api/affirmative/draft/update", "post", dataJSONEN, "json");
             var data = datas["update"];
             if (typeof data !== "undefined" && data !== null) {
                 if (data != false) {
                     $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
-                    listArr[data["finalId"]] = data;
+                    listArr[data["draftId"]] = data;
                     // var mainSeq = $("tr[data-tt-id=type" + data["typeId"] + "]").attr("data-tt-parent-id").substr(4);
                     var mainSeq = data["mainSeq"];
                     var input = "";
                     var node, node2;
                     if (data["targetId"] == 0) {
-                        input = '<tr data-tt-id="final' + data["finalId"] + '" data-tt-parent-id="type' + data["typeId"] + '"  data-seq="' + data["kpiSeq"] + '" >'
+                        input = '<tr data-tt-id="draft' + data["draftId"] + '" data-tt-parent-id="type' + data["typeId"] + '"  data-seq="' + data["kpiSeq"] + '" >'
                                 + (data["isActive"] == "Y" ? '<td style="padding-left: 20px;">' : '<td style="padding-left: 20px;" class="text-primary">') + data["kpiSeq"] + '.' + data["kpiName"] + '</td>'
                                 + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + data["unitName"] + '</td>'
                                 + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["kpiGoal"] ? data["kpiGoal"] : "") + '</td>'
@@ -606,15 +642,20 @@
                                 + '<td class="text-center">' + (data["remark"] ? data["remark"] : "") + '</td>'
                                 + '<td class="text-center">'
                                 + '<div class="btn-group">'
-                                + '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + data["typeId"] + '" data-id="' + data["finalId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["typeId"] + '" data-id="' + data["finalId"] + '">' + (data["draftId"] == "0" ? '<i class="fa fa-trash"></i> ลบ' : '<i class="fa fa-repeat"></i> ส่งกลับ') + '</button>'
+                                + (
+                                        data["isCenter"] == "Y" ?
+                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="N" data-pid="' + data["typeId"] + '" data-id = "' + data["draftId"] + '" > <i class="fa fa-pencil"></i>แก้ไข</button>'
+                                        :
+                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + data["typeId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                        )
+                                + (data["isCenter"] == "Y" ? "" : '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["typeId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>')
                                 + '</div>'
                                 + '</td>'
                                 + '</tr>';
                         node = $("#tableall").treetable("node", "type" + data["typeId"]);
                         node2 = $("#table" + mainSeq).treetable("node", "type" + data["typeId"]);
                     } else {
-                        input = '<tr data-tt-id="final' + data["finalId"] + '" data-tt-parent-id="target' + data["targetId"] + '"  data-seq="' + data["kpiSeq"] + '">'
+                        input = '<tr data-tt-id="draft' + data["draftId"] + '" data-tt-parent-id="target' + data["targetId"] + '"  data-seq="' + data["kpiSeq"] + '">'
                                 + (data["isActive"] == "Y" ? '<td style="padding-left: 20px;">' : '<td style="padding-left: 20px;" class="text-primary">') + data["issueSeq"] + '.' + data["targetSeq"] + '.' + data["kpiSeq"] + ' ' + data["kpiName"] + '</td>'
                                 + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + data["unitName"] + '</td>'
                                 + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["kpiGoal"] ? data["kpiGoal"] : "") + '</td>'
@@ -627,8 +668,13 @@
                                 + '<td class="text-center">' + (data["remark"] ? data["remark"] : "") + '</td>'
                                 + '<td class="text-center">'
                                 + '<div class="btn-group">'
-                                + '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + data["targetId"] + '" data-id="' + data["finalId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["targetId"] + '" data-id="' + data["finalId"] + '">' + (data["draftId"] == "0" ? '<i class="fa fa-trash"></i> ลบ' : '<i class="fa fa-repeat"></i> ส่งกลับ') + '</button>'
+                                + (
+                                        data["isCenter"] == "Y" ?
+                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="N" data-pid="' + data["targetId"] + '" data-id = "' + data["draftId"] + '" > <i class="fa fa-pencil"></i>แก้ไข</button>'
+                                        :
+                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + data["targetId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                        )
+                                + (data["isCenter"] == "Y" ? "" : '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["targetId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>')
                                 + '</div>'
                                 + '</td>'
                                 + '</tr>';
@@ -636,8 +682,8 @@
                         node2 = $("#table" + mainSeq).treetable("node", "target" + data["targetId"]);
                     }
 
-                    $("#tableall").treetable("removeNode", "final" + data["finalId"]);
-                    $("#table" + mainSeq).treetable("removeNode", "final" + data["finalId"]);
+                    $("#tableall").treetable("removeNode", "draft" + data["draftId"]);
+                    $("#table" + mainSeq).treetable("removeNode", "draft" + data["draftId"]);
                     $("#tableall").treetable("loadBranch", node, input);
                     $("#table" + mainSeq).treetable("loadBranch", node2, input);
 //                    var nodeSort = $("#tableall").treetable("node", $(this).attr('data-seq'));
@@ -659,20 +705,20 @@
         }, 500);
     }
 
-    function centerDelete(finalId) {
-        var dataJSON = JSON.stringify({final: {finalId: finalId}});
+    function centerDelete(draftId) {
+        var dataJSON = JSON.stringify({draft: {draftId: draftId}});
         var dataJSONEN = encodeURIComponent(dataJSON);
-        var datas = callAjax("{{_context_path}}/api/affirmative/final/delete", "post", dataJSONEN, "json");
+        var datas = callAjax("{{_context_path}}/api/affirmative/draft/delete", "post", dataJSONEN, "json");
         if (typeof datas !== "undefined" && datas !== null) {
             if (datas["delete"] == true) {
-                $("#tableall").treetable("removeNode", "final" + finalId);
+                $("#tableall").treetable("removeNode", "draft" + draftId);
 //                var parent = $('#tableall').treetable('node', "target" + parentId);
 //                if (parent.children.length == 0) {
 //                    parent.row.find('.indenter').html('');
 //                }
-                //  var mainSeq = $("tr[data-tt-id=type" + listArr[finalId]["typeId"] + "]").attr("data-tt-parent-id").substr(4);
-                var mainSeq = listArr[finalId]["mainSeq"];
-                $("#table" + mainSeq).treetable("removeNode", "final" + finalId);
+                //  var mainSeq = $("tr[data-tt-id=type" + listArr[draftId]["typeId"] + "]").attr("data-tt-parent-id").substr(4);
+                var mainSeq = listArr[draftId]["mainSeq"];
+                $("#table" + mainSeq).treetable("removeNode", "draft" + draftId);
 //                var parent = $("#table" + findNode[parentId]).treetable('node', "target" + parentId);
 //                if (parent.children.length == 0) {
 //                    parent.row.find('.indenter').html('');

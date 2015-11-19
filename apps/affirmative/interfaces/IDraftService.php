@@ -3,19 +3,11 @@
 namespace apps\affirmative\interfaces;
 
 /**
- * @name IGroupService
- * @uri /group
+ * @name IDraftService
+ * @uri /draft
  * @description ประมูล
  */
-interface IGroupService {
-
-    /**
-     * @name checkApprove
-     * @uri /checkApprove
-     * @return String[] lists Description
-     * @description ผู้เสนอราคาสูงสุดต่อคลัง
-     */
-    public function checkApprove();
+interface IDraftService {
 
     /**
      * @name listsDept

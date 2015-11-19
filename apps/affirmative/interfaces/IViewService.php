@@ -22,6 +22,13 @@ interface IViewService {
      * @description ยื่นคำของบประมาณ
      */
     public function homeAdmin();
+    
+    /**
+     * @name setting
+     * @uri /setting
+     * @description ยื่นคำของบประมาณ
+     */
+    public function setting();
 
     /**
      * @name center
@@ -31,26 +38,12 @@ interface IViewService {
     public function center();
 
     /**
-     * @name groupAll
-     * @uri /groupAll
-     * @description ยื่นคำของบประมาณ
-     */
-    public function groupAll();
-
-    /**
-     * @name group
-     * @uri /group
+     * @name draft
+     * @uri /draft
      * @param string deptId
      * @description ยื่นคำของบประมาณ
      */
-    public function group($deptId);
-
-    /**
-     * @name finalAll
-     * @uri /finalAll
-     * @description ยื่นคำของบประมาณ
-     */
-    public function finalAll();
+    public function draft($deptId);
 
     /**
      * @name final
