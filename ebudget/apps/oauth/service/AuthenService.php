@@ -53,7 +53,7 @@ class AuthenService extends CServiceBase implements IAuthenService {
                 // echo $authUrl;
 
                 header('Location: ' . $authUrl);
-                header('Location: /kmutnb-ebudget/ebudget/api/budget/view/formBudget');
+                header('Location: /ebudget/ebudget/api/budget/view/formBudget');
                 exit;
                 //        return false;
             } else {
