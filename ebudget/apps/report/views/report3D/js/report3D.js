@@ -8,7 +8,7 @@ myApp.controller('mainController', function ($scope, $http, $controller) {
     var listDeptGroupB = []; //Global Variable
     var listL3DPlan = []; //Global Variable
     var listL3DFund = []; //Global Variable
-    var pathJavaserver = "http://202.44.34.67/reporter2";
+    var pathJavaserver = "http://202.44.34.67/reporter2/";
     $controller('cmListController', {$scope: $scope});
 
     $scope.init = function () {
