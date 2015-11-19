@@ -517,4 +517,12 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
         }
     }
 
+    public function insertScheme($budget) {
+        
+    }
+
+    public function updateScheme($budget) {
+        
+    }
+
 }

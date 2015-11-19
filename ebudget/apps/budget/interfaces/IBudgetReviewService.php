@@ -84,15 +84,20 @@ interface IBudgetReviewService
     public function getBudgetScheme($budgetPeriodId, $budgetTypeCode, $deptId, $fundgroupId, $planId);
     
     /**
-     * @name getBudgetScheme
-     * @uri /getBudgetScheme
-     * @param int budgetPeriodId ปีงบประมาณ
-     * @param int budgetTypeCode ประเภทงบประมาณ
-     * @param int deptId หน่วยงาน
-     * @param int fundgroupId กองทุน
-     * @param int planId แผน 3 มิติ
+     * @name insertScheme
+     * @uri /insertScheme
+     * @param apps\common\entity\BudgetScheme budget
      * @return string[] result
-     * @description แสดงข้อมูลแผนผลตามแหล่งเงิน
+     * @description เพิ่มข้อมูลแผนผล
      */
     public function insertScheme($budget);
+    
+    /**
+     * @name updateScheme
+     * @uri /updateScheme
+     * @param apps\common\entity\BudgetScheme budget
+     * @return string[] result
+     * @description ปรับปรุงข้อมูลแผนผล
+     */
+    public function updateScheme($budget);
 }
