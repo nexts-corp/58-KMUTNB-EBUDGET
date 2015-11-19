@@ -277,10 +277,7 @@ function buildingOneForm(param) {
             loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBv9gXQrEbOEH_JGiqm_rO5Mv67nzs8m8g&callback=initMap',
                 function () {
                     log('google-loader has been loaded');
-                    google.maps.event.trigger(map, 'resize');
                 });
-        } else {
-            google.maps.event.trigger(map, 'resize');
         }
         $("#modalMap").modal("show");
         firstClick = true;
@@ -293,7 +290,6 @@ function buildingOneForm(param) {
         optionMap = id;
 
         if (id == "point") {
-
             //for btn point
             if (CircleMap != undefined)CircleMap.setMap(null);
             if (directionsDisplay["show"] != undefined) {
@@ -309,7 +305,6 @@ function buildingOneForm(param) {
 
 
         } else if (id == "line") {
-
             //for btn line
             if (CircleMap != undefined)CircleMap.setMap(null);
             if (markers["start"] != undefined) markers["start"].setMap(null); //clear all marker
@@ -375,7 +370,6 @@ function buildingOneForm(param) {
             });
 
         } else if (id == "poly") {
-
             //for btn poly
             if (markers["start"] != undefined) markers["start"].setMap(null); //clear all marker
             if (markers["end"] != undefined) markers["end"].setMap(null); //clear all marker
@@ -388,39 +382,12 @@ function buildingOneForm(param) {
                 if (markers["start"] != undefined) markers["start"].setMap(null); //clear all marker
                 if (markers["end"] != undefined) markers["end"].setMap(null); //clear all marker
             }
-            var html = '<input type="radio" class="input-md" name="poly"  value="point1" checked="checked" style="width: 1.5em; height: 1.5em;">&nbsp;&nbsp;<label>จุดที่ 1</label>&nbsp;<i class="fa fa-map-marker"></i>&nbsp;&nbsp;'
-                + '<input type="radio" class="input-md" name="poly" value="point2" style="width: 1.5em; height: 1.5em;">&nbsp;&nbsp;<label>จุดที่ 2</label>&nbsp;<i class="fa fa-map-marker"></i>&nbsp;&nbsp;'
-                + '<input type="radio" class="input-md" name="poly" value="point3" style="width: 1.5em; height: 1.5em;">&nbsp;&nbsp;<label>จุดที่ 3</label>&nbsp;<i class="fa fa-map-marker"></i>&nbsp;&nbsp;'
-                + '<input type="radio" class="input-md" name="poly" value="point4" style="width: 1.5em; height: 1.5em;">&nbsp;&nbsp;<label>จุดที่ 4</label>&nbsp;<i class="fa fa-map-marker"></i>&nbsp;&nbsp;'
-                + '&nbsp;&nbsp;<button type="button"  class="btn btn-default showArea">แสดงพื้นที่</button>'
-                + '&nbsp;<button type="button" class="btn btn-default clear">ล้าง</button>';
 
-            $("#showInfo").html(html);
             $("#showInfoFotter").html('');
-
-            $(".showArea").unbind("click").click(function () {
-
-                var bermudaTriangle = new google.maps.Polygon({
-                    paths: polygonLatlngList,
-                    strokeColor: '#FF0000',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 3,
-                    fillColor: '#FF0000',
-                    fillOpacity: 0.35
-                });
-                bermudaTriangle.setMap(map);
-
-            });
-            $(".clear").unbind("click").click(function () {
-                if (markers["start"] != undefined) markers["start"].setMap(null); //clear all marker
-                if (markers["end"] != undefined) markers["end"].setMap(null); //clear all marker
-                markers["end"] = undefined;
-                markers["start"] = undefined;
-                if (CircleMap != undefined)CircleMap.setMap(null);
-            });
+            var html = '';
+            $("#showInfo").html(html);
 
         } else if (id == "circle") {
-
             //for btn circle
             if (markers["start"] != undefined) markers["start"].setMap(null); //clear all marker
             if (markers["end"] != undefined) markers["end"].setMap(null); //clear all marker
@@ -543,6 +510,7 @@ function showView(param) {
     }
 
 }
+
 function buildingOneAction() {
 
     $("button.saveBuildOne").unbind("click").click(function () {
@@ -684,6 +652,7 @@ function buildingOneAction() {
         }
     });
 }
+
 function toolsEvent() {
 
     $("button.edit-btnBOQ").unbind("click").click(function () {
@@ -754,9 +723,7 @@ function toolsEvent() {
                 $(this).closest("tr").html(oldHtml);
                 toolsEvent();
             });
-
         } else {
-
             $("#floorDesc").focus(); //focus to row add
         }
 
@@ -862,6 +829,7 @@ function toolsEvent() {
         }
     });
 }
+
 function buildingOneInsert(dataJSONEN) {
 
     setTimeout(function () {
@@ -878,6 +846,7 @@ function buildingOneInsert(dataJSONEN) {
 
     }, 500);
 }
+
 function buildingOneEdit(dataJSONEN) {
 
     setTimeout(function () {
@@ -894,6 +863,7 @@ function buildingOneEdit(dataJSONEN) {
 
     }, 500);
 }
+
 function keyPressedOne(obj) {
 
     var quantity = parseFloat($("#quantity").val());
@@ -919,6 +889,7 @@ function keyPressedOne(obj) {
 
     $("#costTotalBOQ").html(parseFloat($("#wageTotal").html()) + parseFloat($("#materialTotal").html()));
 }
+
 function keyPressedBuilding(obj) {
 
     var name = $(obj).attr("name");
@@ -933,6 +904,7 @@ function keyPressedBuilding(obj) {
 
     $("#costTotalBuild").html(total);
 }
+
 function disableOneEdit() {
 
     $("#divAttachment #formBuildOne input,#divAttachment #formBuildOne textarea").each(function () {
@@ -961,9 +933,8 @@ var map;
 var markers = [];
 var optionMap = "point"; //default
 var directionsDisplay = [];
-var polygonLatlngList = [];
+var triangleCoords = [];
 var CircleMap;
-
 function initMap() {
 
     log('maps-API has been loaded, ready to use');
@@ -1022,32 +993,58 @@ function initMap() {
                 markers["end"] = marker;
             }
 
+            //if (markers["end"] != undefined && markers["start"] != undefined) {
+            //    // direction polyline
+            //
+            //    var service = new google.maps.DirectionsService();
+            //    if (directionsDisplay["show"] == undefined) {
+            //        directionsDisplay["show"] = new google.maps.DirectionsRenderer(
+            //            {
+            //                suppressMarkers: true
+            //            });
+            //    }
+            //
+            //    directionsDisplay["show"].setMap(map);
+            //
+            //    var waypts = [];
+            //    waypts.push({location: markers["start"].position, stopover: true});
+            //    waypts.push({location: markers["end"].position, stopover: true});
+            //
+            //    var request = {
+            //        origin: markers["start"].position,
+            //        destination: markers["end"].position,
+            //        waypoints: waypts,
+            //        travelMode: google.maps.DirectionsTravelMode.DRIVING
+            //    };
+            //
+            //    service.route(request, function (result, status) {
+            //        if (status == google.maps.DirectionsStatus.OK) {
+            //            directionsDisplay["show"].setDirections(result);
+            //        } else {
+            //            alert("Directions request failed:" + status);
+            //        }
+            //    });
+            //
+            //    var html = '<img src="' + js_context_path + '/images/markerA.png"  height="22" width="22"><label class="control-label">ละติจูดที่ ' + markers["start"].position.lat() + ' ลองจิจูดที่ ' + markers["start"].position.lng() + '</label><br>' +
+            //        '<img src="' + js_context_path + '/images/markerB.png"  height="22" width="22"><label class="control-label">ละติจูดที่ ' + markers["end"].position.lat() + ' ลองจิจูดที่ ' + markers["end"].position.lng() + '</label>';
+            //    $("#showInfoFotter").html(html);
+            //
+            //}//end if
+
+
         } else if (optionMap == "poly") {
 
-            var latLng = e.latLng;
-            var checked = $("input:radio[name='poly']:checked").val();
+            triangleCoords.push(e.latLng);
 
-            if (checked == "point1") {
-                if (markers["point1"] != undefined) markers["point1"].setMap(null); //clear all marker
-                polygonLatlngList[0] = {lat: latLng.lat(), lng: latLng.lng()};
-            } else if (checked == "point2") {
-                if (markers["point2"] != undefined) markers["point2"].setMap(null); //clear all marker
-                polygonLatlngList[1] = {lat: latLng.lat(), lng: latLng.lng()};
-            } else if (checked == "point3") {
-                if (markers["point3"] != undefined) markers["point3"].setMap(null); //clear all marker
-                polygonLatlngList[2] = {lat: latLng.lat(), lng: latLng.lng()};
-            } else if (checked == "point4") {
-                if (markers["point4"] != undefined) markers["point4"].setMap(null); //clear all marker
-                polygonLatlngList[3] = {lat: latLng.lat(), lng: latLng.lng()};
-            }
-            log(polygonLatlngList);
-            var marker = new google.maps.Marker({
-                position: latLng,
-                map: map,
-                title: 'Title',
+            var bermudaTriangle = new google.maps.Polygon({
+                paths: triangleCoords,
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 3,
+                fillColor: '#FF0000',
+                fillOpacity: 0.35
             });
-
-            markers[checked] = marker;
+            bermudaTriangle.setMap(map);
 
         } else if (optionMap == "circle") {
 
@@ -1081,6 +1078,23 @@ function initMap() {
                 });
                 markers["end"] = marker;
             }
+
+            //if (markers["end"] != undefined && markers["start"] != undefined) {
+            //
+            //    if (CircleMap != undefined)CircleMap.setMap(null);
+            //
+            //    var km = distance(markers["start"].position.lat(), markers["start"].position.lng(), markers["end"].position.lat(), markers["end"].position.lng(), "K");
+            //    CircleMap = new google.maps.Circle({
+            //        strokeColor: '#FF0000',
+            //        strokeOpacity: 0.8,
+            //        strokeWeight: 2,
+            //        fillColor: '#FF0000',
+            //        fillOpacity: 0.35,
+            //        map: map,
+            //        center: markers["start"].position,
+            //        radius: km * 1000
+            //    });
+            //}
 
         }
 

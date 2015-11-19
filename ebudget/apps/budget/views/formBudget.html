@@ -279,7 +279,7 @@
         });
         $(document).on('click', '#btnViewForm', function (event) {
             var id = $(this).attr('data-id');
-            //alert(id);
+            alert(id);
             //go to form
         });
     });
@@ -298,8 +298,7 @@
 
         var param = {
             budgetPeriodId: 2558,
-            deptId: 1,
-            budgetTypeCode: 'G'
+            deptId: 1
         };
         var datas = callAjax("{{_context_path}}/api/budget/budgetReview/getAllBudgetRequest", "post", param, "json");
         var html = '';
@@ -372,7 +371,7 @@
                 {
                     form: "bg146",
                     name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุน (ง.146)"
-                }/*,
+                },
                 {
                     form: "buildingOne",
                     name: "คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง 1 ปี"
@@ -380,7 +379,7 @@
                 {
                     form: "buildingMore",
                     name: "คำชี้แจงรายละเอียดรายการที่ดินและสิ่งก่อสร้าง"
-                }*/
+                }
             ];
             var html = '';
             $.each(formArr, function (key, value) {

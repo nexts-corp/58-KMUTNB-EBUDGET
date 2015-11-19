@@ -36,8 +36,8 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th class="text-center col-md-2">ประเภทส่วนงาน</th>
-                            <th class="text-center col-md-5">คณะ / หน่วยงาน</th>
+                            <th class="text-center col-md-1">ลำดับ</th>
+                            <th class="text-center col-md-6">คณะ / หน่วยงาน</th>
                             <th class="text-center col-md-3">สถานะ</th>
                             <th class="text-center col-md-2">เครื่องมือ</th>
                         </tr>
@@ -47,27 +47,6 @@
                     </tbody>
                 </table>
             </div>
-            <div id="panelHome" class="col-md-12" style="display: none;">
-                <div class="row">
-                    <div class="form-group">
-                        <label class="col-md-3 control-label text-right" for="affKpiId">รอบ : </label>
-                        <div class="col-md-6">
-                            <select type="text" class="form-control input-sm" name="affKpiId" id="affKpiId"></select>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="tabs">
-                            <ul id="tabMenu" class="nav nav-tabs">
-
-                            </ul>
-                            <div id="tabContent" class="tab-content">
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div><!--  row  -->
     </div><!--  container  -->
 </div><!-- main -->
@@ -87,41 +66,37 @@
     });
 
     function listsDepartment(){
-        var datas = callAjax("{{_context_path}}/api/affirmative/result/listsDepartment", "post", {}, "json");
-        if (typeof datas !== "undefined" && datas !== null) {
-            var html = '';
-            $.each(datas["lists"], function(key, val){
-                $.each(val["dept"], function(key2, val2){
+        $("#deptList table tbody").html('<tr><td colspan="5" class="text-center">Loading...</td></tr>');
+
+        setTimeout(function() {
+            var datas = callAjax("{{_context_path}}/api/affirmative/result/listsDepartment", "post", {}, "json");
+            if (typeof datas !== "undefined" && datas !== null) {
+                var html = '';
+                var count = 0;
+                $.each(datas["lists"], function (key, val) {
                     html += '<tr>'
-                            + '<td>'+val["actName"]+'</td>'
-                            + '<td>'+val2["deptName"]+'</td>'
-                            + '<td>-</td>'
-                            + '<td>'
-                                + '<button class="btn btn-primary tracking" data-id="'+val2["deptId"]+'"><i class="fa fa-pencil"></i> รายงานผล</button>'
-                            + '</td>'
-                        + '</tr>';
+                            + '<td colspan="4" class="bg-primary text-dark text-bold">' + val["actName"] + '</td>'
+                            + '</tr>';
+                    $.each(val["dept"], function (key2, val2) {
+                        html += '<tr>'
+                                + '<td class="text-center">' + (++count) + '</td>'
+                                + '<td>' + val2["deptName"] + '</td>'
+                                + '<td class="text-center">-</td>'
+                                + '<td class="text-center">'
+                                    + '<button class="btn btn-primary tracking" data-id="' + val2["deptId"] + '"><i class="fa fa-pencil"></i> รายงานผล</button>'
+                                + '</td>'
+                            + '</tr>';
+                    });
                 });
-            });
 
-            $("#deptList table tbody").html(html);
+                $("#deptList table tbody").html(html);
 
-            $("button.tracking").unbind().click(function(){
-                var deptId = $(this).attr("data-id");
-                window.location = "{{_context_path}}/api/affirmative/view/result/" + deptId;
-            });
-        }
+                $("button.tracking").unbind().click(function () {
+                    var deptId = $(this).attr("data-id");
+                    window.location = "{{_context_path}}/api/affirmative/view/result/" + deptId;
+                });
+            }
+        }, 0);
     }
 
-
-
-    function toggleShow(option){
-        if(option == "home"){
-            $("#panelHome").hide();
-            $("#deptList").show();
-        }
-        else if(option == "form"){
-            $("#deptList").hide();
-            $("#panelHome").show();
-        }
-    }
 </script>

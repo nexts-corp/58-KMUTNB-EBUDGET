@@ -8,5 +8,5 @@ manifest.server.json
 
 /.idea
 /uploads/ebudget/
-/reporter/EbudgetReport/nbproject/private/
-/reporter/nbproject/private/
+/apps/common/entity/BudgetRevenue - Copy.php
+/ebudget

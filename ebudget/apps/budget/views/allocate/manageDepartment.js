@@ -11,26 +11,26 @@ myApp.controller('manageDepartment', function($scope,$http,$controller,cde) {
     $scope.init = function(){
         cde.setPath("budget","allocate");
         $('[ng-app]').show();
-        //$scope.cmListYear();
-        //$scope.cmListBudgetType();
         $scope.cmListDepartment();
         $scope.cmListFundgroup();
         $scope.cmList3dPlan();
-        $scope.fetchBudgetTypeTree();
-        
-        
+        $scope.fetchRevenueItemList();
     };
     
-    $scope.fetchBudgetTypeTree = function () {
+    $scope.fetchRevenueItemList = function () {
         $scope.loadBttP1 = 1;
-        $http.post(ngContextPath+"/api/budget/allocate/budgetTypeTree").then(function (response) {
-            
-            $scope.dataBudgetTypeTree = response.data.dataList;
+        $http.post(cde.getPath("getRevenueItemList"),{
+            budgetPeriodId:2558,
+//            deptId:$scope.department,
+//            l3dPlanId:$scope.plan3dId,
+//            fundgroupId:$scope.fundgroupId
+            deptId:20100,
+            l3dPlanId:40,
+            fundgroupId:100
+        }).then(function (response) {
+            $scope.dataRevenueItemList = response.data.dataList;
             
             $scope.loadBttP1 = 0;
-            $scope.dataBttP1 = response.data.dataList;
-
-            
         });
     };
     
