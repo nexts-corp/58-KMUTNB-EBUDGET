@@ -44,9 +44,9 @@
                 <table id="table" class="table table-bordered table-striped table-condensed mb-none">
                     <thead>
                         <tr>
-                            <th class="text-center col-lg-2">แบบคำขอ</th>
+                            <th class="text-center col-lg-1">แบบคำขอ</th>
                             <th class="text-center col-lg-4">หน่วยงาน</th>
-                            <th class="text-center col-lg-2">แผนงาน</th>
+                            <th class="text-center col-lg-3">แผนงาน</th>
                             <th class="text-center col-lg-2">กองทุน</th>
                             <th class="text-center col-lg-2">เครื่องมือ</th>
                         </tr>
@@ -270,7 +270,8 @@
         });
         $("button.backHome").unbind("click").click(function () {
             toggleShow("home");
-        });
+        });            var id = $(this).attr('data-id');
+
         $("button.backChoice").unbind("click").click(function () {
             toggleShow("choice");
         });
@@ -278,7 +279,6 @@
             toggleShow("form");
         });
         $(document).on('click', '#btnViewForm', function (event) {
-            var id = $(this).attr('data-id');
             alert(id);
             //go to form
         });
@@ -331,7 +331,7 @@
                         + '<td>' + item.l3dPlanName + '</td>'
                         + '<td>' + item.fundName + '</td>'
                         + '<td>'
-                        + '<button class="btn btn-warning edit" title="แก้ไข" onclick="toFormBudget(' + item + ')"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                        + '<button class="btn btn-warning edit" title="แก้ไข" data-dept=deptId onclick="toFormBudget(' + item + ')"><i class="fa fa-pencil"></i> แก้ไข</button>'
                         + '</td>'
                         + '</tr>';
             }
