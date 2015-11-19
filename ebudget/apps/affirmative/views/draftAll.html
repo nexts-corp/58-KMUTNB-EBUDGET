@@ -74,7 +74,7 @@
                 var count = 0;
                 $.each(datas["lists"], function (key, val) {
                     html += '<tr>'
-                            + '<td class="bg-default"><button type="button" class="btn btn-success btn-sm activity" data-type="'+val["actId"]+'"><i class="fa fa-file-excel-o"></i> ร่างตัวชี้วัด</button></td>'
+                            + '<td class="bg-default"></td>'
                             + '<td colspan="3" class="bg-default text-dark text-bold" style="vertical-align: middle;">' + val["actName"] + '</td>'
                         + '</tr>';
                     $.each(val["dept"], function (key2, val2) {
@@ -82,17 +82,20 @@
                                 + '<td class="text-center">' + (++count) + '</td>'
                                 + '<td>' + val2["departmentName"] + '</td>'
                                 + '<td class="text-center">' + (val2["status"] == "Y" ? "<span class='text-success'>อนุมัติแล้ว" : "<span class='text-danger'>ยังไม่อนุมัติ") + '</span></td>'
-                                + '<td class="text-center">' + (val2["status"] == "Y" ? "" : '<button class="btn btn-primary btnGroup" data-deptId="' + val2["departmentId"] + '"><i class="fa fa-pencil"></i> จัดทำ</button>') + '</td>'
+                                + '<td class="text-center">'
+                                    + (val2["status"] == "Y" ? "" : '<button class="btn btn-primary btn-sm btnGroup" data-deptId="' + val2["departmentId"] + '"><i class="fa fa-pencil"></i> จัดทำ</button>')+'&nbsp;&nbsp;'
+                                    + '<button type="button" class="btn btn-success btn-sm excel" data-id="'+val2["departmentId"]+'"><i class="fa fa-file-excel-o"></i> เอกสาร</button>'
+                                + '</td>'
                             + '</tr>';
                     });
                 });
 
                 $("#deptList table tbody").html(html);
 
-                $("button.activity").unbind().click(function(){
-                    var id = $(this).attr("data-type");
+                $("button.excel").unbind().click(function(){
+                    var id = $(this).attr("data-id");
 
-                    window.open( "{{_context_path}}/api/affirmative/draft/export?activityId="+id);
+                    window.open("{{_context_path}}/api/affirmative/draft/export?departmentId="+id);
                 });
 
                 $("button.btnGroup").click(function () {
