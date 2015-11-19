@@ -8,12 +8,11 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
     $controller('nkController', {$scope: $scope});
     
     $scope.init = function(){
-        
         cde.setPath('budget','allocate');
         
         $scope.page = 1;
         
-        $('[ng-app]').show();
+        
         $scope.cmListYear();
         $scope.cmListBudgetType();
         $scope.cmListDepartment();
@@ -29,6 +28,10 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
                 depTxt:[{depId:'',depValue:0}],
                 data:[]
         };
+    };
+    
+    $scope.nkCloak = function(){
+        $('[ng-app]').show();
     };
     
     $scope.changePage = function(page){
