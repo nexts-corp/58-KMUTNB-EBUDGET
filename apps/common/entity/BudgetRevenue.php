@@ -63,35 +63,8 @@ class BudgetRevenue extends EntityBase {
     /** @Column(type="text", name="REVENUEDESC") */
     public $revenueDesc;
 
-    /** @Column(type="string",length=18, name="BUDGETPLAN_Q1") */
-    public $bgPlanQ1;
-
-    /** @Column(type="string",length=18, name="BUDGETPLAN_Q2") */
-    public $bgPlanQ2;
-
-    /** @Column(type="string",length=18, name="BUDGETPLAN_Q3") */
-    public $bgPlanQ3;
-
-    /** @Column(type="string",length=18, name="BUDGETPLAN_Q4") */
-    public $bgPlanQ4;
-
-    /** @Column(type="string",length=18, name="BUDGETPLAN_SUMMARY") */
-    public $bgPlanSum;
-
-    /** @Column(type="string",length=18, name="BUDGETUSED_Q1") */
-    public $bgUsedQ1;
-
-    /** @Column(type="string",length=18, name="BUDGETUSED_Q2") */
-    public $bgUsedQ2;
-
-    /** @Column(type="string",length=18, name="BUDGETUSED_Q3") */
-    public $bgUsedQ3;
-
-    /** @Column(type="string",length=18, name="BUDGETUSED_Q4") */
-    public $bgUsedQ4;
-
-    /** @Column(type="string",length=18, name="BUDGETUSED_SUMMARY") */
-    public $bgUsedSum;
+    /** @Column(type="string",length=18, name="BUDGETAMOUNT") */
+    public $bgAmount;
 
     /** @Column(type="text", name="REMARK") */
     public $remark;
@@ -179,44 +152,8 @@ class BudgetRevenue extends EntityBase {
         return $this->revenueDesc;
     }
 
-    function getBgPlanQ1() {
-        return $this->bgPlanQ1;
-    }
-
-    function getBgPlanQ2() {
-        return $this->bgPlanQ2;
-    }
-
-    function getBgPlanQ3() {
-        return $this->bgPlanQ3;
-    }
-
-    function getBgPlanQ4() {
-        return $this->bgPlanQ4;
-    }
-
-    function getBgPlanSum() {
-        return $this->bgPlanSum;
-    }
-
-    function getBgUsedQ1() {
-        return $this->bgUsedQ1;
-    }
-
-    function getBgUsedQ2() {
-        return $this->bgUsedQ2;
-    }
-
-    function getBgUsedQ3() {
-        return $this->bgUsedQ3;
-    }
-
-    function getBgUsedQ4() {
-        return $this->bgUsedQ4;
-    }
-
-    function getBgUsedSum() {
-        return $this->bgUsedSum;
+    function getBgAmount() {
+        return $this->bgAmount;
     }
 
     function getRemark() {
@@ -311,44 +248,8 @@ class BudgetRevenue extends EntityBase {
         $this->revenueDesc = $revenueDesc;
     }
 
-    function setBgPlanQ1($bgPlanQ1) {
-        $this->bgPlanQ1 = $bgPlanQ1;
-    }
-
-    function setBgPlanQ2($bgPlanQ2) {
-        $this->bgPlanQ2 = $bgPlanQ2;
-    }
-
-    function setBgPlanQ3($bgPlanQ3) {
-        $this->bgPlanQ3 = $bgPlanQ3;
-    }
-
-    function setBgPlanQ4($bgPlanQ4) {
-        $this->bgPlanQ4 = $bgPlanQ4;
-    }
-
-    function setBgPlanSum($bgPlanSum) {
-        $this->bgPlanSum = $bgPlanSum;
-    }
-
-    function setBgUsedQ1($bgUsedQ1) {
-        $this->bgUsedQ1 = $bgUsedQ1;
-    }
-
-    function setBgUsedQ2($bgUsedQ2) {
-        $this->bgUsedQ2 = $bgUsedQ2;
-    }
-
-    function setBgUsedQ3($bgUsedQ3) {
-        $this->bgUsedQ3 = $bgUsedQ3;
-    }
-
-    function setBgUsedQ4($bgUsedQ4) {
-        $this->bgUsedQ4 = $bgUsedQ4;
-    }
-
-    function setBgUsedSum($bgUsedSum) {
-        $this->bgUsedSum = $bgUsedSum;
+    function setBgAmount($bgAmount) {
+        $this->bgAmount = $bgAmount;
     }
 
     function setRemark($remark) {
