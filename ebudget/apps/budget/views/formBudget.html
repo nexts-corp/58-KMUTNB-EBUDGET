@@ -270,8 +270,8 @@
         });
         $("button.backHome").unbind("click").click(function () {
             toggleShow("home");
-        });            var id = $(this).attr('data-id');
-
+        });
+        var id = $(this).attr('data-id');
         $("button.backChoice").unbind("click").click(function () {
             toggleShow("choice");
         });
@@ -279,8 +279,21 @@
             toggleShow("form");
         });
         $(document).on('click', '#btnViewForm', function (event) {
-            alert(id);
+            var year = $(this).attr('data-year');
+            var form = $(this).attr('data-form');
+            var dept = $(this).attr('data-dept');
+            var fund = $(this).attr('data-fund');
+            var plan = $(this).attr('data-plan');
+
             //go to form
+            var item = {};
+            item.budgetPeriodId = year;            
+            item.budgetTypeCode = 'G';
+            item.deptId = dept;
+            item.fundgroupId = fund;
+            item.l3dPlanId = plan;
+            item.formId = form;
+            toFormBudget(item);
         });
     });
     function listsFormSaved() {
@@ -298,7 +311,8 @@
 
         var param = {
             budgetPeriodId: 2558,
-            deptId: 1
+            deptId: 0,
+            budgetTypeCode: "G"
         };
         var datas = callAjax("{{_context_path}}/api/budget/budgetReview/getAllBudgetRequest", "post", param, "json");
         var html = '';
@@ -306,24 +320,6 @@
             var data = datas["result"];
             for (var i = 0; i < data.length; i++) {
                 var item = data[i];
-                /*
-                 item.budgetPeriodId = res["budgetPeriodId"];
-                 item.budgetTypeCode = res["budgetTypeCode"];
-                 item.deptId = res["deptId"];
-                 item.facultyId = res["facultyId"];
-                 item.fundgroupId = res["fundgroupId"];
-                 item.l3dPlanId = res["l3dPlanId"];
-                 item.planId = res["planId"];
-                 item.projectId = res["projectId"];
-                 item.deptName = res["deptName"];
-                 item.facultyName = res["facultyName"];
-                 item.planName = res["planName"];
-                 item.projectName = res["projectName"];
-                 item.l3dPlanName = res["l3dPlanName"];
-                 item.fundName = res["fundName"];
-                 item.budgetTypeName = res["budgetTypeName"];
-                 item.formId = res["formId"];
-                 */
 
                 html += '<tr>'
                         + '<td>ง.' + item.formId + '</td>'
@@ -331,7 +327,7 @@
                         + '<td>' + item.l3dPlanName + '</td>'
                         + '<td>' + item.fundName + '</td>'
                         + '<td>'
-                        + '<button class="btn btn-warning edit" title="แก้ไข" data-dept=deptId onclick="toFormBudget(' + item + ')"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                        + '<button class="btn btn-warning edit" title="แก้ไข" id="btnViewForm" data-year="'+item.budgetPeriodId+'" data-form="' + item.formId + '" data-dept="' + item.deptId + '" data-fund="' + item.fundgroupId + '" data-plan="' + item.l3dPlanId + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
                         + '</td>'
                         + '</tr>';
             }
@@ -371,7 +367,7 @@
                 {
                     form: "bg146",
                     name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุน (ง.146)"
-                },
+                }/*,
                 {
                     form: "buildingOne",
                     name: "คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง 1 ปี"
@@ -379,7 +375,7 @@
                 {
                     form: "buildingMore",
                     name: "คำชี้แจงรายละเอียดรายการที่ดินและสิ่งก่อสร้าง"
-                }
+                }*/
             ];
             var html = '';
             $.each(formArr, function (key, value) {
@@ -547,10 +543,10 @@
         };
         var datas = callAjax("{{_context_path}}/api/common/lookup/listFundgroupWithPlan", "post", param, "json");
         if (typeof datas !== "undefined" && datas !== null) {
-        $.each(datas["lists"], function (key, value) {
-            html += '<option value="' + value["id"] + '">' + value["name"] + '</option>';
-            fundgroupArr[value["id"]] = value["name"];
-        });
+            $.each(datas["lists"], function (key, value) {
+                html += '<option value="' + value["id"] + '">' + value["name"] + '</option>';
+                fundgroupArr[value["id"]] = value["name"];
+            });
         }
 
         $("#fundgroupId").html(html).trigger("change");
@@ -826,7 +822,7 @@
     }
 
     function toFormBudget(itemBudget) {
-        debugger;
+        //ebugger;
         var param = {};
         param.budgetPeriodId = itemBudget.budgetPeriodId;
         param.budgetTypeCode = itemBudget.budgetTypeCode;

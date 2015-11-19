@@ -44,8 +44,8 @@
                 <table id="table" class="table table-bordered table-striped table-condensed mb-none">
                     <thead>
                         <tr>
-                            <th class="text-center col-lg-6">รายละเอียดคำของบประมาณ</th>
-                            <th class="text-center col-lg-3">สถานะ</th>
+                            <th class="text-center col-lg-3">รายละเอียดคำชี้แจงงบประมาณ</th>
+                            <th class="text-center col-lg-6">หน่วยงาน</th>
                             <th class="text-center col-lg-3">เครื่องมือ</th>
                         </tr>
                     </thead>
@@ -60,7 +60,7 @@
             <div id="divChoice" class="col-md-12" style="display: none;">
                 <section class="panel panel-featured panel-featured-success">
                     <div class="panel-heading">
-                        <h2 class="panel-title">แบบฟอร์มคำของบประมาณ</h2>
+                        <h2 class="panel-title">แบบฟอร์มคำชี้แจงงบประมาณ</h2>
                     </div>
                     <div class="panel-body">
                         <div id="panel1">
@@ -87,49 +87,7 @@
                                             <option value="">เลือก</option>
                                         </select>
                                     </div>
-                                </div>
-
-                                <!--<div class="form-group">
-                                    <label class="col-md-3 control-label text-right req" for="planId">แผนงาน : </label>
-
-                                    <div class="col-md-6">
-                                        <select id="planId" name="planId" class="form-control input-sm" required>
-                                            <option value="">เลือก</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label text-right req" for="projectId">ผลผลิต/โครงการ
-                                        : </label>
-
-                                    <div class="col-md-6">
-                                        <select id="projectId" name="projectId" class="form-control input-sm" required>
-                                            <option value="">เลือก</option>
-                                        </select>
-                                    </div>
-                                </div>-->
-
-                                <!--<div class="form-group">
-                                    <label class="col-md-3 control-label text-right" for="budgetPlanId">แผนงาน 3 มิติ : </label>
-                                    <div class="col-md-6">
-                                        <select id="budgetPlanId" name="budgetPlanId" class="form-control input-sm" required>
-                                            <option value="">เลือก</option>
-                                        </select>
-                                    </div>
-                                </div>-->
-
-                                <!--<div class="form-group">
-                                    <label class="col-md-3 control-label text-right req" for="fundgroupId">กองทุน
-                                        : </label>
-
-                                    <div class="col-md-6">
-                                        <select id="fundgroupId" name="fundgroupId" class="form-control input-sm"
-                                                required>
-                                            <option value="">เลือก</option>
-                                        </select>
-                                    </div>
-                                </div>-->
+                                </div>                            
 
                                 <div class="form-group">
                                     <label class="col-md-3 control-label text-right req" for="facultyId">คณะ : </label>
@@ -156,7 +114,7 @@
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th colspan="2" class="text-center">แบบฟอร์มคำของบประมาณเงินรายได้</th>
+                                            <th colspan="2" class="text-center">แบบฟอร์มคำชี้แจงงบประมาณเงินรายได้</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -284,33 +242,66 @@
         $("button.backAttachment").unbind("click").click(function () {
             toggleShow("form");
         });
+        
+        $(document).on('click', '#btnViewForm', function (event) {
+            var year = $(this).attr('data-year');
+            var form = $(this).attr('data-form');
+            var dept = $(this).attr('data-dept');
+            var fund = $(this).attr('data-fund');
+            var plan = $(this).attr('data-plan');
+
+            //go to form
+            var item = {};
+            item.budgetPeriodId = year;            
+            item.budgetTypeCode = 'K';
+            item.deptId = dept;
+            item.fundgroupId = fund;
+            item.l3dPlanId = plan;
+            item.formId = form;
+            toFormBudget(item);
+        });
     });
     function listsFormSaved() {
-        var html = '<tr>'
-                + '<td>1. แบบรายละเอียดคำของบประมาณเงินรายได้</td>'
-                + '<td class="text-center">-</td>'
-                + '<td class="text-center">'
-                + '<button data-form="bg140" class="btn btn-warning edit" title="แก้ไข"><i class="fa fa-pencil"></i> แก้ไข</button>&nbsp;'
-                + '<button data-form="bg140" class="btn btn-default delete" title="ลบ"><i class="fa fa-trash"></i> ลบ</button>'
-                + '</td>'
-                + '</tr>';
-        $("#table tbody").html(html);
+        var param = {
+            budgetPeriodId: 2558,
+            deptId: 0,
+            budgetTypeCode: "K"
+        };
+        var datas = callAjax("{{_context_path}}/api/budget/budgetReview/getAllBudgetRequest", "post", param, "json");
+        var html = '';
+        if (typeof datas !== "undefined" && datas !== null) {
+            var data = datas["result"];
+            for (var i = 0; i < data.length; i++) {
+                var item = data[i];
+
+                html += '<tr>'
+                        + '<td>' + item.formId + '</td>'
+                        + '<td>' + item.facultyName + ' / ' + item.deptName + '</td>'
+                        + '<td>'
+                        + '<button class="btn btn-warning edit" title="แก้ไข" id="btnViewForm" data-year="'+item.budgetPeriodId+'" data-form="' + item.formId + '" data-dept="' + item.deptId + '" data-fund="' + item.fundgroupId + '" data-plan="' + item.l3dPlanId + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                        + '</td>'
+                        + '</tr>';
+            }
+
+            $("#table tbody").html(html);
+        }
     }
 
     function listsForm(type) {
         if (isForm == 0) {
             var formArr;
             formArr = [
+                 {
+                    ng: "true",
+                    form: "manageDepartment",
+                    name: "รายละเอียดคำชี้แจงงบประมาณ"
+                },
                 {
                     ng: "true",
                     form: "project",
                     name: "โครงการที่ตอบสนองยุทธศาสตร์"
-                },
-                {
-                    ng: "true",
-                    form: "manageDepartment",
-                    name: "รายละเอียดคำชี้แจงงบประมาณ"
                 }
+               
             ];
             /*
              if (type == "G") {

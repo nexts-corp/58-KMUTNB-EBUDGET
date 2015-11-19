@@ -55,10 +55,11 @@ interface IBudgetReviewService
      * @uri /getAllBudgetRequest
      * @param int budgetPeriodId ปีงบประมาณ
      * @param int deptId หน่วยงาน
+     * @param int budgetTypeCode ประเภทงบ
      * @return string[] result
      * @description แสดงข้อมูลประเภทตามแหล่งเงิน
      */
-    public function getAllBudgetRequest($budgetPeriodId, $deptId);
+    public function getAllBudgetRequest($budgetPeriodId, $deptId, $budgetTypeCode);
 
     /**
      * @name listTracking
