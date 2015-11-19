@@ -55,7 +55,7 @@
                     <a href="#" class="fa fa-caret-down"></a>
                     <!--                    <a href="#" class="fa fa-times"></a>-->
                 </div>
-                <h2 class="panel-title">Main</h2>
+                <h2 class="panel-title">ส่วน</h2>
             </header>
             <div class="panel-body">
                 <div class="table-responsive">
@@ -63,9 +63,9 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Main Name</th>
-                                <th class="col-sm-2">Sort No.</th>
-                                <th>Type</th>
+                                <th>ชื่อส่วน</th>
+                                <th class="col-sm-2">ลำดับหัวข้อ</th>
+                                <th>จัดการ</th>
                             </tr>
                         </thead>
                         <tbody id="tbodyMain">
@@ -83,7 +83,7 @@
                     <a href="#" class="fa fa-caret-down"></a>
                     <!--                    <a href="#" class="fa fa-times"></a>-->
                 </div>
-                <h2 class="panel-title">Type</h2>
+                <h2 class="panel-title">ส่วนย่อย</h2>
             </header>
             <div class="panel-body">
                 <div class="table-responsive">
@@ -91,10 +91,10 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th class="col-sm-4">Type Name</th>
-                                <th class="col-sm-1">Sort No.</th>
-                                <th>Title</th>
-                                <th>Remark</th>
+                                <th class="col-sm-4">ชื่อส่วนย่อย</th>
+                                <th class="col-sm-1">ลำดับหัวข้อ</th>
+                                <th>ประกาศ</th>
+                                <th>หมายเหตุ</th>
                             </tr>
                         </thead>
                         <tbody id="tbodyType">
@@ -137,7 +137,7 @@
                             "<td>" + (km + 1) + "</td>" +
                             "<td>" + vm.mainName + "</td>" +
                             "<td><select class='sortMain form-control'></select></td>" +
-                            "<td><button class='btn btn-sm btn-default btnDetail' value='" + vm.mainId + "'>จัดการส่วนย่อย</button></td>" +
+                            "<td><button class='btn btn-md btn-primary btnDetail' value='" + vm.mainId + "'>จัดการส่วนย่อย</button></td>" +
                             "</tr>";
                     sort += "<option value='" + (km + 1) + "'>" + (km + 1) + "</option>";
                 });
