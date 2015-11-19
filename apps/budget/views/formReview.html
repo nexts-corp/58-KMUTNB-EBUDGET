@@ -25,90 +25,84 @@
     <div class="container">
 
         <div id="formTracking" class="col-md-12">
-            <!--
             <div class="form-group">
-                <label class="col-md-2 control-label text-right">{{#i18n}}budgetType{{/i18n}}</label>
+                <label class="col-md-3 control-label text-right req" for="budgetPeriodId">ปีงบประมาณ
+                    : </label>
 
-                <div class="col-md-4">
-                    <select id="expenses-select" class="form-control input-sm" required>
-                        <option value="0">- เลือกประเภทงบประมาณ -</option>
-                        <option value="1">เงินรายได้</option>
-                        <option value="2">เงินงบประมาณแผ่นดิน</option>
+                <div class="col-md-6">
+                    <select id="budgetPeriodId" name="budgetPeriodId" class="form-control input-sm"
+                            required>
+                        <option value="">เลือก</option>
                     </select>
-                </div>
-                <div id="warning-expenses" class="col-md-3" style="display: none">
-                    <label class="control-label text-danger">
-                        <i class="fa fa-exclamation"></i>
-                        กรุณาเลือกประเภทงบประมาณ
-                    </label>
-                </div>
-            </div>
-            -->
-
-            <div class="form-group">
-                <label class="col-md-2 control-label text-right">{{#i18n}}Department{{/i18n}}</label>
-
-                <div class="col-md-4">
-                    <select id="dept-select" class="form-control input-sm" required>
-                        <option value="0">- เลือกหน่วยงาน -</option>
-                    </select>
-                </div>
-                <div id="warning-dept" class="col-md-3" style="display: none">
-                    <label class="control-label text-danger">
-                        <i class="fa fa-exclamation"></i>
-                        กรุณาเลือกหน่วยงาน
-                    </label>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-md-2 control-label text-right">{{#i18n}}Fundgroup{{/i18n}}</label>
+                <label class="col-md-3 control-label text-right req" for="budgetTypeCode">แหล่งเงิน
+                    : </label>
 
-                <div class="col-md-4">
-                    <select id="fundgroup-select" class="form-control input-sm" required>
-                        <option value="0">- เลือกกองทุน -</option>
+                <div class="col-md-6">
+                    <select id="budgetTypeCode" name="budgetTypeCode" class="form-control input-sm"
+                            required>
+                        <option value="">เลือก</option>
                     </select>
-                </div>
-                <div id="warning-fundgroup" class="col-md-3" style="display: none">
-                    <label class="control-label text-danger">
-                        <i class="fa fa-exclamation"></i>
-                        กรุณาเลือกกองทุน
-                    </label>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-md-2 control-label text-right">{{#i18n}}Plan3D{{/i18n}}</label>
+                <label class="col-md-3 control-label text-right req" for="facultyId">คณะ : </label>
 
-                <div class="col-md-4">
-                    <select id="plan3d-select" class="form-control input-sm" required>
-                        <option value="0">- เลือกแผนงาน -</option>
+                <div class="col-md-6">
+                    <select id="facultyId" name="facultyId" class="form-control input-sm" required>
+                        <option value="">เลือก</option>
                     </select>
-                </div>
-                <div id="warning-plan3d" class="col-md-3" style="display: none">
-                    <label class="control-label text-danger">
-                        <i class="fa fa-exclamation"></i>
-                        กรุณาเลือกแผนงาน
-                    </label>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-md-2 control-label text-right">{{#i18n}}budgetYear{{/i18n}}</label>
+                <label class="col-md-3 control-label text-right req" for="deptId">สาขา : </label>
 
-                <div class="col-md-4">
-                    <select id="year-select" class="form-control input-sm" required>
-                        <option value="0">- เลือกปีงบประมาณ -</option>
+                <div class="col-md-6">
+                    <select id="deptId" name="deptId" class="form-control input-sm" required>
+                        <option value="">เลือก</option>
                     </select>
                 </div>
-                <div id="warning-year" class="col-md-2" style="display: none"><label
-                        class="control-label text-danger">
-                        <i class="fa fa-exclamation"></i> กรุณาเลือกปี</label>
-                </div>
-                <div class="col-md-1">
-                    <button class="btn btn-warning col-md-12" id="get-form">{{#i18n}}ok{{/i18n}}</button>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3 control-label text-right req" for="l3dPlanId">แผนงาน
+                    : </label>
+
+                <div class="col-md-6">
+                    <select id="l3dPlanId" name="l3dPlanId" class="form-control input-sm" required>
+                        <option value="">เลือก</option>
+                    </select>
                 </div>
             </div>
+
+            <div class="form-group">
+                <label class="col-md-3 control-label text-right req" for="fundgroupId">กองทุน
+                    : </label>
+
+                <div class="col-md-6">
+                    <select id="fundgroupId" name="fundgroupId" class="form-control input-sm"
+                            required>
+                        <option value="">เลือก</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <button class="btn btn-success col-md-3" id="get-form">ค้นหา</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-12">
+                    <hr>
+                </div>
+            </div>
+
+
 
             <div id="bidderTable" class="col-md-12"><!-- table shown bidder information list -->
                 <!-- manage list-->
@@ -186,7 +180,7 @@
                     </div>
                 </div>
                 <!-- manage list-->
-                <table id="table" class="table table-bordered table-striped table-condensed mb-none">
+                <table id="table" class="table table-bordered table-striped table-condensed mb-none" style="display: none;">
                     <thead>
                         <tr>
                             <th rowspan="2" class="text-center" width="22%" id="title-tb"
@@ -237,8 +231,6 @@
     {{>footer}}
 
     <script type="text/javascript">
-
-
         $(document).ready(function () {
             var total_quater1_plan = 0, total_quater1_used = 0, total_quater2_plan = 0, total_quater2_used = 0, total_quater3_plan = 0, total_quater3_used = 0, total_quater4_plan = 0, total_quater4_used = 0, total_plan = 0, total_used = 0;
             var dataTable = null;
@@ -246,6 +238,9 @@
             listDepartment();
             listFundGroup();
             listPlan3D();
+
+            $("#table").hide();
+
             function iniYear() {
 
                 var html = '<option value="0">- เลือกปี พ.ศ. -</option>';
@@ -254,18 +249,29 @@
 
                         html += '<option value="' + data.lists[i].year + '">' + data.lists[i].year + '</option>';
                     }
-                    $("#year-select").html(html);
+                    $("#budgetPeriodId").html(html);
                 });
             }
-
-            function listDepartment() {
+            
+            function listFaculty() {
                 var html = '<option value="0">- เลือกหน่วยงาน -</option>';
-                $.get("{{_context_path}}/api/common/lookup/listDepartment", function (data) {
+                $.get("{{_context_path}}/api/common/lookup/listDepartment", {campusId: 0}, function (data) {
                     for (var i = 0; i < data.lists.length; i++) {
 
                         html += '<option value="' + data.lists[i].id + '">' + data.lists[i].name + '</option>';
                     }
-                    $("#dept-select").html(html);
+                    $("#facultyId").html(html);
+                });
+            }
+
+            function listDepartment(facultyId) {
+                var html = '<option value="0">- เลือกสาขา -</option>';
+                $.get("{{_context_path}}/api/common/lookup/listFaculty", {facultyId: facultyId}, function (data) {
+                    for (var i = 0; i < data.lists.length; i++) {
+
+                        html += '<option value="' + data.lists[i].id + '">' + data.lists[i].name + '</option>';
+                    }
+                    $("#deptId").html(html);
                 });
             }
 
@@ -293,6 +299,8 @@
 
 
             $("#get-form").click(function () {
+
+                $("#table").show();
 
                 total_quater1_plan = 0, total_quater1_used = 0, total_quater2_plan = 0, total_quater2_used = 0, total_quater3_plan = 0, total_quater3_used = 0, total_quater4_plan = 0, total_quater4_used = 0, total_plan = 0, total_used = 0;
                 resetPanel();

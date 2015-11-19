@@ -99,4 +99,11 @@ interface IViewService {
      * @description ยื่นคำของบประมาณเงินรายได้
      */
     public function formRevenue();
+    
+    /**
+     * @name formScheme
+     * @uri /formScheme
+     * @description รายวานแผน/ผลของเงินงบประมาณ
+     */
+    public function formScheme();
 }
