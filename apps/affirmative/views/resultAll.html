@@ -66,33 +66,37 @@
     });
 
     function listsDepartment(){
-        var datas = callAjax("{{_context_path}}/api/affirmative/result/listsDepartment", "post", {}, "json");
-        if (typeof datas !== "undefined" && datas !== null) {
-            var html = '';
-            var count = 0;
-            $.each(datas["lists"], function(key, val){
-                html += '<tr>'
-                        + '<td colspan="4" class="bg-primary text-dark text-bold">'+val["actName"]+'</td>'
-                    + '</tr>';
-                $.each(val["dept"], function(key2, val2){
+        $("#deptList table tbody").html('<tr><td colspan="5" class="text-center">Loading...</td></tr>');
+
+        setTimeout(function() {
+            var datas = callAjax("{{_context_path}}/api/affirmative/result/listsDepartment", "post", {}, "json");
+            if (typeof datas !== "undefined" && datas !== null) {
+                var html = '';
+                var count = 0;
+                $.each(datas["lists"], function (key, val) {
                     html += '<tr>'
-                            + '<td class="text-center">'+(++count)+'</td>'
-                            + '<td>'+val2["deptName"]+'</td>'
-                            + '<td class="text-center">-</td>'
-                            + '<td class="text-center">'
-                                + '<button class="btn btn-primary tracking" data-id="'+val2["deptId"]+'"><i class="fa fa-pencil"></i> รายงานผล</button>'
-                            + '</td>'
-                        + '</tr>';
+                            + '<td colspan="4" class="bg-primary text-dark text-bold">' + val["actName"] + '</td>'
+                            + '</tr>';
+                    $.each(val["dept"], function (key2, val2) {
+                        html += '<tr>'
+                                + '<td class="text-center">' + (++count) + '</td>'
+                                + '<td>' + val2["deptName"] + '</td>'
+                                + '<td class="text-center">-</td>'
+                                + '<td class="text-center">'
+                                    + '<button class="btn btn-primary tracking" data-id="' + val2["deptId"] + '"><i class="fa fa-pencil"></i> รายงานผล</button>'
+                                + '</td>'
+                            + '</tr>';
+                    });
                 });
-            });
 
-            $("#deptList table tbody").html(html);
+                $("#deptList table tbody").html(html);
 
-            $("button.tracking").unbind().click(function(){
-                var deptId = $(this).attr("data-id");
-                window.location = "{{_context_path}}/api/affirmative/view/result/" + deptId;
-            });
-        }
+                $("button.tracking").unbind().click(function () {
+                    var deptId = $(this).attr("data-id");
+                    window.location = "{{_context_path}}/api/affirmative/view/result/" + deptId;
+                });
+            }
+        }, 0);
     }
 
 </script>

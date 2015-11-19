@@ -68,33 +68,37 @@
     });
 
     function listsDepartment(){
-        var datas = callAjax("{{_context_path}}/api/affirmative/final/listsDept", "post", {}, "json");
-        if (typeof datas !== "undefined" && datas !== null) {
-            var html = '';
-            var count = 0;
-            $.each(datas["lists"], function (key, val) {
-                html += '<tr>'
-                        + '<td colspan="5" class="bg-primary text-dark text-bold">'+val["actName"]+'</td>'
-                    + '</tr>';
+        $("#deptList table tbody").html('<tr><td colspan="5" class="text-center">Loading...</td></tr>');
 
-                $.each(val["dept"], function(key2, val2) {
+        setTimeout(function() {
+            var datas = callAjax("{{_context_path}}/api/affirmative/final/listsDept", "post", {}, "json");
+            if (typeof datas !== "undefined" && datas !== null) {
+                var html = '';
+                var count = 0;
+                $.each(datas["lists"], function (key, val) {
                     html += '<tr>'
-                            + '<td  class="text-center">' + (++count) + '</td>'
-                            + '<td>' + val2["departmentName"] + '</td>'
-                            + '<td class="text-center">' + (val2["statusDept"] == "Y" ? "<span class='text-success'>อนุมัติแล้ว" : "<span class='text-danger'>ยังไม่อนุมัติ") + '</span></td>'
-                            + '<td class="text-center">' + (val2["statusFinal"] == "Y" ? "<span class='text-success'>อนุมัติแล้ว" : "<span class='text-danger'>ยังไม่อนุมัติ") + '</span></td>'
-                            + '<td>' + (val2["statusDept"] == "N" || val2["statusFinal"] == "Y" ? "" : '<button class="btn btn-primary btnFinal" data-deptId="' + val2["departmentId"] + '"><i class="fa fa-pencil"></i> จัดทำ</button>') + '</td>'
-                        + '</tr>';
+                            + '<td colspan="5" class="bg-primary text-dark text-bold">' + val["actName"] + '</td>'
+                            + '</tr>';
+
+                    $.each(val["dept"], function (key2, val2) {
+                        html += '<tr>'
+                                + '<td  class="text-center">' + (++count) + '</td>'
+                                + '<td>' + val2["departmentName"] + '</td>'
+                                + '<td class="text-center">' + (val2["statusDept"] == "Y" ? "<span class='text-success'>อนุมัติแล้ว" : "<span class='text-danger'>ยังไม่อนุมัติ") + '</span></td>'
+                                + '<td class="text-center">' + (val2["statusFinal"] == "Y" ? "<span class='text-success'>อนุมัติแล้ว" : "<span class='text-danger'>ยังไม่อนุมัติ") + '</span></td>'
+                                + '<td>' + (val2["statusDept"] == "N" || val2["statusFinal"] == "Y" ? "" : '<button class="btn btn-primary btnFinal" data-deptId="' + val2["departmentId"] + '"><i class="fa fa-pencil"></i> จัดทำ</button>') + '</td>'
+                                + '</tr>';
+                    });
                 });
-            });
 
-            $("#deptList table tbody").html(html);
+                $("#deptList table tbody").html(html);
 
-            $("button.btnFinal").click(function () {
-                var deptId = $(this).attr("data-deptId");
-                window.location = "{{_context_path}}/api/affirmative/view/final/" + deptId;
-            });
-        }
+                $("button.btnFinal").click(function () {
+                    var deptId = $(this).attr("data-deptId");
+                    window.location = "{{_context_path}}/api/affirmative/view/final/" + deptId;
+                });
+            }
+        }, 0);
     }
 
 </script>
