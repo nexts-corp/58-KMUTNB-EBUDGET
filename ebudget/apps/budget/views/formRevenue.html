@@ -264,7 +264,7 @@
     function listsFormSaved() {
         var param = {
             budgetPeriodId: 2558,
-            deptId: 0,
+            deptId: 1,
             budgetTypeCode: "K"
         };
         var datas = callAjax("{{_context_path}}/api/budget/budgetReview/getAllBudgetRequest", "post", param, "json");
@@ -273,9 +273,14 @@
             var data = datas["result"];
             for (var i = 0; i < data.length; i++) {
                 var item = data[i];
-
+                var formText = "";
+                if(item.formId === 500) {
+                    formText = 'เงินรายได้';
+                } else {
+                    formText = 'โครงการพัฒนามหาวิทยาลัย';
+                }
                 html += '<tr>'
-                        + '<td>' + item.formId + '</td>'
+                        + '<td>' + formText + '</td>'
                         + '<td>' + item.facultyName + ' / ' + item.deptName + '</td>'
                         + '<td>'
                         + '<button class="btn btn-warning edit" title="แก้ไข" id="btnViewForm" data-year="'+item.budgetPeriodId+'" data-form="' + item.formId + '" data-dept="' + item.deptId + '" data-fund="' + item.fundgroupId + '" data-plan="' + item.l3dPlanId + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
