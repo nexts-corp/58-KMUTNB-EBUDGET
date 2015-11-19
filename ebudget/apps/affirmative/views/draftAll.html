@@ -70,7 +70,7 @@
         $("#deptList table tbody").html('<tr><td colspan="4" class="text-center">Loading...</td></tr>');
 
         setTimeout(function() {
-            var datas = callAjax("{{_context_path}}/api/affirmative/group/listsDept", "post", {}, "json");
+            var datas = callAjax("{{_context_path}}/api/affirmative/draft/listsDept", "post", {}, "json");
             if (typeof datas !== "undefined" && datas !== null) {
                 var html = '';
                 var count = 0;
@@ -92,7 +92,7 @@
 
                 $("button.btnGroup").click(function () {
                     var deptId = $(this).attr("data-deptId");
-                    window.location = "{{_context_path}}/api/affirmative/view/group/" + deptId;
+                    window.location = "{{_context_path}}/api/affirmative/view/draft/" + deptId;
                 });
             }
         }, 0);
