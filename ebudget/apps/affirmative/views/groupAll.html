@@ -1,0 +1,101 @@
+{{>header}}
+<div role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">ตัวชี้วัดคำรับรองการปฏิบัติงาน</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">ร่างตัวชี้วัดคำรับรองของส่วนงาน</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="tall dashboard">
+
+    <div class="sort-source-wrapper"><!-- button action on header -->
+        <div class="container">
+            <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+                <li class="active">
+                    <button class="btn btn-default back" style="display: none;"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
+                </li>
+            </ul>
+        </div>
+    </div><!-- end button action on header -->
+
+    <div class="container">
+        <div class="row">
+
+            <div id="deptList">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-md-1">ลำดับ</th>
+                            <th class="text-center col-md-6">คณะ / หน่วยงาน</th>
+                            <th class="text-center col-md-3">สถานะ</th>
+                            <th class="text-center col-md-2">เครื่องมือ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div><!--  row  -->
+    </div><!--  container  -->
+</div><!-- main -->
+
+{{>footer}}
+
+<script type="text/javascript">
+    var findNode = {};
+    var listArr = {};
+
+    $(function () {
+        listsDepartment();
+
+        $("button.back").unbind("click").click(function () {
+            toggleShow("home");
+        })
+    });
+
+    function listsDepartment(){
+        $("#deptList table tbody").html('<tr><td colspan="4" class="text-center">Loading...</td></tr>');
+
+        setTimeout(function() {
+            var datas = callAjax("{{_context_path}}/api/affirmative/group/listsDept", "post", {}, "json");
+            if (typeof datas !== "undefined" && datas !== null) {
+                var html = '';
+                var count = 0;
+                $.each(datas["lists"], function (key, val) {
+                    html += '<tr>'
+                            + '<td colspan="4" class="bg-primary text-dark text-bold">' + val["actName"] + '</td>'
+                        + '</tr>';
+                    $.each(val["dept"], function (key2, val2) {
+                        html += '<tr>'
+                                + '<td class="text-center">' + (++count) + '</td>'
+                                + '<td>' + val2["departmentName"] + '</td>'
+                                + '<td class="text-center">' + (val2["status"] == "Y" ? "<span class='text-success'>อนุมัติแล้ว" : "<span class='text-danger'>ยังไม่อนุมัติ") + '</span></td>'
+                                + '<td class="text-center">' + (val2["status"] == "Y" ? "" : '<button class="btn btn-primary btnGroup" data-deptId="' + val2["departmentId"] + '"><i class="fa fa-pencil"></i> จัดทำ</button>') + '</td>'
+                            + '</tr>';
+                    });
+                });
+
+                $("#deptList table tbody").html(html);
+
+                $("button.btnGroup").click(function () {
+                    var deptId = $(this).attr("data-deptId");
+                    window.location = "{{_context_path}}/api/affirmative/view/group/" + deptId;
+                });
+            }
+        }, 0);
+    }
+
+</script>
