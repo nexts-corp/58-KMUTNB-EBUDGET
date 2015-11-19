@@ -23,7 +23,7 @@
         <div class="container">
             <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
                 <li class="active">
-                    <button class="btn btn-default"><i class="fa fa-excel"> เอกสาร</i></button>
+                    <button class="btn btn-success excel"><i class="fa fa-file-excel-o"></i> เอกสาร</button>
                 </li>
             </ul>
         </div>
@@ -189,9 +189,9 @@
     $(function () {
         centerForm();
 
-        /*$("button.back").unbind("click").click(function () {
-         toggleShow("home");
-         })*/
+        $("button.excel").unbind("click").click(function () {
+            window.open()
+        });
     });
 
     function centerForm() {
