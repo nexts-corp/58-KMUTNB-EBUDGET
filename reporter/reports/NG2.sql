@@ -1,0 +1,1 @@
+exec SP_NG2 '{{PERIOD_ID}}','{{BUDGET_TYPE}}'

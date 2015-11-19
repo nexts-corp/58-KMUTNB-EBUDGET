@@ -118,91 +118,95 @@ class DraftService extends CServiceBase implements IDraftService {
         return $return;
     }
 
-    public function listsAll($departmentId) {
-        if ($this->checkApprove($departmentId)) {
-            $json = new CJSONDecodeImpl();
-            $dept = new \apps\affirmative\model\ViewActivityDepartment();
-            $dept->departmentId = $departmentId;
-            $dataDept = $this->datacontext->getObject($dept)[0];
+    function draftData($departmentId){
+        $json = new CJSONDecodeImpl();
+        $dept = new \apps\affirmative\model\ViewActivityDepartment();
+        $dept->departmentId = $departmentId;
+        $dataDept = $this->datacontext->getObject($dept)[0];
 
-            $typeArr = array();
-            $targetArr = array();
-            $draft = new \apps\affirmative\entity\AffirmativeDraft();
-            $draft->periodCode = $this->getPeriod()->year;
-            $draft->departmentId = $departmentId;
-            $draftData = $this->datacontext->getObject($draft);
-            foreach ($draftData as $keyDraft => $valueDraft) {
-                if ($valueDraft->hasIssue == "Y") {
-                    if (empty($targetArr[$valueDraft->targetId][$valueDraft->draftId])) {
-                        $targetArr[$valueDraft->targetId][$valueDraft->draftId] = $valueDraft;
-                    }
-                } elseif ($valueDraft->hasIssue == "N") {
-                    if (empty($typeArr[$valueDraft->typeId][$valueDraft->draftId])) {
-                        $typeArr[$valueDraft->typeId][$valueDraft->draftId] = $valueDraft;
-                    }
+        $typeArr = array();
+        $targetArr = array();
+        $draft = new \apps\affirmative\entity\AffirmativeDraft();
+        $draft->periodCode = $this->getPeriod()->year;
+        $draft->departmentId = $departmentId;
+        $draftData = $this->datacontext->getObject($draft);
+        foreach ($draftData as $keyDraft => $valueDraft) {
+            if ($valueDraft->hasIssue == "Y") {
+                if (empty($targetArr[$valueDraft->targetId][$valueDraft->draftId])) {
+                    $targetArr[$valueDraft->targetId][$valueDraft->draftId] = $valueDraft;
+                }
+            } elseif ($valueDraft->hasIssue == "N") {
+                if (empty($typeArr[$valueDraft->typeId][$valueDraft->draftId])) {
+                    $typeArr[$valueDraft->typeId][$valueDraft->draftId] = $valueDraft;
                 }
             }
-            $targetArr = $this->sortBy("kpiSeq", $targetArr);
-            $typeArr = $this->sortBy("kpiSeq", $typeArr);
+        }
+        $targetArr = $this->sortBy("kpiSeq", $targetArr);
+        $typeArr = $this->sortBy("kpiSeq", $typeArr);
 
-            $sqlMain = "select s.mainId,s.mainSeq,m.mainName "
-                    . "from apps\\affirmative\\entity\\AffirmativeSetting s "
-                    . "join apps\\affirmative\\entity\\AffirmativeMain m with m.mainId = s.mainId "
-                    . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
-                    . "group by s.mainId,s.mainSeq,m.mainName "
-                    . "order by s.mainSeq";
-            $paramMain = array(
-                "periodCode" => $this->getPeriod()->year,
-                "groupCode" => $dataDept->activityCode
-            );
-            $mainData = $this->datacontext->getObject($sqlMain, $paramMain);
-            $sqlType = "select s.mainId,s.mainSeq,s.typeId,s.typeSeq,m.typeName,m.hasIssue "
-                    . "from apps\\affirmative\\entity\\AffirmativeSetting s "
-                    . "join apps\\affirmative\\entity\\AffirmativeType m with m.typeId = s.typeId "
-                    . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
-                    . "group by s.mainId,s.mainSeq,s.typeId,s.typeSeq,m.typeName,m.hasIssue "
-                    . "order by s.mainSeq,s.typeSeq";
-            $paramType = array(
-                "periodCode" => $this->getPeriod()->year,
-                "groupCode" => $dataDept->activityCode
-            );
-            $typeData = $this->datacontext->getObject($sqlType, $paramType);
-            foreach ($mainData as $keyMain => $valMain) {
-                foreach ($typeData as $keyType => $valueType) {
-                    if ($valMain["mainSeq"] == $valueType["mainSeq"]) {
-                        $mainData[$keyMain]["type"][$valueType["typeSeq"]] = $valueType;
-                        $issueSql = "select v from apps\\affirmative\\entity\\AffirmativeIssue v where v.typeId = :typeId  order by v.issueSeq";
-                        $issueParam = array("typeId" => $valueType["typeId"]);
-                        $issueData = $this->datacontext->getObject($issueSql, $issueParam);
-                        $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"] = $issueData;
+        $sqlMain = "select s.mainId,s.mainSeq,m.mainName "
+            . "from apps\\affirmative\\entity\\AffirmativeSetting s "
+            . "join apps\\affirmative\\entity\\AffirmativeMain m with m.mainId = s.mainId "
+            . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
+            . "group by s.mainId,s.mainSeq,m.mainName "
+            . "order by s.mainSeq";
+        $paramMain = array(
+            "periodCode" => $this->getPeriod()->year,
+            "groupCode" => $dataDept->activityCode
+        );
+        $mainData = $this->datacontext->getObject($sqlMain, $paramMain);
+        $sqlType = "select s.mainId,s.mainSeq,s.typeId,s.typeSeq,m.typeName,m.hasIssue "
+            . "from apps\\affirmative\\entity\\AffirmativeSetting s "
+            . "join apps\\affirmative\\entity\\AffirmativeType m with m.typeId = s.typeId "
+            . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
+            . "group by s.mainId,s.mainSeq,s.typeId,s.typeSeq,m.typeName,m.hasIssue "
+            . "order by s.mainSeq,s.typeSeq";
+        $paramType = array(
+            "periodCode" => $this->getPeriod()->year,
+            "groupCode" => $dataDept->activityCode
+        );
+        $typeData = $this->datacontext->getObject($sqlType, $paramType);
+        foreach ($mainData as $keyMain => $valMain) {
+            foreach ($typeData as $keyType => $valueType) {
+                if ($valMain["mainSeq"] == $valueType["mainSeq"]) {
+                    $mainData[$keyMain]["type"][$valueType["typeSeq"]] = $valueType;
+                    $issueSql = "select v from apps\\affirmative\\entity\\AffirmativeIssue v where v.typeId = :typeId  order by v.issueSeq";
+                    $issueParam = array("typeId" => $valueType["typeId"]);
+                    $issueData = $this->datacontext->getObject($issueSql, $issueParam);
+                    $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"] = $issueData;
 
-                        if (array_key_exists($valueType["typeId"], $typeArr)) {
-                            $mainData[$keyMain]["type"][$valueType["typeSeq"]]["kpi"] = $typeArr[$valueType["typeId"]];
-                        }
-                        $title = new \apps\affirmative\entity\AffirmativeSetting();
-                        $title->typeId = $valueType["typeId"];
-                        $title->periodCode = $this->getPeriod()->year;
-                        $title->mainId = $valMain["mainId"];
-                        $title->groupCode = $dataDept->activityCode;
-                        $title = $this->datacontext->getObject($title);
-                        if (count($title) > 0) {
-                            $mainData[$keyMain]["type"][$valueType["typeSeq"]]["title"] = $title[0]->title;
-                        }
-                        foreach ($issueData as $keyIssue => $valueIssue) {
-                            $targetSql = "select v from apps\\affirmative\\entity\\AffirmativeTarget v where v.issueId = :issueId  order by v.targetSeq";
-                            $targetParam = array("issueId" => $valueIssue->issueId);
-                            $targetData = $this->datacontext->getObject($targetSql, $targetParam);
-                            $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"][$keyIssue]->target = $targetData;
-                            foreach ($targetData as $keyTarget => $valueTarget) {
-                                if (array_key_exists($valueTarget->targetId, $targetArr)) {
-                                    $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"][$keyIssue]->target[$keyTarget]->kpi = $targetArr[$valueTarget->targetId];
-                                }
+                    if (array_key_exists($valueType["typeId"], $typeArr)) {
+                        $mainData[$keyMain]["type"][$valueType["typeSeq"]]["kpi"] = $typeArr[$valueType["typeId"]];
+                    }
+                    $title = new \apps\affirmative\entity\AffirmativeSetting();
+                    $title->typeId = $valueType["typeId"];
+                    $title->periodCode = $this->getPeriod()->year;
+                    $title->mainId = $valMain["mainId"];
+                    $title->groupCode = $dataDept->activityCode;
+                    $title = $this->datacontext->getObject($title);
+                    if (count($title) > 0) {
+                        $mainData[$keyMain]["type"][$valueType["typeSeq"]]["title"] = $title[0]->title;
+                    }
+                    foreach ($issueData as $keyIssue => $valueIssue) {
+                        $targetSql = "select v from apps\\affirmative\\entity\\AffirmativeTarget v where v.issueId = :issueId  order by v.targetSeq";
+                        $targetParam = array("issueId" => $valueIssue->issueId);
+                        $targetData = $this->datacontext->getObject($targetSql, $targetParam);
+                        $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"][$keyIssue]->target = $targetData;
+                        foreach ($targetData as $keyTarget => $valueTarget) {
+                            if (array_key_exists($valueTarget->targetId, $targetArr)) {
+                                $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"][$keyIssue]->target[$keyTarget]->kpi = $targetArr[$valueTarget->targetId];
                             }
                         }
                     }
                 }
             }
-            return $mainData;
+        }
+        return $mainData;
+    }
+
+    public function listsAll($departmentId) {
+        if ($this->checkApprove($departmentId)) {
+            return $this->draftData($departmentId);
         } else {
             return false;
         }
@@ -323,7 +327,163 @@ class DraftService extends CServiceBase implements IDraftService {
         return true;
     }
 
-    public function export($activityId){
+    public function export($departmentId){
+        //style
+        $center = array(
+            'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+            'vertical' => \PHPExcel_Style_Alignment::VERTICAL_CENTER
+        );
 
+        $topLeft = array(
+            'vertical' => \PHPExcel_Style_Alignment::VERTICAL_TOP
+        );
+
+        $topCenter = array(
+            'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+            'vertical' => \PHPExcel_Style_Alignment::VERTICAL_TOP
+        );
+        $underline = array(
+            'font' => array(
+                'underline' => \PHPExcel_Style_Font::UNDERLINE_SINGLE
+            )
+        );
+
+        $objPHPExcel = new \PHPExcel();
+        $objWorkSheet = $objPHPExcel->createSheet(0);
+        $objWorkSheet = $objPHPExcel->setActiveSheetIndex(0);
+        $objWorkSheet = $objPHPExcel->getActiveSheet();
+
+        $title = "Sheet 1";
+        $objWorkSheet -> setTitle($title);
+
+        $mp = new \apps\affirmative\model\ViewActivityDepartment();
+        $mp->departmentId = $departmentId;
+        $dept = $this->datacontext->getObject($mp)[0];
+
+        $row = 1;
+        $objWorkSheet->mergeCells('A1:I2')
+            ->setCellValueByColumnAndRow(0, $row, "(ร่าง) ตัวชี้วัดคำรับรองการปฏิบัติงาน ประจำปีงบประมาณ พ.ศ.".$this->getPeriod()->year."\n ประเภทส่วนงาน".$dept->activityName." : ".$dept->departmentName)
+            ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($center)->setWrapText(true);
+
+        $row =  3;
+        $objWorkSheet->mergeCells('A'.$row.':A'.($row+1))->setCellValueByColumnAndRow(0, $row, "ตัวชี้วัดคำรับรอง ปี ".$this->getPeriod()->year)
+            ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->mergeCells('B'.$row.':B'.($row+1))->setCellValueByColumnAndRow(1, $row, "หน่วยนับตัวชี้วัด")
+            ->getStyleByColumnAndRow(1, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->mergeCells('C'.$row.':C'.($row+1))->setCellValueByColumnAndRow(2, $row, "ค่าเป้าหมาย\nตัวชี้วัด")
+            ->getStyleByColumnAndRow(2, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->mergeCells('D'.$row.':H'.$row)->setCellValueByColumnAndRow(3, $row, "เกณฑ์การให้คะแนนผลลัพธ์ของตัวชี้วัด (ระดับคะแนน)")
+            ->getStyleByColumnAndRow(3, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->mergeCells('I'.$row.':I'.($row+1))->setCellValueByColumnAndRow(8, $row, "หมายเหตุ")
+            ->getStyleByColumnAndRow(8, $row)->getAlignment()->applyFromArray($center);
+
+        $row = 4;
+        $objWorkSheet->setCellValueByColumnAndRow(3, $row, "คะแนน 1")
+            ->getStyleByColumnAndRow(3, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->setCellValueByColumnAndRow(4, $row, "คะแนน 2")
+            ->getStyleByColumnAndRow(4, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->setCellValueByColumnAndRow(5, $row, "คะแนน 3")
+            ->getStyleByColumnAndRow(5, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->setCellValueByColumnAndRow(6, $row, "คะแนน 4")
+            ->getStyleByColumnAndRow(6, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->setCellValueByColumnAndRow(7, $row, "คะแนน 5")
+            ->getStyleByColumnAndRow(7, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->getColumnDimensionByColumn(0)->setWidth(50);
+        $objWorkSheet->getColumnDimensionByColumn(1)->setWidth(20);
+        $objWorkSheet->getColumnDimensionByColumn(2)->setWidth(20);
+        $objWorkSheet->getColumnDimensionByColumn(3)->setWidth(20);
+        $objWorkSheet->getColumnDimensionByColumn(4)->setWidth(20);
+        $objWorkSheet->getColumnDimensionByColumn(5)->setWidth(20);
+        $objWorkSheet->getColumnDimensionByColumn(6)->setWidth(20);
+        $objWorkSheet->getColumnDimensionByColumn(7)->setWidth(20);
+        $objWorkSheet->getColumnDimensionByColumn(8)->setWidth(30);
+
+        $data = $this->draftData($departmentId);
+
+        $row = 5;
+        foreach($data as $key => $value){
+            $objWorkSheet->mergeCells('A'.$row.':I'.$row)
+                ->setCellValueByColumnAndRow(0, $row, "ส่วนที่ ".$value["mainSeq"]." ".$value["mainName"])
+                ->getStyleByColumnAndRow(0, $row)->applyFromArray($underline)->getAlignment()->applyFromArray($center);
+
+            $row++;
+            foreach($value["type"] as $key2 => $value2){
+                $objWorkSheet->mergeCells('A'.$row.':I'.$row)
+                    ->setCellValueByColumnAndRow(0, $row, "ส่วนที่ ".$value["mainSeq"].".".$value2["typeSeq"]." ".$value2["typeName"])
+                    ->getStyleByColumnAndRow(0, $row)->applyFromArray($underline);
+
+                $row++;
+                foreach($value2["issue"] as $key3 => $value3){
+                    $objWorkSheet->mergeCells('A'.$row.':I'.$row)
+                        ->setCellValueByColumnAndRow(0, $row, "ประเด็นยุทธศาสตร์ที่ ".$value3->issueSeq." ".$value3->issueName);
+
+                    $row++;
+                    foreach($value3->target as $key4 => $value4){
+                        $objWorkSheet->mergeCells('A'.$row.':I'.$row)
+                            ->setCellValueByColumnAndRow(0, $row, "เป้าประสงค์ที่ ".$value3->issueSeq.".".$value4->targetSeq." ".$value4->targetName);
+
+                        $row++;
+                        if(is_array( $value4->kpi) && count( $value4->kpi ) > 0 ) {
+                            foreach ($value4->kpi as $key5 => $value5) {
+
+                                $objWorkSheet->setCellValueByColumnAndRow(0, $row, $value3->issueSeq . "." . $value4->targetSeq . "." . $value5->kpiSeq . " " . $value5->kpiName)
+                                    ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+
+                                $objWorkSheet->setCellValueByColumnAndRow(1, $row, $value5->unitName)
+                                    ->getStyleByColumnAndRow(1, $row)->getAlignment()->applyFromArray($topCenter);
+
+                                $objWorkSheet->setCellValueByColumnAndRow(2, $row, $value5->kpiGoal)
+                                    ->getStyleByColumnAndRow(2, $row)->getAlignment()->applyFromArray($topCenter);
+
+                                $objWorkSheet->setCellValueByColumnAndRow(3, $row, $value5->score1)
+                                    ->getStyleByColumnAndRow(3, $row)->getAlignment()->applyFromArray($topCenter);
+
+                                $objWorkSheet->setCellValueByColumnAndRow(4, $row, $value5->score2)
+                                    ->getStyleByColumnAndRow(4, $row)->getAlignment()->applyFromArray($topCenter);
+
+                                $objWorkSheet->setCellValueByColumnAndRow(5, $row, $value5->score3)
+                                    ->getStyleByColumnAndRow(5, $row)->getAlignment()->applyFromArray($topCenter);
+
+                                $objWorkSheet->setCellValueByColumnAndRow(6, $row, $value5->score4)
+                                    ->getStyleByColumnAndRow(6, $row)->getAlignment()->applyFromArray($topCenter);
+
+                                $objWorkSheet->setCellValueByColumnAndRow(7, $row, $value5->score5)
+                                    ->getStyleByColumnAndRow(7, $row)->getAlignment()->applyFromArray($topCenter);
+
+                                $objWorkSheet->setCellValueByColumnAndRow(8, $row, $value5->remark)
+                                    ->getStyleByColumnAndRow(8, $row)->getAlignment()->applyFromArray($topLeft);
+
+                                $row++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+        $objPHPExcel->getDefaultStyle()->getAlignment()->setWrapText(true);
+
+        //create excel file
+        ob_clean();
+
+        header('Content-Type: application/vnd.ms-excel');
+        header("Content-Disposition: attachment;filename=(ร่าง)ตัวชี้วัดคำรับรองการปฏิบัติงาน_".$dept->departmentName."_".$this->getPeriod()->year.".xls");
+
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('php://output');
+
+        ob_end_flush();
+        exit();
     }
 }

@@ -5,6 +5,8 @@
  */
 package ebudgetreport;
 
+import th.co.bpg.cde.server.ChangdaoEngine;
+
 /**
  *
  * @author KaowNeaw
@@ -14,8 +16,9 @@ public class EbudgetReport {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         // TODO code application logic here
+        ChangdaoEngine.start(args);
     }
     
 }
