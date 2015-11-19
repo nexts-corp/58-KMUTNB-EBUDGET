@@ -82,4 +82,17 @@ interface IBudgetReviewService
      * @description แสดงข้อมูลแผนผลตามแหล่งเงิน
      */
     public function getBudgetScheme($budgetPeriodId, $budgetTypeCode, $deptId, $fundgroupId, $planId);
+    
+    /**
+     * @name getBudgetScheme
+     * @uri /getBudgetScheme
+     * @param int budgetPeriodId ปีงบประมาณ
+     * @param int budgetTypeCode ประเภทงบประมาณ
+     * @param int deptId หน่วยงาน
+     * @param int fundgroupId กองทุน
+     * @param int planId แผน 3 มิติ
+     * @return string[] result
+     * @description แสดงข้อมูลแผนผลตามแหล่งเงิน
+     */
+    public function insertScheme($budget);
 }

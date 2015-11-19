@@ -6,7 +6,7 @@ namespace apps\common\entity;
  * @Entity
  * @Table(name="BUDGETSCHEME")
  */
-class BudgetRevenue extends EntityBase {
+class BudgetScheme extends EntityBase {
 
     /**
      * @Id 
