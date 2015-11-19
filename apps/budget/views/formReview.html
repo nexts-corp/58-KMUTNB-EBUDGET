@@ -32,7 +32,7 @@
                 <div class="col-md-6">
                     <select id="budgetPeriodId" name="budgetPeriodId" class="form-control input-sm"
                             required>
-                        <option value="">เลือก</option>
+                        <option value="">- เลือกปี -</option>
                     </select>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                 <div class="col-md-6">
                     <select id="budgetTypeCode" name="budgetTypeCode" class="form-control input-sm"
                             required>
-                        <option value="">เลือก</option>
+                        <option value="">- เลือกแหล่งเงิน -</option>
                     </select>
                 </div>
             </div>
@@ -54,7 +54,7 @@
 
                 <div class="col-md-6">
                     <select id="facultyId" name="facultyId" class="form-control input-sm" required>
-                        <option value="">เลือก</option>
+                        <option value="">- เลือกคณะ -</option>
                     </select>
                 </div>
             </div>
@@ -64,7 +64,7 @@
 
                 <div class="col-md-6">
                     <select id="deptId" name="deptId" class="form-control input-sm" required>
-                        <option value="">เลือก</option>
+                        <option value="">- เลือกสาขา -</option>
                     </select>
                 </div>
             </div>
@@ -75,7 +75,7 @@
 
                 <div class="col-md-6">
                     <select id="l3dPlanId" name="l3dPlanId" class="form-control input-sm" required>
-                        <option value="">เลือก</option>
+                        <option value="">- เลือกแผนงาน -</option>
                     </select>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                 <div class="col-md-6">
                     <select id="fundgroupId" name="fundgroupId" class="form-control input-sm"
                             required>
-                        <option value="">เลือก</option>
+                        <option value="">- เลือกกองทุน -</option>
                     </select>
                 </div>
 
@@ -232,12 +232,15 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
+            $("#budgetPeriodId, #budgetTypeCode, #facultyId, #deptId, #l3dPlanId, #fundgroupId").select2().trigger("change");
+
             var total_quater1_plan = 0, total_quater1_used = 0, total_quater2_plan = 0, total_quater2_used = 0, total_quater3_plan = 0, total_quater3_used = 0, total_quater4_plan = 0, total_quater4_used = 0, total_plan = 0, total_used = 0;
             var dataTable = null;
             iniYear();
-            listDepartment();
-            listFundGroup();
+            listBudgetCode();
+            listFaculty(0);
             listPlan3D();
+            listFundGroup();
 
             $("#table").hide();
 
@@ -252,10 +255,17 @@
                     $("#budgetPeriodId").html(html);
                 });
             }
-            
-            function listFaculty() {
+
+            function listBudgetCode() {
+                var html = '<option value="0">- เลือกแหล่งเงิน -</option>';
+                html += '<option value="G">งบประมาณแผ่นดิน</option>';
+                html += '<option value="K">เงินรายได้</option>';
+                $("#budgetTypeCode").html(html);
+            }
+
+            function listFaculty(campusId) {
                 var html = '<option value="0">- เลือกหน่วยงาน -</option>';
-                $.get("{{_context_path}}/api/common/lookup/listDepartment", {campusId: 0}, function (data) {
+                $.get("{{_context_path}}/api/common/lookup/listFaculty", {campusId: campusId}, function (data) {
                     for (var i = 0; i < data.lists.length; i++) {
 
                         html += '<option value="' + data.lists[i].id + '">' + data.lists[i].name + '</option>';
@@ -266,7 +276,7 @@
 
             function listDepartment(facultyId) {
                 var html = '<option value="0">- เลือกสาขา -</option>';
-                $.get("{{_context_path}}/api/common/lookup/listFaculty", {facultyId: facultyId}, function (data) {
+                $.get("{{_context_path}}/api/common/lookup/listDepartment", {facultyId: facultyId}, function (data) {
                     for (var i = 0; i < data.lists.length; i++) {
 
                         html += '<option value="' + data.lists[i].id + '">' + data.lists[i].name + '</option>';
@@ -275,15 +285,21 @@
                 });
             }
 
-            function listFundGroup() {
-                var html = '<option value="0">- เลือกกองทุน -</option>';
-                $.get("{{_context_path}}/api/common/lookup/listFundgroup", function (data) {
-                    for (var i = 0; i < data.lists.length; i++) {
+            function listFundgroupWithPlan(periodId, l3dPlanId) {
+                var html = '<option value="" selected="selected">เลือก</option>';
+                var param = {
+                    budgetPeriodId: periodId,
+                    l3dPlanId: l3dPlanId
+                };
+                var datas = callAjax("{{_context_path}}/api/common/lookup/listFundgroupWithPlan", "post", param, "json");
+                if (typeof datas !== "undefined" && datas !== null) {
+                    $.each(datas["lists"], function (key, value) {
+                        html += '<option value="' + value["id"] + '">' + value["name"] + '</option>';
+                        fundgroupArr[value["id"]] = value["name"];
+                    });
+                }
 
-                        html += '<option value="' + data.lists[i].id + '">' + data.lists[i].name + '</option>';
-                    }
-                    $("#fundgroup-select").html(html);
-                });
+                $("#fundgroupId").html(html).trigger("change");
             }
 
             function listPlan3D() {
@@ -293,9 +309,10 @@
 
                         html += '<option value="' + data.lists[i].id + '">' + data.lists[i].name + '</option>';
                     }
-                    $("#plan3d-select").html(html);
+                    $("#l3dPlanId").html(html);
                 });
             }
+
 
 
             $("#get-form").click(function () {
@@ -348,6 +365,7 @@
                  }
                  */
             });
+
             $("#expenses-select").change(function () {
                 $("#expenses-select").parent().removeClass("has-error")
                 $("#warning-expenses").hide(10);
@@ -356,6 +374,7 @@
                 $("#year-select").parent().removeClass("has-error")
                 $("#warning-year").hide(10);
             });
+
             $("#btn-save").click(function () {
                 $("#btn-save").attr("disabled", true);
                 $("#saving-ico").show(10);
