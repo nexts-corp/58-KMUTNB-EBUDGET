@@ -21,7 +21,6 @@
     <hr class="tall dashboard">
 
 
-
     <div class="sort-source-wrapper"><!-- button action on header -->
         <div class="container">
             <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
@@ -34,93 +33,174 @@
 
     <div class="container">
         <div ng-show="page == 'home'" class="row">
+            <div id="divChoice" class="col-md-12">
+                <section class="panel panel-featured panel-featured-success">
+                    <div class="panel-heading">
+                        <h2 class="panel-title"><i class="fa fa-file-o"></i> แบบฟอร์มการออกรายงาน </h2>
+                    </div>
+                    <div class="panel-body">
+                        <div id="panel1">
+                            <form id="formChoice" onsubmit="return false;">
+
+                                <div class="form-group">
+                                    <div class="col-md-6" style="padding: 0px;">
+                                        <label class="col-md-4 control-label text-right req" for="budgetPeriodId">ปีงบประมาณ : </label>
+                                        <div class="col-md-8">
+                                            <select id="budgetPeriod" ng-model="budgetPeriodId" ng-change="checkShowTable();" name="budgetPeriodId" ng-options="item.year for item in listPeriod" ng-init="budgetPeriodId = ''" class="form-control input-sm" required>
+                                                <option value="">เลือก</option>
+                                            </select>
+                                        </div>
+                                        <div ng-show="budgetPeriodIdLoding"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+                                    </div>
+                                    <div class="col-md-6" style="padding: 0px;">
+                                        <label class="col-md-4 control-label text-right req" for="reportType">ประเภทแหล่งเงิน : </label>
+                                        <div class="col-md-8">
+                                            <select id="reportType" ng-model="reportType" ng-change="checkShowTable();" name="reportType" ng-options="item.name for item in listReportType" ng-init="reportType = ''" class="form-control input-sm" required>
+                                                <option value="">เลือก</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-6" style="padding: 0px;">
+                                        <label class="col-md-4 control-label text-right req" for="facultyId">หน่วยงาน : </label>
+                                        <div class="col-md-8">
+                                            <select ng-show="!facultyIdLoading" id="faculty" ng-change="checkShowTable();" ng-model="facultyId" name="facultyId" ng-change="facultyChange()" ng-options="(item.id+' '+item.deptName) for item in listDeptA" ng-init="facultyId = ''" class="form-control input-sm" required>
+                                                <option value="">เลือก</option>
+                                            </select>
+                                            <div ng-show="facultyIdLoading"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" style="padding: 0px;">
+                                        <label class="col-md-4 control-label text-right req" for="deptId">สาขา/ภาควิชา : </label>
+                                        <div class="col-md-8">
+                                            <select ng-show="!deptIdLoading" id="dept" ng-change="checkShowTable();" ng-model="deptId" name="deptId" ng-options="(item.id+' '+item.deptName) for item in listDeptB | filter:{ masterId: facultyId.id}" ng-init="deptId = ''" class="form-control input-sm" required>
+                                                <option value="">เลือก</option>
+                                                <!--<option  ng-repeat="item in listDeptB | filter:{ masterId: facultyId.id}">{[item.id +' '+item.deptName]}</option>-->
+                                            </select>
+                                            <div ng-show="deptIdLoading"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-6" style="padding: 0px;">
+                                        <label class="col-md-4 control-label text-right req" for="l3dPlanId">แผนงาน : </label>
+                                        <div class="col-md-8">
+                                            <select ng-show="!l3dPlanIdLoading" ng-change="checkShowTable();" id="l3dplan" ng-model="l3dPlanId" name="l3dPlanId" ng-options="item.planName for item in listL3DPlan" ng-init="l3dPlanId = ''" class="form-control input-sm" required>
+                                                <option value="">เลือก</option>
+                                            </select>
+                                            <div ng-show="l3dPlanIdLoading"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 none-padding" style="padding: 0px;">
+                                        <label class="col-md-4 control-label text-right req" for="l3dFundId">กองทุน : </label>
+                                        <div class="col-md-8">
+                                            <select ng-show="!l3dFundIdLoading" ng-change="checkShowTable();" id="l3dfund" ng-model="l3dFundId" name="l3dFundId" ng-options="item.fundgroupName for item in listL3DFund" ng-init="l3dFundId = ''" class="form-control input-sm" required>
+                                                <option value="">เลือก</option>
+                                            </select>
+                                            <div ng-show="l3dFundIdLoading"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </section>
+            </div>
             <div class="col-md-12">
                 <div id="bidderTable" class="col-md-12"><!-- table shown bidder information list -->
                     <table class="table table-bordered table-striped table-condensed mb-none" id="table">
                         <thead>
-                            <tr>
-                                <th class="text-center col-lg-1">ลำดับ</th>
-                                <th class="text-center col-lg-9">รายงาน</th>
-                                <th class="text-center col-lg-2">จัดการ</th>
-                            </tr>
+                        <tr>
+                            <th class="text-center col-lg-1">ลำดับ</th>
+                            <th class="text-center col-lg-8">รายงาน</th>
+                            <th class="text-center col-lg-3">ประเภทไฟล์</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="list in dataListReport">
-                                <td class="text-center">{[$index+1]}</td>
-                                <td>{[list.name]}</td>
-                                <td class="text-center">
-                                    <button ng-click="getSelectReportPage(list.id)" class="btn btn-primary" title="แก้ไข"><i class="fa fa-pencil"></i></button>
-                                </td>
-                            </tr>
+                        <tr ng-show="!showTable"><td colspan="3" class="text-center" style="background-color: #f9f9f9">กรุณาเลือกข้อมูลให้ครบ</td></tr>
+                        <tr ng-show="showTable" ng-repeat="item in listReport | filter:{ type: reportType.id}">
+                            <td class="text-center">{[$index+1]}</td>
+                            <td>{[item.name]}</td>
+                            <td class="text-center">
+                                <button  class="btn btn-default" ng-click="export('pdfview',item)" title="PDF"><i class="fa fa-file-pdf-o"></i> PDF</button>
+                                <button  class="btn btn-default" ng-click="export('excel',item)" title="EXCEL"><i class="fa fa-file-excel-o"></i> EXCEL</button>
+                                <button  class="btn btn-default" ng-click="export('word',item)" title="WORD"><i class="fa fa-file-word-o"></i> WORD</button>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div><!-- end table shown bidder information list -->
             </div>
 
-        </div><!--  row  -->
-        <div ng-show="page == 'report'" class="row" >
+            <!--</div>&lt;!&ndash;  row  &ndash;&gt;-->
+            <!--<div ng-show="page == 'report'" class="row" >-->
 
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>ปีงบประมาณ</label>
-                            <select ng-model="selectYear" ng-init="selectYear = 'udf'" class="form-control">
-                                <option value="udf">- เลือกปีงบประมาณ -</option>
-                                <option ng-repeat="list in cmDataListYear" value="{[list.year]}">{[list.year]}</option>
-                            </select>
-                        </div>
-                    </div>
+            <!--<div class="col-md-12">-->
+            <!--<div class="row">-->
+            <!--<div class="col-md-4">-->
+            <!--<div class="form-group">-->
+            <!--<label>ปีงบประมาณ</label>-->
+            <!--<select ng-model="selectYear" ng-init="selectYear = 'udf'" class="form-control">-->
+            <!--<option value="udf">- เลือกปีงบประมาณ -</option>-->
+            <!--<option ng-repeat="list in cmDataListYear" value="{[list.year]}">{[list.year]}</option>-->
+            <!--</select>-->
+            <!--</div>-->
+            <!--</div>-->
 
-                    <div ng-show="reportId == 'ง.1'" class="col-md-4">
-                        <div class="form-group">
-                            <label>การจำแนกรายงาน</label>
-                            <select ng-model="selectClassReport" ng-init="selectClassReport = 'udf'" class="form-control">
-                                <option value="udf">- เลือกการจำแนกรายงาน -</option>
-                                <option ng-repeat="list in dataListClassReport" value="{[list.id]}">{[list.name]}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div ng-show="reportId == 'ง.2' || reportId == 'ง.2-1' || reportId == 'ง.2-2' || reportId == 'ง.3'" class="col-md-4">
-                        <div class="form-group">
-                            <label>ภาควิชา</label>
-                            <select ng-model="selectFaculty" ng-init="selectFaculty = 'udf'" ng-change="cmListDepartment(selectFaculty)" class="form-control">
-                                <option value="udf">- เลือกภาควิชา -</option>
-                                <option ng-repeat="list in cmDataListFaculty" value="{[list.id]}">{[list.name]}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div ng-show="reportId == 'ง.2' || reportId == 'ง.2-1' || reportId == 'ง.2-2' || reportId == 'ง.3'" class="col-md-4">
-                        <div class="form-group">
-                            <label>หน่วยงาน</label>
-                            <select class="form-control" ng-model="selectDepartment" ng-init="selectDepartment = 'udf'">
-                                <option value="udf">- เลือกหน่วยงาน -</option>
-                                <option ng-repeat="list in cmDataListDepartment" value="{[list.id]}">{[list.name]}</option>
-                            </select>
-                        </div>
-                    </div>
+            <!--<div ng-show="reportId == 'ง.1'" class="col-md-4">-->
+            <!--<div class="form-group">-->
+            <!--<label>การจำแนกรายงาน</label>-->
+            <!--<select ng-model="selectClassReport" ng-init="selectClassReport = 'udf'" class="form-control">-->
+            <!--<option value="udf">- เลือกการจำแนกรายงาน -</option>-->
+            <!--<option ng-repeat="list in dataListClassReport" value="{[list.id]}">{[list.name]}</option>-->
+            <!--</select>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div ng-show="reportId == 'ง.2' || reportId == 'ง.2-1' || reportId == 'ง.2-2' || reportId == 'ง.3'" class="col-md-4">-->
+            <!--<div class="form-group">-->
+            <!--<label>ภาควิชา</label>-->
+            <!--<select ng-model="selectFaculty" ng-init="selectFaculty = 'udf'" ng-change="cmListDepartment(selectFaculty)" class="form-control">-->
+            <!--<option value="udf">- เลือกภาควิชา -</option>-->
+            <!--<option ng-repeat="list in cmDataListFaculty" value="{[list.id]}">{[list.name]}</option>-->
+            <!--</select>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div ng-show="reportId == 'ง.2' || reportId == 'ง.2-1' || reportId == 'ง.2-2' || reportId == 'ง.3'" class="col-md-4">-->
+            <!--<div class="form-group">-->
+            <!--<label>หน่วยงาน</label>-->
+            <!--<select class="form-control" ng-model="selectDepartment" ng-init="selectDepartment = 'udf'">-->
+            <!--<option value="udf">- เลือกหน่วยงาน -</option>-->
+            <!--<option ng-repeat="list in cmDataListDepartment" value="{[list.id]}">{[list.name]}</option>-->
+            <!--</select>-->
+            <!--</div>-->
+            <!--</div>-->
 
-                    <div ng-show="reportId == 'ง.2' || reportId == 'ง.2-1' || reportId == 'ง.2-2'" class="col-md-4">
-                        <div class="form-group">
-                            <label>แผนงาน</label>
-                            <select ng-model="selectPlan" ng-init="selectPlan = 'udf'" class="form-control">
-                                <option value="udf">- เลือกแผนงาน -</option>
-                                <option ng-repeat="list in cmDataListBudgetPlan" value="{[list.id]}">{[list.name]}</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6"></div>
-                    <div class="col-md-6" style="text-align: right;"><button type="button" class="btn btn-success"><i class="fa fa-search"></i> เรียกดู</button></div>
-                </div>
+            <!--<div ng-show="reportId == 'ง.2' || reportId == 'ง.2-1' || reportId == 'ง.2-2'" class="col-md-4">-->
+            <!--<div class="form-group">-->
+            <!--<label>แผนงาน</label>-->
+            <!--<select ng-model="selectPlan" ng-init="selectPlan = 'udf'" class="form-control">-->
+            <!--<option value="udf">- เลือกแผนงาน -</option>-->
+            <!--<option ng-repeat="list in cmDataListBudgetPlan" value="{[list.id]}">{[list.name]}</option>-->
+            <!--</select>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div class="row">-->
+            <!--<div class="col-md-6"></div>-->
+            <!--<div class="col-md-6" style="text-align: right;"><button type="button" class="btn btn-success"><i class="fa fa-search"></i> เรียกดู</button></div>-->
+            <!--</div>-->
 
 
-            </div>
+            <!--</div>-->
 
-        </div>
-    </div><!--  container  -->
-</div><!-- main -->
+            <!--</div>-->
+        </div><!--  container  -->
+    </div><!-- main -->
 
-{{> footer}}
-<script src="{{_context_path}}/apps/report/views/report3D/js/report3D.js"></script>
+    {{> footer}}
+    <script src="{{_context_path}}/apps/report/views/report3D/js/report3D.js"></script>

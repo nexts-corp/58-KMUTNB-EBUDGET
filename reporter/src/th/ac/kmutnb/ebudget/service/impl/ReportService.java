@@ -5,11 +5,10 @@
  */
 package th.ac.kmutnb.ebudget.service.impl;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+//import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -19,7 +18,6 @@ import th.ac.kmutnb.ebudget.model.BaseReport;
 import th.ac.kmutnb.ebudget.parameter.BaseParameter;
 import th.ac.kmutnb.ebudget.service.IReportService;
 import th.co.bpg.cde.collection.CJFile;
-import th.co.bpg.cde.collection.CJMessage;
 import th.co.bpg.cde.core.CServiceBase;
 import th.co.bpg.cde.data.CDataContext;
 import th.co.bpg.cde.report.CReportGenerater;
@@ -102,7 +100,7 @@ public class ReportService extends CServiceBase implements IReportService {
     }
 //String REPORT_CODE, String EXPORT_TYPE, String PERIOD_ID,String BUDGET_TYPE
     @Override
-    public CJFile export(String REPORT_CODE, String EXPORT_TYPE, String PERIOD_ID, String BUDGET_TYPE, String FAC_ID, String FAC_NAME, String DEPT_ID, String DEPT_NAME, String PLAN_ID, String PLAN_NAME, String FUND_ID, String FUND_NAME) {
+    public CJFile export(String REPORT_CODE, String EXPORT_TYPE, String PERIOD_ID, String BUDGET_TYPE, String FAC_ID, String FAC_NAME, String DEPT_ID, String DEPT_NAME, String PLAN_ID, String PLAN_NAME, String FUND_ID, String FUND_NAME,String PRODUCT_ID,String PRODUCT_NAME) {
         try {
 //           sparam = sparam.replaceAll(" ", "+");
 //            sparam = new String(Base64.decode(sparam), "UTF-8");
@@ -129,6 +127,8 @@ public class ReportService extends CServiceBase implements IReportService {
             param.setPLAN_NAME(PLAN_NAME);
             param.setFUND_ID(FUND_ID);
             param.setFUND_NAME(FUND_NAME);
+            param.setPRODUCT_ID(PRODUCT_ID);
+            param.setPRODUCT_NAME(PRODUCT_NAME);
             param.setREPORT_LOCALE(this.locale);
             
             String reportCode = param.getREPORT_CODE();
@@ -169,8 +169,8 @@ public class ReportService extends CServiceBase implements IReportService {
     }
 
     @Override
-    public CJFile test() {
-      CJFile file = new CJFile("<html><b>Hello Test</b></html>", CJFile.CJFileType.HTML, CJFile.CJFileSourceType.STRING);
+    public CJFile test(String tParam) {
+      CJFile file = new CJFile("<html><b>Hello "+tParam+"</b></html>", CJFile.CJFileType.HTML, CJFile.CJFileSourceType.STRING);
       return  file;
     }
 
