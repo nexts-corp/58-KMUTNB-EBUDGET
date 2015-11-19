@@ -23,7 +23,7 @@
         <div class="container">
             <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
                 <li class="active">
-                    <button class="btn btn-success excel"><i class="fa fa-file-excel-o"></i> เอกสาร</button>
+                    <button class="btn btn-primary" id="btnApprove" style="display: none;"><i class="fa fa-send"> ส่งแบบตัวชี้วัด</i></button>
                 </li>
             </ul>
         </div>
@@ -188,9 +188,14 @@
 
     $(function () {
         centerForm();
-
-        $("button.excel").unbind("click").click(function () {
-            window.open()
+        $("#btnApprove").click(function () {
+            var result = callAjax("{{_context_path}}/api/affirmative/center/approve", "post", {status: "Y"}, "json");
+            if (result["approve"] == true) {
+                alert("อนุมัติสำเร็จ!");
+                window.location = "{{_context_path}}/api/affirmative/view/homeAdmin";
+            } else {
+                alert("อนุมัติไม่สำเร็จ! (" + result["msg"] + ")");
+            }
         });
     });
 
@@ -198,7 +203,7 @@
         var contentArr = {};
 
         var datas = callAjax("{{_context_path}}/api/affirmative/center/listsAll", "post", {}, "json");
-        if (typeof datas["lists"] !== "undefined" && datas["lists"] !== null) {
+        if (typeof datas["lists"] !== "undefined" && datas["lists"] !== null && datas["lists"] !== false) {
             var menu = '<li class="active">'
                     + '<a href="#taball" data-toggle="tab"><i class="fa fa-star"></i> ทั้งหมด</a>'
                     + '</li>';
@@ -392,7 +397,6 @@
                 centerAction();
             });
         } else {
-            console.log('xx');
             $("#panelHome").html("<div class='text-center text-default col-sm-12'>ตัวชี้วัดคำรับรองการปฏิบัติงาน อนุมัติเรียบร้อยแล้ว</div>");
         }
     }

@@ -2,12 +2,12 @@
 
 namespace apps\affirmative\service;
 
-use apps\affirmative\interfaces\IGroupService;
+use apps\affirmative\interfaces\IDraftService;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
 use th\co\bpg\cde\collection\impl\CJSONDecodeImpl;
 
-class GroupService extends CServiceBase implements IGroupService {
+class DraftService extends CServiceBase implements IDraftService {
 
     public $datacontext;
     public $logger;
@@ -17,19 +17,15 @@ class GroupService extends CServiceBase implements IGroupService {
         $this->datacontext = new CDataContext(NULL);
     }
 
-    public function checkApprove() {
-        $draft = new \apps\affirmative\entity\AffirmativeDraft();
-        $draft->periodCode = $this->getPeriod()->year;
-        $data = $this->datacontext->getObject($draft);
-        // $draft->isApprove = "Y";
+    function checkApprove($departmentId) {
+        $final = new \apps\affirmative\entity\AffirmativeFinal();
+        $final->periodCode = $this->getPeriod()->year;
+        $final->departmentId = $departmentId;
+        $data = $this->datacontext->getObject($final);
         if (count($data) > 0) {
-            if ($data[0]->isApprove == $status) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
             return false;
+        } else {
+            return true;
         }
     }
 
@@ -61,10 +57,6 @@ class GroupService extends CServiceBase implements IGroupService {
         $sql = "select r from apps\\affirmative\\model\\ViewActivityDepartment r order by r.activityCode";
         $dept = $this->datacontext->getObject($sql);
         $periodCode = $this->getPeriod()->year;
-
-        $group = array();
-        $actKey = array();
-
         foreach ($dept as $keyDept => $valDept) {
             $draft = new \apps\affirmative\entity\AffirmativeDraft();
             $draft->periodCode = $periodCode;
@@ -82,23 +74,8 @@ class GroupService extends CServiceBase implements IGroupService {
                 }
             }
             $dept[$keyDept]->status = $status;
-
-            $actKey[$valDept->activityId] = $valDept->activityName;
-
-            $group[$valDept->activityId][] = $dept[$keyDept];
         }
-
-        $result = array();
-
-        foreach($group as $key => $value){
-            $result[] = array(
-                "actId" => $key,
-                "actName" => $actKey[$key],
-                "dept" => $value
-            );
-        }
-
-        return $result;
+        return $dept;
     }
 
     function sortBy($by, $arr) {
@@ -123,90 +100,93 @@ class GroupService extends CServiceBase implements IGroupService {
     }
 
     public function listsAll($departmentId) {
-        $json = new CJSONDecodeImpl();
-        $dept = new \apps\affirmative\model\ViewActivityDepartment();
-        $dept->departmentId = $departmentId;
-        $dataDept = $this->datacontext->getObject($dept)[0];
+        if ($this->checkApprove($departmentId)) {
+            $json = new CJSONDecodeImpl();
+            $dept = new \apps\affirmative\model\ViewActivityDepartment();
+            $dept->departmentId = $departmentId;
+            $dataDept = $this->datacontext->getObject($dept)[0];
 
-        $typeArr = array();
-        $targetArr = array();
-        $draft = new \apps\affirmative\entity\AffirmativeDraft();
-        $draft->periodCode = $this->getPeriod()->year;
-        $draft->departmentId = $departmentId;
-        $draftData = $this->datacontext->getObject($draft);
-        foreach ($draftData as $keyDraft => $valueDraft) {
-            if ($valueDraft->hasIssue == "Y") {
-                if (empty($targetArr[$valueDraft->targetId][$valueDraft->draftId])) {
-                    $targetArr[$valueDraft->targetId][$valueDraft->draftId] = $valueDraft;
-                }
-            } elseif ($valueDraft->hasIssue == "N") {
-                if (empty($typeArr[$valueDraft->typeId][$valueDraft->draftId])) {
-                    $typeArr[$valueDraft->typeId][$valueDraft->draftId] = $valueDraft;
+            $typeArr = array();
+            $targetArr = array();
+            $draft = new \apps\affirmative\entity\AffirmativeDraft();
+            $draft->periodCode = $this->getPeriod()->year;
+            $draft->departmentId = $departmentId;
+            $draftData = $this->datacontext->getObject($draft);
+            foreach ($draftData as $keyDraft => $valueDraft) {
+                if ($valueDraft->hasIssue == "Y") {
+                    if (empty($targetArr[$valueDraft->targetId][$valueDraft->draftId])) {
+                        $targetArr[$valueDraft->targetId][$valueDraft->draftId] = $valueDraft;
+                    }
+                } elseif ($valueDraft->hasIssue == "N") {
+                    if (empty($typeArr[$valueDraft->typeId][$valueDraft->draftId])) {
+                        $typeArr[$valueDraft->typeId][$valueDraft->draftId] = $valueDraft;
+                    }
                 }
             }
-        }
-        $targetArr = $this->sortBy("kpiSeq", $targetArr);
-        $typeArr = $this->sortBy("kpiSeq", $typeArr);
+            $targetArr = $this->sortBy("kpiSeq", $targetArr);
+            $typeArr = $this->sortBy("kpiSeq", $typeArr);
 
-        $sqlMain = "select s.mainId,s.mainSeq,m.mainName "
-                . "from apps\\affirmative\\entity\\AffirmativeSetting s "
-                . "join apps\\affirmative\\entity\\AffirmativeMain m with m.mainId = s.mainId "
-                . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
-                . "group by s.mainId,s.mainSeq,m.mainName "
-                . "order by s.mainSeq";
-        $paramMain = array(
-            "periodCode" => $this->getPeriod()->year,
-            "groupCode" => $dataDept->activityCode
-        );
-        $mainData = $this->datacontext->getObject($sqlMain, $paramMain);
-        $sqlType = "select s.mainId,s.mainSeq,s.typeId,s.typeSeq,m.typeName,m.hasIssue "
-                . "from apps\\affirmative\\entity\\AffirmativeSetting s "
-                . "join apps\\affirmative\\entity\\AffirmativeType m with m.typeId = s.typeId "
-                . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
-                . "group by s.mainId,s.mainSeq,s.typeId,s.typeSeq,m.typeName,m.hasIssue "
-                . "order by s.mainSeq,s.typeSeq";
-        $paramType = array(
-            "periodCode" => $this->getPeriod()->year,
-            "groupCode" => $dataDept->activityCode
-        );
-        $typeData = $this->datacontext->getObject($sqlType, $paramType);
-        foreach ($mainData as $keyMain => $valMain) {
-            foreach ($typeData as $keyType => $valueType) {
-                if ($valMain["mainSeq"] == $valueType["mainSeq"]) {
-                    $mainData[$keyMain]["type"][$valueType["typeSeq"]] = $valueType;
-                    $issueSql = "select v from apps\\affirmative\\entity\\AffirmativeIssue v where v.typeId = :typeId  order by v.issueSeq";
-                    $issueParam = array("typeId" => $valueType["typeId"]);
-                    $issueData = $this->datacontext->getObject($issueSql, $issueParam);
-                    $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"] = $issueData;
+            $sqlMain = "select s.mainId,s.mainSeq,m.mainName "
+                    . "from apps\\affirmative\\entity\\AffirmativeSetting s "
+                    . "join apps\\affirmative\\entity\\AffirmativeMain m with m.mainId = s.mainId "
+                    . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
+                    . "group by s.mainId,s.mainSeq,m.mainName "
+                    . "order by s.mainSeq";
+            $paramMain = array(
+                "periodCode" => $this->getPeriod()->year,
+                "groupCode" => $dataDept->activityCode
+            );
+            $mainData = $this->datacontext->getObject($sqlMain, $paramMain);
+            $sqlType = "select s.mainId,s.mainSeq,s.typeId,s.typeSeq,m.typeName,m.hasIssue "
+                    . "from apps\\affirmative\\entity\\AffirmativeSetting s "
+                    . "join apps\\affirmative\\entity\\AffirmativeType m with m.typeId = s.typeId "
+                    . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
+                    . "group by s.mainId,s.mainSeq,s.typeId,s.typeSeq,m.typeName,m.hasIssue "
+                    . "order by s.mainSeq,s.typeSeq";
+            $paramType = array(
+                "periodCode" => $this->getPeriod()->year,
+                "groupCode" => $dataDept->activityCode
+            );
+            $typeData = $this->datacontext->getObject($sqlType, $paramType);
+            foreach ($mainData as $keyMain => $valMain) {
+                foreach ($typeData as $keyType => $valueType) {
+                    if ($valMain["mainSeq"] == $valueType["mainSeq"]) {
+                        $mainData[$keyMain]["type"][$valueType["typeSeq"]] = $valueType;
+                        $issueSql = "select v from apps\\affirmative\\entity\\AffirmativeIssue v where v.typeId = :typeId  order by v.issueSeq";
+                        $issueParam = array("typeId" => $valueType["typeId"]);
+                        $issueData = $this->datacontext->getObject($issueSql, $issueParam);
+                        $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"] = $issueData;
 
-                    if (array_key_exists($valueType["typeId"], $typeArr)) {
-                        $mainData[$keyMain]["type"][$valueType["typeSeq"]]["kpi"] = $typeArr[$valueType["typeId"]];
-                    }
-                    $title = new \apps\affirmative\entity\AffirmativeSetting();
-                    $title->typeId = $valueType["typeId"];
-                    $title->periodCode = $this->getPeriod()->year;
-                    $title->mainId = $valMain["mainId"];
-                    $title->groupCode = $dataDept->activityCode;
-                    $title = $this->datacontext->getObject($title);
-                    if (count($title) > 0) {
-                        $mainData[$keyMain]["type"][$valueType["typeSeq"]]["title"] = $title[0]->title;
-                    }
-                    foreach ($issueData as $keyIssue => $valueIssue) {
-                        $targetSql = "select v from apps\\affirmative\\entity\\AffirmativeTarget v where v.issueId = :issueId  order by v.targetSeq";
-                        $targetParam = array("issueId" => $valueIssue->issueId);
-                        $targetData = $this->datacontext->getObject($targetSql, $targetParam);
-                        $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"][$keyIssue]->target = $targetData;
-                        foreach ($targetData as $keyTarget => $valueTarget) {
-                            if (array_key_exists($valueTarget->targetId, $targetArr)) {
-                                $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"][$keyIssue]->target[$keyTarget]->kpi = $targetArr[$valueTarget->targetId];
+                        if (array_key_exists($valueType["typeId"], $typeArr)) {
+                            $mainData[$keyMain]["type"][$valueType["typeSeq"]]["kpi"] = $typeArr[$valueType["typeId"]];
+                        }
+                        $title = new \apps\affirmative\entity\AffirmativeSetting();
+                        $title->typeId = $valueType["typeId"];
+                        $title->periodCode = $this->getPeriod()->year;
+                        $title->mainId = $valMain["mainId"];
+                        $title->groupCode = $dataDept->activityCode;
+                        $title = $this->datacontext->getObject($title);
+                        if (count($title) > 0) {
+                            $mainData[$keyMain]["type"][$valueType["typeSeq"]]["title"] = $title[0]->title;
+                        }
+                        foreach ($issueData as $keyIssue => $valueIssue) {
+                            $targetSql = "select v from apps\\affirmative\\entity\\AffirmativeTarget v where v.issueId = :issueId  order by v.targetSeq";
+                            $targetParam = array("issueId" => $valueIssue->issueId);
+                            $targetData = $this->datacontext->getObject($targetSql, $targetParam);
+                            $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"][$keyIssue]->target = $targetData;
+                            foreach ($targetData as $keyTarget => $valueTarget) {
+                                if (array_key_exists($valueTarget->targetId, $targetArr)) {
+                                    $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"][$keyIssue]->target[$keyTarget]->kpi = $targetArr[$valueTarget->targetId];
+                                }
                             }
                         }
                     }
                 }
             }
+            return $mainData;
+        } else {
+            return false;
         }
-
-        return $mainData;
     }
 
     public function insert($draft) {
@@ -278,20 +258,29 @@ class GroupService extends CServiceBase implements IGroupService {
         $draft->isActive = "Y";
         $dataDraft = $this->datacontext->getObject($draft);
         if ($status == "Y") {
+            $check = true;
             foreach ($dataDraft as $keyDraft => $valueDraft) {
                 if ($valueDraft->kpiGoal != NULL && $valueDraft->score1 != NULL && $valueDraft->score2 != NULL && $valueDraft->score3 != NULL && $valueDraft->score4 != NULL && $valueDraft->score5 != NULL && $valueDraft->isApprove != "Y") {
-                    $valueDraft->isApprove = $status;
-                    if ($this->datacontext->updateObject($valueDraft)) {
+                    $dataDraft[$keyDraft]->isApprove = $status;
+                } else {
+                    $check = false;
+                    $this->getResponse()->add('msg', 'ข้อมูลตัวชี้วัดไม่ครบถ้วน');
+                    return false;
+                }
+            }
+            if ($check == true) {
+                if ($this->datacontext->updateObject($dataDraft)) {
+                    foreach ($dataDraft as $keyDraft => $valueDraft) {
                         $final = $json->decode(new \apps\affirmative\entity\AffirmativeFinal(), $valueDraft);
                         $final->isApprove = "N";
                         if (!$this->datacontext->saveObject($final)) {
                             $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
                             return false;
                         }
-                    } else {
-                        $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
-                        return false;
                     }
+                } else {
+                    $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+                    return false;
                 }
             }
         } elseif ($status == "N") {
