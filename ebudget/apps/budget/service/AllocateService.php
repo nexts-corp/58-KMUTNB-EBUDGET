@@ -258,6 +258,45 @@ class AllocateService extends CServiceBase implements IAllocateService {
 
         return $return;
     }
+    
+    
+    public function getSumRevenue($budgetPeriodId, $deptId, $bgCategory) {
+        $sql3 = " select SUM(bg.bgAmount) as value "
+                . " from " . $this->pathEnt . "BudgetRevenue bg "
+                . " left join " . $this->pathEnt . "BudgetHead head with head.id = bg.budgetHeadId "
+                . " left join " . $this->pathEnt . "Attachment att with bg.attachmentId = att.id "
+                . " left join " . $this->pathEnt . "TrackingStatus ts with bg.statusId = ts.id "
+                . " where head.formId = :formId "
+                . " and bg.budgetPeriodId = :budgetPeriodId "
+                . " and bg.budgetTypeCode = :budgetTypeCode "
+                . " and bg.deptId = :deptId"
+                . " and bg.bgCategory = :bgCategory";
+
+        $param3 = array(
+            "formId" => "500",
+            "budgetPeriodId" => $budgetPeriodId,
+            "budgetTypeCode" => "K",
+            "deptId" => $deptId,
+            "bgCategory" => $bgCategory
+        );
+
+        return $this->datacontext->getObject($sql3, $param3);
+    }
+    
+    
+    public function getSumRevenuePlan($budgetPeriodId, $deptId) {
+        $sql = "
+            SELECT 
+                SUM(bgrp.budgetEducation) AS education,SUM(bgrp.budgetService) AS service 
+            FROM ".$this->pathEnt."BudgetRevenuePlan bgrp
+            WHERE bgrp.budgetPeriodId = ".$budgetPeriodId."
+            AND bgrp.deptId = ".$deptId."
+            AND bgrp.budgetTypeCode = 'K'
+        ";
+        $list = $this->datacontext->getObject($sql);
+        return $list;
+    }
+    
 
     public function fetchRevenue($budgetPeriodId) {
 
@@ -424,25 +463,7 @@ class AllocateService extends CServiceBase implements IAllocateService {
         return $result;
     }
 
-    public function getRevenueItemList($budgetPeriodId, $deptId, $l3dPlanId, $fundgroupId) {
-        /*
-          $result = true;
-
-          $revenue = new entity\BudgetRevenue();
-          $revenue->setBudgetPeriodId($budgetPeriodId);
-          $revenue->setDeptId($deptId);
-          $revenue->setL3dPlanId($l3dPlanId);
-          $revenue->setFundgroupId($fundgroupId);
-
-          $revenueData = $this->datacontext->getObject($revenue);
-          if ($revenueData != null) {
-          return $revenueData;
-          } else {
-          $return = $this->datacontext->getLastMessage();
-          }
-
-          return $result;
-         */
+    public function getRevenueItemList($budgetPeriodId, $deptId, $l3dPlanId, $fundgroupId, $bgCategory) {
 
         $sql1 = " SELECT typ.id, typ.typeName as name "
                 . " FROM " . $this->pathEnt . "BudgetType typ "
@@ -457,11 +478,12 @@ class AllocateService extends CServiceBase implements IAllocateService {
                 "masterId" => $list1[$key1]["id"]
             );
             $list2 = $this->datacontext->getObject($sql2, $param2);
+            
             $list1[$key1]["sub"] = $list2;
 
             foreach ($list2 as $key2 => $value2) {
                 $sql3 = " select bg.id, bg.revenueName as name, bg.revenueName as nameC, "
-                        . "bg.bgPlanSum as value, bg.bgPlanSum as valueC"
+                        . "bg.bgAmount as value, bg.bgAmount as valueC"
                         . " from " . $this->pathEnt . "BudgetRevenue bg "
                         . " left join " . $this->pathEnt . "BudgetHead head with head.id = bg.budgetHeadId "
                         . " left join " . $this->pathEnt . "Attachment att with bg.attachmentId = att.id "
@@ -472,7 +494,8 @@ class AllocateService extends CServiceBase implements IAllocateService {
                         . " and bg.budgetTypeCode = :budgetTypeCode "
                         . " and bg.l3dPlanId = :l3dPlanId "
                         . " and bg.fundgroupId = :fundgroupId "
-                        . " and bg.deptId = :deptId";
+                        . " and bg.deptId = :deptId"
+                        . " and bg.bgCategory = :bgCategory";
 
                 $param3 = array(
                     "formId" => "500",
@@ -481,11 +504,11 @@ class AllocateService extends CServiceBase implements IAllocateService {
                     "budgetTypeCode" => "K",
                     "l3dPlanId" => $l3dPlanId,
                     "fundgroupId" => $fundgroupId,
-                    "deptId" => $deptId
+                    "deptId" => $deptId,
+                    "bgCategory" => $bgCategory
                 );
 
                 $list3 = $this->datacontext->getObject($sql3, $param3);
-
                 //$list2[$key]["budget"] = $list3;
                 $list1[$key1]["sub"][$key2]["data"] = $list3;
             }

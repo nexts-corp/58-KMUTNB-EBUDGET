@@ -132,7 +132,7 @@
                 <div ng-if="activeTemplate === 'project'" ng-controller="projectForm" data-ng-init="init()">
                     <project-template></project-template>
                 </div>
-                <div ng-if="activeTemplate === 'manageDepartment'" ng-controller="manageDepartment" data-ng-init="init()">
+                <div ng-if="activeTemplate === 'manageDepartment'" ng-controller="manageDepartment" data-ng-init="init()" nk-cloak>
                     <managedepartment-template></managedepartment-template>
                 </div>
             </div>

@@ -82,6 +82,29 @@ interface IAllocateService {
      */
     public function deleteExpenseProject($bgHeadId);
 
+    
+    /**
+     * @name getSumRevenuePlan
+     * @uri /getSumRevenuePlan
+     * @param int budgetPeriodId
+     * @param int deptId
+     * @return string[] dataList Description
+     * @description ดึงเงินรวมของแผน
+     */
+    public function getSumRevenuePlan($budgetPeriodId,$deptId);
+    
+    /**
+     * @name getSumRevenue
+     * @uri /getSumRevenue
+     * @param int budgetPeriodId
+     * @param int deptId
+     * @param String bgCategory
+     * @return string[] dataList Description
+     * @description ดึงเงินรวมของแจกแจง
+     */
+    public function getSumRevenue($budgetPeriodId,$deptId,$bgCategory);
+    
+    
     /**
      * @name fetchRevenue
      * @uri /fetchRevenue
@@ -156,9 +179,10 @@ interface IAllocateService {
      * @param int budgetPeriodId 
      * @param int deptId 
      * @param int l3dPlanId 
-     * @param int fundgroupId 
+     * @param int fundgroupId
+     * @param String bgCategory 
      * @return string[] dataList Description
      * @description โหลดรายการรายละเอียดเงินรายได้
      */
-    public function getRevenueItemList($budgetPeriodId, $deptId, $l3dPlanId, $fundgroupId);
+    public function getRevenueItemList($budgetPeriodId, $deptId, $l3dPlanId, $fundgroupId, $bgCategory);
 }

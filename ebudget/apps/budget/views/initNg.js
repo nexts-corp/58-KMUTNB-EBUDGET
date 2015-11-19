@@ -161,7 +161,7 @@ myApp.controller('mainController', function($scope,$http,$controller) {
 //                projectId: "1",
 //                fundgroupId: "100",
 //                facultyId: "30100",
-//                deptId: "30101"
+//                deptId: "20100"
 //            };
 //
 //            $scope.openForm("manageDepartment",$scope.tParam);
