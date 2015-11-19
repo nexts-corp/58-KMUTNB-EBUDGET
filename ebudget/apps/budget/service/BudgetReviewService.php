@@ -79,7 +79,6 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
     }
 
     private function queryExpensesBg($year, $id) {
-
         $sql = "SELECT bg.id,bg.type_name"
                 . ",CASE WHEN (tb.budget_quater1_plan IS NULL) THEN ' ' ELSE tb.budget_quater1_plan END AS budget_quater1_plan,CASE WHEN (tb.budget_quater1_used IS NULL) THEN ' ' ELSE tb.budget_quater1_used END AS budget_quater1_used"
                 . ",CASE WHEN (tb.budget_quater2_plan IS NULL) THEN ' ' ELSE tb.budget_quater2_plan END AS budget_quater2_plan,CASE WHEN (tb.budget_quater2_used IS NULL) THEN ' ' ELSE tb.budget_quater2_used END AS budget_quater2_used"
@@ -361,6 +360,169 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
     public function listStatusTracking() {
 
         return $this->datacontext->getObject(new TrackingStatus());
+    }
+
+    public function getBudgetScheme($budgetPeriodId, $budgetTypeCode, $deptId, $fundgroupId, $planId) {
+        if ($budgetTypeCode == "G") {
+            $sql = "select
+                bg.planId,
+                bg.deptId, 
+                bg.fundgroupId,
+                bgType.bgTypeMasterId, bgType.bgTypeMasterName,
+                bgType.bgTypeMainId, bgType.bgTypeMainName,
+                bgType.bgTypeId, bgType.bgTypeName,
+                bgType.bgTypeSubId, bgType.bgTypeSubName,
+                bg.budgetSummary, 
+                bgScheme.BUDGETPLAN_SUMMARY as planSummary, bgScheme.BUDGETUSED_SUMMARY as usedSummary,
+                bgScheme.BUDGETPLAN_Q1 as planQ1, bgScheme.BUDGETUSED_Q1 as usedQ1,
+                bgScheme.BUDGETPLAN_Q2 as planQ2, bgScheme.BUDGETUSED_Q2 as usedQ2,
+                bgScheme.BUDGETPLAN_Q3 as planQ3, bgScheme.BUDGETUSED_Q3 as usedQ3,
+                bgScheme.BUDGETPLAN_Q4 as planQ4, bgScheme.BUDGETUSED_Q4 as usedQ4
+                from (
+                    select 
+                        bgTypeTmp.bgTypeMasterId, bgTypeTmp.bgTypeMasterName,
+                        bgTypeTmp.bgTypeMainId, bgTypeTmp.bgTypeMainName,
+                        bgTypeTmp.bgTypeId, bgTypeTmp.bgTypeName,
+                        case when bgTypeTmp.bgTypeSubId is not null then bgTypeTmp.bgTypeSubId else bgTypeTmp.bgTypeId end as bgTypeSubId, 
+                        case when bgTypeTmp.bgTypeSubName is not null then bgTypeTmp.bgTypeSubName else bgTypeTmp.bgTypeName end as bgTypeSubName
+                    from (
+                        select 
+                        bgTypeMaster.BUDGETTYPEID as bgTypeMasterId, bgTypeMaster.BUDGETTYPENAME as bgTypeMasterName,
+                        bgTypeMain.BUDGETTYPEID as bgTypeMainId, bgTypeMain.BUDGETTYPENAME as bgTypeMainName,
+                        case when bgType.BUDGETTYPEID is not null then bgType.BUDGETTYPEID else bgTypeMain.BUDGETTYPEID end as bgTypeId, 
+                        case when bgType.BUDGETTYPENAME is not null then bgType.BUDGETTYPENAME else bgTypeMain.BUDGETTYPENAME end as bgTypeName,
+                        bgTypeSub.BUDGETTYPEID as bgTypeSubId, bgTypeSub.BUDGETTYPENAME as bgTypeSubName
+                        from BUDGETTYPE bgTypeMaster
+                        left outer join BUDGETTYPE bgTypeMain on bgTypeMaster.BUDGETTYPEID = bgTypeMain.MASTERID
+                        left outer join BUDGETTYPE bgType on bgTypeMain.BUDGETTYPEID = bgType.MASTERID
+                        left outer join BUDGETTYPE bgTypeSub on bgType.BUDGETTYPEID = bgTypeSub.MASTERID
+                        where bgTypeMaster.MASTERID = 0
+                        and bgTypeMaster.BUDGETTYPECODE = '".$budgetTypeCode."'
+                        and bgTypeMain.BUDGETTYPECODE = '".$budgetTypeCode."'
+                    ) bgTypeTmp
+                ) bgType
+                left outer join BUDGETSCHEME bgScheme on bgScheme.BUDGETTYPEID = bgType.bgTypeSubId
+                left outer join (
+                    select 
+                        bgh.DEPARTMENTID as deptId,
+                        bgh.L3D_PLANID as planId,
+                        bgh.FUNDGROUPID as fundgroupId,
+                        (case 
+                            when bgh.FORMBUDGET = 140 then bg140.BUDGETTYPEID
+                            when bgh.FORMBUDGET = 141 then bg141.BUDGETTYPEID
+                            when bgh.FORMBUDGET = 142 then bg142.BUDGETTYPEID
+                            when bgh.FORMBUDGET = 143 then bg143.BUDGETTYPEID
+                            when bgh.FORMBUDGET = 144 then bg144.BUDGETTYPEID
+                            when bgh.FORMBUDGET = 145 then bg145.BUDGETTYPEID
+                            when bgh.FORMBUDGET = 146 then bg146.BUDGETTYPEID
+                        else 0 end) as budgetTypeId,
+                        coalesce(sum(bg140.BUDGETSUMMARY), 0) + 
+                        coalesce(sum(bg141.BUDGETSUMMARY), 0) +
+                        coalesce(sum(bg142.BUDGETSUMMARY), 0) +
+                        coalesce(sum(bg143.BUDGETSUMMARY), 0) +
+                        coalesce(sum(bg144.BUDGETSUMMARY), 0) +
+                        coalesce(sum(bg145.BUDGETSUMMARY), 0) +
+                        coalesce(sum(bg146.BUDGETSUMMARY), 0) as budgetSummary
+                    from BUDGETHEAD bgh
+                    left outer join BUDGET140 bg140 on bgh.BUDGETHEADID = bg140.BUDGETHEADID
+                    left outer join BUDGET141 bg141 on bgh.BUDGETHEADID = bg141.BUDGETHEADID
+                    left outer join BUDGET142 bg142 on bgh.BUDGETHEADID = bg142.BUDGETHEADID
+                    left outer join BUDGET143 bg143 on bgh.BUDGETHEADID = bg143.BUDGETHEADID
+                    left outer join BUDGET144 bg144 on bgh.BUDGETHEADID = bg144.BUDGETHEADID
+                    left outer join BUDGET145 bg145 on bgh.BUDGETHEADID = bg145.BUDGETHEADID
+                    left outer join BUDGET146 bg146 on bgh.BUDGETHEADID = bg146.BUDGETHEADID
+                    where bgh.BUDGETTYPECODE = '".$budgetTypeCode."'
+                    and bgh.BUDGETPERIODID = '".$budgetPeriodId."'
+                    and bgh.DEPARTMENTID = '".$deptId."'
+                    and bgh.FUNDGROUPID = '".$fundgroupId."'
+                    and bgh.L3D_PLANID = '".$planId."'
+                    group by bgh.DEPARTMENTID, bgh.L3D_PLANID, bgh.FUNDGROUPID, bgh.FORMBUDGET, 
+                    bg140.BUDGETTYPEID, bg141.BUDGETTYPEID, bg142.BUDGETTYPEID, bg143.BUDGETTYPEID, bg144.BUDGETTYPEID, bg145.BUDGETTYPEID, bg146.BUDGETTYPEID
+                ) bg on bg.budgetTypeId = bgType.bgTypeSubId";
+           
+            $data = $this->datacontext->pdoQuery($sql);
+            
+            return $data;
+            
+        } else if ($budgetTypeCode == "K") {
+            $sql = "select
+                bg.planId,
+                bg.deptId, 
+                bg.fundgroupId,
+                bgType.bgTypeMasterId, bgType.bgTypeMasterName,
+                bgType.bgTypeMainId, bgType.bgTypeMainName,
+                bg.budgetSummary, 
+                bgScheme.BUDGETPLAN_SUMMARY as planSummary, bgScheme.BUDGETUSED_SUMMARY as usedSummary,
+                bgScheme.BUDGETPLAN_Q1 as planQ1, bgScheme.BUDGETUSED_Q1 as usedQ1,
+                bgScheme.BUDGETPLAN_Q2 as planQ2, bgScheme.BUDGETUSED_Q2 as usedQ2,
+                bgScheme.BUDGETPLAN_Q3 as planQ3, bgScheme.BUDGETUSED_Q3 as usedQ3,
+                bgScheme.BUDGETPLAN_Q4 as planQ4, bgScheme.BUDGETUSED_Q4 as usedQ4
+                from (
+                    select 
+                        bgTypeTmp.bgTypeMasterId, bgTypeTmp.bgTypeMasterName,
+                        bgTypeTmp.bgTypeMainId, bgTypeTmp.bgTypeMainName,
+                        bgTypeTmp.bgTypeId, bgTypeTmp.bgTypeName,
+                        case when bgTypeTmp.bgTypeSubId is not null then bgTypeTmp.bgTypeSubId else bgTypeTmp.bgTypeId end as bgTypeSubId, 
+                        case when bgTypeTmp.bgTypeSubName is not null then bgTypeTmp.bgTypeSubName else bgTypeTmp.bgTypeName end as bgTypeSubName
+                    from (
+                        select 
+                        bgTypeMaster.BUDGETTYPEID as bgTypeMasterId, bgTypeMaster.BUDGETTYPENAME as bgTypeMasterName,
+                        bgTypeMain.BUDGETTYPEID as bgTypeMainId, bgTypeMain.BUDGETTYPENAME as bgTypeMainName,
+                        case when bgType.BUDGETTYPEID is not null then bgType.BUDGETTYPEID else bgTypeMain.BUDGETTYPEID end as bgTypeId, 
+                        case when bgType.BUDGETTYPENAME is not null then bgType.BUDGETTYPENAME else bgTypeMain.BUDGETTYPENAME end as bgTypeName,
+                        bgTypeSub.BUDGETTYPEID as bgTypeSubId, bgTypeSub.BUDGETTYPENAME as bgTypeSubName
+                        from BUDGETTYPE bgTypeMaster
+                        left outer join BUDGETTYPE bgTypeMain on bgTypeMaster.BUDGETTYPEID = bgTypeMain.MASTERID
+                        left outer join BUDGETTYPE bgType on bgTypeMain.BUDGETTYPEID = bgType.MASTERID
+                        left outer join BUDGETTYPE bgTypeSub on bgType.BUDGETTYPEID = bgTypeSub.MASTERID
+                        where bgTypeMaster.MASTERID = 0
+                        and bgTypeMaster.BUDGETTYPECODE = '".$budgetTypeCode."'
+                        and bgTypeMain.BUDGETTYPECODE = '".$budgetTypeCode."'
+                    ) bgTypeTmp
+                ) bgType
+                left outer join BUDGETSCHEME bgScheme on bgScheme.BUDGETTYPEID = bgType.bgTypeSubId
+                left outer join (
+                    select 
+                        bgh.DEPARTMENTID as deptId,
+                        bgh.L3D_PLANID as planId,
+                        bgh.FUNDGROUPID as fundgroupId,
+                        rv.BUDGETTYPEID as budgetTypeId,
+                        coalesce(sum(rv.BUDGETAMOUNT), 0) as budgetSummary
+                    from BUDGETHEAD bgh
+                    left outer join BUDGETREVENUE rv on rv.BUDGETHEADID = bgh.BUDGETHEADID
+                    where bgh.BUDGETTYPECODE = '".$budgetTypeCode."'
+                    and bgh.BUDGETPERIODID = '".$budgetPeriodId."'
+                    and bgh.DEPARTMENTID = '".$deptId."'
+                    and bgh.FUNDGROUPID = '".$fundgroupId."'
+                    and bgh.L3D_PLANID = '".$planId."'
+                    group by bgh.DEPARTMENTID, bgh.L3D_PLANID, bgh.FUNDGROUPID, rv.BUDGETTYPEID
+                ) bg on bg.budgetTypeId = bgType.bgTypeSubId
+                group by bg.planId,
+                bg.deptId, 
+                bg.fundgroupId,
+                bgType.bgTypeMasterId, bgType.bgTypeMasterName,
+                bgType.bgTypeMainId, bgType.bgTypeMainName,
+                bgType.bgTypeId, bgType.bgTypeName,
+                bgType.bgTypeSubId, bgType.bgTypeSubName,
+                bg.budgetSummary,
+                bgScheme.BUDGETPLAN_SUMMARY, bgScheme.BUDGETUSED_SUMMARY,
+                bgScheme.BUDGETPLAN_Q1, bgScheme.BUDGETUSED_Q1,
+                bgScheme.BUDGETPLAN_Q2, bgScheme.BUDGETUSED_Q2,
+                bgScheme.BUDGETPLAN_Q3, bgScheme.BUDGETUSED_Q3,
+                bgScheme.BUDGETPLAN_Q4, bgScheme.BUDGETUSED_Q4";
+            
+            $data = $this->datacontext->pdoQuery($sql);
+            
+            return $data;
+        }
+    }
+
+    public function insertScheme($budget) {
+        
+    }
+
+    public function updateScheme($budget) {
+        
     }
 
 }

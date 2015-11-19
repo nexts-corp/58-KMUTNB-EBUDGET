@@ -8,12 +8,19 @@
     <class>th.ac.kmutnb.ebudget.model.NG2_2_model</class>
     <class>th.ac.kmutnb.ebudget.model.NG3_model</class>
     <class>th.ac.kmutnb.ebudget.model.NG1_model</class>
+    <class>th.ac.kmutnb.ebudget.model.NG112_model</class>
+    <class>th.ac.kmutnb.ebudget.model.NG140_model</class>
+    <class>th.ac.kmutnb.ebudget.model.NG141_model</class>
+    <class>th.ac.kmutnb.ebudget.model.NG142_model</class>
+    <class>th.ac.kmutnb.ebudget.model.NG143_model</class>
+    <class>th.ac.kmutnb.ebudget.model.NG144_model</class>
+    <class>th.ac.kmutnb.ebudget.model.NG145_model</class>
+    <class>th.ac.kmutnb.ebudget.model.NG146_model</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://202.44.34.86:1433;databaseName=Ebudget"/>
       <property name="javax.persistence.jdbc.user" value="ebudget"/>
       <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
       <property name="javax.persistence.jdbc.password" value="ebudget"/>
-      <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>
   </persistence-unit>
 </persistence>

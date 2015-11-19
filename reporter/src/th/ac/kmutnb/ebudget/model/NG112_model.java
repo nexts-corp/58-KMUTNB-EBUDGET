@@ -16,6 +16,10 @@ import javax.persistence.Entity;
 @Entity
 public class NG112_model extends BaseReport{
     
+ @Column
+ Integer bgPlanId;
+ @Column
+ String bgPlanName;
 @Column
 private Integer facultyId;
 @Column
@@ -68,6 +72,23 @@ private BigDecimal durableCost = BigDecimal.ZERO;
 private BigDecimal buildingCost = BigDecimal.ZERO;
 @Column
 private BigDecimal otherCost = BigDecimal.ZERO;
+
+    public Integer getBgProjectId() {
+        return bgProjectId;
+    }
+
+    public void setBgProjectId(Integer bgProjectId) {
+        this.bgProjectId = bgProjectId;
+    }
+
+    public String getBgProjectName() {
+        return bgProjectName;
+    }
+
+    public void setBgProjectName(String bgProjectName) {
+        this.bgProjectName = bgProjectName;
+    }
+
 
     public Integer getFacultyId() {
         return facultyId;

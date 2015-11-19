@@ -67,4 +67,37 @@ interface IBudgetReviewService
      * @description สถานะการติดตาม
      */
     public function listStatusTracking();
+    
+    
+    
+    /**
+     * @name getBudgetScheme
+     * @uri /getBudgetScheme
+     * @param int budgetPeriodId ปีงบประมาณ
+     * @param int budgetTypeCode ประเภทงบประมาณ
+     * @param int deptId หน่วยงาน
+     * @param int fundgroupId กองทุน
+     * @param int planId แผน 3 มิติ
+     * @return string[] result
+     * @description แสดงข้อมูลแผนผลตามแหล่งเงิน
+     */
+    public function getBudgetScheme($budgetPeriodId, $budgetTypeCode, $deptId, $fundgroupId, $planId);
+    
+    /**
+     * @name insertScheme
+     * @uri /insertScheme
+     * @param apps\common\entity\BudgetScheme budget
+     * @return string[] result
+     * @description เพิ่มข้อมูลแผนผล
+     */
+    public function insertScheme($budget);
+    
+    /**
+     * @name updateScheme
+     * @uri /updateScheme
+     * @param apps\common\entity\BudgetScheme budget
+     * @return string[] result
+     * @description ปรับปรุงข้อมูลแผนผล
+     */
+    public function updateScheme($budget);
 }
