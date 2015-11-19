@@ -77,6 +77,12 @@ interface ICenterService {
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
     public function approve($status);
-    
-    
+
+    /**
+     * @name export
+     * @uri /export
+     * @return file export Description
+     * @description รายการสำรองข้าว
+     */
+    public function export();
 }

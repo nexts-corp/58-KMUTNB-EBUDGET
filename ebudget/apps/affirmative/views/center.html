@@ -23,7 +23,8 @@
         <div class="container">
             <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
                 <li class="active">
-                    <button class="btn btn-primary" id="btnApprove" style="display: none;"><i class="fa fa-send"> ส่งแบบตัวชี้วัด</i></button>
+                    <button class="btn btn-primary" id="btnApprove" style="display: none;"><i class="fa fa-send"></i> ส่งแบบตัวชี้วัด</button>
+                    <button class="btn btn-success" id="btnExcel"><i class="fa fa-file-excel-o"></i> Excel</button>
                 </li>
             </ul>
         </div>
@@ -196,6 +197,10 @@
             } else {
                 alert("อนุมัติไม่สำเร็จ! (" + result["msg"] + ")");
             }
+        });
+
+        $("#btnExcel").click(function(){
+            window.open( "{{_context_path}}/api/affirmative/center/export");
         });
     });
 
