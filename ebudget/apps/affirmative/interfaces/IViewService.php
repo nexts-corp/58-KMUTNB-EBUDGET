@@ -22,6 +22,13 @@ interface IViewService {
      * @description ยื่นคำของบประมาณ
      */
     public function homeAdmin();
+    
+    /**
+     * @name setting
+     * @uri /setting
+     * @description ยื่นคำของบประมาณ
+     */
+    public function setting();
 
     /**
      * @name center
