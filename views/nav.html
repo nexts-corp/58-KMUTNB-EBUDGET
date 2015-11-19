@@ -10,43 +10,59 @@
 
                 <li class="dropdown">
                     <a class="dropdown-toggle" href="#">
-                        จัดทำ/จัดสรรงบประมาณ
+                        งบประมาณแผ่นดิน
                         <i class="fa fa-angle-down"></i>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="{{_context_path}}/api/budget/view/formBudget">จัดทำคำของบประมาณแผ่นดิน</a></li>
                         <li><a href="{{_context_path}}/api/budget/view/formBudgetReview">ตรวจสอบคำของบประมาณแผ่นดิน</a></li>
+                        <li><a href="{{_context_path}}/api/budget/view/formTracking">รายงานผลการใช้งบประมาณรายจ่ายประจำปี</a></li>
+                        <li><a href="{{_context_path}}/api/budget/view/formReview">ตรวจสอบผลการใช้งบประมาณรายจ่ายประจำปี (Admin)</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a class="dropdown-toggle" href="#">
+                        งบเงินรายได้
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
                         <li><a href="{{_context_path}}/api/budget/allocate/managePlanning">จัดสรรงบประมาณเงินรายได้</a></li>
                         <li><a href="{{_context_path}}/api/budget/view/formRevenue">จัดทำคำชี้แจงงบประมาณเงินรายได้</a></li>
                     </ul>
                 </li>
 
                 <li class="dropdown">
-                    <a class="dropdown-toggle" href="#">
-                        ติดตามผลการดำเนินงาน
+                    <a class="dropdown-toggle" href="{{_context_path}}/api/affirmative/view/homeAdmin">
+                        ตัวชี้วัดคำรับรอง
                         <i class="fa fa-angle-down"></i>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{_context_path}}/api/budget/view/formTracking">รายงานผลการใช้งบประมาณรายจ่ายประจำปี</a></li>
-                        <li><a href="{{_context_path}}/api/budget/view/formReview">ตรวจสอบผลการใช้งบประมาณรายจ่ายประจำปี (Admin)</a></li>
-                        <!--<li><a href="{{_context_path}}/api/budget/view/#">รายงานผลการใช้งบประมาณโครงการที่ตอบสนองยุทธศาสตร์</a></li>-->
-                        <li><a href="{{_context_path}}/api/affirmative/view/homeAdmin">ตัวชี้วัดคำรับรองการปฏิบัติงาน</a></li>
-
-                        <!--<li class="dropdown-submenu">
-                            <a href="#">ระบบจัดทำตัวชี้วัดคำรับรองการปฏิบัติงาน</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="{{_context_path}}/api/performanceKpi/view/createCenter">สร้างตัวชี้วัดส่วนงานภายในมหาวิทยาลัย</a></li>
-                                <li><a href="{{_context_path}}/#">ร่างตัวชี้วัดคำรับรองของส่วนงาน</a></li>
-                                <li><a href="{{_context_path}}/#">จัดทำตัวชี้วัดคำรับรองของส่วนงาน</a></li>
-                                <li><a href="{{_context_path}}/#">รายงานผลตัวชี้วัด</a></li>
-                            </ul>
-                        </li>-->
+                        <li><a href="{{_context_path}}/api/affirmative/view/center">ส่วนงานภายในมหาวิทยาลัย</a></li>
+                        <li><a href="{{_context_path}}/api/affirmative/view/groupAll">ร่างตัวชี้วัดคำรับรองของส่วนงาน</a></li>
+                        <li><a href="{{_context_path}}/api/affirmative/view/homeAdmin">จัดทำตัวชี้วัดคำรับรองของส่วนงาน</a></li>
+                        <li><a href="{{_context_path}}/api/affirmative/view/resultAll">รายงานผล</a></li>
                     </ul>
                 </li>
 
                 <li class="dropdown">
                     <a class="dropdown-toggle" href="#">
-                        จัดทำรายงาน
+                        จัดการข้อมูลเบื้องหลัง
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">ระบบจัดการผู้ใช้งาน</a></li>
+                        <li><a href="{{_context_path}}/api/bginfo/EduDevPlan/manage">ระบบจัดการด้านแผนพัฒนาการศึกษาระดับอุดมศึกษา</a></li>
+                        <li><a href="{{_context_path}}/api/bginfo/ProductionPlan/manage">ระบบจัดการด้านแผนงาน และผลผลิต</a></li>
+                        <li><a href="{{_context_path}}/api/bginfo/mappingPlan/manage">ระบบจัดการความสัมพันธ์ของแผนงาน</a></li>
+                        <li><a href="{{_context_path}}/api/bginfo/BudgetType/manage">ระบบจัดการด้านประเภทหมวดรายจ่าย</a></li>
+                        <li><a href="{{_context_path}}/api/bginfo/Department/viewDepartment">ระบบจัดการด้านหน่วยงาน</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a class="dropdown-toggle" href="#">
+                        รายงาน
                         <i class="fa fa-angle-down"></i>
                     </a>
                     <ul class="dropdown-menu">
@@ -83,23 +99,7 @@
                             </ul>
                         </li>-->
                     </ul>
-                </li>               
-
-                <li class="dropdown">
-                    <a class="dropdown-toggle" href="#">
-                        จัดการข้อมูลเบื้องหลัง
-                        <i class="fa fa-angle-down"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">ระบบจัดการผู้ใช้งาน</a></li>
-                        <li><a href="{{_context_path}}/api/bginfo/EduDevPlan/manage">ระบบจัดการด้านแผนพัฒนาการศึกษาระดับอุดมศึกษา</a></li>
-                        <li><a href="{{_context_path}}/api/bginfo/ProductionPlan/manage">ระบบจัดการด้านแผนงาน และผลผลิต</a></li>
-                        <li><a href="{{_context_path}}/api/bginfo/mappingPlan/manage">ระบบจัดการความสัมพันธ์ของแผนงาน</a></li>
-                        <li><a href="{{_context_path}}/api/bginfo/BudgetType/manage">ระบบจัดการด้านประเภทหมวดรายจ่าย</a></li>
-                        <li><a href="{{_context_path}}/api/bginfo/Department/viewDepartment">ระบบจัดการด้านหน่วยงาน</a></li>
-                    </ul>
                 </li>
-
             </ul>
         </nav>
     </div>
