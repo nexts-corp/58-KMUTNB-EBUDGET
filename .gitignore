@@ -1,6 +1,10 @@
-/logs
-/nbproject
-/vendor
-/composer.json
-/composer.lock
-/manifest.server.json
+/ebudget/logs
+/ebudget/nbproject
+/ebudget/vendor
+/ebudget/composer.json
+/ebudget/composer.lock
+/ebudget/manifest.server.json
+/reporter/build
+/reporter/dist
+
+
