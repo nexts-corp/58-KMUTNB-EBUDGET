@@ -9,6 +9,7 @@ myApp.controller('mainController', function ($scope, $http, $controller) {
     var listL3DPlan = []; //Global Variable
     var listL3DFund = []; //Global Variable
     var pathJavaserver = "http://202.44.34.67/reporter2/api";
+    //var pathJavaserver = "http://localhost:9999/api";
     $controller('cmListController', {$scope: $scope});
 
     $scope.init = function () {
@@ -219,17 +220,17 @@ myApp.controller('mainController', function ($scope, $http, $controller) {
         var FUND_NAME = $scope.l3dFundId["fundgroupName"];
         
         var params = {
-            REPORT_CODE: dataItem["id"],
+            REPORT_CODE: String(dataItem["id"]),
             BUDGET_TYPE: dataItem["type"],
             EXPORT_TYPE: exportType,
-            PERIOD_ID: $scope.budgetPeriodId["year"],
-            FACULTY_ID: $scope.facultyId["id"],
+            PERIOD_ID: String($scope.budgetPeriodId["year"]),
+            FACULTY_ID: String($scope.facultyId["id"]),
             FACULTY_NAME: $scope.facultyId["deptName"],
-            DEPT_ID: $scope.deptId["id"],
+            DEPT_ID: String($scope.deptId["id"]),
             DEPT_NAME: $scope.deptId["deptName"],
-            PLAN_ID: $scope.l3dPlanId["id"],
+            PLAN_ID: String($scope.l3dPlanId["id"]),
             PLAN_NAME: $scope.l3dPlanId["planName"],
-            FUND_ID: $scope.l3dFundId["id"],
+            FUND_ID: String($scope.l3dFundId["id"]),
             FUND_NAME: $scope.l3dFundId["fundgroupName"]
         };
         console.log(params);

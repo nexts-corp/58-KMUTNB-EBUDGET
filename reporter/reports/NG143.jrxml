@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
 	<property name="ireport.zoom" value="1.4019755979256268"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="254"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
 	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -120,58 +120,6 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textFieldExpression><![CDATA[$P{PLAN_NAME}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="62" y="40" width="278" height="20" uuid="cfb5a999-ec2d-4cd1-ad8f-0c7f2f05d534"/>
-				<box>
-					<bottomPen lineWidth="1.25" lineStyle="Dotted"/>
-				</box>
-				<textFieldExpression><![CDATA[$P{PRODUCT_NAME}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="62" y="60" width="278" height="20" uuid="9628745f-3384-4943-a9df-dd81f3402690"/>
-				<box>
-					<bottomPen lineWidth="1.25" lineStyle="Dotted"/>
-				</box>
-				<textFieldExpression><![CDATA[$P{DEPT_NAME}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement style="FBold" x="1" y="20" width="61" height="20" uuid="c2653869-37eb-4f26-a995-cab30ba06227"/>
-				<text><![CDATA[แผนงาน]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="FBold" x="1" y="40" width="61" height="20" uuid="a6f2a860-99c5-4df7-ac65-7903c67728f5"/>
-				<text><![CDATA[ผลผลิต]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="FBold" x="1" y="60" width="61" height="20" uuid="985c2ce8-6705-4d37-897a-b450d792d786"/>
-				<text><![CDATA[หน่วยงาน]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="FBold" x="0" y="90" width="250" height="20" uuid="23f2a27a-4622-4bfb-a06a-7dfd7ca4b2f7"/>
-				<box>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[(1)]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="FBold" x="570" y="90" width="232" height="20" uuid="591b96a9-e9f2-477e-8846-541a7636033e"/>
-				<box>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[(4)]]></text>
-			</staticText>
-			<textField>
 				<reportElement style="FBold" x="386" y="40" width="278" height="20" uuid="a7f2c927-f347-46b2-8f2e-28b7371e4ad7"/>
 				<textFieldExpression><![CDATA["ส่งกองแผนงานภายในวันที่ .........................."]]></textFieldExpression>
 			</textField>
@@ -202,7 +150,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<text><![CDATA[(2)]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="0" y="110" width="250" height="60" uuid="3176e53d-bbcf-4912-b677-3d0e87e6107f"/>
+				<reportElement style="FBold" x="0" y="110" width="250" height="60" uuid="3176e53d-bbcf-4912-b677-3d0e87e6107f"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -213,7 +161,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textFieldExpression><![CDATA["หมวดรายจ่าย-รายการ"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="250" y="110" width="160" height="60" uuid="ccc69338-ce8a-462e-9fad-9efe5a47e268"/>
+				<reportElement style="FBold" x="250" y="110" width="160" height="60" uuid="ccc69338-ce8a-462e-9fad-9efe5a47e268"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -224,7 +172,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textFieldExpression><![CDATA["งบประมาณที่ได้รับ การจัดสรรปีปัจจุบัน "]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="410" y="110" width="160" height="60" uuid="ebbce3e6-3e4b-4ead-b9ec-64b126f09655"/>
+				<reportElement style="FBold" mode="Opaque" x="410" y="110" width="160" height="60" uuid="ebbce3e6-3e4b-4ead-b9ec-64b126f09655"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -235,7 +183,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textFieldExpression><![CDATA["คำของบประมาณปีงบประมาณที่ขอตั้ง"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="570" y="110" width="232" height="60" uuid="564d8bbd-1380-4d3b-9b61-ad9e9c773608"/>
+				<reportElement style="FBold" x="570" y="110" width="232" height="60" uuid="564d8bbd-1380-4d3b-9b61-ad9e9c773608"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -245,12 +193,53 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA["คำชี้แจงเหตุผลสรุป"]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="62" y="40" width="278" height="20" uuid="9628745f-3384-4943-a9df-dd81f3402690"/>
+				<box>
+					<bottomPen lineWidth="1.25" lineStyle="Dotted"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{DEPT_NAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FBold" x="1" y="20" width="61" height="20" uuid="c2653869-37eb-4f26-a995-cab30ba06227"/>
+				<text><![CDATA[แผนงาน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="1" y="40" width="61" height="20" uuid="985c2ce8-6705-4d37-897a-b450d792d786"/>
+				<text><![CDATA[หน่วยงาน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="0" y="90" width="250" height="20" uuid="23f2a27a-4622-4bfb-a06a-7dfd7ca4b2f7"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[(1)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="570" y="90" width="232" height="20" uuid="591b96a9-e9f2-477e-8846-541a7636033e"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[(4)]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Prevent">
 			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="250" height="20" uuid="f815eb1a-34b3-4f67-9165-ecee973dda91"/>
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="0" y="0" width="250" height="20" uuid="f815eb1a-34b3-4f67-9165-ecee973dda91"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -263,7 +252,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textFieldExpression><![CDATA[$F{operName}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="##,##">
-				<reportElement stretchType="RelativeToBandHeight" x="250" y="0" width="160" height="20" isPrintWhenDetailOverflows="true" uuid="304007fc-f4e4-4e89-aad9-14c7969de5b6"/>
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="250" y="0" width="160" height="20" isPrintWhenDetailOverflows="true" uuid="304007fc-f4e4-4e89-aad9-14c7969de5b6"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -284,7 +273,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textField isStretchWithOverflow="true" pattern="##,##">
-					<reportElement style="HtmlFont" stretchType="RelativeToBandHeight" x="0" y="0" width="232" height="20" isPrintWhenDetailOverflows="true" uuid="f2f154f1-b653-45a2-97ac-d73ec2981e79"/>
+					<reportElement style="Default" stretchType="RelativeToBandHeight" x="0" y="0" width="232" height="20" isPrintWhenDetailOverflows="true" uuid="f2f154f1-b653-45a2-97ac-d73ec2981e79"/>
 					<box leftPadding="2" rightPadding="2">
 						<topPen lineWidth="0.0"/>
 						<leftPen lineWidth="0.0"/>
@@ -298,7 +287,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				</textField>
 			</frame>
 			<textField isStretchWithOverflow="true" pattern="##,##">
-				<reportElement stretchType="RelativeToBandHeight" x="410" y="0" width="160" height="20" isPrintWhenDetailOverflows="true" uuid="faa29f3a-e807-4cd4-9f0a-6bdd9f2b043c"/>
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="410" y="0" width="160" height="20" isPrintWhenDetailOverflows="true" uuid="faa29f3a-e807-4cd4-9f0a-6bdd9f2b043c"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>

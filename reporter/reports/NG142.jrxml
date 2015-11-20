@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
 	<property name="ireport.zoom" value="1.4019755979256263"/>
-	<property name="ireport.x" value="252"/>
+	<property name="ireport.x" value="254"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
 	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -138,59 +138,6 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				</box>
 				<textFieldExpression><![CDATA[$P{PLAN_NAME}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="62" y="40" width="278" height="20" uuid="cfb5a999-ec2d-4cd1-ad8f-0c7f2f05d534"/>
-				<box>
-					<bottomPen lineWidth="1.25" lineStyle="Dotted"/>
-				</box>
-				<textFieldExpression><![CDATA[$P{PRODUCT_NAME}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="62" y="60" width="278" height="20" uuid="9628745f-3384-4943-a9df-dd81f3402690"/>
-				<box>
-					<bottomPen lineWidth="1.25" lineStyle="Dotted"/>
-				</box>
-				<textFieldExpression><![CDATA[$P{DEPT_NAME}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement style="FBold" x="1" y="20" width="61" height="20" uuid="c2653869-37eb-4f26-a995-cab30ba06227"/>
-				<text><![CDATA[แผนงาน]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="FBold" x="1" y="40" width="61" height="20" uuid="a6f2a860-99c5-4df7-ac65-7903c67728f5"/>
-				<text><![CDATA[ผลผลิต]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="FBold" x="1" y="60" width="61" height="20" uuid="985c2ce8-6705-4d37-897a-b450d792d786"/>
-				<text><![CDATA[หน่วยงาน]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="FBold" x="30" y="90" width="178" height="60" uuid="23f2a27a-4622-4bfb-a06a-7dfd7ca4b2f7"/>
-				<box>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[(2)
-ประเภท-ตำแหน่ง]]></text>
-			</staticText>
-			<textField>
-				<reportElement style="FBold" x="208" y="90" width="202" height="20" uuid="657d7a55-7eb7-4fef-a77c-09fa06170cce"/>
-				<box>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA["(3) อัตราเงินเดือน (ตามบัญชีถือจ่าย ณ ต.ค. 57)"]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement style="FBold" x="612" y="90" width="190" height="60" uuid="591b96a9-e9f2-477e-8846-541a7636033e"/>
 				<box>
@@ -300,12 +247,54 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				</textElement>
 				<text><![CDATA[อัตราค่าจ้าง]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="62" y="40" width="278" height="20" uuid="9628745f-3384-4943-a9df-dd81f3402690"/>
+				<box>
+					<bottomPen lineWidth="1.25" lineStyle="Dotted"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{DEPT_NAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FBold" x="1" y="20" width="61" height="20" uuid="c2653869-37eb-4f26-a995-cab30ba06227"/>
+				<text><![CDATA[แผนงาน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="1" y="40" width="61" height="20" uuid="985c2ce8-6705-4d37-897a-b450d792d786"/>
+				<text><![CDATA[หน่วยงาน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="30" y="90" width="178" height="60" uuid="23f2a27a-4622-4bfb-a06a-7dfd7ca4b2f7"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[(2)
+ประเภท-ตำแหน่ง]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="FBold" x="208" y="90" width="202" height="20" uuid="657d7a55-7eb7-4fef-a77c-09fa06170cce"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["(3) อัตราเงินเดือน (ตามบัญชีถือจ่าย ณ ต.ค. 57)"]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Stretch">
-			<textField>
-				<reportElement stretchType="RelativeToBandHeight" x="1" y="0" width="29" height="20" isPrintWhenDetailOverflows="true" uuid="6c93402a-ecd0-4e7f-8b26-4ca25d65bf01"/>
+		<band height="20" splitType="Prevent">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="1" y="0" width="29" height="20" isPrintWhenDetailOverflows="true" uuid="6c93402a-ecd0-4e7f-8b26-4ca25d65bf01"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -317,8 +306,8 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement stretchType="RelativeToBandHeight" x="30" y="0" width="178" height="20" isPrintWhenDetailOverflows="true" uuid="06654047-fb29-45d9-80fd-4eada39ff4e9"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="30" y="0" width="178" height="20" isPrintWhenDetailOverflows="true" uuid="06654047-fb29-45d9-80fd-4eada39ff4e9"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -330,21 +319,8 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{positionName}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement stretchType="RelativeToBandHeight" x="612" y="0" width="190" height="20" isPrintWhenDetailOverflows="true" uuid="4b7f7d11-fa9b-47e5-921a-dc09337affb4"/>
-				<box leftPadding="2" rightPadding="2">
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement markup="html">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[""+$F{remark}]]></textFieldExpression>
-			</textField>
-			<textField pattern="##,##">
-				<reportElement stretchType="RelativeToBandHeight" x="545" y="0" width="67" height="20" isPrintWhenDetailOverflows="true" uuid="78cdeec1-5db1-40d6-918f-0ecd3befe098"/>
+			<textField isStretchWithOverflow="true" pattern="##,##">
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="545" y="0" width="67" height="20" isPrintWhenDetailOverflows="true" uuid="78cdeec1-5db1-40d6-918f-0ecd3befe098"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -356,8 +332,8 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{salaryTotal}]]></textFieldExpression>
 			</textField>
-			<textField pattern="##,##">
-				<reportElement stretchType="RelativeToBandHeight" x="410" y="0" width="67" height="20" isPrintWhenDetailOverflows="true" uuid="2a78878c-1b3d-4455-83c0-6c4ba4bfc08b"/>
+			<textField isStretchWithOverflow="true" pattern="##,##">
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="410" y="0" width="67" height="20" isPrintWhenDetailOverflows="true" uuid="2a78878c-1b3d-4455-83c0-6c4ba4bfc08b"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -369,8 +345,8 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{salaryMonth}]]></textFieldExpression>
 			</textField>
-			<textField pattern="##,##">
-				<reportElement stretchType="RelativeToBandHeight" x="477" y="0" width="68" height="20" isPrintWhenDetailOverflows="true" uuid="535dce46-fac6-48d8-97d4-8e13ba159d94"/>
+			<textField isStretchWithOverflow="true" pattern="##,##">
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="477" y="0" width="68" height="20" isPrintWhenDetailOverflows="true" uuid="535dce46-fac6-48d8-97d4-8e13ba159d94"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -383,7 +359,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textFieldExpression><![CDATA[$F{occupied}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement stretchType="RelativeToBandHeight" x="208" y="0" width="67" height="20" isPrintWhenDetailOverflows="true" uuid="a76804ee-a7fe-44bc-8635-a19a9d9e2f29"/>
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="208" y="0" width="67" height="20" isPrintWhenDetailOverflows="true" uuid="a76804ee-a7fe-44bc-8635-a19a9d9e2f29"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -396,7 +372,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement stretchType="RelativeToBandHeight" x="275" y="0" width="68" height="20" isPrintWhenDetailOverflows="true" uuid="3c80d84d-5d24-4c70-8de8-44dd5ff84e02"/>
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="275" y="0" width="68" height="20" isPrintWhenDetailOverflows="true" uuid="3c80d84d-5d24-4c70-8de8-44dd5ff84e02"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -409,7 +385,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement stretchType="RelativeToBandHeight" x="343" y="0" width="67" height="20" isPrintWhenDetailOverflows="true" uuid="54417ff8-ea08-4b70-a3cb-2d15e9edb05a"/>
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="343" y="0" width="67" height="20" isPrintWhenDetailOverflows="true" uuid="54417ff8-ea08-4b70-a3cb-2d15e9edb05a"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -421,6 +397,23 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				</textElement>
 				<textFieldExpression><![CDATA[""]]></textFieldExpression>
 			</textField>
+			<frame>
+				<reportElement stretchType="RelativeToBandHeight" x="612" y="0" width="190" height="20" uuid="44ac5058-5fcf-4ca2-9af3-32022665e515"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Default" stretchType="RelativeToBandHeight" x="0" y="0" width="190" height="20" isPrintWhenDetailOverflows="true" uuid="4b7f7d11-fa9b-47e5-921a-dc09337affb4"/>
+					<box leftPadding="2" rightPadding="2"/>
+					<textElement markup="html">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""+$F{remark}]]></textFieldExpression>
+				</textField>
+			</frame>
 		</band>
 	</detail>
 	<columnFooter>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="1.1586575189468058"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.158657518946801"/>
+	<property name="ireport.x" value="11"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
 	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -28,7 +28,7 @@
 		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="HEAD_RPT" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน (ค่าตอบแทน ใช้สอยวัสดุ) \n ปีงบประมาณที่ขอตั้งงบประมาณ ( " +$P{PERIOD_ID}+ " )"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน (ค่าตอบแทน ใช้สอยวัสดุ) \n ปีงบประมาณที่ขอตั้งงบประมาณ ( "+$P{PERIOD_ID}+" )"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select
@@ -38,12 +38,12 @@
 	dept.DEPARTMENTID as deptId, dept.DEPARTMENTNAME as deptName,
 	bgTypeMain.BUDGETTYPEID as bgTypeMainId, bgTypeMain.BUDGETTYPENAME as bgTypeMainName,
 	bgType.BUDGETTYPEID as bgTypeId, bgType.BUDGETTYPENAME as bgTypeName,
-	concat('<b>', bg.DURABLENAME, '</b><br />', bg.DURABLEDESC) as bgName,
-	bg.QTY as bgQty, bg.PRICE as bgPrice, bg.UNIT as bgUnit, bg.TOTALPRICE as bgPriceTotal,
-	bg.NUMNEEDED as bgNeeded, bg.NUMUNWORKABLE as bgNumWork, bg.NUMUNWORKABLE as bgNumUnwork,
+	bg.UTILITYNAME as utilName,
+	bg.BUDGETHISTORY as historyBudget, bg.NONBUDGETHISTORY as historyNonBudget, (bg.BUDGETHISTORY + bg.NONBUDGETHISTORY) as historySummary,
+	bg.BUDGETREQUEST as requestBudget, bg.NONBUDGETREQUEST as requestNonBudget, (bg.BUDGETREQUEST + bg.NONBUDGETREQUEST) as requestSummary,
 	bg.REMARK as remark
 from BUDGETHEAD bgh
-inner join BUDGET145 bg on bg.BUDGETHEADID = bgh.BUDGETHEADID
+inner join BUDGET144 bg on bg.BUDGETHEADID = bgh.BUDGETHEADID
 inner join L3D_PLAN l3dPlan on l3dPlan.PLANID = bgh.L3D_PLANID
 inner join MAPPINGPLAN mapplan on mapplan.PLANID = bgh.L3D_PLANID
 inner join BUDGETPROJECT bgProject on bgProject.BUDGETPROJECTID = mapplan.BUDGETPROJECTID
@@ -53,7 +53,7 @@ inner join L3D_DEPARTMENT dept on dept.DEPARTMENTID = bgh.DEPARTMENTID
 inner join L3D_DEPARTMENT faculty on faculty.DEPARTMENTID = dept.MASTERID
 inner join BUDGETTYPE bgType on bgType.BUDGETTYPEID = bg.BUDGETTYPEID
 inner join BUDGETTYPE bgTypeMain on bgTypeMain.BUDGETTYPEID = bgType.MASTERID
-where bgh.FORMBUDGET = 145
+where bgh.FORMBUDGET = 144
 and faculty.DEPARTMENTGROUP = 'A'
 and bgh.BUDGETPERIODID = mapplan.BUDGETPERIODID
 and bgh.FUNDGROUPID = mapplan.FUNDGROUPID
@@ -73,14 +73,13 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 	<field name="bgTypeMainName" class="java.lang.String"/>
 	<field name="bgTypeId" class="java.lang.Integer"/>
 	<field name="bgTypeName" class="java.lang.String"/>
-	<field name="bgName" class="java.lang.String"/>
-	<field name="bgQty" class="java.lang.Integer"/>
-	<field name="bgPrice" class="java.math.BigDecimal"/>
-	<field name="bgUnit" class="java.lang.String"/>
-	<field name="bgPriceTotal" class="java.math.BigDecimal"/>
-	<field name="bgNeeded" class="java.lang.Integer"/>
-	<field name="bgNumWork" class="java.lang.Integer"/>
-	<field name="bgNumUnwork" class="java.lang.Integer"/>
+	<field name="utilName" class="java.lang.String"/>
+	<field name="historyBudget" class="java.math.BigDecimal"/>
+	<field name="historyNonBudget" class="java.math.BigDecimal"/>
+	<field name="historySummary" class="java.math.BigDecimal"/>
+	<field name="requestBudget" class="java.math.BigDecimal"/>
+	<field name="requestNonBudget" class="java.math.BigDecimal"/>
+	<field name="requestSummary" class="java.math.BigDecimal"/>
 	<field name="remark" class="java.lang.String"/>
 	<variable name="CURRENT_PAGE" class="java.lang.Integer" resetType="None" calculation="DistinctCount">
 		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
@@ -109,12 +108,12 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textElement textAlignment="Right">
 					<font size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA["แบบ ง.145"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["แบบ ง.144"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="150" splitType="Stretch">
+		<band height="190" splitType="Stretch">
 			<staticText>
 				<reportElement style="FBold" x="0" y="0" width="340" height="20" uuid="08e97599-8d20-4e22-a2ff-c83d43b15afb"/>
 				<text><![CDATA[มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ]]></text>
@@ -127,51 +126,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textFieldExpression><![CDATA[$P{PLAN_NAME}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement style="FBold" x="35" y="90" width="188" height="60" uuid="eca659b5-64dc-4ef6-a116-cd8c10becc19"/>
-				<box>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[(2)
-หมวดรายจ่าย
-รายการและรายละเอียดประกอบ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="FBold" x="608" y="90" width="194" height="60" uuid="fc7bf99b-04ac-4ca4-8588-1c826b5953b6"/>
-				<box>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[(7)
-เหตุผลความจำเป็น]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="FBold" x="0" y="90" width="35" height="60" uuid="f80185bb-3bef-4fa0-beac-d5fcc5bf6419"/>
-				<box>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[(1)
-ลำดับ
-ที่]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="FBold" x="418" y="110" width="60" height="40" uuid="7fc5165c-f029-4426-b6ef-3c68cf9ce31d"/>
+				<reportElement style="FBold" x="536" y="150" width="64" height="40" uuid="5bb579ac-ac5a-43d3-888e-71e6923d55f3"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -181,11 +136,11 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="12"/>
 				</textElement>
-				<text><![CDATA[ความต้องการ
-ทั้งสิ้น]]></text>
+				<text><![CDATA[เงิน
+งบประมาณ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="FBold" x="543" y="130" width="65" height="20" uuid="4f7a5913-8901-49c2-9127-419e2c8f1feb"/>
+				<reportElement style="FBold" x="160" y="150" width="64" height="40" uuid="e8bfce79-ed10-4cf1-acff-8c208adc39ff"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -195,10 +150,11 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="12"/>
 				</textElement>
-				<text><![CDATA[ใช้การไม่ได้]]></text>
+				<text><![CDATA[เงิน
+งบประมาณ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="FBold" x="478" y="110" width="130" height="20" uuid="d15d048c-2873-4146-812a-4c29f1b366ca"/>
+				<reportElement style="FBold" x="412" y="150" width="62" height="40" uuid="a38ea436-3f75-4df3-82e9-ff9d4653307e"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -208,10 +164,10 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="12"/>
 				</textElement>
-				<text><![CDATA[มีอยู่แล้ว]]></text>
+				<text><![CDATA[รวมเงิน]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="FBold" x="478" y="130" width="65" height="20" uuid="8f674654-766e-405d-9baf-4c20d95ed7b8"/>
+				<reportElement style="FBold" x="286" y="150" width="62" height="40" uuid="cf99855f-3636-460f-8df0-34dc69e5f38f"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -221,10 +177,39 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="12"/>
 				</textElement>
-				<text><![CDATA[ใช้การได้]]></text>
+				<text><![CDATA[เงินนอก
+งบประมาณ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="FBold" x="288" y="90" width="65" height="60" uuid="26905573-2801-466c-b99e-e8a6f5308da4"/>
+				<reportElement style="FBold" x="348" y="150" width="64" height="40" uuid="8c28ab59-b527-4b89-88c9-6d8e701a9d4b"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[เงิน
+งบประมาณ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="474" y="150" width="62" height="40" uuid="1244c970-2970-4e2a-b901-0dbaef84d155"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[เงินนอก
+งบประมาณ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="474" y="90" width="188" height="20" uuid="516463fc-b92e-4c73-a6e7-1418ebf62568"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -234,12 +219,121 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<text><![CDATA[(4)
-ราคา
-ต่อหน่วย]]></text>
+				<text><![CDATA[(4)]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="FBold" x="98" y="110" width="188" height="40" uuid="216e72fa-9b05-4915-91cf-1459fb8c0d67"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["รายจ่ายจริง ปีงบประมาณ ที่ผ่านมา 2557 \n (ณ 30 กันยายน)"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FBold" x="286" y="90" width="188" height="20" uuid="a7db3531-4996-46cb-95cd-b58e26efb982"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[(3)]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="FBold" x="474" y="110" width="188" height="40" uuid="0146241b-523f-40ee-99f8-5db573017f5b"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["คำของบประมาณปีงบประมาณที่ขอตั้ง \n งบประมาณ (2559)"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FBold" x="0" y="90" width="98" height="20" uuid="b97c5274-5eca-44d7-89c1-74ecc44a18a5"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[(1)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="FBold" x="353" y="90" width="65" height="60" uuid="64adcbc4-7f39-4b98-a30d-ab8010178ba5"/>
+				<reportElement style="FBold" x="98" y="90" width="188" height="20" uuid="83d98d44-0ad0-4d64-8be2-ba2fe7ee9ea2"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[(2)]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="FBold" x="286" y="110" width="188" height="40" uuid="87c14d0b-bcf3-4629-b762-c0962f95b1ca"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["งบประมาณที่ได้รับการจัดสรร \n ปีงบประมาณปัจจุบัน (2558)"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FBold" x="662" y="70" width="140" height="20" uuid="50196a65-0625-4a18-ac53-a1406b84f4e1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[หน่วย : บาท]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="600" y="150" width="62" height="40" uuid="3426c07c-9da6-48f8-a5a8-c510c23ad252"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[รวมเงิน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="0" y="110" width="98" height="80" uuid="6c83cb04-9b50-4ad2-96a6-c6eead1ad4e2"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ประเภท]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="662" y="90" width="140" height="100" uuid="dec1416e-2b2f-468a-a158-cc1d469395b4"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -250,7 +344,20 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[(5)
-รวมเงิน]]></text>
+คำชี้แจง]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="224" y="150" width="62" height="40" uuid="97f563b9-6f19-4c7a-b377-11fe097bbdc1"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[รวมเงิน]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="62" y="40" width="278" height="20" uuid="9628745f-3384-4943-a9df-dd81f3402690"/>
@@ -267,157 +374,154 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<reportElement style="FBold" x="1" y="40" width="61" height="20" uuid="985c2ce8-6705-4d37-897a-b450d792d786"/>
 				<text><![CDATA[หน่วยงาน]]></text>
 			</staticText>
+			<textField>
+				<reportElement style="FBold" x="386" y="40" width="278" height="20" uuid="a7f2c927-f347-46b2-8f2e-28b7371e4ad7"/>
+				<textFieldExpression><![CDATA["ส่งกองแผนงานภายในวันที่ .........................."]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement style="FBold" x="418" y="90" width="190" height="20" uuid="591b96a9-e9f2-477e-8846-541a7636033e"/>
+				<reportElement style="FBold" x="98" y="150" width="62" height="40" uuid="9b11f7a7-0766-4ee6-89af-79a942446b5a"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="12"/>
 				</textElement>
-				<text><![CDATA[(6) คำชี้แจง]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="FBold" x="223" y="90" width="65" height="60" uuid="85c2326b-5570-4d18-80b7-a06ca05b0267"/>
-				<box>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[(3)
-จำนวน
-หน่วย]]></text>
+				<text><![CDATA[เงินนอก
+งบประมาณ]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Prevent">
+			<textField isStretchWithOverflow="true" pattern="##,##">
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="600" y="0" width="62" height="20" uuid="ac8300e8-89ff-40ad-b9c1-82e96c7cc773"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{requestSummary}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="286" y="0" width="62" height="20" uuid="c4cf5151-d056-47d9-b890-4dd0f8220cd4"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="##,##">
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="536" y="0" width="64" height="20" uuid="0d17c39c-defe-4368-84c6-b75e3d60b15d"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{requestBudget}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="348" y="0" width="64" height="20" uuid="587fcfed-4f91-46c1-9801-79aa8a90f4e5"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="160" y="0" width="64" height="20" uuid="d5542ff5-f0fd-47b4-99f8-ce431d283caa"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="98" y="0" width="62" height="20" uuid="e6530ef2-b3cf-47ae-a48b-b8b974cbdcd9"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="##,##">
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="474" y="0" width="62" height="20" uuid="94eb914a-cc09-4f62-af6e-cf3e3ce7218f"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{requestNonBudget}]]></textFieldExpression>
+			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement style="Default" stretchType="RelativeToBandHeight" x="0" y="0" width="35" height="20" uuid="53a05ebe-e260-4800-ab2d-4842d65b31d0"/>
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="0" y="0" width="98" height="20" uuid="6b55f222-122d-42ed-ae9e-8555f5326ecb"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Center" markup="html">
+				<textElement>
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{utilName}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement style="Default" stretchType="RelativeToBandHeight" x="35" y="0" width="188" height="20" uuid="e1cfc883-47ff-4ca4-96c9-93cac4fac5f9"/>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="412" y="0" width="62" height="20" uuid="da41a2ac-c190-4a55-bce3-b6cb1de9fef0"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement markup="html">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{bgName}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" pattern="##,##">
-				<reportElement style="Default" stretchType="RelativeToBandHeight" x="223" y="0" width="65" height="20" uuid="ced7be96-356a-46e4-be00-30fa8122cad7"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="224" y="0" width="62" height="20" uuid="df313747-708c-4fc2-8364-24b97e90b787"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Right" markup="html">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{bgQty}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" pattern="##,##">
-				<reportElement style="Default" stretchType="RelativeToBandHeight" x="288" y="0" width="65" height="20" uuid="3d825a91-d986-4198-b5b5-c16da00353d7"/>
-				<box leftPadding="2" rightPadding="2">
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Right" markup="html">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{bgPrice}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" pattern="##,##">
-				<reportElement style="Default" stretchType="RelativeToBandHeight" x="353" y="0" width="65" height="20" uuid="adb8b1b0-d591-4a9b-8ef1-523f7af49ebc"/>
-				<box leftPadding="2" rightPadding="2">
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Right" markup="html">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{bgPriceTotal}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" pattern="##,##">
-				<reportElement style="Default" stretchType="RelativeToBandHeight" x="418" y="0" width="60" height="20" uuid="5514068e-c611-4da2-9a7f-8be1a514c2e0"/>
-				<box leftPadding="2" rightPadding="2">
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement markup="html">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{bgNeeded}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" pattern="##,##">
-				<reportElement style="Default" stretchType="RelativeToBandHeight" x="478" y="0" width="65" height="20" uuid="19488d04-ad4d-4269-b9f9-b44f11102e7a"/>
-				<box leftPadding="2" rightPadding="2">
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Right" markup="html">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{bgNumWork}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" pattern="##,##">
-				<reportElement style="Default" stretchType="RelativeToBandHeight" x="543" y="0" width="65" height="20" uuid="23e344be-d62e-4ddb-ac7d-39234d63d86b"/>
-				<box leftPadding="2" rightPadding="2">
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Right" markup="html">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{bgNumUnwork}]]></textFieldExpression>
-			</textField>
+				<text><![CDATA[]]></text>
+			</staticText>
 			<frame>
-				<reportElement stretchType="RelativeToBandHeight" x="608" y="0" width="194" height="20" uuid="e957bf8c-2173-4ad9-bd33-2a7f2b5567d5"/>
-				<box>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
+				<reportElement stretchType="RelativeToBandHeight" x="662" y="0" width="140" height="20" uuid="49073c85-168b-4daf-b855-643d7686294c"/>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Default" stretchType="RelativeToBandHeight" x="0" y="0" width="194" height="20" uuid="4c3cd29f-caa7-413e-a128-774d5809480b"/>
-					<box leftPadding="2" rightPadding="2"/>
+					<reportElement style="Default" stretchType="RelativeToBandHeight" x="0" y="0" width="140" height="20" uuid="95726c57-6c76-447c-aae5-1ab8c7564c14"/>
+					<box leftPadding="2" rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
 					<textElement markup="html">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{remark}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[""+$F{remark}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
@@ -426,26 +530,16 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="81" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="2" width="802" height="66" uuid="93a72ddc-fd19-4a07-aea6-fc8d8e342aaf"/>
-				<textElement markup="html">
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[<p>หมายเหตุ</p>
-     <p>&nbsp&nbsp 1. โปรดระบุรายละเอียดทุกรายการ</p>
-     <p>&nbsp&nbsp 2. ช่องเหตุผลความจำเป็น กรุณากรอกรายละเอียด เช่น ซื้อทดแทนเพราะอะไร หรือ ซื้อใหม่มีความจำเป็นอย่างไร ฯลฯ อธิบายมาให้ชัดเจน</p>
-     <b>&nbsp&nbsp 3. ถ้าไม่ใส่สเปคครุภัณฑ์ และเหตุผลความจำเป็นของแต่ละรายการจะไม่นำมาพิจารณาตั้งคำของบประมาณให้</b>]]></text>
-			</staticText>
+		<band height="32" splitType="Stretch">
 			<textField pattern="dd/MM/yyyy HH:mm:ss">
-				<reportElement x="0" y="68" width="418" height="12" uuid="6c13bc20-06bd-4a29-b6b1-b74bcef75220"/>
+				<reportElement x="0" y="20" width="410" height="12" uuid="6c13bc20-06bd-4a29-b6b1-b74bcef75220"/>
 				<textElement verticalAlignment="Bottom">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA["วันที่พิมพ์ : "+$V{CURRENT_DATE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="418" y="68" width="384" height="12" uuid="b2d6c192-8577-44c8-b0f0-0351df3024dc"/>
+				<reportElement x="410" y="20" width="392" height="12" uuid="1e01c677-eb19-4c12-ab23-2c5ae53f3883"/>
 				<textElement textAlignment="Right">
 					<font size="10"/>
 				</textElement>
