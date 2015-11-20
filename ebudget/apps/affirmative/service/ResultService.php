@@ -331,21 +331,20 @@ class ResultService extends CServiceBase implements IResultService {
         $mp->departmentId = $departmentId;
         $dept = $this->datacontext->getObject($mp)[0];
 
-        //last year
+        //round detail
         $sql = "SELECT"
-            ." yr.year"
-            ." FROM apps\\common\\entity\\Year yr"
-            ." WHERE yr.year < :year"
-            ." ORDER BY yr.year DESC";
+                ." rd.roundName"
+            ." FROM apps\\affirmative\\entity\\AffirmativeRound rd"
+            ." WHERE rd.roundId = :round";
         $param = array(
-            "year" => $this->getPeriod()->year
+            "round" => $roundId
         );
-        $lastYear =  $this->datacontext->getObject($sql, $param, 1)[0];
-        //return $lastYear;
+        $round =  $this->datacontext->getObject($sql, $param)[0];
+        //return $round->roundName;
 
         $row = 1;
         $objWorkSheet->mergeCells('A1:J2')
-            ->setCellValueByColumnAndRow(0, $row, "ตัวชี้วัดคำรับรองการปฏิบัติงาน ประจำปีงบประมาณ พ.ศ.".$this->getPeriod()->year."\n ประเภทส่วนงาน".$dept->activityName." : ".$dept->departmentName)
+            ->setCellValueByColumnAndRow(0, $row, "รายงานผลการดำเนินงานตัวชี้วัดคำรับรองการปฏิบัติงาน ประจำปีงบประมาณ พ.ศ.".$this->getPeriod()->year." ".$round["roundName"]."\n ประเภทส่วนงาน".$dept->activityName." : ".$dept->departmentName)
             ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($center)->setWrapText(true);
 
         $row =  3;
