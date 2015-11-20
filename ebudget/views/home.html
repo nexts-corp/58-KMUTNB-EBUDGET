@@ -53,7 +53,7 @@
                                                 </p>
                                                 <div class="tm-meta">
                                                     <span>
-                                                        <a href="#">#จัดทำคำของบประมาณ</a>
+                                                        <a href="{{_context_path}}/api/budget/view/formBudget">#จัดทำคำของบประมาณ</a>
                                                     </span>
                                                 </div>
                                             </div>
@@ -72,7 +72,7 @@
                                                 </p>
                                                 <div class="tm-meta">
                                                     <span>
-                                                        <a href="#">#ตรวจสอบคำของบประมาณแผ่นดิน</a>
+                                                        <a href="{{_context_path}}/api/budget/view/formBudgetReview">#ตรวจสอบคำของบประมาณแผ่นดิน</a>
                                                     </span>
                                                 </div>
                                             </div>
@@ -80,10 +80,8 @@
                                     </ol>
                                 </div>
                             </div>
-                            <!-- end: page -->
-                    </section>
-                </div>
                         </div>
+                            <!-- end: page -->
                     </section>
 
                     <hr class="tall dashboard">
@@ -97,7 +95,52 @@
                             <h2 class="panel-title text-warning">ระบบจัดทำงบเงินรายได้</h2>
                         </header>
                         <div class="panel-body">
-                            <code>.panel-featured.panel-featured-warning</code>
+                            <div class="timeline">
+                                <div class="tm-body">
+                                    <!--<div class="tm-title">
+                                        <h3 class="h5 text-uppercase">ตารางเวลา</h3>
+                                    </div>-->
+                                    <ol class="tm-items">
+                                        <li>
+                                            <div class="tm-info">
+                                                <div class="tm-icon text-warning"><i class="fa fa-star"></i></div>
+                                                <time class="tm-datetime">
+                                                    <div class="tm-datetime-date" style="margin-top: 10px;">1 ต.ค. - 30 พ.ย.</div>
+                                                </time>
+                                            </div>
+                                            <div class="tm-box appear-animation" data-appear-animation="fadeInRight" data-appear-animation-delay="100">
+                                                <p>
+                                                    กองแผนงานจัดสรรงบประมาณเงินรายได้
+                                                </p>
+                                                <div class="tm-meta">
+                                                    <span>
+                                                        <a href="{{_context_path}}/api/budget/allocate/managePlanning">#จัดสรรงบประมาณเงินรายได้</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li>
+                                            <div class="tm-info">
+                                                <div class="tm-icon text-warning"><i class="fa fa-star"></i></div>
+                                                <time class="tm-datetime">
+                                                    <div class="tm-datetime-date" style="margin-top: 10px;">1 ธ.ค. - 15 ม.ค.</div>
+                                                </time>
+                                            </div>
+                                            <div class="tm-box appear-animation" data-appear-animation="fadeInRight" data-appear-animation-delay="100">
+                                                <p>
+                                                    หน่วยงานจัดทำคำชี้แจงงบประมาณเงินรายได้
+                                                </p>
+                                                <div class="tm-meta">
+                                                    <span>
+                                                        <a href="{{_context_path}}/api/budget/view/formRevenue">#จัดทำคำชี้แจงงบประมาณเงินรายได้</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
                         </div>
                     </section>
 
@@ -109,10 +152,90 @@
                                 <a href="#" class="fa fa-caret-down"></a>
                             </div>
 
-                            <h2 class="panel-title text-warning">ระบบตัวชี้วัดรับรอง</h2>
+                            <h2 class="panel-title text-warning">ระบบจัดทำตัวชี้วัดรับรองการปฏิบัติงาน</h2>
                         </header>
                         <div class="panel-body">
-                            <code>.panel-featured.panel-featured-warning</code>
+                            <div class="timeline">
+                                <div class="tm-body">
+                                    <ol class="tm-items">
+                                        <li>
+                                            <div class="tm-info">
+                                                <div class="tm-icon text-warning"><i class="fa fa-star"></i></div>
+                                                <time class="tm-datetime">
+                                                    <div class="tm-datetime-date" style="margin-top: 10px;">1 ต.ค. - 30 พ.ย.</div>
+                                                </time>
+                                            </div>
+                                            <div class="tm-box appear-animation" data-appear-animation="fadeInRight" data-appear-animation-delay="100">
+                                                <p>
+                                                    กองแผนงานจัดทำตัวชี้วัดคำรับรองการปฏิบัติงานของส่วนงานภายในมหาวิทยาลัย
+                                                </p>
+                                                <div class="tm-meta">
+                                                    <span>
+                                                        <a href="{{_context_path}}/api/affirmative/view/center">#ส่วนงานภายในมหาวิทยาลัย</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li>
+                                            <div class="tm-info">
+                                                <div class="tm-icon text-warning"><i class="fa fa-star"></i></div>
+                                                <time class="tm-datetime">
+                                                    <div class="tm-datetime-date" style="margin-top: 10px;">1 ธ.ค. - 15 ม.ค.</div>
+                                                </time>
+                                            </div>
+                                            <div class="tm-box appear-animation" data-appear-animation="fadeInRight" data-appear-animation-delay="100">
+                                                <p>
+                                                    หน่วยงานร่างตัวชี้วัดคำรับรองการปฏิบัติงาน
+                                                </p>
+                                                <div class="tm-meta">
+                                                    <span>
+                                                        <a href="{{_context_path}}/api/affirmative/view/draftAll">#ร่างตัวชี้วัดคำรับรองของส่วนงาน</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li>
+                                            <div class="tm-info">
+                                                <div class="tm-icon text-warning"><i class="fa fa-star"></i></div>
+                                                <time class="tm-datetime">
+                                                    <div class="tm-datetime-date" style="margin-top: 10px;">1 ธ.ค. - 15 ม.ค.</div>
+                                                </time>
+                                            </div>
+                                            <div class="tm-box appear-animation" data-appear-animation="fadeInRight" data-appear-animation-delay="100">
+                                                <p>
+                                                    กองแผนงานตรวจสอบตัวชี้วัดคำรับรองการปฏิบัติงานของส่วนงาน
+                                                </p>
+                                                <div class="tm-meta">
+                                                    <span>
+                                                        <a href="{{_context_path}}/api/affirmative/view/finalAll">#จัดทำตัวชี้วัดคำรับรองของส่วนงาน</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                        <li>
+                                            <div class="tm-info">
+                                                <div class="tm-icon text-warning"><i class="fa fa-star"></i></div>
+                                                <time class="tm-datetime">
+                                                    <div class="tm-datetime-date" style="margin-top: 10px;">1 ธ.ค. - 15 ม.ค.</div>
+                                                </time>
+                                            </div>
+                                            <div class="tm-box appear-animation" data-appear-animation="fadeInRight" data-appear-animation-delay="100">
+                                                <p>
+                                                    หน่วยงานรายงานผลการดำเนินงานตัวชี้วัดคำรับรองการปฏิบัติงาน
+                                                </p>
+                                                <div class="tm-meta">
+                                                    <span>
+                                                        <a href="{{_context_path}}/api/affirmative/view/resultAll">#รายงานผล</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
                         </div>
                     </section>
                 </div>
