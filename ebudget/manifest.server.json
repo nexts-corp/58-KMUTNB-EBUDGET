@@ -1,0 +1,44 @@
+{
+    "context_path":"/ebudget",
+    "test" : "test",
+    "welcome_page":"/ebudget/api/root/view/index",
+    "locale":"th-TH",
+    "context": [
+        {
+            "contextName": "xdefault",
+            "contextType": "data",
+            "propertys": [
+                {"name": "driver","value": "pdo_mysql"},
+                {"name": "host","value": "db.codeunbug.com"},
+                {"name": "port","value": "3306"},
+                {"name": "dbname","value": "kmutnb_ebudget"},
+                {"name": "user","value": "admin"},
+                {"name": "password","value": "intelenicsdb"},
+                {"name": "charset","value": "utf8"}
+            ]
+        },
+        {
+            "contextName": "default",
+            "contextType": "data",
+            "propertys": [
+                {"name": "driver","value": "pdo_dblib"},
+                {"name": "host","value": "202.44.34.86"},
+                {"name": "port","value": "1433"},
+                {"name": "dbname","value": "EBudget"},
+                {"name": "user","value": "ebudget"},
+                {"name": "password","value": "ebudget"}
+
+            ]
+        }
+    ],
+    "oauth":{
+        "provider":"\\apps\\common\\AuthClient",
+        "propertys": [
+                {"name": "OAUTH2_CLIENT_ID","value": "123456"},
+                {"name": "OAUTH2_CLIENT_SECRET","value": "123456"},
+                {"name": "OAUTH2_ACCESS_KEY","value": "code"},
+                {"name": "OAUTH2_AUTH_URL","value": "/ebudget/api/oauth/authen/authorization"},
+                {"name": "OAUTH2_TOKEN_URI","value":"http://202.44.34.67/ebudget/api/oauth/authen/authenticate"}
+       ]
+    }
+}

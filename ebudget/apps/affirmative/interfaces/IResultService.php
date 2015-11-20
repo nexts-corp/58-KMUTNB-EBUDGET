@@ -44,4 +44,14 @@ interface IResultService {
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
     public function result($result, $file);
+
+    /**
+     * @name export
+     * @uri /export
+     * @param string departmentId
+     * @param string roundId
+     * @return file export Description
+     * @description ผู้เสนอราคาสูงสุดต่อคลัง
+     */
+    public function export($departmentId, $roundId);
 }

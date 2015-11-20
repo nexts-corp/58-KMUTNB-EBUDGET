@@ -52,6 +52,7 @@
 </div><!-- main -->
 
 {{>footer}}
+<script src="{{_context_path}}/asset/vendor/bootstrap/bootstrap.min.js"></script>
 
 <script type="text/javascript">
     var findNode = {};
@@ -75,15 +76,27 @@
                 var count = 0;
                 $.each(datas["lists"], function (key, val) {
                     html += '<tr>'
-                            + '<td colspan="4" class="bg-primary text-dark text-bold">' + val["actName"] + '</td>'
-                            + '</tr>';
+                            + '<td class="bg-default"></td>'
+                            + '<td colspan="3" class="bg-default text-dark text-bold">' + val["actName"] + '</td>'
+                        + '</tr>';
                     $.each(val["dept"], function (key2, val2) {
                         html += '<tr>'
                                 + '<td class="text-center">' + (++count) + '</td>'
                                 + '<td>' + val2["deptName"] + '</td>'
                                 + '<td class="text-center">-</td>'
                                 + '<td class="text-center">'
-                                    + '<button class="btn btn-primary tracking" data-id="' + val2["deptId"] + '"><i class="fa fa-pencil"></i> รายงานผล</button>'
+                                    + '<button class="btn btn-primary btn-sm tracking" data-id="' + val2["deptId"] + '"><i class="fa fa-pencil"></i> รายงานผล</button>'+'&nbsp;&nbsp;'
+                                    + '<div class="btn-group">'
+                                        + '<button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">'
+                                            + '<i class="fa fa-file-excel-o"></i> เอกสาร <span class="caret"></span>'
+                                        + '</button>'
+                                        + '<ul class="dropdown-menu" role="menu">';
+
+                                        $.each(val2["round"], function(key3, val3) {
+                                            html += '<li><a class="excel" href="javascript: void(0);" data-id="'+val2["deptId"]+'" data-round="'+val3["roundId"]+'">' + val3["roundName"] + '</a></li>';
+                                        });
+                                        html += '</ul>'
+                                    + '</div>'
                                 + '</td>'
                             + '</tr>';
                     });
@@ -94,6 +107,13 @@
                 $("button.tracking").unbind().click(function () {
                     var deptId = $(this).attr("data-id");
                     window.location = "{{_context_path}}/api/affirmative/view/result/" + deptId;
+                });
+
+                $("a.excel").unbind().click(function(){
+                    var id = $(this).attr("data-id");
+                    var round = $(this).attr("data-round");
+
+                    window.open("{{_context_path}}/api/affirmative/result/export?departmentId="+id+"&roundId="+round);
                 });
             }
         }, 0);

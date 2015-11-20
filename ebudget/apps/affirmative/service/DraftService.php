@@ -335,6 +335,7 @@ class DraftService extends CServiceBase implements IDraftService {
         );
 
         $topLeft = array(
+            'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
             'vertical' => \PHPExcel_Style_Alignment::VERTICAL_TOP
         );
 
@@ -408,7 +409,7 @@ class DraftService extends CServiceBase implements IDraftService {
         $objWorkSheet->getColumnDimensionByColumn(8)->setWidth(30);
 
         $data = $this->draftData($departmentId);
-
+//return $data;
         $row = 5;
         foreach($data as $key => $value){
             $objWorkSheet->mergeCells('A'.$row.':I'.$row)
@@ -422,48 +423,86 @@ class DraftService extends CServiceBase implements IDraftService {
                     ->getStyleByColumnAndRow(0, $row)->applyFromArray($underline);
 
                 $row++;
-                foreach($value2["issue"] as $key3 => $value3){
-                    $objWorkSheet->mergeCells('A'.$row.':I'.$row)
-                        ->setCellValueByColumnAndRow(0, $row, "ประเด็นยุทธศาสตร์ที่ ".$value3->issueSeq." ".$value3->issueName);
-
-                    $row++;
-                    foreach($value3->target as $key4 => $value4){
-                        $objWorkSheet->mergeCells('A'.$row.':I'.$row)
-                            ->setCellValueByColumnAndRow(0, $row, "เป้าประสงค์ที่ ".$value3->issueSeq.".".$value4->targetSeq." ".$value4->targetName);
+                if($value2["hasIssue"] == "Y") {
+                    foreach ($value2["issue"] as $key3 => $value3) {
+                        $objWorkSheet->mergeCells('A' . $row . ':I' . $row)
+                            ->setCellValueByColumnAndRow(0, $row, "ประเด็นยุทธศาสตร์ที่ " . $value3->issueSeq . " " . $value3->issueName);
 
                         $row++;
-                        if(is_array( $value4->kpi) && count( $value4->kpi ) > 0 ) {
-                            foreach ($value4->kpi as $key5 => $value5) {
+                        foreach ($value3->target as $key4 => $value4) {
+                            $objWorkSheet->mergeCells('A' . $row . ':I' . $row)
+                                ->setCellValueByColumnAndRow(0, $row, "เป้าประสงค์ที่ " . $value3->issueSeq . "." . $value4->targetSeq . " " . $value4->targetName);
 
-                                $objWorkSheet->setCellValueByColumnAndRow(0, $row, $value3->issueSeq . "." . $value4->targetSeq . "." . $value5->kpiSeq . " " . $value5->kpiName)
-                                    ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+                            $row++;
+                            if (is_array($value4->kpi) && count($value4->kpi) > 0) {
+                                foreach ($value4->kpi as $key5 => $value5) {
 
-                                $objWorkSheet->setCellValueByColumnAndRow(1, $row, $value5->unitName)
-                                    ->getStyleByColumnAndRow(1, $row)->getAlignment()->applyFromArray($topCenter);
+                                    $objWorkSheet->setCellValueByColumnAndRow(0, $row, $value3->issueSeq . "." . $value4->targetSeq . "." . $value5->kpiSeq . " " . $value5->kpiName)
+                                        ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
 
-                                $objWorkSheet->setCellValueByColumnAndRow(2, $row, $value5->kpiGoal)
-                                    ->getStyleByColumnAndRow(2, $row)->getAlignment()->applyFromArray($topCenter);
+                                    $objWorkSheet->setCellValueByColumnAndRow(1, $row, $value5->unitName)
+                                        ->getStyleByColumnAndRow(1, $row)->getAlignment()->applyFromArray($topCenter);
 
-                                $objWorkSheet->setCellValueByColumnAndRow(3, $row, $value5->score1)
-                                    ->getStyleByColumnAndRow(3, $row)->getAlignment()->applyFromArray($topCenter);
+                                    $objWorkSheet->setCellValueByColumnAndRow(2, $row, $value5->kpiGoal)
+                                        ->getStyleByColumnAndRow(2, $row)->getAlignment()->applyFromArray($topCenter);
 
-                                $objWorkSheet->setCellValueByColumnAndRow(4, $row, $value5->score2)
-                                    ->getStyleByColumnAndRow(4, $row)->getAlignment()->applyFromArray($topCenter);
+                                    $objWorkSheet->setCellValueByColumnAndRow(3, $row, $value5->score1)
+                                        ->getStyleByColumnAndRow(3, $row)->getAlignment()->applyFromArray($topCenter);
 
-                                $objWorkSheet->setCellValueByColumnAndRow(5, $row, $value5->score3)
-                                    ->getStyleByColumnAndRow(5, $row)->getAlignment()->applyFromArray($topCenter);
+                                    $objWorkSheet->setCellValueByColumnAndRow(4, $row, $value5->score2)
+                                        ->getStyleByColumnAndRow(4, $row)->getAlignment()->applyFromArray($topCenter);
 
-                                $objWorkSheet->setCellValueByColumnAndRow(6, $row, $value5->score4)
-                                    ->getStyleByColumnAndRow(6, $row)->getAlignment()->applyFromArray($topCenter);
+                                    $objWorkSheet->setCellValueByColumnAndRow(5, $row, $value5->score3)
+                                        ->getStyleByColumnAndRow(5, $row)->getAlignment()->applyFromArray($topCenter);
 
-                                $objWorkSheet->setCellValueByColumnAndRow(7, $row, $value5->score5)
-                                    ->getStyleByColumnAndRow(7, $row)->getAlignment()->applyFromArray($topCenter);
+                                    $objWorkSheet->setCellValueByColumnAndRow(6, $row, $value5->score4)
+                                        ->getStyleByColumnAndRow(6, $row)->getAlignment()->applyFromArray($topCenter);
 
-                                $objWorkSheet->setCellValueByColumnAndRow(8, $row, $value5->remark)
-                                    ->getStyleByColumnAndRow(8, $row)->getAlignment()->applyFromArray($topLeft);
+                                    $objWorkSheet->setCellValueByColumnAndRow(7, $row, $value5->score5)
+                                        ->getStyleByColumnAndRow(7, $row)->getAlignment()->applyFromArray($topCenter);
 
-                                $row++;
+                                    $objWorkSheet->setCellValueByColumnAndRow(8, $row, $value5->remark)
+                                        ->getStyleByColumnAndRow(8, $row)->getAlignment()->applyFromArray($topLeft);
+
+                                    $row++;
+                                }
                             }
+                        }
+                    }
+                }
+                elseif($value2["hasIssue"] == "N") {
+                    //return isset($value2["kpi"]);
+                    if(isset($value2["kpi"])) {
+                        foreach ($value2["kpi"] as $key5 => $value5) {
+
+                            $objWorkSheet->setCellValueByColumnAndRow(0, $row, $value5->kpiSeq. ". " . $value5->kpiName)
+                                ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+
+                            $objWorkSheet->setCellValueByColumnAndRow(1, $row, $value5->unitName)
+                                ->getStyleByColumnAndRow(1, $row)->getAlignment()->applyFromArray($topCenter);
+
+                            $objWorkSheet->setCellValueByColumnAndRow(2, $row, $value5->kpiGoal)
+                                ->getStyleByColumnAndRow(2, $row)->getAlignment()->applyFromArray($topCenter);
+
+                            $objWorkSheet->setCellValueByColumnAndRow(3, $row, $value5->score1)
+                                ->getStyleByColumnAndRow(3, $row)->getAlignment()->applyFromArray($topCenter);
+
+                            $objWorkSheet->setCellValueByColumnAndRow(4, $row, $value5->score2)
+                                ->getStyleByColumnAndRow(4, $row)->getAlignment()->applyFromArray($topCenter);
+
+                            $objWorkSheet->setCellValueByColumnAndRow(5, $row, $value5->score3)
+                                ->getStyleByColumnAndRow(5, $row)->getAlignment()->applyFromArray($topCenter);
+
+                            $objWorkSheet->setCellValueByColumnAndRow(6, $row, $value5->score4)
+                                ->getStyleByColumnAndRow(6, $row)->getAlignment()->applyFromArray($topCenter);
+
+                            $objWorkSheet->setCellValueByColumnAndRow(7, $row, $value5->score5)
+                                ->getStyleByColumnAndRow(7, $row)->getAlignment()->applyFromArray($topCenter);
+
+                            $objWorkSheet->setCellValueByColumnAndRow(8, $row, $value5->remark)
+                                ->getStyleByColumnAndRow(8, $row)->getAlignment()->applyFromArray($topLeft);
+
+                            $row++;
                         }
                     }
                 }
