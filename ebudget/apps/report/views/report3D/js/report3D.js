@@ -44,6 +44,11 @@ myApp.controller('mainController', function ($scope, $http, $controller) {
                 id: 'NG3'
             },
             {
+                name: 'แบบสรุปคำของบประมาณของส่วนราชการ (ง. 112)',
+                type: 'G',
+                id: 'NG112'
+            },
+            {
                 name: 'แบบรายละเอียดคำของบประมาณเงินเดือน (ง. 140)',
                 type: 'G',
                 id: 'NG140'
