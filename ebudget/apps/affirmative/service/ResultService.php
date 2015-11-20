@@ -48,28 +48,47 @@ class ResultService extends CServiceBase implements IResultService {
     }
 
     public function listsDepartment(){
-        $sql = "SELECT * FROM View_Activity_Department ORDER BY ActivityId ASC";
-        $data = $this->datacontext->pdoQuery($sql);
+        $sql = "SELECT"
+                ." ad.*, rd.RoundId, rd.RoundName FROM View_Activity_Department ad"
+                ." CROSS JOIN Affirmative_Round rd"
+            ." WHERE rd.PeriodCode = :year"
+            ." ORDER BY ad.ActivityId ASC";
+        $param = array(
+            "year" => $this->getPeriod()->year
+        );
+        $data = $this->datacontext->pdoQuery($sql, $param);
 
         $group = array();
         $actKey = array();
+        $deptKey = array();
 
         foreach($data as $key => $value){
             $actKey[$value["ActivityId"]] = $value["ActivityName"];
+            $deptKey[$value["DepartmentId"]] = $value["DepartmentName"];
 
-            $group[$value["ActivityId"]][] = array(
-                "deptId" => $value["DepartmentId"],
-                "deptName" => $value["DepartmentName"]
+            $group[$value["ActivityId"]][$value["DepartmentId"]][] = array(
+                "roundId" => $value["RoundId"],
+                "roundName" => $value["RoundName"]
             );
         }
 
         $result = array();
 
         foreach($group as $key => $value){
+            $dept = array();
+
+            foreach($value as $key2 => $value2){
+                $dept[] = array(
+                    "deptId" => $key2,
+                    "deptName" => $deptKey[$key2],
+                    "round" => $value2
+                );
+            }
+
             $result[] = array(
                 "actId" => $key,
                 "actName" => $actKey[$key],
-                "dept" => $value
+                "dept" => $dept
             );
         }
 
@@ -276,5 +295,327 @@ class ResultService extends CServiceBase implements IResultService {
 
         $this->getResponse()->add("filename", $fileReturn);
         return $return;
+    }
+
+    public function export($departmentId, $roundId){
+        //style
+        $center = array(
+            'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+            'vertical' => \PHPExcel_Style_Alignment::VERTICAL_CENTER
+        );
+
+        $topLeft = array(
+            'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_LEFT,
+            'vertical' => \PHPExcel_Style_Alignment::VERTICAL_TOP
+        );
+
+        $topCenter = array(
+            'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+            'vertical' => \PHPExcel_Style_Alignment::VERTICAL_TOP
+        );
+        $underline = array(
+            'font' => array(
+                'underline' => \PHPExcel_Style_Font::UNDERLINE_SINGLE
+            )
+        );
+
+        $objPHPExcel = new \PHPExcel();
+        $objWorkSheet = $objPHPExcel->createSheet(0);
+        $objWorkSheet = $objPHPExcel->setActiveSheetIndex(0);
+        $objWorkSheet = $objPHPExcel->getActiveSheet();
+
+        $title = "Sheet 1";
+        $objWorkSheet -> setTitle($title);
+
+        $mp = new \apps\affirmative\model\ViewActivityDepartment();
+        $mp->departmentId = $departmentId;
+        $dept = $this->datacontext->getObject($mp)[0];
+
+        //last year
+        $sql = "SELECT"
+            ." yr.year"
+            ." FROM apps\\common\\entity\\Year yr"
+            ." WHERE yr.year < :year"
+            ." ORDER BY yr.year DESC";
+        $param = array(
+            "year" => $this->getPeriod()->year
+        );
+        $lastYear =  $this->datacontext->getObject($sql, $param, 1)[0];
+        //return $lastYear;
+
+        $row = 1;
+        $objWorkSheet->mergeCells('A1:J2')
+            ->setCellValueByColumnAndRow(0, $row, "ตัวชี้วัดคำรับรองการปฏิบัติงาน ประจำปีงบประมาณ พ.ศ.".$this->getPeriod()->year."\n ประเภทส่วนงาน".$dept->activityName." : ".$dept->departmentName)
+            ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($center)->setWrapText(true);
+
+        $row =  3;
+        $objWorkSheet->mergeCells('A'.$row.':A'.($row+2))->setCellValueByColumnAndRow(0, $row, "ตัวชี้วัดคำรับรอง ปี ".$this->getPeriod()->year)
+            ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->mergeCells('B'.$row.':B'.($row+2))->setCellValueByColumnAndRow(1, $row, "หน่วยนับ")
+            ->getStyleByColumnAndRow(1, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->mergeCells('C'.$row.':C'.($row+2))->setCellValueByColumnAndRow(2, $row, "ค่าเป้าหมาย\nตัวชี้วัด")
+            ->getStyleByColumnAndRow(2, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->mergeCells('D'.$row.':H'.($row+1))->setCellValueByColumnAndRow(3, $row, "เกณฑ์การให้คะแนนผลลัพธ์ของตัวชี้วัด (ระดับคะแนน)")
+            ->getStyleByColumnAndRow(3, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->mergeCells('I'.$row.':I'.($row+2))->setCellValueByColumnAndRow(8, $row, "รายละเอียดผลการดำเนินงาน\nตามตัวชี้วัด")
+            ->getStyleByColumnAndRow(8, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->mergeCells('J'.$row.':M'.$row)->setCellValueByColumnAndRow(9, $row, "คำนวณผลการดำเนินงานตามตัวชี้วัด")
+            ->getStyleByColumnAndRow(9, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->mergeCells('N'.$row.':N'.($row+2))->setCellValueByColumnAndRow(13, $row, "หมายเหตุ")
+            ->getStyleByColumnAndRow(13, $row)->getAlignment()->applyFromArray($center);
+
+
+        $row = 4;
+        $objWorkSheet->setCellValueByColumnAndRow(9, $row, "ตัวตั้ง")
+            ->getStyleByColumnAndRow(9, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->mergeCells('K'.$row.':K'.($row+1))->setCellValueByColumnAndRow(10, $row, "ผลลัพธ์ตัวชี้วัด")
+            ->getStyleByColumnAndRow(10, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->mergeCells('L'.$row.':L'.($row+1))->setCellValueByColumnAndRow(11, $row, "ระดับคะแนน")
+            ->getStyleByColumnAndRow(11, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->mergeCells('M'.$row.':M'.($row+1))->setCellValueByColumnAndRow(12, $row, "✔ = บรรลุ\n ✘ = ไม่บรรลุ")
+            ->getStyleByColumnAndRow(12, $row)->getAlignment()->applyFromArray($center)->setWrapText(true);
+
+        $row = 5;
+        $objWorkSheet->setCellValueByColumnAndRow(3, $row, "คะแนน 1")
+            ->getStyleByColumnAndRow(3, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->setCellValueByColumnAndRow(4, $row, "คะแนน 2")
+            ->getStyleByColumnAndRow(4, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->setCellValueByColumnAndRow(5, $row, "คะแนน 3")
+            ->getStyleByColumnAndRow(5, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->setCellValueByColumnAndRow(6, $row, "คะแนน 4")
+            ->getStyleByColumnAndRow(6, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->setCellValueByColumnAndRow(7, $row, "คะแนน 5")
+            ->getStyleByColumnAndRow(7, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->setCellValueByColumnAndRow(9, $row, "ตัวหาร")
+            ->getStyleByColumnAndRow(9, $row)->getAlignment()->applyFromArray($center);
+
+        $objWorkSheet->getColumnDimensionByColumn(0)->setWidth(50);
+        $objWorkSheet->getColumnDimensionByColumn(1)->setWidth(20);
+        $objWorkSheet->getColumnDimensionByColumn(2)->setWidth(20);
+        $objWorkSheet->getColumnDimensionByColumn(3)->setWidth(15);
+        $objWorkSheet->getColumnDimensionByColumn(4)->setWidth(15);
+        $objWorkSheet->getColumnDimensionByColumn(5)->setWidth(15);
+        $objWorkSheet->getColumnDimensionByColumn(6)->setWidth(15);
+        $objWorkSheet->getColumnDimensionByColumn(7)->setWidth(15);
+        $objWorkSheet->getColumnDimensionByColumn(8)->setWidth(40);
+        $objWorkSheet->getColumnDimensionByColumn(9)->setWidth(20);
+        $objWorkSheet->getColumnDimensionByColumn(10)->setWidth(20);
+        $objWorkSheet->getColumnDimensionByColumn(11)->setWidth(20);
+        $objWorkSheet->getColumnDimensionByColumn(12)->setWidth(20);
+        $objWorkSheet->getColumnDimensionByColumn(13)->setWidth(30);
+
+        $data = $this->department($departmentId, $roundId);
+
+        //return $data;
+
+        $row = 6;
+        foreach($data as $key => $value){
+            $objWorkSheet->mergeCells('A'.$row.':J'.$row)
+                ->setCellValueByColumnAndRow(0, $row, "ส่วนที่ ".$value["mainSeq"]." ".$value["mainName"])
+                ->getStyleByColumnAndRow(0, $row)->applyFromArray($underline)->getAlignment()->applyFromArray($center);
+
+            $row++;
+            foreach($value["type"] as $key2 => $value2){
+                $objWorkSheet->mergeCells('A'.$row.':J'.$row)
+                    ->setCellValueByColumnAndRow(0, $row, "ส่วนที่ ".$value["mainSeq"].".".$value2["typeSeq"]." ".$value2["typeName"])
+                    ->getStyleByColumnAndRow(0, $row)->applyFromArray($underline);
+
+                $row++;
+                if($value2["hasIssue"] == "Y") {
+                    foreach ($value2["issue"] as $key3 => $value3) {
+                        $objWorkSheet->mergeCells('A' . $row . ':J' . $row)
+                            ->setCellValueByColumnAndRow(0, $row, "ประเด็นยุทธศาสตร์ที่ " . $value3->issueSeq . " " . $value3->issueName);
+
+                        $row++;
+                        foreach ($value3->target as $key4 => $value4) {
+                            $objWorkSheet->mergeCells('A' . $row . ':J' . $row)
+                                ->setCellValueByColumnAndRow(0, $row, "เป้าประสงค์ที่ " . $value3->issueSeq . "." . $value4->targetSeq . " " . $value4->targetName);
+
+                            $row++;
+                            if (is_array($value4->kpi) && count($value4->kpi) > 0) {
+                                foreach ($value4->kpi as $key5 => $value5) {
+
+                                    $rowIn = 0;
+                                    if($value5["divisor"] != "") $rowIn = 1;
+
+                                    $isSuccess = '';
+                                    if($value5["isSuccess"] == "1") $isSuccess = "✔";
+                                    elseif($value["isSuccess"] == "0") $isSuccess = "✘ = ไม่บรรลุ";
+
+                                    $objWorkSheet->mergeCells('A'.$row.':A'.($row+$rowIn))
+                                        ->setCellValueByColumnAndRow(0, $row, $value3->issueSeq . "." . $value4->targetSeq . "." . $value5["kpiSeq"] . " " . $value5["kpiName"])
+                                        ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+
+                                    $objWorkSheet->mergeCells('B'.$row.':B'.($row+$rowIn))
+                                        ->setCellValueByColumnAndRow(1, $row, $value5["unitName"])
+                                        ->getStyleByColumnAndRow(1, $row)->getAlignment()->applyFromArray($topCenter);
+
+                                    $objWorkSheet->mergeCells('C'.$row.':C'.($row+$rowIn))
+                                        ->setCellValueByColumnAndRow(2, $row, $value5["kpiGoal"])
+                                        ->getStyleByColumnAndRow(2, $row)->getAlignment()->applyFromArray($topCenter);
+
+                                    $objWorkSheet->mergeCells('D'.$row.':D'.($row+$rowIn))
+                                        ->setCellValueByColumnAndRow(3, $row, $value5["score1"])
+                                        ->getStyleByColumnAndRow(3, $row)->getAlignment()->applyFromArray($topCenter);
+
+                                    $objWorkSheet->mergeCells('E'.$row.':E'.($row+$rowIn))
+                                        ->setCellValueByColumnAndRow(4, $row, $value5["score2"])
+                                        ->getStyleByColumnAndRow(4, $row)->getAlignment()->applyFromArray($topCenter);
+
+                                    $objWorkSheet->mergeCells('F'.$row.':F'.($row+$rowIn))
+                                        ->setCellValueByColumnAndRow(5, $row, $value5["score3"])
+                                        ->getStyleByColumnAndRow(5, $row)->getAlignment()->applyFromArray($topCenter);
+
+                                    $objWorkSheet->mergeCells('G'.$row.':G'.($row+$rowIn))
+                                        ->setCellValueByColumnAndRow(6, $row, $value5["score4"])
+                                        ->getStyleByColumnAndRow(6, $row)->getAlignment()->applyFromArray($topCenter);
+
+                                    $objWorkSheet->mergeCells('H'.$row.':H'.($row+$rowIn))
+                                        ->setCellValueByColumnAndRow(7, $row, $value5["score5"])
+                                        ->getStyleByColumnAndRow(7, $row)->getAlignment()->applyFromArray($topCenter);
+
+                                    $objWorkSheet->mergeCells('I'.$row.':I'.($row+$rowIn))
+                                        ->setCellValueByColumnAndRow(8, $row, $value5["detail"])
+                                        ->getStyleByColumnAndRow(8, $row)->getAlignment()->applyFromArray($topLeft);
+
+                                    $objWorkSheet->setCellValueByColumnAndRow(9, $row, $value5["dividend"])
+                                        ->getStyleByColumnAndRow(9, $row)->getAlignment()->applyFromArray($topCenter);
+
+                                    $objWorkSheet->mergeCells('K'.$row.':K'.($row+$rowIn))
+                                        ->setCellValueByColumnAndRow(10, $row, $value5["result"])
+                                        ->getStyleByColumnAndRow(10, $row)->getAlignment()->applyFromArray($topCenter);
+
+                                    $objWorkSheet->mergeCells('L'.$row.':L'.($row+$rowIn))
+                                        ->setCellValueByColumnAndRow(11, $row, $value5["score"])
+                                        ->getStyleByColumnAndRow(11, $row)->getAlignment()->applyFromArray($topCenter);
+
+                                    $objWorkSheet->mergeCells('M'.$row.':M'.($row+$rowIn))
+                                        ->setCellValueByColumnAndRow(12, $row, $isSuccess)
+                                        ->getStyleByColumnAndRow(12, $row)->getAlignment()->applyFromArray($topCenter);
+
+                                    $objWorkSheet->mergeCells('N'.$row.':N'.($row+$rowIn))
+                                        ->setCellValueByColumnAndRow(13, $row, $value5["remark"])
+                                        ->getStyleByColumnAndRow(13, $row)->getAlignment()->applyFromArray($topLeft);
+
+                                    $row++;
+
+                                    if($value5["divisor"] != ""){
+                                        $objWorkSheet->setCellValueByColumnAndRow(9, $row, $value5["divisor"])
+                                            ->getStyleByColumnAndRow(9, $row)->getAlignment()->applyFromArray($topCenter);
+                                        $row++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                elseif($value2["hasIssue"] == "N") {
+                    //return isset($value2["kpi"]);
+                    if(isset($value2["kpi"])) {
+                        foreach ($value2["kpi"] as $key5 => $value5) {
+
+                            $rowIn = 0;
+                            if($value5["divisor"] != "") $rowIn = 1;
+
+                            $isSuccess = '';
+                            if($value5["isSuccess"] == "1") $isSuccess = "✔";
+                            elseif($value["isSuccess"] == "0") $isSuccess = "✘ = ไม่บรรลุ";
+
+                            $objWorkSheet->mergeCells('A'.$row.':A'.($row+$rowIn))
+                                ->setCellValueByColumnAndRow(0, $row, $value5["kpiSeq"]. ". " . $value5["kpiName"])
+                                ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+
+                            $objWorkSheet->mergeCells('B'.$row.':B'.($row+$rowIn))
+                                ->setCellValueByColumnAndRow(1, $row, $value5["unitName"])
+                                ->getStyleByColumnAndRow(1, $row)->getAlignment()->applyFromArray($topCenter);
+
+                            $objWorkSheet->mergeCells('C'.$row.':C'.($row+$rowIn))
+                                ->setCellValueByColumnAndRow(2, $row, $value5["kpiGoal"])
+                                ->getStyleByColumnAndRow(2, $row)->getAlignment()->applyFromArray($topCenter);
+
+                            $objWorkSheet->mergeCells('D'.$row.':D'.($row+$rowIn))
+                                ->setCellValueByColumnAndRow(3, $row, $value5["score1"])
+                                ->getStyleByColumnAndRow(3, $row)->getAlignment()->applyFromArray($topCenter);
+
+                            $objWorkSheet->mergeCells('E'.$row.':E'.($row+$rowIn))
+                                ->setCellValueByColumnAndRow(4, $row, $value5["score2"])
+                                ->getStyleByColumnAndRow(4, $row)->getAlignment()->applyFromArray($topCenter);
+
+                            $objWorkSheet->mergeCells('F'.$row.':F'.($row+$rowIn))
+                                ->setCellValueByColumnAndRow(5, $row, $value5["score3"])
+                                ->getStyleByColumnAndRow(5, $row)->getAlignment()->applyFromArray($topCenter);
+
+                            $objWorkSheet->mergeCells('G'.$row.':G'.($row+$rowIn))
+                                ->setCellValueByColumnAndRow(6, $row, $value5["score4"])
+                                ->getStyleByColumnAndRow(6, $row)->getAlignment()->applyFromArray($topCenter);
+
+                            $objWorkSheet->mergeCells('H'.$row.':H'.($row+$rowIn))
+                                ->setCellValueByColumnAndRow(7, $row, $value5["score5"])
+                                ->getStyleByColumnAndRow(7, $row)->getAlignment()->applyFromArray($topCenter);
+
+                            $objWorkSheet->mergeCells('I'.$row.':I'.($row+$rowIn))
+                                ->setCellValueByColumnAndRow(8, $row, $value5["detail"])
+                                ->getStyleByColumnAndRow(8, $row)->getAlignment()->applyFromArray($topLeft);
+
+                            $objWorkSheet->setCellValueByColumnAndRow(9, $row, $value5["dividend"])
+                                ->getStyleByColumnAndRow(9, $row)->getAlignment()->applyFromArray($topCenter);
+
+                            $objWorkSheet->mergeCells('K'.$row.':K'.($row+$rowIn))
+                                ->setCellValueByColumnAndRow(10, $row, $value5["result"])
+                                ->getStyleByColumnAndRow(10, $row)->getAlignment()->applyFromArray($topCenter);
+
+                            $objWorkSheet->mergeCells('L'.$row.':L'.($row+$rowIn))
+                                ->setCellValueByColumnAndRow(11, $row, $value5["score"])
+                                ->getStyleByColumnAndRow(11, $row)->getAlignment()->applyFromArray($topCenter);
+
+                            $objWorkSheet->mergeCells('M'.$row.':M'.($row+$rowIn))
+                                ->setCellValueByColumnAndRow(12, $row, $isSuccess)
+                                ->getStyleByColumnAndRow(12, $row)->getAlignment()->applyFromArray($topCenter);
+
+                            $objWorkSheet->mergeCells('N'.$row.':N'.($row+$rowIn))
+                                ->setCellValueByColumnAndRow(13, $row, $value5["remark"])
+                                ->getStyleByColumnAndRow(13, $row)->getAlignment()->applyFromArray($topLeft);
+
+                            $row++;
+
+                            if($value5["divisor"] != ""){
+                                $objWorkSheet->setCellValueByColumnAndRow(9, $row, $value5["divisor"])
+                                    ->getStyleByColumnAndRow(9, $row)->getAlignment()->applyFromArray($topCenter);
+                                $row++;
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+
+        $objPHPExcel->getDefaultStyle()->getAlignment()->setWrapText(true);
+
+        //create excel file
+        ob_clean();
+
+        header('Content-Type: application/vnd.ms-excel');
+        header("Content-Disposition: attachment;filename=ตัวชี้วัดคำรับรองการปฏิบัติงาน_".$dept->departmentName."_".$this->getPeriod()->year.".xls");
+
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('php://output');
+
+        ob_end_flush();
+        exit();
     }
 }
