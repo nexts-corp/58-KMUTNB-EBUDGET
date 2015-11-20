@@ -1,0 +1,1 @@
+exec SP_LR2_1 '{{PERIOD_ID}}','{{BUDGET_TYPE}}'

@@ -8,8 +8,8 @@ myApp.controller('mainController', function ($scope, $http, $controller) {
     var listDeptGroupB = []; //Global Variable
     var listL3DPlan = []; //Global Variable
     var listL3DFund = []; //Global Variable
-    var pathJavaserver = "http://202.44.34.67/reporter2/api";
-    //var pathJavaserver = "http://localhost:9999/api";
+    //var pathJavaserver = "http://202.44.34.67/reporter2/api";
+    var pathJavaserver = "http://localhost:9999/api";
     $controller('cmListController', {$scope: $scope});
 
     $scope.init = function () {
@@ -79,12 +79,12 @@ myApp.controller('mainController', function ($scope, $http, $controller) {
                 id: 'NG146'
             },
             {
-                name: 'รายงาน ร.1', type: 'K',
-                id: 'R1'
+                name: 'แบบงบประมาณรายจ่ายเงินรายได้  จำแนกตามหน่วยงาน-ภาควิชา-สาขาวิชา/หมวดรายจ่าย (ร. 2-1)', type: 'K',
+                id: 'LR2_1'
             },
             {
-                name: 'รายงาน ร.2', type: 'K',
-                id: 'R2'
+                name: 'แบบงบประมาณรายจ่ายเงินรายได้  จำแนกตามหน่วยงาน-ภาควิชา-สาขาวิชา/กองทุน (ร. 2-2)', type: 'K',
+                id: 'LR2_2'
             },
             {
                 name: 'รายงาน ร.3', type: 'K',

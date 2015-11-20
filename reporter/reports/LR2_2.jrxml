@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
+	<property name="ireport.zoom" value="1.158657518946798"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
+	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
+	<style name="Default" isDefault="true" fontName="TH SarabunPSK" fontSize="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
+	<parameter name="PUBLISHER" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["พงศ์ปณต ทัศนียาชุมพาลี"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATE_CURRENT" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PERIOD_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="HEAD_RPT" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["แบบงบประมาณรายจ่ายเงินรายได้ \n จำแนกตามหน่วยงาน-ภาควิชา-สาขาวิชา/กองทุน \n ประจำปีงบประมาณ พ.ศ."+$P{PERIOD_ID}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+	l3dPlan.PLANID as planId, l3dPlan.PLANNAME as planName,
+	faculty.DEPARTMENTID as facultyId, faculty.DEPARTMENTNAME as facultyName, dept.DEPARTMENTID as deptId, dept.DEPARTMENTNAME as deptName,
+	sum(case when bg.fundgroupId = 100 then bg.budgetSummary else 0 end) as 'generalFund',
+	sum(case when bg.fundgroupId = 200 then bg.budgetSummary else 0 end) as 'eduFund',
+	sum(case when bg.fundgroupId = 300 then bg.budgetSummary else 0 end) as 'researchFunds',
+	sum(case when bg.fundgroupId = 400 then bg.budgetSummary else 0 end) as 'outreachFund',
+	sum(case when bg.fundgroupId = 500 then bg.budgetSummary else 0 end) as 'affairsFund',
+	sum(case when bg.fundgroupId = 600 then bg.budgetSummary else 0 end) as 'assetsFund',
+	sum(case when bg.fundgroupId = 700 then bg.budgetSummary else 0 end) as 'otherFund',
+	sum(case when bg.fundgroupId = 701 then bg.budgetSummary else 0 end) as 'culturalFund',
+	sum(case when bg.fundgroupId = 702 then bg.budgetSummary else 0 end) as 'funds',
+	sum(case when bg.fundgroupId = 703 then bg.budgetSummary else 0 end) as 'welfareFund',
+	sum(case when bg.fundgroupId = 704 then bg.budgetSummary else 0 end) as 'devFund',
+	sum(case when bg.fundgroupId = 705 then bg.budgetSummary else 0 end) as 'boardFund',
+	sum(case when bg.fundgroupId = 706 then bg.budgetSummary else 0 end) as 'institutionsFund',
+	sum(case when bg.fundgroupId = 707 then bg.budgetSummary else 0 end) as 'purposeFund',
+	sum(case when bg.fundgroupId = 708 then bg.budgetSummary else 0 end) as 'inventoryFund',
+	sum(case when bg.fundgroupId = 709 then bg.budgetSummary else 0 end) as 'techKMUTNBFund'
+from
+L3D_PLAN l3dPlan
+left outer join
+ (
+	select
+	bgr.L3D_PLANID as planId,
+	faculty.DEPARTMENTID as facultyId, dept.DEPARTMENTID as deptId,
+	fund.FUNDGROUPID as fundgroupId,
+	sum(coalesce(bgr.BUDGETAMOUNT,0)) as budgetSummary
+	from L3D_DEPARTMENT faculty
+	inner join L3D_DEPARTMENT dept on dept.MASTERID = faculty.DEPARTMENTID
+	left outer join BUDGETHEAD bgh on bgh.DEPARTMENTID = dept.DEPARTMENTID
+	left outer join L3D_FUNDGROUP fund on fund.FUNDGROUPID = bgh.FUNDGROUPID
+	left outer join BUDGETREVENUE bgr on bgh.BUDGETHEADID = bgr.BUDGETHEADID
+	where faculty.MASTERID = 0
+	and faculty.DEPARTMENTID <> 0
+	and bgh.BUDGETTYPECODE = 'K'
+	--and bgh.BUDGETPERIODID = 2558
+	--and faculty.DEPARTMENTID = 30100
+	group by bgr.L3D_PLANID, faculty.DEPARTMENTID, dept.DEPARTMENTID, fund.FUNDGROUPID, bgr.BUDGETTYPEID
+) bg on bg.planId = l3dPlan.PLANID
+left outer join L3D_DEPARTMENT dept on dept.DEPARTMENTID = bg.deptId
+inner join L3D_DEPARTMENT faculty  on faculty.DEPARTMENTID = dept.MASTERID
+where faculty.DEPARTMENTID <> 0
+group by l3dPlan.PLANID, l3dPlan.PLANNAME, faculty.DEPARTMENTID, faculty.DEPARTMENTNAME,
+dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
+	</queryString>
+	<field name="planId" class="java.lang.Integer"/>
+	<field name="planName" class="java.lang.String"/>
+	<field name="facultyId" class="java.lang.Integer"/>
+	<field name="facultyName" class="java.lang.String"/>
+	<field name="deptId" class="java.lang.Integer"/>
+	<field name="deptName" class="java.lang.String"/>
+	<field name="generalFund" class="java.math.BigDecimal"/>
+	<field name="eduFund" class="java.math.BigDecimal"/>
+	<field name="researchFunds" class="java.math.BigDecimal"/>
+	<field name="outreachFund" class="java.math.BigDecimal"/>
+	<field name="affairsFund" class="java.math.BigDecimal"/>
+	<field name="assetsFund" class="java.math.BigDecimal"/>
+	<field name="otherFund" class="java.math.BigDecimal"/>
+	<field name="culturalFund" class="java.math.BigDecimal"/>
+	<field name="funds" class="java.math.BigDecimal"/>
+	<field name="welfareFund" class="java.math.BigDecimal"/>
+	<field name="devFund" class="java.math.BigDecimal"/>
+	<field name="boardFund" class="java.math.BigDecimal"/>
+	<field name="institutionsFund" class="java.math.BigDecimal"/>
+	<field name="purposeFund" class="java.math.BigDecimal"/>
+	<field name="inventoryFund" class="java.math.BigDecimal"/>
+	<field name="techKMUTNBFund" class="java.math.BigDecimal"/>
+	<variable name="CURRENT_PAGE" class="java.lang.Integer" resetType="None" calculation="DistinctCount">
+		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer(1)]]></initialValueExpression>
+	</variable>
+	<variable name="CURRENT_DATE" class="java.util.Date">
+		<variableExpression><![CDATA[new Date()]]></variableExpression>
+	</variable>
+	<variable name="total" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{generalFund}+$F{eduFund}+$F{researchFunds}+$F{outreachFund}+$F{affairsFund}
++$F{assetsFund}+$F{devFund}+$F{funds}+$F{culturalFund}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="802" height="20" uuid="f46aee95-03fb-4f8c-a89b-2612b52f7647"/>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{HEAD_RPT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="100" splitType="Stretch">
+			<staticText>
+				<reportElement style="FBold" x="735" y="60" width="67" height="40" uuid="9fc5fbc2-c19a-48cb-8ef9-3e4583e0054d"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[รวม]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="133" y="40" width="669" height="20" uuid="ed3c56cc-5df6-4a9a-ad67-f960a727d23d"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[กองทุน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="534" y="60" width="201" height="20" uuid="84454550-2450-43f4-95cf-2918bcf8355d"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[อื่นๆ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="534" y="80" width="67" height="20" uuid="de237225-bb22-451b-80ba-430fba6cd262"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[พัฒนาบุคลากร]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="467" y="60" width="67" height="40" uuid="3e5d786f-19de-47e1-b45e-a9d01ab0d703"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[สินทรัพย์ถาวร]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="400" y="60" width="67" height="40" uuid="7533075b-7789-4d68-8c5e-fb05794eb812"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[กิจการนักศึกษา]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="333" y="60" width="67" height="40" uuid="b180976c-4b46-40fb-a320-1f90b518d90c"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[บริการ
+วิชาการ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="266" y="60" width="67" height="40" uuid="83399594-fb52-4dca-ba78-312a4acd96e5"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[วิจัย]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="199" y="60" width="67" height="40" uuid="e51f71e0-8e2c-4e8b-9b0d-6b6575e968ee"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[เพื่อการศึกษา]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="133" y="60" width="66" height="40" uuid="2e5c0dc7-62c5-48d5-92e0-94e0fbfe6a3e"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ทั่วไป]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="601" y="80" width="67" height="20" uuid="b0e05887-6b48-4aa3-93ca-5d488e266293"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[สำรอง]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="668" y="80" width="67" height="20" uuid="1019d452-d01b-4c32-b86d-8d04b3a5d201"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ทำนุบำรุง]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="FBold" x="1" y="0" width="801" height="20" uuid="13d9ce8e-0feb-4f4f-ae27-047292e22b62"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["แบบ ร.2-2"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FBold" x="1" y="20" width="801" height="20" uuid="a587d0f2-5341-40f5-86b8-e732df0d62c9"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[(หน่วย : บาท)]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="FBold" x="1" y="40" width="132" height="60" uuid="60dc77fe-04b3-4e47-a838-04e7b2a4b57a"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["หน่วยงาน"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="133" height="20" uuid="4259be94-2e71-4c8e-ae05-9a14883ea9d4"/>
+				<box leftPadding="1" rightPadding="1">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{deptName}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##,##">
+				<reportElement x="133" y="0" width="66" height="20" uuid="22bddb2c-f10b-4580-b930-626da4ed070e"/>
+				<box leftPadding="1" rightPadding="1">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{generalFund}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##,##">
+				<reportElement x="199" y="0" width="67" height="20" uuid="7c937fd0-e925-4fd6-834b-e5f430677c16"/>
+				<box leftPadding="1" rightPadding="1">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{eduFund}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##,##">
+				<reportElement x="266" y="0" width="67" height="20" uuid="2fd2d3f2-9347-4935-b49e-79c9c5691bc3"/>
+				<box leftPadding="1" rightPadding="1">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{researchFunds}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##,##">
+				<reportElement x="333" y="0" width="67" height="20" uuid="670a8207-3496-4f25-9b9e-0cb7ee6ef665"/>
+				<box leftPadding="1" rightPadding="1">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{outreachFund}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##,##">
+				<reportElement x="400" y="0" width="67" height="20" uuid="00b0cdab-8592-45ef-ad15-9aae03405920"/>
+				<box leftPadding="1" rightPadding="1">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{affairsFund}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##,##">
+				<reportElement x="467" y="0" width="67" height="20" uuid="6aaddb56-7f64-4e8c-aefe-66adfc21a3be"/>
+				<box leftPadding="1" rightPadding="1">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{assetsFund}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##,##">
+				<reportElement x="534" y="0" width="67" height="20" uuid="9e7b4e62-40f8-4404-b987-642c324e904d"/>
+				<box leftPadding="1" rightPadding="1">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{devFund}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##,##">
+				<reportElement x="601" y="0" width="67" height="20" uuid="5cb11b4f-46cb-4dd4-ac56-fa42ea14e318"/>
+				<box leftPadding="1" rightPadding="1">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{funds}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##,##">
+				<reportElement x="668" y="0" width="67" height="20" uuid="41f2bcd4-e97a-4b37-a3cb-93d8a5a97a82"/>
+				<box leftPadding="1" rightPadding="1">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{culturalFund}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="FBold" x="735" y="0" width="67" height="20" uuid="5a0af001-ab67-4d46-95b8-3dd9caadade0"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="32" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH:mm:ss">
+				<reportElement x="0" y="20" width="400" height="12" uuid="6c13bc20-06bd-4a29-b6b1-b74bcef75220"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["วันที่พิมพ์ : "+$V{CURRENT_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="20" width="402" height="12" uuid="f6def40c-bd12-4a84-9ee0-c8d463498b3c"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["พิมพ์โดย : "+$P{PUBLISHER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="30" splitType="Stretch"/>
+	</summary>
+</jasperReport>
