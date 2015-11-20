@@ -400,8 +400,8 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
                         left outer join BUDGETTYPE bgType on bgTypeMain.BUDGETTYPEID = bgType.MASTERID
                         left outer join BUDGETTYPE bgTypeSub on bgType.BUDGETTYPEID = bgTypeSub.MASTERID
                         where bgTypeMaster.MASTERID = 0
-                        and bgTypeMaster.BUDGETTYPECODE = '" . $budgetTypeCode . "'
-                        and bgTypeMain.BUDGETTYPECODE = '" . $budgetTypeCode . "'
+                        and bgTypeMaster.BUDGETTYPECODE = 'G'
+                        and bgTypeMain.BUDGETTYPECODE = 'G'
                     ) bgTypeTmp
                 ) bgType
                 left outer join BUDGETSCHEME bgScheme on bgScheme.BUDGETTYPEID = bgType.bgTypeSubId
@@ -434,7 +434,7 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
                     left outer join BUDGET144 bg144 on bgh.BUDGETHEADID = bg144.BUDGETHEADID
                     left outer join BUDGET145 bg145 on bgh.BUDGETHEADID = bg145.BUDGETHEADID
                     left outer join BUDGET146 bg146 on bgh.BUDGETHEADID = bg146.BUDGETHEADID
-                    where bgh.BUDGETTYPECODE = '" . $budgetTypeCode . "'
+                    where bgh.BUDGETTYPECODE = 'G'
                     and bgh.BUDGETPERIODID = '" . $budgetPeriodId . "'
                     and bgh.DEPARTMENTID = '" . $deptId . "'
                     and bgh.FUNDGROUPID = '" . $fundgroupId . "'
@@ -479,8 +479,8 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
                         left outer join BUDGETTYPE bgType on bgTypeMain.BUDGETTYPEID = bgType.MASTERID
                         left outer join BUDGETTYPE bgTypeSub on bgType.BUDGETTYPEID = bgTypeSub.MASTERID
                         where bgTypeMaster.MASTERID = 0
-                        and bgTypeMaster.BUDGETTYPECODE = '" . $budgetTypeCode . "'
-                        and bgTypeMain.BUDGETTYPECODE = '" . $budgetTypeCode . "'
+                        and bgTypeMaster.BUDGETTYPECODE = 'K'
+                        and bgTypeMain.BUDGETTYPECODE = 'K'
                     ) bgTypeTmp
                 ) bgType
                 left outer join BUDGETSCHEME bgScheme on bgScheme.BUDGETTYPEID = bgType.bgTypeSubId
@@ -493,7 +493,7 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
                         coalesce(sum(rv.BUDGETAMOUNT), 0) as budgetSummary
                     from BUDGETHEAD bgh
                     left outer join BUDGETREVENUE rv on rv.BUDGETHEADID = bgh.BUDGETHEADID
-                    where bgh.BUDGETTYPECODE = '" . $budgetTypeCode . "'
+                    where bgh.BUDGETTYPECODE = 'K'
                     and bgh.BUDGETPERIODID = '" . $budgetPeriodId . "'
                     and bgh.DEPARTMENTID = '" . $deptId . "'
                     and bgh.FUNDGROUPID = '" . $fundgroupId . "'
