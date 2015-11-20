@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
+	<property name="ireport.zoom" value="1.4019755979256263"/>
+	<property name="ireport.x" value="252"/>
+	<property name="ireport.y" value="0"/>
+	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
+	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
+	<style name="Default" isDefault="true" fontName="TH SarabunPSK" fontSize="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
+	<parameter name="PUBLISHER" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["พงศ์ปณต ทัศนียาชุมพาลี"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATE_CURRENT" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PERIOD_ID" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DEPT_NAME" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA["-"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PRODUCT_NAME" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA["-"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PLAN_NAME" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA["-"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="HEAD_RPT" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["แบบรายละเอียดคำของบประมาณเงินเดือน \n ปีงบประมาณที่ขอตั้งงบประมาณ ( "+$P{PERIOD_ID}+" )"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+	bgPlan.BUDGETPLANID as bgPlanId, bgPlan.BUDGETPLANNAME as bgPlanName,
+	bgProject.BUDGETPROJECTID as bgProjectId, bgProject.BUDGETPROJECTNAME as bgProjectName,
+	faculty.DEPARTMENTID as facultyId, faculty.DEPARTMENTNAME as facultyName,
+	dept.DEPARTMENTID as deptId, dept.DEPARTMENTNAME as deptName,
+	bgTypeMain.BUDGETTYPEID as bgTypeMainId, bgTypeMain.BUDGETTYPENAME as bgTypeMainName,
+	bgType.BUDGETTYPEID as bgTypeId, bgType.BUDGETTYPENAME as bgTypeName,
+	bg.POSITIONNAME as positionName, bg.RATENO as rateNo, bg.POSITIONVACANCY as vacancy, bg.POSITIONOCCUPIED as occupied,
+	bg.SALARYPERMONTH as salaryMonth, bg.SALARYTOTAL as salaryTotal,
+	bg.REMARK as remark
+from BUDGETHEAD bgh
+inner join BUDGET142 bg on bg.BUDGETHEADID = bgh.BUDGETHEADID
+inner join L3D_PLAN l3dPlan on l3dPlan.PLANID = bgh.L3D_PLANID
+inner join MAPPINGPLAN mapplan on mapplan.PLANID = bgh.L3D_PLANID
+inner join BUDGETPROJECT bgProject on bgProject.BUDGETPROJECTID = mapplan.BUDGETPROJECTID
+inner join BUDGETPLAN bgPlan on bgPlan.BUDGETPLANID = bgProject.BUDGETPLANID
+inner join L3D_FUNDGROUP fundgroup on fundgroup.FUNDGROUPID = mapplan.FUNDGROUPID
+inner join L3D_DEPARTMENT dept on dept.DEPARTMENTID = bgh.DEPARTMENTID
+inner join L3D_DEPARTMENT faculty on faculty.DEPARTMENTID = dept.MASTERID
+inner join BUDGETTYPE bgType on bgType.BUDGETTYPEID = bg.BUDGETTYPEID
+inner join BUDGETTYPE bgTypeMain on bgTypeMain.BUDGETTYPEID = bgType.MASTERID
+where bgh.FORMBUDGET = 142
+and faculty.DEPARTMENTGROUP = 'A'
+and bgh.BUDGETPERIODID = mapplan.BUDGETPERIODID
+and bgh.FUNDGROUPID = mapplan.FUNDGROUPID
+order by bgPlan.BUDGETPLANID, bgProject.BUDGETPROJECTID,
+faculty.DEPARTMENTID, dept.DEPARTMENTID,
+bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
+	</queryString>
+	<field name="bgPlanId" class="java.lang.Integer"/>
+	<field name="bgPlanName" class="java.lang.String"/>
+	<field name="bgProjectId" class="java.lang.Integer"/>
+	<field name="bgProjectName" class="java.lang.String"/>
+	<field name="facultyId" class="java.lang.Integer"/>
+	<field name="facultyName" class="java.lang.String"/>
+	<field name="deptId" class="java.lang.Integer"/>
+	<field name="deptName" class="java.lang.String"/>
+	<field name="bgTypeMainId" class="java.lang.Integer"/>
+	<field name="bgTypeMainName" class="java.lang.String"/>
+	<field name="bgTypeId" class="java.lang.Integer"/>
+	<field name="bgTypeName" class="java.lang.String"/>
+	<field name="positionName" class="java.lang.String"/>
+	<field name="rateNo" class="java.lang.String"/>
+	<field name="vacancy" class="java.lang.Integer"/>
+	<field name="occupied" class="java.lang.Integer"/>
+	<field name="salaryMonth" class="java.math.BigDecimal"/>
+	<field name="salaryTotal" class="java.math.BigDecimal"/>
+	<field name="remark" class="java.lang.String"/>
+	<variable name="CURRENT_PAGE" class="java.lang.Integer" resetType="None" calculation="DistinctCount">
+		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer(1)]]></initialValueExpression>
+	</variable>
+	<variable name="CURRENT_DATE" class="java.util.Date">
+		<variableExpression><![CDATA[new Date()]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="50" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="20" width="802" height="20" uuid="f46aee95-03fb-4f8c-a89b-2612b52f7647"/>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{HEAD_RPT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="FBold" x="1" y="0" width="801" height="20" uuid="43f82a38-dd35-49d8-bebb-da8764d5e942"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["แบบ ง.142"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="150" splitType="Stretch">
+			<staticText>
+				<reportElement style="FBold" x="0" y="90" width="30" height="60" uuid="d2942672-0d74-4bf3-8dcd-40f78b768931"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[(1)
+ลำดับ
+ที่]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="0" y="0" width="340" height="20" uuid="08e97599-8d20-4e22-a2ff-c83d43b15afb"/>
+				<text><![CDATA[มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="62" y="20" width="278" height="20" uuid="d4341605-29e6-4036-b38a-3e960a35a635"/>
+				<box>
+					<bottomPen lineWidth="1.25" lineStyle="Dotted"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{PLAN_NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="62" y="40" width="278" height="20" uuid="cfb5a999-ec2d-4cd1-ad8f-0c7f2f05d534"/>
+				<box>
+					<bottomPen lineWidth="1.25" lineStyle="Dotted"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{PRODUCT_NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="62" y="60" width="278" height="20" uuid="9628745f-3384-4943-a9df-dd81f3402690"/>
+				<box>
+					<bottomPen lineWidth="1.25" lineStyle="Dotted"/>
+				</box>
+				<textFieldExpression><![CDATA[$P{DEPT_NAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FBold" x="1" y="20" width="61" height="20" uuid="c2653869-37eb-4f26-a995-cab30ba06227"/>
+				<text><![CDATA[แผนงาน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="1" y="40" width="61" height="20" uuid="a6f2a860-99c5-4df7-ac65-7903c67728f5"/>
+				<text><![CDATA[ผลผลิต]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="1" y="60" width="61" height="20" uuid="985c2ce8-6705-4d37-897a-b450d792d786"/>
+				<text><![CDATA[หน่วยงาน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="30" y="90" width="178" height="60" uuid="23f2a27a-4622-4bfb-a06a-7dfd7ca4b2f7"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[(2)
+ประเภท-ตำแหน่ง]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="FBold" x="208" y="90" width="202" height="20" uuid="657d7a55-7eb7-4fef-a77c-09fa06170cce"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["(3) อัตราเงินเดือน (ตามบัญชีถือจ่าย ณ ต.ค. 57)"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FBold" x="612" y="90" width="190" height="60" uuid="591b96a9-e9f2-477e-8846-541a7636033e"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[(4)
+คำชี้แจง]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="FBold" x="386" y="40" width="278" height="20" uuid="a7f2c927-f347-46b2-8f2e-28b7371e4ad7"/>
+				<textFieldExpression><![CDATA["ส่งกองแผนงานภายในวันที่ .........................."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="FBold" x="410" y="90" width="202" height="20" uuid="a5b3f29c-ec69-4060-a13f-addb9c1e9b01"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["(3) อัตราเงินเดือน (ตามบัญชีถือจ่าย ณ ต.ค. 57)"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FBold" x="208" y="110" width="67" height="40" uuid="30c96c6c-c04e-42d6-ae12-99948b7bf796"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[อัตราค่าจ้าง]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="275" y="110" width="68" height="40" uuid="df578c5a-3f35-4898-bdf7-833dabe57326"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[จำนวนอัตรา]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="343" y="110" width="67" height="40" uuid="37c8d6a3-b163-4934-9d37-2923edd2460b"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[จำนวนเงิน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="477" y="110" width="68" height="40" uuid="32fca13c-9aaa-4bed-b3cf-c279fbecec4e"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[จำนวนอัตรา]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="545" y="110" width="67" height="40" uuid="b50a4651-c4d5-41d9-95c1-d8cb363197b2"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[จำนวนเงิน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="410" y="110" width="67" height="40" uuid="4296e650-d4be-4521-9eb4-a88b38329c56"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[อัตราค่าจ้าง]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="0" width="29" height="20" isPrintWhenDetailOverflows="true" uuid="6c93402a-ecd0-4e7f-8b26-4ca25d65bf01"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="30" y="0" width="178" height="20" isPrintWhenDetailOverflows="true" uuid="06654047-fb29-45d9-80fd-4eada39ff4e9"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{positionName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="612" y="0" width="190" height="20" isPrintWhenDetailOverflows="true" uuid="4b7f7d11-fa9b-47e5-921a-dc09337affb4"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement markup="html">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{remark}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##,##">
+				<reportElement stretchType="RelativeToBandHeight" x="545" y="0" width="67" height="20" isPrintWhenDetailOverflows="true" uuid="78cdeec1-5db1-40d6-918f-0ecd3befe098"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{salaryTotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##,##">
+				<reportElement stretchType="RelativeToBandHeight" x="410" y="0" width="67" height="20" isPrintWhenDetailOverflows="true" uuid="2a78878c-1b3d-4455-83c0-6c4ba4bfc08b"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{salaryMonth}]]></textFieldExpression>
+			</textField>
+			<textField pattern="##,##">
+				<reportElement stretchType="RelativeToBandHeight" x="477" y="0" width="68" height="20" isPrintWhenDetailOverflows="true" uuid="535dce46-fac6-48d8-97d4-8e13ba159d94"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{occupied}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="208" y="0" width="67" height="20" isPrintWhenDetailOverflows="true" uuid="a76804ee-a7fe-44bc-8635-a19a9d9e2f29"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="275" y="0" width="68" height="20" isPrintWhenDetailOverflows="true" uuid="3c80d84d-5d24-4c70-8de8-44dd5ff84e02"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="343" y="0" width="67" height="20" isPrintWhenDetailOverflows="true" uuid="54417ff8-ea08-4b70-a3cb-2d15e9edb05a"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="32" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH:mm:ss">
+				<reportElement x="0" y="20" width="343" height="12" uuid="6c13bc20-06bd-4a29-b6b1-b74bcef75220"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["วันที่พิมพ์ : "+$V{CURRENT_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="343" y="20" width="459" height="12" uuid="65364f4c-620d-4608-a42c-88304175a765"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["พิมพ์โดย : "+$P{PUBLISHER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="30" splitType="Stretch"/>
+	</summary>
+</jasperReport>
