@@ -1,6 +1,6 @@
 <?php
-    header("Location: /ebudget/ebudget/api/root/view/index");
+    //header("Location: /ebudget/ebudget/api/root/view/index");
     
-    //header("Location: /kmutnb-ebudget/api/budget/view/formBudget");
+    header("Location: /kmutnb-ebudget/ebudget/api/root/view/index");
     exit();
 ?>
