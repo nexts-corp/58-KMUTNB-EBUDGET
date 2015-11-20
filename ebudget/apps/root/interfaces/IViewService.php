@@ -12,7 +12,6 @@ interface IViewService {
      * @name index
      * @uri /index
      * @description  index
-     * @authen true
      */ 
     public function index();
     
