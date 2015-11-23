@@ -103,7 +103,7 @@
             </div>
 
             <div id="divDetail">
-                
+
             </div>
 
 
@@ -183,10 +183,10 @@
                     </div>
                 </div>
                 <!-- manage list-->
-                <table id="table" class="table table-bordered table-striped table-condensed mb-none" style="display: none;">
+                <table id="table" class="table table-bordered table-condensed mb-none" style="display: none;">
                     <thead>
                         <tr>
-                            <th rowspan="2" class="text-center" width="22%" id="title-tb"
+                            <th rowspan="2" class="text-center" width="10%" id="title-tb"
                                 style="vertical-align: middle; min-width:170px">
                                 {{#i18n}}budgetType{{/i18n}}
                             </th>
@@ -195,7 +195,7 @@
                             <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter2{{/i18n}}</th>
                             <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter3{{/i18n}}</th>
                             <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter4{{/i18n}}</th>
-                            <th rowspan="2" class="text-center" width="13%" style="vertical-align: middle">
+                            <th rowspan="2" class="text-center" width="10%" style="vertical-align: middle">
                                 {{#i18n}}totalPercent{{/i18n}}
                             </th>
                         </tr>
@@ -237,21 +237,19 @@
         var departmentArr = {};
         var fundgroupArr = {};
         var planArr = {};
+        var dataArr = [];
         //var projectArr = {};
         //var listSTATUSTRACKING = [];
 
         $(document).ready(function () {
             $("#budgetPeriodId, #budgetTypeCode, #facultyId, #deptId, #l3dPlanId, #fundgroupId").select2().trigger("change");
-
             var total_quater1_plan = 0, total_quater1_used = 0, total_quater2_plan = 0, total_quater2_used = 0, total_quater3_plan = 0, total_quater3_used = 0, total_quater4_plan = 0, total_quater4_used = 0, total_plan = 0, total_used = 0;
             var dataTable = null;
             iniYear();
             listBudgetCode();
             listFaculty(0);
             listPlan3D();
-
             $("#table").hide();
-
             function iniYear() {
 
                 var html = '<option value="0">- เลือกปี พ.ศ. -</option>';
@@ -266,7 +264,6 @@
 
             function listBudgetCode() {
                 var html = '<option value="0">- เลือกแหล่งเงิน -</option>';
-
                 var data = [{id: "G", name: "งบประมาณแผ่นดิน"}, {id: "K", name: "เงินรายได้"}];
                 for (var i = 0; i < data.length; i++) {
                     html += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
@@ -299,7 +296,6 @@
 
             function listFundgroupWithPlan(periodId, l3dPlanId) {
                 var html = '<option value="0">- เลือกกองทุน -</option>';
-
                 var param = {
                     budgetPeriodId: periodId,
                     l3dPlanId: l3dPlanId
@@ -328,60 +324,202 @@
 
             $("#get-form").click(function () {
                 $("#table").show();
-
                 total_quater1_plan = 0, total_quater1_used = 0, total_quater2_plan = 0, total_quater2_used = 0, total_quater3_plan = 0, total_quater3_used = 0, total_quater4_plan = 0, total_quater4_used = 0, total_plan = 0, total_used = 0;
                 resetPanel();
                 disablePanel();
                 //var budgetType = $("#expenses-select").val();
+                var year = $("#budgetPeriodId").val();
                 var code = $("#budgetTypeCode").val();
                 var dept = $("#deptId").val();
                 var fund = $("#fundgroupId").val();
                 var plan = $("#l3dPlanId").val();
-                var year = $("#budgetPeriodId").val();
-                
-                var param = {
-                    "budgetPeriodId": year,
-                    "budgetTypeCode": code,
-                    "deptId": dept,
-                    "fundgroupId": fund,
-                    "planId": plan
-                };
-                var html = "";
-                var datas = callAjax("{{_context_path}}/api/budget/budgetReview/getBudgetScheme", "post", param, "json");
-                if (typeof datas !== "undefined" && datas !== null) {
-                    $.each(datas["lists"], function (key, value) {
-                        html += '<option value="' + value["year"] + '">' + value["year"] + '</option>';
-                    });
-                    
-                    $("divDetail").html(html);
-                }
-                
-                
-                
-                if (dept > 0 && fund > 0 && plan > 0 && year > 0) {
+//                if (typeof datas !== "undefined" && datas !== null) {
+//                    $.each(datas["lists"], function (key, value) {
+//                        html += '<option value="' + value["year"] + '">' + value["year"] + '</option>';
+//                    });
+//                    
+//                    $("divDetail").html(html);
+//                }
+
+
+                if (code == "K" && dept > 0 && fund > 0 && plan > 0 && year > 0) {
                     //var textSelected = $("#expenses-select").find('option:selected').text();
-                    showTableExpenseInfo(dept, fund, plan, year);
+                    //  showTableExpenseInfo(dept, fund, plan, year);
                     //getExpensesList(budgetType);
+
+                    var param = {
+                        "budgetPeriodId": year,
+                        "budgetTypeCode": code,
+                        "deptId": dept,
+                        "fundgroupId": fund,
+                        "planId": plan
+                    };
+                    var html = "";
+                    var datas = callAjax("{{_context_path}}/api/budget/budgetReview/getBudgetScheme", "post", param, "json")["result"];
+                    if (typeof datas !== "undefined" && datas !== null) {
+                        var masterId = 0;
+                        var countMaster = 1;
+                        var countMain = 1;
+                        var sum = {};
+                        $.each(datas, function (k, v) {
+                            if (v.bgTypeMasterId != masterId) {
+                                masterId = v.bgTypeMasterId;
+                                countMain = 1;
+                                sum[v.bgTypeMasterId] = {};
+                                html += '<tr id="master' + v.bgTypeMasterId + '" class="active"><td style="padding-left: 4em ;vertical-align:middle">' + countMaster + ". " + v.bgTypeMasterName + '</td>';
+                                html += '<td  class="text-right planSummary">' + toNumberFormat(v.planSummary) + '</td>';
+                                html += '<td class="text-right usedSummary">' + toNumberFormat(v.usedSummary) + '</td>';
+                                html += '<td class="text-right planQ1">' + toNumberFormat(v.planQ1) + '</td>';
+                                html += '<td class="text-right usedQ1">' + toNumberFormat(v.usedQ1) + '</td>';
+                                html += '<td class="text-right planQ2">' + toNumberFormat(v.planQ2) + '</td>';
+                                html += '<td class="text-right usedQ2">' + toNumberFormat(v.usedQ2) + '</td>';
+                                html += '<td class="text-right planQ3">' + toNumberFormat(v.planQ3) + '</td>';
+                                html += '<td class="text-right usedQ3">' + toNumberFormat(v.usedQ3) + '</td>';
+                                html += '<td class="text-right planQ4">' + toNumberFormat(v.planQ4) + '</td>';
+                                html += '<td class="text-right usedQ4">' + toNumberFormat(v.usedQ4) + '</td>';
+                                html += '<td class="text-right"><b>' + '(%)' + '</b></td></tr>';
+                                html += '<tr><td style="padding-left: 4em ;vertical-align:middle">' + (countMaster++) + "." + (countMain++) + " " + v.bgTypeMainName + '</td>';
+                                html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planSummary" value="' + toNumberFormat(v.planSummary) + '" /></td>';
+                                html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedSummary" value="' + toNumberFormat(v.usedSummary) + '" /></td>';
+                                html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ1" value="' + toNumberFormat(v.planQ1) + '" /></td>';
+                                html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ1" value="' + toNumberFormat(v.usedQ1) + '" /></td>';
+                                html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ2" value="' + toNumberFormat(v.planQ2) + '" /></td>';
+                                html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ2" value="' + toNumberFormat(v.usedQ2) + '" /></td>';
+                                html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ3" value="' + toNumberFormat(v.planQ3) + '" /></td>';
+                                html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ3" value="' + toNumberFormat(v.usedQ3) + '" /></td>';
+                                html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ4" value="' + toNumberFormat(v.planQ4) + '" /></td>';
+                                html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ4" value="' + toNumberFormat(v.usedQ4) + '" /></td>';
+                                html += '<td class="text-right"><b>' + '(%)' + '</b></td></tr>';
+                            } else {
+                                html += '<tr><td style="padding-left: 4em ;vertical-align:middle">' + (countMaster - 1) + "." + (countMain++) + " " + v.bgTypeMainName + '</td>';
+                                html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planSummary" value="' + toNumberFormat(v.planSummary) + '" /></td>';
+                                html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedSummary" value="' + toNumberFormat(v.usedSummary) + '" /></td>';
+                                html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ1" value="' + toNumberFormat(v.planQ1) + '" /></td>';
+                                html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ1" value="' + toNumberFormat(v.usedQ1) + '" /></td>';
+                                html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ2" value="' + toNumberFormat(v.planQ2) + '" /></td>';
+                                html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ2" value="' + toNumberFormat(v.usedQ2) + '" /></td>';
+                                html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ3" value="' + toNumberFormat(v.planQ3) + '" /></td>';
+                                html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ3" value="' + toNumberFormat(v.usedQ3) + '" /></td>';
+                                html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ4" value="' + toNumberFormat(v.planQ4) + '" /></td>';
+                                html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ4" value="' + toNumberFormat(v.usedQ4) + '" /></td>';
+                                html += '<td class="text-right"><b>' + '(%)' + '</b></td></tr>';
+                            }
+                            sum[v.bgTypeMasterId]["planSummary"] += parseFloat(v.planSummary);
+                            sum[v.bgTypeMasterId]["usedSummary"] += parseFloat(v.usedSummary);
+                            sum[v.bgTypeMasterId]["planQ1"] += parseFloat(v.planQ1);
+                            sum[v.bgTypeMasterId]["usedQ1"] += parseFloat(v.usedQ1);
+                            sum[v.bgTypeMasterId]["planQ2"] += parseFloat(v.planQ2);
+                            sum[v.bgTypeMasterId]["usedQ2"] += parseFloat(v.usedQ2);
+                            sum[v.bgTypeMasterId]["planQ3"] += parseFloat(v.planQ3);
+                            sum[v.bgTypeMasterId]["usedQ3"] += parseFloat(v.usedQ3);
+                            sum[v.bgTypeMasterId]["planQ4"] += parseFloat(v.planQ4);
+                            sum[v.bgTypeMasterId]["usedQ4"] += parseFloat(v.usedQ4);
+                        });
+                        $("#budgetBody").html(html);
+                        $.each(sum, function (key, obj) {
+                            $.each(obj, function (index, value) {
+                                $("#master" + key + " > td." + index).text(toNumberFormat(sum[key][index]));
+                            });
+                        });
+
+
+                    }
+
+                } else if (code == "G" && dept > 0 && fund > 0 && plan > 0 && year > 0) {
+                    var param = {
+                        "budgetPeriodId": year,
+                        "budgetTypeCode": code,
+                        "deptId": dept,
+                        "fundgroupId": fund,
+                        "planId": plan
+                    };
+                    var html = "";
+                    var datas = callAjax("{{_context_path}}/api/budget/budgetReview/getBudgetScheme", "post", param, "json")["result"];
+                    if (typeof datas !== "undefined" && datas !== null) {
+                        var masterId = 0;
+                        var countMaster = 1;
+                        var countMain = 1;
+                        var sum = {};
+                        $.each(datas, function (k, v) {
+                            if (v.bgTypeMasterId != masterId) {
+                                masterId = v.bgTypeMasterId;
+                                countMain = 1;
+                                sum[v.bgTypeMasterId] = {};
+                                html += '<tr id="master' + v.bgTypeMasterId + '" class="active"><td style="padding-left: 4em ;vertical-align:middle">' + countMaster + ". " + v.bgTypeMasterName + '</td>';
+                                html += '<td  class="text-right planSummary">' + toNumberFormat(v.planSummary) + '</td>';
+                                html += '<td class="text-right usedSummary">' + toNumberFormat(v.usedSummary) + '</td>';
+                                html += '<td class="text-right planQ1">' + toNumberFormat(v.planQ1) + '</td>';
+                                html += '<td class="text-right usedQ1">' + toNumberFormat(v.usedQ1) + '</td>';
+                                html += '<td class="text-right planQ2">' + toNumberFormat(v.planQ2) + '</td>';
+                                html += '<td class="text-right usedQ2">' + toNumberFormat(v.usedQ2) + '</td>';
+                                html += '<td class="text-right planQ3">' + toNumberFormat(v.planQ3) + '</td>';
+                                html += '<td class="text-right usedQ3">' + toNumberFormat(v.usedQ3) + '</td>';
+                                html += '<td class="text-right planQ4">' + toNumberFormat(v.planQ4) + '</td>';
+                                html += '<td class="text-right usedQ4">' + toNumberFormat(v.usedQ4) + '</td>';
+                                html += '<td class="text-right"><b>' + '(%)' + '</b></td></tr>';
+                                html += '<tr><td style="padding-left: 4em ;vertical-align:middle">' + (countMaster++) + "." + (countMain++) + " " + v.bgTypeMainName + '</td>';
+                                html += '<td class="text-right">' + toNumberFormat(v.planSummary) + '</td>';
+                                html += '<td class="text-right">' + toNumberFormat(v.usedSummary) + '</td>';
+                                html += '<td class="text-right">' + toNumberFormat(v.planQ1) + '</td>';
+                                html += '<td class="text-right">' + toNumberFormat(v.usedQ1) + '</td>';
+                                html += '<td class="text-right">' + toNumberFormat(v.planQ2) + '</td>';
+                                html += '<td class="text-right">' + toNumberFormat(v.usedQ2) + '</td>';
+                                html += '<td class="text-right">' + toNumberFormat(v.planQ3) + '</td>';
+                                html += '<td class="text-right">' + toNumberFormat(v.usedQ3) + '</td>';
+                                html += '<td class="text-right">' + toNumberFormat(v.planQ4) + '</td>';
+                                html += '<td class="text-right">' + toNumberFormat(v.usedQ4) + '</td>';
+                                html += '<td class="text-right"><b>' + '(%)' + '</b></td></tr>';
+                            } else {
+                                html += '<tr><td style="padding-left: 4em ;vertical-align:middle">' + (countMaster - 1) + "." + (countMain++) + " " + v.bgTypeMainName + '</td>';
+                                html += '<td class="text-right">' + toNumberFormat(v.planSummary) + '</td>';
+                                html += '<td class="text-right">' + toNumberFormat(v.usedSummary) + '</td>';
+                                html += '<td class="text-right">' + toNumberFormat(v.planQ1) + '</td>';
+                                html += '<td class="text-right">' + toNumberFormat(v.usedQ1) + '</td>';
+                                html += '<td class="text-right">' + toNumberFormat(v.planQ2) + '</td>';
+                                html += '<td class="text-right">' + toNumberFormat(v.usedQ2) + '</td>';
+                                html += '<td class="text-right">' + toNumberFormat(v.planQ3) + '</td>';
+                                html += '<td class="text-right">' + toNumberFormat(v.usedQ3) + '</td>';
+                                html += '<td class="text-right">' + toNumberFormat(v.planQ4) + '</td>';
+                                html += '<td class="text-right">' + toNumberFormat(v.usedQ4) + '</td>';
+                                html += '<td class="text-right"><b>' + '(%)' + '</b></td></tr>';
+                            }
+                            sum[v.bgTypeMasterId]["planSummary"] += parseFloat(v.planSummary);
+                            sum[v.bgTypeMasterId]["usedSummary"] += parseFloat(v.usedSummary);
+                            sum[v.bgTypeMasterId]["planQ1"] += parseFloat(v.planQ1);
+                            sum[v.bgTypeMasterId]["usedQ1"] += parseFloat(v.usedQ1);
+                            sum[v.bgTypeMasterId]["planQ2"] += parseFloat(v.planQ2);
+                            sum[v.bgTypeMasterId]["usedQ2"] += parseFloat(v.usedQ2);
+                            sum[v.bgTypeMasterId]["planQ3"] += parseFloat(v.planQ3);
+                            sum[v.bgTypeMasterId]["usedQ3"] += parseFloat(v.usedQ3);
+                            sum[v.bgTypeMasterId]["planQ4"] += parseFloat(v.planQ4);
+                            sum[v.bgTypeMasterId]["usedQ4"] += parseFloat(v.usedQ4);
+                        });
+                        $("#budgetBody").html(html);
+                        $.each(sum, function (key, obj) {
+                            $.each(obj, function (index, value) {
+                                $("#master" + key + " > td." + index).text(toNumberFormat(sum[key][index]));
+                            });
+                        });
+                    }
                 }
-                if (dept == 0) {
-                    $("#dept-select").parent().addClass("has-error");
-                    $("#warning-dept").show(10);
-                }
-                if (fund == 0) {
-                    $("#fundgroup-select").parent().addClass("has-error");
-                    $("#warning-fundgroup").show(10);
-                }
-                if (plan == 0) {
-                    $("#plan3d-select").parent().addClass("has-error");
-                    $("#warning-plan3d").show(10);
-                }
-                if (year == 0) {
-                    $("#year-select").parent().addClass("has-error");
-                    $("#warning-year").show(10);
-                }
+//                if (dept == 0) {
+//                    $("#dept-select").parent().addClass("has-error");
+//                    $("#warning-dept").show(10);
+//                }
+//                if (fund == 0) {
+//                    $("#fundgroup-select").parent().addClass("has-error");
+//                    $("#warning-fundgroup").show(10);
+//                }
+//                if (plan == 0) {
+//                    $("#plan3d-select").parent().addClass("has-error");
+//                    $("#warning-plan3d").show(10);
+//                }
+//                if (year == 0) {
+//                    $("#year-select").parent().addClass("has-error");
+//                    $("#warning-year").show(10);
+//                }
 
             });
-
             $("#facultyId").change(function () {
                 listDepartment($(this).val());
             });
@@ -390,9 +528,6 @@
                 var plan = $(this).val();
                 listFundgroupWithPlan(periodId, plan);
             });
-
-
-
             $("#expenses-select").change(function () {
                 $("#expenses-select").parent().removeClass("has-error")
                 $("#warning-expenses").hide(10);
@@ -401,7 +536,6 @@
                 $("#year-select").parent().removeClass("has-error")
                 $("#warning-year").hide(10);
             });
-
             $("#btn-save").click(function () {
                 $("#btn-save").attr("disabled", true);
                 $("#saving-ico").show(10);
