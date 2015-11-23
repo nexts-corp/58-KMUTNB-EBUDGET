@@ -126,7 +126,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
     {
         $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
             . " FROM " . $this->ent . "\\BudgetType typ "
-            . " WHERE typ.masterId = '20000000' and typ.typeCode = 'G' and typ.form143 = true ";
+            . " WHERE typ.masterId = '20200000' and typ.typeCode = 'G' and typ.form143 = true ";
         $list1 = $this->datacontext->getObject($sql1);
 
         foreach ($list1 as $key => $value) {
@@ -412,7 +412,7 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
     {
         $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
             . " FROM " . $this->ent . "\\BudgetType typ "
-            . " WHERE typ.masterId = '20000000' and typ.typeCode = 'G' and typ.form143 = true ";
+            . " WHERE typ.masterId = '20200000' and typ.typeCode = 'G' and typ.form143 = true ";
         $list1 = $this->datacontext->getObject($sql1);
 
         foreach ($list1 as $key1 => $value1) {
