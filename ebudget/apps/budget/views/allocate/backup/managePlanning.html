@@ -80,8 +80,8 @@
                                                 <td>
                                                     <select ng-model="listA.department" class="form-control input-sm" ng-options="dep.id as dep.name for dep in cmDataListDepartment | filter:setMaster" disabled></select>
                                                 </td>
-                                                <td><input ng-model="listA.education" type="text" class="form-control input-sm" number-format ng-keypress="editItemByEnter($index,$event)"></td>
-                                                <td><input ng-model="listA.academic" type="text" class="form-control input-sm" number-format ng-keypress="editItemByEnter($index,$event)"></td>
+                                                <td><input ng-model="listA.education" type="text" class="form-control input-sm" nk-number="2" ng-keypress="editItemByEnter($index,$event)"></td>
+                                                <td><input ng-model="listA.academic" type="text" class="form-control input-sm" nk-number="2" ng-keypress="editItemByEnter($index,$event)"></td>
                                                 <td class="text-right" style="vertical-align: middle;" ng-bind="sumRows(listA.education,listA.academic) | currency:'':2"></td>
                                                 <td class="text-center">
                                                     <button ng-show="checkEditItem($index)" ng-click="editItem($index)" class="btn btn-primary"><i class="fa fa-save"></i> บันทึก</button>
@@ -96,8 +96,8 @@
                                                     </select>
                                                     {[departmentFocus]}
                                                 </td>
-                                                <td><input ng-model="education" type="text" class="form-control input-sm" number-format ng-keypress="addItemByEnter($event)"></td>
-                                                <td><input ng-model="academic" type="text" class="form-control input-sm" number-format ng-keypress="addItemByEnter($event)"></td>
+                                                <td><input ng-model="education" type="text" class="form-control input-sm" nk-number="2" ng-keypress="addItemByEnter($event)"></td>
+                                                <td><input ng-model="academic" type="text" class="form-control input-sm" nk-number="2" ng-keypress="addItemByEnter($event)"></td>
                                                 <td class="text-right" style="vertical-align: middle;" ng-bind="sumProceeds() | currency:'':2"></td>
                                                 <td class="text-center">
                                                     <button ng-show="checkAddItem()" class="btn btn-success" ng-click="addItem()"><i class="fa fa-plus"></i> เพิ่ม</button>
@@ -148,7 +148,7 @@
                                                     </select>
                                                 </td>
                                                 <td class="text-right">
-                                                     <input ng-model="listSub.depValue" type="text" class="form-control input-sm text-right" number-format>
+                                                     <input ng-model="listSub.depValue" type="text" class="form-control input-sm text-right" nk-number="2">
                                                 </td>
                                                 <td class="text-center">
                                                     <button ng-show="checkEditItemAppSub($parent.$index+'.'+$index)" ng-click="editItemAppSub($parent.$index+'.'+$index)" class="btn btn-primary"><i class="fa fa-save"></i> บันทึก</button>
@@ -163,7 +163,7 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input ng-model="list.valueTxt" type="text" class="form-control input-sm text-right" number-format>
+                                                    <input ng-model="list.valueTxt" type="text" class="form-control input-sm text-right" nk-number="2">
                                                 </td>
                                                 <td class="text-center">
                                                     <button ng-show="list.depOpt && list.valueTxt" class="btn btn-success" ng-click="addItemAPPSub($index)"><i class="fa fa-plus"></i> เพิ่ม</button>
