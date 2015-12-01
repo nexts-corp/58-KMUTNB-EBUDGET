@@ -1,0 +1,494 @@
+{{>header}}
+<div role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">{{#i18n}}bgi.bginfo{{/i18n}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">{{#i18n}}bgi.departmentService{{/i18n}}</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<hr class="tall dashboard">
+<div class="sort-source-wrapper"><!-- button action on header -->
+    <div class="container">
+        <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+            <li class="active">
+                <button class="btn btn-default back" style="display: none;" get-form="main">
+                    <i class="fa fa-angle-double-left">ย้อนกลับ</i>
+                </button>
+            </li>
+        </ul>
+    </div>
+</div><!-- end button action on header -->
+
+<div class="container">
+    <div class="tabs">
+        <ul id="tabMenu" class="nav nav-tabs"> <!--inner with javascript--> </ul>
+        <div id="tabContent" class="tab-content">
+            <!--inner with javascript-->
+            <!--end tab content-->
+        </div>
+    </div>
+    <div id="addDept" class="col-md-12" style="display: none">
+        <section class="panel panel-featured panel-featured-success">
+            <div class="panel-heading"><h2 class="panel-title">{{#i18n}}bgi.addDepartment{{/i18n}}</h2></div>
+            <div class="panel-body">
+                <div id="panel-add">
+                    <form id="form" onsubmit="return false;">
+                        <div class="form-group"><label class="col-md-3 control-label text-right" for="xxx">วิทยาเขต
+                            : </label>
+
+                            <div class="col-md-6"><select id="add-campus-panel" name="add-campus-panel"
+                                                          class="form-control input-sm" required=""></select></div>
+                        </div>
+                        <div class="form-group"><label class="col-md-3 control-label text-right" for="xxx">หน่วยงานหลัก
+                            : </label>
+
+                            <div class="col-md-6"><select id="add-deptMain-panel" name="add-deptMain-panel"
+                                                          class="form-control input-sm" required=""></select></div>
+                        </div>
+                        <div class="form-group"><label class="col-md-3 control-label text-right" for="xxx">ประเภทส่วนงาน
+                            : </label>
+
+                            <div class="col-md-6"><select id="add-activityType-panel" name="add-activityType-panel"
+                                                          class="form-control input-sm" required=""></select></div>
+                        </div>
+                        <div class="form-group"><label class="col-md-3 control-label text-right" for="xxx">รหัสหน่วยงาน
+                            : </label>
+
+                            <div class="col-md-6"><input id="add-deptcode-panel" name="add-deptcode-panel" type="number"
+                                                         class="form-control input-sm" required=""
+                                                         placeholder="กรุณาใส่รหัสหน่วยงาน"></div>
+                        </div>
+                        <div class="form-group"><label class="col-md-3 control-label text-right" for="xxx">ชื่อหน่วยงาน
+                            : </label>
+
+                            <div class="col-md-6"><input id="add-deptname-panel" name="add-deptname-panel"
+                                                         class="form-control input-sm" required=""
+                                                         placeholder="กรุณาใส่ชื่อหน่วยงาน"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 text-right">
+                                <label id="success-status" class="text-success" style="display: none"><i
+                                        class="fa fa-check"></i> บันทึกเรียบร้อย</label>
+                                <label id="error-status" class="text-danger" style="display: none"><i
+                                        class="fa fa-times"></i> ไม่สามารถบันทึก</label>
+                                <button id="save-dept-panel" class="btn btn-success"><i class="fa fa-save">
+                                    {{#i18n}}bgi.save{{/i18n}}</i>
+                                </button>
+                                <button class="btn btn-default" id="cancel-panel"><i class="fa fa-trash">
+                                    {{#i18n}}bgi.cancel{{/i18n}}</i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+</div><!--  container  -->
+<!-- Modal-->
+<div id="panelDeleteForm" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">ยืนยันการลบ</h4>
+            </div>
+            <div class="modal-body">
+                <div id="delete-content"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger save-delete"><i class="fa fa-trash"></i>
+                    ยืนยันการลบ
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{>footer}}
+
+<script type="text/javascript">
+
+    var GET = 'GET', POST = 'POST', PARAMS = {};
+
+    $(document).ready(function () {
+
+        initialHeadTab();
+        function initialHeadTab() {
+
+            callAjax('{{_context_path}}/api/bginfo/Department/fetchCampus', GET, PARAMS, function (data) {
+                var html = '', tabContentHtml = '', selectCampusHtml = '';
+
+                for (var i = 0; i < data.listsCampus.length; i++) {
+
+                    var campusName = data.listsCampus[i].campusName;
+                    var campusID = data.listsCampus[i].id;
+
+                    if (i == 0) {
+                        tabContentHtml += '<div class="tab-pane fade in active" id="tab' + i + '" campus="' + campusID + '"></div>';
+                        html += '<li class="active"><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + campusName + '</a></li>';
+                    } else {
+                        tabContentHtml += '<div class="tab-pane fade in" id="tab' + i + '" campus="' + campusID + '"></div>';
+                        html += '<li class=""><a href="#tab' + i + '" data-toggle="tab" aria-expanded="false">' + campusName + '</a></li>';
+                    }
+
+                    selectCampusHtml += '<option value="' + campusID + '">' + campusName + '</option>'
+                }
+                html += '<li class=""><a href="#tabAdd" data-toggle="tab" aria-expanded="false"><i class="fa fa-plus-circle"></i> {{#i18n}}bgi.addCampus{{/i18n}}</a></li>';
+
+                $("#tabContent").html(tabContentHtml);//initial tab div
+                $("#tabMenu").html(html);//menu tab ul li
+                $("#add-campus-panel").html(selectCampusHtml);//combobox in add panel
+            });
+
+            $(".tab-pane").each(function () {
+                var tabDiv = $(this).attr("id");
+                var campusID = $(this).attr("campus");
+                //loop add tab detail
+                innerTab(campusID, function (html) {
+
+                    $('#' + tabDiv).html(html);
+                    comboboxMainDept(tabDiv, campusID);
+                });
+            });
+        }//end initialHeadTab
+        function innerTab(campus_id, reusltHTML) {
+
+            callAjax('{{_context_path}}/api/bginfo/Department/fetchDepartment', GET, {campusID: campus_id}, function (data) {
+
+                var html = '';
+                if (data != null && data.listsDepartment.length > 0) {
+
+                    for (var i = 0; i < data.listsDepartment.length; i++) {
+                        var checknull;
+                        if (data.listsDepartment[i].actTypeName == null) {
+                            checknull = "ไม่มี"
+                        } else {
+                            checknull = data.listsDepartment[i].actTypeName
+                        }
+
+                        html += '<tr masterid="' + data.listsDepartment[i].masterId + '" deptID="' + data.listsDepartment[i].deptID + '" actTypeID="' + data.listsDepartment[i].actTypeID + '" mapID="' + data.listsDepartment[i].mapID + '">'; //masterid for filter
+                        html += '<td >' + data.listsDepartment[i].deptID + '</td>';
+                        html += '<td >' + data.listsDepartment[i].deptName + '</td>';
+                        html += '<td >' + checknull + '</td>';
+                        html += '<td style="text-align: center"><button class="btn btn-warning edit-btn" title="แก้ไข"><i class="fa fa-pencil"></i></button>&nbsp;';
+                        html += '<button class="btn btn-default delete-btn" title="ลบ"><i class="fa fa-trash"></i></button></td></tr>';
+                    }
+                    html += '   </tbody>';
+                    html += '</table>';
+
+                    var htmlMain = '<div class="row">' +
+                            '   <div class="col-md-7" style="margin-bottom: 10px">' +
+                            '     <label class="col-md-3 control-label text-left" for="xxx">หน่วยงานหลัก : </label>' +
+                            '     <div class="col-md-8"><select class="select-deptMain form-control"></select></div>' +
+                            '   </div>' +
+                            '   <div class="col-md-5 text-right" style="margin-bottom: 10px"><button class="btn btn-success add-dept" campusID="' + campus_id + '"><i class=" fa fa-plus-circle"></i> เพิ่มหน่วยงาน</button></div>' +
+                            '</div>' +
+                            '<table class="table table-bordered mb-none">' +
+                            '<thead>' +
+                            '   <tr>' +
+                            '       <th class="col-md-2">{{#i18n}}bgi.departmentCode{{/i18n}}</th>' +
+                            '       <th class="col-md-6">{{#i18n}}bgi.department{{/i18n}}</th>' +
+                            '       <th class="col-md-2">ประเภทส่วนงาน</th>' +
+                            '       <th class="col-md-2">Manage Function</th>' +
+                            '   </tr>' +
+                            '</thead>' +
+                            '<tbody id="table-body">' + html;
+
+                    reusltHTML(htmlMain);//call back
+                }
+            });
+        }
+
+        var statusActiveEdit = 0;
+        var selectActivityType = '';
+        $(document).on('click', "table tr .edit-btn", function () {
+
+            if (statusActiveEdit == 0) {
+                statusActiveEdit = 1;
+                var deptCode = $(this).closest('tr').find('td:eq(0)').text();
+                var deptName = $(this).closest('tr').find('td:eq(1)').text();
+//              var activityName = $(this).closest('tr').find('td:eq(2)').text();
+                var activityId = $(this).closest('tr').attr("actTypeID");
+                var btn = '<button id="save-edit" class="btn btn-success" title="บันทึก"><i class="fa fa-save"></i></button>&nbsp;';
+                btn += '<button id="cancel-edit" class="btn btn-default" title="ยกเลิก"><i class="fa fa-close"></i></button>';
+                var oldHtml = $('tr[deptID="' + deptCode + '"]').html();
+
+                if (!selectActivityType.length > 0) {
+                    comboboxActivityType(function (resultHTML) {
+                        selectActivityType = '<select class="form-control input-sm" id="select-edit">';
+                        selectActivityType += '<option value="null">ไม่มี</option>';
+                        selectActivityType += resultHTML;
+                        selectActivityType += '</select>';
+                    });
+                }
+                $(this).closest('tr').find('td:eq(0)').html('<input id="edit-deptcode" type="number" class="form-control" value="' + deptCode + '">');
+                $(this).closest('tr').find('td:eq(1)').html('<input id="edit-deptname" type="text" class="form-control" value="' + deptName + '">');
+                $(this).closest('tr').find('td:eq(2)').html(selectActivityType);
+                $(this).closest('tr').find('td:eq(3)').html(btn);
+
+                $("#select-edit").val(activityId);
+
+                $(document).on('click', "#cancel-edit", function () {
+                    statusActiveEdit = 0;
+                    $('tr[deptID="' + deptCode + '"]').html(oldHtml);
+                });
+
+                $("#save-edit").unbind("click").click(function () {
+                    statusActiveEdit = 0;
+
+                    var masterID = $(this).closest('tr').attr("masterid");
+                    var activityTypeID = $("#select-edit").val();
+                    var activityTypeName = $("#select-edit option:selected").text();
+                    var mapID = $(this).closest('tr').attr("mapid");
+                    var deptcode = $("#edit-deptcode").val();
+                    var deptName = $("#edit-deptname").val();
+
+                    var deptObj = {
+                        id: deptcode,
+                        deptName: deptName,
+                        deptType: '1',
+                        deptStatus: 'Y',
+                        deptGroup: 'A',
+                    };
+
+                    var mapObj = {id: mapID, deptId: deptcode, actId: activityTypeID};
+
+                    callAjax("{{_context_path}}/api/bginfo/Department/editDept", POST, JSON.stringify({
+                        dataDept: deptObj,
+                        dataMaping: mapObj
+                    }), function (data) {
+                        if (data.status != undefined && data.status != null && data.status != false) {
+                            //data.status = mapID
+                            var html = '<tr masterid="' + masterID + '" deptid="' + deptcode + '" acttypeid="' + activityTypeID + '" mapid="' + data.status.id + '">' +
+                                    '<td>' + deptcode + '</td>' +
+                                    '<td>' + deptName + '</td>' +
+                                    '<td>' + activityTypeName + '</td><td style="text-align: center">' +
+                                    '<button class="btn btn-warning edit-btn" title="แก้ไข">' +
+                                    '<i class="fa fa-pencil"></i>' +
+                                    '</button>&nbsp;<button class="btn btn-default delete-btn" title="ลบ">' +
+                                    '<i class="fa fa-trash"></i></button>' +
+                                    '</td>' +
+                                    '</tr>';
+
+                            $('tr[deptID="' + deptCode + '"]').replaceWith(html);
+                        } else {
+                            alert("แก้ไขไม่สำเร็จ");
+                        }
+                    });
+
+                });//end save edit
+            }
+        });
+
+        $(document).on('click', "table tr .delete-btn", function () {
+
+            var idDept = $(this).closest('tr').attr("deptid");
+            var deptName = $(this).closest('tr').find('td:eq(1)').text();
+            var mapID = $(this).closest('tr').attr("mapid");
+            $(".save-delete").click(function () {
+                callAjax('{{_context_path}}/api/bginfo/Department/removeDept', POST, {
+                    idDept: idDept,
+                    mapid: mapID
+                }, function (data) {
+                    if (data.status == true) {
+                        $('tr[deptID="' + idDept + '"]').remove();
+                        $("#panelDeleteForm").modal("hide");
+                    } else {
+                        alert("ลบไม่สำเร็จ");
+                        $("#panelDeleteForm").modal("hide");
+                    }
+                });
+            });
+            $("#delete-content").html("<p>ต้องการลบหน่วยงาน " + deptName + " ?</p>");
+            $("#panelDeleteForm").modal("show");
+
+        });
+
+        function comboboxMainDept(tabDiv, campus_id) {
+
+            callAjax('{{_context_path}}/api/bginfo/Department/fetchDepartmentMain', GET, {campusID: campus_id}, function (data) {
+
+                var comboboxItem = '<option value="0">{{#i18n}}bgi.KMUTNB{{/i18n}}</option>';
+                for (var i = 0; i < data.listsDepartment.length; i++) {
+                    comboboxItem += '<option value="' + data.listsDepartment[i].DEPARTMENTID + '">' + data.listsDepartment[i].DEPARTMENTID + ' ' + data.listsDepartment[i].DEPARTMENTNAME + '</option>';
+                }
+
+                $("#" + tabDiv + " .select-deptMain").html(comboboxItem).attr('id', tabDiv);
+            });
+        }
+
+        function comboboxActivityType(resultHTML) {
+
+            callAjax('{{_context_path}}/api/bginfo/Department/fetchActivityType', GET, PARAMS, function (data) {
+
+                var html = '';
+                for (var i = 0; i < data.listsActivityType.length; i++) {
+
+                    html += '<option value="' + data.listsActivityType[i].id + '">' + data.listsActivityType[i].actTypeName + '</option>';
+                }
+                resultHTML(html);//call back
+            });
+        }
+
+        function sortDataTable(deptID, tab) {
+
+            var $rows = $(tab + ' .table #table-body tr');
+
+            $rows.show().filter(function () {
+                var masterid = $(this).attr('masterid');
+
+                if (masterid == deptID) {
+                    return 0; //show
+                } else {
+                    return -1; //hide
+                }
+            }).hide();
+        }
+
+        $('.select-deptMain').on('change', function () {
+
+            var tab = "#" + $(this).attr('id'); //getTab ID
+            sortDataTable(this.value, tab);
+        });
+
+        $(".add-dept").on("click", function () {
+
+            toggleShow("addDept");//show hide div
+            //setting panel
+            var add_campus_panel = $('#add-campus-panel');
+            add_campus_panel.on('change', function () {
+                var campusID = $(this).val();
+
+                getTabDiv(campusID, function (tabDiv) {
+                    $("#add-deptMain-panel").html($(tabDiv + " .select-deptMain").html());
+                });
+
+            });//end on change
+
+            add_campus_panel.val($(this).attr("campusID")).trigger("change");
+
+            var innerHtml = $("#add-activityType-panel").html();
+            if (!innerHtml.length > 0) {
+                comboboxActivityType(function (resultHTML) {
+                    $("#add-activityType-panel").html(resultHTML);
+                });
+            }
+        });
+
+        $("#save-dept-panel").click(function () {
+
+            var campusID = $("#add-campus-panel").val();
+            var daptMainID = $("#add-deptMain-panel").val();
+            var activityTypeID = $("#add-activityType-panel").val();
+            var activityTypeName = $("#add-activityType-panel").find('option:selected').text();
+            var deptcode = $("#add-deptcode-panel").val();
+            var deptName = $("#add-deptname-panel").val();
+
+            var deptObj = {
+                id: deptcode,
+                deptName: deptName,
+                deptType: '1',
+                deptStatus: 'Y',
+                masterId: daptMainID,
+                deptGroup: 'A',
+                campusId: campusID
+            };
+
+            var mapObj = {deptId: deptcode, actId: activityTypeID};
+            callAjax("{{_context_path}}/api/bginfo/Department/saveDept", POST, JSON.stringify({
+                dataDept: deptObj,
+                dataMaping: mapObj
+            }), function (data) {
+                if (data.mapid != undefined && data.mapid != null) {
+                    $("#success-status").show().fadeOut(10000);
+                    //append table after insert
+                    var mapID = data.mapid;
+                    getTabDiv(campusID, function (tabDiv) {
+                        var html = '<tr masterid="' + daptMainID + '" deptID="' + deptcode + '" actTypeID="' + activityTypeID + '" mapID="' + mapID + '">'; //masterid for filter
+                        html += '<td >' + deptcode + '</td>';
+                        html += '<td >' + deptName + '</td>';
+                        html += '<td >' + activityTypeName + '</td>';
+                        html += '<td style="text-align: center"><button class="btn btn-warning edit-btn" title="แก้ไข"><i class="fa fa-pencil"></i></button>&nbsp;';
+                        html += '<button class="btn btn-default delete-btn" title="ลบ"><i class="fa fa-trash"></i></button></td></tr>';
+                        $(tabDiv + " table tbody").append(html);
+                        $("#add-deptcode-panel").val("");
+                        $("#add-deptname-panel").val("");
+                    });
+                } else {
+                    $("#error-status").show().fadeOut(10000);
+                }
+            });
+        });
+
+        $("#cancel-panel").click(function () {
+            $("button.back").trigger("click");
+        });
+
+        $("button.back").unbind("click").click(function () {
+            var page = $(this).attr("get-form")
+            toggleShow(page);
+        });
+
+        function getTabDiv(campusID, tabDivCallback) {
+
+            $(".tab-pane").each(function () {
+                var tabDiv = $(this).attr("id");
+                var campusIDTab = $(this).attr("campus");
+                if (campusID == campusIDTab) {
+                    tabDivCallback('#' + tabDiv);
+                }
+            });
+        }
+
+        function toggleShow(page) {
+
+            if (page == "addDept") {
+
+                $(".tabs").hide();
+                $("#addDept").show();
+                $("button.back").show();
+
+            } else if ("main") {
+
+                $(".tabs").show();
+                $("#addDept").hide();
+                $("button.back").hide();
+            }
+        }
+
+        function callAjax(url, type, param, handleData) {
+
+            $.ajax({
+                url: url,
+                type: type,
+                data: param,
+                cache: false,
+                async: false,
+                dataType: 'json',
+                success: function (data) {
+                    handleData(data);
+                },
+                error: function (err) {
+                    alert('error; ' + err.responseText);
+                }
+            });
+        }
+
+    })
+    ; //document ready
+
+
+</script>
