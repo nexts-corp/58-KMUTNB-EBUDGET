@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
-                <label class="col-md-4 control-label" for="department">หน่วยงาน : {[departmentCurrent]}</label>
+                <label class="col-md-12 control-label" for="department">{[facultyCurrent]} => {[departmentCurrent]}</label>
             </div>
         </div>
     </div><br>
@@ -11,7 +11,7 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="department">ประเภทเงิน</label>
                 <div class="col-md-8">
-                    <select ng-model="bgCategory" ng-change="fetchRevenueItemList()" ng-init="bgCategory = ''" class="form-control input-sm selChange">
+                    <select ng-model="bgCategory" ng-change="fetchRevenueItemList();getSumRevenue();" ng-init="bgCategory = ''" class="form-control input-sm selChange">
                         <option value="">- เลือกประเภทเงิน -</option>
                         <option value="E">ค่าธรรมเนียมการศึกษา</option>
                         <option value="S">งานบริการวิชาการ</option>
@@ -19,16 +19,26 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4" ng-show="bgCategory">
+        <div class="col-md-6" ng-show="bgCategory">
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="col-md-12 control-label">เงินต้นทั้ง คณะ/สำนัก รวม<br>{[sumRevenuePlan() | currency:'':2]}&nbsp;&nbsp;บาท</label>
+                </div>
+                <div class="col-md-6">
+                    <label class="col-md-12 control-label">เงินที่ใช้ทั้ง คณะ/สำนัก รวม<br><i ng-show="loadSumRevenue" class="fa fa-spinner fa-spin"></i><span ng-show="!loadSumRevenue">{[sumRevenue()| currency:'':2]}</span>&nbsp;&nbsp;บาท</label>
+                </div>
+            </div>
+        </div>
+        <!--div class="col-md-4" ng-show="bgCategory">
             <div class="form-group">
-                <label class="col-md-8 control-label">เงินต้น&nbsp;&nbsp;{[sumRevenuePlan()]}&nbsp;&nbsp;บาท</label>
+                <label class="col-md-12 control-label">เงินต้นทั้ง คณะ/สำนัก รวม<br>{[sumRevenuePlan() | currency:'':2]}&nbsp;&nbsp;บาท</label>
             </div>
         </div>
         <div class="col-md-4" ng-show="bgCategory">
             <div class="form-group">
-                <label class="col-md-8 control-label">เงินที่ใช้&nbsp;&nbsp;{[sumRevenue()]}&nbsp;&nbsp;บาท</label>
+                <label class="col-md-12 control-label">เงินที่ใช้ทั้ง คณะ/สำนัก รวม<br><i ng-show="loadSumRevenue" class="fa fa-spinner fa-spin"></i><span ng-show="!loadSumRevenue">{[sumRevenue()| currency:'':2]}</span>&nbsp;&nbsp;บาท</label>
             </div>
-        </div>
+        </div-->
     </div><br>
     <div class="row">
         <div class="tabs">
@@ -68,9 +78,9 @@
                         <thead>
                             <tr>
                                 <th class="text-center col-md-1">ลำดับ</th>
-                                <th class="text-center col-md-7">รายการ</th>
+                                <th class="text-center col-md-5">รายการ</th>
                                 <th class="text-center col-md-2">จำนวนเงิน</th>
-                                <th class="text-center col-md-2">จัดการ</th>
+                                <th class="text-center col-md-4">จัดการ</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -107,10 +117,11 @@
                                 <td class="text-right" style="vertical-align: middle;">
                                     <input ng-model="listData.value" type="text" class="form-control text-right" nk-number="2">
                                 </td> 
-                                <td class="text-center">
-                                    <button ng-show="(listData.name!=listData.nameC)||(listData.value!=listData.valueC)" ng-click="upItemPlanList($parent.$parent.$index+'.'+$parent.$index+'.'+$index)" class="btn btn-primary" nk-cloak><i class="fa fa-save"></i> บันทึก</button>
-                                    <button ng-show="(listData.name!=listData.nameC)||(listData.value!=listData.valueC)" ng-click="undoItemPlanList($parent.$parent.$index+'.'+$parent.$index+'.'+$index)" class="btn btn-default" nk-cloak><i class="fa fa-undo"></i> ย้อนกลับ</button>
-                                    <button ng-hide="(listData.name!=listData.nameC)||(listData.value!=listData.valueC)" ng-click="delItemPlanList($parent.$parent.$index+'.'+$parent.$index+'.'+$index,listData.id)" class="btn btn-default"><i class="fa fa-trash-o "></i> ลบ</button> 
+                                <td class="text-center" ng-init="dataIndex=$parent.$parent.$index+'.'+$parent.$index+'.'+$index;">
+                                    <button ng-show="conDataButton(dataIndex)" ng-click="upItemPlanList(dataIndex)" class="btn btn-primary"><i class="fa fa-save"></i> บันทึก</button>
+                                    <button ng-click="openDetail(listData.detail,dataIndex)" class="btn btn-warning"><i class="fa fa-gear"></i> รายละเอียด</button>
+                                    <button ng-show="conDataButton(dataIndex)" ng-click="undoItemPlanList(dataIndex)" class="btn btn-default"><i class="fa fa-undo"></i> ย้อนกลับ</button>
+                                    <button ng-hide="conDataButton(dataIndex)" ng-click="delItemPlanList(dataIndex,listData.id)" class="btn btn-default"><i class="fa fa-trash-o "></i> ลบ</button> 
                                 </td>
                             </tr>
                             <tr ng-show="listSub.show" style="background-color:#FFF;" nk-cloak>   
@@ -126,6 +137,7 @@
                                     </div>
                                 </td>  
                                 <td class="text-center" style="vertical-align: middle;">
+                                    <button ng-click="openDetail(listSub.detailText,$parent.$index+'.'+$index)" class="btn btn-warning"><i class="fa fa-gear"></i> รายละเอียด</button>
                                     <button ng-show="listSub.nameText && (listSub.valueText!=null && listSub.valueText!=0)" ng-click="addItemPlanList($parent.$index+'.'+$index)" class="btn btn-success"><i class="fa fa-plus"></i> เพิ่ม</button>
                                 </td>
                             </tr>
@@ -238,4 +250,24 @@
         </div>
     </div>
 
+</div>
+<div id="modal-detail" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header"> 
+                <button data-dismiss="modal" class="close" type="button"></button>  
+                <h4 class="modal-title">
+                    <i class="fa fa-gear"></i>
+                    <span>รายละเอียด</span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <textarea ng-model="textDetail" class="form-control" rows="10"></textarea> 
+            </div>
+            <div class="modal-footer">  
+                <button data-dismiss="modal" class="btn btn-default" type="button">ยกเลิก</button> 
+                <button data-dismiss="modal" ng-click="saveDetail()" class="btn btn-success" type="button" >ตกลง</button>
+            </div>
+        </div>
+    </div>
 </div>
