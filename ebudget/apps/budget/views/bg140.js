@@ -271,7 +271,7 @@ function bg140Form(param) {
         + '</table>'
         + '</div>'
         + '<div class="modal-footer">'
-        + '     <button type="button" class="btn btn-danger save" data-dismiss="modal"><i class="fa fa-trash"></i> ยืนยันการลบ</button>'
+        + '     <button type="button" class="btn btn-danger save"><i class="fa fa-trash"></i> ยืนยันการลบ</button>'
         + '     <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>'
         + '</div>'
         + '</div>'
@@ -920,6 +920,9 @@ function bg140delete(id, parentId, dataJSONEN) {
                 parent.row.find('.indenter').html('');
             }
             delete list140Arr[id];
+            $("#panelDeleteForm").modal("hide");
+        }else{
+            alert("ลบไม่สำเร็จ");
         }
     }
 }

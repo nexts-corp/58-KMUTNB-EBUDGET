@@ -561,11 +561,25 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
         if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
         } else {
-            $repoHead = new BudgetHead();
-            $repoHead->setId($bgHeadId);
+//            $repoHead = new BudgetHead();
+//            $repoHead->setId($bgHeadId);
+//
+//            if (!$this->datacontext->removeObject($repoHead)) {
+//                $return = $this->datacontext->getLastMessage();
+//            }
+            $sql = "SELECT count(bg) as num FROM " . $this->ent . "\\Budget140 as bg WHERE bg.budgetHeadId = " . $bgHeadId;
+            $obj = $this->datacontext->getObject($sql);
 
-            if (!$this->datacontext->removeObject($repoHead)) {
-                $return = $this->datacontext->getLastMessage();
+            if ($obj[0]["num"] == 0) {
+
+                $repoHead = new BudgetHead();
+                $repoHead->setId($bgHeadId);
+
+                if (!$this->datacontext->removeObject($repoHead)) {
+                    $result = false;
+                    $return = $this->datacontext->getLastMessage();
+                }
+
             }
         }
 
@@ -584,11 +598,24 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
         if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
         } else {
-            $repoHead = new BudgetHead();
-            $repoHead->setId($bgHeadId);
+//            $repoHead = new BudgetHead();
+//            $repoHead->setId($bgHeadId);
+//
+//            if (!$this->datacontext->removeObject($repoHead)) {
+//                $return = $this->datacontext->getLastMessage();
+//            }
+            $sql = "SELECT count(bg) as num FROM " . $this->ent . "\\Budget141 as bg WHERE bg.budgetHeadId = " . $bgHeadId;
+            $obj = $this->datacontext->getObject($sql);
 
-            if (!$this->datacontext->removeObject($repoHead)) {
-                $return = $this->datacontext->getLastMessage();
+            if ($obj[0]["num"] == 0) {
+
+                $repoHead = new BudgetHead();
+                $repoHead->setId($bgHeadId);
+
+                if (!$this->datacontext->removeObject($repoHead)) {
+                    $result = false;
+                    $return = $this->datacontext->getLastMessage();
+                }
             }
         }
 
@@ -607,11 +634,26 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
         if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
         } else {
-            $repoHead = new BudgetHead();
-            $repoHead->setId($bgHeadId);
+//            $repoHead = new BudgetHead();
+//            $repoHead->setId($bgHeadId);
+//
+//            if (!$this->datacontext->removeObject($repoHead)) {
+//                $return = $this->datacontext->getLastMessage();
+//            }
 
-            if (!$this->datacontext->removeObject($repoHead)) {
-                $return = $this->datacontext->getLastMessage();
+            $sql = "SELECT count(bg) as num FROM " . $this->ent . "\\Budget142 as bg WHERE bg.budgetHeadId = " . $bgHeadId;
+            $obj = $this->datacontext->getObject($sql);
+
+            if ($obj[0]["num"] == 0) {
+
+                $repoHead = new BudgetHead();
+                $repoHead->setId($bgHeadId);
+
+                if (!$this->datacontext->removeObject($repoHead)) {
+                    $result = false;
+                    $return = $this->datacontext->getLastMessage();
+                }
+
             }
         }
 
@@ -630,11 +672,25 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
         if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
         } else {
-            $repoHead = new BudgetHead();
-            $repoHead->setId($bgHeadId);
+//            $repoHead = new BudgetHead();
+//            $repoHead->setId($bgHeadId);
+//
+//            if (!$this->datacontext->removeObject($repoHead)) {
+//                $return = $this->datacontext->getLastMessage();
+//            }
+            $sql = "SELECT count(bg) as num FROM " . $this->ent . "\\Budget143 as bg WHERE bg.budgetHeadId = " . $bgHeadId;
+            $obj = $this->datacontext->getObject($sql);
 
-            if (!$this->datacontext->removeObject($repoHead)) {
-                $return = $this->datacontext->getLastMessage();
+            if ($obj[0]["num"] == 0) {
+
+                $repoHead = new BudgetHead();
+                $repoHead->setId($bgHeadId);
+
+                if (!$this->datacontext->removeObject($repoHead)) {
+                    $result = false;
+                    $return = $this->datacontext->getLastMessage();
+                }
+
             }
         }
 
@@ -653,11 +709,25 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
         if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
         } else {
-            $repoHead = new BudgetHead();
-            $repoHead->setId($bgHeadId);
+//            $repoHead = new BudgetHead();
+//            $repoHead->setId($bgHeadId);
+//
+//            if (!$this->datacontext->removeObject($repoHead)) {
+//                $return = $this->datacontext->getLastMessage();
+//            }
+            $sql = "SELECT count(bg) as num FROM " . $this->ent . "\\Budget144 as bg WHERE bg.budgetHeadId = " . $bgHeadId;
+            $obj = $this->datacontext->getObject($sql);
 
-            if (!$this->datacontext->removeObject($repoHead)) {
-                $return = $this->datacontext->getLastMessage();
+            if ($obj[0]["num"] == 0) {
+
+                $repoHead = new BudgetHead();
+                $repoHead->setId($bgHeadId);
+
+                if (!$this->datacontext->removeObject($repoHead)) {
+                    $result = false;
+                    $return = $this->datacontext->getLastMessage();
+                }
+
             }
         }
 
@@ -676,11 +746,25 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
         if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
         } else {
-            $repoHead = new BudgetHead();
-            $repoHead->setId($bgHeadId);
+//            $repoHead = new BudgetHead();
+//            $repoHead->setId($bgHeadId);
+//
+//            if (!$this->datacontext->removeObject($repoHead)) {
+//                $return = $this->datacontext->getLastMessage();
+//            }
+            $sql = "SELECT count(bg) as num FROM " . $this->ent . "\\Budget145 as bg WHERE bg.budgetHeadId = " . $bgHeadId;
+            $obj = $this->datacontext->getObject($sql);
 
-            if (!$this->datacontext->removeObject($repoHead)) {
-                $return = $this->datacontext->getLastMessage();
+            if ($obj[0]["num"] == 0) {
+
+                $repoHead = new BudgetHead();
+                $repoHead->setId($bgHeadId);
+
+                if (!$this->datacontext->removeObject($repoHead)) {
+                    $result = false;
+                    $return = $this->datacontext->getLastMessage();
+                }
+
             }
         }
 
@@ -699,11 +783,25 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
         if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
         } else {
-            $repoHead = new BudgetHead();
-            $repoHead->setId($bgHeadId);
+//            $repoHead = new BudgetHead();
+//            $repoHead->setId($bgHeadId);
+//
+//            if (!$this->datacontext->removeObject($repoHead)) {
+//                $return = $this->datacontext->getLastMessage();
+//            }
+            $sql = "SELECT count(bg) as num FROM " . $this->ent . "\\Budget146 as bg WHERE bg.budgetHeadId = " . $bgHeadId;
+            $obj = $this->datacontext->getObject($sql);
 
-            if (!$this->datacontext->removeObject($repoHead)) {
-                $return = $this->datacontext->getLastMessage();
+            if ($obj[0]["num"] == 0) {
+
+                $repoHead = new BudgetHead();
+                $repoHead->setId($bgHeadId);
+
+                if (!$this->datacontext->removeObject($repoHead)) {
+                    $result = false;
+                    $return = $this->datacontext->getLastMessage();
+                }
+
             }
         }
 
