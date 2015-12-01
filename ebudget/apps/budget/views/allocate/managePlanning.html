@@ -1,6 +1,6 @@
 {{> header}}
 
-<div ng-app="managePlanning" ng-controller="mainCtrl" data-ng-init="init()" style="display:none;">
+<div ng-app="managePlanning" ng-controller="mainCtrl" data-ng-init="init()" class="nk-cloak">
     <div role="main" class="main">
         <section class="page-top none-margin">
             <div class="container">
@@ -80,7 +80,7 @@
                                                 <select ng-model="listA.department" class="form-control input-sm" ng-options="dep.id as dep.name for dep in cmDataListDepartment" disabled></select>
                                             </td>
                                             <td><input ng-model="listA.education" type="text" class="form-control input-sm text-right" nk-number="2" ng-keypress="editItemByEnter($index, $event)"></td>
-                                            <td><input ng-model="listA.academic" type="text" class="form-control input-sm text-right" nk-number="2" ng-keypress="editItemByEnter($index, $event)"></td>
+                                            <td><input id="txt" ng-model="listA.academic" type="text" class="form-control input-sm text-right" nk-number="2" ng-keypress="editItemByEnter($index, $event)"></td>
                                             <td class="text-right" style="vertical-align: middle;" ng-bind="sumRows(listA.education,listA.academic) | currency:'':2"></td>
                                             <td class="text-center">
                                                 <button ng-show="checkEditItem($index)" ng-click="editItem($index)" class="btn btn-primary"><i class="fa fa-save"></i> บันทึก</button>

@@ -1,6 +1,3 @@
-//ngContextPath
-
-
 var myApp = angular.module('managePlanning', ['commonApp']);
 
 myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
@@ -30,9 +27,7 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
         };
     };
     
-    $scope.nkCloak = function(){
-        $('[ng-app]').show();
-    };
+    
     
     $scope.changePage = function(page){
         $scope.selectYear = '';
@@ -479,6 +474,10 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
         }
         
         return val;
+    };
+    
+    $scope.nkCloak = function(){
+        $('[ng-app]').removeClass("nk-cloak");
     };
     
 });

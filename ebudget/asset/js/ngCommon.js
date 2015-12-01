@@ -116,6 +116,19 @@ commonService.directive('nkNumber', function() {
             }
             
             angular.element(element).val(0);
+            
+            element.bind("keyup", function (event) {
+                if(event.keyCode===46 || event.keyCode===8){
+                    if(angular.element(element).val()===""){
+
+                        angular.element(element).val(0);
+
+                        ngModel.$setViewValue(0);
+                        ngModel.$render();
+
+                    }
+                }
+            });
             //ngModel.$setViewValue(0);
             
         }
