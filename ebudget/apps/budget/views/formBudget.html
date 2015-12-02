@@ -352,6 +352,14 @@
             item.l3dPlanId = plan;
             item.formId = form;
             toFormBudget(item);
+            
+
+            budgetPeriodArr["year"] = year;
+            budgetTypeArr["budgetTypeCode"] = 'G';
+            planArr["fundgroupId"] = fund;
+            fundgroupArr["facultyId"] = year;
+            facultyArr["deptId"] = dept;
+            departmentArr["deptId"] = dept;
         });
     });
     function listsFormSaved() {

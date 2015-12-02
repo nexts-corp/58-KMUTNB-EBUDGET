@@ -364,13 +364,20 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
 
     public function getBudgetScheme($budgetPeriodId, $budgetTypeCode, $deptId, $fundgroupId, $planId) {
         if ($budgetTypeCode == "G") {
+//            $sql = "select *
+//                from View_Scheme_Budget_Plan bg
+//                where (bg.bgPeriodId is null or bg.bgPeriodId = '" . $budgetPeriodId . "')
+//                and (bg.deptId is null or bg.deptId = '" . $deptId . "')
+//                and (bg.fundgroupId is null or bg.fundgroupId = '" . $fundgroupId . "')
+//                and (bg.planId is null or bg.planId = '" . $planId . "')";
+
             $sql = "select *
                 from View_Scheme_Budget_Plan bg
-                where (bg.bgPeriodId is null or bg.bgPeriodId = '" . $budgetPeriodId . "')
+                where bg.bgPeriodId = '" . $budgetPeriodId . "'
                 and bg.deptId = '" . $deptId . "'
                 and bg.fundgroupId = '" . $fundgroupId . "'
                 and bg.planId = '" . $planId . "'";
-
+            
             $data = $this->datacontext->pdoQuery($sql);
 
             return $data;
