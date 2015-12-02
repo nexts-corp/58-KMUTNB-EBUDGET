@@ -26,7 +26,7 @@
                 <li class="active">
                     <button class="btn btn-success goChoice"><i class="fa fa-plus-circle"> เพิ่มคำขอ</i></button>
                     <button class="btn btn-default backHome" style="display: none;"><i class="fa fa-angle-double-left">
-                            ย้อนกลับ</i></button>
+                        ย้อนกลับ</i></button>
                     <button class="btn btn-default backChoice" style="display: none;"><i
                             class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
                     <button class="btn btn-default backAttachment" style="display: none;"><i
@@ -43,18 +43,18 @@
             <div id="divHome" class="col-md-12">
                 <table id="table" class="table table-bordered table-striped table-condensed mb-none">
                     <thead>
-                        <tr>
-                            <th class="text-center col-lg-1">แบบคำขอ</th>
-                            <th class="text-center col-lg-4">หน่วยงาน</th>
-                            <th class="text-center col-lg-3">แผนงาน</th>
-                            <th class="text-center col-lg-2">กองทุน</th>
-                            <th class="text-center col-lg-2">เครื่องมือ</th>
-                        </tr>
+                    <tr>
+                        <th class="text-center col-lg-1">แบบคำขอ</th>
+                        <th class="text-center col-lg-4">หน่วยงาน</th>
+                        <th class="text-center col-lg-3">แผนงาน</th>
+                        <th class="text-center col-lg-2">กองทุน</th>
+                        <th class="text-center col-lg-2">เครื่องมือ</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td colspan="3" class="text-center">-</td>
-                        </tr>
+                    <tr>
+                        <td colspan="3" class="text-center">-</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -159,9 +159,9 @@
                             <div id="panel2" style="margin-top: 20px;">
                                 <table class="table table-hover">
                                     <thead>
-                                        <tr>
-                                            <th colspan="2" class="text-center">แบบฟอร์มคำของบประมาณแผ่นดิน</th>
-                                        </tr>
+                                    <tr>
+                                        <th colspan="2" class="text-center">แบบฟอร์มคำของบประมาณแผ่นดิน</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
                                     </tbody>
@@ -174,15 +174,17 @@
             </div>
 
             <!-- divForm Jquery -->
-
+            <!--<button type="button" id="t1" class="btn btn-default">T1</button>-->
+            <!--<button type="button" id="t2" class="btn btn-default">T2</button>-->
             <div id="divForm" class="col-md-12" style="display: none;"></div>
             <div id="divAttachment" class="col-md-12" style="display: none;"></div>
 
+            <!--</div>-->
             <!-- divForm AngularJs -->
-            <!-- 
+            <!--
             <div ng-show="!activeNg" id="divForm" class="col-md-12" style="display: none;"></div>
             <div id="divAttachment" class="col-md-12" style="display: none;"></div>
-            
+
             <div ng-show="activeNg">
                 <div ng-if="activeTemplate === 'project'" ng-controller="projectForm" data-ng-init="init()">
                     <project-template></project-template>
@@ -190,13 +192,44 @@
                 <div ng-if="activeTemplate === 'manageDepartment'" ng-controller="manageDepartment" data-ng-init="init()">
                     <managedepartment-template></managedepartment-template>
                 </div>
+            </div> -->
+
+            <!-- MODAL For Map -->
+            <div id="modalMap" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel"><i class="fa fa-map-o"></i> แผนที่</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="btn-group" id="btnGroup">
+                                <button type="button" id="point" class="btn btn-default active">Point</button>
+                                <button type="button" id="line" class="btn btn-default">Line</button>
+                                <button type="button" id="poly" class="btn btn-default">Polygon</button>
+                                <button type="button" id="circle" class="btn btn-default">Circle</button>
+                            </div>
+                            <div id="showInfo" style="margin-top: 10px;"><i class="fa fa-map-marker"> พิกัดภูมิศาสตร์</i></div>
+                            <div id="map" style="height: 450px; margin-top: 10px;"></div>
+                            <div id="showInfoFotter" class="text-center" style="margin-top: 10px;"></div>
+                        </div>
+                        <div id="loadingModalMap" class="text-center"></div>
+                        <div class="modal-footer" id="modalMapFooter" style="margin-top: 0px;">
+                            <button type="button" class="btn btn-success saveMap"> บันทึก</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-default cancel"> ยกเลิก</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            -->
+            <!--END MODAL For Map-->
+
         </div>
         <!--  row  -->
     </div>
     <!--  container  -->
-</div><!-- main -->
+</div>
+<!-- main -->
 
 {{> footer}}
 <style type="text/css">
@@ -207,7 +240,7 @@
 </style>
 
 <script type="text/javascript">
-            var js_context_path = "{{_context_path}}";</script>
+    var js_context_path = "{{_context_path}}";</script>
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg140.js"></script>
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg141.js"></script>
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg142.js"></script>
@@ -237,8 +270,34 @@
     var facultyArr = {};
     var departmentArr = {};
     var listSTATUSTRACKING = [];
+    var labelNameMarker = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; // nameMarker
+    var labelMarkerIndex = 0; // index label
+    var markerArray = []; // marker for select on map
+    var markerArrayForUse = []; //use latlng only use to DB
+    var markerArrayInfo = []; // marker for show
+    var optionMap = "point"; //default
+    var optionMapUse = ""; // use to DB
+    var linePathArr = []; //store latLng
+    var polyLineArray = []; //store object polyLine
+    var polygonArr = [];//store latLng
+    var polygonSimpleArr = [];//store object polygon
+    var CircleMap; // hadler object Circle
+    var canClickMap = true;
+    var coordinatesChange;
+    var hashMaptype = [];
+    hashMaptype["point"] = "รูปแบบจุด";
+    hashMaptype["line"] = "รูปแบบเส้น";
+    hashMaptype["poly"] = "รูปแบบรูปทรง";
+    hashMaptype["circle"] = "รูปแบบวงกลม";
+    var positionCenter;
+
     $(function () {
 
+        loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBv9gXQrEbOEH_JGiqm_rO5Mv67nzs8m8g&callback=initMap',
+                function () {
+                    console.log('google-loader has been loaded');
+                    positionCenter = new google.maps.LatLng(13.8192445, 100.513857);
+                });
         listsFormSaved();
         listsStatusTracking();
         toggleShow("home");
@@ -256,7 +315,6 @@
         });
         $("#l3dPlanId").change(function () {
             //listsProject($(this).val());
-
             periodId = $("#budgetPeriodId").val();
             plan = $(this).val();
             listFundgroupWithPlan(periodId, plan);
@@ -287,7 +345,7 @@
 
             //go to form
             var item = {};
-            item.budgetPeriodId = year;            
+            item.budgetPeriodId = year;
             item.budgetTypeCode = 'G';
             item.deptId = dept;
             item.fundgroupId = fund;
@@ -297,17 +355,6 @@
         });
     });
     function listsFormSaved() {
-        /*
-         var html = '<tr>'
-         + '<td>1. แบบรายละเอียดคำของบประมาณเงินเดือน (ง.140)</td>'
-         + '<td class="text-center">-</td>'
-         + '<td class="text-center">'
-         + '<button data-form="bg140" class="btn btn-warning edit" title="แก้ไข"><i class="fa fa-pencil"></i> แก้ไข</button>&nbsp;'
-         + '<button data-form="bg140" class="btn btn-default delete" title="ลบ"><i class="fa fa-trash"></i> ลบ</button>'
-         + '</td>'
-         + '</tr>';
-         $("#table tbody").html(html);
-         */
 
         var param = {
             budgetPeriodId: 2558,
@@ -327,7 +374,7 @@
                         + '<td>' + item.l3dPlanName + '</td>'
                         + '<td>' + item.fundName + '</td>'
                         + '<td>'
-                        + '<button class="btn btn-warning edit" title="แก้ไข" id="btnViewForm" data-year="'+item.budgetPeriodId+'" data-form="' + item.formId + '" data-dept="' + item.deptId + '" data-fund="' + item.fundgroupId + '" data-plan="' + item.l3dPlanId + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                        + '<button class="btn btn-warning edit" title="แก้ไข" id="btnViewForm" data-year="' + item.budgetPeriodId + '" data-form="' + item.formId + '" data-dept="' + item.deptId + '" data-fund="' + item.fundgroupId + '" data-plan="' + item.l3dPlanId + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
                         + '</td>'
                         + '</tr>';
             }
@@ -367,15 +414,8 @@
                 {
                     form: "bg146",
                     name: "แบบรายละเอียดคำของบประมาณเงินอุดหนุน (ง.146)"
-                }/*,
-                {
-                    form: "buildingOne",
-                    name: "คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง 1 ปี"
-                },
-                {
-                    form: "buildingMore",
-                    name: "คำชี้แจงรายละเอียดรายการที่ดินและสิ่งก่อสร้าง"
-                }*/
+                }
+
             ];
             var html = '';
             $.each(formArr, function (key, value) {
@@ -413,13 +453,13 @@
                 eval(form + "Form(param)");
                 /*
                  var form = $(this).attr("data-form");
-                 
+
                  var param = {};
                  $("#formChoice select").each(function () {
                  var name = $(this).attr("name");
                  param[name] = $(this).val();
                  });
-                 
+
                  var hasNg = $(this).attr("has-ng");
                  if (hasNg !== "true") {
                  // open Form for Jquery
@@ -476,12 +516,12 @@
      if (typeof datas !== "undefined" && datas !== null) {
      $.each(datas["lists"], function (key, value) {
      html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
-     
+
      planArr[value["id"]] = value["name"];
      });
      }
      }
-     
+
      $("#planId").html(html).trigger("change");
      }
      */
@@ -510,12 +550,12 @@
      if (typeof datas !== "undefined" && datas !== null) {
      $.each(datas["lists"], function (key, value) {
      html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
-     
+
      projectArr[value["id"]] = value["name"];
      });
      }
      }
-     
+
      $("#projectId").html(html).trigger("change");
      }
      */
@@ -527,11 +567,11 @@
      if (typeof datas !== "undefined" && datas !== null) {
      $.each(datas["lists"], function (key, value) {
      html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
-     
+
      fundgroupArr[value["id"]] = value["name"];
      });
      }
-     
+
      $("#fundgroupId").html(html).trigger("change");
      }
      */
@@ -673,7 +713,6 @@
         }
     }
 
-
     function InsertAttachment() {
 
         var param = {};
@@ -793,7 +832,7 @@
         fParam.fundgroupId = param.fundgroupId;
         fParam.l3dPlanId = param.l3dPlanId; //แผนใน 3 มิติ
 
-        //fParam.planId = param.planId;  
+        //fParam.planId = param.planId;
         //fParam.projectId = param.projectId;
         return fParam;
     }
@@ -844,13 +883,253 @@
         eval(form + "Form(param)");
     }
 
-//    var map;
-//    function initMap() {
-//        var map = new google.maps.Map(document.getElementById('map'), {
-//            center: {lat: 13.809842, lng: 100.461178},
-//            zoom: 14
-//        });
-//    }
+    function initMap() {
+        var mapOptions = {
+            zoom: 18,
+            center: new google.maps.LatLng(13.8192445, 100.513857),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
 
+        window.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        google.maps.event.trigger(window.map, "resize");
+
+        //listerner map
+        addListernerClickOnMap();
+    }
+
+    function addListernerClickOnMap() {
+
+        google.maps.event.addListener(map, "click", function (e) {
+
+            if (canClickMap && e != undefined) {
+                if (optionMap == "point") {
+                    clearAllMarker();
+                    //lat and lng is available in e object
+                    var latLng = e.latLng;
+                    var marker = new google.maps.Marker({
+                        position: latLng,
+                        map: map,
+                        title: 'Title'
+                    });
+                    var html = '<i class="fa fa-map-marker"> พิกัดภูมิศาสตร์ ละติจูดที่ <b>' + latLng.lat() + '</b> ลองจิจูดที่ <b>' + latLng.lng() + '</b></i>';
+                    $("#showInfo").html(html);
+                    //markers["start"] = marker;
+                    markerArray[0] = marker;
+
+                } else if (optionMap == "line") {
+
+                    var checked = $("input:radio[name='point']:checked").val();
+                    //lat and lng is available in e object
+                    var latLng = e.latLng;
+
+                    linePathArr.push(latLng);
+
+                    var marker = new google.maps.Marker({
+                        position: latLng,
+                        map: map,
+                        title: 'Title',
+                        label: labelNameMarker[labelMarkerIndex++ % labelNameMarker.length]
+                    });
+
+                    markerArray.push(marker);
+
+                    var line = new google.maps.Polyline({
+                        path: linePathArr,
+                        geodesic: true,
+                        strokeColor: '#0000FF',
+                        strokeOpacity: 1.0,
+                        strokeWeight: 2
+                    });
+                    line.setMap(map);
+                    polyLineArray.push(line);
+
+                } else if (optionMap == "poly") {
+
+                    var latLng = e.latLng;
+
+                    polygonArr.push(latLng);
+
+                    var marker = new google.maps.Marker({
+                        position: latLng,
+                        map: map,
+                        title: 'Title'
+                    });
+
+                    markerArray.push(marker);
+
+                } else if (optionMap == "circle") {
+
+                    var latLng = e.latLng;
+                    var checked = $("input:radio[name='circle']:checked").val();
+
+                    if (checked == "center") {
+                        //marker start
+                        if (markerArray[1] == undefined)markerArray[1] = null;
+                        var marker = new google.maps.Marker({
+                            position: latLng,
+                            map: map,
+                            title: 'Title',
+                            label: 'A'
+                        });
+                        if (markerArray[0] != undefined)markerArray[0].setMap(null);
+                        markerArray[0] = marker;
+
+                    } else if (checked == "radius") {
+                        //marker end
+                        if (markerArray[0] == undefined)markerArray[0] = null;
+                        var marker = new google.maps.Marker({
+                            position: latLng,
+                            map: map,
+                            title: 'Title',
+                            label: 'B'
+                        });
+                        if (markerArray[1] != undefined)markerArray[1].setMap(null);
+                        markerArray[1] = marker;
+                    }
+                }
+            }//End canClickMap
+
+        });
+
+        google.maps.event.addListener(map, "mouseover", function (e) {
+            //use refresh map
+            google.maps.event.trigger(window.map, 'resize');
+            window.map.setCenter(positionCenter);
+        });
+    }
+
+    function loadScript(src, callback) {
+
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        if (callback)script.onload = callback;
+        document.getElementsByTagName("head")[0].appendChild(script);
+        script.src = src;
+    }
+
+    function drawPolyOnMap() {
+        var latlngArr = [];
+        markerArrayInfo = [];
+        for (var i = 0; i < markerArrayForUse.length; i++) {
+            var marker = new google.maps.Marker({
+                position: markerArrayForUse[i].position,
+                map: map,
+                title: 'Marker'
+            });
+            latlngArr.push(markerArrayForUse[i].position);
+            markerArrayInfo.push(marker);
+        }
+
+        if (latlngArr.length > 0) {
+
+            if (optionMapUse == "line") {
+
+                var line = new google.maps.Polyline({
+                    path: latlngArr,
+                    geodesic: true,
+                    strokeColor: '#0000FF',
+                    strokeOpacity: 1.0,
+                    strokeWeight: 2
+                });
+                line.setMap(map);
+                polyLineArray.push(line);
+
+            } else if (optionMapUse == "poly") {
+                console.log("draw");
+                console.log(latlngArr);
+                var polygon = new google.maps.Polygon({
+                    paths: latlngArr,
+                    strokeColor: '#0000FF',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 3,
+                    fillColor: '#0000FF',
+                    fillOpacity: 0.35
+                });
+                polygon.setMap(map);
+                polygonSimpleArr.push(polygon);
+
+            } else if (optionMapUse == "circle") {
+
+                if (latlngArr[0] != undefined && latlngArr[0] != null && latlngArr[1] != undefined && latlngArr[1] != null) {
+
+                    console.log("11111");
+                    var km = distance(latlngArr[0].lat(), latlngArr[0].lng(), latlngArr[1].lat(), latlngArr[1].lng(), "K");
+                    CircleMap = new google.maps.Circle({
+                        strokeColor: '#0000FF',
+                        strokeOpacity: 0.8,
+                        strokeWeight: 2,
+                        fillColor: '#0000FF',
+                        fillOpacity: 0.35,
+                        map: map,
+                        center: latlngArr[0],
+                        radius: km * 1000
+                    });
+                }
+            }
+        }
+    }
+
+    function clearAllMarker() {
+
+        for (var i = 0; i < markerArray.length; i++) {
+
+            if (markerArray[i] != null) markerArray[i].setMap(null);
+        }
+        for (var i = 0; i < markerArrayInfo.length; i++) {
+            markerArrayInfo[i].setMap(null); //remove marker on modal view map
+        }
+        markerArray = []; //re new
+    }
+
+    function clearAllLine() {
+        clearAllMarker();
+        for (var i = 0; i < polyLineArray.length; i++) {
+            polyLineArray[i].setMap(null);
+        }
+        polyLineArray = []; //re new object line
+        linePathArr = []; // latlng point
+    }
+
+    function clearAllPolygon() {
+        clearAllMarker();
+        for (var i = 0; i < polygonSimpleArr.length; i++) {
+            polygonSimpleArr[i].setMap(null);
+        }
+        polygonSimpleArr = []; //re new object poly
+        polygonArr = []; // latlng point
+    }
+
+    function clearAllCircle() {
+
+        if (CircleMap != undefined) CircleMap.setMap(null);
+        clearAllMarker();
+    }
+
+    function distance(lat1, lon1, lat2, lon2, unit) {
+
+        var radlat1 = Math.PI * lat1 / 180
+        var radlat2 = Math.PI * lat2 / 180
+        var radlon1 = Math.PI * lon1 / 180
+        var radlon2 = Math.PI * lon2 / 180
+        var theta = lon1 - lon2
+        var radtheta = Math.PI * theta / 180
+        var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        dist = Math.acos(dist)
+        dist = dist * 180 / Math.PI
+        dist = dist * 60 * 1.1515
+        if (unit == "K") {
+            dist = dist * 1.609344
+        }
+        if (unit == "N") {
+            dist = dist * 0.8684
+        }
+        return dist
+    }
+
+    function clearAll() {
+        clearAllLine();
+        clearAllPolygon();
+        clearAllCircle();
+    }
 
 </script>

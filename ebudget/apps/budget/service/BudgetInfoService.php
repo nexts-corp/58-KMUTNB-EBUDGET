@@ -677,6 +677,12 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
             $listBOQ = $this->datacontext->getObject($sql2, $param2);
             $listBuilding[$key1]->listBOQ = $listBOQ;
 
+            $sql2 = " SELECT cor"
+                . " FROM " . $this->ent . "\\Coordinates cor"
+                . " WHERE cor.buildingId = :buildingId";
+
+            $listCoordinates = $this->datacontext->getObject($sql2, $param2);
+            $listBuilding[$key1]->listCoordinates = $listCoordinates;
         }
 
         return $listBuilding;
@@ -725,6 +731,12 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
             $listflp = $this->datacontext->getObject($sql2, $param2);
             $listBuilding[$key1]->listflp = $listflp;
 
+            $sql2 = " SELECT cor"
+                . " FROM " . $this->ent . "\\Coordinates cor"
+                . " WHERE cor.buildingId = :buildingId";
+
+            $listCoordinates = $this->datacontext->getObject($sql2, $param2);
+            $listBuilding[$key1]->listCoordinates = $listCoordinates;
         }
 
         return $listBuilding;
