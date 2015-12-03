@@ -106,4 +106,11 @@ interface IViewService {
      * @description รายวานแผน/ผลของเงินงบประมาณ
      */
     public function formScheme();
+
+    /**
+     * @name budgetAll
+     * @uri /budgetAll
+     * @description จัดทำคำของบประมาณแผ่นดิน
+     */
+    public function budgetAll();
 }
