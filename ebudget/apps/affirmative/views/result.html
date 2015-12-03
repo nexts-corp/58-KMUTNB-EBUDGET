@@ -40,15 +40,15 @@
                             <select type="text" class="form-control input-sm" name="roundId" id="roundId"></select>
                         </div>
                     </div>
+                </div>
 
-                    <div class="col-md-12">
-                        <div class="tabs">
-                            <ul id="tabMenu" class="nav nav-tabs">
+                <div class="row" style="margin-top: 20px;">
+                    <div class="tabs">
+                        <ul id="tabMenu" class="nav nav-tabs">
 
-                            </ul>
-                            <div id="tabContent" class="tab-content">
+                        </ul>
+                        <div id="tabContent" class="tab-content">
 
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -184,350 +184,356 @@
     }
 
     function resultForm() {
-        var contentArr = {};
+        $("#tabMenu, #tabContent").html('');
 
-        var datas = callAjax("{{_context_path}}/api/affirmative/result/department", "post", {deptId: deptId, roundId: $("#roundId").val()}, "json");
-        //  console.log(datas);
-        if (typeof datas["lists"] !== "undefined" && datas["lists"] !== null) {
-            var menu = '<li class="active">'
-                    + '<a href="#taball" data-toggle="tab"><i class="fa fa-star"></i> ทั้งหมด</a>'
-                + '</li>';
+        $("#tabContent").html('<div class="col-md-12 text-center">Loading...</div>');
 
-            var content = '<div id="taball" class="tab-pane active">'
-                    + '<table id="tableall" class="table table-hover table-bordered">'
-                        + '<thead>'
-                            + '<tr>'
-                                + '<td rowspan="3" style="width: 20%;">ตัวชี้วัดคำรับรอง ปี {{year}}</td>'
-                                + '<td rowspan="3" style="width: 5%;">หน่วยนับ</td>'
-                                + '<td rowspan="3" style="width: 5%;">ค่าเป้าหมาย<br>ตัวชี้วัด</td>'
-                                + '<td rowspan="3" style="width: 5%;">ระดับ<br>คะแนน</td>'
-                                + '<td rowspan="3" style="width: 20%;">รายละเอียดผลการดำเนินงาน<br>ตามตัวชี้วัด</td>'
-                                + '<td colspan="4" style="width: 18%;">คำนวนผลการดำเนินงานตามตัวชี้วัด</td>'
-                                + '<td rowspan="3" style="width: 17%;">หมายเหตุ</td>'
-                                + '<td rowspan="3" style="width: 10%;">ไฟล์แนบ</td>'
-                                + '<td rowspan="3" style="width: 10%;">เครื่องมือ</td>'
-                            + '</tr>'
-                            + '<tr>'
-                                + '<td>ตัวตั้ง</td>'
-                                + '<td rowspan="2">ผลลัพธ์<br>ตัวชี้วัด</td>'
-                                + '<td rowspan="2">ระดับ<br>คะแนน</td>'
-                                + '<td style="text-align: left;" rowspan="2">✔ = บรรลุ<br>✘ = ไม่บรรลุ</td>'
-                            + '</tr>'
-                            + '<tr>'
-                                + '<td>ตัวหาร</td>'
-                            + '</tr>'
-                        + '</thead>'
+        setTimeout(function() {
+            var contentArr = {};
 
-                        + '<tbody>'
-                            + '<tr>'
-                                + '<td colspan="5" class="text-center">-</td>'
-                            + '</tr>'
-                        + '</tbody>'
-                    + '</table>'
-                + '</div>';
+            var datas = callAjax("{{_context_path}}/api/affirmative/result/department", "post", {
+                deptId: deptId,
+                roundId: $("#roundId").val()
+            }, "json");
+            //  console.log(datas);
+            if (typeof datas["lists"] !== "undefined" && datas["lists"] !== null) {
+                var menu = '<li class="active">'
+                        + '<a href="#taball" data-toggle="tab"><i class="fa fa-star"></i> ทั้งหมด</a>'
+                        + '</li>';
 
-            $.each(datas["lists"], function (key1, value1) {
-                menu += '<li>'
-                        + '<a href="#tab' + value1["mainSeq"] + '" data-toggle="tab">ส่วนที่ ' + value1["mainSeq"] + ' ' + value1["mainName"] + '</a>'
-                    + '</li>';
-
-                content += '<div id="tab' + value1["mainSeq"] + '" class="tab-pane">'
-                        + '<table id="table' + value1["mainSeq"] + '" class="table table-hover table-bordered">'
+                var content = '<div id="taball" class="tab-pane active">'
+                        + '<table id="tableall" class="table table-hover table-bordered">'
                             + '<thead>'
                                 + '<tr>'
-                                    + '<td rowspan="3" style="width: 20%;">ตัวชี้วัดคำรับรอง ปี {{year}}</td>'
-                                    + '<td rowspan="3" style="width: 5%;">หน่วยนับ</td>'
-                                    + '<td rowspan="3" style="width: 5%;">ค่าเป้าหมาย<br>ตัวชี้วัด</td>'
-                                    + '<td rowspan="3" style="width: 5%;">ระดับ<br>คะแนน</td>'
-                                    + '<td rowspan="3" style="width: 20%;">รายละเอียดผลการดำเนินงาน<br>ตามตัวชี้วัด</td>'
-                                    + '<td colspan="4" style="width: 18%;">คำนวนผลการดำเนินงานตามตัวชี้วัด</td>'
-                                    + '<td rowspan="3" style="width: 17%;">หมายเหตุ</td>'
-                                    + '<td rowspan="3" style="width: 10%;">ไฟล์แนบ</td>'
-                                    + '<td rowspan="3" style="width: 10%;">เครื่องมือ</td>'
-
+                                    + '<td rowspan="3" class="text-center text-bold" style="width: 20%; vertical-align: middle;">ตัวชี้วัดคำรับรอง ปี {{year}}</td>'
+                                    + '<td rowspan="3" class="text-center text-bold" style="width: 5%; vertical-align: middle;">หน่วยนับ</td>'
+                                    + '<td rowspan="3" class="text-center text-bold" style="width: 5%; vertical-align: middle;">ค่าเป้าหมาย<br>ตัวชี้วัด</td>'
+                                    + '<td rowspan="3" class="text-center text-bold" style="width: 5%; vertical-align: middle;">ระดับ<br>คะแนน</td>'
+                                    + '<td rowspan="3" class="text-center text-bold" style="width: 20%; vertical-align: middle;">รายละเอียดผลการดำเนินงาน<br>ตามตัวชี้วัด</td>'
+                                    + '<td colspan="4" class="text-center text-bold" style="width: 18%; vertical-align: middle;">คำนวนผลการดำเนินงานตามตัวชี้วัด</td>'
+                                    + '<td rowspan="3" class="text-center text-bold" style="width: 17%; vertical-align: middle;">หมายเหตุ</td>'
+                                    + '<td rowspan="3" class="text-center text-bold" style="width: 10%; vertical-align: middle;">ไฟล์แนบ</td>'
+                                    + '<td rowspan="3" class="text-center text-bold" style="width: 10%; vertical-align: middle;">เครื่องมือ</td>'
                                 + '</tr>'
                                 + '<tr>'
-                                    + '<td>ตัวตั้ง</td>'
-                                    + '<td rowspan="2">ผลลัพธ์<br>ตัวชี้วัด</td>'
-                                    + '<td rowspan="2">ระดับ<br>คะแนน</td>'
-                                    + '<td style="text-align: left;" rowspan="2">✔ = บรรลุ<br>✘ = ไม่บรรลุ</td>'
+                                    + '<td class="text-center text-bold" style="vertical-align: middle;">ตัวตั้ง</td>'
+                                    + '<td rowspan="2" class="text-center text-bold" style="vertical-align: middle;">ผลลัพธ์<br>ตัวชี้วัด</td>'
+                                    + '<td rowspan="2" class="text-center text-bold" style="vertical-align: middle;">ระดับ<br>คะแนน</td>'
+                                    + '<td rowspan="2" class="text-bold" style="vertical-align: middle;" >✔ = บรรลุ<br>✘ = ไม่บรรลุ</td>'
                                 + '</tr>'
                                 + '<tr>'
-                                    + '<td>ตัวหาร</td>'
+                                    + '<td class="text-center text-bold" style="vertical-align: middle;">ตัวหาร</td>'
                                 + '</tr>'
                             + '</thead>'
+
                             + '<tbody>'
                                 + '<tr>'
-                                    + '<td colspan="10" class="text-center">-</td>'
+                                    + '<td colspan="5" class="text-center">-</td>'
                                 + '</tr>'
                             + '</tbody>'
                         + '</table>'
                     + '</div>';
 
-                contentArr[value1["mainSeq"]] += '<tr data-tt-id="main' + value1["mainSeq"] + '"  data-seq="' + value1["mainSeq"] + '">'
-                        + '<td colspan="11" class="text-center">'
-                            + '<span class="text-bold" style="text-decoration: underline;">ส่วนที่ ' + value1["mainSeq"]+'</span>'
+                $.each(datas["lists"], function (key1, value1) {
+                    menu += '<li>'
+                            + '<a href="#tab' + value1["mainSeq"] + '" data-toggle="tab">ส่วนที่ ' + value1["mainSeq"] + ' ' + value1["mainName"] + '</a>'
+                            + '</li>';
+
+                    content += '<div id="tab' + value1["mainSeq"] + '" class="tab-pane">'
+                            + '<table id="table' + value1["mainSeq"] + '" class="table table-hover table-bordered">'
+                                + '<thead>'
+                                    + '<tr>'
+                                        + '<td rowspan="3" class="text-center text-bold" style="width: 20%; vertical-align: middle;">ตัวชี้วัดคำรับรอง ปี {{year}}</td>'
+                                        + '<td rowspan="3" class="text-center text-bold" style="width: 5%; vertical-align: middle;">หน่วยนับ</td>'
+                                        + '<td rowspan="3" class="text-center text-bold" style="width: 5%; vertical-align: middle;">ค่าเป้าหมาย<br>ตัวชี้วัด</td>'
+                                        + '<td rowspan="3" class="text-center text-bold" style="width: 5%; vertical-align: middle;">ระดับ<br>คะแนน</td>'
+                                        + '<td rowspan="3" class="text-center text-bold" style="width: 20%; vertical-align: middle;">รายละเอียดผลการดำเนินงาน<br>ตามตัวชี้วัด</td>'
+                                        + '<td colspan="4" class="text-center text-bold" style="width: 18%; vertical-align: middle;">คำนวนผลการดำเนินงานตามตัวชี้วัด</td>'
+                                        + '<td rowspan="3" class="text-center text-bold" style="width: 17%; vertical-align: middle;">หมายเหตุ</td>'
+                                        + '<td rowspan="3" class="text-center text-bold" style="width: 10%; vertical-align: middle;">ไฟล์แนบ</td>'
+                                        + '<td rowspan="3" class="text-center text-bold" style="width: 10%; vertical-align: middle;">เครื่องมือ</td>'
+                                    + '</tr>'
+                                    + '<tr>'
+                                        + '<td class="text-center text-bold" style="vertical-align: middle;">ตัวตั้ง</td>'
+                                        + '<td rowspan="2" class="text-center text-bold" style="vertical-align: middle;">ผลลัพธ์<br>ตัวชี้วัด</td>'
+                                        + '<td rowspan="2" class="text-center text-bold" style="vertical-align: middle;">ระดับ<br>คะแนน</td>'
+                                        + '<td rowspan="2" class="text-bold" style="vertical-align: middle;" >✔ = บรรลุ<br>✘ = ไม่บรรลุ</td>'
+                                    + '</tr>'
+                                    + '<tr>'
+                                        + '<td class="text-center text-bold" style="vertical-align: middle;">ตัวหาร</td>'
+                                    + '</tr>'
+                                + '</thead>'
+
+                                + '<tbody>'
+                                    + '<tr>'
+                                        + '<td colspan="10" class="text-center">-</td>'
+                                    + '</tr>'
+                                + '</tbody>'
+                            + '</table>'
+                        + '</div>';
+
+                    contentArr[value1["mainSeq"]] += '<tr data-tt-id="main' + value1["mainSeq"] + '"  data-seq="' + value1["mainSeq"] + '">'
+                            + '<td colspan="11" class="text-center">'
+                            + '<span class="text-bold" style="text-decoration: underline;">ส่วนที่ ' + value1["mainSeq"] + ' </span>'
                             + value1["mainName"]
-                        + '</td>'
-                    + '</tr>';
-
-                $.each(value1.type, function (key2, value2) {
-
-                    if (value2["hasIssue"] == "Y") {
-                        contentArr[value1["mainSeq"]] += '<tr data-tt-id="type' + value2["typeId"] + '" data-tt-parent-id="main' + value1["mainSeq"] + '">'
-                                + '<td colspan="11">'
-                                    + '<span class="text-bold" style="text-decoration: underline;">'+ 'ส่วนที่ ' + value1["mainSeq"] + '.' + value2['typeSeq']+'</span>'
-                                    + value2["typeName"] + (value2["title"] != "" ? "<h3>" + value2["title"] + "</h3>" : "")
-                                + '</td>'
+                            + '</td>'
                             + '</tr>';
 
-                        $.each(value2["issue"], function (key3, value3) {
-                            contentArr[value1["mainSeq"]] += '<tr data-tt-id="issue' + value3["issueId"] + '" data-tt-parent-id="type' + value2["typeId"] + '">'
+                    $.each(value1.type, function (key2, value2) {
+
+                        if (value2["hasIssue"] == "Y") {
+                            contentArr[value1["mainSeq"]] += '<tr data-tt-id="type' + value2["typeId"] + '" data-tt-parent-id="main' + value1["mainSeq"] + '">'
                                     + '<td colspan="11">'
-                                        + '<span class="text-bold" style="text-decoration: underline;">ประเด็นยุทธศาสตร์ที่ ' + value3['issueSeq'] + '</span>'
+                                    + '<span class="text-bold" style="text-decoration: underline;">' + 'ส่วนที่ ' + value1["mainSeq"] + '.' + value2['typeSeq'] + ' </span>'
+                                    + value2["typeName"] + (value2["title"] != "" ? "<h3>" + value2["title"] + "</h3>" : "")
+                                    + '</td>'
+                                    + '</tr>';
+
+                            $.each(value2["issue"], function (key3, value3) {
+                                contentArr[value1["mainSeq"]] += '<tr data-tt-id="issue' + value3["issueId"] + '" data-tt-parent-id="type' + value2["typeId"] + '">'
+                                        + '<td colspan="11">'
+                                        + '<span class="text-bold" style="text-decoration: underline;">ประเด็นยุทธศาสตร์ที่ ' + value3['issueSeq'] + ' </span>'
                                         + value3["issueName"]
+                                        + '</td>'
+                                        + '</tr>';
+
+                                $.each(value3["target"], function (key4, value4) {
+                                    contentArr[value1["mainSeq"]] += '<tr data-tt-id="target' + value4["targetId"] + '" data-tt-parent-id="issue' + value3["issueId"] + '">'
+                                            + '<td colspan="11">'
+                                            + '<span class="text-bold" style="text-decoration: underline;">เป้าประสงค์ที่ ' + value3["issueSeq"] + '.' + value4["targetSeq"] + ' </span> '
+                                            + value4["targetName"]
+                                            + '</td>'
+                                            + '</tr>';
+
+                                    if (typeof value4["kpi"] !== "undefined" && value4["kpi"] !== null) {
+                                        $.each(value4["kpi"], function (key5, value5) {
+                                            var row = 1;
+                                            if (getTag(value5["divisor"], "") != "") row = 2;
+
+                                            var isSuccess = '';
+                                            if (value5["isSuccess"] == "1") isSuccess = '<span class="text-success">✔</span>';
+                                            else if (value5["isSuccess"] == "0") isSuccess = '<span class="text-danger">✘</span>';
+
+                                            var link = '';
+                                            if (getTag(value5["attachment"], "") != "")
+                                                link = '<i class="fa fa-file-o"></i> <a href="javascript: void(0);" onclick="downloadFile(\'' + value5["attachment"] + '\');">' + fileNameCut(value5["attachment"]) + '</a>';
+
+                                            contentArr[value1["mainSeq"]] += '<tr data-tt-id="final' + value5["finalId"] + '" data-tt-parent-id="target' + value4["targetId"] + '" data-issue="Y">'
+                                                    + '<td style="padding-left: 20px;" rowspan="' + row + '">' + value3["issueSeq"] + '.' + value4["targetSeq"] + '.' + value5["kpiSeq"] + ' ' + value5["kpiName"] + '</td>'
+                                                    + '<td class="center" rowspan="' + row + '">' + value5["unitName"] + '</td>'
+                                                    + '<td class="center" rowspan="' + row + '">' + (value5["kpiGoal"] ? value5["kpiGoal"] : "") + '</td>'
+                                                    + '<td class="center" rowspan="' + row + '">'
+                                                        + '<a data-tooltip data-html="true" href="javascript: void(0);" data-original-title="<table style=\'border: 1px solid white; width: 400px;\' border=1><thead><tr><td>คะแนน 1</td><td>คะแนน 2</td><td>คะแนน 3</td><td>คะแนน 4</td><td>คะแนน 5</td></tr><tr><td>' + value5["score1"] + '</td><td>' + value5["score2"] + '</td><td>' + value5["score3"] + '</td><td>' + value5["score4"] + '</td><td>' + value5["score5"] + '</td></tr></thead></table>">'
+                                                            + '<i class="fa fa-info-circle"></i>'
+                                                        + '</a>'
+                                                    + '</td>'
+                                                    + '<td class="center" rowspan="' + row + '">' + getTag(value5["detail"], "") + '</td>'
+                                                    + '<td class="center">' + getTag(value5["dividend"], "") + '</td>'
+                                                    + '<td class="center" rowspan="' + row + '">' + getTag(value5["result"], "") + '</td>'
+                                                    + '<td class="center" rowspan="' + row + '">' + getTag(value5["score"], "") + '</td>'
+                                                    + '<td class="text-center" rowspan="' + row + '">' + isSuccess + '</td>'
+                                                    + '<td class="text-center" rowspan="' + row + '">' + getTag(value5["remark"], "") + '</td>'
+                                                    + '<td class="text-center" rowspan="' + row + '">' + link + '</td>'
+                                                    + '<td class="text-center" rowspan="' + row + '">'
+                                                        + '<button type="button" class="btn btn-sm btn-primary result" data-id = "' + value5["finalId"] + '" ><i class="fa fa-pencil"></i> รายงาน</button>'
+                                                    + '</td>'
+                                                + '</tr>';
+
+                                            if (getTag(value5["divisor"], "") != "") {
+                                                contentArr[value1["mainSeq"]] += '<tr data-tt-id="final' + value5["finalId"] + '-2" data-tt-parent-id="target' + value4["targetId"] + '">'
+                                                        + '<td style="text-align: center;" >' + getTag(value5["divisor"], "") + '</td>'
+                                                    + '</tr>';
+                                            }
+
+                                            listArr[value5["finalId"]] = value5;
+                                        });
+                                    }
+                                });
+                            });
+                        } else if (value2["hasIssue"] == "N") {
+
+                            contentArr[value1["mainSeq"]] += '<tr data-tt-id="type' + value2["typeId"] + '" data-tt-parent-id="main' + value1["mainSeq"] + '">'
+                                    + '<td colspan="11">'
+                                        + '<span class="text-bold" style="text-decoration: underline;">ส่วนที่ ' + value1["mainSeq"] + '.' + value2['typeSeq']+' </span> '
+                                        + value2["typeName"] + (value2["title"] != "" ? "<h3>" + value2["title"] + "</h3>" : "")
                                     + '</td>'
                                 + '</tr>';
 
-                            $.each(value3["target"], function (key4, value4) {
-                                contentArr[value1["mainSeq"]] += '<tr data-tt-id="target' + value4["targetId"] + '" data-tt-parent-id="issue' + value3["issueId"] + '">'
-                                        + '<td colspan="11">'
-                                            + '<span class="text-bold" style="text-decoration: underline;">เป้าประสงค์ที่ ' + value3["issueSeq"] + '.' + value4["targetSeq"] + '</span> '
-                                            + value4["targetName"]
-                                        + '</td>'
-                                    + '</tr>';
+                            if (typeof value2["kpi"] !== "undefined" && value2["kpi"] !== null) {
+                                $.each(value2["kpi"], function (key5, value5) {
+                                    var row = 1;
+                                    if (getTag(value5["divisor"], "") != "") row = 2;
 
-                                if (typeof value4["kpi"] !== "undefined" && value4["kpi"] !== null) {
-                                    $.each(value4["kpi"], function (key5, value5) {
-                                        var row = 1;
-                                        if(getTag(value5["divisor"], "") != "") row = 2;
+                                    var isSuccess = '';
+                                    if (value5["isSuccess"] == "1") isSuccess = '<span class="text-success">✔</span>';
+                                    else if (value5["isSuccess"] == "0") isSuccess = '<span class="text-danger">✘</span>';
 
-                                        var isSuccess = '';
-                                        if(value5["isSuccess"] == "1") isSuccess = "✔";
-                                        else if(value5["isSuccess"] == "0") isSuccess = "✘";
-
-                                        var link = '';
-                                        if(getTag(value5["attachment"], "") != "")
-                                            link = '<i class="fa fa-file-o"></i> <a href="javascript: void(0);" onclick="downloadFile(\''+value5["attachment"]+'\');">'+fileNameCut(value5["attachment"])+'</a>';
-
-                                        contentArr[value1["mainSeq"]] += '<tr data-tt-id="final' + value5["finalId"] + '" data-tt-parent-id="target' + value4["targetId"] + '" data-issue="Y">'
-                                                + '<td style="padding-left: 20px;" rowspan="'+row+'">' + value3["issueSeq"] + '.' + value4["targetSeq"] + '.' + value5["kpiSeq"] + ' ' + value5["kpiName"] + '</td>'
-                                                + '<td class="center" rowspan="'+row+'">' + value5["unitName"] + '</td>'
-                                                + '<td class="center" rowspan="'+row+'">' + (value5["kpiGoal"] ? value5["kpiGoal"] : "") + '</td>'
-                                                + '<td class="center" rowspan="'+row+'">'
-                                                    + '<a data-tooltip data-html="true" href="javascript: void(0);" data-original-title="<table style=\'border: 1px solid white; width: 400px;\' border=1><thead><tr><td>คะแนน 1</td><td>คะแนน 2</td><td>คะแนน 3</td><td>คะแนน 4</td><td>คะแนน 5</td></tr><tr><td>'+value5["score1"]+'</td><td>'+value5["score2"]+'</td><td>'+value5["score3"]+'</td><td>'+value5["score4"]+'</td><td>'+value5["score5"]+'</td></tr></thead></table>">'
-                                                        + '<i class="fa fa-info-circle"></i>'
-                                                    + '</a>'
-                                                + '</td>'
-                                                + '<td class="center" rowspan="'+row+'">' + getTag(value5["detail"], "") + '</td>'
-                                                + '<td class="center">' + getTag(value5["dividend"], "") + '</td>'
-                                                + '<td class="center" rowspan="'+row+'">' + getTag(value5["result"], "") + '</td>'
-                                                + '<td class="center" rowspan="'+row+'">' + getTag(value5["score"], "") + '</td>'
-                                                + '<td class="text-center" rowspan="'+row+'">' + isSuccess + '</td>'
-                                                + '<td class="text-center" rowspan="'+row+'">' + getTag(value5["remark"], "") + '</td>'
-                                                + '<td class="text-center" rowspan="'+row+'">' + link + '</td>'
-                                                + '<td class="text-center" rowspan="'+row+'">'
-                                                    + '<button type="button" class="btn btn-sm btn-primary result" data-id = "' + value5["finalId"] + '" ><i class="fa fa-pencil"></i> รายงาน</button>'
-                                                + '</td>'
-                                            + '</tr>';
-
-                                        if(getTag(value5["divisor"], "") != ""){
-                                            contentArr[value1["mainSeq"]] += '<tr data-tt-id="final' + value5["finalId"] + '-2" data-tt-parent-id="target' + value4["targetId"] + '">'
-                                                    + '<td style="text-align: center;" >'+getTag(value5["divisor"], "")+'</td>'
-                                                + '</tr>';
-                                        }
-
-                                        listArr[value5["finalId"]] = value5;
-                                    });
-                                }
-//                             
-
-                            });
-                        });
-                    } else if (value2["hasIssue"] == "N") {
-
-                        contentArr[value1["mainSeq"]] += '<tr data-tt-id="type' + value2["typeId"] + '" data-tt-parent-id="main' + value1["mainSeq"] + '">' +
-                                '<td colspan="9">' +
-                                    '<span class="text-bold" style="text-decoration: underline;">' +
-                                'ส่วนที่ ' + value1["mainSeq"] + '.' + value2['typeSeq'] +
-                                '</span> ' + value2["typeName"] + (value2["title"] != "" ? "<h3>" + value2["title"] + "</h3>" : "") +
-                                '</td>'  +
-                                '</tr>';
-                        if (typeof value2["kpi"] !== "undefined" && value2["kpi"] !== null) {
-                            $.each(value2["kpi"], function (key5, value5) {
-                                var row = 1;
-                                if(getTag(value5["divisor"], "") != "") row = 2;
-
-                                var isSuccess = '';
-                                if(value5["isSuccess"] == "1") isSuccess = "✔";
-                                else if(value5["isSuccess"] == "0") isSuccess = "✘";
-
-                                contentArr[value1["mainSeq"]] += '<tr data-tt-id="final2' + value5["finalId"] + '" data-tt-parent-id="type' + value2["typeId"] + '" data-issue="N">'
-                                        + '<td style="padding-left: 20px;" rowspan="'+row+'">' + value5["kpiSeq"] + ' ' + value5["kpiName"] + '</td>'
-                                        + '<td class="center" rowspan="'+row+'">' + value5["unitName"] + '</td>'
-                                        + '<td class="center" rowspan="'+row+'">' + (value5["kpiGoal"] ? value5["kpiGoal"] : "") + '</td>'
-                                        + '<td class="center" rowspan="'+row+'">'
-                                            + '<a data-tooltip data-html="true" href="javascript: void(0);" data-original-title="<table style=\'border: 1px solid white; width: 400px;\' border=1><thead><tr><td>คะแนน 1</td><td>คะแนน 2</td><td>คะแนน 3</td><td>คะแนน 4</td><td>คะแนน 5</td></tr><tr><td>'+value5["score1"]+'</td><td>'+value5["score2"]+'</td><td>'+value5["score3"]+'</td><td>'+value5["score4"]+'</td><td>'+value5["score5"]+'</td></tr></thead></table>">'
-                                                + '<i class="fa fa-info-circle"></i>'
-                                            + '</a>'
-                                        + '</td>'
-                                        + '<td class="center" rowspan="'+row+'">' + getTag(value5["detail"], "") + '</td>'
-                                        + '<td class="center">' + getTag(value5["dividend"], "") + '</td>'
-                                        + '<td class="center" rowspan="'+row+'">' + getTag(value5["result"], "") + '</td>'
-                                        + '<td class="center" rowspan="'+row+'">' + getTag(value5["score"], "") + '</td>'
-                                        + '<td class="text-center" rowspan="'+row+'">' + isSuccess + '</td>'
-                                        + '<td class="text-center" rowspan="'+row+'">' + getTag(value5["remark"], "") + '</td>'
-                                        + '<td class="text-center" rowspan="'+row+'">' + getTag(value5["attachment"], "") + '</td>'
-                                        + '<td class="text-center" rowspan="'+row+'">'
-                                            + '<button type="button" class="btn btn-sm btn-primary result" data-id = "' + value5["finalId"] + '" ><i class="fa fa-pencil"></i> รายงาน</button>'
-                                        + '</td>'
-                                    + '</tr>';
-
-                                if(getTag(value5["divisor"], "") != ""){
-                                    contentArr[value1["mainSeq"]] += '<tr data-tt-id="final' + value5["finalId"] + '-2" data-tt-parent-id="target' + value4["targetId"] + '">'
-                                            + '<td style="text-align: center;" >'+getTag(value5["divisor"], "")+'</td>'
+                                    contentArr[value1["mainSeq"]] += '<tr data-tt-id="final2' + value5["finalId"] + '" data-tt-parent-id="type' + value2["typeId"] + '" data-issue="N">'
+                                            + '<td style="padding-left: 20px;" rowspan="' + row + '">' + value5["kpiSeq"] + ' ' + value5["kpiName"] + '</td>'
+                                            + '<td class="center" rowspan="' + row + '">' + value5["unitName"] + '</td>'
+                                            + '<td class="center" rowspan="' + row + '">' + (value5["kpiGoal"] ? value5["kpiGoal"] : "") + '</td>'
+                                            + '<td class="center" rowspan="' + row + '">'
+                                                + '<a data-tooltip data-html="true" href="javascript: void(0);" data-original-title="<table style=\'border: 1px solid white; width: 400px;\' border=1><thead><tr><td>คะแนน 1</td><td>คะแนน 2</td><td>คะแนน 3</td><td>คะแนน 4</td><td>คะแนน 5</td></tr><tr><td>' + value5["score1"] + '</td><td>' + value5["score2"] + '</td><td>' + value5["score3"] + '</td><td>' + value5["score4"] + '</td><td>' + value5["score5"] + '</td></tr></thead></table>">'
+                                                    + '<i class="fa fa-info-circle"></i>'
+                                                + '</a>'
+                                            + '</td>'
+                                            + '<td class="center" rowspan="' + row + '">' + getTag(value5["detail"], "") + '</td>'
+                                            + '<td class="center">' + getTag(value5["dividend"], "") + '</td>'
+                                            + '<td class="center" rowspan="' + row + '">' + getTag(value5["result"], "") + '</td>'
+                                            + '<td class="center" rowspan="' + row + '">' + getTag(value5["score"], "") + '</td>'
+                                            + '<td class="text-center" rowspan="' + row + '">' + isSuccess + '</td>'
+                                            + '<td class="text-center" rowspan="' + row + '">' + getTag(value5["remark"], "") + '</td>'
+                                            + '<td class="text-center" rowspan="' + row + '">' + getTag(value5["attachment"], "") + '</td>'
+                                            + '<td class="text-center" rowspan="' + row + '">'
+                                                + '<button type="button" class="btn btn-sm btn-primary result" data-id = "' + value5["finalId"] + '" ><i class="fa fa-pencil"></i> รายงาน</button>'
+                                            + '</td>'
                                         + '</tr>';
-                                }
-                                listArr[value5["finalId"]] = value5;
-                            });
-                        }
-                    }
 
-                });
-                $("#tabMenu").html(menu);
-                $("#tabContent").html(content);
-                var contentAll = '';
-                $.each(contentArr, function (key, value) {
-                    contentAll += value
-                    $("#table" + key + " tbody").html(value);
-                    $("#table" + key).treetable({
+                                    if (getTag(value5["divisor"], "") != "") {
+                                        contentArr[value1["mainSeq"]] += '<tr data-tt-id="final' + value5["finalId"] + '-2" data-tt-parent-id="target' + value4["targetId"] + '">'
+                                                + '<td style="text-align: center;" >' + getTag(value5["divisor"], "") + '</td>'
+                                            + '</tr>';
+                                    }
+                                    listArr[value5["finalId"]] = value5;
+                                });
+                            }
+                        }
+
+                    });
+                    $("#tabMenu").html(menu);
+                    $("#tabContent").html(content);
+                    var contentAll = '';
+                    $.each(contentArr, function (key, value) {
+                        contentAll += value
+                        $("#table" + key + " tbody").html(value);
+                        $("#table" + key).treetable({
+                            expandable: true,
+                            initialState: "expanded"
+                        });
+                    });
+                    $("#tableall tbody").html(contentAll);
+                    $("#tableall").treetable({
                         expandable: true,
                         initialState: "expanded"
                     });
-                });
-                $("#tableall tbody").html(contentAll);
-                $("#tableall").treetable({
-                    expandable: true,
-                    initialState: "expanded"
-                });
 
-                $('[data-tooltip]').tooltip({
-                    container: 'body'
-                });
+                    $('[data-tooltip]').tooltip({
+                        container: 'body'
+                    });
 
-                $("button.result").unbind("click").click(function () {
-                    $("#panelForm").modal("show");
+                    $("button.result").unbind("click").click(function () {
+                        $("#panelForm").modal("show");
 
-                    var finalId = $(this).attr("data-id");
-                    var data = listArr[finalId];
+                        var finalId = $(this).attr("data-id");
+                        var data = listArr[finalId];
 
-                    $("#kpiName").html(data["kpiName"]);
-                    $("#unitName").html(data["unitName"]);
-                    $("#kpiGoal").html(data["kpiGoal"]);
+                        $("#kpiName").html(data["kpiName"]);
+                        $("#unitName").html(data["unitName"]);
+                        $("#kpiGoal").html(data["kpiGoal"]);
 
-                    $("#detail").val(data["detail"]);
-                    $("#dividend").val(data["dividend"]);
-                    $("#divisor").val(data["divisor"]);
-                    $("#remark").val(data["remark"]);
+                        $("#detail").val(data["detail"]);
+                        $("#dividend").val(data["dividend"]);
+                        $("#divisor").val(data["divisor"]);
+                        $("#remark").val(data["remark"]);
 
-                    $("#result").val(data["result"]);
-                    $("#score").html(data["score"]);
+                        $("#result").val(data["result"]);
+                        $("#score").html(data["score"]);
 
-                    if(data["isSuccess"]== "1") $("#isSuccess").html('✔').removeClass("text-success text-danger").addClass("text-success");
-                    else if(data["isSuccess"]== "0") $("#isSuccess").html('✘').removeClass("text-success text-danger").addClass("text-danger");
-                    else $("#isSuccess").html('');
-
-                    //attachment
-                    var fileUpload = 0;
-
-                    $("#fileGroup").html('<div id="fileNew"></div><div id="fileBak"></div>');
-
-                    if(getTag(data["attachment"], "") != ""){
-                        $("#fileNew").hide();
-                        $("#fileBak").html(
-                            '<i class="fa fa-file-o"></i>'
-                            + '<a href="javascript: void(0);" style="color:blue !important;" onclick="downloadFile(\''+data["attachment"]+'\');"> '+fileNameCut(data["attachment"])+'</a> &nbsp;&nbsp;'
-                            + '<a href="javascript: void(0);" style="color:blue !important;" title="ลบ" class="ic-edit" id="deleteFile"><i class="fa fa-trash"></i></a>'
-                        );
-
-                        $("#deleteFile").click(function(){
-                            $("#fileNew").html(
-                                '<input type="file" id="attachment" name="attachment"> '
-                                + '<a href="javascript: void(0);" id="fileOld" style="color: blue !important;">[ไฟล์เดิม]</a>&nbsp;&nbsp;'
-                                + '<a href="javascript: void(0);" onclick="$(\'#attachment\').val(\'\');">[Reset]</a>'
-                            ).show();
-                            $("#fileBak").hide();
-                            fileUpload = 1;
-
-                            $("#fileOld").click(function(){
-                                $("#fileNew").hide();
-                                $("#fileBak").show();
-                                fileUpload = 0;
-                            });
-                        });
-                    }
-                    else{
-                        $("#fileNew").html(
-                                '<input type="file" id="attachment" name="attachment"> '
-                                + '<a href="javascript: void(0);" onclick="$(\'#attachment\').val(\'\');">[Reset]</a>'
-                        ).show();
-                        $("#fileBak").hide();
-
-                        fileUpload = 1;
-                    }
-
-                    /*$("#dividend, #divisor").focusout(function(){
-                        if($("#dividend").val() != "" && $("#divisor").val() != ""){
-
-                        }
-                    });*/
-
-                    $("#result").focusout(function(){
-                        var cal = calResult(finalId, $(this).val());
-
-                        $("#score").html(cal["score"]);
-
-                        if(cal["isSuccess"]== "1") $("#isSuccess").html('✔').removeClass("text-success text-danger").addClass("text-success");
-                        else if(cal["isSuccess"]== "0") $("#isSuccess").html('✘').removeClass("text-success text-danger").addClass("text-danger");
+                        if (data["isSuccess"] == "1") $("#isSuccess").html('✔').removeClass("text-success text-danger").addClass("text-success");
+                        else if (data["isSuccess"] == "0") $("#isSuccess").html('✘').removeClass("text-success text-danger").addClass("text-danger");
                         else $("#isSuccess").html('');
 
-                    });
+                        //attachment
+                        var fileUpload = 0;
 
-                    $("button.save").unbind("click").click(function(){
-                        //if($("#attachment").val() != ""){
-                        $("#loading").html('<span>กำลังบันทึกข้อมูล...</span>');
-                            var formData = new FormData();
+                        $("#fileGroup").html('<div id="fileNew"></div><div id="fileBak"></div>');
 
-                            var object = dataObject(finalId, $("#roundId").val(), fileUpload);
-                            jQuery.each(object["Result"], function(key, value) {
-                                formData.append('result['+key+']', value);
+                        if (getTag(data["attachment"], "") != "") {
+                            $("#fileNew").hide();
+                            $("#fileBak").html(
+                                    '<i class="fa fa-file-o"></i>'
+                                    + '<a href="javascript: void(0);" style="color:blue !important;" onclick="downloadFile(\'' + data["attachment"] + '\');"> ' + fileNameCut(data["attachment"]) + '</a> &nbsp;&nbsp;'
+                                    + '<a href="javascript: void(0);" style="color:blue !important;" title="ลบ" class="ic-edit" id="deleteFile"><i class="fa fa-trash"></i></a>'
+                            );
+
+                            $("#deleteFile").click(function () {
+                                $("#fileNew").html(
+                                        '<input type="file" id="attachment" name="attachment"> '
+                                        + '<a href="javascript: void(0);" id="fileOld" style="color: blue !important;">[ไฟล์เดิม]</a>&nbsp;&nbsp;'
+                                        + '<a href="javascript: void(0);" onclick="$(\'#attachment\').val(\'\');">[Reset]</a>'
+                                ).show();
+                                $("#fileBak").hide();
+                                fileUpload = 1;
+
+                                $("#fileOld").click(function () {
+                                    $("#fileNew").hide();
+                                    $("#fileBak").show();
+                                    fileUpload = 0;
+                                });
                             });
+                        }
+                        else {
+                            $("#fileNew").html(
+                                    '<input type="file" id="attachment" name="attachment"> '
+                                    + '<a href="javascript: void(0);" onclick="$(\'#attachment\').val(\'\');">[Reset]</a>'
+                            ).show();
+                            $("#fileBak").hide();
 
-                            if($('#attachment').length) formData.append('file', $('#attachment')[0].files[0]);
-                            else formData.append('file', '');
+                            fileUpload = 1;
+                        }
+                        /*$("#dividend, #divisor").focusout(function(){
+                            if($("#dividend").val() != "" && $("#divisor").val() != ""){
 
-                            var datas = callAjaxFile("{{_context_path}}/api/affirmative/result/result", "post", formData, "json");
-                            if(typeof datas !== "undefined" && datas !== null){
-                                if(datas["result"] == true){
-                                    $("#loading").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
-                                    setTimeout(function(){
-                                        $("#loading").html("");
-                                        $("#panelForm").modal("hide");
-
-                                        showInRow(finalId, object, datas["filename"]);
-
-                                    }, 500);
-                                }
-                                else{
-                                    $("#loading").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้<br>'+datas["save"]+'</span>');
-                                }
                             }
-                        //}
-                    });
-                });
+                        });*/
 
-            });
-        }
+                        $("#result").focusout(function(){
+                            var cal = calResult(finalId, $(this).val());
+
+                            $("#score").html(cal["score"]);
+
+                            if(cal["isSuccess"]== "1") $("#isSuccess").html('✔').removeClass("text-success text-danger").addClass("text-success");
+                            else if(cal["isSuccess"]== "0") $("#isSuccess").html('✘').removeClass("text-success text-danger").addClass("text-danger");
+                            else $("#isSuccess").html('');
+
+                        });
+
+                        $("button.save").unbind("click").click(function(){
+                            //if($("#attachment").val() != ""){
+                            $("#loading").html('<span>กำลังบันทึกข้อมูล...</span>');
+                                var formData = new FormData();
+
+                                var object = dataObject(finalId, $("#roundId").val(), fileUpload);
+                                jQuery.each(object["Result"], function(key, value) {
+                                    formData.append('result['+key+']', value);
+                                });
+
+                                if($('#attachment').length) formData.append('file', $('#attachment')[0].files[0]);
+                                else formData.append('file', '');
+
+                                var datas = callAjaxFile("{{_context_path}}/api/affirmative/result/result", "post", formData, "json");
+                                if(typeof datas !== "undefined" && datas !== null){
+                                    if(datas["result"] == true){
+                                        $("#loading").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
+                                        setTimeout(function(){
+                                            $("#loading").html("");
+                                            $("#panelForm").modal("hide");
+
+                                            showInRow(finalId, object, datas["filename"]);
+
+                                        }, 500);
+                                    }
+                                    else{
+                                        $("#loading").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้ < br>'+datas["save"]+'</span>');
+                                    }
+                                }
+                            //}
+                        });
+                    });
+
+                });
+            }
+        }, 0);
     }
 
     function dataObject(finalId, roundId, fileUpload){
