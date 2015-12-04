@@ -108,9 +108,9 @@ interface IViewService {
     public function formScheme();
 
     /**
-     * @name budgetAll
-     * @uri /budgetAll
+     * @name draftAll
+     * @uri /draftAll
      * @description จัดทำคำของบประมาณแผ่นดิน
      */
-    public function budgetAll();
+    public function draftAll();
 }
