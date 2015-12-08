@@ -64,4 +64,84 @@ class DraftService extends CServiceBase implements IDraftService {
 
         return $data;
     }
+
+    public function listForm(){
+        $formArr = array(
+            ["id" => 140, "name" => "ง.140 - คำของบประมาณเงินเดือน"],
+            ["id" => 141, "name" => "ง.141 - คำของบประมาณค่าจ้างประจำ"],
+            ["id" => 142, "name" => "ง.142 - คำของบประมาณค่าจ้างชั่วคราว"],
+            ["id" => 143, "name" => "ง.143 - คำของบประมาณเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน (ค่าตอบแทน ใช้สอย และวัสดุ)"],
+            ["id" => 144, "name" => "ง.144 - คำของบประมาณเงินอุดหนุนเป็นค่าสาธารณูปโภค"],
+            ["id" => 145, "name" => "ง.145 - คำของบประมาณเงินอุดหนุนเป็นค่าครุภัณฑ์ ค่าที่ดิน/สิ่งก่อสร้าง"],
+            ["id" => 146, "name" => "ง.146 - คำของบประมาณเงินอุดหนุน"],
+            ["id" => 200, "name" => "โครงการที่ตอบสนองยุทธศาสตร์"]
+        );
+
+        return $formArr;
+    }
+
+    public function list3DPlan() {
+        $repo = new entity\L3D\Plan();
+        $data = $this->datacontext->getObject($repo);
+
+        $result = array();
+        foreach ($data as $key => $value) {
+            $result[$key]["id"] = $value->id;
+            $result[$key]["name"] = $value->planName;
+        }
+        return $result;
+    }
+
+    public function listFundgroupWithPlan($l3dPlanId) {
+        $sql = "select DISTINCT(map.FUNDGROUPID) as id , fund.FUNDGROUPNAME as name "
+            ."from MAPPINGPLAN map "
+            ."inner join L3D_FUNDGROUP fund on fund.FUNDGROUPID = map.FUNDGROUPID "
+            ."where BUDGETPERIODID = :budgetPeriodId "
+            ."and PLANID = :l3dPlanId";
+
+        $param = array(
+            "budgetPeriodId" => $this->getPeriod()->year,
+            "l3dPlanId" => $l3dPlanId
+        );
+        $data = $this->datacontext->pdoQuery($sql, $param);
+
+        $result = array();
+
+        foreach ($data as $key => $value) {
+            $result[$key]["id"] = $value["id"];
+            $result[$key]["name"] = $value["name"];
+        }
+        return $result;
+    }
+
+    public function listFaculty() {
+        $repo = new entity\L3D\Department();
+        $repo->setDeptGroup("A");
+        $repo->setDeptStatus("Y");
+        $data = $this->datacontext->getObject($repo);
+
+        $result = array();
+        foreach ($data as $key => $value) {
+            $result[$key]["id"] = $value->id;
+            $result[$key]["name"] = $value->deptName;
+        }
+        return $result;
+    }
+
+    public function listDepartment($facultyId) {
+        $repo = new entity\L3D\Department();
+        $repo->setDeptStatus("Y");
+        if (isset($facultyId)) {
+            $repo->setMasterId($facultyId);
+        }
+        $data = $this->datacontext->getObject($repo);
+
+        $result = array();
+        foreach ($data as $key => $value) {
+            $result[$key]["id"] = $value->id;
+            $result[$key]["name"] = $value->deptName;
+            $result[$key]["masterId"] = $value->masterId;
+        }
+        return $result;
+    }
 }

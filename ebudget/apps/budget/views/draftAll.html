@@ -87,19 +87,19 @@
                 </table>
             </div>
 
-            <div id="divChoice" aria-labelledby="Label" class="modal fade col-md-12" tabindex="-1" role="dialog" aria-hidden="true"><!-- delete bidder info form -->
+            <div id="divChoice" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true"><!-- delete bidder info form -->
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title text-success">แบบฟอร์มคำของบประมาณ</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form id="formChoice" onsubmit="return false;">
+                        <form id="formChoice" onsubmit="return false;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title text-success">แบบฟอร์มคำของบประมาณ</h4>
+                            </div>
+                            <div class="modal-body">
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label text-right req" for="budgetPeriodId">แบบคำขอ :</label>
+                                    <label class="col-md-3 control-label text-right req" for="formId">แบบคำขอ :</label>
                                     <div class="col-md-7">
-                                        <select id="budgetPeriodId" name="budgetPeriodId" class="form-control input-sm" required></select>
+                                        <select id="formId" name="formId" class="form-control input-sm" required></select>
                                     </div>
                                 </div>
 
@@ -130,17 +130,17 @@
                                         <select id="deptId" name="deptId" class="form-control input-sm" required></select>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
-
-                        <footer class="panel-footer">
-                            <div class="row">
-                                <div class="col-md-12 text-right">
-                                    <button class="btn btn-success modal-confirm"><i class="fa fa-pencil"></i> จัดทำ</button>
-                                    <button class="btn btn-default modal-dismiss">ยกเลิก</button>
-                                </div>
                             </div>
-                        </footer>
+
+                            <footer class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <button class="btn btn-success modal-confirm"><i class="fa fa-pencil"></i> จัดทำ</button>
+                                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">ยกเลิก</button>
+                                    </div>
+                                </div>
+                            </footer>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -150,13 +150,24 @@
 
 {{> footer}}
 
+
 <script type="text/javascript">
     var listArr = {};
+    var callCount = 0
     $(function(){
         listsAllBudgetRequest();
 
         $("button.goChoice").unbind("click").click(function () {
             $("#divChoice").modal("show");
+            listsObject();
+
+            $("button.modal-confirm").unbind("click").click(function () {
+                var formId = $("#formId").val();
+                var l3dPlanId = $("#l3dPlanId").val();
+                var fundgroupId = $("#fundgroupId").val();
+                var deptId = $("#deptId").val();
+                window.location = "{{_context_path}}/api/budget/view/draft/"+formId+"/"+l3dPlanId+"/"+fundgroupId+"/"+deptId;
+            });
         });
     });
 
@@ -276,16 +287,112 @@
                 var id = $(this).attr("data-bgh");
                 var data = listArr[id];
 
-                window.location = "{{_context_path}}/api/budget/view/draft/"+data["formId"]+"/"+data["deptId"]+"/"+data["fundgroupId"]+"/"+data["l3dPlanId"];
+                var formId = data["formId"];
+                var l3dPlanId = data["l3dPlanId"];
+                var fundgroupId = data["fundgroupId"];
+                var deptId = data["deptId"];
+                window.location = "{{_context_path}}/api/budget/view/draft/"+formId+"/"+l3dPlanId+"/"+fundgroupId+"/"+deptId;
             });
 
             $("#table").on("click", "button.delete", function(){
                 var id = $(this).attr("data-bgh");
                 var data = listArr[id];
 
-                window.location = "{{_context_path}}/api/budget/view/draft/"+data["formId"]+"/"+data["deptId"]+"/"+data["fundgroupId"]+"/"+data["l3dPlanId"];
+                var formId = data["formId"];
+                var l3dPlanId = data["l3dPlanId"];
+                var fundgroupId = data["fundgroupId"];
+                var deptId = data["deptId"];
+                window.location = "{{_context_path}}/api/budget/view/draft/"+formId+"/"+l3dPlanId+"/"+fundgroupId+"/"+deptId;
             });
         }
+    }
+
+    function listsObject(){
+        if(callCount == 0) {
+            setTimeout(function () {
+                listsForm();
+                listsPlan3D();
+                listsFaculty();
+            }, 10);
+
+            callCount = 1;
+        }
+    }
+
+    function listsForm(){
+        var html = '<option value="" selected="selected">เลือก</option>';
+        var datas = callAjax("{{_context_path}}/api/budget/draft/listForm", "post", {}, "json");
+        if (typeof datas !== "undefined" && datas !== null) {
+            $.each(datas["lists"], function (key, value) {
+                html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
+
+            });
+        }
+
+        $("#formId").html(html).select2();
+    }
+
+    function listsPlan3D() {
+        var html = '<option value="" selected="selected">เลือก</option>';
+        var datas = callAjax("{{_context_path}}/api/budget/draft/list3DPlan", "post", {}, "json");
+        if (typeof datas !== "undefined" && datas !== null) {
+            $.each(datas["lists"], function (key, value) {
+                html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
+
+            });
+        }
+
+        $("#l3dPlanId").html(html).select2().change(function(){
+            listFundgroupWithPlan($(this).val());
+        }).trigger("change");
+    }
+
+    function listFundgroupWithPlan(l3dPlanId) {
+        var html = '<option value="" selected="selected">เลือก</option>';
+
+        if(l3dPlanId != "") {
+            var param = {
+                l3dPlanId: l3dPlanId
+            };
+            var datas = callAjax("{{_context_path}}/api/budget/draft/listFundgroupWithPlan", "post", param, "json");
+            if (typeof datas !== "undefined" && datas !== null) {
+                $.each(datas["lists"], function (key, value) {
+                    html += '<option value="' + value["id"] + '">' + value["name"] + '</option>';
+                });
+            }
+        }
+
+        $("#fundgroupId").html(html).select2();
+    }
+
+
+    function listsFaculty() {
+        var html = '<option value="" selected="selected">เลือก</option>';
+        var datas = callAjax("{{_context_path}}/api/budget/draft/listFaculty", "post", {}, "json");
+        if (typeof datas !== "undefined" && datas !== null) {
+            $.each(datas["lists"], function (key, value) {
+                html += '<option value="' + value["id"] + '">' + value["name"] + '</option>';
+            });
+        }
+
+        $("#facultyId").html(html).select2().change(function(){
+            listsDepartment($(this).val());
+        }).trigger("change");
+    }
+
+    function listsDepartment(facultyId) {
+        var html = '<option value="" selected="selected">เลือก</option>';
+
+        if(facultyId != "") {
+            var datas = callAjax("{{_context_path}}/api/common/lookup/listDepartment", "post", {facultyId: facultyId}, "json");
+            if (typeof datas !== "undefined" && datas !== null) {
+                $.each(datas["lists"], function (key, value) {
+                    html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
+                });
+            }
+        }
+
+        $("#deptId").html(html).select2();
     }
 
 </script>
