@@ -290,3 +290,19 @@ html.dark .timeline.timeline-simple .tm-body .tm-items > li .tm-box:before {
     z-index: 1;
 }
 
+.modal-open .select2-drop-mask {
+    z-index: 10051;
+}
+
+.modal-open .select2-drop {
+    z-index: 10052;
+}
+
+.modal-open .select2-search {
+    z-index: 10053;
+}
+
+.table tbody tr.no-border td{
+    border: none;
+}
+
