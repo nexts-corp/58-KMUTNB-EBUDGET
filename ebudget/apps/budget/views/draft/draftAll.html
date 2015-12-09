@@ -1,6 +1,6 @@
 {{> header}}
-<!-- insert and initial for AngularJS into divMain -->
-<div ng-app="formBudget" ng-controller="mainController" role="main" class="main">
+
+<div class="main">
     <section class="page-top none-margin">
         <div class="container">
             <div class="row">
@@ -384,7 +384,7 @@
         var html = '<option value="" selected="selected">เลือก</option>';
 
         if(facultyId != "") {
-            var datas = callAjax("{{_context_path}}/api/common/lookup/listDepartment", "post", {facultyId: facultyId}, "json");
+            var datas = callAjax("{{_context_path}}/api/budget/draft/listDepartment", "post", {facultyId: facultyId}, "json");
             if (typeof datas !== "undefined" && datas !== null) {
                 $.each(datas["lists"], function (key, value) {
                     html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
