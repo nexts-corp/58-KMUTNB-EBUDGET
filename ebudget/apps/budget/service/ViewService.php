@@ -79,8 +79,41 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
-    public function budgetAll() {
-        $view = new CJView("budgetAll", CJViewType::HTML_VIEW_ENGINE);
+    public function draftAll() {
+        $view = new CJView("draft/draftAll", CJViewType::HTML_VIEW_ENGINE);
+        return $view;
+    }
+
+    public function draft($formId, $l3dPlanId, $fundgroupId, $deptId) {
+        if($formId == "140"){
+            $view = new CJView("draft/bg140", CJViewType::HTML_VIEW_ENGINE);
+        }
+        elseif($formId == "141"){
+            $view = new CJView("draft/bg141", CJViewType::HTML_VIEW_ENGINE);
+        }
+        elseif($formId == "142"){
+            $view = new CJView("draft/bg142", CJViewType::HTML_VIEW_ENGINE);
+        }
+        elseif($formId == "143"){
+            $view = new CJView("draft/bg143", CJViewType::HTML_VIEW_ENGINE);
+        }
+        elseif($formId == "144"){
+            $view = new CJView("draft/bg144", CJViewType::HTML_VIEW_ENGINE);
+        }
+        elseif($formId == "145"){
+            $view = new CJView("draft/bg145", CJViewType::HTML_VIEW_ENGINE);
+        }
+        elseif($formId == "146"){
+            $view = new CJView("draft/bg146", CJViewType::HTML_VIEW_ENGINE);
+        }
+        else{
+            $view = new CJView("draft/project", CJViewType::HTML_VIEW_ENGINE);
+        }
+        $view->formId = $formId;
+        $view->l3dPlanId = $l3dPlanId;
+        $view->fundgroupId = $fundgroupId;
+        $view->deptId = $deptId;
+
         return $view;
     }
 
