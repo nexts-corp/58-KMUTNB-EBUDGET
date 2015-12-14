@@ -8,12 +8,7 @@ namespace apps\budget\model;
  * and open the template in the editor.
  */
 
-/**
- * Description of BudgetForm
- *
- * @author Palida
- */
-class BudgetFilter {
+class BudgetSchemeResult {
 
     public $bgPeriodId;
     public $bgTypeCode;
@@ -23,6 +18,7 @@ class BudgetFilter {
     public $bgTypeMasterId;
     public $bgTypeMainId;
     public $bgTypeId;
+    public $bgLevel;
     public $planQ1;
     public $planQ2;
     public $planQ3;
@@ -46,10 +42,6 @@ class BudgetFilter {
         return $this->planId;
     }
 
-    function getFacultyId() {
-        return $this->facultyId;
-    }
-
     function getDeptId() {
         return $this->deptId;
     }
@@ -68,6 +60,10 @@ class BudgetFilter {
 
     function getBgTypeId() {
         return $this->bgTypeId;
+    }
+
+    function getBgLevel() {
+        return $this->bgLevel;
     }
 
     function getPlanQ1() {
@@ -122,10 +118,6 @@ class BudgetFilter {
         $this->planId = $planId;
     }
 
-    function setFacultyId($facultyId) {
-        $this->facultyId = $facultyId;
-    }
-
     function setDeptId($deptId) {
         $this->deptId = $deptId;
     }
@@ -144,6 +136,10 @@ class BudgetFilter {
 
     function setBgTypeId($bgTypeId) {
         $this->bgTypeId = $bgTypeId;
+    }
+
+    function setBgLevel($bgLevel) {
+        $this->bgLevel = $bgLevel;
     }
 
     function setPlanQ1($planQ1) {
