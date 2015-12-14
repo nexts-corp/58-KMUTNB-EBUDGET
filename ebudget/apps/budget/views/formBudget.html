@@ -344,6 +344,7 @@
             var plan = $(this).attr('data-plan');
 
             //go to form
+            /*
             var item = {};
             item.budgetPeriodId = year;
             item.budgetTypeCode = 'G';
@@ -352,8 +353,9 @@
             item.l3dPlanId = plan;
             item.formId = form;
             toFormBudget(item);
+            */
             
-
+            var param = {};
             budgetPeriodArr["year"] = year;
             budgetTypeArr["budgetTypeCode"] = 'G';
             planArr["fundgroupId"] = fund;
@@ -866,29 +868,6 @@
         }
 
         return true;
-    }
-
-    function toFormBudget(itemBudget) {
-        //ebugger;
-        var param = {};
-        param.budgetPeriodId = itemBudget.budgetPeriodId;
-        param.budgetTypeCode = itemBudget.budgetTypeCode;
-        param.deptId = itemBudget.deptId;
-        param.facultyId = itemBudget.facultyId;
-        param.fundgroupId = itemBudget.fundgroupId;
-        param.l3dPlanId = itemBudget.l3dPlanId;
-        param.planId = itemBudget.planId;
-        param.projectId = itemBudget.projectId;
-        param.deptName = itemBudget.deptName;
-        param.facultyName = itemBudget.facultyName;
-        param.planName = itemBudget.planName;
-        param.projectName = itemBudget.projectName;
-        param.l3dPlanName = itemBudget.l3dPlanName;
-        param.fundName = itemBudget.fundName;
-        param.budgetTypeName = itemBudget.budgetTypeName;
-        paramObj = param;
-        var form = "bg" + itemBudget.formId;
-        eval(form + "Form(param)");
     }
 
     function initMap() {
