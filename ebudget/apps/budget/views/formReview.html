@@ -444,7 +444,16 @@
                         html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ3" value="' + (v.usedQ3 == null ? 0 : v.usedQ3) + '" /></td>';
                         html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ4" value="' + (v.planQ4 == null ? 0 : v.planQ4) + '" /></td>';
                         html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ4" value="' + (v.usedQ4 == null ? 0 : v.usedQ4) + '" /></td>';
-                        html += '<td class="text-right"><b>' + '(%)' + '</b></td></tr>';
+
+                        html += '<td class="text-right"><b>' + '(%)' + '</b></td>';
+                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="bgLevel" value="' + v.bgLevel + '" />';
+                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="bgPeriodId" value="' + v.bgPeriodId + '" />';
+                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="planId" value="' + v.planId + '" />';
+                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="deptId" value="' + v.deptId + '" />';
+                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="fundgroupId" value="' + v.fundgroupId + '" />';
+                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="facultyId" value="' + v.facultyId + '" />';
+                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="bgTypeCode" value="' + v.bgTypeCode + '" />';
+                        html += '</tr>';
                         sum[txtId]["planSummary"] = parseFloat((v.planSummary == null ? 0 : v.planSummary));
                         sum[txtId]["usedSummary"] = parseFloat((v.usedSummary == null ? 0 : v.usedSummary));
                         sum[txtId]["planQ1"] = parseFloat((v.planQ1 == null ? 0 : v.planQ1));
@@ -502,6 +511,8 @@
                     var sumPrice = {};
                     for (var i = 0; i < lenId - 1; i++) {
                         name += arrId[i];
+                        //console.log(i + " " + lenId);
+                        //if (i == (lenId - 2)) {
                         if (typeof sumPrice[name] === "undefined") {
                             sumPrice[name] = 0;
                         }
@@ -509,10 +520,25 @@
                             sumPrice[name] += parseFloat($(this).find("input[name='" + className + "']").val());
                             // console.log($(this).find("input[name='" + className + "']").val());
                         });
+                        // }
                         if (lenId - i != 1) {
                             name += "-";
                         }
                     }
+                    $.each(sumPrice, function (key, value) {
+//                        var arrId = key.split("-");
+//                        var lenId = arrId.length;
+//                        var name = "";
+                        $("#" + key + " > td." + className).text(toNumberFormat(value));
+//                        for (var i = 0; i < lenId - 1; i++) {
+//                            name += arrId[i];
+//
+//                            $("#" + name + " > td." + className).text(toNumberFormat(value));
+//                            if (lenId - i != 1) {
+//                                name += "-";
+//                            }
+//                        }
+                    });
                     console.log(sumPrice);
                 });
 
