@@ -17,8 +17,8 @@ myApp.controller('manageDepartment', function($scope,$http,$controller,cde,nk) {
         $('[ng-app]').show();
         $scope.cmListFundgroup();
         $scope.cmList3dPlan();
-        $scope.facultyCurrent = facultyArr[$scope.param.facultyId];
-        $scope.departmentCurrent = departmentArr[$scope.param.deptId];
+        $scope.facultyCurrent = allDepArr[$scope.param.facultyId].name;
+        $scope.departmentCurrent = allDepArr[$scope.param.deptId].name;
         $scope.getSumRevenuePlan();
     };
     
