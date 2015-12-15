@@ -330,8 +330,7 @@ class Draft140Service extends CServiceBase implements IDraft140Service {
             $obj = $this->datacontext->getObject($sql);
 
             if ($obj[0]["num"] == 0) {
-
-                $repoHead = new BudgetHead();
+                $repoHead = new \apps\common\entity\BudgetHead();
                 $repoHead->setId($bgHeadId);
 
                 if (!$this->datacontext->removeObject($repoHead)) {
