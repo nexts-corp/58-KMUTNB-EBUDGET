@@ -10,8 +10,8 @@
     <div class="col-md-12">
         <label class="col-md-1 control-label">โครงการ</label>
         <div class="col-md-5">
-            <select ng-model="affList.typeId" class="form-control input-sm">
-                <option value="udf">- เลือกโครงการ -</option>
+            <select ng-model="seriesData.id" class="form-control input-sm" ng-change="fetchProject()" ng-options="lp.id as lp.name for lp in dataListProject">
+                <option value="">- เลือกโครงการ -</option>
             </select>
         </div>
     </div>
@@ -38,22 +38,7 @@
     <div id="tabContent" class="tab-content">
         <div id="tab-general" class="tab-pane active">
             
-            
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <h5>1. ชื่อโครงการ</h5>
-                        </div>
 
-                        <div class="col-md-12">
-                            <div class="col-md-2"></div>
-                            <div class="col-md-6">
-                                <input name="name" ng-model="seriesData.name" type="text" class="form-control input-sm" required>
-                                <span style="color:red" ng-show="projectForm.name.$dirty && projectForm.name.$invalid">
-                                    <span ng-show="projectForm.name.$error.required">กรุณากรอก ชื่อโครงการ</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="form-group">
                         <div class="col-md-12">
@@ -107,11 +92,11 @@
                         <div ng-repeat="listInt in dataIntegration" class="col-md-12">
                             <div class="row">
                                 <div class="col-md-offset-1 col-md-3 checkbox-custom checkbox-primary">
-                                    <input ng-model="seriesData.integrationId[$index]" ng-change="clearIntegrationDESC($index, seriesData.integrationId[$index])" type="checkbox" value="listInt.id">
+                                    <input ng-init="seriesData.integration[listInt.id].checked=false" ng-model="seriesData.integration[listInt.id].checked" ng-change="clearIntegration(listInt.id)" type="checkbox" value="listInt.id">
                                     <label>{[listInt.name]}</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input ng-disabled="!seriesData.integrationId[$index]" ng-model="seriesData.integrationDESC[$index]" type="text" class="form-control input-sm">
+                                    <input ng-init="seriesData.integration[listInt.id].desc=''" ng-model="seriesData.integration[listInt.id].desc" ng-disabled="!seriesData.integration[listInt.id].checked" type="text" class="form-control input-sm">
                                 </div>
                             </div><br>
                         </div>
@@ -125,9 +110,8 @@
                         <div class="col-md-12">
                             <label class="col-md-2 control-label text-right">แผนกลยุทธ์</label>
                             <div class="col-md-6">
-                                <select ng-model="affList.typeId" ng-init="affList.typeId = 'udf'" ng-change="fetchIssue($index, affList.typeId)" class="form-control input-sm">
-                                    <option value="udf">เลือก</option>
-                                    <option ng-repeat="list in cmDataListAffirmativeType" value="{[list.id]}">{[list.typeName]}</option>
+                                <select ng-model="seriesData.affirmative[$index].typeId" ng-change="getIssue($index,affList.typeId);" ng-options="af.typeId as af.typeName for af in dataAffirmative" class="form-control input-sm">
+                                    <option value="">เลือก</option>
                                 </select>
                             </div>
                             <div class="col-md-4">
@@ -137,9 +121,8 @@
                         <div class="col-md-12" style="margin: 5px 0;">
                             <label class="col-md-3 control-label text-right">ประเด็นยุทธศาสตร์</label>
                             <div class="col-md-5">
-                                <select ng-model="affList.issueId" ng-init="affList.issueId = 'udf'" ng-change="fetchTarget($index, affList.issueId)" class="form-control input-sm">
-                                    <option value="udf">เลือก</option>
-                                    <option ng-repeat="listIssue in affList.dataIssue" value="{[listIssue.id]}">{[listIssue.issueName]}</option>
+                                <select ng-model="seriesData.affirmative[$index].issueId" ng-change="getTarget($index);" ng-options="af.issueId as af.issueName for af in affList.dataIssue" class="form-control input-sm">
+                                    <option value="">เลือก</option>
                                 </select>
                             </div>
                         </div>
@@ -147,9 +130,8 @@
                         <div class="col-md-12" style="margin: 5px 0;">
                             <label class="col-md-3 control-label text-right">เป้าประสงค์</label>
                             <div class="col-md-5">
-                                <select ng-model="affList.targetId" ng-init="affList.targetId = 'udf'" ng-change="fetchStrategy($index, affList.typeId)" class="form-control input-sm">
-                                    <option value="udf">เลือก</option>
-                                    <option ng-repeat="listTarget in affList.dataTarget" value="{[listTarget.id]}">{[listTarget.targetName]}</option>
+                                <select ng-model="seriesData.affirmative[$index].targetId" ng-change="getStrategy($index);" ng-options="af.targetId as af.targetName for af in affList.dataTarget" class="form-control input-sm">
+                                    <option value="">เลือก</option>
                                 </select>
                             </div>
                         </div>
@@ -157,9 +139,8 @@
                         <div class="col-md-12" style="margin: 5px 0;">
                             <label class="col-md-3 control-label text-right" for="xxx">กลยุทธ์</label>
                             <div class="col-md-5">
-                                <select ng-model="affList.strategyId" ng-init="affList.strategyId = 'udf'" ng-change="seriesData.affirmative[$index].strategyId = affList.strategyId" class="form-control input-sm">
-                                    <option value="udf">เลือก</option>
-                                    <option ng-repeat="listStrategy in affList.dataStrategy" value="{[listStrategy.id]}">{[listStrategy.strategyName]}</option>
+                                <select ng-model="seriesData.affirmative[$index].strategyId" ng-options="af.strategyId as af.strategyName for af in affList.dataStrategy" class="form-control input-sm">
+                                    <option value="">เลือก</option>
                                 </select>
                             </div>
                         </div>
@@ -212,7 +193,7 @@
                         <div class="col-md-12">
                             <div class="col-md-2"></div>
                             <div class="col-md-6">
-                                <textarea ng-model="seriesData.benefit" type="text" class="form-control" rows="5"></textarea>
+                                <textarea ng-model="seriesData.benefits" type="text" class="form-control" rows="5"></textarea>
                             </div>
                         </div>
                     </div>
@@ -290,8 +271,8 @@
                                 </tr>
                                 <tr ng-repeat="listOpe in seriesData.operating">
                                     <td><input ng-model="listOpe.operatingName" type="text" class="form-control input-sm"></td>
-                                    <td><input ng-model="listOpe.timeStart" type="text" class="form-control input-sm"></td>
-                                    <td><input ng-model="listOpe.timeEnd" type="text" class="form-control input-sm"></td>
+                                    <td><input ng-model="listOpe.timeStart" type="text" class="form-control input-sm" nk-date></td>
+                                    <td><input ng-model="listOpe.timeEnd" type="text" class="form-control input-sm" nk-date></td>
                                     <td class="text-center">
                                         <button ng-click="operatingManage('splice', $index)" class="btn btn-default"><i class="fa fa-trash"></i> ลบ</button>
                                     </td>
@@ -315,11 +296,11 @@
                             <div style="margin: 5px 0;" class="col-md-12">
                                 <label class="col-md-2 control-label text-right">วันที่เริ่มต้น</label>
                                 <div class="col-md-3">
-                                    <input ng-model="seriesData.timeStart" type="text" class="form-control input-sm ng-pristine ng-valid ng-touched">
+                                    <input ng-model="seriesData.timeStart" type="text" class="form-control input-sm ng-pristine ng-valid ng-touched" nk-date>
                                 </div>
                                 <label class="col-md-1 control-label text-right">วันที่สิ้นสุด</label>
                                 <div class="col-md-3">
-                                    <input ng-model="seriesData.timeEnd" type="text" class="form-control input-sm ng-pristine ng-valid ng-touched">
+                                    <input ng-model="seriesData.timeEnd" type="text" class="form-control input-sm ng-pristine ng-valid ng-touched" nk-date>
                                 </div>
                             </div>
                         </div>
@@ -335,11 +316,11 @@
                 <div class="col-md-12" style="margin: 5px 0;">
                     <label class="col-md-2 control-label text-right">ตัวเลข</label>
                     <div class="col-md-3">
-                        <input ng-model="seriesData.budgetAmount" type="text" class="form-control input-sm ng-pristine ng-valid ng-touched">
+                        <input ng-model="seriesData.budgetEstAmount" type="text" class="form-control input-sm ng-pristine ng-valid ng-touched">
                     </div>
                     <label class="col-md-1 control-label text-right">ตัวอักษร</label>
                     <div class="col-md-3">
-                        <input ng-model="seriesData.budgetText" type="text" class="form-control input-sm ng-pristine ng-valid ng-touched">
+                        <input ng-model="seriesData.budgetEstText" type="text" class="form-control input-sm ng-pristine ng-valid ng-touched">
                     </div>
                 </div>
                 <div class="col-md-12" style="margin: 5px 0;">
@@ -360,8 +341,8 @@
                     </div>
                     <div ng-repeat="listSub in dataSubsidies" class="col-md-6">
                         <div class="row">
-                            <div class="col-md-offset-2 col-md-10 checkbox-custom checkbox-primary">
-                                <input ng-model="seriesData.subsidies[listSub.id]" type="checkbox" value="{[listSub.id]}">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input ng-model="seriesData.budgetTypeId" type="radio" value="{[listSub.id]}">
                                 <label>{[listSub.typeName]}</label>
                             </div>
                         </div><br>
@@ -375,8 +356,8 @@
                     </div>
                     <div ng-repeat="listPlan in dataPlan" class="col-md-6">
                         <div class="row">
-                            <div class="col-md-offset-2 col-md-10 checkbox-custom checkbox-primary">
-                                <input ng-model="seriesData.Plan[listPlan.id]" type="checkbox" value="{[listPlan.id]}">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input ng-model="seriesData.planId" type="radio" value="{[listPlan.id]}">
                                 <label>{[listPlan.planName]}</label>
                             </div>
                         </div><br>
@@ -461,6 +442,8 @@
 </div>
 
 <div class="col-md-12 text-right">
-    <button class="btn btn-success"><i class="fa fa-save"></i> บันทึก</button>&nbsp;
+    <button class="btn btn-success" ng-click="saveProject()"><i class="fa fa-save"></i> บันทึก</button>&nbsp;
     <button class="btn btn-default"><i class="fa fa-trash"></i> ล้างข้อมูล</button>
 </div>
+
+{[nkCloak()]}

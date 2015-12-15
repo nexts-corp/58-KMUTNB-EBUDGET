@@ -8,10 +8,16 @@ namespace apps\common\entity;
  */
 class BudgetExpenseIntegration extends EntityBase {
 
-    /** @Column(type="integer",length=11, name="BUDGETEXPENSEID") */
+
+    
+    /** 
+     * @Id 
+     * @Column(type="integer",length=11, name="BUDGETEXPENSEID") */
     public $expenseId;
 
-    /** @Column(type="integer",length=11, name="INTEGRATIONID") */
+    /**
+     * @Id
+     * @Column(type="integer",length=11, name="INTEGRATIONID") */
     public $integrationId;
 
     /** @Column(type="integer",length=11, name="DEPARTMENTID") */
@@ -26,6 +32,7 @@ class BudgetExpenseIntegration extends EntityBase {
     /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
     public $updater;
 
+    
     function getExpenseId() {
         return $this->expenseId;
     }
@@ -50,6 +57,8 @@ class BudgetExpenseIntegration extends EntityBase {
         return $this->updater;
     }
 
+ 
+    
     function setExpenseId($expenseId) {
         $this->expenseId = $expenseId;
     }

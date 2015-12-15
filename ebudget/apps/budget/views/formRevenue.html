@@ -129,7 +129,7 @@
 
             <!-- divForm AngularJs -->
             <div ng-show="activeNg">
-                <div ng-if="activeTemplate === 'project'" ng-controller="projectForm" data-ng-init="init()">
+                <div ng-if="activeTemplate === 'project'" class="nk-cloak" ng-controller="projectForm" data-ng-init="init()">
                     <project-template></project-template>
                 </div>
                 <div ng-if="activeTemplate === 'manageDepartment'" ng-controller="manageDepartment" data-ng-init="init()" nk-cloak>
@@ -138,19 +138,7 @@
             </div>
 
             <!-- divForm AngularJs -->
-            <!-- 
-            <div ng-show="!activeNg" id="divForm" class="col-md-12" style="display: none;"></div>
-            <div id="divAttachment" class="col-md-12" style="display: none;"></div>
-            
-            <div ng-show="activeNg">
-                <div ng-if="activeTemplate === 'project'" ng-controller="projectForm" data-ng-init="init()">
-                    <project-template></project-template>
-                </div>
-                <div ng-if="activeTemplate === 'manageDepartment'" ng-controller="manageDepartment" data-ng-init="init()">
-                    <managedepartment-template></managedepartment-template>
-                </div>
-            </div>
-            -->
+
         </div>
         <!--  row  -->
     </div>
