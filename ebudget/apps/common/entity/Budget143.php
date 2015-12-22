@@ -81,6 +81,9 @@ class Budget143 extends EntityBase {
     /** @Column(type="string",length=18, name="BUDGETSUMMARY") */
     public $bgSummary;
 
+    /** @Column(type="string",length=10, name="STATUS") */
+    public $status;
+
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
 
@@ -177,6 +180,10 @@ class Budget143 extends EntityBase {
 
     function getBgSummary() {
         return $this->bgSummary;
+    }
+
+    function getStatus() {
+        return $this->status;
     }
 
     function getCreator() {
@@ -277,6 +284,10 @@ class Budget143 extends EntityBase {
 
     function setBgSummary($bgSummary) {
         $this->bgSummary = $bgSummary;
+    }
+
+    function setStatus($status) {
+        $this->status = $status;
     }
 
     function setCreator($creator) {
