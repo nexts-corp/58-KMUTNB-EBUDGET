@@ -1,0 +1,100 @@
+{{> header}}
+<div role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">{{#i18n}}memberinfo{{/i18n}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">เพิ่มผู้ใช้งาน</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr class="tall dashboard">
+</div>
+<div id="create"></div>
+{{> footer}}
+<script>
+    
+$( document ).ready(function() {
+  getHTML('create', '{{_context_path}}/api/member/Member/form', null);
+  
+});    
+function btsave() {
+    
+        
+        var data = {};
+        data['username'] = $("#username").val();
+
+        var jdata = {};
+        jdata['data'] = data;
+
+
+
+        var result=callAjax(ngContextPath+'/api/member/Member/checkUsername', 'post', jsonEncode(jdata),'json');
+        console.log(result);
+        if(result.data>0){
+
+            swal({   
+                title: "เกิดข้อผิดพลาด!",   
+                text: "Username นี้มีผู้ใช้งานอยู่แล้ว กรุณาเปลี่ยน Username ใหม่อีกครั้ง",   
+                type: "error",   
+                confirmButtonText: "ตกลง" 
+            });
+            return false;
+        }else{
+
+
+                var data = {};
+                data['firstname'] = $("#firstname").val();
+                data['lastname'] = $("#lastname").val();
+                data['deptId'] = $("#deptId").val();
+                data['email'] = $("#email").val();
+                data['telephone'] = $("#tel").val();
+                data['username'] = $("#username").val();
+                data['password'] = $("#password").val();
+                data['roleId'] = $("#roleId").val();
+
+                var jdata = {};
+                jdata['data'] = data;
+                //var result=callAjax(ngContextPath+'/api/member/Member/saveMember', 'post', jsonEncode(jdata),'json');
+
+                var result=callAjax('{{_context_path}}/api/member/Member/saveMember', 'post', jsonEncode(jdata),'json');
+                console.log(result.status);
+                if (result.status == true) {
+                    //swal("saved", "คุณได้ทำการเพิมข้อมูลผู้ใช้งานเรียบร้อยแล้ว", "success");
+                    window.location.assign("{{_context_path}}/api/member/Member/manage");
+                 } else {
+                    sweetAlert("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลได้", "error");
+                    
+                 }
+                /*
+                $.post("{{_context_path}}/api/member/Member/saveMember", {data: jsonEncode(jdata)}, function (data) {
+                     alert("OK");
+                     if (data.status == true) {
+
+                        swal("Good job!", "You clicked the button!", "success");
+
+                     } else {
+                        sweetAlert("Oops...", "Something went wrong!", "error");
+
+
+                     }
+                 });
+                 */
+        }
+       
+        
+        return false;
+   
+}
+
+
+
+</script>

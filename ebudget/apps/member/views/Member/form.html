@@ -1,0 +1,101 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            {{#member}}
+            <form class="form-horizontal" method="POST" name="member" onsubmit="return btsave()">
+                
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">{{#i18n}}firstname{{/i18n}} : *</label>
+                      <div class="col-sm-9">
+                          <input type="text" class="form-control" id="firstname" name="firstname" placeholder="{{#i18n}}required{{/i18n}}{{#i18n}}firstname{{/i18n}}" value="{{firstname}}" required>
+                      </div>
+                    </div>
+                
+                    <div class="form-group">
+                      <label for="inputPassword3" class="col-sm-3 control-label">{{#i18n}}lastname{{/i18n}} : *</label>
+                      <div class="col-sm-9">
+                        <input type="text" class="form-control" id="lastname" name="lastname" placeholder="{{#i18n}}required{{/i18n}}{{#i18n}}lastname{{/i18n}}" value="{{lastname}}" required>
+                      </div>
+                    </div>
+                
+                    <div class="form-group">
+                      <label for="inputPassword3" class="col-sm-3 control-label">{{#i18n}}dept{{/i18n}} : *</label>
+                      <div class="col-sm-9">
+                        <select class="form-control" id="deptId" name="deptId" required>
+                            <option value="">- เลือกหน่วยงาน -</option>
+                            {{#dept}} 
+                            <option value="{{id}}">{{id}} {{name}}</option>
+                            {{/dept}}
+                        </select>
+                      </div>
+                    </div>
+                
+                    <div class="form-group">
+                      <label for="inputPassword3" class="col-sm-3 control-label">{{#i18n}}email{{/i18n}} :</label>
+                      <div class="col-sm-9">
+                          <input type="email" class="form-control" id="email" name="email" value="{{email}}" placeholder="{{#i18n}}required{{/i18n}}{{#i18n}}email{{/i18n}}">
+                      </div>
+                    </div>
+                
+                    <div class="form-group">
+                      <label for="inputPassword3" class="col-sm-3 control-label">{{#i18n}}tel{{/i18n}} :</label>
+                      <div class="col-sm-9">
+                          <input type="text" class="form-control" id="tel" name="tel" value="{{telephone}}"  placeholder="{{#i18n}}required{{/i18n}}{{#i18n}}tel{{/i18n}}">
+                      </div>
+                    </div>
+                    {{^checkPassword}}
+                    <div class="form-group">
+                      <label for="inputPassword3" class="col-sm-3 control-label">{{#i18n}}username{{/i18n}} : *</label>
+                      <div class="col-sm-9">
+                          <input type="text" class="form-control" id="username" name="username"  value="{{username}}" placeholder="{{#i18n}}required{{/i18n}} {{#i18n}}username{{/i18n}}" required>
+                      </div>
+                    </div>
+                
+                    <div class="form-group">
+                      <label for="inputPassword3" class="col-sm-3 control-label">{{#i18n}}password{{/i18n}} : *</label>
+                      <div class="col-sm-9">
+                          <input type="password" class="form-control" id="password" name="password" value="{{password}}" placeholder="{{#i18n}}required{{/i18n}} {{#i18n}}password{{/i18n}}" required>
+                      </div>
+                    </div>
+                    {{/checkPassword}}
+                    <!--
+                    <div class="form-group">
+                      <label for="inputPassword3" class="col-sm-3 control-label">{{#i18n}}role{{/i18n}} : *</label>
+                      <div class="col-sm-9">
+                        <select class="form-control" id="roleId" required>
+                            {{#listRole}} 
+                                <option value="{{id}}">{{role}}</option>
+                            {{/listRole}}
+                        </select>
+                      </div>
+                    </div>
+                    -->
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">&nbsp;</label>
+                        <div class="col-sm-9">
+                            <button type="submit" name="bt-save" id="bt-save" value="submit" class="btn btn-success" ><i class="fa fa-floppy-o"></i> บันทึกข้อมูล</button>
+                            <button type="reset" onclick="cancel()" class="btn btn-danger"><i class="fa fa-refresh"></i> ยกเลิก</button>
+                        </div>
+                    </div>
+                
+            </form>
+            {{/member}}
+        </div>
+
+    </div>
+</div>
+<script>
+$( document ).ready(function() {
+  var checkvalue='{{#member}}{{id}}{{/member}}';
+ 
+  if(checkvalue!=""){
+    $("#deptId").val('{{#member}}{{deptId}}{{/member}}');
+    //$("#roleId").val('{{#member}}{{roleId}}{{/member}}');
+   
+  }
+});   
+function cancel(){
+    
+    window.location.assign("{{_context_path}}/api/member/Member/manage");
+}
+</script>

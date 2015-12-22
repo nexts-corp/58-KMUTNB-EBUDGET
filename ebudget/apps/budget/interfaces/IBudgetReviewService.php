@@ -87,7 +87,7 @@ interface IBudgetReviewService
     /**
      * @name updateScheme
      * @uri /updateScheme
-     * @param apps\common\entity\BudgetScheme budget
+     * @param apps\budget\model\BudgetSchemeResult[] budget
      * @return boolean result Description
      * @description ปรับปรุงข้อมูลแผนผล
      */

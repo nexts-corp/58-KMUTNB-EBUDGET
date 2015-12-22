@@ -17,15 +17,13 @@ myApp.controller('manageDepartment', function($scope,$http,$controller,cde,nk) {
         $('[ng-app]').show();
         $scope.cmListFundgroup();
         $scope.cmList3dPlan();
-        $scope.departmentCurrent = departmentArr[$scope.param.deptId];
+        $scope.facultyCurrent = allDepArr[$scope.param.facultyId].name;
+        $scope.departmentCurrent = allDepArr[$scope.param.deptId].name;
         $scope.getSumRevenuePlan();
     };
     
+    
     $scope.fetchRevenueItemList = function () {
-        
-        if($scope.bgCategory){
-            $scope.getSumRevenue();
-        }
         
         $scope.dataRevenueItemList=[];
         if($scope.checkSelectAll()){
@@ -63,7 +61,7 @@ myApp.controller('manageDepartment', function($scope,$http,$controller,cde,nk) {
         $scope.loadSumRevenuePlan  = 1;
         $http.post(cde.getPath("getSumRevenuePlan"),{
             budgetPeriodId:$scope.param.budgetPeriodId,
-            deptId:$scope.param.deptId,
+            facultyId:$scope.param.facultyId,
             bgCategory:$scope.bgCategory
         }).then(function (response) {
             $scope.dataSumRevenuePlan = response.data.dataList;
@@ -76,20 +74,25 @@ myApp.controller('manageDepartment', function($scope,$http,$controller,cde,nk) {
         if(!$scope.dataSumRevenue){
             return 0;
         }else{
+            if($scope.dataSumRevenue[0].value===null){
+                return 0;
+            }
             return $scope.dataSumRevenue[0].value;
         }
     };
     
     $scope.getSumRevenue = function(){
-        $scope.loadSumRevenue  = 1;
-        $http.post(cde.getPath("getSumRevenue"),{
-            budgetPeriodId:$scope.param.budgetPeriodId,
-            deptId:$scope.param.deptId,
-            bgCategory:$scope.bgCategory
-        }).then(function (response) {
-            $scope.dataSumRevenue = response.data.dataList;
-            $scope.loadSumRevenue = 0;
-        });
+        if($scope.bgCategory){
+            $scope.loadSumRevenue  = 1;
+            $http.post(cde.getPath("getSumRevenue"),{
+                budgetPeriodId:$scope.param.budgetPeriodId,
+                facultyId:$scope.param.facultyId,
+                bgCategory:$scope.bgCategory
+            }).then(function (response) {
+                $scope.dataSumRevenue = response.data.dataList;
+                $scope.loadSumRevenue = 0;
+            });
+        }
     };
     
     
@@ -143,6 +146,12 @@ myApp.controller('manageDepartment', function($scope,$http,$controller,cde,nk) {
     };
     
     
+    $scope.conDataButton = function(index){
+        var indexSplit = index.split('.');
+        var arrUse = $scope.dataRevenueItemList[indexSplit[0]].sub[indexSplit[1]].data[indexSplit[2]];
+        return (arrUse.name!==arrUse.nameC) || (arrUse.value!==arrUse.valueC) || (arrUse.detail!==arrUse.detailC);
+    };
+    
     $scope.addItemPlanList = function(index){
         
         var indexSplit = index.split('.');
@@ -158,8 +167,10 @@ myApp.controller('manageDepartment', function($scope,$http,$controller,cde,nk) {
                 bgAmount:arrUse.valueText,
                 budgetTypeId:arrUse.id,
                 budgetTypeCode:'K',
-                bgCategory:$scope.bgCategory
-            }
+                bgCategory:$scope.bgCategory,
+                revenueDesc:arrUse.detailText
+            },
+            facultyId:$scope.param.facultyId
         }).then(function (response) {
             //$scope.dataRevenueItemList = response.data.dataList;
             $scope.getSumRevenue();
@@ -168,11 +179,14 @@ myApp.controller('manageDepartment', function($scope,$http,$controller,cde,nk) {
                 name:arrUse.nameText,
                 value:arrUse.valueText,
                 nameC:arrUse.nameText,
-                valueC:arrUse.valueText
+                valueC:arrUse.valueText,
+                detail:arrUse.detailText,
+                detailC:arrUse.detailText
             });
 
             arrUse.nameText = "";
             arrUse.valueText = "";
+            arrUse.detailText = "";
             $scope.toggleFocus(arrUse);
 
         });
@@ -189,13 +203,15 @@ myApp.controller('manageDepartment', function($scope,$http,$controller,cde,nk) {
             budget:{
                 id:arrUse.id,
                 revenueName:arrUse.name,
-                bgAmount:parseFloat(arrUse.value)
+                bgAmount:parseFloat(arrUse.value),
+                revenueDesc:arrUse.detail
             }
         }).then(function (response) {
             $scope.getSumRevenue();
 
             arrUse.nameC = arrUse.name;
             arrUse.valueC = arrUse.value;
+            arrUse.detailC = arrUse.detail;
         });
         
         
@@ -207,6 +223,7 @@ myApp.controller('manageDepartment', function($scope,$http,$controller,cde,nk) {
         
         arrUse.name = arrUse.nameC;
         arrUse.value = arrUse.valueC;
+        arrUse.detail = arrUse.detailC;
     };
     
     $scope.delItemPlanList = function(index,id){
@@ -277,6 +294,37 @@ myApp.controller('manageDepartment', function($scope,$http,$controller,cde,nk) {
             return val;
         }
     };
+    
+    
+    
+    
+    var indexForDetail = null;
+    
+    $scope.openDetail = function(text,index){
+        $("#modal-detail").modal();
+        $scope.textDetail = text;
+        indexForDetail = index;
+    };
+    
+    $scope.saveDetail = function(){
+        
+        var indexSplit = indexForDetail.split('.');
+        var arrUse = $scope.dataRevenueItemList[indexSplit[0]].sub[indexSplit[1]];
+        
+        
+        
+        if(indexSplit.length===2){
+            
+            arrUse.detailText = $scope.textDetail;
+            
+        }else if(indexSplit.length===3){
+            
+            arrUse.data[indexSplit[2]].detail = $scope.textDetail;
+            
+        }
+    };
+    
+   
     
     
     

@@ -129,7 +129,7 @@
 
             <!-- divForm AngularJs -->
             <div ng-show="activeNg">
-                <div ng-if="activeTemplate === 'project'" ng-controller="projectForm" data-ng-init="init()">
+                <div ng-if="activeTemplate === 'project'" class="nk-cloak" ng-controller="projectForm" data-ng-init="init()">
                     <project-template></project-template>
                 </div>
                 <div ng-if="activeTemplate === 'manageDepartment'" ng-controller="manageDepartment" data-ng-init="init()" nk-cloak>
@@ -138,19 +138,7 @@
             </div>
 
             <!-- divForm AngularJs -->
-            <!-- 
-            <div ng-show="!activeNg" id="divForm" class="col-md-12" style="display: none;"></div>
-            <div id="divAttachment" class="col-md-12" style="display: none;"></div>
-            
-            <div ng-show="activeNg">
-                <div ng-if="activeTemplate === 'project'" ng-controller="projectForm" data-ng-init="init()">
-                    <project-template></project-template>
-                </div>
-                <div ng-if="activeTemplate === 'manageDepartment'" ng-controller="manageDepartment" data-ng-init="init()">
-                    <managedepartment-template></managedepartment-template>
-                </div>
-            </div>
-            -->
+
         </div>
         <!--  row  -->
     </div>
@@ -196,6 +184,8 @@
     var fundgroupArr = {};
     var facultyArr = {};
     var departmentArr = {};
+    var allDepArr = listsAllDepartment();
+    
     //        var budgetPeriodArr = {2557: 2557, 2558: 2558, 2559: 2559};
     //        var budgetTypeArr = {G: "เงินงบประมาณแผ่นดิน", K: "เงินรายได้", U: "เงินงบประมาณแผ่นดินและเงินรายได้"};
     //        var planArr = {1: "ดำเนินการตามกรอบข้อตกลงของประชาคมอาเซียน", 2: "ขยายโอกาสและพัฒนาคุณภาพการศึกษา", 3: "ส่งเสริมการวิจัยและพัฒนา"};
@@ -251,14 +241,25 @@
             var plan = $(this).attr('data-plan');
 
             //go to form
-            var item = {};
-            item.budgetPeriodId = year;            
-            item.budgetTypeCode = 'K';
-            item.deptId = dept;
-            item.fundgroupId = fund;
-            item.l3dPlanId = plan;
-            item.formId = form;
-            toFormBudget(item);
+            var param = {};
+            param.budgetPeriodId = year;            
+            param.budgetTypeCode = 'K';
+            param.facultyId = allDepArr[dept].masterId;
+            param.deptId = dept;
+            param.fundgroupId = fund;
+            param.l3dPlanId = plan;
+            param.formId = form;
+            
+            var $scopeJS = angular.element(document.querySelector('[ng-app=formBudget]')).scope();
+            $scopeJS.$apply(function () {
+                if(param.formId==="500"){
+                    form="manageDepartment";
+                }
+                $scopeJS.openForm(form, param);
+            });
+            toggleShow("form");
+            
+            //toFormBudget(item);
         });
     });
     function listsFormSaved() {
@@ -290,6 +291,8 @@
 
             $("#table tbody").html(html);
         }
+        
+        
     }
 
     function listsForm(type) {
@@ -525,6 +528,20 @@
 
         $("#deptId").html(html).trigger("change");
     }
+    
+    function listsAllDepartment(facultyId) {
+        var html = '<option value="" selected="selected">เลือก</option>';
+        var datas = callAjax("{{_context_path}}/api/common/lookup/listDepartment", "post", {}, "json");
+        var list = {};
+        if (typeof datas !== "undefined" && datas !== null) {
+            $.each(datas["lists"], function (key, value) {
+                list[value["id"]] = {name:value["name"],masterId:value["masterId"]};
+            });
+        }
+        return list;
+    }
+    
+    
 
     function toggleShow(option) {
 

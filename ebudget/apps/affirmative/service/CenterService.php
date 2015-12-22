@@ -289,6 +289,13 @@ class CenterService extends CServiceBase implements ICenterService {
                 'underline' => \PHPExcel_Style_Font::UNDERLINE_SINGLE
             )
         );
+        $border = array(
+            'borders' => array(
+                'allborders' => array(
+                    'style' => \PHPExcel_Style_Border::BORDER_THIN
+                )
+            )
+        );
 
         $objPHPExcel = new \PHPExcel();
         $objWorkSheet = $objPHPExcel->createSheet(0);
@@ -411,6 +418,7 @@ class CenterService extends CServiceBase implements ICenterService {
 
 
         $objPHPExcel->getDefaultStyle()->getAlignment()->setWrapText(true);
+        $objWorkSheet->getStyle('A1:D'.($row-1))->applyFromArray($border);
 
         //create excel file
         ob_clean();

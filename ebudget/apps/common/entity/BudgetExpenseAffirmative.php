@@ -8,16 +8,28 @@ namespace apps\common\entity;
  */
 class BudgetExpenseAffirmative extends EntityBase {
 
-    /** @Column(type="integer",length=11, name="BUDGETEXPENSEID") */
+    /** 
+     * @Id
+     * @Column(type="integer",length=11, name="BUDGETEXPENSEID") */
     public $expenseId;
+    
+    /**
+     * @Column(type="integer",length=11, name="AFFIRMATIVETYPEID") */
+    public $typeId;
 
-    /** @Column(type="integer",length=11, name="AFFIRMATIVEISSUE") */
+    /**
+     * @Id
+     * @Column(type="integer",length=11, name="AFFIRMATIVEISSUEID") */
     public $issueId;
 
-    /** @Column(type="integer",length=11, name="AFFIRMATIVETARGETID") */
+    /**
+     * @Id
+     * @Column(type="integer",length=11, name="AFFIRMATIVETARGETID") */
     public $targetId;
 
-    /** @Column(type="integer",length=11, name="AFFIRMATIVESTRATEGYID") */
+    /** 
+     * @Id
+     * @Column(type="integer",length=11, name="AFFIRMATIVESTRATEGYID") */
     public $strategyId;
 
     /** @Column(type="string",length=20, name="CREATEUSERID") */
@@ -26,8 +38,13 @@ class BudgetExpenseAffirmative extends EntityBase {
     /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
     public $updater;
 
+
     function getExpenseId() {
         return $this->expenseId;
+    }
+    
+    function getTypeId() {
+        return $this->typeId;
     }
 
     function getIssueId() {
@@ -52,6 +69,10 @@ class BudgetExpenseAffirmative extends EntityBase {
 
     function setExpenseId($expenseId) {
         $this->expenseId = $expenseId;
+    }
+    
+    function setTypeId($typeId) {
+        $this->typeId = $typeId;
     }
 
     function setIssueId($issueId) {

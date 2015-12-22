@@ -44,6 +44,8 @@ class Member extends EntityBase {
 
     /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
     public $updater;
+    
+    public $roleId;
 
     function getId() {
         return $this->id;
@@ -132,5 +134,52 @@ class Member extends EntityBase {
     function setUpdater($updater) {
         $this->updater = $updater;
     }
+    
+    public function checkPassword(){
+        //echo $this->id."xxxxxxxx";
+       // print_r($this);
+        if(!empty($this->id)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    function fullname(){
+        return $this->firstname." ".$this->lastname;
+    }
+    
+    public function getRoleId() {
+        return $this->roleId;
+    }
+
+    public function setRoleId($roleId) {
+        $this->roleId = $roleId;
+    }
+    
+    //function __consstruct(){
+        
+    //}
+   // function __construct() {
+        
+   // }
+    //public function __call($name, $arguments) {
+        
+   // }
+
+    
+//    function __construct($id=null, $username=null, $password=null, $deptId=null
+//            , $firstname=null, $lastname=null, $email=null, $telephone=null) {
+//        $this->id = $id;
+//        $this->username = $username;
+//        $this->password = $password;
+//        $this->deptId = $deptId;
+//        $this->firstname = $firstname;
+//        $this->lastname = $lastname;
+//        $this->email = $email;
+//        $this->telephone = $telephone;
+//    }
+
+
 
 }

@@ -49,7 +49,7 @@ class LookupService extends CServiceBase implements ILookupService {
     public function listDepartment($facultyId) {
         $repo = new L3D\Department();
         $repo->setDeptStatus("Y");
-        if (isset($facultyId)) {
+        if (isset($facultyId) && $facultyId!=null ) {
             $repo->setMasterId($facultyId);
         }
         $data = $this->datacontext->getObject($repo);
@@ -162,6 +162,7 @@ class LookupService extends CServiceBase implements ILookupService {
             $result[$key]["id"] = $value->id;
             $result[$key]["name"] = $value->planName;
         }
+
         return $result;
     }
 

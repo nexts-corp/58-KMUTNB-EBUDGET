@@ -49,10 +49,23 @@ class ResultService extends CServiceBase implements IResultService {
 
     public function listsDepartment(){
         $sql = "SELECT"
-                ." ad.*, rd.RoundId, rd.RoundName FROM View_Activity_Department ad"
-                ." CROSS JOIN Affirmative_Round rd"
+                ."  ad.ActivityId, ad.ActivityName, ad.ActivityCode, ad.DepartmentId,"
+                ." ad.DepartmentName, rd.RoundId, rd.RoundName,"
+                ." COUNT(fl.FinalId) AS cFinal, COUNT(rt.ResultId) AS cResult"
+            ." FROM View_Activity_Department ad"
+            ." CROSS JOIN Affirmative_Round rd"
+            ." LEFT OUTER JOIN Affirmative_Final fl ON fl.PeriodCode = rd.PeriodCode AND fl.DepartmentId = ad.DepartmentId"
+            ." LEFT OUTER JOIN Affirmative_Result rt ON ResultId ="
+	            ." ("
+		            ." SELECT TOP 1 ResultId"
+		            ." FROM Affirmative_Result"
+		            ." WHERE FinalId = fl.FinalId AND RoundId <= rd.RoundId"
+		            ." ORDER BY RoundId DESC"
+	            ." )"
             ." WHERE rd.PeriodCode = :year"
-            ." ORDER BY ad.ActivityId ASC";
+            ." GROUP BY ad.DepartmentId, ad.DepartmentName, ad.ActivityId, ad.ActivityName, ad.ActivityCode, rd.RoundId, rd.RoundName"
+            ." ORDER BY ActivityId ASC";
+
         $param = array(
             "year" => $this->getPeriod()->year
         );
@@ -68,7 +81,9 @@ class ResultService extends CServiceBase implements IResultService {
 
             $group[$value["ActivityId"]][$value["DepartmentId"]][] = array(
                 "roundId" => $value["RoundId"],
-                "roundName" => $value["RoundName"]
+                "roundName" => $value["RoundName"],
+                "cFinal" => $value["cFinal"],
+                "cResult" => $value["cResult"]
             );
         }
 
@@ -123,20 +138,31 @@ class ResultService extends CServiceBase implements IResultService {
         $draft->departmentId = $deptId;
         $draftData = $this->datacontext->getObject($draft);*/
         $sql = "SELECT"
-                ." fl.finalId, fl.periodCode, fl.departmentId, fl.mainId, fl.mainSeq, fl.typeId, fl.typeSeq, fl.hasIssue,"
-                ." fl.issueId, fl.issueSeq, fl.targetId, fl.targetSeq, fl.kpiId, fl.kpiSeq, fl.kpiName, fl.unitId, fl.unitName,"
-                ." fl.kpiGoal, fl.score1, fl.score2, fl.score3, fl.score4, fl.score5, rt.resultId, rt.roundId, rt.detail,"
-                ." rt.dividend, rt.divisor, rt.result, rt.score, rt.isSuccess, rt.remark, rt.attachment"
-            ." FROM ".$this->entA."\\AffirmativeFinal fl"
-            ." LEFT OUTER JOIN ".$this->entA."\\AffirmativeResult rt WITH rt.finalId = fl.finalId AND rt.roundId = :round"
-            ." WHERE fl.periodCode = :period AND fl.departmentId = :dept";
+                ." fl.FinalId AS finalId, fl.PeriodCode AS periodCode, fl.DepartmentId AS departmentId,"
+                ." fl.MainId AS mainId, fl.MainSeq AS mainSeq, fl.TypeId AS typeId, fl.TypeSeq AS typeSeq,"
+                ." fl.HasIssue AS hasIssue, fl.IssueId AS issueId, fl.IssueSeq AS issueSeq, fl.TargetId AS targetId,"
+                ." fl.TargetSeq AS targetSeq, fl.KpiId AS kpiId, fl.KpiSeq AS kpiSeq, fl.KpiName AS kpiName,"
+                ." fl.UnitId AS unitId, fl.UnitName AS unitName, fl.KpiGoal AS kpiGoal, fl.Score1 AS score1,"
+                ." fl.Score2 AS score2, fl.Score3 AS score3, fl.Score4 AS score4, fl.Score5 AS score5,"
+                ." rt.ResultId AS resultId, rt.RoundId AS roundId, rt.Detail AS detail, CAST(rt.Dividend AS varchar) AS dividend,"
+                ." CAST(rt.Divisor AS varchar) AS divisor, CAST(rt.Result AS varchar) AS result, CAST(rt.Score AS varchar) AS score, rt.IsSuccess AS isSuccess,"
+                ." rt.Remark AS remark, rt.Attachment AS attachment"
+            ." FROM Affirmative_Final fl"
+            ." LEFT OUTER JOIN Affirmative_Result rt ON ResultId = "
+                ."("
+                    ." SELECT TOP 1 ResultId"
+                    ." FROM Affirmative_Result"
+                    ." WHERE FinalId = fl.FinalId AND RoundId <= :round"
+                    ." ORDER BY RoundId DESC"
+                .")"
+            ." WHERE fl.PeriodCode = :period AND fl.DepartmentId = :dept";
         $param = array(
             "round" => $roundId,
             "period" => $this->getPeriod()->year,
             "dept" => $deptId
         );
 
-        $draftData = $this->datacontext->getObject($sql, $param);
+        $draftData = $this->datacontext->pdoQuery($sql, $param);
         //return $draftData;
         foreach ($draftData as $keyDraft => $valueDraft) {
             if ($valueDraft["hasIssue"] == "Y") {
@@ -223,10 +249,8 @@ class ResultService extends CServiceBase implements IResultService {
         $check->roundId = $result["roundId"];
         $dataCk = $this->datacontext->getObject($check);
 
-        $hasFile = $dataCk[0]->attachment;
-
-        $fileReturn = $dataCk[0]->attachment;
-
+        $hasFile = '';
+        $fileReturn = '';
         if(count($dataCk) == 0){
             $check->detail = $result["detail"];
             $check->dividend = $result["dividend"];
@@ -241,6 +265,10 @@ class ResultService extends CServiceBase implements IResultService {
             }
         }
         else{
+            $hasFile = $dataCk[0]->attachment;
+
+            $fileReturn = $dataCk[0]->attachment;
+
             $dataCk[0]->detail = $result["detail"];
             $dataCk[0]->dividend = $result["dividend"];
             $dataCk[0]->divisor = $result["divisor"];
@@ -319,10 +347,19 @@ class ResultService extends CServiceBase implements IResultService {
             )
         );
 
+        $border = array(
+            'borders' => array(
+                'allborders' => array(
+                    'style' => \PHPExcel_Style_Border::BORDER_THIN
+                )
+            )
+        );
+
         $objPHPExcel = new \PHPExcel();
         $objWorkSheet = $objPHPExcel->createSheet(0);
         $objWorkSheet = $objPHPExcel->setActiveSheetIndex(0);
         $objWorkSheet = $objPHPExcel->getActiveSheet();
+
 
         $title = "Sheet 1";
         $objWorkSheet -> setTitle($title);
@@ -343,7 +380,7 @@ class ResultService extends CServiceBase implements IResultService {
         //return $round->roundName;
 
         $row = 1;
-        $objWorkSheet->mergeCells('A1:J2')
+        $objWorkSheet->mergeCells('A1:N2')
             ->setCellValueByColumnAndRow(0, $row, "รายงานผลการดำเนินงานตัวชี้วัดคำรับรองการปฏิบัติงาน ประจำปีงบประมาณ พ.ศ.".$this->getPeriod()->year." ".$round["roundName"]."\n ประเภทส่วนงาน".$dept->activityName." : ".$dept->departmentName)
             ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($center)->setWrapText(true);
 
@@ -604,6 +641,9 @@ class ResultService extends CServiceBase implements IResultService {
         }
 
         $objPHPExcel->getDefaultStyle()->getAlignment()->setWrapText(true);
+
+        $objWorkSheet->getStyle('A1:N'.($row-1))->applyFromArray($border);
+
 
         //create excel file
         ob_clean();

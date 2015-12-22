@@ -6,7 +6,7 @@ myApp.directive('projectTemplate', function() {
 });
 
 
-myApp.controller('projectForm', function($scope,$http,$controller,cde) {
+myApp.controller('projectForm', function($scope,$http,$controller,cde,nk) {
     $controller('cmListController', {$scope: $scope});
     
     
@@ -21,17 +21,12 @@ myApp.controller('projectForm', function($scope,$http,$controller,cde) {
 
     $scope.init = function() {
         //console.log(JSON.stringify($scope.param, null, 4));
-        cde.setPath('budget','allocate');
-        
+        cde.setPath('budget','projectUniver');
         $scope.dataExpenseProject = [];
         
         //ข้อมูลเบื้องต้น
-        $scope.cmListAffirmativeType();
-        $scope.fetchProjectType();
-        $scope.fetchIntegration();
-        $scope.fetchSubsidies();
-        $scope.fetchPlan();
-        $scope.fetchBudgetType();
+        $scope.textProjectName = "- เลือกโครงการ -";
+        $scope.getLatouts();
         
         //ข้อมูลพร้อมส่ง
         $scope.seriesData = {
@@ -64,41 +59,148 @@ myApp.controller('projectForm', function($scope,$http,$controller,cde) {
     };
     
     
+    $scope.getLatouts = function(){
+        $scope.loadLayouts= true;
+        $http.post(cde.getPath("getLayouts"),{
+            budgetPeriodId:$scope.param.budgetPeriodId,
+            facultyId:$scope.param.facultyId
+        }).then(function (response) {
+            var layouts = response.data.layouts;
+            $scope.dataIntegration = layouts.integration;
+            $scope.dataProjectType = layouts.projectType;
+            $scope.dataSubsidies = layouts.subsidies;
+            $scope.dataPlan = layouts.plan;
+            $scope.dataBudgetType = layouts.budgetType;
+            $scope.dataAffirmative = layouts.affirmative;
+            $scope.dataListProject = layouts.listProject;
+            $scope.loadLayouts = false;
+            
+            console.log(layouts);
+        });
+    };
     
     
     
-    $scope.fetchIssue = function(index,id){
+    $scope.fetchProject = function(){
         
-        $http.post(ngContextPath+"/api/common/lookup/listAffirmativeIssue",{id:id}).then(function (response) {
-            $scope.affirmative[index].dataIssue = response.data.lists;
-            $scope.affirmative[index].issueId = "udf";
-            $scope.affirmative[index].dataTarget = [];
-            $scope.affirmative[index].targetId = "udf";
-            $scope.affirmative[index].dataStrategy = [];
-            $scope.affirmative[index].strategyId = "udf";
-            $scope.seriesData.affirmative[index].typeId=id;
-        });
         
+        
+        if($scope.seriesData.id){
+            for(var i=0;i<$scope.dataListProject.length;i++){
+                if($scope.dataListProject[i].id===parseInt($scope.seriesData.id)){
+                    $scope.seriesData.budgetHeadId = $scope.dataListProject[i].budgetHeadId;
+                    $scope.seriesData.deptId = $scope.dataListProject[i].deptId;
+                }
+            }
+
+            $scope.loadProject = true;
+            $http.post(cde.getPath("fetchProject"),{
+                id:$scope.seriesData.id
+            }).then(function (response) {
+                var res = response.data.dataList;
+                var dataBE = res.dataBE;
+                var dataBEI = res.dataBEI;
+                var dataBEA = res.dataBEA;
+                var dataBEO = res.dataBEO;
+                
+                
+                $scope.seriesData.responder = dataBE.responder;
+                $scope.seriesData.director = dataBE.director;
+                $scope.seriesData.projectTypeId = dataBE.projectTypeId;
+                $scope.seriesData.rationale = dataBE.rationale;
+                $scope.seriesData.objective = dataBE.objective;
+                $scope.seriesData.benefits = dataBE.benefits;
+                $scope.seriesData.target = dataBE.target;
+                $scope.seriesData.budgetEstAmount = dataBE.budgetEstAmount;
+                $scope.seriesData.budgetEstText = dataBE.budgetEstText;
+                $scope.seriesData.timeStart = nk.date(dataBE.timeStart.date);
+                $scope.seriesData.timeEnd = nk.date(dataBE.timeEnd.date);
+                $scope.seriesData.budgetTypeId = dataBE.budgetTypeId;
+                $scope.seriesData.planId = dataBE.planId;
+                
+                /*การบูรณาการโครงการ*/
+                for(var i=0;i<dataBEI.length;i++){
+                    //console.log(dataBEI[i].integrationId);
+                    var indexInte = dataBEI[i].integrationId;
+                    $scope.seriesData.integration[indexInte].checked = true;
+                    $scope.seriesData.integration[indexInte].desc = dataBEI[i].desc;
+                }
+                
+                /*ความเชื่อมโยงสอดคล้องกับแผนกลยุทธ์*/
+                $scope.affirmative=[];
+                $scope.seriesData.affirmative=[];
+                for(var i=0;i<dataBEA.length;i++){
+                    $scope.affirmative.push({
+                        dataIssue:[],
+                        dataTarget:[],
+                        dataStrategy:[]
+                    });
+                    $scope.seriesData.affirmative.push({
+                        typeId:dataBEA[i].typeId,
+                        issueId:dataBEA[i].issueId,
+                        targetId:dataBEA[i].targetId,
+                        strategyId:dataBEA[i].strategyId
+                    });
+                    $scope.triggerAFF();
+                }
+                
+                
+                /*ขั้นตอนการดำเนินการ*/
+                $scope.seriesData.operating = [];
+                for(var i=0;i<dataBEO.length;i++){
+                    $scope.seriesData.operating.push({
+                        operatingName:dataBEO[i].operName,
+                        timeStart:nk.date(dataBEO[i].timeStart.date),
+                        timeEnd:nk.date(dataBEO[i].timeEnd.date)
+                    });
+                };
+                
+                
+                console.log(response.data.dataList);
+                $scope.loadProject = false;
+            });
+            
+            
+        }else{
+            $scope.textProjectName = "- เลือกโครงการ -";
+        }
     };
     
-    $scope.fetchTarget = function(index,id){
-        $http.post(ngContextPath+"/api/common/lookup/listAffirmativeTarget",{id:id}).then(function (response) {
-            $scope.affirmative[index].dataTarget = response.data.lists;
-            $scope.affirmative[index].targetId = "udf";
-            $scope.affirmative[index].dataStrategy = [];
-            $scope.affirmative[index].strategyId = "udf";
-            $scope.seriesData.affirmative[index].issueId=id;
-        });
+    
+    
+    
+    
+    /*การบูรณาการโครงการ*/
+    $scope.clearIntegration = function(index){
+        var arrUse = $scope.seriesData.integration;
+        if(!arrUse[index].checked){
+            arrUse[index].desc="";
+        }
     };
     
     
-    $scope.fetchStrategy = function(index,id){
-        $http.post(ngContextPath+"/api/common/lookup/listAffirmativeStrategy",{id:id}).then(function (response) {
-            $scope.affirmative[index].dataStrategy = response.data.lists;
-            $scope.affirmative[index].strategyId = "udf";
-            $scope.seriesData.affirmative[index].targetId=id;
-        });
+    
+    
+    /*ความเชื่อมโยงสอดคล้องกับแผนกลยุทธ์*/
+    
+    $scope.getIssue = function(index){
+        $scope.affirmative[index].dataIssue = $scope.dataAffirmative[
+            nk.findObjectIndex($scope.dataAffirmative,'typeId',$scope.seriesData.affirmative[index].typeId)
+        ].issue;
     };
+    
+    $scope.getTarget = function(index){
+        $scope.affirmative[index].dataTarget = $scope.affirmative[index].dataIssue[
+            nk.findObjectIndex($scope.affirmative[index].dataIssue,'issueId',$scope.seriesData.affirmative[index].issueId)
+        ].target;
+    };
+    
+    $scope.getStrategy = function(index){
+        $scope.affirmative[index].dataStrategy = $scope.affirmative[index].dataTarget[
+            nk.findObjectIndex($scope.affirmative[index].dataTarget,'targetId',$scope.seriesData.affirmative[index].targetId)
+        ].strategy;
+    };
+    
     
     $scope.affirmativeManage = function(action,index){
         if(action==="push"){
@@ -110,30 +212,19 @@ myApp.controller('projectForm', function($scope,$http,$controller,cde) {
         }
     };
     
-    
-    
-    
-    
-    $scope.fetchProjectType = function(){
-        $http.post(ngContextPath+"/api/common/lookup/listProjectType").then(function (response) {
-            $scope.dataProjectType = response.data.lists;
-        });
-    };
-    
-    
-    
-    
-    $scope.fetchIntegration = function(){
-        $http.post(ngContextPath+"/api/common/lookup/listIntegration").then(function (response) {
-            $scope.dataIntegration = response.data.lists;
-        });
-    };
-    
-    $scope.clearIntegrationDESC = function(index,val){
-        if(!val){
-            $scope.seriesData.integrationDESC[index]="";
+    $scope.triggerAFF = function(){
+        for(var i=0;i<$scope.affirmative.length;i++){
+            $scope.getIssue(i,$scope.seriesData.affirmative[i].typeId);
+            $scope.getTarget(i,$scope.seriesData.affirmative[i].issueId);
+            $scope.getStrategy(i,$scope.seriesData.affirmative[i].strategyId);
         }
     };
+    
+    
+    
+    
+    
+    
     
     
     
@@ -160,30 +251,6 @@ myApp.controller('projectForm', function($scope,$http,$controller,cde) {
     };
     
     
-    // # 13. แหล่งเงิน/ประเภทงบประมาณที่ใช้/แผนงาน
-        $scope.fetchSubsidies = function(){
-            $http.post(ngContextPath+"/api/budget/projectUniver/fetchSubsidies").then(function (response) {
-                $scope.dataSubsidies = response.data.dataList;
-            });
-        };
-        
-        
-    // # แผนงาน
-        $scope.fetchPlan = function(){
-            $http.post(ngContextPath+"/api/budget/projectUniver/fetchPlan").then(function (response) {
-                $scope.dataPlan = response.data.dataList;
-            });
-        };   
-        
-        
-        
-    // # 14. งบประมาณและแผนการใช้จ่ายงบประมาณ
-        $scope.fetchBudgetType = function(){
-            $http.post(ngContextPath+"/api/budget/projectUniver/fetchBudgetType").then(function (response) {
-                $scope.dataBudgetType = response.data.dataList;
-            });
-        }; 
-        
 
     // # 15. รายละเอียดการใช้งบประมาณ
     $scope.expenseManage = function(action,index){
@@ -194,6 +261,28 @@ myApp.controller('projectForm', function($scope,$http,$controller,cde) {
         }
     };
     
+    
+    
+    
+    
+    
+    $scope.saveProject = function(){
+        console.log('testSave');
+        
+        $scope.loadSaveProject = true;
+        $http.post(cde.getPath("saveProject"),{
+            seriesData:$scope.seriesData
+        }).then(function (response) {
+            console.log(response.data.dataList);
+            $scope.loadSaveProject = false;
+        });
+    };
+    
+    
+    
+    $scope.nkCloak = function(){
+        $('[ng-controller=projectForm]').removeClass("nk-cloak");
+    };
     
     
 });

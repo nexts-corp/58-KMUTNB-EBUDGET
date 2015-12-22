@@ -242,7 +242,7 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
                 . "bgProj.id as projectId, bgProj.projectName as projectName, "
                 . "fund.id as fundgroupId, fund.fundgroupName as fundName, "
                 . "status.id as statusId, status.desc as statusDesc "
-                . "from " .                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              $this->ent . "\\BudgetHead bgh "
+                . "from " . $this->ent . "\\BudgetHead bgh "
                 . "left outer join " . $this->ent . "\\L3D\\Department dept with dept.id = bgh.deptId "
                 . "left outer join " . $this->ent . "\\L3D\\Department faculty with faculty.id = dept.masterId "
                 . "left outer join " . $this->ent . "\\L3D\\Plan l3dPlan with l3dPlan.id = bgh.l3dPlanId "
@@ -250,7 +250,7 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
                 . "left outer join " . $this->ent . "\\BudgetProject bgProj with bgProj.id = bgh.projectId "
                 . "left outer join " . $this->ent . "\\L3D\\FundGroup fund with fund.id = bgh.fundgroupId "
                 . "left outer join " . $this->ent . "\\TrackingStatus status with status.id = bgh.statusId "
-                . "where bgh.budgetTypeCode = '".$budgetTypeCode."' "
+                . "where bgh.budgetTypeCode = '" . $budgetTypeCode . "' "
                 . $sqlExt
                 . "and bgh.budgetPeriodId = :budgetPeriodId "
                 . "order by status.id, bgh.formId, dept.id, l3dPlan.id, fund.id asc ";
@@ -364,155 +364,23 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
 
     public function getBudgetScheme($budgetPeriodId, $budgetTypeCode, $deptId, $fundgroupId, $planId) {
         if ($budgetTypeCode == "G") {
-            $sql = "select
-                planId,
-                deptId, 
-                fundgroupId,
-                bgTypeMasterId, bgTypeMasterName,
-                bgTypeMainId, bgTypeMainName,
-                bgTypeId, bgTypeName,
-                bgTypeSubId, bgTypeSubName,
-                case when bgType.bgTypeMainId in (20201000,20202000,20203000,20204000) then 1
-		when bgType.bgTypeMainId in (10100000,10200000,10300000,20200000,20300000,20400000) then 2
-		when bgType.bgTypeMainId in (20100000,20500000) then 3 else 0 end as bgLevel,
-                budgetSummary, 
-                planSummary, usedSummary,
-                planQ1, usedQ1,
-                planQ2, usedQ2,
-                planQ3, usedQ3,
-                planQ4, usedQ4
-                from (
-                    select 
-                        bgTypeTmp.bgTypeMasterId, bgTypeTmp.bgTypeMasterName,
-                        bgTypeTmp.bgTypeMainId, bgTypeTmp.bgTypeMainName,
-                        bgTypeTmp.bgTypeId, bgTypeTmp.bgTypeName,
-                        case when bgTypeTmp.bgTypeSubId is not null then bgTypeTmp.bgTypeSubId else bgTypeTmp.bgTypeId end as bgTypeSubId, 
-                        case when bgTypeTmp.bgTypeSubName is not null then bgTypeTmp.bgTypeSubName else bgTypeTmp.bgTypeName end as bgTypeSubName
-                    from (
-                        select 
-                        bgTypeMaster.BUDGETTYPEID as bgTypeMasterId, bgTypeMaster.BUDGETTYPENAME as bgTypeMasterName,
-                        bgTypeMain.BUDGETTYPEID as bgTypeMainId, bgTypeMain.BUDGETTYPENAME as bgTypeMainName,
-                        case when bgType.BUDGETTYPEID is not null then bgType.BUDGETTYPEID else bgTypeMain.BUDGETTYPEID end as bgTypeId, 
-                        case when bgType.BUDGETTYPENAME is not null then bgType.BUDGETTYPENAME else bgTypeMain.BUDGETTYPENAME end as bgTypeName,
-                        bgTypeSub.BUDGETTYPEID as bgTypeSubId, bgTypeSub.BUDGETTYPENAME as bgTypeSubName
-                        from BUDGETTYPE bgTypeMaster
-                        left outer join BUDGETTYPE bgTypeMain on bgTypeMaster.BUDGETTYPEID = bgTypeMain.MASTERID
-                        left outer join BUDGETTYPE bgType on bgTypeMain.BUDGETTYPEID = bgType.MASTERID
-                        left outer join BUDGETTYPE bgTypeSub on bgType.BUDGETTYPEID = bgTypeSub.MASTERID
-                        where bgTypeMaster.MASTERID = 0
-                        and bgTypeMaster.BUDGETTYPECODE = 'G'
-                        and bgTypeMain.BUDGETTYPECODE = 'G'
-                    ) bgTypeTmp
-                ) bgType
-                left outer join BUDGETSCHEME bgScheme on bgScheme.BUDGETTYPEID = bgType.bgTypeSubId
-                left outer join (
-                    select 
-                        bgh.DEPARTMENTID as deptId,
-                        bgh.L3D_PLANID as planId,
-                        bgh.FUNDGROUPID as fundgroupId,
-                        (case 
-                            when bgh.FORMBUDGET = 140 then bg140.BUDGETTYPEID
-                            when bgh.FORMBUDGET = 141 then bg141.BUDGETTYPEID
-                            when bgh.FORMBUDGET = 142 then bg142.BUDGETTYPEID
-                            when bgh.FORMBUDGET = 143 then bg143.BUDGETTYPEID
-                            when bgh.FORMBUDGET = 144 then bg144.BUDGETTYPEID
-                            when bgh.FORMBUDGET = 145 then bg145.BUDGETTYPEID
-                            when bgh.FORMBUDGET = 146 then bg146.BUDGETTYPEID
-                        else 0 end) as budgetTypeId,
-                        coalesce(sum(bg140.BUDGETSUMMARY), 0) + 
-                        coalesce(sum(bg141.BUDGETSUMMARY), 0) +
-                        coalesce(sum(bg142.BUDGETSUMMARY), 0) +
-                        coalesce(sum(bg143.BUDGETSUMMARY), 0) +
-                        coalesce(sum(bg144.BUDGETSUMMARY), 0) +
-                        coalesce(sum(bg145.BUDGETSUMMARY), 0) +
-                        coalesce(sum(bg146.BUDGETSUMMARY), 0) as budgetSummary
-                    from BUDGETHEAD bgh
-                    left outer join BUDGET140 bg140 on bgh.BUDGETHEADID = bg140.BUDGETHEADID
-                    left outer join BUDGET141 bg141 on bgh.BUDGETHEADID = bg141.BUDGETHEADID
-                    left outer join BUDGET142 bg142 on bgh.BUDGETHEADID = bg142.BUDGETHEADID
-                    left outer join BUDGET143 bg143 on bgh.BUDGETHEADID = bg143.BUDGETHEADID
-                    left outer join BUDGET144 bg144 on bgh.BUDGETHEADID = bg144.BUDGETHEADID
-                    left outer join BUDGET145 bg145 on bgh.BUDGETHEADID = bg145.BUDGETHEADID
-                    left outer join BUDGET146 bg146 on bgh.BUDGETHEADID = bg146.BUDGETHEADID
-                    where bgh.BUDGETTYPECODE = 'G'
-                    and bgh.BUDGETPERIODID = '" . $budgetPeriodId . "'
-                    and bgh.DEPARTMENTID = '" . $deptId . "'
-                    and bgh.FUNDGROUPID = '" . $fundgroupId . "'
-                    and bgh.L3D_PLANID = '" . $planId . "'
-                    group by bgh.DEPARTMENTID, bgh.L3D_PLANID, bgh.FUNDGROUPID, bgh.FORMBUDGET, 
-                    bg140.BUDGETTYPEID, bg141.BUDGETTYPEID, bg142.BUDGETTYPEID, bg143.BUDGETTYPEID, bg144.BUDGETTYPEID, bg145.BUDGETTYPEID, bg146.BUDGETTYPEID
-                ) bg on bg.budgetTypeId = bgType.bgTypeSubId";
+            $sql = "select *
+                from View_Scheme_Budget_Plan bg
+                where bg.bgPeriodId = '" . $budgetPeriodId . "'
+                and bg.deptId = '" . $deptId . "'
+                and bg.fundgroupId = '" . $fundgroupId . "'
+                and bg.planId = '" . $planId . "'";
 
             $data = $this->datacontext->pdoQuery($sql);
 
             return $data;
         } else if ($budgetTypeCode == "K") {
-            $sql = "select
-                bg.planId,
-                bg.deptId, 
-                bg.fundgroupId,
-                bgType.bgTypeMasterId, bgType.bgTypeMasterName,
-                bgType.bgTypeMainId, bgType.bgTypeMainName,
-                2 as bgLevel,
-                bg.budgetSummary, 
-                bgScheme.BUDGETPLAN_SUMMARY as planSummary, bgScheme.BUDGETUSED_SUMMARY as usedSummary,
-                bgScheme.BUDGETPLAN_Q1 as planQ1, bgScheme.BUDGETUSED_Q1 as usedQ1,
-                bgScheme.BUDGETPLAN_Q2 as planQ2, bgScheme.BUDGETUSED_Q2 as usedQ2,
-                bgScheme.BUDGETPLAN_Q3 as planQ3, bgScheme.BUDGETUSED_Q3 as usedQ3,
-                bgScheme.BUDGETPLAN_Q4 as planQ4, bgScheme.BUDGETUSED_Q4 as usedQ4
-                from (
-                    select 
-                        bgTypeTmp.bgTypeMasterId, bgTypeTmp.bgTypeMasterName,
-                        bgTypeTmp.bgTypeMainId, bgTypeTmp.bgTypeMainName,
-                        bgTypeTmp.bgTypeId, bgTypeTmp.bgTypeName,
-                        case when bgTypeTmp.bgTypeSubId is not null then bgTypeTmp.bgTypeSubId else bgTypeTmp.bgTypeId end as bgTypeSubId, 
-                        case when bgTypeTmp.bgTypeSubName is not null then bgTypeTmp.bgTypeSubName else bgTypeTmp.bgTypeName end as bgTypeSubName
-                    from (
-                        select 
-                        bgTypeMaster.BUDGETTYPEID as bgTypeMasterId, bgTypeMaster.BUDGETTYPENAME as bgTypeMasterName,
-                        bgTypeMain.BUDGETTYPEID as bgTypeMainId, bgTypeMain.BUDGETTYPENAME as bgTypeMainName,
-                        case when bgType.BUDGETTYPEID is not null then bgType.BUDGETTYPEID else bgTypeMain.BUDGETTYPEID end as bgTypeId, 
-                        case when bgType.BUDGETTYPENAME is not null then bgType.BUDGETTYPENAME else bgTypeMain.BUDGETTYPENAME end as bgTypeName,
-                        bgTypeSub.BUDGETTYPEID as bgTypeSubId, bgTypeSub.BUDGETTYPENAME as bgTypeSubName
-                        from BUDGETTYPE bgTypeMaster
-                        left outer join BUDGETTYPE bgTypeMain on bgTypeMaster.BUDGETTYPEID = bgTypeMain.MASTERID
-                        left outer join BUDGETTYPE bgType on bgTypeMain.BUDGETTYPEID = bgType.MASTERID
-                        left outer join BUDGETTYPE bgTypeSub on bgType.BUDGETTYPEID = bgTypeSub.MASTERID
-                        where bgTypeMaster.MASTERID = 0
-                        and bgTypeMaster.BUDGETTYPECODE = 'K'
-                        and bgTypeMain.BUDGETTYPECODE = 'K'
-                    ) bgTypeTmp
-                ) bgType
-                left outer join BUDGETSCHEME bgScheme on bgScheme.BUDGETTYPEID = bgType.bgTypeSubId
-                left outer join (
-                    select 
-                        bgh.DEPARTMENTID as deptId,
-                        bgh.L3D_PLANID as planId,
-                        bgh.FUNDGROUPID as fundgroupId,
-                        rv.BUDGETTYPEID as budgetTypeId,
-                        coalesce(sum(rv.BUDGETAMOUNT), 0) as budgetSummary
-                    from BUDGETHEAD bgh
-                    left outer join BUDGETREVENUE rv on rv.BUDGETHEADID = bgh.BUDGETHEADID
-                    where bgh.BUDGETTYPECODE = 'K'
-                    and bgh.BUDGETPERIODID = '" . $budgetPeriodId . "'
-                    and bgh.DEPARTMENTID = '" . $deptId . "'
-                    and bgh.FUNDGROUPID = '" . $fundgroupId . "'
-                    and bgh.L3D_PLANID = '" . $planId . "'
-                    group by bgh.DEPARTMENTID, bgh.L3D_PLANID, bgh.FUNDGROUPID, rv.BUDGETTYPEID
-                ) bg on bg.budgetTypeId = bgType.bgTypeSubId
-                group by bg.planId,
-                bg.deptId, 
-                bg.fundgroupId,
-                bgType.bgTypeMasterId, bgType.bgTypeMasterName,
-                bgType.bgTypeMainId, bgType.bgTypeMainName,
-                bgType.bgTypeId, bgType.bgTypeName,
-                bgType.bgTypeSubId, bgType.bgTypeSubName,
-                bg.budgetSummary,
-                bgScheme.BUDGETPLAN_SUMMARY, bgScheme.BUDGETUSED_SUMMARY,
-                bgScheme.BUDGETPLAN_Q1, bgScheme.BUDGETUSED_Q1,
-                bgScheme.BUDGETPLAN_Q2, bgScheme.BUDGETUSED_Q2,
-                bgScheme.BUDGETPLAN_Q3, bgScheme.BUDGETUSED_Q3,
-                bgScheme.BUDGETPLAN_Q4, bgScheme.BUDGETUSED_Q4";
+            $sql = "select *
+                from View_Scheme_Revenue_Plan bg
+                where (bg.bgPeriodId is null or bg.bgPeriodId = '" . $budgetPeriodId . "')
+                and bg.deptId = '" . $deptId . "'
+                and bg.fundgroupId = '" . $fundgroupId . "'
+                and bg.planId = '" . $planId . "'";
 
             $data = $this->datacontext->pdoQuery($sql);
 
@@ -521,19 +389,32 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
     }
 
     public function updateScheme($budget) {
-        $bg = new entity\BudgetScheme();
-        $data = $this->datacontext->getObject($budget);
-        if (!isset($data) || $data == null) {
-            if (!$this->datacontext->saveObject($budget)) {
-                return false;
-            }
-        } else {
-            if (!$this->datacontext->updateObject($budget)) {
-                return false;
+        if (is_null($budget) || count($budget) <= 0)
+            return false;
+
+        for ($i = 0; $i < count($budget); $i++) {
+            $bg = new entity\BudgetScheme();
+            $bg->setBudgetPeriodId($budget[$i].bgPeriodId);
+            $bg->setBudgetTypeCode($budget[$i].bgTypeCode);
+            $bg->setBudgetTypeId($budget[$i].bgTypeId);
+            $bg->setL3dPlanId($budget[$i].planId);
+            $bg->setDeptId($budget[$i].deptId);
+            $bg->setFundgroupId($budget[$i].fundgroupId);
+            $dataBg = $this->datacontext->getObject($bg);
+
+            if (!isset($dataBg) || $dataBg == null) {
+                if (!$this->datacontext->saveObject($budget[0])) {
+                    return false;
+                }
+                return true;
+            } else {
+                $budget[0]->id = $dataBg[0]->id;
+                if (!$this->datacontext->updateObject($budget[0])) {
+                    return false;
+                }
+                return true;
             }
         }
-
-        return true;
     }
 
 }

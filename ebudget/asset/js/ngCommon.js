@@ -69,6 +69,16 @@ commonService.service('nk', function () {
         }
     };
     
+    this.date = function (date) {
+        var getDate = new Date(date);
+        var d = getDate.getDate().toString();
+        if(d.length===1){ d='0'+d; }
+        var m = getDate.getMonth() + 1; //Months are zero based
+        if(m.length===1){ m='0'+m; }
+        var y = getDate.getFullYear();
+        return d+'/'+m+'/'+y;
+    };
+    
 });
 
 commonService.controller('nkController', function ($scope,$timeout) {
@@ -99,6 +109,15 @@ commonService.directive('nkFocus', function() {
 commonService.directive('nkCloak', function() {
     return function(scope, element, attrs) {
         angular.element(element).removeAttr("nk-cloak");
+    };
+});
+
+commonService.directive('nkDate', function() {
+    return function(scope, element, attrs) {
+        angular.element(element).datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose:true
+        });
     };
 });
 

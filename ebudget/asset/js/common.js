@@ -4,6 +4,7 @@ $.extend(true, $.fn.dataTable.defaults, {
     "oLanguage": {
         "sInfo": "<span style='font-size: 120%;'>รายการที่ _START_ ถึง _END_ จาก <span style='color: blue;'>_TOTAL_</span> รายการ</span>",
         "sInfoEmpty": "",
+        "sInfoFiltered" : "(จากทั้งหมด _MAX_ รายการ)",
         "sEmptyTable": "ไม่มีข้อมูล",
         "sLengthMenu": "_MENU_ รายการต่อหน้า"
     }
@@ -161,4 +162,47 @@ function logout(){
     $.removeCookie("token", { path: '/' });
     $.removeCookie("userinfo", { path: '/' });
     window.location.href = '/kmutnb-ebudget/api/root/view/index';
+}
+
+function jsonEncode(data) {
+    var dataJSON = JSON.stringify(data);
+    var dataJSONEN = encodeURIComponent(dataJSON);
+    return dataJSONEN;
+}
+
+function getHTML(id, link, data) {
+    
+    //have data ==> getHTML("navbar","/api/xxx/xxx/",{name:name});
+    ////have data ==> getHTML("navbar","/api/xxx/xxx/",jsonEncode(xxx));
+    //dont have data ==> getHTML("navbar","/api/xxx/xxx/",null);
+    if (data == null) {
+        $.ajax({
+            url: link,
+            type: 'post',
+            async: true,
+            error: function (xhr) {
+                if (xhr.status == 401) {
+                    window.location.href = xhr.getResponseHeader('Location');
+                }
+            },
+            success: function (result) {
+                $('#' + id).html(result);
+            }
+        });
+    } else {
+        $.ajax({
+            url: link,
+            data: data,
+            type: 'post',
+            async: true,
+            error: function (xhr) {
+                if (xhr.status == 401) {
+                    window.location.href = xhr.getResponseHeader('Location');
+                }
+            },
+            success: function (result) {
+                $('#' + id).html(result);
+            }
+        });
+    }
 }

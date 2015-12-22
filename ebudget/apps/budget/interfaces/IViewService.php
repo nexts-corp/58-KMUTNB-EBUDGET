@@ -13,6 +13,7 @@ interface IViewService {
      * @name formBudget
      * @uri /formBudget
      * @description ยื่นคำของบประมาณเงินแผ่นดิน
+     * @SiteMap true
      */
     public function formBudget();
 
@@ -106,4 +107,22 @@ interface IViewService {
      * @description รายวานแผน/ผลของเงินงบประมาณ
      */
     public function formScheme();
+
+    /**
+     * @name draftAll
+     * @uri /draftAll
+     * @description จัดทำคำของบประมาณแผ่นดินทั้งหมด
+     */
+    public function draftAll();
+
+    /**
+     * @name draft
+     * @uri /draft
+     * @param string formId
+     * @param string l3dPlanId
+     * @param string fundgroupId
+     * @param string deptId
+     * @description จัดทำคำของบประมาณแผ่นดิน
+     */
+    public function draft($formId, $l3dPlanId, $fundgroupId, $deptId);
 }

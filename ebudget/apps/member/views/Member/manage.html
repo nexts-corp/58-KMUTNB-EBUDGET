@@ -1,20 +1,19 @@
 {{> header}}
 
 
-<div ng-app="mappingPlanApp" ng-controller="mappingPlanController" data-ng-init="init()" nk-cloak>
     <div role="main" class="main">
         <section class="page-top none-margin">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <ul class="breadcrumb">
-                            <li class="active">{{#i18n}}bgi.bginfo{{/i18n}}</li>
+                            <li class="active">{{#i18n}}memberinfo{{/i18n}}</li>
                         </ul>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <h1 class="none-padding">จัดการข้อมูลผู้ใช้งานระบบ</h1>
+                        <h1 class="none-padding">จัดการผู้ใช้งานระบบ</h1>
                     </div>
                 </div>
             </div>
@@ -24,133 +23,132 @@
     <div class="container">
         
         <div class="row">
+            <!--
             <div class="col-md-5">
+                
                 <div class="form-group">
                     <label class="col-md-5 control-label" for="selectYear">{{#i18n}}role{{/i18n}}</label>
-                    <div class="col-md-8">
-                        <select ng-model="selectYear" class="form-control input-sm selChange" ng-change="fetchPlan()">
-                            <option value="">- เลือกประเภทสิทธิ์การใช้งาน -</option>
+                    <div class="col-md-7">
+                        <select ng-model="selectYear" class="form-control input-sm selChange" onchange="searchrole(this.value)">
+                            <option value="">- แสดงทั้งหมด -</option>
+                            {{#listRole}} 
+                            <option value="{{id}}">{{role}}</option>
+                            {{/listRole}}
                         </select>
                     </div>
                 </div>
+            </div>-->
+            <div class="col-md-12">
+                <a class="btn btn-success pull-right control-label" title="เพิ่มผู้ใช้งาน" href="{{_context_path}}/api/member/Member/create" role="button"><i class="fa fa-plus-circle"></i> เพิ่มผู้ใช้งาน</a>
             </div>
-        </div><br>
+        </div>
+        <br>
                                     
         <table class="table table-bordered table-condensed mb-none">
             <thead>
                 <tr>
-                    <th class="text-center col-md-1">ลำดับ</th>
-                    <th class="text-center col-md-9">รายการ</th>
-                    <th class="text-center col-md-2">จัดการ</th>
+                    <th class="text-center">{{#i18n}}number{{/i18n}}</th>
+                    <th class="text-center">{{#i18n}}firstname{{/i18n}}-{{#i18n}}lastname{{/i18n}}</th>
+                    <th class="text-center">{{#i18n}}dept{{/i18n}}</th>
+                    <th class="text-center">{{#i18n}}tel{{/i18n}}</th>
+                    <th class="text-center">{{#i18n}}managerole{{/i18n}}</th>
+                    <th class="text-center col-md-3">{{#i18n}}manage{{/i18n}}</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr ng-repeat-start="list in dataPlan" style="background-color:#F1F1F1;" nk-cloak>   
-                    <td ng-click="treeToggle(list.show,$index)" class="text-center cssCursor" style="vertical-align: middle;">
-                        <i ng-hide="list.show" class="fa fa-plus-square"></i>
-                        <i ng-show="list.show" class="fa fa-minus-square"></i>
-                    </td> 
-                    <td style="vertical-align: middle;">
-                        {[list.planName]}
-                    </td>   
-                    <td class="text-center" style="vertical-align: middle;"></td>
-                </tr>
-
-
-
-                <tr ng-show="list.show && (list.produce.length!==0)" nk-cloak>   
-                    <td class="text-center" style="vertical-align: middle;"></td> 
-                    <td style="padding-left:25px;vertical-align: middle;">
-                        <i ng-show="list.produce" class="fa fa-caret-down"></i><i ng-show="!list.produce" class="fa fa-caret-right"></i> ผลผลิต</td>   
-                    <td class="text-center" style="vertical-align: middle;"></td>
-                </tr>
-                <tr ng-show="list.show" ng-repeat="pdList in list.produce" nk-cloak>   
-                    <td class="text-center"></td> 
-                    <td style="padding-left:50px;vertical-align: middle;">
-                        {[pdList.name]}
-                    </td>   
-                    <td class="text-center">
-                        <button class="btn btn-primary" ng-click="openMapping(pdList.id)"><i class="fa fa-gear"></i> ความสัมพันธ์</button>    
+            <tbody id='resultmember'>
+                {{#Member}} 
+                <tr id='row{{id}}'>
+                    <td align="center">{{rowNo}}</td>
+                    <td>{{firstname}}&nbsp;&nbsp;&nbsp;{{lastname}}</td>
+                    <td>{{deptName}}</td>
+                    <td>{{telephone}}</td>
+                    <td align="center"><a class="btn btn-default btn-sm" href="{{_context_path}}/api/member/Member/managerole/{{id}}" role="button"><i class="fa fa-users"></i> แก้ไขสิทธิ์การเข้าถึง</a></td>
+                    <td align="center">
+                        <a class="btn btn-default btn-sm" href="{{_context_path}}/api/member/Member/edit/{{id}}" role="button"><span class="fa fa-pencil-square-o" aria-hidden="true"></span> แก้ไข</a> 
+                        <a class="btn btn-default btn-sm" href="{{_context_path}}/api/member/Member/changepassword/{{id}}" role="button"><span class="fa fa-refresh" aria-hidden="true"></span> เปลี่ยนรหัสผ่าน</a> 
+                        <a class="btn btn-danger btn-sm" onclick="deleteMember('{{id}}')" href="#" role="button"><span class="fa fa-trash-o" aria-hidden="true"></span> ลบ</a>
+                    
                     </td>
                 </tr>
-
-
-
-                <tr ng-show="list.show && (list.project.length!==0)" nk-cloak>   
-                    <td class="text-center" style="vertical-align: middle;"></td> 
-                    <td style="padding-left:25px;vertical-align: middle;">
-                        <i ng-show="list.project" class="fa fa-caret-down "></i><i ng-show="!list.project" class="fa fa-caret-right"></i> โครงการ</td>   
-                    <td class="text-center" style="vertical-align: middle;"></td>
-                </tr>
-                <tr ng-show="list.show" ng-repeat="pjList in list.project" nk-cloak>   
-                    <td class="text-center"></td> 
-                    <td style="padding-left:50px;vertical-align: middle;">
-                        {[pjList.name]}
-                    </td>   
-                    <td class="text-center">
-                        <button class="btn btn-primary" ng-click="openMapping(pjList.id)"><i class="fa fa-gear"></i> ความสัมพันธ์</button>    
-                    </td>
-                </tr>
-
-                <tr class="nk-cloak" ng-repeat-end><td colspan="3">repeat end</td></tr>
-
-                <tr ng-show="waitDataList" nk-cloak><td colspan="3" style="background-color: #F1F1F1;text-align: center;"><i class="fa fa-cog fa-spin"></i> กำลังโหลด</td></tr>
-                <tr ng-show="!selectYear" nk-cloak><td colspan="3" style="background-color: #F1F1F1;text-align: center;">กรุณาเลือกปีงบประมาณ</td></tr>
+                {{/Member}}
             </tbody>
         </table>
     </div>
     
     
     
-    <div id="modal-mapping" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header"> 
-                    <button data-dismiss="modal" class="close" type="button"></button>  
-                    <h4 class="modal-title">
-                        <i class="fa fa-gear"></i>
-                        <span>จัดการความสัมพันธ์</span>
-                    </h4>
-                    <select style="margin-top: 10px;" ng-model="plan3dId" ng-change="chagePlan3D()" ng-options="plan3d.id as plan3d.name for plan3d in cmDataList3dPlan" class="form-control input-sm selChange">
-                        <option value="">- เลือกแผนงานสามมิติ -</option>
-                    </select>
-                </div>
-                <div class="modal-body">
-                    <label ng-show="!loadfetchDataFG && plan3dId">กองทุน</label>
-                    <label ng-show="loadfetchDataFG"><i class="fa fa-spinner fa-spin"></i> กำลังโหลดกองทุน</label>
-                    <label ng-show="!plan3dId">กรุณาเลือกแผนงานสามมิติ</label>
-                    <div ng-repeat="listFG in dataFGSelect" class="row" ng-show="!loadfetchDataFG" nk-cloak>
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <select ng-model="listFG.id" ng-options="fg.id as fg.name for fg in cmDataListFundgroup" class="form-control input-sm selChange" disabled>
-                                    <option value="">- เลือกกองทุน -</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <button class="btn btn-default" ng-click="delFGSelect($index)"><i class="fa fa-trash"></i></button>
-                        </div>
-                    </div>
-                    <div class="row" ng-show="!loadfetchDataFG && plan3dId">
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <select ng-model="fundgroupId" ng-options="fg.id as fg.name for fg in cmDataListFundgroup" ng-change="pushFGSelect()" class="form-control input-sm selChange">
-                                    <option value="">- เลือกกองทุน -</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="modal-footer">  
-                    <button data-dismiss="modal" class="btn btn-default" type="button">ยกเลิก</button> 
-                    <button ng-click="saveMappingPlan()" ng-disabled="!plan3dId" class="btn btn-success" type="button" ><i ng-show="loadSaveMappingPlan" class="fa fa-spinner fa-spin"></i> บันทึก</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-<script src="{{_context_path}}/apps/bginfo/views/MappingPlan/manage.js"></script>
+<script src="{{_context_path}}/apps/member/views/Member/member.js"></script>
 
 {{> footer}}
+<script>
+function deleteMember(id){
+    var data = {};
+    data['id'] = id;
+    //data['username'] = $("#username").val();
+    //data['password'] = $("#password").val();
+
+    var jdata = {};
+    jdata['data'] = data;
     
+    swal({   
+        title: "ต้องการลบข้อมูลใช่หรือไม่?",   
+        text: "การลบข้อมูลจะไม่สามารถดึงข้อมูลนี้กลับมาใช้งานอีกได้",   
+        type: "warning",   
+        showCancelButton: true,   
+        confirmButtonColor: "#00612c",   
+        confirmButtonText: "Yes, delete it!",   
+        closeOnConfirm: true 
+    },function(){   
+        
+        var result=callAjax('{{_context_path}}/api/member/Member/delete', 'post', jsonEncode(jdata),'json');
+    
+        if(result.status==true){
+            $('#row'+id).remove();
+        }else{
+
+            sweetAlert("เกิดข้อผิดพลาด", "ไม่สามารถลบผู้ใช้งานได้", "error");
+
+        }
+
+        console.log(result.status);
+    });
+    
+    
+}    
+function searchrole(id){
+    
+    //$("#resultmember").html(id);
+    var data = {};
+    data['roleId'] = id;
+    //data['username'] = $("#username").val();
+    //data['password'] = $("#password").val();
+
+    var jdata = {};
+    jdata['data'] = data;
+    
+    var result=callAjax('{{_context_path}}/api/member/Member/listMember', 'post', jsonEncode(jdata),'json');
+    console.log(result.datas);
+    
+    var html="";   
+    for (var i = 0; i < result.datas.length; i++) {
+      
+        html+="<tr>";      
+         
+            html+='<td align="center">'+result.datas[i].rowNo+'</td>';
+            html+='<td>'+result.datas[i].firstname+' '+result.datas[i].lastname+'</td>';
+            html+='<td>'+result.datas[i].deptName+'</td>';
+            html+='<td>'+result.datas[i].telephone+'</td>';
+            html+='<td align="center"><a class="btn btn-default btn-sm" href="{{_context_path}}/api/member/Member/managerole/{{id}}" role="button"><i class="fa fa-users"></i> แก้ไขสิทธิ์การเข้าถึง</a></td>';
+            html+='<td align="center">';
+                html+=' <a class="btn btn-default btn-sm" href="{{_context_path}}/api/member/Member/edit/'+result.datas[i].id+'" role="button"><span class="fa fa-pencil-square-o" aria-hidden="true"></span> แก้ไข</a>';
+                html+=' <a class="btn btn-default btn-sm" href="{{_context_path}}/api/member/Member/changepassword/'+result.datas[i].id+'" role="button"><span class="fa fa-refresh" aria-hidden="true"></span> เปลี่ยนรหัสผ่าน</a>';
+                html+=' <a class="btn btn-danger btn-sm" onclick="deleteMember('+result.datas[i].id+')" href="#" role="button"><span class="fa fa-trash-o" aria-hidden="true"></span> ลบ</a>';
+            html+='</td>';
+            
+        html+="</tr>";      
+    }
+    
+    $("#resultmember").html(html);
+    
+}
+</script>

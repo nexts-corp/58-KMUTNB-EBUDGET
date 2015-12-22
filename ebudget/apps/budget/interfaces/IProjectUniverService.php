@@ -9,6 +9,29 @@ namespace apps\budget\interfaces;
  */
 interface IProjectUniverService {
 
+    
+    /**
+     * @name getLayouts
+     * @uri /getLayouts
+     * @description ดึงโครงสร้างโครงการ
+     * @param int budgetPeriodId ปีงบประมาณ
+     * @param int facultyId รหัสหน่วยงาน
+     * @return String[] layouts
+     */ 
+    public function getLayouts($budgetPeriodId,$facultyId);
+
+    
+    /**
+     * @name fetchProject
+     * @uri /fetchProject
+     * @description ดึงข้อมูลโปรแจค
+     * @param Int id expenseId
+     * @return String[] dataList
+     */ 
+    public function fetchProject($id);
+   
+
+    
     /**
      * @name fetchSubsidies
      * @uri /fetchSubsidies
@@ -34,4 +57,14 @@ interface IProjectUniverService {
      */ 
     public function fetchBudgetType();
 
+    
+    
+    /**
+     * @name saveProject
+     * @uri /saveProject
+     * @description บันทึกโครงการ
+     * @param String[] seriesData ปีงบประมาณ
+     * @return String[] dataList
+     */ 
+    public function saveProject($seriesData);
 }

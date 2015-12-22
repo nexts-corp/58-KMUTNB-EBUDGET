@@ -348,6 +348,13 @@ class DraftService extends CServiceBase implements IDraftService {
                 'underline' => \PHPExcel_Style_Font::UNDERLINE_SINGLE
             )
         );
+        $border = array(
+            'borders' => array(
+                'allborders' => array(
+                    'style' => \PHPExcel_Style_Border::BORDER_THIN
+                )
+            )
+        );
 
         $objPHPExcel = new \PHPExcel();
         $objWorkSheet = $objPHPExcel->createSheet(0);
@@ -510,6 +517,7 @@ class DraftService extends CServiceBase implements IDraftService {
         }
 
         $objPHPExcel->getDefaultStyle()->getAlignment()->setWrapText(true);
+        $objWorkSheet->getStyle('A1:I'.($row-1))->applyFromArray($border);
 
         //create excel file
         ob_clean();

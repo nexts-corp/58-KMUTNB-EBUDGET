@@ -9,6 +9,7 @@ use apps\common\entity\BuildingBOQ;
 use apps\common\entity\BuildingDetail;
 use apps\common\entity\BuildingFloorPlan;
 use apps\common\entity\BuildingPeriod;
+use apps\common\entity\Coordinates;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
 use apps\common\entity\BudgetHead;
@@ -20,19 +21,22 @@ use apps\common\entity\Budget144;
 use apps\common\entity\Budget145;
 use apps\common\entity\Budget146;
 
-class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
+class BudgetSaveService extends CServiceBase implements IBudgetSaveService
+{
 
     public $datacontext;
     public $logger;
     public $md = "apps\\common\\model";
     public $ent = "apps\\common\\entity";
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->logger = \Logger::getLogger("root");
         $this->datacontext = new CDataContext(NULL);
     }
 
-    public function insertBudget140($budget) {
+    public function insertBudget140($budget)
+    {
         $return = array();
 
         foreach ($budget as $key => $value) {
@@ -114,7 +118,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
          */
     }
 
-    public function updateBudget140($budget) {
+    public function updateBudget140($budget)
+    {
         $return = true;
 
         $budget[0]->bgSummary = $budget[0]->salaryTotal;
@@ -148,7 +153,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
          */
     }
 
-    public function insertBudget141($budget) {
+    public function insertBudget141($budget)
+    {
         $return = array();
 
         foreach ($budget as $key => $value) {
@@ -199,7 +205,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function updateBudget141($budget) {
+    public function updateBudget141($budget)
+    {
         $return = true;
 
         $budget[0]->bgSummary = $budget[0]->salaryTotal;
@@ -212,7 +219,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function insertBudget142($budget) {
+    public function insertBudget142($budget)
+    {
         $return = array();
 
         foreach ($budget as $key => $value) {
@@ -263,7 +271,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function updateBudget142($budget) {
+    public function updateBudget142($budget)
+    {
         $return = true;
 
         $budget[0]->bgSummary = $budget[0]->salaryTotal;
@@ -276,7 +285,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function insertBudget143($budget) {
+    public function insertBudget143($budget)
+    {
         $return = array();
 
         foreach ($budget as $key => $value) {
@@ -327,7 +337,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function updateBudget143($budget) {
+    public function updateBudget143($budget)
+    {
         $return = true;
 
         $budget[0]->bgSummary = $budget[0]->bgRequest;
@@ -340,7 +351,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function insertBudget144($budget) {
+    public function insertBudget144($budget)
+    {
         $return = array();
 
         foreach ($budget as $key => $value) {
@@ -373,7 +385,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
             $value->budgetHeadId = $bgHeadId;
             $value->planId = $budgetPlanProject["budgetPlanId"];
             $value->projectId = $budgetPlanProject["budgetProjectId"];
-            $value->bgSummary = (float) ($value->bgRequest) + (float) ($value->nonBgRequest);
+            $value->bgSummary = (float)($value->bgRequest) + (float)($value->nonBgRequest);
             if ($value->remark == "") {
                 $value->remark = "-";
             }
@@ -391,10 +403,11 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function updateBudget144($budget) {
+    public function updateBudget144($budget)
+    {
         $return = true;
 
-        $budget[0]->bgSummary = (float) ($budget[0]->bgRequest) + (float) ($budget[0]->nonBgRequest);
+        $budget[0]->bgSummary = (float)($budget[0]->bgRequest) + (float)($budget[0]->nonBgRequest);
         $budget[0]->dateUpdated = date('Y-m-d H:i:s');
 
         if (!$this->datacontext->updateObject($budget)) {
@@ -404,7 +417,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function insertBudget145($budget) {
+    public function insertBudget145($budget)
+    {
         $return = array();
 
         foreach ($budget as $key => $value) {
@@ -455,7 +469,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function updateBudget145($budget) {
+    public function updateBudget145($budget)
+    {
         $return = true;
 
         $budget[0]->bgSummary = $budget[0]->totalPrice;
@@ -468,7 +483,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function insertBudget146($budget) {
+    public function insertBudget146($budget)
+    {
         $return = array();
 
         foreach ($budget as $key => $value) {
@@ -519,7 +535,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function updateBudget146($budget) {
+    public function updateBudget146($budget)
+    {
         $return = true;
 
         $budget[0]->bgSummary = $budget[0]->bgRequest;
@@ -532,7 +549,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function deleteBudget140($budgetId) {
+    public function deleteBudget140($budgetId)
+    {
         $result = true;
 
         $repo = new Budget140();
@@ -543,18 +561,33 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
         } else {
-            $repoHead = new BudgetHead();
-            $repoHead->setId($bgHeadId);
+//            $repoHead = new BudgetHead();
+//            $repoHead->setId($bgHeadId);
+//
+//            if (!$this->datacontext->removeObject($repoHead)) {
+//                $return = $this->datacontext->getLastMessage();
+//            }
+            $sql = "SELECT count(bg) as num FROM " . $this->ent . "\\Budget140 as bg WHERE bg.budgetHeadId = " . $bgHeadId;
+            $obj = $this->datacontext->getObject($sql);
 
-            if (!$this->datacontext->removeObject($repoHead)) {
-                $return = $this->datacontext->getLastMessage();
+            if ($obj[0]["num"] == 0) {
+
+                $repoHead = new BudgetHead();
+                $repoHead->setId($bgHeadId);
+
+                if (!$this->datacontext->removeObject($repoHead)) {
+                    $result = false;
+                    $return = $this->datacontext->getLastMessage();
+                }
+
             }
         }
 
         return $result;
     }
 
-    public function deleteBudget141($budgetId) {
+    public function deleteBudget141($budgetId)
+    {
         $result = true;
 
         $repo = new Budget141();
@@ -565,18 +598,32 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
         } else {
-            $repoHead = new BudgetHead();
-            $repoHead->setId($bgHeadId);
+//            $repoHead = new BudgetHead();
+//            $repoHead->setId($bgHeadId);
+//
+//            if (!$this->datacontext->removeObject($repoHead)) {
+//                $return = $this->datacontext->getLastMessage();
+//            }
+            $sql = "SELECT count(bg) as num FROM " . $this->ent . "\\Budget141 as bg WHERE bg.budgetHeadId = " . $bgHeadId;
+            $obj = $this->datacontext->getObject($sql);
 
-            if (!$this->datacontext->removeObject($repoHead)) {
-                $return = $this->datacontext->getLastMessage();
+            if ($obj[0]["num"] == 0) {
+
+                $repoHead = new BudgetHead();
+                $repoHead->setId($bgHeadId);
+
+                if (!$this->datacontext->removeObject($repoHead)) {
+                    $result = false;
+                    $return = $this->datacontext->getLastMessage();
+                }
             }
         }
 
         return $result;
     }
 
-    public function deleteBudget142($budgetId) {
+    public function deleteBudget142($budgetId)
+    {
         $result = true;
 
         $repo = new Budget142();
@@ -587,18 +634,34 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
         } else {
-            $repoHead = new BudgetHead();
-            $repoHead->setId($bgHeadId);
+//            $repoHead = new BudgetHead();
+//            $repoHead->setId($bgHeadId);
+//
+//            if (!$this->datacontext->removeObject($repoHead)) {
+//                $return = $this->datacontext->getLastMessage();
+//            }
 
-            if (!$this->datacontext->removeObject($repoHead)) {
-                $return = $this->datacontext->getLastMessage();
+            $sql = "SELECT count(bg) as num FROM " . $this->ent . "\\Budget142 as bg WHERE bg.budgetHeadId = " . $bgHeadId;
+            $obj = $this->datacontext->getObject($sql);
+
+            if ($obj[0]["num"] == 0) {
+
+                $repoHead = new BudgetHead();
+                $repoHead->setId($bgHeadId);
+
+                if (!$this->datacontext->removeObject($repoHead)) {
+                    $result = false;
+                    $return = $this->datacontext->getLastMessage();
+                }
+
             }
         }
 
         return $result;
     }
 
-    public function deleteBudget143($budgetId) {
+    public function deleteBudget143($budgetId)
+    {
         $result = true;
 
         $repo = new Budget143();
@@ -609,18 +672,33 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
         } else {
-            $repoHead = new BudgetHead();
-            $repoHead->setId($bgHeadId);
+//            $repoHead = new BudgetHead();
+//            $repoHead->setId($bgHeadId);
+//
+//            if (!$this->datacontext->removeObject($repoHead)) {
+//                $return = $this->datacontext->getLastMessage();
+//            }
+            $sql = "SELECT count(bg) as num FROM " . $this->ent . "\\Budget143 as bg WHERE bg.budgetHeadId = " . $bgHeadId;
+            $obj = $this->datacontext->getObject($sql);
 
-            if (!$this->datacontext->removeObject($repoHead)) {
-                $return = $this->datacontext->getLastMessage();
+            if ($obj[0]["num"] == 0) {
+
+                $repoHead = new BudgetHead();
+                $repoHead->setId($bgHeadId);
+
+                if (!$this->datacontext->removeObject($repoHead)) {
+                    $result = false;
+                    $return = $this->datacontext->getLastMessage();
+                }
+
             }
         }
 
         return $result;
     }
 
-    public function deleteBudget144($budgetId) {
+    public function deleteBudget144($budgetId)
+    {
         $result = true;
 
         $repo = new Budget144();
@@ -631,18 +709,33 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
         } else {
-            $repoHead = new BudgetHead();
-            $repoHead->setId($bgHeadId);
+//            $repoHead = new BudgetHead();
+//            $repoHead->setId($bgHeadId);
+//
+//            if (!$this->datacontext->removeObject($repoHead)) {
+//                $return = $this->datacontext->getLastMessage();
+//            }
+            $sql = "SELECT count(bg) as num FROM " . $this->ent . "\\Budget144 as bg WHERE bg.budgetHeadId = " . $bgHeadId;
+            $obj = $this->datacontext->getObject($sql);
 
-            if (!$this->datacontext->removeObject($repoHead)) {
-                $return = $this->datacontext->getLastMessage();
+            if ($obj[0]["num"] == 0) {
+
+                $repoHead = new BudgetHead();
+                $repoHead->setId($bgHeadId);
+
+                if (!$this->datacontext->removeObject($repoHead)) {
+                    $result = false;
+                    $return = $this->datacontext->getLastMessage();
+                }
+
             }
         }
 
         return $result;
     }
 
-    public function deleteBudget145($budgetId) {
+    public function deleteBudget145($budgetId)
+    {
         $result = true;
 
         $repo = new Budget145();
@@ -653,18 +746,33 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
         } else {
-            $repoHead = new BudgetHead();
-            $repoHead->setId($bgHeadId);
+//            $repoHead = new BudgetHead();
+//            $repoHead->setId($bgHeadId);
+//
+//            if (!$this->datacontext->removeObject($repoHead)) {
+//                $return = $this->datacontext->getLastMessage();
+//            }
+            $sql = "SELECT count(bg) as num FROM " . $this->ent . "\\Budget145 as bg WHERE bg.budgetHeadId = " . $bgHeadId;
+            $obj = $this->datacontext->getObject($sql);
 
-            if (!$this->datacontext->removeObject($repoHead)) {
-                $return = $this->datacontext->getLastMessage();
+            if ($obj[0]["num"] == 0) {
+
+                $repoHead = new BudgetHead();
+                $repoHead->setId($bgHeadId);
+
+                if (!$this->datacontext->removeObject($repoHead)) {
+                    $result = false;
+                    $return = $this->datacontext->getLastMessage();
+                }
+
             }
         }
 
         return $result;
     }
 
-    public function deleteBudget146($budgetId) {
+    public function deleteBudget146($budgetId)
+    {
         $result = true;
 
         $repo = new Budget146();
@@ -675,18 +783,33 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
         } else {
-            $repoHead = new BudgetHead();
-            $repoHead->setId($bgHeadId);
+//            $repoHead = new BudgetHead();
+//            $repoHead->setId($bgHeadId);
+//
+//            if (!$this->datacontext->removeObject($repoHead)) {
+//                $return = $this->datacontext->getLastMessage();
+//            }
+            $sql = "SELECT count(bg) as num FROM " . $this->ent . "\\Budget146 as bg WHERE bg.budgetHeadId = " . $bgHeadId;
+            $obj = $this->datacontext->getObject($sql);
 
-            if (!$this->datacontext->removeObject($repoHead)) {
-                $return = $this->datacontext->getLastMessage();
+            if ($obj[0]["num"] == 0) {
+
+                $repoHead = new BudgetHead();
+                $repoHead->setId($bgHeadId);
+
+                if (!$this->datacontext->removeObject($repoHead)) {
+                    $result = false;
+                    $return = $this->datacontext->getLastMessage();
+                }
+
             }
         }
 
         return $result;
     }
 
-    public function insertBuildingOne($building, $listBuildDetail, $listBOQ) {
+    public function insertBuildingOne($building, $listBuildDetail, $listBOQ, $listCoordinates)
+    {
         $return = array();
 
         foreach ($building as $key => $value) {
@@ -723,13 +846,27 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
                         $return["idBoq"] = $listBOQ[$key2]->id;
                     }
                 }
+
+                foreach ($listCoordinates as $key2 => $value2) {
+
+                    $listCoordinates[$key2]->setBuildingId($building[$key]->id);
+
+                    if (!$this->datacontext->saveObject($value2)) {
+                        $return["result"] = false;
+                        $return["msg"] = $this->datacontext->getLastMessage();
+                    } else {
+                        $return["result"] = true;
+                        $return["idCoordinate"] = $listCoordinates[$key2]->id;
+                    }
+                }
             }
         }
 
         return $return;
     }
 
-    public function editBuildingOne($building, $listBuildDetail, $listBOQ, $listIDRemoveBuildingOne, $listIDRemoveBOQ) {
+    public function editBuildingOne($building, $listBuildDetail, $listBOQ, $listCoordinates, $listIDRemoveBuildingOne, $listIDRemoveBOQ, $coordinatesChange)
+    {
         $return = array();
         foreach ($building as $key => $value) {
 
@@ -792,8 +929,29 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
                         }
                     }
                 }//end loop $listBuildDetail
+
+                if ($coordinatesChange) {
+                    //remove and new insert coordinates
+                    $sql = "DELETE  FROM COORDINATES WHERE BUILDINGID = " . $building[$key]->id;
+                    $this->datacontext->pdoDelete($sql);
+                    //insert new coordinates
+                    foreach ($listCoordinates as $key2 => $value2) {
+
+                        $value2->setBuildingId($building[$key]->id);
+
+                        if ($this->datacontext->saveObject($value2)) {
+                            //insert BuildingDetail
+                            $return["result"] = true;
+                            $return["msgCoordinates"] = $this->datacontext->getLastMessage();
+                        } else {
+                            $return["result"] = false;
+                            $return["msgCoordinates"] = $this->datacontext->getLastMessage();
+                        }
+                    }
+                }
+
             }//else update building is ok
-        }
+        } //loop building
 
         foreach ($listIDRemoveBOQ as $key => $value) { //remove object
             if (isset($value)) {
@@ -826,7 +984,49 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function insertBuildingMore($building, $listBuildFloor, $listBOQ, $listBuildPeriod) {
+    public function removeBuildingOne($building)
+    {
+        $return = array();
+        foreach ($building as $key => $value) {
+            if (isset($building[$key]->id)) {
+                //remove Coordinates
+                $sql = "DELETE  FROM COORDINATES WHERE BUILDINGID = " . $building[$key]->id;
+                if ($this->datacontext->pdoDelete($sql)) {
+                    $return["result"] = true;
+                } else {
+                    $return["result"] = false;
+                }
+
+                //remove BUILDING_DETAIL
+                $sql = "DELETE  FROM BUILDING_DETAIL WHERE BUILDINGID = " . $building[$key]->id;
+                if ($this->datacontext->pdoDelete($sql)) {
+                    $return["result"] = true;
+                } else {
+                    $return["result"] = false;
+                }
+
+                //remove BoQ
+                $sql = "DELETE  FROM BUILDING_BOQ WHERE BUILDINGID = " . $building[$key]->id;
+                if ($this->datacontext->pdoDelete($sql)) {
+                    $return["result"] = true;
+                } else {
+                    $return["result"] = false;
+                }
+
+                //remove Building
+                if ($this->datacontext->removeObject($value)) {
+                    $return["result"] = true;
+                } else {
+                    $return["result"] = false;
+                }
+            }
+        }
+        return $return;
+    }
+
+
+    public function insertBuildingMore($building, $listBuildFloor, $listBOQ, $listBuildPeriod, $listCoordinates)
+    {
         foreach ($building as $key => $value) {
 
             if (!$this->datacontext->saveObject($value)) {
@@ -874,13 +1074,27 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
                         $return["idBoq"] = $listBuildPeriod[$key2]->id;
                     }
                 }
+
+                foreach ($listCoordinates as $key2 => $value2) {
+
+                    $listCoordinates[$key2]->setBuildingId($building[$key]->id);
+
+                    if (!$this->datacontext->saveObject($value2)) {
+                        $return["result"] = false;
+                        $return["msg"] = $this->datacontext->getLastMessage();
+                    } else {
+                        $return["result"] = true;
+                        $return["idCoordinate"] = $listCoordinates[$key2]->id;
+                    }
+                }
             }
         }
 
         return $return;
     }
 
-    public function editBuildingMore($building, $listBuildFloor, $listBOQ, $listBuildPeriod, $listIDRemoveFloor, $listIDRemoveBOQ, $listIDRemovePeriod) {
+    public function editBuildingMore($building, $listBuildFloor, $listBOQ, $listBuildPeriod, $listCoordinates, $listIDRemoveFloor, $listIDRemoveBOQ, $listIDRemovePeriod, $coordinatesChange)
+    {
 
         $return = array();
         foreach ($building as $key => $value) {
@@ -971,8 +1185,28 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
                         }
                     }
                 }//end loop $listBuildPeriod
+
+                if ($coordinatesChange) {
+                    //remove and new insert coordinates
+                    $sql = "DELETE  FROM COORDINATES WHERE BUILDINGID = " . $building[$key]->id;
+                    $this->datacontext->pdoDelete($sql);
+                    //insert new coordinates
+                    foreach ($listCoordinates as $key2 => $value2) {
+
+                        $value2->setBuildingId($building[$key]->id);
+
+                        if ($this->datacontext->saveObject($value2)) {
+                            //insert BuildingDetail
+                            $return["result"] = true;
+                            $return["msgCoordinates"] = $this->datacontext->getLastMessage();
+                        } else {
+                            $return["result"] = false;
+                            $return["msgCoordinates"] = $this->datacontext->getLastMessage();
+                        }
+                    }
+                }
             }
-        }
+        } //loop building
 
         foreach ($listIDRemoveBOQ as $key => $value) { //remove object
             if (isset($value)) {
@@ -1019,7 +1253,56 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function uploadFileAttachment($file) {
+    public function removeBuildingMore($building)
+    {
+        $return = array();
+        foreach ($building as $key => $value) {
+            if (isset($building[$key]->id)) {
+                //remove Coordinates
+                $sql = "DELETE  FROM COORDINATES WHERE BUILDINGID = " . $building[$key]->id;
+                if ($this->datacontext->pdoDelete($sql)) {
+                    $return["result"] = true;
+                } else {
+                    $return["result"] = false;
+                }
+
+                //remove BUILDING_FLOORPLAN
+                $sql = "DELETE  FROM BUILDING_FLOORPLAN WHERE BUILDINGID = " . $building[$key]->id;
+                if ($this->datacontext->pdoDelete($sql)) {
+                    $return["result"] = true;
+                } else {
+                    $return["result"] = false;
+                }
+
+                //remove BUILDING_PERIOD
+                $sql = "DELETE  FROM BUILDING_PERIOD WHERE BUILDINGID = " . $building[$key]->id;
+                if ($this->datacontext->pdoDelete($sql)) {
+                    $return["result"] = true;
+                } else {
+                    $return["result"] = false;
+                }
+
+                //remove BoQ
+                $sql = "DELETE  FROM BUILDING_BOQ WHERE BUILDINGID = " . $building[$key]->id;
+                if ($this->datacontext->pdoDelete($sql)) {
+                    $return["result"] = true;
+                } else {
+                    $return["result"] = false;
+                }
+
+                //remove Building
+                if ($this->datacontext->removeObject($value)) {
+                    $return["result"] = true;
+                } else {
+                    $return["result"] = false;
+                }
+            }
+        }
+        return $return;
+    }
+
+    public function uploadFileAttachment($file)
+    {
         //uploadFile
         $return = array();
         $uploaddir = './uploads/ebudget/';
@@ -1040,7 +1323,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function InsertAttachment($att) {
+    public function InsertAttachment($att)
+    {
         $return = array();
 
         foreach ($att as $key => $value) {
@@ -1057,7 +1341,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return[0];
     }
 
-    public function editAttachment($att) {
+    public function editAttachment($att)
+    {
         $return = array();
 
         foreach ($att as $key => $value) {
@@ -1085,7 +1370,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return[0];
     }
 
-    public function deleteAttachment($attachmentID, $path, $budgetID, $formBudget) {
+    public function deleteAttachment($attachmentID, $path, $budgetID, $formBudget)
+    {
         $uploaddir = './uploads/ebudget/';
         $return = array();
 
@@ -1114,7 +1400,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    public function updateStatusBG($bgType, $listBg, $status) {
+    public function updateStatusBG($bgType, $listBg, $status)
+    {
         $return = array();
 
         foreach ($listBg as $key => $value) {
@@ -1167,7 +1454,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $return;
     }
 
-    private function updateBudgetHead($id, $formType, $statusId) {
+    private function updateBudgetHead($id, $formType, $statusId)
+    {
         $result = true;
 
         /*
@@ -1198,11 +1486,11 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
             }
         } else if ($statusId == "3") {
             $sql = "select count(*) as num from " . $this->ent . "\\" . $formType . " bg "
-                    . "where bg.budgetHeadId = :budgetHeadId "
-                    . "and bg.statusId in (1,2,4) ";
+                . "where bg.budgetHeadId = :budgetHeadId "
+                . "and bg.statusId in (1,2,4) ";
             $param = array("budgetHeadId" => $id);
             $bg = $this->datacontext->getObject($sql, $param);
-            
+
             if (count($bg) == 0) {
                 $bgh = new BudgetHead();
                 $bgh->setId($id);
@@ -1216,7 +1504,8 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService {
         return $result;
     }
 
-    private function getBudgetPlanAndProject($budgetPeriodId, $L3DPlanId, $fundgroupId) {
+    private function getBudgetPlanAndProject($budgetPeriodId, $L3DPlanId, $fundgroupId)
+    {
         $project = new \apps\common\entity\MappingPlan();
 
         $project->setBudgetperiodId($budgetPeriodId);

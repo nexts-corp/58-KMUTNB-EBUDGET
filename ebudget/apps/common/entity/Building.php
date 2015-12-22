@@ -75,6 +75,9 @@ class Building extends EntityBase {
     /** @Column(type="string",length=18, name="COSTTOTAL") */
     public $costTotal;
 
+    /** @Column(type="string",length=20, name="GEOTYPE") */
+    public $geoType;
+
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
 

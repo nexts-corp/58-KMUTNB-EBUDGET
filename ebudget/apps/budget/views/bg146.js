@@ -828,6 +828,8 @@ function bg146delete(id, parentId, dataJSONEN) {
                 parent.row.find('.indenter').html('');
             }
             $("#panelDeleteForm").modal("hide");
+        }else{
+            alert("ลบไม่สำเร็จ");
         }
     }
 }

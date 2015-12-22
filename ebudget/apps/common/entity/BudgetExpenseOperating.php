@@ -8,10 +8,14 @@ namespace apps\common\entity;
  */
 class BudgetExpenseOperating extends EntityBase {
 
-    /** @Column(type="integer",length=11, name="BUDGETEXPENSEID") */
+    /**
+     * @Id
+     * @Column(type="integer",length=11, name="BUDGETEXPENSEID") */
     public $expenseId;
 
-    /** @Column(type="integer",length=11, name="SEQ") */
+    /** 
+     * @Id
+     * @Column(type="integer",length=11, name="SEQ") */
     public $seq;
 
     /** @Column(type="text", name="OPERATINGNAME") */

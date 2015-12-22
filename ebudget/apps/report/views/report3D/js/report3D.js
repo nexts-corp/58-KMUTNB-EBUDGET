@@ -146,8 +146,8 @@ myApp.controller('mainController', function ($scope, $http, $controller) {
 
 
     $scope.fetchDept = function (groupDept) {
-
-        if (groupDept.toUpperCase() == "A") {
+ 
+       if (groupDept.toUpperCase() == "A") {
 
             if (listDeptGroupA.length <= 0) {
                 $http.post(ngContextPath + "/api/report/rptservice/listDept/A").then(function (response) {

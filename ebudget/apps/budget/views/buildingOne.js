@@ -3,9 +3,23 @@ var listBuilding = [];
 var STATUSFORM = "INSERT";
 var listIDRemoveBOQOne = [];//id remove
 var listIDRemoveBuildingOne = [];//id remove
+var listCoordinates = [];// list latlng
 var addStatusBOQOne = false, addStatusBuildOne = false;
 
 function buildingOneForm(param) {
+    clearAll();
+    optionMap = "point"; //default
+    optionMapUse = "point"; // use to DB
+    linePathArr = []; //store latLng
+    polyLineArray = []; //store object polyLine
+    polygonArr = [];//store latLng
+    polygonSimpleArr = [];//store object polygon
+    CircleMap;
+    coordinatesChange = false;
+    canClickMap = true;
+    markerArrayInfo = [];
+    markerArrayForUse = [];
+
     var html = ''
         + ' <div class="col-md-12 text-center">'
         + '     <h4>'
@@ -17,23 +31,6 @@ function buildingOneForm(param) {
         + ' <input type="text" id="id" name="id" style="display: none;">'
         + ' <input type="text" id="typeId" name="typeId" value="1" style="display: none;">'
         + ' <input type="text" id="bg145Id" name="bg145Id" value="' + param["bg145Id"] + '" style="display: none;">'
-            //+ ' <div class="form-group">'
-            //+ '     <div class="col-md-9">'
-            //+ '         <label class="col-md-4 control-label text-right" for="xxx">แผนงาน</label>'
-            //+ '         <div class="col-md-8">'
-            ////+ '             <input type="text" id="plan" name="plan"  value="' + planArr[param["l3dPlanId"]] + '" class="form-control input-sm" required>'
-            //+ '         </div>'
-            //+ '     </div>'
-            //+ ' </div>'
-            //
-            //+ ' <div class="form-group">'
-            //+ '     <div class="col-md-9">'
-            //+ '         <label class="col-md-4 control-label text-right" for="xxx">ผลผลิต</label>'
-            //+ '         <div class="col-md-8">'
-            //    //+ '             <input type="text" id="product" name="product" value="' + projectArr[param["projectId"]] + '" class="form-control input-sm" required>'
-            //+ '         </div>'
-            //+ '     </div>'
-            //+ ' </div>'
 
         + ' <div class="form-group">'
         + '     <div class="col-md-9">'
@@ -81,15 +78,29 @@ function buildingOneForm(param) {
         + '</div>'
 
         + ' <div class="form-group">'
-        + '     <div class="col-md-9">'
-        + '         <label class="col-md-4 control-label text-right" for="xxx">พิกัดภูมิศาสตร์</label>'
-        + '          <div class="col-md-3">'
-        + '              <input type="text" id="lat" name="lat" class="form-control input-sm">'
-        + '          </div>'
-        + '          <div class="col-md-3">'
-        + '             <input type="text" id="lng" name="lng" class="form-control input-sm">'
-        + '          </div>'
-        + '         <button class="btn btn-primary col-md-1" type="button" id="btn-map"><i class="fa fa-map-o"></i> เพิ่ม</button>'
+        + '     <div class="col-md-12">'
+        + '         <label class="col-md-3 control-label text-right" for="xxx">ลักษณะภูมิศาสตร์บนแผนที่</label>'
+        + '         <div class="col-md-3">'
+        + '             <input type="text" id="geoType" name="geoType" readonly class="form-control input-sm">'
+        + '         </div>'
+        + '         <div class="col-md-3">'
+        + '             <button id="viewMap" type="button" class="btn btn-primary" style="margin-bottom: 5px;">เรียกดู</button>'
+        + '         </div>'
+        + '         <div class="col-md-3 text-right">'
+        + '             <button id="btn-map" type="button" class="btn btn-success" style="margin-bottom: 5px;"><i class="fa fa-plus-circle"></i> เพิ่ม/แก้ไขพิกัดภูมิศาสตร์</button>'
+        + '         </div>'
+        + '     </div>'
+        + '     <div class="col-md-12">'
+        + '         <table class="table table-bordered table-striped table-condensed mb-none">'
+        + '             <thead>'
+        + '                 <tr>'
+        + '                      <th class="col-md-1 text-center">จุดที่</th>'
+        + '                      <th class="col-md-3 text-center" >ละติจูด</th>'
+        + '                      <th class="col-md-3 text-center">ลองจิจูด</th>'
+        + '                </tr>'
+        + '            </thead>'
+        + '            <tbody id="mapTbody"></tbody>'
+        + '          </table>'
         + '     </div>'
         + '</div>'
 
@@ -209,233 +220,167 @@ function buildingOneForm(param) {
         + '   </div>'
         + '</div>'
 
-            //+ '<div id="payBudget" class="form-group">'
-            //+ ' <div class="col-md-9">'
-            //+ '     <div class="col-md-12" style="margin: 3px 0;">'
-            //+ '         <label class="col-md-4 control-label text-right" for="xxx"><b>แผนการใช้จ่ายงบประมาณ</b></label>'
-            //+ '     </div>'
-            //+ ' </div>'
-            //+ ' <div class = "col-md-12 text-right form-group"><label class="col-md-2">ดำเนินการ จำนวน</label><div class="col-md-2"><input type="number" min="0" class="form-control input-sm"></div><label class="col-md-1">งวด</label><div class="col-md-2"><input type="date" class="form-control input-sm"></div><label class="col-md-1 text-left">วัน</label><label class="col-md-1 text-right">วงเงินรวม</label><div class="col-md-2"><input type="number"  class="form-control input-sm"></div><label class="col-md-1 text-left">บาท</label></div>'
-            //+ ' <div class="col-md-12"><label class="col-md-2 text-right text-bold" style="text-decoration: underline;">งวดที่</label><label class="col-md-7"></label><label class="col-md-2 text-center" style="text-decoration: underline;">ยอดเงินสะสม</label></div>'
-            //+ ' <div class = "col-md-12 text-right form-group"><label class="col-md-3">งวดที่ 1 &nbsp;&nbsp;&nbsp;เดือน</label><div class="col-md-2"><input type="number" min="0"  class="form-control input-sm"></div><label class="col-md-1">จำนวน</label><div class="col-md-2"><input type="number" class="form-control input-sm"></div><label class="col-md-1 text-left">บาท</label><div class="col-md-2"><input type="number"  class="form-control input-sm"></div><label class="col-md-1 text-left">บาท</label></div>'
-            //+ ' <div class = "col-md-12 text-right form-group"><label class="col-md-3">งวดที่ 2 &nbsp;&nbsp;&nbsp;เดือน</label><div class="col-md-2"><input type="number" min="0"  class="form-control input-sm"></div><label class="col-md-1">จำนวน</label><div class="col-md-2"><input type="number"  class="form-control input-sm"></div><label class="col-md-1 text-left">บาท</label><div class="col-md-2"><input type="number"  class="form-control input-sm"></div><label class="col-md-1 text-left">บาท</label></div>'
-            //+ ' <div class = "col-md-12 text-right form-group"><label class="col-md-3">งวดที่ 3 &nbsp;&nbsp;&nbsp;เดือน</label><div class="col-md-2"><input type="number" min="0"  class="form-control input-sm"></div><label class="col-md-1">จำนวน</label><div class="col-md-2"><input type="number"  class="form-control input-sm"></div><label class="col-md-1 text-left">บาท</label><div class="col-md-2"><input type="number"  class="form-control input-sm"></div><label class="col-md-1 text-left">บาท</label></div>'
-            //+ '</div>'
-
         + ' <div class="col-md-12 text-right">'
-        + '     <button type="button" class="btn btn-success saveBuildOne"><i class="fa fa-save"></i> บันทึก</button>&nbsp;'
-        + '     <button type="button" class="btn btn-default clearBuildOne"><i class="fa fa-trash"></i> ล้างข้อมูล</button>'
+        + '     <div id="showLoad" style="display: inline; visibility: hidden;"><i class="fa fa-spinner fa-spin"></i> Saving... </div>&nbsp;&nbsp;'
+        + '     <button type="button" class="btn btn-success saveBuildOne"><i class="fa fa-save"></i> บันทึกคำชี้แจง</button>&nbsp;'
+        + '     <button type="button" class="btn btn-default removeBuildOne"><i class="fa fa-trash"></i> ลบคำชี้แจง</button>'
         + ' </div>'
         + '</form>'
 
         + '<div class="col-md-12">'
         + ' <p class="control-label"><b>หมายเหตุ </b>แผนการดำเนินงานในแต่ละรายการจะต้องกำหนดระยะเวลาให้ต่อเนื่องกันและเซ็นสัญญาภายในไตรมาศที่ 1 (ตุลาคม-ธันวาคม)</p>'
-        + '</div>'
-
-        + '<div id="modalMap" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">'
-        + '<div class="modal-dialog">'
-        + '<div class="modal-content">'
-        + '<div class="modal-header">'
-        + '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
-        + '<h4 class="modal-title" id="myModalLabel"><i class="fa fa-map-o"></i> แผนที่</h4>'
-        + '</div>'
-        + '<div class="modal-body">'
-        + ' <div class="btn-group" id="btnGroup">'
-        + '     <button type="button" id="point" class="btn btn-default active">Point</button>'
-        + '     <button type="button" id="line" class="btn btn-default">Line</button>'
-        + '     <button type="button" id="poly" class="btn btn-default">Polygon</button>'
-        + '     <button type="button" id="circle" class="btn btn-default">Circle</button>'
-        + ' </div>'
-        + ' <div id="showInfo" style="margin-top: 16px;"></div>'
-        + ' <div id="map"  style="height: 400px; margin-top: 16px;"></div>'
-        + ' <div id="showInfoFotter" style="margin-top: 10px;"></div>'
-        + '</div>'
-        + '<div id="loadingModalMap" class="col-md-12 text-center"></div>'
-        + '<div class="modal-footer" style="margin-top: 0px;">'
-        + '     <button type="button" class="btn btn-success save "> บันทึก</button>'
-        + '     <button type="button" data-dismiss="modal" class="btn btn-default cancel"> ยกเลิก</button>'
-        + '</div>'
-        + '</div>'
-        + '</div>'
         + '</div>';
 
     $("#divAttachment").html(html);
+    $('#btnGroup button').addClass('active').not($("#point")).removeClass('active'); //active on button point
 
     if (PERMISSION == "DEPARTMENT") {
         $(".saveBuildOne").show();
-        $(".clearBuildOne").show();
+        $(".removeBuildOne").show();
 
     } else {
         $(".saveBuildOne").hide();
-        $(".clearBuildOne").hide();
+        $(".removeBuildOne").hide();
     }
 
-    var firstClick = false;
-    $("#btn-map").click(function () {
-        //modal map
-        if (!firstClick) {
-            loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBv9gXQrEbOEH_JGiqm_rO5Mv67nzs8m8g&callback=initMap',
-                function () {
-                    log('google-loader has been loaded');
-                });
-        }
+    $("#btn-map").unbind("click").click(function () {
+        //click and show map
+        clearAll();
+        canClickMap = true;
+        $("#modalMapFooter").show();
+        if (optionMap == "point") $("#showInfo").html('<i class="fa fa-map-marker"> พิกัดภูมิศาสตร์</i>');
+        $("#showInfo").show();
+        $("#btnGroup").show();
         $("#modalMap").modal("show");
-        firstClick = true;
+
+    });
+
+    $("#viewMap").unbind("click").click(function () {
+        clearAll();
+        drawPolyOnMap();
+        canClickMap = false;
+        $("#modalMapFooter").hide();
+        $("#showInfo").hide();
+        $("#btnGroup").hide();
+        $("#showInfoFotter").hide();
+        $("#modalMap").modal("show");
+
     });
 
     $("#btnGroup #point,#line,#poly,#circle").click(function (e) {
-        //modal map
+        //function on modal map
         $('#btnGroup button').addClass('active').not(this).removeClass('active');
-        var id = e.target.id; //id is option of map such point line
-        optionMap = id;
-
-        if (id == "point") {
+        optionMap = e.target.id; //id is option of map such point line
+        clearAll();
+        if (optionMap == "point") {
             //for btn point
-            if (CircleMap != undefined)CircleMap.setMap(null);
-            if (directionsDisplay["show"] != undefined) {
-                //clear dierection
-                directionsDisplay["show"].setMap(null);
-                if (markers["start"] != undefined) markers["start"].setMap(null); //clear all marker
-                if (markers["end"] != undefined) markers["end"].setMap(null); //clear all marker
-            }
-
             var html = '<i class="fa fa-map-marker"> พิกัดภูมิศาสตร์</i>';
             $("#showInfo").html(html);
             $("#showInfoFotter").html('');
 
-
-        } else if (id == "line") {
+        } else if (optionMap == "line") {
             //for btn line
-            if (CircleMap != undefined)CircleMap.setMap(null);
-            if (markers["start"] != undefined) markers["start"].setMap(null); //clear all marker
-            if (markers["end"] != undefined) markers["end"].setMap(null); //clear all marker
-            markers["end"] = undefined;
-            markers["start"] = undefined;
-
-            var html = '<input type="radio" class="input-md" name="point"  value="start" checked="checked" style="width: 1.5em; height: 1.5em;">&nbsp;&nbsp;<label>จุดเริ่มต้น</label>&nbsp;<i class="fa fa-map-marker"></i>&nbsp;&nbsp;'
-                + '<input type="radio" class="input-md" name="point" value="end" style="width: 1.5em; height: 1.5em;">&nbsp;&nbsp;<label>จุดสิ้นสุด</label>&nbsp;<i class="fa fa-map-marker"></i>'
-                + '&nbsp;&nbsp;<button type="button"  class="btn btn-default showArea">แสดงเส้นทาง</button>'
-                + '&nbsp;<button type="button" class="btn btn-default clear">ล้าง</button>';
-
+            var html = '<div class="text-right" style="width: 100%;"><button type="button" class="btn btn-default clear"><i class="fa fa-trash-o"></i> ล้าง </button></div>';
             $("#showInfo").html(html);
 
-            $(".showArea").unbind("click").click(function () {
+            $(".clear").unbind("click").click(function () {
+                $("#showInfoFotter").html('');
+                clearAllMarker();
+                clearAllLine();
+            });
 
-                if (markers["end"] != undefined && markers["start"] != undefined) {
-                    // direction polyline
+        } else if (optionMap == "poly") {
+            //for btn poly
+            var html = '<div class="text-right" style="width: 100%;"><button type="button" class="btn btn-primary add"> แสดงพื้นที่ </button>&nbsp;' +
+                '<button type="button" class="btn btn-default clear"><i class="fa fa-trash-o"></i> ล้าง </button></div>';
+            $("#showInfo").html(html);
+            $("#showInfoFotter").html('');
+            $(".add").unbind("click").click(function () {
 
-                    var service = new google.maps.DirectionsService();
-                    if (directionsDisplay["show"] == undefined) {
-                        directionsDisplay["show"] = new google.maps.DirectionsRenderer(
-                            {
-                                suppressMarkers: true
-                            });
-                    }
+                var polygon = new google.maps.Polygon({
+                    paths: polygonArr,
+                    strokeColor: '#0000FF',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 3,
+                    fillColor: '#0000FF',
+                    fillOpacity: 0.35
+                });
+                polygon.setMap(map);
+                polygonSimpleArr.push(polygon);
 
-                    directionsDisplay["show"].setMap(map);
-
-                    var waypts = [];
-                    waypts.push({location: markers["start"].position, stopover: true});
-                    waypts.push({location: markers["end"].position, stopover: true});
-
-                    var request = {
-                        origin: markers["start"].position,
-                        destination: markers["end"].position,
-                        waypoints: waypts,
-                        travelMode: google.maps.DirectionsTravelMode.DRIVING
-                    };
-
-                    service.route(request, function (result, status) {
-                        if (status == google.maps.DirectionsStatus.OK) {
-                            directionsDisplay["show"].setDirections(result);
-                        } else {
-                            alert("Directions request failed:" + status);
-                        }
-                    });
-
-                    var html = '<img src="' + js_context_path + '/images/markerA.png"  height="22" width="22"><label class="control-label">ละติจูดที่ ' + markers["start"].position.lat() + ' ลองจิจูดที่ ' + markers["start"].position.lng() + '</label><br>' +
-                        '<img src="' + js_context_path + '/images/markerB.png"  height="22" width="22"><label class="control-label">ละติจูดที่ ' + markers["end"].position.lat() + ' ลองจิจูดที่ ' + markers["end"].position.lng() + '</label>';
-                    $("#showInfoFotter").html(html);
-
-                }//end if
             });
             $(".clear").unbind("click").click(function () {
-                if (directionsDisplay["show"] != undefined) {
-                    //clear dierection
-                    directionsDisplay["show"].setMap(null);
-                    if (markers["start"] != undefined) markers["start"].setMap(null); //clear all marker
-                    if (markers["end"] != undefined) markers["end"].setMap(null); //clear all marker
-                }
-                $("#showInfoFotter").html('');
+                clearAllMarker();
+                clearAllPolygon();
             });
 
-        } else if (id == "poly") {
-            //for btn poly
-            if (markers["start"] != undefined) markers["start"].setMap(null); //clear all marker
-            if (markers["end"] != undefined) markers["end"].setMap(null); //clear all marker
-            markers["end"] = undefined;
-            markers["start"] = undefined;
-            if (CircleMap != undefined)CircleMap.setMap(null);
-            if (directionsDisplay["show"] != undefined) {
-                //clear dierection
-                directionsDisplay["show"].setMap(null);
-                if (markers["start"] != undefined) markers["start"].setMap(null); //clear all marker
-                if (markers["end"] != undefined) markers["end"].setMap(null); //clear all marker
-            }
-
-            $("#showInfoFotter").html('');
-            var html = '';
-            $("#showInfo").html(html);
-
-        } else if (id == "circle") {
+        } else if (optionMap == "circle") {
             //for btn circle
-            if (markers["start"] != undefined) markers["start"].setMap(null); //clear all marker
-            if (markers["end"] != undefined) markers["end"].setMap(null); //clear all marker
-            markers["end"] = undefined;
-            markers["start"] = undefined;
-            if (CircleMap != undefined)CircleMap.setMap(null);
             $("#showInfoFotter").html('');
-            if (directionsDisplay["show"] != undefined) {
-                //clear dierection
-                directionsDisplay["show"].setMap(null);
-                if (markers["start"] != undefined) markers["start"].setMap(null); //clear all marker
-                if (markers["end"] != undefined) markers["end"].setMap(null); //clear all marker
-            }
-            var html = '<input type="radio" class="input-md" name="circle"  value="start" checked="checked" style="width: 1.5em; height: 1.5em;">&nbsp;&nbsp;<label>จุดกึ่งกลาง</label>&nbsp;<i class="fa fa-map-marker"></i>&nbsp;&nbsp;'
-                + '<input type="radio" class="input-md" name="circle" value="end" style="width: 1.5em; height: 1.5em;">&nbsp;&nbsp;<label>รัศมี</label>&nbsp;<i class="fa fa-map-marker"></i>'
-                + '&nbsp;&nbsp;<button type="button"  class="btn btn-default showArea">แสดงพื้นที่</button>&nbsp;'
-                + '<button type="button" class="btn btn-default clear">ล้าง</button>';
+            var html = '<div style="width: 100%;"><input type="radio" class="input-md" name="circle"  value="center" checked="checked" style="width: 1.5em; height: 1.5em;">&nbsp;&nbsp;<label>จุดกึ่งกลาง</label>&nbsp;<i class="fa fa-map-marker"></i>&nbsp;&nbsp;'
+                + '<input type="radio" class="input-md" name="circle" value="radius" style="width: 1.5em; height: 1.5em;">&nbsp;&nbsp;<label>รัศมี</label>&nbsp;<i class="fa fa-map-marker"></i>'
+                + '&nbsp;&nbsp;<button type="button" class="btn btn-default pull-right clear"><i class="fa fa-trash-o"></i> ล้าง</button>&nbsp;&nbsp;<button type="button"  class="btn btn-primary pull-right showArea">แสดงพื้นที่</button>&nbsp;'
+                + '</div>';
 
             $("#showInfo").html(html);
-
             $(".showArea").unbind("click").click(function () {
 
-                if (markers["end"] != undefined && markers["start"] != undefined) {
-
-                    if (CircleMap != undefined)CircleMap.setMap(null);
-
-                    var km = distance(markers["start"].position.lat(), markers["start"].position.lng(), markers["end"].position.lat(), markers["end"].position.lng(), "K");
+                if (CircleMap != undefined) CircleMap.setMap(null);
+                if (markerArray[0] != undefined && markerArray[1] != undefined) {
+                    var km = distance(markerArray[0].position.lat(), markerArray[0].position.lng(), markerArray[1].position.lat(), markerArray[1].position.lng(), "K");
                     CircleMap = new google.maps.Circle({
-                        strokeColor: '#FF0000',
+                        strokeColor: '#0000FF',
                         strokeOpacity: 0.8,
                         strokeWeight: 2,
-                        fillColor: '#FF0000',
+                        fillColor: '#0000FF',
                         fillOpacity: 0.35,
                         map: map,
-                        center: markers["start"].position,
+                        center: markerArray[0].position,
                         radius: km * 1000
                     });
                 }
             });
+
             $(".clear").unbind("click").click(function () {
-                if (markers["start"] != undefined) markers["start"].setMap(null); //clear all marker
-                if (markers["end"] != undefined) markers["end"].setMap(null); //clear all marker
-                markers["end"] = undefined;
-                markers["start"] = undefined;
-                if (CircleMap != undefined)CircleMap.setMap(null);
+                clearAllCircle();
             });
         }
 
+    });
+
+    $(".saveMap").unbind("click").click(function () {
+        //btn save modal map
+        coordinatesChange = true;
+
+        var html = '';
+
+        if (optionMap == "circle" && ((markerArray[0] == undefined || markerArray[0] == null) || (markerArray[1] == undefined || markerArray[1] == null))) {
+            $("#showInfoFotter").show();
+            $("#showInfoFotter").html("<b class='text-danger'>กรุณาเลือกจุดให้ครบก่อนบันทึก<b>");
+
+        } else {
+            listCoordinates = [];
+            markerArrayForUse = markerArray;
+            optionMapUse = optionMap;
+            for (var i = 0; i < markerArray.length; i++) {
+
+                if (markerArray[i] != null && markerArray[i] != undefined) {
+
+                    html += '<tr><td class="text-center">จุดที่ ' + (i + 1) + '</td>';
+                    html += '<td>' + markerArray[i].position.lat() + '</td>';
+                    html += '<td>' + markerArray[i].position.lng() + '</td>';
+                    html += '</tr>';
+                    var obj = {};
+                    obj.latitude = markerArray[i].position.lat();
+                    obj.longitude = markerArray[i].position.lng();
+                    listCoordinates.push(obj);
+                }
+            }
+
+            $("#mapTbody").html(html);
+            $("#geoType").val(hashMaptype[optionMap]);
+            $("#modalMap").modal("hide");
+        }
     });
 
     showView(param);
@@ -450,6 +395,8 @@ function showView(param) {
     listBuilding = [] //reset
     listIDRemoveBOQOne = [];//reset
     listIDRemoveBuildingOne = [];//reset
+    listCoordinates = []; //reset
+
     var datas = callAjax(js_context_path + "/api/budget/budgetInfo/viewBuildingOne", "post", {
         bg145Id: param["bg145Id"],
         type: 1
@@ -458,10 +405,17 @@ function showView(param) {
     if (datas["budget"].length > 0) { //is not empty array
 
         STATUSFORM = "EDIT";
+        $(".removeBuildOne").show();
         datas["budget"].forEach(function (objBudget) {
+
             $("#formBuildOne input, #formBuildOne textarea").each(function () {
                 var name = $(this).attr("name");
                 if (name != "plan" && name != "product")$(this).val(objBudget[name]);
+                if (name == "geoType") {
+                    var valTypeMap = objBudget[name];
+                    $(this).val(hashMaptype[valTypeMap]);
+                    optionMapUse = valTypeMap;
+                }
             });
 
             for (var i = 0; i < objBudget["listBOQ"].length; i++) {
@@ -500,15 +454,32 @@ function showView(param) {
                 listBuilding.push(obj)
             }
 
-            toolsEvent();
+            for (var i = 0; i < objBudget["listCoordinates"].length; i++) {
+                var obj = objBudget["listCoordinates"][i];
+                var html = '<tr>';
+                html += '<td class="text-center">จุดที่ ' + (i + 1) + '</td>';
+                html += '<td>' + obj.latitude + '</td>';
+                html += '<td>' + obj.longitude + '</td>';
+                html += '</tr>';
+                $('#mapTbody').append(html);
 
+                var marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(obj.latitude, obj.longitude),
+                    title: 'Marker'
+                });
+                listCoordinates.push(obj);
+                markerArrayForUse.push(marker);
+            }
+            drawPolyOnMap();
+
+            toolsEvent();
         });
 
     } else {
 
         STATUSFORM = "INSERT";
+        $(".removeBuildOne").hide();
     }
-
 }
 
 function buildingOneAction() {
@@ -520,6 +491,7 @@ function buildingOneAction() {
             var val = $(this).val();
             fParam[name] = val;
         });
+        fParam["geoType"] = optionMapUse;
         var fdata = [];
         fdata.push(fParam);
         var dataJSON = JSON.stringify({
@@ -527,17 +499,35 @@ function buildingOneAction() {
             listBOQ: listBOQ,
             listBuildDetail: listBuilding,
             listIDRemoveBOQ: listIDRemoveBOQOne,
-            listIDRemoveBuildingOne: listIDRemoveBuildingOne
+            listIDRemoveBuildingOne: listIDRemoveBuildingOne,
+            listCoordinates: listCoordinates,
+            coordinatesChange: coordinatesChange
         });
 
         var dataJSONEN = encodeURIComponent(dataJSON);
         if (STATUSFORM == "INSERT") {
             buildingOneInsert(dataJSONEN);
         } else if (STATUSFORM == "EDIT") {
-            console.log(dataJSON);
             buildingOneEdit(dataJSONEN);
         }
     }); //Insert TO DB service
+
+    $("button.removeBuildOne").unbind("click").click(function () {
+        var fParam = {};
+        fParam["id"] = $("#id").val();
+        var fdata = [];
+        fdata.push(fParam);
+        var dataJSON = JSON.stringify({
+            building: fdata
+        });
+
+        var dataJSONEN = encodeURIComponent(dataJSON);
+        var r = confirm("ต้องการลบคำชี้แจงใช่ไหม ?");
+        if (r == true) {
+            buildingOneRemove(dataJSONEN);
+        }
+
+    });
 
     $("button.addBOQ").unbind("click").click(function () {
 
@@ -588,7 +578,7 @@ function buildingOneAction() {
 
             $(".cancel-btnBOQ").unbind("click").click(function () {
                 addStatusBOQOne = false;
-                $(this).closest("tr").html('');
+                $(this).closest("tr").remove();
             });
             //button.add
         } else {
@@ -599,7 +589,7 @@ function buildingOneAction() {
     $("button.add-btn").unbind("click").click(function () {
 
         if (!addStatusBuildOne) {
-
+            console.log("add");
             addStatusBuildOne = true;
             var html = '<tr>' +
                 '   <td><input type="text" class="form-control" id="desc" name="desc"></td>' +
@@ -644,7 +634,7 @@ function buildingOneAction() {
 
             $(".cancel-btn").unbind("click").click(function () {
                 addStatusBuildOne = false;
-                $(this).closest("tr").html('');
+                $(this).closest("tr").remove();
             });
             //button.add
         } else {
@@ -652,7 +642,6 @@ function buildingOneAction() {
         }
     });
 }
-
 function toolsEvent() {
 
     $("button.edit-btnBOQ").unbind("click").click(function () {
@@ -765,7 +754,7 @@ function toolsEvent() {
             var index;
             $("td input, td label", row).each(function () {
                 var name = $(this).attr("name");
-                index = (listBuilding.length - 1) - rowIndex;
+                index = (listBuilding.length - 1) - (rowIndex);
                 var val = listBuilding[index][name];
                 if (name != "costTotal") {
                     $(this).val(val);
@@ -829,9 +818,8 @@ function toolsEvent() {
         }
     });
 }
-
 function buildingOneInsert(dataJSONEN) {
-
+    $("#showLoad").css("visibility", "visible");
     setTimeout(function () {
 
         var datas = callAjax(js_context_path + "/api/budget/budgetSave/insertBuildingOne", "post", dataJSONEN, "json");
@@ -843,12 +831,11 @@ function buildingOneInsert(dataJSONEN) {
                 alert("บันทึกไม่สำเร็จ");
             }
         }
-
+        $("#showLoad").css("visibility", "hidden");
     }, 500);
 }
-
 function buildingOneEdit(dataJSONEN) {
-
+    $("#showLoad").css("visibility", "visible");
     setTimeout(function () {
 
         var datas = callAjax(js_context_path + "/api/budget/budgetSave/editBuildingOne", "post", dataJSONEN, "json");
@@ -860,10 +847,26 @@ function buildingOneEdit(dataJSONEN) {
                 alert("แก้ไขไม่สำเร็จ");
             }
         }
-
+        $("#showLoad").css("visibility", "hidden");
     }, 500);
 }
 
+function buildingOneRemove(dataJSONEN) {
+    $("#showLoad").css("visibility", "visible");
+    setTimeout(function () {
+
+        var datas = callAjax(js_context_path + "/api/budget/budgetSave/removeBuildingOne", "post", dataJSONEN, "json");
+        if (typeof datas !== "undefined" && datas !== null) {
+            if (datas['results']['result'] == true) {
+                alert("ลบสำเร็จ");
+                toggleShow("form"); // backHome
+            } else {
+                alert("ลบไม่สำเร็จ");
+            }
+        }
+        $("#showLoad").css("visibility", "hidden");
+    }, 500);
+}
 function keyPressedOne(obj) {
 
     var quantity = parseFloat($("#quantity").val());
@@ -889,7 +892,6 @@ function keyPressedOne(obj) {
 
     $("#costTotalBOQ").html(parseFloat($("#wageTotal").html()) + parseFloat($("#materialTotal").html()));
 }
-
 function keyPressedBuilding(obj) {
 
     var name = $(obj).attr("name");
@@ -904,7 +906,6 @@ function keyPressedBuilding(obj) {
 
     $("#costTotalBuild").html(total);
 }
-
 function disableOneEdit() {
 
     $("#divAttachment #formBuildOne input,#divAttachment #formBuildOne textarea").each(function () {
@@ -917,215 +918,9 @@ function disableOneEdit() {
     $(".add-btn").hide();
     $(".edit-btn").hide();
     $(".delete-btn").hide();
-
 }
 
-function loadScript(src, callback) {
 
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    if (callback)script.onload = callback;
-    document.getElementsByTagName("head")[0].appendChild(script);
-    script.src = src;
-}
-
-var map;
-var markers = [];
-var optionMap = "point"; //default
-var directionsDisplay = [];
-var triangleCoords = [];
-var CircleMap;
-function initMap() {
-
-    log('maps-API has been loaded, ready to use');
-    var mapOptions = {
-        zoom: 16,
-        center: new google.maps.LatLng(13.809842, 100.461178),
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-    google.maps.event.addListener(map, "click", function (e) {
-
-        if (optionMap == "point") {
-
-            if (markers["start"] != undefined) markers["start"].setMap(null); //clear all marker
-            //lat and lng is available in e object
-            var latLng = e.latLng;
-            var marker = new google.maps.Marker({
-                position: latLng,
-                map: map,
-                title: 'Title'
-            });
-            var html = '<i class="fa fa-map-marker"> พิกัดภูมิศาสตร์ ละติจูดที่' + latLng.lat() + ' ลองจิจูดที่ ' + latLng.lng() + '</i>';
-            $("#showInfo").html(html);
-            markers["start"] = marker;
-
-        } else if (optionMap == "line") {
-
-            var checked = $("input:radio[name='point']:checked").val();
-            if (checked == "start") {
-                //marker start
-                if (markers["start"] != undefined) markers["start"].setMap(null); //clear all marker
-                //lat and lng is available in e object
-                var latLng = e.latLng;
-
-                var marker = new google.maps.Marker({
-                    position: latLng,
-                    map: map,
-                    title: 'Title',
-                    icon: js_context_path + '/images/markerA.png'
-                });
-
-                markers["start"] = marker;
-            } else if (checked == "end") {
-                //marker end
-                if (markers["end"] != undefined) markers["end"].setMap(null); //clear all marker
-                //lat and lng is available in e object
-                var latLng = e.latLng;
-
-                var marker = new google.maps.Marker({
-                    position: latLng,
-                    map: map,
-                    title: 'Title',
-                    icon: js_context_path + '/images/markerB.png'
-                });
-                markers["end"] = marker;
-            }
-
-            //if (markers["end"] != undefined && markers["start"] != undefined) {
-            //    // direction polyline
-            //
-            //    var service = new google.maps.DirectionsService();
-            //    if (directionsDisplay["show"] == undefined) {
-            //        directionsDisplay["show"] = new google.maps.DirectionsRenderer(
-            //            {
-            //                suppressMarkers: true
-            //            });
-            //    }
-            //
-            //    directionsDisplay["show"].setMap(map);
-            //
-            //    var waypts = [];
-            //    waypts.push({location: markers["start"].position, stopover: true});
-            //    waypts.push({location: markers["end"].position, stopover: true});
-            //
-            //    var request = {
-            //        origin: markers["start"].position,
-            //        destination: markers["end"].position,
-            //        waypoints: waypts,
-            //        travelMode: google.maps.DirectionsTravelMode.DRIVING
-            //    };
-            //
-            //    service.route(request, function (result, status) {
-            //        if (status == google.maps.DirectionsStatus.OK) {
-            //            directionsDisplay["show"].setDirections(result);
-            //        } else {
-            //            alert("Directions request failed:" + status);
-            //        }
-            //    });
-            //
-            //    var html = '<img src="' + js_context_path + '/images/markerA.png"  height="22" width="22"><label class="control-label">ละติจูดที่ ' + markers["start"].position.lat() + ' ลองจิจูดที่ ' + markers["start"].position.lng() + '</label><br>' +
-            //        '<img src="' + js_context_path + '/images/markerB.png"  height="22" width="22"><label class="control-label">ละติจูดที่ ' + markers["end"].position.lat() + ' ลองจิจูดที่ ' + markers["end"].position.lng() + '</label>';
-            //    $("#showInfoFotter").html(html);
-            //
-            //}//end if
-
-
-        } else if (optionMap == "poly") {
-
-            triangleCoords.push(e.latLng);
-
-            var bermudaTriangle = new google.maps.Polygon({
-                paths: triangleCoords,
-                strokeColor: '#FF0000',
-                strokeOpacity: 0.8,
-                strokeWeight: 3,
-                fillColor: '#FF0000',
-                fillOpacity: 0.35
-            });
-            bermudaTriangle.setMap(map);
-
-        } else if (optionMap == "circle") {
-
-            var checked = $("input:radio[name='circle']:checked").val();
-
-            if (checked == "start") {
-                //marker start
-                if (markers["start"] != undefined) markers["start"].setMap(null); //clear all marker
-                //lat and lng is available in e object
-                var latLng = e.latLng;
-
-                var marker = new google.maps.Marker({
-                    position: latLng,
-                    map: map,
-                    title: 'Title',
-                    icon: js_context_path + '/images/markerA.png'
-                });
-
-                markers["start"] = marker;
-            } else if (checked == "end") {
-                //marker end
-                if (markers["end"] != undefined) markers["end"].setMap(null); //clear all marker
-                //lat and lng is available in e object
-                var latLng = e.latLng;
-
-                var marker = new google.maps.Marker({
-                    position: latLng,
-                    map: map,
-                    title: 'Title',
-                    icon: js_context_path + '/images/markerB.png'
-                });
-                markers["end"] = marker;
-            }
-
-            //if (markers["end"] != undefined && markers["start"] != undefined) {
-            //
-            //    if (CircleMap != undefined)CircleMap.setMap(null);
-            //
-            //    var km = distance(markers["start"].position.lat(), markers["start"].position.lng(), markers["end"].position.lat(), markers["end"].position.lng(), "K");
-            //    CircleMap = new google.maps.Circle({
-            //        strokeColor: '#FF0000',
-            //        strokeOpacity: 0.8,
-            //        strokeWeight: 2,
-            //        fillColor: '#FF0000',
-            //        fillOpacity: 0.35,
-            //        map: map,
-            //        center: markers["start"].position,
-            //        radius: km * 1000
-            //    });
-            //}
-
-        }
-
-    });
-
-}
-
-function log(str) {
-    console.log(str);
-}
-
-function distance(lat1, lon1, lat2, lon2, unit) {
-
-    var radlat1 = Math.PI * lat1 / 180
-    var radlat2 = Math.PI * lat2 / 180
-    var radlon1 = Math.PI * lon1 / 180
-    var radlon2 = Math.PI * lon2 / 180
-    var theta = lon1 - lon2
-    var radtheta = Math.PI * theta / 180
-    var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-    dist = Math.acos(dist)
-    dist = dist * 180 / Math.PI
-    dist = dist * 60 * 1.1515
-    if (unit == "K") {
-        dist = dist * 1.609344
-    }
-    if (unit == "N") {
-        dist = dist * 0.8684
-    }
-    return dist
-}
 
 
 
