@@ -21,6 +21,9 @@ class AffirmativeType extends EntityBase {
     /** @Column(type="integer",length=11, name="BUDGETPERIODID") */
     public $budgetPeriodId;
 
+    /** @Column(type="integer",length=11, name="ISCOMMON") */
+    public $isCommon;
+
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;
 
@@ -37,6 +40,10 @@ class AffirmativeType extends EntityBase {
 
     function getBudgetperiodId() {
         return $this->budgetperiodId;
+    }
+
+    function getIsCommon(){
+        return $this->isCommon;
     }
 
     function getCreator() {
@@ -59,6 +66,10 @@ class AffirmativeType extends EntityBase {
         $this->budgetperiodId = $budgetperiodId;
     }
 
+    function setIsCommon($isCommon){
+        $this->isCommon = $isCommon;
+    }
+
     function setCreator($creator) {
         $this->creator = $creator;
     }
@@ -66,5 +77,4 @@ class AffirmativeType extends EntityBase {
     function setUpdater($updater) {
         $this->updater = $updater;
     }
-
 }
