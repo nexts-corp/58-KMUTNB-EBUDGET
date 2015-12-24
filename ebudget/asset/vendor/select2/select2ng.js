@@ -1,4 +1,4 @@
-(function () {
+(function () {//test
     "use strict";
     var module = angular.module('ui.select2', []);
 
