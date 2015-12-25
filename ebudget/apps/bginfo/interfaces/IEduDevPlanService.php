@@ -126,6 +126,23 @@ interface IEduDevPlanService {
      * @return apps\common\entity\AffirmativeIssue dataList
      */ 
     public function delIssue($pData);
-    
+
+
+    /**
+     * @name listsType
+     * @uri /listsType
+     * @description แผนกลยุทธ์
+     * @return String[] lists Description
+     */
+    public function listsType();
+
+    /**
+     * @name viewPlan
+     * @uri /viewPlan
+     * @param integer typeId Description
+     * @description ข้อมูลประเด็นยุทธศาสตร์/เป้าประสงค์/ตัวชี้วัด/กลยุทธ์​
+     * @return String[] lists Description
+     */
+    public function viewPlan($typeId);
 
 }

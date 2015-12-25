@@ -597,7 +597,9 @@
                     });
                     datas.push(data);
                 });
-                console.log(datas);
+                
+                var result = callAjaxFile("{{_context_path}}/api/budget/budgetReview/updateScheme", "post", datas, "json");
+                //console.log(datas);
             });
             $("#facultyId").change(function () {
                 listDepartment($(this).val());

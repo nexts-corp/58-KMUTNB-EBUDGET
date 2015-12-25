@@ -1,0 +1,134 @@
+{{> header}}
+<div role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">จัดการข้อมูลเบื้องหลัง</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">จัดการด้านแผนกลยุทธ์</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="tall dashboard">
+
+    <div class="sort-source-wrapper"><!-- button action on header -->
+        <div class="container">
+            <ul data-option-key="filter" data-sort-id="portfolio" class="nav nav-pills sort-source menu-top pull-right">
+                <li class="active">
+                    <!--<button class="btn btn-default back"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>-->
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="col-md-4 control-label text-right">แผนกลยุทธ์ :</label>
+                    <div class="col-md-8">
+                        <select id="typeId" name="typeId" class="form-control input-sm"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 20px;">
+            <table id="table" class="table table-bordered table-condensed mb-none">
+                <thead>
+                    <tr>
+                        <th class="text-center col-md-3">ลำดับ</th>
+                        <th class="text-center col-md-7">แผนกลยุทธ์</th>
+                        <th class="text-center col-md-2">จัดการ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="3" class="text-center">-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{{> footer}}
+
+<script type="text/javascript">
+    $(function(){
+        $("#typeId").html(listsType()).select2().change(function(){
+            showPlanAll();
+        });
+    });
+
+    function listsType(){
+        var datas = callAjax("{{_context_path}}/api/bginfo/EduDevPlan/listsType", "post", {}, "json");
+        if(typeof datas !== "undefined" && datas !== null){
+            var html = '<option value="">- เลือกแผนกลยุทธ์ -</option>';
+            $.each(datas["lists"], function(key, value){
+                html += '<option value="'+value["id"]+'">'+value["typeName"]+'</option>';
+            });
+
+            return html;
+        }
+    }
+
+    function showPlanAll(){
+        $("#table tbody").html('<tr><td colspan="3" class="text-center">Loading...</td></tr>');
+
+        setTimeout(function() {
+            var datas = callAjax("{{_context_path}}/api/bginfo/EduDevPlan/viewPlan", "post", {
+                typeId: $("#typeId").val()
+            }, "json");
+            if (typeof datas !== "undefined" && datas !== null) {
+                var html = '';
+                $.each(datas["lists"], function (key, value) {
+                    html += '<tr data-tt-id="issue' + value["issueId"] + '">'
+                            + '<td class="text-bold">ประเด็นยุทธศาสตร์ที่ ' + value["issueSeq"] + ' </td>'
+                            + '<td>' + value["issueName"] + '</td>'
+                            + '<td></td>'
+                            + '</tr>';
+
+                    $.each(value["target"], function (key2, value2) {
+                        html += '<tr data-tt-id="target' + value2["targetId"] + '"  data-tt-parent-id="issue' + value["issueId"] + '">'
+                                + '<td class="text-bold">เป้าประสงค์ที่ ' + value["issueSeq"]+'.'+value2["targetSeq"] + ' </td>'
+                                + '<td>' + value2["targetName"] + '</td>'
+                                + '<td></td>'
+                            + '</tr>';
+
+                        if(value2["kpi"].length > 0) {
+                            $.each(value2["kpi"], function (key3, value3) {
+                                html += '<tr data-tt-parent-id="target' + value2["targetId"] + '">'
+                                        + '<td class="text-center text-bold">ตัวชี้วัด</td>'
+                                        + '<td>'+value3["kpiSeq"]+'. '+value3["kpiName"]+'</td>'
+                                        + '<td></td>'
+                                    + '</tr>';
+                            });
+                        }
+                        else{
+                            html += '<tr data-tt-parent-id="target' + value2["targetId"] + '">'
+                                    + '<td class="text-center text-bold">ตัวชี้วัด</td>'
+                                    + '<td></td>'
+                                    + '<td></td>'
+                                + '</tr>';
+                        }
+                    });
+                });
+
+                $("#table tbody").html(html);
+                $("#table").treetable({
+                    expandable: true,
+                    initialState: "expanded"
+                });
+            }
+        }, 0);
+    }
+</script>

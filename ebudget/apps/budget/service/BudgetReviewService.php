@@ -388,15 +388,24 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
         }
     }
 
-    public function updateScheme($budget) {
+    public function updateScheme($budget) {     
+        
         if (is_null($budget) || count($budget) <= 0)
             return false;
 
         for ($i = 0; $i < count($budget); $i++) {
             $bg = new entity\BudgetScheme();
+            
+            if ($budget[$i].bgLevel == 1) {
+                $bg->setBudgetTypeId($budget[$i].bgTypeMasterId);
+            } else if ($budget[$i].bgLevel == 2) {
+                $bg->setBudgetTypeId($budget[$i].bgTypeMainId);
+            } else if ($budget[$i].bgLevel == 3) {
+                $bg->setBudgetTypeId($budget[$i].bgTypeId);
+            }
+            
             $bg->setBudgetPeriodId($budget[$i].bgPeriodId);
-            $bg->setBudgetTypeCode($budget[$i].bgTypeCode);
-            $bg->setBudgetTypeId($budget[$i].bgTypeId);
+            $bg->setBudgetTypeCode($budget[$i].bgTypeCode);            
             $bg->setL3dPlanId($budget[$i].planId);
             $bg->setDeptId($budget[$i].deptId);
             $bg->setFundgroupId($budget[$i].fundgroupId);

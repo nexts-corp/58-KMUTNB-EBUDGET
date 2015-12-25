@@ -1,5 +1,5 @@
 var commonService = angular.module('commonService', []); 
-         
+         //common
 commonService.service('cde', function () {
     this.projectPath = ngContextPath;
     
