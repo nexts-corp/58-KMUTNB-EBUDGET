@@ -116,6 +116,13 @@ interface IViewService {
     public function draftAll();
 
     /**
+     * @name approveAll
+     * @uri /approveAll
+     * @description ตรวจสอบสถานะคำของบประมาณแผ่นดินทั้งหมด
+     */
+    public function approveAll();
+    
+    /**
      * @name draft
      * @uri /draft
      * @param string formId
@@ -125,4 +132,15 @@ interface IViewService {
      * @description จัดทำคำของบประมาณแผ่นดิน
      */
     public function draft($formId, $l3dPlanId, $fundgroupId, $deptId);
+    
+        /**
+     * @name approve
+     * @uri /approve
+     * @param string formId
+     * @param string l3dPlanId
+     * @param string fundgroupId
+     * @param string deptId
+     * @description ตรวจสอบคำของบประมาณแผ่นดิน
+     */
+    public function approve($formId, $l3dPlanId, $fundgroupId, $deptId);
 }

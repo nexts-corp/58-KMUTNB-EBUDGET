@@ -1402,6 +1402,7 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
 
     public function updateStatusBG($bgType, $listBg, $status)
     {
+   
         $return = array();
 
         foreach ($listBg as $key => $value) {
@@ -1533,6 +1534,20 @@ class BudgetSaveService extends CServiceBase implements IBudgetSaveService
         }
 
         return $result;
+    }
+
+    public function updateComment($data,$bgType) {
+       
+        $class = $this->ent . "\\" . $bgType;
+        $object = new $class();
+        $object->setId($data->id);
+        $object->setComment($data->comment);
+        if($this->datacontext->updateObject($object)){
+            return true;
+        }else{
+            return false;
+        }
+        
     }
 
 }

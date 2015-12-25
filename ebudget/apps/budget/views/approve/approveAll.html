@@ -1,0 +1,432 @@
+{{> header}}
+
+<div class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">ระบบจัดทำ/จัดสรรงบประมาณ</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 id="navBgDept" class="none-padding">ตรวจสอบคำของบประมาณแผ่นดิน</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="tall dashboard">
+
+    <div class="sort-source-wrapper"><!-- button action on header -->
+        <div class="container">
+            <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+                <li class="active">
+                    <button class="btn btn-success goChoice"><i class="fa fa-plus-circle"> เพิ่มคำขอ</i></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <span class="text-bold text-info">ระบบค้นหา</span>
+                <fieldset style="border: 1px solid #cccccc; margin: 0 0 20px 0; padding: 0 0 20px 0;">
+                    <div class="col-sm-12" style="margin-top: 20px;">
+                        <div class="col-sm-6">
+                            <label class="col-sm-4 control-label text-right">แบบคำขอ :</label>
+                            <div class="col-sm-8">
+                                <select id="searchFormId" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="col-sm-4 control-label text-right">หน่วยงาน :</label>
+                            <div class="col-sm-8">
+                                <select id="searchFaculty" class="form-control"></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12" style="margin-top: 20px;">
+                        <div class="col-sm-6">
+                            <label class="col-sm-4 control-label text-right">แผนงาน :</label>
+                            <div class="col-sm-8">
+                                <select id="searchPlan" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="col-sm-4 control-label text-right">กองทุน :</label>
+                            <div class="col-sm-8">
+                                <select id="searchFund" class="form-control"></select>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div id="divHome" class="col-md-12">
+                <table id="table" class="table table-bordered table-striped table-condensed mb-none">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-md-1">ลำดับ</th>
+                            <th class="text-center col-md-1">แบบคำขอ</th>
+                            <th class="text-center col-md-4">หน่วยงาน</th>
+                            <th class="text-center col-md-2">แผนงาน</th>
+                            <th class="text-center col-md-2">กองทุน</th>
+                            <th class="text-center col-md-1">สถานะ</th>
+                            <th class="text-center col-md-1">เครื่องมือ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="7" class="text-center">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="divChoice" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true"><!-- delete bidder info form -->
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form id="formChoice" onsubmit="return false;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title text-success">แบบฟอร์มคำของบประมาณ</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label text-right req" for="formId">แบบคำขอ :</label>
+                                    <div class="col-md-7">
+                                        <select id="formId" name="formId" class="form-control input-sm" required></select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label text-right req" for="l3dPlanId">แผนงาน :</label>
+                                    <div class="col-md-7">
+                                        <select id="l3dPlanId" name="l3dPlanId" class="form-control input-sm" required></select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label text-right req" for="fundgroupId">กองทุน :</label>
+                                    <div class="col-md-7">
+                                        <select id="fundgroupId" name="fundgroupId" class="form-control input-sm" required></select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label text-right req" for="facultyId">คณะ :</label>
+                                    <div class="col-md-7">
+                                        <select id="facultyId" name="facultyId" class="form-control input-sm" required></select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label text-right req" for="deptId">สาขา :</label>
+                                    <div class="col-md-7">
+                                        <select id="deptId" name="deptId" class="form-control input-sm" required></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <footer class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <button class="btn btn-success modal-confirm"><i class="fa fa-pencil"></i> จัดทำ</button>
+                                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">ยกเลิก</button>
+                                    </div>
+                                </div>
+                            </footer>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{> footer}}
+
+
+<script type="text/javascript">
+    var listArr = {};
+    var callCount = 0
+    $(function(){
+        listsAllBudgetRequest();
+
+        $("button.goChoice").unbind("click").click(function () {
+            $("#divChoice").modal("show");
+            listsObject();
+
+            $("button.modal-confirm").unbind("click").click(function () {
+                var formId = $("#formId").val();
+                var l3dPlanId = $("#l3dPlanId").val();
+                var fundgroupId = $("#fundgroupId").val();
+                var deptId = $("#deptId").val();
+                window.location = "{{_context_path}}/api/budget/view/approve/"+formId+"/"+l3dPlanId+"/"+fundgroupId+"/"+deptId;
+            });
+        });
+    });
+
+    function listsAllBudgetRequest(){
+        var dataSet = [];
+
+        var formGroup = {};
+        var facultyGroup = {};
+        var planGroup = {}
+        var fundGroup = {};
+
+        var datas = callAjax("{{_context_path}}/api/budget/approve/getAllBudgetRequest", "post", {deptId: 0}, "json");
+        var html = '';
+        var search = '';
+        if (typeof datas !== "undefined" && datas !== null) {
+            $.each(datas["result"], function(key, value){
+                dataSet.push(value);
+
+                listArr[value["bghId"]] = value;
+                formGroup['ง.'+value["formId"]] = 'ง.'+value["formId"];
+                facultyGroup[value["facultyName"]] = value["facultyName"];
+                planGroup[value["l3dPlanName"]] = value["l3dPlanName"];
+                fundGroup[value["fundName"]] = value["fundName"];
+            });
+
+            var t = $("#table").DataTable({
+                "destroy": true,
+                "data": dataSet,
+                "order": [0, 'asc'],
+                "iDisplayLength": 50,
+                "columnDefs": [
+                    {
+                        "targets": 0,
+                        "searchable": false,
+                        "orderable": false,
+                        "data": "bghId",
+                        "sClass": "text-center col-md-1"
+                    },
+                    {
+                        "targets": 1,
+                        "data": "formId",
+                        "sClass": "text-center col-md-1",
+                        "render": function(data){
+                            return 'ง.'+data;
+                        }
+                    },
+                    {
+                        "targets": 2,
+                        "data": "bghId",
+                        "sClass": "col-md-3",
+                        "render": function(data, key, full){
+                            return full["facultyName"]+' / '+full["deptName"];
+                        }
+
+                    },
+                    {
+                        "targets": 3,
+                        "data": "l3dPlanName",
+                        "sClass": "col-md-2"
+                    },
+                    {
+                        "targets": 4,
+                        "data": "fundName",
+                        "sClass": "col-md-2"
+                    },
+                    {
+                        "targets": 5,
+                        "data": "statusId",
+                        "sClass": "text-center col-md-2",
+                        "render": function(data){
+                            
+                            var value="";
+                            
+                            if(data==1){
+                                value='<h4><span class="label label-default">อยู่ระหว่างการดำเนินการ</span></h4>';
+                            }else if(data==2){
+                                value='<h4><span class="label label-info">รอการตรวจสอบ</span></h4>';
+                                
+                            }else if(data==3){
+                                value='<h4><span class="label label-default">อนุมัติคำขอ</span></h4>';
+                                
+                            }else if(data==4){
+                                value='<h4><span class="label label-danger">อยู่ระหว่างการแก้ไข</span></h4>';
+                                
+                            }else if(data==5){
+                                value='<h4><span class="label label-success">การดำเนินการแล้วเสร็จ</span></h4>';
+                                
+                            }
+                            return value;
+                        }
+
+          
+                    },
+                    {
+                        "targets": 6,
+                        "data": "bghId",
+                        "sClass": "text-center col-md-1",
+                        "render": function(data){
+                           
+                            return '<button class="btn btn-sm btn-default approve" data-bgh="'+data+'"><i class="fa fa-pencil"></i> อนุมัติ</button>';
+                            /*
+                            return '<button class="btn btn-sm btn-warning edit" title="แก้ไข" data-bgh="'+data+'"><i class="fa fa-pencil"></i> แก้ไข</button>&nbsp;&nbsp;'
+                                + '<button class="btn btn-sm btn-default delete" title="ลบ" data-bgh="'+data+'"><i class="fa fa-trash"></i> ลบ</button>'
+                            */    
+                                
+
+                        }
+                    }
+                ]
+            });
+            t.on('order.dt search.dt', function () {
+                t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
+
+            search = '<option value="" selected="selected">ทั้งหมด</option>';
+            $.each(formGroup, function (key, value) {
+                search += '<option value="' + value + '">' + value + '</option>';
+            });
+            $("#searchFormId").html(search).select2().change(function() {
+                t.columns(1).search(this.value).draw();
+            });
+
+            search = '<option value="" selected="selected">ทั้งหมด</option>';
+            $.each(facultyGroup, function (key, value) {
+                search += '<option value="' + value + '">' + value + '</option>';
+            });
+            $("#searchFaculty").html(search).select2().change(function() {
+                t.columns(2).search(this.value).draw();
+            });
+
+            search = '<option value="" selected="selected">ทั้งหมด</option>';
+            $.each(planGroup, function (key, value) {
+                search += '<option value="' + value + '">' + value + '</option>';
+            });
+            $("#searchPlan").html(search).select2().change(function() {
+                t.columns(3).search(this.value).draw();
+            });
+
+            search = '<option value="" selected="selected">ทั้งหมด</option>';
+            $.each(fundGroup, function (key, value) {
+                search += '<option value="' + value + '">' + value + '</option>';
+            });
+            $("#searchFund").html(search).select2().change(function() {
+                t.columns(4).search(this.value).draw();
+            });
+            
+            $("#table").on("click", "button.approve", function(){
+                var id = $(this).attr("data-bgh");
+                var data = listArr[id];
+
+                var formId = data["formId"];
+                var l3dPlanId = data["l3dPlanId"];
+                var fundgroupId = data["fundgroupId"];
+                var deptId = data["deptId"];
+                window.location = "{{_context_path}}/api/budget/view/approve/"+formId+"/"+l3dPlanId+"/"+fundgroupId+"/"+deptId;
+            });
+
+            $("#table").on("click", "button.delete", function(){
+                var id = $(this).attr("data-bgh");
+                var data = listArr[id];
+
+                var formId = data["formId"];
+                var l3dPlanId = data["l3dPlanId"];
+                var fundgroupId = data["fundgroupId"];
+                var deptId = data["deptId"];
+                window.location = "{{_context_path}}/api/budget/view/approve/"+formId+"/"+l3dPlanId+"/"+fundgroupId+"/"+deptId;
+            });
+        }
+    }
+
+    function listsObject(){
+        if(callCount == 0) {
+            setTimeout(function () {
+                listsForm();
+                listsPlan3D();
+                listsFaculty();
+            }, 10);
+
+            callCount = 1;
+        }
+    }
+
+    function listsForm(){
+        var html = '<option value="" selected="selected">เลือก</option>';
+        var datas = callAjax("{{_context_path}}/api/budget/approve/listForm", "post", {}, "json");
+        if (typeof datas !== "undefined" && datas !== null) {
+            $.each(datas["lists"], function (key, value) {
+                html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
+
+            });
+        }
+
+        $("#formId").html(html).select2();
+    }
+
+    function listsPlan3D() {
+        var html = '<option value="" selected="selected">เลือก</option>';
+        var datas = callAjax("{{_context_path}}/api/budget/approve/list3DPlan", "post", {}, "json");
+        if (typeof datas !== "undefined" && datas !== null) {
+            $.each(datas["lists"], function (key, value) {
+                html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
+
+            });
+        }
+
+        $("#l3dPlanId").html(html).select2().change(function(){
+            listFundgroupWithPlan($(this).val());
+        }).trigger("change");
+    }
+
+    function listFundgroupWithPlan(l3dPlanId) {
+        var html = '<option value="" selected="selected">เลือก</option>';
+
+        if(l3dPlanId != "") {
+            var param = {
+                l3dPlanId: l3dPlanId
+            };
+            var datas = callAjax("{{_context_path}}/api/budget/approve/listFundgroupWithPlan", "post", param, "json");
+            if (typeof datas !== "undefined" && datas !== null) {
+                $.each(datas["lists"], function (key, value) {
+                    html += '<option value="' + value["id"] + '">' + value["name"] + '</option>';
+                });
+            }
+        }
+
+        $("#fundgroupId").html(html).select2();
+    }
+
+
+    function listsFaculty() {
+        var html = '<option value="" selected="selected">เลือก</option>';
+        var datas = callAjax("{{_context_path}}/api/budget/approve/listFaculty", "post", {}, "json");
+        if (typeof datas !== "undefined" && datas !== null) {
+            $.each(datas["lists"], function (key, value) {
+                html += '<option value="' + value["id"] + '">' + value["name"] + '</option>';
+            });
+        }
+
+        $("#facultyId").html(html).select2().change(function(){
+            listsDepartment($(this).val());
+        }).trigger("change");
+    }
+
+    function listsDepartment(facultyId) {
+        var html = '<option value="" selected="selected">เลือก</option>';
+
+        if(facultyId != "") {
+            var datas = callAjax("{{_context_path}}/api/budget/approve/listDepartment", "post", {facultyId: facultyId}, "json");
+            if (typeof datas !== "undefined" && datas !== null) {
+                $.each(datas["lists"], function (key, value) {
+                    html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
+                });
+            }
+        }
+
+        $("#deptId").html(html).select2();
+    }
+
+</script>
