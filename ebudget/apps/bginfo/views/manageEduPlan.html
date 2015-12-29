@@ -42,11 +42,14 @@
         </div>
 
         <div class="row" style="margin-top: 20px;">
+            <div class="col-md-12 text-right" style="margin-bottom: 10px;">
+                <button class="btn btn-primary add" data-type="issue"><i class="fa fa-plus-circle"></i> เพิ่มประเด็นยุทธศาสตร์</button>
+            </div>
             <table id="table" class="table table-bordered table-condensed mb-none">
                 <thead>
                     <tr>
-                        <th class="text-center col-md-3">ลำดับ</th>
-                        <th class="text-center col-md-7">แผนกลยุทธ์</th>
+                        <th class="text-center col-md-2">ลำดับ</th>
+                        <th class="text-center col-md-8">แผนกลยุทธ์</th>
                         <th class="text-center col-md-2">จัดการ</th>
                     </tr>
                 </thead>
@@ -57,16 +60,160 @@
                 </tbody>
             </table>
         </div>
+
+        <div id="manageModal" aria-labelledby="manageLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"><!-- delete bidder info form -->
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="form" onsubmit="return false;">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title"><span class="planTitle"></span></h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-manage form-issue">
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right req">ลำดับที่ :</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-sm" name="issueSeq" id="issueSeq" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right req">ประเด็นยุทธศาสตร์ :</label>
+                                    <div class="col-md-8">
+                                        <textarea class="form-control input-sm" name="issueName" id="issueName" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-manage form-target">
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right">ประเด็นยุทธศาสตร์ :</label>
+                                    <div class="col-md-8" id="targetParent"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right req">ลำดับที่ :</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-sm" name="targetSeq" id="targetSeq" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right req">เป้าประสงค์ :</label>
+                                    <div class="col-md-8">
+                                        <textarea class="form-control input-sm" name="targetName" id="targetName" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-manage form-kpi">
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right req">เป้าประสงค์ :</label>
+                                    <div class="col-md-8" id="kpiParent"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right req">ลำดับที่ :</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-sm" name="kpiSeq" id="kpiSeq" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right req">ตัวชี้วัด :</label>
+                                    <div class="col-md-8">
+                                        <textarea class="form-control input-sm" name="kpiName" id="kpiName" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-manage form-strategy">
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right req">เป้าประสงค์ :</label>
+                                    <div class="col-md-8" id="strategyParent"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right req">ลำดับที่ :</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-sm" name="strategySeq" id="strateSeq" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right req">กลยุทธ์ :</label>
+                                    <div class="col-md-8">
+                                        <textarea class="form-control input-sm" name="strategyName" id="strategyName" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="loading" class="col-md-12 text-center" style="margin: 20px;"></div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary save"><i class="fa fa-save"></i> บันทึก</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="deleteModal" aria-labelledby="deleteLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"><!-- delete bidder info form -->
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">ยืนยันการลบ : <span class="planType"></span></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table mb-none">
+                                <tbody>
+                                    <tr class="no-border">
+                                        <td class="col-md-4 text-right text-bold">ลำดับที่ :</td>
+                                        <td class="col-md-8 text-left"><div id="seqDel"></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-4 text-right text-bold"><span class="planType"></span> :</td>
+                                        <td class="col-md-8 text-left"><div id="nameDel"></div></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="loadingDel" class="col-md-12 text-center" style="margin: 20px;"></div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                        <button type="button" id="confirmDelete" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-trash"></i> ยืนยันการลบ</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end delete bidder info form -->
     </div>
 </div>
 
 {{> footer}}
 
 <script type="text/javascript">
+    var listArr = {
+        issue: {},
+        target: {},
+        kpi: {},
+        strategy: {}
+    };
+
     $(function(){
         $("#typeId").html(listsType()).select2().change(function(){
-            showPlanAll();
-        });
+            if($(this).val() != "") {
+                showPlanAll();
+                $("button.addIssue").show();
+            }
+            else{
+                $("#table tbody").html('<tr><td colspan="3" class="text-center">-</td></tr>');
+                $("button.addIssue").hide();
+            }
+        }).trigger("change");
     });
 
     function listsType(){
@@ -82,7 +229,7 @@
     }
 
     function showPlanAll(){
-        $("#table tbody").html('<tr><td colspan="3" class="text-center">Loading...</td></tr>');
+        $("#table tbody").html('<tr><td colspan="3" class="text-center"><i class="fa fa-spin fa-cog"></i> Loading</td></tr>');
 
         setTimeout(function() {
             var datas = callAjax("{{_context_path}}/api/bginfo/EduDevPlan/viewPlan", "post", {
@@ -91,35 +238,117 @@
             if (typeof datas !== "undefined" && datas !== null) {
                 var html = '';
                 $.each(datas["lists"], function (key, value) {
-                    html += '<tr data-tt-id="issue' + value["issueId"] + '">'
-                            + '<td class="text-bold">ประเด็นยุทธศาสตร์ที่ ' + value["issueSeq"] + ' </td>'
-                            + '<td>' + value["issueName"] + '</td>'
-                            + '<td></td>'
-                            + '</tr>';
+                    listArr["issue"][value["issueId"]] = {
+                        issueSeq: value["issueSeq"],
+                        issueName: value["issueName"]
+                    };
+
+                    html += '<tr data-tt-id="issue' + value["issueId"] + '" style="background-color: #f9f9f9;">'
+                            + '<td class="text-bold">ประเด็นยุทธศาสตร์ที่ <span class="wording">' + value["issueSeq"] + '</span></td>'
+                            + '<td class="text-bold">'
+                                + '<span class="wording">'+value["issueName"]+'</span>'
+                                + '<span style="float:right">'
+                                    + '<a href="javascript: void(0)" class="editIssue" data-id="'+value["issueId"]+'"><i class="fa fa-pencil"></i></a>&nbsp;'
+                                    + '<a href="javascript: void(0)" class="deleteIssue" data-id="'+value["issueId"]+'"><i class="fa fa-trash"></i></a>'
+                                + '</span>'
+                            + '</td>'
+                            + '<td class="text-center"><button class="btn btn-sm btn-primary add" data-type="target" data-pid="'+value["issueId"]+'"><i class="fa fa-plus-circle"></i> เพิ่มเป้าประสงค์</button></td>'
+                        + '</tr>';
 
                     $.each(value["target"], function (key2, value2) {
-                        html += '<tr data-tt-id="target' + value2["targetId"] + '"  data-tt-parent-id="issue' + value["issueId"] + '">'
-                                + '<td class="text-bold">เป้าประสงค์ที่ ' + value["issueSeq"]+'.'+value2["targetSeq"] + ' </td>'
-                                + '<td>' + value2["targetName"] + '</td>'
-                                + '<td></td>'
-                            + '</tr>';
+                        listArr["target"][value2["targetId"]] = {
+                            targetSeq: value2["targetSeq"],
+                            targetName: value2["targetName"]
+                        };
 
-                        if(value2["kpi"].length > 0) {
-                            $.each(value2["kpi"], function (key3, value3) {
-                                html += '<tr data-tt-parent-id="target' + value2["targetId"] + '">'
-                                        + '<td class="text-center text-bold">ตัวชี้วัด</td>'
-                                        + '<td>'+value3["kpiSeq"]+'. '+value3["kpiName"]+'</td>'
-                                        + '<td></td>'
-                                    + '</tr>';
-                            });
-                        }
-                        else{
-                            html += '<tr data-tt-parent-id="target' + value2["targetId"] + '">'
-                                    + '<td class="text-center text-bold">ตัวชี้วัด</td>'
-                                    + '<td></td>'
-                                    + '<td></td>'
-                                + '</tr>';
-                        }
+                        html += '<tr data-tt-id="target' + value2["targetId"] + '"  data-tt-parent-id="issue' + value["issueId"] + '">'
+                                + '<td class="text-bold">เป้าประสงค์ที่ <span class="wording">' + value["issueSeq"]+'.'+value2["targetSeq"] + '</span></td>'
+                                + '<td>'
+                                    + '<span class="wording">'+value2["targetName"]+'</span>'
+                                    + '<span style="float:right">'
+                                        + '<a href="javascript: void(0)" class="editTarget" data-id="'+value2["targetId"]+'" data-pid="'+value["issueId"]+'"><i class="fa fa-pencil"></i></a>&nbsp;'
+                                        + '<a href="javascript: void(0)" class="deleteTarget" data-id="'+value2["targetId"]+'" data-pid="'+value["issueId"]+'"><i class="fa fa-trash"></i></a>'
+                                    + '</span>'
+                                + '</td>'
+                                + '<td></td>'
+                            + '</tr>'
+                            + '<tr data-tt-id="target' + value2["targetId"] + '-object"  data-tt-parent-id="issue' + value["issueId"] + '">'
+                                + '<td colspan="3">'
+                                    + '<div class="col-md-4 col-md-offset-2">'
+                                        + '<table class="table table-bordered table-condensed mb-none">'
+                                            + '<thead>'
+                                                + '<tr>'
+                                                    + '<th colspan="2" class="text-center">ตัวชี้วัด <span style="float: right;"><button class="btn btn-sm btn-primary add" data-type="kpi" data-pid="'+value2["targetId"]+'"><i class="fa fa-plus-circle"></i></button></span></th>'
+                                                + '</tr>'
+                                            + '</thead>'
+                                            + '<tbody>';
+
+                                            if(value2["kpi"].length > 0){
+                                                $.each(value2["kpi"], function(key3, value3) {
+                                                    listArr["kpi"][value3["kpiId"]] = {
+                                                        kpiSeq: value3["kpiSeq"],
+                                                        kpiName: value3["kpiName"]
+                                                    };
+
+                                                    html += '<tr data-tt-id="kpi' + value3["kpiId"] + '">'
+                                                            + '<td>'
+                                                                + '<span class="wording">'+value3["kpiSeq"]+'. '+value3["kpiName"]+'</span>'
+                                                                + '<span style="float:right">'
+                                                                    + '<a href="javascript: void(0)" class="editKpi" data-id="'+value3["kpiId"]+'" data-pid="'+value2["targetId"]+'"><i class="fa fa-pencil"></i></a>&nbsp;'
+                                                                    + '<a href="javascript: void(0)" class="deleteKpi" data-id="'+value3["kpiId"]+'" data-pid="'+value2["targetId"]+'"><i class="fa fa-trash"></i></a>'
+                                                                + '</span>'
+                                                            +'</td>'
+                                                        + '</tr>';
+                                                });
+                                            }
+                                            else{
+                                                html += '<tr>'
+                                                        + '<td colspan="2" class="text-center">-</td>'
+                                                    + '</tr>';
+                                            }
+
+                                            html += '</tbody>'
+                                        + '</table>'
+                                    + '</div>'
+
+                                    + '<div class="col-md-4">'
+                                        + '<table class="table table-bordered table-condensed mb-none">'
+                                            + '<thead>'
+                                                + '<tr>'
+                                                    + '<th colspan="2" class="text-center">กลยุทธ์ <span style="float: right;"><button class="btn btn-sm btn-primary add" data-type="strategy" data-pid="'+value2["targetId"]+'"><i class="fa fa-plus-circle"></i></button></span></th>'
+                                                + '</tr>'
+                                            + '</thead>'
+                                            + '<tbody>';
+
+                                            if(value2["strategy"].length > 0){
+                                                $.each(value2["strategy"], function(key3, value3) {
+                                                    listArr["strategy"][value3["strategyId"]] = {
+                                                        strategySeq: value3["strategySeq"],
+                                                        strategyName: value3["strategyName"]
+                                                    };
+
+                                                    html += '<tr data-tt-id="strategy' + value3["strategyId"] + '">'
+                                                            + '<td>'
+                                                                + value3["strategySeq"]+'. '+value3["strategyName"]
+                                                                + '<span style="float:right">'
+                                                                    + '<a href="javascript: void(0)" class="editStrategy" data-id="'+value3["strateId"]+'" data-pid="'+value2["targetId"]+'"><i class="fa fa-pencil"></i></a>&nbsp;'
+                                                                    + '<a href="javascript: void(0)" class="deleteStrategy" data-id="'+value3["strateId"]+'" data-pid="'+value2["targetId"]+'"><i class="fa fa-trash"></i></a>'
+                                                                + '</span>'
+                                                            +'</td>'
+                                                        + '</tr>';
+                                                });
+                                            }
+                                            else{
+                                                html += '<tr>'
+                                                        + '<td colspan="2" class="text-center">-</td>'
+                                                    + '</tr>';
+                                            }
+
+                                            html += '</tbody>'
+                                        + '</table>'
+                                    + '</div>'
+                                + '</td>'
+                            + '</tr>';
                     });
                 });
 
@@ -128,7 +357,233 @@
                     expandable: true,
                     initialState: "expanded"
                 });
+
+                //add
+                $("button.add").unbind("click").click(function(){
+                    var plan = $(this).attr("data-type");
+                    modalType("add", plan);
+
+                    if(plan == "target"){
+                        var pId = $(this).attr("data-pid");
+                        $("#targetParent").html(listArr["issue"][pId]["issueName"]);
+                    }
+
+                    $("button.save").unbind("click").click(function(){
+                        var isValid = true;
+                        $('.form-'+plan+' input[type=text], .form-'+plan+' textarea').each(function() {
+                            if($(this).val() == "" && !$(this).prop("disabled")) {
+                                $(this).focus();
+                                isValid = false
+                            }
+                        });
+
+                        if(isValid){
+                            var url = '';
+                            var fdata = {};
+                            if(plan == "issue"){
+                                fdata = dataObject("issue", null, null);
+                                url = "Issue";
+                            }
+                            else if(plan == "target"){
+                                fdata = dataObject("target", pId, null);
+                                url = "Target";
+                            }
+                            else if(plan == "kpi"){
+                                fdata = dataObject("kpi", pId, null);
+                                url = "Kpi";
+                            }
+                            else if(plan == "strategy"){
+                                fdata = dataObject("strategy", pId, null);
+                                url = "Strategy";
+                            }
+
+                            var dataJSON = JSON.stringify({pData: fdata["data"]});
+                            var dataJSONEN = encodeURIComponent(dataJSON);
+
+                            insertPlan(url, dataJSONEN);
+                        }
+                    });
+                });
+
+                //edit
+                $("a.editIssue").unbind("click").click(function(){
+                    var id = $(this).attr("data-id");
+                    modalType("edit", "issue");
+
+                    $("#issueSeq").val(listArr["issue"][id]["issueSeq"]);
+                    $("#issueName").val(listArr["issue"][id]["issueName"]);
+
+                    $("button.save").unbind("click").click(function(){
+                        var isValid = true;
+                        $('.form-issue input[type=text], .form-issue textarea').each(function() {
+                            if($(this).val() == "" && !$(this).prop("disabled")) {
+                                $(this).focus();
+                                isValid = false
+                            }
+                        });
+
+                        if(isValid){
+                            var fdata = dataObject("issue", null, id);
+
+                            var dataJSON = JSON.stringify({pData: fdata["data"]});
+                            var dataJSONEN = encodeURIComponent(dataJSON);
+
+                            editPlan("Issue", dataJSONEN, id);
+                        }
+                    });
+                });
+
+                //delete
+                $("a.deleteIssue").unbind("click").click(function(){
+                    $("#deleteModal").modal("show");
+                    $("#loadingDel").html('');
+                    $(".planType").html("ประเด็นยุทธศาสตร์");
+
+                    var id = $(this).attr("data-id");
+                    $("#seqDel").html(listArr["issue"][id]["issueSeq"]);
+                    $("#nameDel").html(listArr["issue"][id]["issueName"]);
+
+                    $("#confirmDelete").unbind().click(function(){
+                        var dataJSONDel = JSON.stringify({id: id});
+                        var dataJSONENDel = encodeURIComponent(dataJSONDel);
+
+                        deletePlan("Issue", dataJSONENDel);
+                    });
+                });
+                //---------- end issue --------------
             }
         }, 0);
+    }
+
+    function modalType(option, plan){
+        $("#manageModal").modal("show");
+        $("#loading").html('');
+        $("#form > .modal-body > .form-manage").hide();
+
+        var action = "";
+        var title = "";
+        if(option == "add") action = "เพิ่ม";
+        else action = "แก้ไข";
+
+        if(plan == "issue"){
+            title = "ประเด็นยุทธศาสตร์";
+            $("#form > .modal-body > .form-issue").show();
+        }
+        else if(plan == "target"){
+            title = "เป้าประสงค์";
+            $("#form > .modal-body > .form-target").show();
+        }
+        else if(plan == "kpi"){
+            title = "ตัวชี้วัด";
+            $("#form > .modal-body > .form-kpi").show();
+        }
+        else{
+            title = "กลยุทธ์";
+            $("#form > .modal-body > .form-strategy").show();
+        }
+
+        $(".planTitle").html(action+" : "+title);
+    }
+
+    function dataObject(planType, parentId, id ){
+        var data = {};
+
+        if(id != null) data["id"] = id;
+
+        if(planType == "issue"){
+            data["typeId"] = $("#typeId").val();
+        }
+        else if(planType == "target"){
+            data["issueId"] = parentId;
+        }
+        else if(planType == "kpi"){
+            data["kpiId"] = parentId;
+        }
+        else if(planType == "strategy"){
+            data["strategyId"] = parentId;
+        }
+        $(".form-"+planType+" input[type=text], .form-"+planType+" textarea").each(function (i) {
+            var fname = $(this).attr("name");
+            var fvalue = $(this).val();
+            data[fname] = fvalue;
+        });
+
+        var fdata = {};
+        fdata["data"] = data;
+
+        return fdata;
+    }
+
+    function insertPlan(url, dataJSONEN) {
+        $("#loading").html("กำลังบันทึกข้อมูล...");
+
+        setTimeout(function(){
+            var datas = callAjax("{{_context_path}}/api/bginfo/EduDevPlan/insert"+url, "post", dataJSONEN, "json");
+            if (typeof datas !== 'undefined' && datas !== null) {
+                if (datas["add"] == true) {
+                    $("#loading").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
+                    setTimeout(function(){
+                        $("#manageModal").modal("hide");
+                        showPlanAll();
+                    }, 500);
+                }
+                else{
+                    $("#loading").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้<br>'+datas["add"]+'</span>');
+                }
+            }
+        }, 100);
+    }
+
+    function editPlan(url, dataJSONEN, id) {
+        $("#loading").html("กำลังบันทึกข้อมูล...");
+
+        setTimeout(function(){
+            var datas = callAjax("{{_context_path}}/api/bginfo/EduDevPlan/update"+url, "post", dataJSONEN, "json");
+            if (typeof datas !== 'undefined' && datas !== null) {
+                if (datas["update"] == true) {
+                    $("#loading").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
+                    setTimeout(function(){
+                        $("#manageModal").modal("hide");
+
+                        if(url == "Issue"){
+                            var seq = $("#issueSeq").val();
+                            var name = $("#issueName").val();
+
+                            $('tr[data-tt-id=issue'+id+'] td:eq(0) > span.wording').html(seq);
+                            $('tr[data-tt-id=issue'+id+'] td:eq(1) > span.wording').html(name);
+
+                            listArr["issue"][id] = {
+                                issueSeq: seq,
+                                issueName: name
+                            };
+                        }
+
+                    }, 500);
+                }
+                else{
+                    $("#loading").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้<br>'+datas["add"]+'</span>');
+                }
+            }
+        }, 100);
+    }
+
+    function deletePlan(url, dataJSONEN) {
+        $("#loading").html("กำลังบันทึกข้อมูล...");
+
+        setTimeout(function(){
+            var datas = callAjax("{{_context_path}}/api/bginfo/EduDevPlan/delete"+url, "post", dataJSONEN, "json");
+            if (typeof datas !== 'undefined' && datas !== null) {
+                if (datas["delete"] == true) {
+                    $("#loadingDel").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
+                    setTimeout(function(){
+                        $("#manageModal").modal("hide");
+                        showPlanAll();
+                    }, 100);
+                }
+                else{
+                    $("#loadingDel").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้<br>'+datas["add"]+'</span>');
+                }
+            }
+        }, 100);
     }
 </script>

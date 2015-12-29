@@ -15,14 +15,14 @@ class AffirmativeKpi extends EntityBase {
      */
     public $id;
 
+    /** @Column(type="integer",length=11, name="SEQ") */
+    public $kpiSeq;
+
     /** @Column(type="text", name="AFFIRMATIVEKPINAME") */
     public $kpiName;
 
     /** @Column(type="integer",length=11, name="AFFIRMATIVETARGETID") */
     public $targetId;
-
-    /** @Column(type="integer",length=11, name="SEQ") */
-    public $seq;
 
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;

@@ -27,6 +27,9 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
         $year = new \apps\common\entity\Year();
         $year->yearStatus = 'Y';
         return $this->datacontext->getObject($year)[0];
+        //$data = $this->datacontext->getObject($year)[0];
+        //$data->year = 2559;
+        //return $data;
     }
 
     public function viewManage() {
@@ -186,13 +189,14 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
         $target = [];
 
         $sql1 = "SELECT"
-                ." issue.id AS issueId, issue.seq AS issueSeq, issue.issueName,"
-                ." target.id AS targetId, target.seq AS targetSeq, target.targetName,"
-                ." kpi.id AS kpiId, kpi.seq AS kpiSeq, kpi.kpiName"
+                ." issue.id AS issueId, issue.issueSeq, issue.issueName,"
+                ." target.id AS targetId, target.targetSeq, target.targetName,"
+                ." kpi.id AS kpiId, kpi.kpiSeq, kpi.kpiName"
             ." FROM ".$this->pathEnt."\\AffirmativeIssue issue"
             ." LEFT JOIN ".$this->pathEnt."\\AffirmativeTarget target WITH target.issueId = issue.id"
             ." LEFT JOIN ".$this->pathEnt."\\AffirmativeKpi kpi WITH kpi.targetId = target.id"
-            ." WHERE issue.typeId = :typeId";
+            ." WHERE issue.typeId = :typeId"
+            ." ORDER BY issue.issueSeq, target.targetSeq, kpi.kpiSeq ASC";
         $param1 = array(
             "typeId" => $typeId
         );
@@ -216,13 +220,14 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
         }
 
         $sql2 = "SELECT"
-                ." issue.id AS issueId, issue.seq AS issueSeq, issue.issueName,"
-                ." target.id AS targetId, target.seq AS targetSeq, target.targetName,"
-                ." strategy.id AS strategyId, strategy.seq AS strategySeq, strategy.strategyName"
+                ." issue.id AS issueId, issue.issueSeq, issue.issueName,"
+                ." target.id AS targetId, target.targetSeq, target.targetName,"
+                ." strategy.id AS strategyId, strategy.strategySeq, strategy.strategyName"
             ." FROM ".$this->pathEnt."\\AffirmativeIssue issue"
             ." LEFT JOIN ".$this->pathEnt."\\AffirmativeTarget target WITH target.issueId = issue.id"
             ." LEFT JOIN ".$this->pathEnt."\\AffirmativeStrategy strategy WITH strategy.targetId = target.id"
-            ." WHERE issue.typeId = :typeId";
+            ." WHERE issue.typeId = :typeId"
+            ." ORDER BY issue.issueSeq, target.targetSeq, strategy.strategySeq ASC";
         $param2 = array(
             "typeId" => $typeId
         );
@@ -272,13 +277,15 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
                     }
                 }
 
-                $targetArr[] = array(
-                    "targetId" => $key2,
-                    "targetSeq" => $target[$key2]["seq"],
-                    "targetName" => $target[$key2]["name"],
-                    "kpi" => $kpiArr,
-                    "strategy" => $strategyArr
-                );
+                if($key2 != null) {
+                    $targetArr[] = array(
+                        "targetId" => $key2,
+                        "targetSeq" => $target[$key2]["seq"],
+                        "targetName" => $target[$key2]["name"],
+                        "kpi" => $kpiArr,
+                        "strategy" => $strategyArr
+                    );
+                }
             }
 
             $result[] = array(
@@ -289,5 +296,164 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
             );
         }
         return $result;
+    }
+
+    public function insertIssue($pData) {
+        $return = true;
+        if(!$this->datacontext->saveObject($pData)){
+            $return = $this->datacontext->getLastMessage();
+        }
+
+        return $return;
+    }
+
+    public function updateIssue($pData) {
+        $return = true;
+        if(!$this->datacontext->updateObject($pData)){
+            $return = $this->datacontext->getLastMessage();
+        }
+
+        return $return;
+    }
+
+    public function deleteIssue($id){
+        $return = true;
+
+        $issue = new \apps\common\entity\AffirmativeIssue();
+        $issue->id = $id;
+        $dIssue = $this->datacontext->getObject($issue);
+        if(!$this->datacontext->removeObject($dIssue)){
+            return $this->datacontext->getLastMessage();
+        }
+
+        $target = new \apps\common\entity\AffirmativeTarget();
+        $target->issueId = $id;
+        $dTarget = $this->datacontext->getObject($target);
+        if(!$this->datacontext->removeObject($dTarget)){
+            return $this->datacontext->getLastMessage();
+        }
+
+        foreach($dTarget as $key => $value){
+            $kpi = new \apps\common\entity\AffirmativeKpi();
+            $kpi->targetId = $value->id;
+            $dKpi = $this->datacontext->getObject($kpi);
+            if(!$this->datacontext->removeObject($dKpi)){
+                return $this->datacontext->getLastMessage();
+            }
+
+            $strategy = new \apps\common\entity\AffirmativeStrategy();
+            $strategy->targetId = $value->id;
+            $dStrategy = $this->datacontext->getObject($strategy);
+            if(!$this->datacontext->removeObject($dStrategy)){
+                return $this->datacontext->getLastMessage();
+            }
+        }
+        return $return;
+    }
+
+    public function insertTarget($pData) {
+        $return = true;
+        if(!$this->datacontext->saveObject($pData)){
+            $return = $this->datacontext->getLastMessage();
+        }
+
+        return $return;
+    }
+
+    public function updateTarget($pData) {
+        $return = true;
+        if(!$this->datacontext->updateObject($pData)){
+            $return = $this->datacontext->getLastMessage();
+        }
+
+        return $return;
+    }
+
+    public function deleteTarget($id){
+        $return = true;
+
+        $target = new \apps\common\entity\AffirmativeTarget();
+        $target->id = $id;
+        $dTarget = $this->datacontext->getObject($target);
+        if(!$this->datacontext->removeObject($dTarget)){
+            return $this->datacontext->getLastMessage();
+        }
+
+        foreach($dTarget as $key => $value){
+            $kpi = new \apps\common\entity\AffirmativeKpi();
+            $kpi->targetId = $value->id;
+            $dKpi = $this->datacontext->getObject($kpi);
+            if(!$this->datacontext->removeObject($dKpi)){
+                return $this->datacontext->getLastMessage();
+            }
+
+            $strategy = new \apps\common\entity\AffirmativeStrategy();
+            $strategy->targetId = $value->id;
+            $dStrategy = $this->datacontext->getObject($strategy);
+            if(!$this->datacontext->removeObject($dStrategy)){
+                return $this->datacontext->getLastMessage();
+            }
+        }
+        return $return;
+    }
+
+    public function insertKpi($pData) {
+        $return = true;
+        if(!$this->datacontext->saveObject($pData)){
+            $return = $this->datacontext->getLastMessage();
+        }
+
+        return $return;
+    }
+
+    public function updateKpi($pData) {
+        $return = true;
+        if(!$this->datacontext->updateObject($pData)){
+            $return = $this->datacontext->getLastMessage();
+        }
+
+        return $return;
+    }
+
+    public function deleteKpi($id){
+        $return = true;
+
+        $kpi = new \apps\common\entity\AffirmativeKpi();
+        $kpi->id = $id;
+        $dKpi = $this->datacontext->getObject($kpi);
+        if(!$this->datacontext->removeObject($dKpi)){
+            return $this->datacontext->getLastMessage();
+        }
+        return $return;
+    }
+
+    public function insertStrategy($pData) {
+        $return = true;
+        if(!$this->datacontext->saveObject($pData)){
+            $return = $this->datacontext->getLastMessage();
+        }
+
+        return $return;
+    }
+
+    public function updateStrategy($pData) {
+        $return = true;
+        if(!$this->datacontext->updateObject($pData)){
+            $return = $this->datacontext->getLastMessage();
+        }
+
+        return $return;
+    }
+
+    public function deleteStrategy($id){
+        $return = true;
+
+        $strategy = new \apps\common\entity\AffirmativeStrategy();
+        $strategy->id = $id;
+        $dStrategy = $this->datacontext->getObject($strategy);
+        if(!$this->datacontext->removeObject($dStrategy)){
+            return $this->datacontext->getLastMessage();
+        }
+        return $return;
     }
 }

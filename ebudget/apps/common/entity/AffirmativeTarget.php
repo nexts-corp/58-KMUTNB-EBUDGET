@@ -15,14 +15,14 @@ class AffirmativeTarget extends EntityBase {
      */
     public $id;
 
+    /** @Column(type="integer",length=11, name="SEQ") */
+    public $targetSeq;
+
     /** @Column(type="text", name="AFFIRMATIVETARGETNAME") */
     public $targetName;
 
     /** @Column(type="integer",length=11, name="AFFIRMATIVEISSUEID") */
     public $issueId;
-
-    /** @Column(type="integer",length=11, name="SEQ") */
-    public $seq;
 
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;

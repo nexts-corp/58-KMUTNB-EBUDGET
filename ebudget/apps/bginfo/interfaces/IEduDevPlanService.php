@@ -145,4 +145,112 @@ interface IEduDevPlanService {
      */
     public function viewPlan($typeId);
 
+    /**
+     * @name insertIssue
+     * @uri /insertIssue
+     * @param apps\common\entity\AffirmativeIssue pData Description
+     * @return boolean add Description
+     * @description เพิ่มประเด็นยุทธศาสตร์
+     */
+    public function insertIssue($pData);
+
+    /**
+     * @name updateIssue
+     * @uri /updateIssue
+     * @param apps\common\entity\AffirmativeIssue pData Description
+     * @return boolean update Description
+     * @description แก้ไขประเด็นยุทธศาสตร์
+     */
+    public function updateIssue($pData);
+
+    /**
+     * @name deleteIssue
+     * @uri /deleteIssue
+     * @param integer id Description
+     * @return boolean delete Description
+     * @description แก้ประเด็นยุทธศาสตร์
+     */
+    public function deleteIssue($id);
+
+    /**
+     * @name insertTarget
+     * @uri /insertTarget
+     * @param apps\common\entity\AffirmativeTarget pData Description
+     * @return boolean add Description
+     * @description เพิ่มประเด็นยุทธศาสตร์
+     */
+    public function insertTarget($pData);
+
+    /**
+     * @name updateTarget
+     * @uri /updateTarget
+     * @param apps\common\entity\AffirmativeTarget pData Description
+     * @return boolean update Description
+     * @description แก้ไขประเด็นยุทธศาสตร์
+     */
+    public function updateTarget($pData);
+
+    /**
+     * @name deleteTarget
+     * @uri /deleteTarget
+     * @param integer id Description
+     * @return boolean delete Description
+     * @description แก้ประเด็นยุทธศาสตร์
+     */
+    public function deleteTarget($id);
+
+    /**
+     * @name insertKpi
+     * @uri /insertKpi
+     * @param apps\common\entity\AffirmativeKpi pData Description
+     * @return boolean add Description
+     * @description เพิ่มประเด็นยุทธศาสตร์
+     */
+    public function insertKpi($pData);
+
+    /**
+     * @name updateKpi
+     * @uri /updateKpi
+     * @param apps\common\entity\AffirmativeKpi pData Description
+     * @return boolean update Description
+     * @description แก้ไขประเด็นยุทธศาสตร์
+     */
+    public function updateKpi($pData);
+
+    /**
+     * @name deleteKpi
+     * @uri /deleteKpi
+     * @param integer id Description
+     * @return boolean delete Description
+     * @description แก้ประเด็นยุทธศาสตร์
+     */
+    public function deleteKpi($id);
+
+    /**
+     * @name insertStrategy
+     * @uri /insertStrategy
+     * @param apps\common\entity\AffirmativeStrategy pData Description
+     * @return boolean add Description
+     * @description เพิ่มประเด็นยุทธศาสตร์
+     */
+    public function insertStrategy($pData);
+
+    /**
+     * @name updateStrategy
+     * @uri /updateStrategy
+     * @param apps\common\entity\AffirmativeStrategy pData Description
+     * @return boolean update Description
+     * @description แก้ไขประเด็นยุทธศาสตร์
+     */
+    public function updateStrategy($pData);
+
+    /**
+     * @name deleteStrategy
+     * @uri /deleteStrategy
+     * @param integer id Description
+     * @return boolean delete Description
+     * @description แก้ประเด็นยุทธศาสตร์
+     */
+    public function deleteStrategy($id);
+
 }
