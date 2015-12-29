@@ -552,6 +552,11 @@
             // button show and hide
             $("button.backHome, button.backChoice").hide();
             $("button.goChoice").show();
+            var $scopeJS = angular.element(document.querySelector('[ng-app=formBudget]')).scope();
+            $scopeJS.$apply(function () {
+                $scopeJS.activeNg = false;
+                $scopeJS.activeTemplate = "no";
+            });
         }
         else if (option == "choice") {
 
