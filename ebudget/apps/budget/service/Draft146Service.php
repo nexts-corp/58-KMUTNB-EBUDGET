@@ -10,19 +10,23 @@ use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
 use apps\budget\interfaces\IDraft146Service;
 use apps\common\entity;
+use apps\common\entity\BudgetHead;
 
 use th\co\bpg\cde\collection\impl\CJSONDecodeImpl;
 
-class Draft146Service extends CServiceBase implements IDraft146Service {
+class Draft146Service extends CServiceBase implements IDraft146Service
+{
 
     public $datacontext;
     public $ent = "apps\\common\\entity";
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->datacontext = new CDataContext();
     }
 
-    function getPeriod() {
+    function getPeriod()
+    {
         $year = new \apps\common\entity\Year();
         $year->yearStatus = 'Y';
         return $this->datacontext->getObject($year)[0];
@@ -59,7 +63,8 @@ class Draft146Service extends CServiceBase implements IDraft146Service {
         return $result;
     }
 
-    public function view($param){
+    public function view($param)
+    {
         $param->budgetPeriodId = $this->getPeriod()->year;
         $param->budgetTypeCode = "G";
 
@@ -125,14 +130,15 @@ class Draft146Service extends CServiceBase implements IDraft146Service {
         return $list1;
     }
 
-    public function insert($budget, $file){
+    public function insert($budget, $file)
+    {
 
         $conv = json_decode($budget);
 
         $desc = $conv->desc;
 
         $json = new CJSONDecodeImpl();
-        $budget = $json->decode(new \apps\common\entity\Budget146(),$conv);
+        $budget = $json->decode(new \apps\common\entity\Budget146(), $conv);
         $budget->budgetTypeCode = "G";
         $budget->budgetPeriodId = $this->getPeriod()->year;
 
@@ -167,6 +173,7 @@ class Draft146Service extends CServiceBase implements IDraft146Service {
         $budget->budgetHeadId = $bgHeadId;
         $budget->planId = $budgetPlanProject["budgetPlanId"];
         $budget->projectId = $budgetPlanProject["budgetProjectId"];
+        $budget->statusId = 1;
         $budget->bgSummary = $budget->bgRequest;
         if ($budget->remark == "") {
             $budget->remark = "-";
@@ -181,13 +188,13 @@ class Draft146Service extends CServiceBase implements IDraft146Service {
             $return["budgetHeadId"] = $bgHeadId;
         }
 
-        if($file != ''){
-            if($file != "undefined") {
+        if ($file != '') {
+            if ($file != "undefined") {
                 $time = date("YmdHis");
                 $target_dir = "apps\\budget\\views\\draft\\attachment\\";
 
-                $target_file = $target_dir ."BG146". $time . "-" . $file["name"];
-                $fileN = "BG146". $time . "-" . $file["name"];
+                $target_file = $target_dir . "BG146" . $time . "-" . $file["name"];
+                $fileN = "BG146" . $time . "-" . $file["name"];
 
                 if (move_uploaded_file($file["tmp_name"], $target_file)) {
 
@@ -197,8 +204,7 @@ class Draft146Service extends CServiceBase implements IDraft146Service {
 
                     if (!$this->datacontext->saveObject($update)) {
                         $return = $this->datacontext->getLastMessage();
-                    }
-                    else{
+                    } else {
                         $update2 = new \apps\common\entity\Budget146();
                         $update2->id = $budget->id;
                         $data = $this->datacontext->getObject($update2);
@@ -215,7 +221,8 @@ class Draft146Service extends CServiceBase implements IDraft146Service {
         return $return;
     }
 
-    public function update($budget, $file, $fileUpload){
+    public function update($budget, $file, $fileUpload)
+    {
         $return = array();
 
         $conv = json_decode($budget);
@@ -223,7 +230,7 @@ class Draft146Service extends CServiceBase implements IDraft146Service {
         $desc = $conv->desc;
 
         $json = new CJSONDecodeImpl();
-        $budget = $json->decode(new \apps\common\entity\Budget146(),$conv);
+        $budget = $json->decode(new \apps\common\entity\Budget146(), $conv);
 
         $budget->bgSummary = $budget->bgRequest;
         $budget->dateUpdated = date('Y-m-d H:i:s');
@@ -231,12 +238,11 @@ class Draft146Service extends CServiceBase implements IDraft146Service {
         if (!$this->datacontext->updateObject($budget)) {
             $return["result"] = false;
             $return["msg"] = $this->datacontext->getLastMessage();
-        }
-        else {
+        } else {
             $return["result"] = true;
         }
 
-        if($fileUpload == "1"){
+        if ($fileUpload == "1") {
             $time = date("YmdHis");
             $target_dir = "apps\\budget\\views\\draft\\attachment\\";
 
@@ -257,21 +263,20 @@ class Draft146Service extends CServiceBase implements IDraft146Service {
 
                     if (!$this->datacontext->updateObject($data[0])) {
                         $return = $this->datacontext->getLastMessage();
-                    }
-                    else{
-                        if (!$this->datacontext->removeObject($data2[0])){
+                    } else {
+                        if (!$this->datacontext->removeObject($data2[0])) {
                             $return = $this->datacontext->getLastMessage();
                         }
                     }
                 }
             }
 
-            if($file !== "undefined") {
+            if ($file !== "undefined") {
                 $time = date("YmdHis");
                 $target_dir = "apps\\budget\\views\\draft\\attachment\\";
 
-                $target_file = $target_dir ."BG146". $time . "-" . $file["name"];
-                $fileN = "BG146". $time . "-" . $file["name"];
+                $target_file = $target_dir . "BG146" . $time . "-" . $file["name"];
+                $fileN = "BG146" . $time . "-" . $file["name"];
 
                 if (move_uploaded_file($file["tmp_name"], $target_file)) {
 
@@ -281,8 +286,7 @@ class Draft146Service extends CServiceBase implements IDraft146Service {
 
                     if (!$this->datacontext->saveObject($update)) {
                         $return = $this->datacontext->getLastMessage();
-                    }
-                    else{
+                    } else {
                         $update2 = new \apps\common\entity\Budget146();
                         $update2->id = $budget->id;
                         $data = $this->datacontext->getObject($update2);
@@ -299,7 +303,8 @@ class Draft146Service extends CServiceBase implements IDraft146Service {
         return $return;
     }
 
-    public function delete($budgetId){
+    public function delete($budgetId)
+    {
         $result = true;
 
         $repo = new \apps\common\entity\Budget146();
@@ -327,7 +332,7 @@ class Draft146Service extends CServiceBase implements IDraft146Service {
             }
         }
 
-        if($attachmentId != null && $attachmentId != ""){
+        if ($attachmentId != null && $attachmentId != "") {
             $target_dir = "apps\\budget\\views\\draft\\attachment\\";
 
             $update2 = new \apps\common\entity\Attachment();
@@ -339,7 +344,7 @@ class Draft146Service extends CServiceBase implements IDraft146Service {
 
                 $data[0]->attachmentId = null;
 
-                if (!$this->datacontext->removeObject($data2[0])){
+                if (!$this->datacontext->removeObject($data2[0])) {
                     $return = $this->datacontext->getLastMessage();
                 }
             }

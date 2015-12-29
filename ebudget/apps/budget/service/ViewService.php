@@ -2,10 +2,12 @@
 
 namespace apps\budget\service;
 
+use apps\common\entity\Budget145;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use apps\budget\interfaces\IViewService;
+use th\co\bpg\cde\collection\impl\CJSONDecodeImpl;
 
 class ViewService extends CServiceBase implements IViewService {
 
@@ -153,6 +155,32 @@ class ViewService extends CServiceBase implements IViewService {
     
     public function approveAll() {
         $view = new CJView("approve/approveAll", CJViewType::HTML_VIEW_ENGINE);
+        return $view;
+    }
+
+    public function buildOne($bg145Id, $budget)
+    {
+        $view = new CJView("draft/buildingOne", CJViewType::HTML_VIEW_ENGINE);
+
+        $view->bg145Id = $bg145Id;
+        $conv = json_decode(base64_decode($budget));
+        $json = new CJSONDecodeImpl();
+        $budgetDe = $json->decode(new Budget145(), $conv);
+        $view->budget = $budgetDe;
+
+        return $view;
+    }
+
+
+    public function buildMore($bg145Id, $budget)
+    {
+        $view = new CJView("draft/buildingMore", CJViewType::HTML_VIEW_ENGINE);
+        $view->bg145Id = $bg145Id;
+        $conv = json_decode(base64_decode($budget));
+        $json = new CJSONDecodeImpl();
+        $budgetDe = $json->decode(new Budget145(), $conv);
+        $view->budget = $budgetDe;
+
         return $view;
     }
 

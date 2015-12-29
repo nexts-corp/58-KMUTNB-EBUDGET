@@ -10,6 +10,7 @@ use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
 use apps\budget\interfaces\IDraft144Service;
 use apps\common\entity;
+use apps\common\entity\BudgetHead;
 
 use th\co\bpg\cde\collection\impl\CJSONDecodeImpl;
 
@@ -182,6 +183,7 @@ class Draft144Service extends CServiceBase implements IDraft144Service {
         $budget->budgetHeadId = $bgHeadId;
         $budget->planId = $budgetPlanProject["budgetPlanId"];
         $budget->projectId = $budgetPlanProject["budgetProjectId"];
+        $budget->statusId = 1;
         $budget->bgSummary = $budget->bgRequest;
         if ($budget->remark == "") {
             $budget->remark = "-";

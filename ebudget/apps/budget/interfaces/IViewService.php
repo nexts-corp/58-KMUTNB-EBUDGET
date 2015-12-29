@@ -143,4 +143,22 @@ interface IViewService {
      * @description ตรวจสอบคำของบประมาณแผ่นดิน
      */
     public function approve($formId, $l3dPlanId, $fundgroupId, $deptId);
+
+    /**
+     * @name buildOne
+     * @uri /buildOne
+     * @param string bg145Id
+     * @param string budget
+     * @description คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง 1 ปี
+     */
+    public function buildOne($bg145Id, $budget);
+
+    /**
+     * @name buildMore
+     * @uri /buildMore
+     * @param string bg145Id
+     * @param string budget
+     * @description คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง ต่อเนื่อง
+     */
+    public function buildMore($bg145Id, $budget);
 }
