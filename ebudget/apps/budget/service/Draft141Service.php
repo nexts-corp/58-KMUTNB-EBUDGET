@@ -5,6 +5,7 @@ namespace apps\budget\service;
 use apps\budget\interfaces\budgetType;
 use apps\budget\interfaces\quater;
 use apps\budget\interfaces\year;
+use apps\common\entity\BudgetHead;
 use apps\common\entity\TrackingStatus;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
@@ -182,6 +183,7 @@ class Draft141Service extends CServiceBase implements IDraft141Service {
         $budget->budgetHeadId = $bgHeadId;
         $budget->planId = $budgetPlanProject["budgetPlanId"];
         $budget->projectId = $budgetPlanProject["budgetProjectId"];
+        $budget->statusId = 1;
         $budget->bgSummary = $budget->salaryTotal;
         if ($budget->remark == "") {
             $budget->remark = "-";

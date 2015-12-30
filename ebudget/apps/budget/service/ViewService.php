@@ -2,10 +2,12 @@
 
 namespace apps\budget\service;
 
+use apps\common\entity\Budget145;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use apps\budget\interfaces\IViewService;
+use th\co\bpg\cde\collection\impl\CJSONDecodeImpl;
 
 class ViewService extends CServiceBase implements IViewService {
 
@@ -113,6 +115,71 @@ class ViewService extends CServiceBase implements IViewService {
         $view->l3dPlanId = $l3dPlanId;
         $view->fundgroupId = $fundgroupId;
         $view->deptId = $deptId;
+
+        return $view;
+    }
+
+    
+    public function approve($formId, $l3dPlanId, $fundgroupId, $deptId) {
+        if($formId == "140"){
+            $view = new CJView("approve/bg140", CJViewType::HTML_VIEW_ENGINE);
+        }
+        elseif($formId == "141"){
+            $view = new CJView("approve/bg141", CJViewType::HTML_VIEW_ENGINE);
+        }
+        elseif($formId == "142"){
+            $view = new CJView("approve/bg142", CJViewType::HTML_VIEW_ENGINE);
+        }
+        elseif($formId == "143"){
+            $view = new CJView("approve/bg143", CJViewType::HTML_VIEW_ENGINE);
+        }
+        elseif($formId == "144"){
+            $view = new CJView("approve/bg144", CJViewType::HTML_VIEW_ENGINE);
+        }
+        elseif($formId == "145"){
+            $view = new CJView("approve/bg145", CJViewType::HTML_VIEW_ENGINE);
+        }
+        elseif($formId == "146"){
+            $view = new CJView("approve/bg146", CJViewType::HTML_VIEW_ENGINE);
+        }
+        else{
+            $view = new CJView("approve/project", CJViewType::HTML_VIEW_ENGINE);
+        }
+        $view->formId = $formId;
+        $view->l3dPlanId = $l3dPlanId;
+        $view->fundgroupId = $fundgroupId;
+        $view->deptId = $deptId;
+
+        return $view;
+    }
+    
+    public function approveAll() {
+        $view = new CJView("approve/approveAll", CJViewType::HTML_VIEW_ENGINE);
+        return $view;
+    }
+
+    public function buildOne($bg145Id, $budget)
+    {
+        $view = new CJView("draft/buildingOne", CJViewType::HTML_VIEW_ENGINE);
+
+        $view->bg145Id = $bg145Id;
+        $conv = json_decode(base64_decode($budget));
+        $json = new CJSONDecodeImpl();
+        $budgetDe = $json->decode(new Budget145(), $conv);
+        $view->budget = $budgetDe;
+
+        return $view;
+    }
+
+
+    public function buildMore($bg145Id, $budget)
+    {
+        $view = new CJView("draft/buildingMore", CJViewType::HTML_VIEW_ENGINE);
+        $view->bg145Id = $bg145Id;
+        $conv = json_decode(base64_decode($budget));
+        $json = new CJSONDecodeImpl();
+        $budgetDe = $json->decode(new Budget145(), $conv);
+        $view->budget = $budgetDe;
 
         return $view;
     }

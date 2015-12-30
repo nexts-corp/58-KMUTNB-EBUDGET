@@ -15,14 +15,14 @@ class AffirmativeStrategy extends EntityBase {
      */
     public $id;
 
+    /** @Column(type="integer",length=11, name="SEQ") */
+    public $strategySeq;
+
     /** @Column(type="text", name="AFFIRMATIVESTRATEGYNAME") */
     public $strategyName;
 
     /** @Column(type="integer",length=11, name="AFFIRMATIVETARGETID") */
     public $targetId;
-
-    /** @Column(type="integer",length=11, name="SEQ") */
-    public $seq;
 
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;

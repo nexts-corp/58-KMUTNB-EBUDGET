@@ -6,6 +6,7 @@ namespace apps\budget\interfaces;
  * @name AllocateService
  * @uri /allocate
  * @description AllocateService
+
  */
 interface IAllocateService {
 
@@ -14,6 +15,7 @@ interface IAllocateService {
      * @uri /budgetTypeTree
      * @return String[] dataList
      * @description ข้อมูลประเภทงบประมาณแบบเค้าโครงต้นไม้
+     * @Authen true
      */
     public function budgetTypeTree();
 

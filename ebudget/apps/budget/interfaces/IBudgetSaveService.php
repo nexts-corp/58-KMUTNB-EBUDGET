@@ -328,5 +328,15 @@ interface IBudgetSaveService
      */
     public function updateStatusBG($bgType, $listBg, $status);
 
-
+     /**
+     * @name updateComment
+     * @uri /updateComment
+     * @param apps\common\entity\Budget data
+     * @param apps\common\entity\Budget bgType
+     * @return boolean result Description
+     * @description อัพเดทหมายเหตุ
+     */
+    public function updateComment($data,$bgType);
+    
+    
 }

@@ -547,11 +547,16 @@
 
         if (option == "home") {
             // panel show and hide
-            $("#divChoice, #divForm").hide();
+            $("#divChoice,#divForm").hide();
             $("#divHome").show();
             // button show and hide
             $("button.backHome, button.backChoice").hide();
             $("button.goChoice").show();
+            var $scopeJS = angular.element(document.querySelector('[ng-app=formBudget]')).scope();
+            $scopeJS.$apply(function () {
+                $scopeJS.activeNg = false;
+                $scopeJS.activeTemplate = "no";
+            });
         }
         else if (option == "choice") {
 
@@ -579,8 +584,8 @@
             $("#divHome, #divChoice, #divAttachment").hide();
             $("#divForm").show();
             // button show and hide
-            $("button.goChoice, button.backHome, button.backAttachment").hide();
-            $("button.backChoice").show();
+            $("button.goChoice, button.backChoice, button.backAttachment").hide();
+            $("button.backHome").show();
         } else if (option == "attachment") {
             // panel show and hide
             $("#divHome, #divChoice, #divForm").hide();

@@ -13,6 +13,7 @@ interface IViewService {
      * @name formBudget
      * @uri /formBudget
      * @description ยื่นคำของบประมาณเงินแผ่นดิน
+     * @SiteMap true
      */
     public function formBudget();
 
@@ -115,6 +116,13 @@ interface IViewService {
     public function draftAll();
 
     /**
+     * @name approveAll
+     * @uri /approveAll
+     * @description ตรวจสอบสถานะคำของบประมาณแผ่นดินทั้งหมด
+     */
+    public function approveAll();
+    
+    /**
      * @name draft
      * @uri /draft
      * @param string formId
@@ -124,4 +132,33 @@ interface IViewService {
      * @description จัดทำคำของบประมาณแผ่นดิน
      */
     public function draft($formId, $l3dPlanId, $fundgroupId, $deptId);
+    
+        /**
+     * @name approve
+     * @uri /approve
+     * @param string formId
+     * @param string l3dPlanId
+     * @param string fundgroupId
+     * @param string deptId
+     * @description ตรวจสอบคำของบประมาณแผ่นดิน
+     */
+    public function approve($formId, $l3dPlanId, $fundgroupId, $deptId);
+
+    /**
+     * @name buildOne
+     * @uri /buildOne
+     * @param string bg145Id
+     * @param string budget
+     * @description คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง 1 ปี
+     */
+    public function buildOne($bg145Id, $budget);
+
+    /**
+     * @name buildMore
+     * @uri /buildMore
+     * @param string bg145Id
+     * @param string budget
+     * @description คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง ต่อเนื่อง
+     */
+    public function buildMore($bg145Id, $budget);
 }

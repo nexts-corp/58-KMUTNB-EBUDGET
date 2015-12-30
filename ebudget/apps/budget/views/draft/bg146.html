@@ -35,11 +35,13 @@
                 <div class="form-group">
                     <div class="col-md-6">
                         <label class="col-md-4 control-label text-right">ปีงบประมาณ : </label>
+
                         <div class="col-md-6" id="budgetYear"></div>
                     </div>
 
                     <div class="col-md-6">
                         <label class="col-md-4 control-label text-right">แหล่งเงิน : </label>
+
                         <div class="col-md-6" id="budgetType"></div>
                     </div>
                 </div>
@@ -47,11 +49,13 @@
                 <div class="form-group">
                     <div class="col-md-6">
                         <label class="col-md-4 control-label text-right">แผนงาน : </label>
+
                         <div class="col-md-6" id="l3dPlan"></div>
                     </div>
 
                     <div class="col-md-6">
                         <label class="col-md-4 control-label text-right">กองทุน : </label>
+
                         <div class="col-md-6" id="fundgroup"></div>
                     </div>
                 </div>
@@ -59,11 +63,13 @@
                 <div class="form-group">
                     <div class="col-md-6">
                         <label class="col-md-4 control-label text-right">หน่วยงาน/สำนักงาน : </label>
+
                         <div class="col-md-6" id="facName"></div>
                     </div>
 
                     <div class="col-md-6">
                         <label class="col-md-4 control-label text-right">ภาควิชา : </label>
+
                         <div class="col-md-6" id="deptName"></div>
                     </div>
                 </div>
@@ -78,37 +84,38 @@
                             <a href="#" id="collapseAll"><i class="fa fa-minus-square"></i> ซ่อนทั้งหมด</a>
                         </div>
                         <table id="table146" class="table table-bordered table-striped mb-none treetable">
-                             <thead>
-                             <tr>
-                                 <th class="text-center">ลำดับ</th>
-                                 <th class="text-center">รายการ - ประเภทเงินอุดหนุน</th>
-                                 <th class="text-center">งบประมาณที่ได้รับการจัดสรรปีงบประมาณปัจจุบัน</th>
-                                 <th class="text-center">คำของบประมาณปีงบประมาณที่ขอตั้งงบประมาณ</th>
-                                 <th class="text-center">คำชี้แจงเหตุผลสรุป</th>
-                                 <th class="text-center" style="vertical-align: middle;">สถานะคำขอ</th>
-                                 <th class="text-center" style="vertical-align: middle;min-width: 130px;">เครื่องมือ</th>
-                                 </tr>
-                             <tr id="total">
-                                 <th class="text-center"></th>
-                                 <th class="text-center">รวมทั้งสิ้น</th>
-                                 <th class="text-right text-bold"></th>
-                                 <th class="text-right text-bold"></th>
-                                 <th class="text-center"></th>
-                                 <th class="text-center"></th>
-                                 <th class="text-center"></th>
-                                 </tr>
-                             </thead>
-                             <tbody>
-                                 <tr>
-                                     <td colspan="10" class="text-center">-</td>
-                                 </tr>
-                             </tbody>
+                            <thead>
+                            <tr>
+                                <th class="text-center">ลำดับ</th>
+                                <th class="text-center">รายการ - ประเภทเงินอุดหนุน</th>
+                                <th class="text-center">งบประมาณที่ได้รับการจัดสรรปีงบประมาณปัจจุบัน</th>
+                                <th class="text-center">คำของบประมาณปีงบประมาณที่ขอตั้งงบประมาณ</th>
+                                <th class="text-center">คำชี้แจงเหตุผลสรุป</th>
+                                <th class="text-center" style="vertical-align: middle;">สถานะคำขอ</th>
+                                <th class="text-center" style="vertical-align: middle;min-width: 130px;">เครื่องมือ</th>
+                            </tr>
+                            <tr id="total">
+                                <th class="text-center"></th>
+                                <th class="text-center">รวมทั้งสิ้น</th>
+                                <th class="text-right text-bold"></th>
+                                <th class="text-right text-bold"></th>
+                                <th class="text-center"></th>
+                                <th class="text-center"></th>
+                                <th class="text-center"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td colspan="10" class="text-center">-</td>
+                            </tr>
+                            </tbody>
                         </table>
                     </div>
                 </section>
             </div>
 
-            <div id="panelForm" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div id="panelForm" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog"
+                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -118,35 +125,48 @@
                         <div class="modal-body">
                             <form id="form" onsubmit="return false;">
                                 <div class="form-group">
-                                    <label class="col-md-12 control-label text-bold req" for="bursaryName">ประเภท :</label>
+                                    <label class="col-md-12 control-label text-bold req" for="bursaryName">ประเภท
+                                        :</label>
+
                                     <div class="col-md-12">
-                                        <input type="text" id="bursaryName" name="bursaryName" class="form-control input-sm" required>
+                                        <input type="text" id="bursaryName" name="bursaryName"
+                                               class="form-control input-sm" required>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-12 control-label text-bold req" for="bursaryDesc">คำอธิบาย :</label>
+                                    <label class="col-md-12 control-label text-bold req" for="bursaryDesc">คำอธิบาย
+                                        :</label>
+
                                     <div class="col-md-12">
-                                        <textarea type="text" id="bursaryDesc" name="bursaryDesc" class="form-control input-sm" required> </textarea>
+                                        <textarea type="text" id="bursaryDesc" name="bursaryDesc"
+                                                  class="form-control input-sm" required> </textarea>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-12 control-label text-bold req" for="bgHistory">งบประมาณที่ได้รับการจัดสรรปีงบประมาณปัจจุบัน :</label>
+                                    <label class="col-md-12 control-label text-bold req" for="bgHistory">งบประมาณที่ได้รับการจัดสรรปีงบประมาณปัจจุบัน
+                                        :</label>
+
                                     <div class="col-md-12">
-                                        <input type="text" id="bgHistory" name="bgHistory" class="form-control input-sm" required>
+                                        <input type="text" id="bgHistory" name="bgHistory" class="form-control input-sm"
+                                               required>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-12 control-label text-bold req" for="bgRequest">คำของบประมาณปีงบประมาณที่ขอตั้งงบประมาณ :</label>
+                                    <label class="col-md-12 control-label text-bold req" for="bgRequest">คำของบประมาณปีงบประมาณที่ขอตั้งงบประมาณ
+                                        :</label>
+
                                     <div class="col-md-12">
-                                        <input type="text" id="bgRequest" name="bgRequest" class="form-control input-sm" required>
+                                        <input type="text" id="bgRequest" name="bgRequest" class="form-control input-sm"
+                                               required>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-md-12 control-label text-bold" for="remark">คำชี้แจง :</label>
+
                                     <div class="col-md-12">
                                         <textarea class="summernote noteRemark" id="remark" name="remark"></textarea>
                                     </div>
@@ -154,10 +174,12 @@
 
                                 <div id="attachFileDiv" class="form-group">
                                     <label class="col-md-4 req text-bold">แนบเอกสารประกอบ :</label>
+
                                     <div id="fileGroup" class="col-md-8">
                                     </div>
                                     <div class="col-md-12">
-                                        <input type="text" id="desc" class="form-control input-sm" name="desc" placeholder="คำอธิบายประกอบไฟล์">
+                                        <input type="text" id="desc" class="form-control input-sm" name="desc"
+                                               placeholder="คำอธิบายประกอบไฟล์">
                                     </div>
                                 </div>
 
@@ -165,14 +187,16 @@
                         </div>
                         <div id="loadingForm" class="col-md-12 text-center"></div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-success save"><i class="fa fa-save"></i> บันทึก</button>
+                            <button type="button" class="btn btn-success save"><i class="fa fa-save"></i> บันทึก
+                            </button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div id="panelDeleteForm" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div id="panelDeleteForm" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog"
+                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -183,39 +207,43 @@
                             <div class="table-responsive">
                                 <table class="table mb-none">
                                     <tbody>
-                                        <tr class="no-border">
-                                            <td class="col-md-4 text-right">รายการ - ประเภทเงินอุดหนุน : </td>
-                                            <td class="col-md-8 text-bold" id="bursaryNameDel"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="col-md-4 text-right">คำอธิบาย : </td>
-                                            <td class="col-md-8 text-bold" id="bursaryDescDel"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="col-md-4 text-right">งบประมาณที่ได้รับการจัดสรรปีงบประมาณปัจจุบัน  : </td>
-                                            <td class="col-md-8 text-bold" id="bgHistoryDel"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="col-md-4 text-right">คำของบประมาณปีงบประมาณที่ขอตั้งงบประมาณ  : </td>
-                                            <td class="col-md-8 text-bold" id="bgRequestDel"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="col-md-4 text-right">คำชี้แจง : </td>
-                                            <td class="col-md-8 text-bold" id="remarkDel"></td>
-                                        </tr>
+                                    <tr class="no-border">
+                                        <td class="col-md-4 text-right">รายการ - ประเภทเงินอุดหนุน :</td>
+                                        <td class="col-md-8 text-bold" id="bursaryNameDel"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-4 text-right">คำอธิบาย :</td>
+                                        <td class="col-md-8 text-bold" id="bursaryDescDel"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-4 text-right">งบประมาณที่ได้รับการจัดสรรปีงบประมาณปัจจุบัน :
+                                        </td>
+                                        <td class="col-md-8 text-bold" id="bgHistoryDel"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-4 text-right">คำของบประมาณปีงบประมาณที่ขอตั้งงบประมาณ :</td>
+                                        <td class="col-md-8 text-bold" id="bgRequestDel"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-4 text-right">คำชี้แจง :</td>
+                                        <td class="col-md-8 text-bold" id="remarkDel"></td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger save"><i class="fa fa-trash"></i> ยืนยันการลบ</button>
+                            <button type="button" class="btn btn-danger save"><i class="fa fa-trash"></i> ยืนยันการลบ
+                            </button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div><!--  row  -->
-    </div><!--  container  -->
+        </div>
+        <!--  row  -->
+    </div>
+    <!--  container  -->
 </div><!-- main -->
 
 {{> footer}}
@@ -231,7 +259,7 @@
     var sumArrbgHistory = {};
     var sumArrbgRequest = {};
 
-    $(function(){
+    $(function () {
         var param = {
             l3dPlanId: l3dPlanId,
             fundgroupId: fundgroupId,
@@ -269,7 +297,7 @@
                 $.each(datas["budget"], function (key, value) {
                     html += '<tr data-tt-id="' + value["id"] + '">'
                             + '<td class="text-center"></td>'
-                            + '<td class="text-bold">'+ value["typeName"] + '</td>'
+                            + '<td class="text-bold">' + value["typeName"] + '</td>'
                             + '<td class="text-right text-bold"></td>'
                             + '<td class="text-right text-bold"></td>'
                             + '<td></td>'
@@ -294,7 +322,7 @@
                                 + '<td class="number text-right">' + value2["bgHistory"] + '</td>'
                                 + '<td class="number text-right">' + value2["bgRequest"] + '</td>'
                                 + '<td>' + value2["remark"] + '</td>'
-                                + '<td></td>'
+                                + '<td class="text-bold text-sm">' + value2["statusDesc"] + '</td>'
                                 + '<td>'
                                 + '<div class="btn-group">'
                                 + '<button class="btn btn-sm btn-warning editList" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
@@ -341,8 +369,8 @@
 
                     $("#fileGroup").html('<div id="fileNew"></div><div id="fileBak"></div>');
                     $("#fileNew").html(
-                        '<input type="file" id="attachment" name="attachment"> '
-                        + '<a href="javascript: void(0);" onclick="$(\'#attachment\').val(\'\');">[Reset]</a>'
+                            '<input type="file" id="attachment" name="attachment"> '
+                            + '<a href="javascript: void(0);" onclick="$(\'#attachment\').val(\'\');">[Reset]</a>'
                     ).show();
                     $("#fileBak").hide();
 
@@ -363,11 +391,11 @@
 
                             formData.append('budget', JSON.stringify(fdata["Budget"]));
 
-                            if($('#attachment').length) formData.append('file', $('#attachment')[0].files[0]);
+                            if ($('#attachment').length) formData.append('file', $('#attachment')[0].files[0]);
                             else formData.append('file', '');
 
                             insertBudget(headerId, parentId, formData, param)
-                        }else{
+                        } else {
                             $("#loadingForm").html('<label class="text-danger">กรุณากรอกข้อมูลให้ครบ</label>');
                         }
                     });
@@ -378,12 +406,13 @@
         }, 100);
     }
 
-    function sumtotal(){
+    function sumtotal() {
         var totalbgHistory = 0;
 
-        $.each(sumArrbgHistory, function(key, value){
+        $.each(sumArrbgHistory, function (key, value) {
+
             var sum = 0;
-            $.each(value, function(key2, value2) {
+            $.each(value, function (key2, value2) {
                 $("tr[data-tt-id='" + key2 + "']").find("td").eq(2).html(checkZero(value2));
                 totalbgHistory += parseFloat(value2);
                 sum += parseFloat(value2);
@@ -392,9 +421,9 @@
         });
 
         var totalbgRequest = 0;
-        $.each(sumArrbgRequest, function(key, value){
+        $.each(sumArrbgRequest, function (key, value) {
             var sum = 0;
-            $.each(value, function(key2, value2) {
+            $.each(value, function (key2, value2) {
                 $("tr[data-tt-id='" + key2 + "']").find("td").eq(3).html(checkZero(value2));
                 totalbgRequest += parseFloat(value2);
                 sum += parseFloat(value2);
@@ -402,12 +431,12 @@
             $("tr[data-tt-id='" + key + "']").find("td").eq(3).html(checkZero(sum));
         });
 
-      $("tr[id='total']").find("th").eq(2).html(checkZero(totalbgHistory));
-      $("tr[id='total']").find("th").eq(3).html(checkZero(totalbgRequest));
+        $("tr[id='total']").find("th").eq(2).html(checkZero(totalbgHistory));
+        $("tr[id='total']").find("th").eq(3).html(checkZero(totalbgRequest));
 
     }
 
-    function insertBudget(headerId, parentId, dataJSONEN, param){
+    function insertBudget(headerId, parentId, dataJSONEN, param) {
         setTimeout(function () {
             var datas = callAjaxFile("{{_context_path}}/api/budget/draft146/insert", "post", dataJSONEN, "json");
             if (typeof datas !== "undefined" && datas !== null) {
@@ -422,7 +451,7 @@
                             + '<td class="number text-right">' + $("#bgHistory").val() + '</td>'
                             + '<td class="number text-right">' + $("#bgRequest").val() + '</td>'
                             + '<td>' + $(".noteRemark").code() + '</td>'
-                            + '<td></td>'
+                            + '<td class="text-bold text-sm">อยู่ระหว่างการดำเนินการ</td>'
                             + '<td>'
                             + '<div class="btn-group">'
                             + '<button class="btn btn-sm btn-warning editList" data-pid="' + parentId + '" data-id="' + data["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
@@ -444,6 +473,8 @@
 
                     list146Arr[data["id"]]["budgetHeadId"] = data["budgetHeadId"];
                     list146Arr[data["id"]]["remark"] = $("#remark").code();
+                    list146Arr[data["id"]]["statusId"] = 1;
+                    list146Arr[data["id"]]["statusDesc"] = "อยู่ระหว่างการดำเนินการ";
 
                     if (data["path"] !== undefined) {
                         list146Arr[data["id"]]["path"] = data["path"];
@@ -464,7 +495,7 @@
         }, 0);
     }
 
-    function updateBudget(id, headerId, parentId, dataJSONEN, param){
+    function updateBudget(id, headerId, parentId, dataJSONEN, param) {
         setTimeout(function () {
             var datas = callAjaxFile("{{_context_path}}/api/budget/draft146/update", "post", dataJSONEN, "json");
             if (typeof datas !== "undefined" && datas !== null) {
@@ -473,16 +504,16 @@
                     $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
 
                     // insert node in branch
-                    var input =  '<td class="text-center"></td>'
+                    var input = '<td class="text-center"></td>'
                             + '<td>' + $("#bursaryName").val() + '</br> &nbsp;' + $("#bursaryDesc").val() + '</td>'
                             + '<td class="number text-right">' + $("#bgHistory").val() + '</td>'
                             + '<td class="number text-right">' + $("#bgRequest").val() + '</td>'
                             + '<td>' + $(".noteRemark").code() + '</td>'
-                            + '<td></td>'
+                            + '<td class="status text-bold text-sm">' + list146Arr[id]["statusDesc"] + '</td>'
                             + '<td>'
                             + '<div class="btn-group">'
-                            + '<button class="btn btn-sm btn-warning editList" data-hid="' + headerId+'" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                            + '<button class="btn btn-sm btn-default deleteList"  data-hid="' + headerId+'" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-trash"></i> ลบ</button>'
+                            + '<button class="btn btn-sm btn-warning editList" data-hid="' + headerId + '" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                            + '<button class="btn btn-sm btn-default deleteList"  data-hid="' + headerId + '" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-trash"></i> ลบ</button>'
                             + '</div>'
                             + '</td>';
 
@@ -537,13 +568,13 @@
 
                 $("#panelDeleteForm").modal("hide");
 
-            }else{
+            } else {
                 alert("ลบไม่สำเร็จ");
             }
         }
     }
 
-    function actionBudget(param){
+    function actionBudget(param) {
         $("button.editList").unbind("click").click(function () {
             var headerId = $(this).attr("data-hid");
             var parentId = $(this).attr("data-pid");
@@ -619,7 +650,7 @@
                     else formData.append('file', '');
 
                     updateBudget(id, headerId, parentId, formData, param)
-                }else{
+                } else {
                     $("#loadingForm").html('<label class="text-danger">กรุณากรอกข้อมูลให้ครบ</label>');
                 }
             });
@@ -647,25 +678,25 @@
         });
     }
 
-    function checkZero(input){
+    function checkZero(input) {
         var output = "-";
-        if(input != 0){
+        if (input != 0) {
             output = accounting.formatNumber(parseFloat(input), 2, ",", ".");
         }
 
         return output;
     }
 
-    function dataObject(parentId, param, id){
+    function dataObject(parentId, param, id) {
         var data = {};
 
         data["budgetTypeId"] = parentId;
 
-        $.each(param, function(key, value){
+        $.each(param, function (key, value) {
             data[key] = value;
         });
 
-        if(id !== null){
+        if (id !== null) {
             data["id"] = id;
         }
 
@@ -683,7 +714,37 @@
         return fdata;
     }
 
-    function downloadFile(path){
-        console.log(path);
+    function downloadFile(path) {
+
+        var link = document.createElement("a");
+        link.download = path;
+        link.href = '{{{{_context_path}}}}/apps/budget/views/draft/attachment/';
+        link.click();
     }
+
+
+    $(".requestBGbtn").click(function () {
+
+        updateStatusBG("Budget146");
+
+    });
+
+    function updateStatusBG(bgType) {
+        //update status all
+        var param = {};
+        param.bgType = bgType;
+        param.listBg = list146Arr;
+        param.status = 2;
+        var dataJSONEN = encodeURIComponent(JSON.stringify(param));
+        var datas = callAjax("{{_context_path}}/api/budget/updateTrackingService/updateTracking", "post", dataJSONEN, "json");
+        if (datas != undefined && datas !== null) {
+            if (datas["results"]["status"] == true) {
+                alert("ส่งคำขอสำเร็จ");
+                location.reload();
+            } else {
+                alert("ส่งคำขอผิดพลาด");
+            }
+        }
+    }
+
 </script>

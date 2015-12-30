@@ -1,0 +1,198 @@
+{{> header}}
+<link rel="stylesheet" href="{{_context_path}}/asset/vendor/listview/css/jquery.treegrid.css">
+<script type="text/javascript" src="{{_context_path}}/asset/vendor/listview/js/jquery.treegrid.js"></script>
+<script type="text/javascript" src="{{_context_path}}/asset/vendor/listview/js/jquery.treegrid.bootstrap3.js"></script>
+<script type="text/javascript">
+
+
+</script>   
+<div role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">{{#i18n}}memberinfo{{/i18n}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">จัดการสิทธิ์การเข้าใช้งาน <small> : {{#Member}}{{firstname}} {{lastname}}{{/Member}}</small></h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr class="tall dashboard">
+</div>
+<div class="container">
+    
+    <table class="table tree table-bordered" id="listrole">
+        <tr class="treegrid-1">
+            <td>App 1</td>
+            <td>
+                <select class="form-control input-sm">
+                    <option>R/W</option>
+                    <option>R</option>
+                    <option>None</option>
+                </select>
+            </td>
+        </tr>
+        <tr class="treegrid-2 treegrid-parent-1">
+            <td>Node 1-1</td>
+            <td>
+                <select class="form-control input-sm">
+                    <option>R/W</option>
+                    <option>R</option>
+                    <option>None</option>
+                </select>
+            </td>
+        </tr>
+        <tr class="treegrid-3 treegrid-parent-1">
+            <td>Node 1-2</td>
+            <td>
+                <select class="form-control input-sm">
+                    <option>R/W</option>
+                    <option>R</option>
+                    <option>None</option>
+                </select>
+            </td>
+        </tr>
+        <tr class="treegrid-4 treegrid-parent-3">
+            <td>Node 1-2-1</td>
+            <td>
+                <select class="form-control input-sm">
+                    <option>R/W</option>
+                    <option>R</option>
+                    <option>None</option>
+                </select>
+            </td>
+        </tr>
+        <tr class="treegrid-5">
+            <td>App 2</td>
+            <td>
+                <select class="form-control input-sm">
+                    <option>R/W</option>
+                    <option>R</option>
+                    <option>None</option>
+                </select>
+            </td>
+        </tr>
+        <tr class="treegrid-6 treegrid-parent-5">
+            <td>Node 2-1</td>
+            <td>
+                <select class="form-control input-sm">
+                    <option>R/W</option>
+                    <option>R</option>
+                    <option>None</option>
+                </select>
+            </td>
+        </tr>
+        <tr class="treegrid-7 treegrid-parent-5">
+            <td>Node 2-2</td>
+            <td>
+                <select class="form-control input-sm">
+                    <option>R/W</option>
+                    <option>R</option>
+                    <option>None</option>
+                </select>
+            </td>
+        </tr>
+        <tr class="treegrid-8 treegrid-parent-7">
+            <td>Node 2-2-1</td>
+            <td>
+                <select class="form-control input-sm">
+                    <option>R/W</option>
+                    <option>R</option>
+                    <option>None</option>
+                </select>
+            </td>
+        </tr>        
+    </table>	
+</div>
+
+
+<script>
+$( document ).ready(function() {
+        var listdata=[
+                        {
+                            id:"1000",
+                            name:"จัดการข้อมูลเบื้องหลัง",
+                            data:[
+                                {id:"1001",name:"จัดการด้านแผนพัฒนาการศึกษาระดับอุดมศึกษา",roleselect:"R/W"},
+                                {id:"1002",name:"จัดการผู้ใช้งาน",roleselect:"R"}],
+                            role:["R/W","R","None"]
+                        },{
+                            id:"2000",
+                            name:"รายงาน",
+                            data:[
+                                {id:"2001",name:"รายงานที่ 1",roleselect:"R"},
+                                {id:"2003",name:"รายงานที่ 2",roleselect:"R/W"}],
+                            role:["R/W","R","None"]
+                        }
+                    ];
+                    
+        console.log(listdata);
+        var html="";
+       
+        for(var i=0;i<listdata.length;i++){
+            html+='<tr class="treegrid-'+i+'">';
+                html+='<td>'+listdata[i]["name"]+'</td>';
+                html+='<td>&nbsp;';
+                html+='</td>';
+            html+="</tr>";
+            //
+
+            for(var j=0;j<listdata[i]["data"].length;j++){                
+                html+='<tr class="treegrid-'+listdata[i]["data"][j]["id"]+' treegrid-parent-'+i+'">';
+                    html+='<td>'+listdata[i]["data"][j]["name"]+'</td>';
+
+                    html+='<td>';
+                        html+='<select id="'+listdata[i]["data"][j]["id"]+'" class="form-control input-sm" onchange="managerole('+listdata[i]["data"][j]["id"]+')">';
+                            for(var n=0;n<listdata[i]["role"].length;n++){
+                                html+='<option value="'+listdata[i]["role"][n]+'">'+listdata[i]["role"][n]+'</option>';
+                            }
+                        html+='</select>';
+                    html+='</td>';
+                html+="</tr>";
+                
+                
+            }
+        }
+        $("#listrole").html(html);
+        $('.tree').treegrid();
+
+        var jdata = {};
+        jdata['data'] = listdata;  
+        jdata['memberId'] = '{{#Member}}{{id}}{{/Member}}';    
+        
+        var result=callAjax('{{_context_path}}/api/member/Member/checkMenurole', 'post', jsonEncode(jdata),'json');
+        //console.log(result);     
+        
+        for(var i=0;i<result.datas.length;i++){
+            for(var j=0;j<result.datas[i]["data"].length;j++){
+                    $('#'+result.datas[i]["data"][j]["id"]).val(result.datas[i]["data"][j]["roleselect"]);
+                    //alert(listdata[i][2][j][0]);
+            }
+        }
+        
+});
+
+function managerole(id){
+    var roleId=$('#'+id).val();
+    
+    var data = {};
+    data['listId'] = id;
+    data['roleId'] = roleId;
+    data['memberId'] = '{{#Member}}{{id}}{{/Member}}';
+
+    var jdata = {};
+    jdata['data'] = data;
+    
+
+    //console.log(checkstatus);
+    var result=callAjax('{{_context_path}}/api/member/Member/saverole', 'post', jsonEncode(jdata),'json');
+    //console.log(result);
+}
+</script>
+{{> footer}}

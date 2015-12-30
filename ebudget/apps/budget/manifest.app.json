@@ -13,5 +13,10 @@
     "sitemap":"api/rice/sitemap",
     "license": "content",
     "copyright": "content",
-    "about": "content.html"
+    "about": "content.html",
+    "permissions":[
+        {"code":"10010","name":"จัดการด้านแผนพัฒนาการศึกษาระดับอุดมศึกษา"},
+        {"code":"10010","name":"จัดการด้านแผนพัฒนาการศึกษาระดับอุดมศึกษา"}
+    ]
+    
 }

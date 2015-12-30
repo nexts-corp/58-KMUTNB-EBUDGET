@@ -10,6 +10,7 @@ use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
 use apps\budget\interfaces\IDraft145Service;
 use apps\common\entity;
+use apps\common\entity\BudgetHead;
 
 use th\co\bpg\cde\collection\impl\CJSONDecodeImpl;
 
@@ -117,7 +118,6 @@ class Draft145Service extends CServiceBase implements IDraft145Service {
                     . " left join " . $this->ent . "\\BudgetHead head with head.id = bg.budgetHeadId "
                     . " left join " . $this->ent . "\\Attachment att with bg.attachmentId = att.id "
                     . " left join " . $this->ent . "\\TrackingStatus ts with bg.statusId = ts.id "
-                    . " left join " . $this->ent . "\\Building build with bg.id = build.id "
                     . " where head.formId = :formId and "
                     . " bg.budgetTypeId = :budgetTypeId and "
                     . " bg.budgetPeriodId = :budgetPeriodId and "
@@ -137,12 +137,6 @@ class Draft145Service extends CServiceBase implements IDraft145Service {
 
                 $list2 = $this->datacontext->getObject($sql2, $param2);
 
-                foreach ($list2 as $key2 => $value2) {
-                    //add listBuild
-                    $sql = "select build.id,build.typeId from " . $this->ent . "\\Building build where build.bg145Id =" . $value2["id"];
-                    $listBuild = $this->datacontext->getObject($sql);
-                    $list2[$key2]["listBuild"] = $listBuild;
-                }
 
                 $list1[$key1]["lv2"] = $list2;
                 foreach ($list2 as $key2 => $value2) {
@@ -225,6 +219,7 @@ class Draft145Service extends CServiceBase implements IDraft145Service {
         $budget->budgetHeadId = $bgHeadId;
         $budget->planId = $budgetPlanProject["budgetPlanId"];
         $budget->projectId = $budgetPlanProject["budgetProjectId"];
+        $budget->statusId = 1;
         $budget->bgSummary = $budget->totalPrice;
 
         if ($budget->remark == "") {

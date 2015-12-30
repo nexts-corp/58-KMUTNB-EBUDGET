@@ -1,0 +1,141 @@
+{{> header}}
+
+
+<!-- This is what you need sweetalert-->
+
+<link rel="stylesheet" href="{{_context_path}}/asset/vendor/switch/bootstrap-switch.css">
+
+    <div role="main" class="main">
+        <section class="page-top none-margin">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="breadcrumb">
+                            <li class="active">{{#i18n}}memberinfo{{/i18n}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="none-padding">ระบบจัดการสิทธิ์การเข้าใช้งาน</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <hr class="tall dashboard">
+    </div>
+    <div class="container">
+        <table class="table table-bordered table-condensed" id="listRole">
+            <thead>
+                <tr>
+                    <th>รหัส</th>
+                    <th>คำอธิบาย</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3" align="center"><span class="three-quarters-loader">Loading&#8230;</span></td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+<script src="{{_context_path}}/asset/vendor/switch/bootstrap-switch.js"></script>
+{{> footer}}  
+
+<script>
+$( document ).ready(function() {
+    //$("#listRole").html("OK");
+    
+    //การดึงข้อมูลจาก function โดยไม่ส่ง parameter
+    var result=callAjax('{{_context_path}}/api/role/Role/listRole', 'post', {},'json');
+    //console.log(result.datas);
+    var roledata=[];
+    var listdata=[["1001","จัดการผู้ใช้งาน"],["1002","จัดการด้านแผนพัฒนาการศึกษาระดับอุดมศึกษา"],["1003","งบเงินรายได้"]];
+    var html="";
+    html+='<thead>';
+        html+='<tr>';
+            html+='<th class="text-center">รหัส</th>';
+            html+='<th class="text-center">คำอธิบาย</th>';
+            for(var i=0;i<result.datas.length;i++){
+                
+                html+='<th class="text-center col-md-2">'+result.datas[i].role+'</th>';
+                roledata.push(result.datas[i].id);
+            }
+        html+='</tr>';
+    html+='</thead>';
+    html+='<tbody>';
+   
+   
+    var jdata = {};
+    jdata['data'] = {roledata:roledata,listdata:listdata};
+    
+    //console.log(jdata);
+    var checkMenuroles=callAjax('{{_context_path}}/api/role/Role/checkMenurole', 'post', jsonEncode(jdata),'json');
+    
+    
+    var b=0;
+    for (var i=0;i<listdata.length;i++){
+        
+        html+='<tr id="tr'+i+'">';
+            html+='<td>'+listdata[i][0]+'</td>';
+            html+='<td>'+listdata[i][1]+'</td>';
+            
+            for(var a=0;a<result.datas.length;a++){
+                //alert(checkMenuroles.datas[b].listId);
+                //console.log(checkMenurole.datas[i].listId);
+                //checkMenurole=false;
+                //alert(listdata[i][0]);
+                html+='<td class="text-center col-md-2"><input id="c'+listdata[i][0]+''+result.datas[a].id+'" class="form-control" type="checkbox" onchange="managerole('+checkMenuroles.datas[b].status+','+listdata[i][0]+','+result.datas[a].id+')"'
+                if(checkMenuroles.datas[b].status==1){
+                   
+                    html+=' checked';
+                }
+                html+='></td>';
+                b++;
+            }
+         
+        html+='</tr>';
+        
+        //console.log(html);
+    }
+    html+='</tbody>';
+    //console.log(roledata);
+    $("#listRole").html(html);
+    
+    $('[type="checkbox"]').bootstrapSwitch({
+        onText: "On",
+        onColor: 'success',
+        size: 'mini',
+        offColor: 'danger',
+        offText: "Off",
+        //setState: "false",
+        //animate: true,
+    });
+    
+});
+
+function managerole(status,listId,roleId){
+    
+    var checkstatus = $('#c'+listId+''+roleId).prop("checked");
+    var data = {};
+    data['listId'] = listId;
+    data['roleId'] = roleId;
+    data['status'] = checkstatus;
+
+    var jdata = {};
+    jdata['data'] = data;
+    
+
+    console.log(checkstatus);
+    var result=callAjax('{{_context_path}}/api/role/Role/managerole', 'post', jsonEncode(jdata),'json');
+
+    $('c'+listId+roleId).bootstrapSwitch({
+        setState: checkstatus,
+    });
+    
+
+}
+</script>
+  

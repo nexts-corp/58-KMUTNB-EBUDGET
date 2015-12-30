@@ -15,14 +15,14 @@ class AffirmativeIssue extends EntityBase {
      */
     public $id;
 
+    /** @Column(type="integer",length=11, name="SEQ") */
+    public $issueSeq;
+
     /** @Column(type="text", name="AFFIRMATIVEISSUENAME") */
     public $issueName;
 
     /** @Column(type="integer",length=11, name="AFFIRMATIVETYPEID") */
     public $typeId;
-
-    /** @Column(type="integer",length=11, name="SEQ") */
-    public $seq;
 
     /** @Column(type="string",length=20, name="CREATEUSERID") */
     public $creator;

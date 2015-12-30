@@ -163,3 +163,46 @@ function logout(){
     $.removeCookie("userinfo", { path: '/' });
     window.location.href = '/kmutnb-ebudget/api/root/view/index';
 }
+
+function jsonEncode(data) {
+    var dataJSON = JSON.stringify(data);
+    var dataJSONEN = encodeURIComponent(dataJSON);
+    return dataJSONEN;
+}
+
+function getHTML(id, link, data) {
+    
+    //have data ==> getHTML("navbar","/api/xxx/xxx/",{name:name});
+    ////have data ==> getHTML("navbar","/api/xxx/xxx/",jsonEncode(xxx));
+    //dont have data ==> getHTML("navbar","/api/xxx/xxx/",null);
+    if (data == null) {
+        $.ajax({
+            url: link,
+            type: 'post',
+            async: true,
+            error: function (xhr) {
+                if (xhr.status == 401) {
+                    window.location.href = xhr.getResponseHeader('Location');
+                }
+            },
+            success: function (result) {
+                $('#' + id).html(result);
+            }
+        });
+    } else {
+        $.ajax({
+            url: link,
+            data: data,
+            type: 'post',
+            async: true,
+            error: function (xhr) {
+                if (xhr.status == 401) {
+                    window.location.href = xhr.getResponseHeader('Location');
+                }
+            },
+            success: function (result) {
+                $('#' + id).html(result);
+            }
+        });
+    }
+}

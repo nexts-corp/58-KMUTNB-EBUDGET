@@ -8,10 +8,16 @@ namespace apps\common\entity;
  */
 class MemberRole extends EntityBase {
 
-    /** @Column(type="integer",length=11, name="MEMBERID") */
+    /**
+     * @Id 
+     * @Column(type="integer",length=11,name="MEMBERID")
+     */
     public $memberId;
 
-    /** @Column(type="integer",length=11, name="ROLEID") */
+    /**
+     * @Column(type="integer",length=11,name="ROLEID")
+     */
+    
     public $roleId;
 
     /** @Column(type="string",length=20, name="CREATEUSERID") */
