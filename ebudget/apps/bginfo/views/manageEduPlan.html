@@ -107,7 +107,7 @@
 
                             <div class="form-manage form-kpi">
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label text-right req">เป้าประสงค์ :</label>
+                                    <label class="col-md-4 control-label text-right">เป้าประสงค์ :</label>
                                     <div class="col-md-8" id="kpiParent"></div>
                                 </div>
 
@@ -127,14 +127,14 @@
 
                             <div class="form-manage form-strategy">
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label text-right req">เป้าประสงค์ :</label>
+                                    <label class="col-md-4 control-label text-right">เป้าประสงค์ :</label>
                                     <div class="col-md-8" id="strategyParent"></div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-md-4 control-label text-right req">ลำดับที่ :</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control input-sm" name="strategySeq" id="strateSeq" required>
+                                        <input type="text" class="form-control input-sm" name="strategySeq" id="strategySeq" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -185,7 +185,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                        <button type="button" id="confirmDelete" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-trash"></i> ยืนยันการลบ</button>
+                        <button type="button" id="confirmDelete" class="btn btn-danger"><i class="fa fa-trash"></i> ยืนยันการลบ</button>
                     </div>
                 </div>
             </div>
@@ -207,11 +207,11 @@
         $("#typeId").html(listsType()).select2().change(function(){
             if($(this).val() != "") {
                 showPlanAll();
-                $("button.addIssue").show();
+                $("button.add[data-type=issue]").show();
             }
             else{
                 $("#table tbody").html('<tr><td colspan="3" class="text-center">-</td></tr>');
-                $("button.addIssue").hide();
+                $("button.add[data-type=issue]").hide();
             }
         }).trigger("change");
     });
@@ -248,8 +248,8 @@
                             + '<td class="text-bold">'
                                 + '<span class="wording">'+value["issueName"]+'</span>'
                                 + '<span style="float:right">'
-                                    + '<a href="javascript: void(0)" class="editIssue" data-id="'+value["issueId"]+'"><i class="fa fa-pencil"></i></a>&nbsp;'
-                                    + '<a href="javascript: void(0)" class="deleteIssue" data-id="'+value["issueId"]+'"><i class="fa fa-trash"></i></a>'
+                                    + '<a href="javascript: void(0)" class="edit" data-type="issue" data-id="'+value["issueId"]+'"><i class="fa fa-pencil"></i></a>&nbsp;'
+                                    + '<a href="javascript: void(0)" class="delete" data-type="issue" data-id="'+value["issueId"]+'"><i class="fa fa-trash"></i></a>'
                                 + '</span>'
                             + '</td>'
                             + '<td class="text-center"><button class="btn btn-sm btn-primary add" data-type="target" data-pid="'+value["issueId"]+'"><i class="fa fa-plus-circle"></i> เพิ่มเป้าประสงค์</button></td>'
@@ -262,12 +262,12 @@
                         };
 
                         html += '<tr data-tt-id="target' + value2["targetId"] + '"  data-tt-parent-id="issue' + value["issueId"] + '">'
-                                + '<td class="text-bold">เป้าประสงค์ที่ <span class="wording">' + value["issueSeq"]+'.'+value2["targetSeq"] + '</span></td>'
+                                + '<td class="text-bold">เป้าประสงค์ที่ ' + value["issueSeq"]+'.<span class="wording">'+value2["targetSeq"] + '</span></td>'
                                 + '<td>'
                                     + '<span class="wording">'+value2["targetName"]+'</span>'
                                     + '<span style="float:right">'
-                                        + '<a href="javascript: void(0)" class="editTarget" data-id="'+value2["targetId"]+'" data-pid="'+value["issueId"]+'"><i class="fa fa-pencil"></i></a>&nbsp;'
-                                        + '<a href="javascript: void(0)" class="deleteTarget" data-id="'+value2["targetId"]+'" data-pid="'+value["issueId"]+'"><i class="fa fa-trash"></i></a>'
+                                        + '<a href="javascript: void(0)" class="edit" data-type="target" data-id="'+value2["targetId"]+'" data-pid="'+value["issueId"]+'"><i class="fa fa-pencil"></i></a>&nbsp;'
+                                        + '<a href="javascript: void(0)" class="delete" data-type="target" data-id="'+value2["targetId"]+'" data-pid="'+value["issueId"]+'"><i class="fa fa-trash"></i></a>'
                                     + '</span>'
                                 + '</td>'
                                 + '<td></td>'
@@ -294,8 +294,8 @@
                                                             + '<td>'
                                                                 + '<span class="wording">'+value3["kpiSeq"]+'. '+value3["kpiName"]+'</span>'
                                                                 + '<span style="float:right">'
-                                                                    + '<a href="javascript: void(0)" class="editKpi" data-id="'+value3["kpiId"]+'" data-pid="'+value2["targetId"]+'"><i class="fa fa-pencil"></i></a>&nbsp;'
-                                                                    + '<a href="javascript: void(0)" class="deleteKpi" data-id="'+value3["kpiId"]+'" data-pid="'+value2["targetId"]+'"><i class="fa fa-trash"></i></a>'
+                                                                    + '<a href="javascript: void(0)" class="edit" data-type="kpi" data-id="'+value3["kpiId"]+'" data-pid="'+value2["targetId"]+'"><i class="fa fa-pencil"></i></a>&nbsp;'
+                                                                    + '<a href="javascript: void(0)" class="delete" data-type="kpi" data-id="'+value3["kpiId"]+'" data-pid="'+value2["targetId"]+'"><i class="fa fa-trash"></i></a>'
                                                                 + '</span>'
                                                             +'</td>'
                                                         + '</tr>';
@@ -329,10 +329,10 @@
 
                                                     html += '<tr data-tt-id="strategy' + value3["strategyId"] + '">'
                                                             + '<td>'
-                                                                + value3["strategySeq"]+'. '+value3["strategyName"]
+                                                                + '<span class="wording">'+value3["strategySeq"]+'. '+value3["strategyName"]+'</span>'
                                                                 + '<span style="float:right">'
-                                                                    + '<a href="javascript: void(0)" class="editStrategy" data-id="'+value3["strateId"]+'" data-pid="'+value2["targetId"]+'"><i class="fa fa-pencil"></i></a>&nbsp;'
-                                                                    + '<a href="javascript: void(0)" class="deleteStrategy" data-id="'+value3["strateId"]+'" data-pid="'+value2["targetId"]+'"><i class="fa fa-trash"></i></a>'
+                                                                    + '<a href="javascript: void(0)" class="edit" data-type="strategy" data-id="'+value3["strategyId"]+'" data-pid="'+value2["targetId"]+'"><i class="fa fa-pencil"></i></a>&nbsp;'
+                                                                    + '<a href="javascript: void(0)" class="delete" data-type="strategy" data-id="'+value3["strategyId"]+'" data-pid="'+value2["targetId"]+'"><i class="fa fa-trash"></i></a>'
                                                                 + '</span>'
                                                             +'</td>'
                                                         + '</tr>';
@@ -353,10 +353,11 @@
                 });
 
                 $("#table tbody").html(html);
+
                 $("#table").treetable({
                     expandable: true,
                     initialState: "expanded"
-                });
+                }, true);
 
                 //add
                 $("button.add").unbind("click").click(function(){
@@ -366,6 +367,14 @@
                     if(plan == "target"){
                         var pId = $(this).attr("data-pid");
                         $("#targetParent").html(listArr["issue"][pId]["issueName"]);
+                    }
+                    else if(plan == "kpi"){
+                        var pId = $(this).attr("data-pid");
+                        $("#kpiParent").html(listArr["target"][pId]["targetName"]);
+                    }
+                    else if(plan == "strategy"){
+                        var pId = $(this).attr("data-pid");
+                        $("#strategyParent").html(listArr["target"][pId]["targetName"]);
                     }
 
                     $("button.save").unbind("click").click(function(){
@@ -406,16 +415,42 @@
                 });
 
                 //edit
-                $("a.editIssue").unbind("click").click(function(){
+                $("a.edit").unbind("click").click(function(){
                     var id = $(this).attr("data-id");
-                    modalType("edit", "issue");
+                    var plan = $(this).attr("data-type");
 
-                    $("#issueSeq").val(listArr["issue"][id]["issueSeq"]);
-                    $("#issueName").val(listArr["issue"][id]["issueName"]);
+                    modalType("edit", plan);
+
+                    if(plan == "issue"){
+                        $("#issueSeq").val(listArr["issue"][id]["issueSeq"]);
+                        $("#issueName").val(listArr["issue"][id]["issueName"]);
+                    }
+                    else if(plan == "target"){
+                        var pId = $(this).attr("data-pid");
+                        $("#targetParent").html(listArr["issue"][pId]["issueName"]);
+
+                        $("#targetSeq").val(listArr["target"][id]["targetSeq"]);
+                        $("#targetName").val(listArr["target"][id]["targetName"]);
+                    }
+                    else if(plan == "kpi"){
+                        var pId = $(this).attr("data-pid");
+                        $("#kpiParent").html(listArr["target"][pId]["targetName"]);
+
+                        $("#kpiSeq").val(listArr["kpi"][id]["kpiSeq"]);
+                        $("#kpiName").val(listArr["kpi"][id]["kpiName"]);
+                    }
+                    else if(plan == "strategy") {
+                        var pId = $(this).attr("data-pid");
+                        $("#strategyParent").html(listArr["target"][pId]["targetName"]);
+
+                        $("#strategySeq").val(listArr["strategy"][id]["strategySeq"]);
+                        $("#strategyName").val(listArr["strategy"][id]["strategyName"]);
+                    }
+
 
                     $("button.save").unbind("click").click(function(){
                         var isValid = true;
-                        $('.form-issue input[type=text], .form-issue textarea').each(function() {
+                        $('.form-'+plan+' input[type=text], .form-'+plan+' textarea').each(function() {
                             if($(this).val() == "" && !$(this).prop("disabled")) {
                                 $(this).focus();
                                 isValid = false
@@ -423,34 +458,75 @@
                         });
 
                         if(isValid){
-                            var fdata = dataObject("issue", null, id);
-
+                            var url = '';
+                            var fdata = {};
+                            if(plan == "issue"){
+                                fdata = dataObject("issue", null, id);
+                                url = "Issue";
+                            }
+                            else if(plan == "target"){
+                                fdata = dataObject("target", pId, id);
+                                url = "Target";
+                            }
+                            else if(plan == "kpi"){
+                                fdata = dataObject("kpi", pId, id);
+                                url = "Kpi";
+                            }
+                            else if(plan == "strategy"){
+                                fdata = dataObject("strategy", pId, id);
+                                url = "Strategy";
+                            }
                             var dataJSON = JSON.stringify({pData: fdata["data"]});
                             var dataJSONEN = encodeURIComponent(dataJSON);
 
-                            editPlan("Issue", dataJSONEN, id);
+                            editPlan(url, dataJSONEN, id);
                         }
                     });
                 });
 
                 //delete
-                $("a.deleteIssue").unbind("click").click(function(){
+                $("a.delete").unbind("click").click(function(){
+                    var id = $(this).attr("data-id");
+                    var plan = $(this).attr("data-type");
+
                     $("#deleteModal").modal("show");
                     $("#loadingDel").html('');
-                    $(".planType").html("ประเด็นยุทธศาสตร์");
 
-                    var id = $(this).attr("data-id");
-                    $("#seqDel").html(listArr["issue"][id]["issueSeq"]);
-                    $("#nameDel").html(listArr["issue"][id]["issueName"]);
+                    var title = '';
+                    var url = '';
+                    var pId = '';
+                    if(plan == "issue"){
+                        title = "ประเด็นยุทธศาสตร์";
+                        url = "Issue";
+                    }
+                    else if(plan == "target"){
+                        pId = $(this).attr("data-pid");
+                        title = "เป้าประสงค์";
+                        url = "Target";
+                    }
+                    else if(plan == "kpi"){
+                        pId = $(this).attr("data-pid");
+                        title = "ตัวชี้วัด";
+                        url = "Kpi";
+                    }
+                    else{
+                        pId = $(this).attr("data-pid");
+                        title = "กลยุทธ์";
+                        url = "Strategy";
+                    }
+                    $(".planType").html(title);
+
+
+                    $("#seqDel").html(listArr[plan][id][plan+"Seq"]);
+                    $("#nameDel").html(listArr[plan][id][plan+"Name"]);
 
                     $("#confirmDelete").unbind().click(function(){
                         var dataJSONDel = JSON.stringify({id: id});
                         var dataJSONENDel = encodeURIComponent(dataJSONDel);
 
-                        deletePlan("Issue", dataJSONENDel);
+                        deletePlan(url, dataJSONENDel, id, pId);
                     });
                 });
-                //---------- end issue --------------
             }
         }, 0);
     }
@@ -482,7 +558,10 @@
             $("#form > .modal-body > .form-strategy").show();
         }
 
+
         $(".planTitle").html(action+" : "+title);
+
+        $("#form")[0].reset();
     }
 
     function dataObject(planType, parentId, id ){
@@ -497,10 +576,10 @@
             data["issueId"] = parentId;
         }
         else if(planType == "kpi"){
-            data["kpiId"] = parentId;
+            data["targetId"] = parentId;
         }
         else if(planType == "strategy"){
-            data["strategyId"] = parentId;
+            data["targetId"] = parentId;
         }
         $(".form-"+planType+" input[type=text], .form-"+planType+" textarea").each(function (i) {
             var fname = $(this).attr("name");
@@ -531,7 +610,7 @@
                     $("#loading").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้<br>'+datas["add"]+'</span>');
                 }
             }
-        }, 100);
+        }, 0);
     }
 
     function editPlan(url, dataJSONEN, id) {
@@ -545,30 +624,32 @@
                     setTimeout(function(){
                         $("#manageModal").modal("hide");
 
-                        if(url == "Issue"){
-                            var seq = $("#issueSeq").val();
-                            var name = $("#issueName").val();
+                        var plan = url.toLowerCase();
 
-                            $('tr[data-tt-id=issue'+id+'] td:eq(0) > span.wording').html(seq);
-                            $('tr[data-tt-id=issue'+id+'] td:eq(1) > span.wording').html(name);
+                        var seq = $("#"+plan+"Seq").val();
+                        var name = $("#"+plan+"Name").val();
 
-                            listArr["issue"][id] = {
-                                issueSeq: seq,
-                                issueName: name
-                            };
+                        if(plan == "issue" || plan == "target") {
+                            $('tr[data-tt-id=' + plan + id + '] td:eq(0) > span.wording').html(seq);
+                            $('tr[data-tt-id=' + plan + id + '] td:eq(1) > span.wording').html(name);
+                        }
+                        else{
+                            $('tr[data-tt-id=' + plan + id + '] td:eq(0) > span.wording').html(seq+". "+name);
                         }
 
+                        listArr[plan][id][plan+"Seq"] = seq;
+                        listArr[plan][id][plan+"Name"] = name;
                     }, 500);
                 }
                 else{
-                    $("#loading").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้<br>'+datas["add"]+'</span>');
+                    $("#loading").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้<br>'+datas["update"]+'</span>');
                 }
             }
-        }, 100);
+        }, 0);
     }
 
-    function deletePlan(url, dataJSONEN) {
-        $("#loading").html("กำลังบันทึกข้อมูล...");
+    function deletePlan(url, dataJSONEN, id, parentId) {
+        $("#loadingDel").html("กำลังบันทึกข้อมูล...");
 
         setTimeout(function(){
             var datas = callAjax("{{_context_path}}/api/bginfo/EduDevPlan/delete"+url, "post", dataJSONEN, "json");
@@ -576,14 +657,30 @@
                 if (datas["delete"] == true) {
                     $("#loadingDel").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
                     setTimeout(function(){
-                        $("#manageModal").modal("hide");
-                        showPlanAll();
+                        $("#deleteModal").modal("hide");
+                        var plan = url.toLowerCase();
+
+                        if(plan == "issue"){
+                            $("#table").treetable("removeNode", plan + id);
+                        }
+                        else if(plan == "target"){
+                            $("#table").treetable("removeNode", plan + id);
+                            $("#table").treetable("removeNode", plan + id + '-object');
+                            var parent = $('#table').treetable('node', 'issue'+parentId);
+                            if (parent.children.length == 0) {
+                                parent.row.find('.indenter').html('');
+                            }
+                        }
+                        else {
+                            $('tr[data-tt-id=' + plan + id + ']').hide();
+                        }
+                        delete listArr[plan][id];
                     }, 100);
                 }
                 else{
-                    $("#loadingDel").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้<br>'+datas["add"]+'</span>');
+                    $("#loadingDel").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้<br>'+datas["delete"]+'</span>');
                 }
             }
-        }, 100);
+        }, 0);
     }
 </script>
