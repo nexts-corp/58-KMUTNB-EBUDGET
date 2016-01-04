@@ -43,7 +43,7 @@
 
         <div class="row" style="margin-top: 20px;">
             <div class="col-md-12 text-right" style="margin-bottom: 10px;">
-                <button class="btn btn-primary add" data-type="issue"><i class="fa fa-plus-circle"></i> เพิ่มประเด็นยุทธศาสตร์</button>
+                <button class="btn btn-success add" data-type="issue"><i class="fa fa-plus-circle"></i> เพิ่มประเด็นยุทธศาสตร์</button>
             </div>
             <table id="table" class="table table-bordered table-condensed mb-none">
                 <thead>
@@ -149,7 +149,7 @@
                         <div id="loading" class="col-md-12 text-center" style="margin: 20px;"></div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary save"><i class="fa fa-save"></i> บันทึก</button>
+                            <button type="button" class="btn btn-success save"><i class="fa fa-save"></i> บันทึก</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
                         </div>
                     </form>
@@ -248,11 +248,11 @@
                             + '<td class="text-bold">'
                                 + '<span class="wording">'+value["issueName"]+'</span>'
                                 + '<span style="float:right">'
-                                    + '<a href="javascript: void(0)" class="edit" data-type="issue" data-id="'+value["issueId"]+'"><i class="fa fa-pencil"></i></a>&nbsp;'
-                                    + '<a href="javascript: void(0)" class="delete" data-type="issue" data-id="'+value["issueId"]+'"><i class="fa fa-trash"></i></a>'
+                                    + '<a href="javascript: void(0)" class="text-warning edit" data-type="issue" data-id="'+value["issueId"]+'"><i class="fa fa-pencil"></i></a>&nbsp;'
+                                    + '<a href="javascript: void(0)" class="text-danger delete" data-type="issue" data-id="'+value["issueId"]+'"><i class="fa fa-trash"></i></a>'
                                 + '</span>'
                             + '</td>'
-                            + '<td class="text-center"><button class="btn btn-sm btn-primary add" data-type="target" data-pid="'+value["issueId"]+'"><i class="fa fa-plus-circle"></i> เพิ่มเป้าประสงค์</button></td>'
+                            + '<td class="text-center"><button class="btn btn-sm btn-success add" data-type="target" data-pid="'+value["issueId"]+'"><i class="fa fa-plus-circle"></i> เพิ่มเป้าประสงค์</button></td>'
                         + '</tr>';
 
                     $.each(value["target"], function (key2, value2) {
@@ -266,8 +266,8 @@
                                 + '<td>'
                                     + '<span class="wording">'+value2["targetName"]+'</span>'
                                     + '<span style="float:right">'
-                                        + '<a href="javascript: void(0)" class="edit" data-type="target" data-id="'+value2["targetId"]+'" data-pid="'+value["issueId"]+'"><i class="fa fa-pencil"></i></a>&nbsp;'
-                                        + '<a href="javascript: void(0)" class="delete" data-type="target" data-id="'+value2["targetId"]+'" data-pid="'+value["issueId"]+'"><i class="fa fa-trash"></i></a>'
+                                        + '<a href="javascript: void(0)" class="text-warning edit" data-type="target" data-id="'+value2["targetId"]+'" data-pid="'+value["issueId"]+'"><i class="fa fa-pencil"></i></a>&nbsp;'
+                                        + '<a href="javascript: void(0)" class="text-danger delete" data-type="target" data-id="'+value2["targetId"]+'" data-pid="'+value["issueId"]+'"><i class="fa fa-trash"></i></a>'
                                     + '</span>'
                                 + '</td>'
                                 + '<td></td>'
@@ -278,7 +278,7 @@
                                         + '<table class="table table-bordered table-condensed mb-none">'
                                             + '<thead>'
                                                 + '<tr>'
-                                                    + '<th colspan="2" class="text-center">ตัวชี้วัด <span style="float: right;"><button class="btn btn-sm btn-primary add" data-type="kpi" data-pid="'+value2["targetId"]+'"><i class="fa fa-plus-circle"></i></button></span></th>'
+                                                    + '<th colspan="2" class="text-center">ตัวชี้วัด <span style="float: right;"><button class="btn btn-sm btn-success add" data-type="kpi" data-pid="'+value2["targetId"]+'"><i class="fa fa-plus-circle"></i></button></span></th>'
                                                 + '</tr>'
                                             + '</thead>'
                                             + '<tbody>';
@@ -294,8 +294,8 @@
                                                             + '<td>'
                                                                 + '<span class="wording">'+value3["kpiSeq"]+'. '+value3["kpiName"]+'</span>'
                                                                 + '<span style="float:right">'
-                                                                    + '<a href="javascript: void(0)" class="edit" data-type="kpi" data-id="'+value3["kpiId"]+'" data-pid="'+value2["targetId"]+'"><i class="fa fa-pencil"></i></a>&nbsp;'
-                                                                    + '<a href="javascript: void(0)" class="delete" data-type="kpi" data-id="'+value3["kpiId"]+'" data-pid="'+value2["targetId"]+'"><i class="fa fa-trash"></i></a>'
+                                                                    + '<a href="javascript: void(0)" class="text-warning edit" data-type="kpi" data-id="'+value3["kpiId"]+'" data-pid="'+value2["targetId"]+'"><i class="fa fa-pencil"></i></a>&nbsp;'
+                                                                    + '<a href="javascript: void(0)" class="text-danger delete" data-type="kpi" data-id="'+value3["kpiId"]+'" data-pid="'+value2["targetId"]+'"><i class="fa fa-trash"></i></a>'
                                                                 + '</span>'
                                                             +'</td>'
                                                         + '</tr>';
@@ -315,7 +315,7 @@
                                         + '<table class="table table-bordered table-condensed mb-none">'
                                             + '<thead>'
                                                 + '<tr>'
-                                                    + '<th colspan="2" class="text-center">กลยุทธ์ <span style="float: right;"><button class="btn btn-sm btn-primary add" data-type="strategy" data-pid="'+value2["targetId"]+'"><i class="fa fa-plus-circle"></i></button></span></th>'
+                                                    + '<th colspan="2" class="text-center">กลยุทธ์ <span style="float: right;"><button class="btn btn-sm btn-success add" data-type="strategy" data-pid="'+value2["targetId"]+'"><i class="fa fa-plus-circle"></i></button></span></th>'
                                                 + '</tr>'
                                             + '</thead>'
                                             + '<tbody>';
@@ -331,8 +331,8 @@
                                                             + '<td>'
                                                                 + '<span class="wording">'+value3["strategySeq"]+'. '+value3["strategyName"]+'</span>'
                                                                 + '<span style="float:right">'
-                                                                    + '<a href="javascript: void(0)" class="edit" data-type="strategy" data-id="'+value3["strategyId"]+'" data-pid="'+value2["targetId"]+'"><i class="fa fa-pencil"></i></a>&nbsp;'
-                                                                    + '<a href="javascript: void(0)" class="delete" data-type="strategy" data-id="'+value3["strategyId"]+'" data-pid="'+value2["targetId"]+'"><i class="fa fa-trash"></i></a>'
+                                                                    + '<a href="javascript: void(0)" class="text-warning edit" data-type="strategy" data-id="'+value3["strategyId"]+'" data-pid="'+value2["targetId"]+'"><i class="fa fa-pencil"></i></a>&nbsp;'
+                                                                    + '<a href="javascript: void(0)" class="text-danger delete" data-type="strategy" data-id="'+value3["strategyId"]+'" data-pid="'+value2["targetId"]+'"><i class="fa fa-trash"></i></a>'
                                                                 + '</span>'
                                                             +'</td>'
                                                         + '</tr>';
