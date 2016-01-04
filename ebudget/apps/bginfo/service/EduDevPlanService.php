@@ -322,16 +322,10 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
         $issue = new \apps\common\entity\AffirmativeIssue();
         $issue->id = $id;
         $dIssue = $this->datacontext->getObject($issue);
-        if(!$this->datacontext->removeObject($dIssue)){
-            return $this->datacontext->getLastMessage();
-        }
 
         $target = new \apps\common\entity\AffirmativeTarget();
         $target->issueId = $id;
         $dTarget = $this->datacontext->getObject($target);
-        if(!$this->datacontext->removeObject($dTarget)){
-            return $this->datacontext->getLastMessage();
-        }
 
         foreach($dTarget as $key => $value){
             $kpi = new \apps\common\entity\AffirmativeKpi();
@@ -348,6 +342,15 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
                 return $this->datacontext->getLastMessage();
             }
         }
+
+        if(!$this->datacontext->removeObject($dTarget)){
+            return $this->datacontext->getLastMessage();
+        }
+
+        if(!$this->datacontext->removeObject($dIssue)){
+            return $this->datacontext->getLastMessage();
+        }
+
         return $return;
     }
 
@@ -375,9 +378,6 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
         $target = new \apps\common\entity\AffirmativeTarget();
         $target->id = $id;
         $dTarget = $this->datacontext->getObject($target);
-        if(!$this->datacontext->removeObject($dTarget)){
-            return $this->datacontext->getLastMessage();
-        }
 
         foreach($dTarget as $key => $value){
             $kpi = new \apps\common\entity\AffirmativeKpi();
@@ -394,6 +394,11 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
                 return $this->datacontext->getLastMessage();
             }
         }
+
+        if(!$this->datacontext->removeObject($dTarget)){
+            return $this->datacontext->getLastMessage();
+        }
+
         return $return;
     }
 

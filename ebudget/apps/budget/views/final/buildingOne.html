@@ -1,0 +1,1279 @@
+{{> header}}
+<section class="page-top none-margin">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb">
+                    <li class="active">ระบบจัดทำ/จัดสรรงบประมาณ</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="none-padding"> คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง 1 ปี</h2>
+            </div>
+            {{#budget}}
+            <div class="col-md-8">
+                <div class="col-md-12">
+                    <div class="col-md-3"><label class="control-label">หมวดรายจ่ายรายการ : </label> </div>
+                    <div class="col-md-9">{{durableName}}</div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-3"><label class="control-label">รายละเอียดประกอบ : </label></div>
+                    <div class="col-md-9">{{durableDesc}}</div>
+                </div>
+            </div>
+            {{/budget}}
+            <div class="col-md-4 text-right">
+                <div id="loadAll"><i class="fa fa-spinner fa-spin"></i><b> Loading...</b></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr class="tall dashboard">
+
+<div class="sort-source-wrapper"><!-- button action on header -->
+
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+
+        </div>
+
+        <form id="formBuildOne">
+            <input type="text" id="id" name="id" style="display: none;">
+            <input type="text" id="typeId" name="typeId" value="1" style="display: none;">
+            <input type="text" id="bg145Id" name="bg145Id" value="{{bg145Id}}" style="display: none;">
+
+            <div class="form-group">
+                <div class="col-md-9">
+                    <label class="col-md-4 control-label text-right req" for="name">รายการ</label>
+
+                    <div class="col-md-8">
+                        <input type="text" id="name" name="name" class="form-control input-sm" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-9">
+                    <label class="col-md-4 control-label text-right req" for="place">สถานที่ดำเนินการ</label>
+
+                    <div class="col-md-8">
+                        <input type="text" id="place" name="place" class="form-control input-sm" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-9">
+                    <label class="col-md-4 control-label text-right req" for="rationale">เหตุผลความจำเป็น</label>
+
+                    <div class="col-md-8">
+                        <textarea id="rationale" name="rationale" class="form-control input-sm" required></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-9">
+                    <label class="col-md-4 control-label text-right req" for="costTotal">งบประมาณทั้งสิ้น</label>
+
+                    <div class="col-md-8">
+                        <input type="number" id="costTotal" name="costTotal" class="form-control input-sm" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-9">
+                    <label class="col-md-4 control-label text-right req" for="area">พื้นที่/ปริมาณงาน</label>
+
+                    <div class="col-md-8">
+                        <input type="text" id="area" name="area" class="form-control input-sm" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label class="col-md-3 control-label text-right req" for="geoType">ลักษณะภูมิศาสตร์บนแผนที่</label>
+
+                    <div class="col-md-3">
+                        <input type="text" id="geoType" name="geoType" readonly class="form-control input-sm" required>
+                    </div>
+                    <div class="col-md-3">
+                        <button id="viewMap" type="button" class="btn btn-primary" style="margin-bottom: 5px;">เรียกดู
+                        </button>
+                    </div>
+                    <div class="col-md-3 text-right">
+                        <button id="btn-map" type="button" class="btn btn-success" style="margin-bottom: 5px;"><i
+                                class="fa fa-plus-circle"></i> เพิ่ม/แก้ไขพิกัดภูมิศาสตร์
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <table class="table table-bordered table-striped table-condensed mb-none">
+                        <thead>
+                        <tr>
+                            <th class="col-md-1 text-center">จุดที่</th>
+                            <th class="col-md-3 text-center">ละติจูด</th>
+                            <th class="col-md-3 text-center">ลองจิจูด</th>
+                        </tr>
+                        </thead>
+                        <tbody id="mapTbody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label class="col-md-4 control-label text-right">ลักษณะการก่อสร้าง ปรับปรุงขนาดและประมาณราคา</label>
+
+                    <div class="col-md-8 text-right">
+                        <button type="button" class="btn btn-success add-btn" style="margin-bottom: 5px;"><i
+                                class="fa fa-plus-circle"></i> เพิ่ม
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <table class="table table-bordered table-striped table-condensed mb-none">
+                        <thead>
+                        <tr>
+                            <th class="col-md-4 text-center">กิจกรรม/ดำเนินงาน</th>
+                            <th class="col-md-2 text-center">ขนาด/ปริมาณ</th>
+                            <th class="col-md-2 text-center">ราคาต่อหน่วย</th>
+                            <th class="col-md-2 text-center">เงิน</th>
+                            <th class="col-md-2 text-center">เครื่องมือ</th>
+                        </tr>
+                        </thead>
+                        <tbody id="buildTbody"></tbody>
+                        <tfoot id="buildTfoot">
+                        <tr>
+                            <td class="text-center">รวม</td>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-9">
+                    <div class="col-md-12" style="margin: 3px 0;">
+                        <label class="col-md-4 control-label text-right text-bold">แผนการดำเนินงาน</label>
+
+                        <div class="col-md-8">
+                            <label class="col-md-4 control-label text-right req" for="timeDesign">ออกแบบ</label>
+
+                            <div class="col-md-8">
+                                <input type="text" id="timeDesign" name="timeDesign" class="form-control input-sm"
+                                       required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="margin: 3px 0;">
+                        <label class="col-md-4 control-label text-right "></label>
+
+                        <div class="col-md-8">
+                            <label class="col-md-4 control-label text-right req" for="timeBid">ประกวดราคา</label>
+
+                            <div class="col-md-8">
+                                <input type="text" id="timeBid" name="timeBid" class="form-control input-sm" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="margin: 3px 0;">
+                        <label class="col-md-4 control-label text-right"></label>
+
+                        <div class="col-md-8">
+                            <label class="col-md-4 control-label text-right req" for="timeContract">เซ็นสัญญา</label>
+
+                            <div class="col-md-8">
+                                <input type="text" id="timeContract" name="timeContract" class="form-control input-sm"
+                                       required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="margin: 3px 0;">
+                        <label class="col-md-4 control-label text-right"></label>
+
+                        <div class="col-md-8">
+                            <label class="col-md-4 control-label text-right req"
+                                   for="timeOperate">ระยะเวลาการดำเนินการ</label>
+
+                            <div class="col-md-8">
+                                <input type="text" id="timeOperate" name="timeOperate" class="form-control input-sm"
+                                       required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="col-md-9"><label class="col-md-4 control-label text-right">แบบ BOQ</label></div>
+                    <div class="col-md-3 text-right">
+                        <button type="button" class="btn btn-success addBOQ" style="margin-bottom: 5px;"><i
+                                class="fa fa-plus-circle"></i> เพิ่ม
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <table class="table table-bordered table-striped table-condensed mb-none">
+                        <thead>
+                        <tr>
+                            <th rowspan="2" class="col-md-3 text-center">รายการ</th>
+                            <th colspan="2" class="col-md-2 text-center">ปริมาณ</th>
+                            <th colspan="2" class="col-md-2 text-center">ค่าวัสดุ</th>
+                            <th colspan="2" class="col-md-2 text-center">ค่าแรงงาน</th>
+                            <th rowspan="2" class="col-md-2 text-center">รวม</th>
+                            <th rowspan="2" class="col-md-3 text-center">เครื่องมือ</th>
+                        </tr>
+                        <tr>
+                            <th rowspan="1" class="col-md-1 text-center">จำนวน</th>
+                            <th rowspan="1" class="col-md-1 text-center">หน่วย</th>
+                            <th rowspan="1" class="col-md-1 text-center">หน่วยละ</th>
+                            <th rowspan="1" class="col-md-1 text-center">จำนวนเงิน</th>
+                            <th rowspan="1" class="col-md-1 text-center">หน่วยละ</th>
+                            <th rowspan="1" class="col-md-1 text-center">จำนวนเงิน</th>
+                        </tr>
+                        </thead>
+                        <tbody id="BoqBody"></tbody>
+                        <tfoot id="Boqfoot">
+                        <tr>
+                            <td class="text-center" colspan="3">รวม</td>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-md-12 text-right">
+                <div id="showLoad" style="display: inline; visibility: hidden;"><i class="fa fa-spinner fa-spin"></i>
+                    Saving...
+                </div>
+                &nbsp;&nbsp;
+                <button type="button" class="btn btn-success saveBuildOne"><i class="fa fa-save"></i> บันทึกคำชี้แจง
+                </button>
+                &nbsp;
+                <button type="button" class="btn btn-default removeBuildOne"><i class="fa fa-trash"></i> ลบคำชี้แจง
+                </button>
+            </div>
+        </form>
+
+        <div class="col-md-12">
+            <p class="control-label"><b>หมายเหตุ </b>แผนการดำเนินงานในแต่ละรายการจะต้องกำหนดระยะเวลาให้ต่อเนื่องกันและเซ็นสัญญาภายในไตรมาศที่
+                1 (ตุลาคม-ธันวาคม)</p>
+        </div>
+
+        <!-- MODAL For Map -->
+        <div id="modalMap" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-map-o"></i> แผนที่</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="btn-group" id="btnGroup">
+                            <button type="button" id="point" class="btn btn-default active">Point</button>
+                            <button type="button" id="line" class="btn btn-default">Line</button>
+                            <button type="button" id="poly" class="btn btn-default">Polygon</button>
+                            <button type="button" id="circle" class="btn btn-default">Circle</button>
+                        </div>
+                        <div id="showInfo" style="margin-top: 10px;"><i class="fa fa-map-marker"> พิกัดภูมิศาสตร์</i>
+                        </div>
+                        <div id="map" style="height: 450px; margin-top: 10px;"></div>
+                        <div id="showInfoFootter" class="text-center" style="margin-top: 10px;"></div>
+                    </div>
+                    <div id="loadingModalMap" class="text-center"></div>
+                    <div class="modal-footer" id="modalMapFooter" style="margin-top: 0px;">
+                        <button type="button" class="btn btn-success saveMap"> บันทึก</button>
+                        <button type="button" data-dismiss="modal" class="btn btn-default cancel"> ยกเลิก</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--END MODAL For Map-->
+
+    </div>
+</div>
+
+{{> footer}}
+<style>
+    .modal-dialog {
+        width: 720px;
+    }
+</style>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDc_jex8JHvJW008Rtiz3SD5Vpngj_O_BE&callback=initMap" async
+        defer></script>
+<script type="text/javascript">
+
+    var listBOQ = [];
+    var listBuilding = [];
+    var STATUSFORM = "INSERT";
+    var listIDRemoveBOQOne = [];//id remove
+    var listIDRemoveBuildingOne = [];//id remove
+    var listCoordinates = [];// list latlng
+    var addStatusBOQOne = false, addStatusBuildOne = false;
+    var optionMap = "point"; //default
+    var optionMapUse = "point"; // use to DB
+    var linePathArr = []; //store latLng
+    var polyLineArray = []; //store object polyLine
+    var polygonArr = [];//store latLng
+    var polygonSimpleArr = [];//store object polygon
+    var CircleMap;
+    var coordinatesChange = false;
+    var canClickMap = true;
+    var markerArrayInfo = [];
+    var markerArrayForUse = [];
+    var markerArray = []; // marker for select on map
+    var labelNameMarker = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; // nameMarker
+    var labelMarkerIndex = 0; // index label
+    var hashMaptype = [];
+    hashMaptype["point"] = "รูปแบบจุด";
+    hashMaptype["line"] = "รูปแบบเส้น";
+    hashMaptype["poly"] = "รูปแบบรูปทรง";
+    hashMaptype["circle"] = "รูปแบบวงกลม";
+    var positionCenter;
+
+    $('#btnGroup button').addClass('active').not($("#point")).removeClass('active'); //active on button point
+    $("#btn-map").unbind("click").click(function () {
+        //click and show map
+        clearAll();
+        canClickMap = true;
+        $("#modalMapFooter").show();
+        if (optionMap == "point") $("#showInfo").html('<i class="fa fa-map-marker"> พิกัดภูมิศาสตร์</i>');
+        $("#showInfoFootter").html('');
+        $("#showInfo").show();
+        $("#btnGroup").show();
+        $("#modalMap").modal("show");
+
+    });
+
+    $("#viewMap").unbind("click").click(function () {
+        clearAll();
+        drawPolyOnMap();
+        canClickMap = false;
+        $("#modalMapFooter").hide();
+        $("#showInfo").hide();
+        $("#btnGroup").hide();
+        $("#showInfoFootter").hide();
+        $("#modalMap").modal("show");
+
+    });
+
+    $("#btnGroup #point,#line,#poly,#circle").click(function (e) {
+        //function on modal map
+        $('#btnGroup button').addClass('active').not(this).removeClass('active');
+        optionMap = e.target.id; //id is option of map such point line
+        clearAll();
+        if (optionMap == "point") {
+            //for btn point
+            var html = '<i class="fa fa-map-marker"> พิกัดภูมิศาสตร์</i>';
+            $("#showInfo").html(html);
+            $("#showInfoFootter").html('');
+
+        } else if (optionMap == "line") {
+            //for btn line
+            var html = '<div class="text-right" style="width: 100%;"><button type="button" class="btn btn-default clear"><i class="fa fa-trash-o"></i> ล้าง </button></div>';
+            $("#showInfo").html(html);
+
+            $(".clear").unbind("click").click(function () {
+                $("#showInfoFootter").html('');
+                clearAllMarker();
+                clearAllLine();
+            });
+
+        } else if (optionMap == "poly") {
+            //for btn poly
+            var html = '<div class="text-right" style="width: 100%;"><button type="button" class="btn btn-primary add"> แสดงพื้นที่ </button>' +
+                    '<button type="button" class="btn btn-default clear"><i class="fa fa-trash-o"></i> ล้าง </button></div>';
+            $("#showInfo").html(html);
+            $("#showInfoFootter").html('');
+            $(".add").unbind("click").click(function () {
+
+                var polygon = new google.maps.Polygon({
+                    paths: polygonArr,
+                    strokeColor: '#0000FF',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 3,
+                    fillColor: '#0000FF',
+                    fillOpacity: 0.35
+                });
+                polygon.setMap(map);
+                polygonSimpleArr.push(polygon);
+
+            });
+            $(".clear").unbind("click").click(function () {
+                clearAllMarker();
+                clearAllPolygon();
+            });
+
+        } else if (optionMap == "circle") {
+            //for btn circle
+            $("#showInfoFootter").html('');
+            var html = '<div style="width: 100%;">'
+                    + '<input type="radio" class="input-md" name="circle"  value="center" checked="checked" style="width: 1.5em; height: 1.5em;">&nbsp;&nbsp;'
+                    + '<label>จุดกึ่งกลาง</label>&nbsp;<i class="fa fa-map-marker"></i>&nbsp;&nbsp;'
+                    + '<input type="radio" class="input-md" name="circle" value="radius" style="width: 1.5em; height: 1.5em;">&nbsp;&nbsp;'
+                    + '<label>รัศมี</label>&nbsp;<i class="fa fa-map-marker"></i>'
+                    + '<div class="pull-right"><button type="button" class="btn btn-default pull-right clear"><i class="fa fa-trash-o"></i> ล้าง</button>'
+                    + '<button type="button" class="btn btn-primary pull-right showArea">แสดงพื้นที่</button></div>'
+                    + '</div>';
+
+            $("#showInfo").html(html);
+            $(".showArea").unbind("click").click(function () {
+
+                if (CircleMap != undefined) CircleMap.setMap(null);
+                if (markerArray[0] != undefined && markerArray[1] != undefined) {
+                    var km = distance(markerArray[0].position.lat(), markerArray[0].position.lng(), markerArray[1].position.lat(), markerArray[1].position.lng(), "K");
+                    CircleMap = new google.maps.Circle({
+                        strokeColor: '#0000FF',
+                        strokeOpacity: 0.8,
+                        strokeWeight: 2,
+                        fillColor: '#0000FF',
+                        fillOpacity: 0.35,
+                        map: map,
+                        center: markerArray[0].position,
+                        radius: km * 1000
+                    });
+                }
+            });
+
+            $(".clear").unbind("click").click(function () {
+                clearAllCircle();
+            });
+        }
+
+    });
+
+    $(".saveMap").unbind("click").click(function () {
+        //btn save modal map
+        coordinatesChange = true;
+
+        var html = '';
+
+        if (optionMap == "circle" && ((markerArray[0] == undefined || markerArray[0] == null) || (markerArray[1] == undefined || markerArray[1] == null))) {
+            $("#showInfoFootter").show();
+            $("#showInfoFootter").html("<b class='text-danger'>กรุณาเลือกจุดให้ครบก่อนบันทึก<b>");
+
+        } else {
+
+            listCoordinates = [];
+            markerArrayForUse = markerArray;
+            optionMapUse = optionMap;
+            for (var i = 0; i < markerArray.length; i++) {
+
+                if (markerArray[i] != null && markerArray[i] != undefined) {
+
+                    html += '<tr><td class="text-center">จุดที่ ' + (i + 1) + '</td>';
+                    html += '<td>' + markerArray[i].position.lat() + '</td>';
+                    html += '<td>' + markerArray[i].position.lng() + '</td>';
+                    html += '</tr>';
+                    var obj = {};
+                    obj.latitude = markerArray[i].position.lat();
+                    obj.longitude = markerArray[i].position.lng();
+                    listCoordinates.push(obj);
+                }
+            }
+
+            $("#mapTbody").html(html);
+            $("#geoType").val(hashMaptype[optionMap]);
+            $("#modalMap").modal("hide");
+        }
+    });
+
+
+    function drawPolyOnMap() {
+
+        var latlngArr = [];
+        markerArrayInfo = [];
+        for (var i = 0; i < markerArrayForUse.length; i++) {
+            var marker = new google.maps.Marker({
+                position: markerArrayForUse[i].position,
+                map: map,
+                title: 'Marker'
+            });
+            latlngArr.push(markerArrayForUse[i].position);
+            markerArrayInfo.push(marker);
+        }
+
+        if (latlngArr.length > 0) {
+
+            if (optionMapUse == "line") {
+
+                var line = new google.maps.Polyline({
+                    path: latlngArr,
+                    geodesic: true,
+                    strokeColor: '#0000FF',
+                    strokeOpacity: 1.0,
+                    strokeWeight: 2
+                });
+                line.setMap(map);
+                polyLineArray.push(line);
+
+            } else if (optionMapUse == "poly") {
+                console.log("draw");
+                console.log(latlngArr);
+                var polygon = new google.maps.Polygon({
+                    paths: latlngArr,
+                    strokeColor: '#0000FF',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 3,
+                    fillColor: '#0000FF',
+                    fillOpacity: 0.35
+                });
+                polygon.setMap(map);
+                polygonSimpleArr.push(polygon);
+
+            } else if (optionMapUse == "circle") {
+
+                if (latlngArr[0] != undefined && latlngArr[0] != null && latlngArr[1] != undefined && latlngArr[1] != null) {
+
+                    var km = distance(latlngArr[0].lat(), latlngArr[0].lng(), latlngArr[1].lat(), latlngArr[1].lng(), "K");
+                    CircleMap = new google.maps.Circle({
+                        strokeColor: '#0000FF',
+                        strokeOpacity: 0.8,
+                        strokeWeight: 2,
+                        fillColor: '#0000FF',
+                        fillOpacity: 0.35,
+                        map: map,
+                        center: latlngArr[0],
+                        radius: km * 1000
+                    });
+                }
+            }
+        }
+    }
+
+    function clearAllMarker() {
+
+        for (var i = 0; i < markerArray.length; i++) {
+
+            if (markerArray[i] != null) markerArray[i].setMap(null);
+        }
+        for (var i = 0; i < markerArrayInfo.length; i++) {
+            markerArrayInfo[i].setMap(null); //remove marker on modal view map
+        }
+        markerArray = []; //re new
+    }
+
+    function clearAllLine() {
+        clearAllMarker();
+        for (var i = 0; i < polyLineArray.length; i++) {
+            polyLineArray[i].setMap(null);
+        }
+        polyLineArray = []; //re new object line
+        linePathArr = []; // latlng point
+    }
+
+    function clearAllPolygon() {
+        clearAllMarker();
+        for (var i = 0; i < polygonSimpleArr.length; i++) {
+            polygonSimpleArr[i].setMap(null);
+        }
+        polygonSimpleArr = []; //re new object poly
+        polygonArr = []; // latlng point
+    }
+
+    function clearAllCircle() {
+
+        if (CircleMap != undefined) CircleMap.setMap(null);
+        clearAllMarker();
+    }
+
+    function clearAll() {
+        clearAllLine();
+        clearAllPolygon();
+        clearAllCircle();
+    }
+
+    function initMap() {
+
+        var mapOptions = {
+            zoom: 18,
+            center: new google.maps.LatLng(13.8192445, 100.513857),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        positionCenter = new google.maps.LatLng(13.8192445, 100.513857);
+        window.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        google.maps.event.trigger(window.map, "resize");
+
+        //listerner map
+        addListernerClickOnMap();
+        showView();
+        buildingOneAction();
+    }
+
+    function addListernerClickOnMap() {
+
+        google.maps.event.addListener(map, "click", function (e) {
+
+            if (canClickMap && e != undefined) {
+                if (optionMap == "point") {
+                    clearAllMarker();
+                    //lat and lng is available in e object
+                    var latLng = e.latLng;
+                    var marker = new google.maps.Marker({
+                        position: latLng,
+                        map: map,
+                        title: 'Title'
+                    });
+                    var html = '<i class="fa fa-map-marker"> พิกัดภูมิศาสตร์ ละติจูดที่ <b>' + latLng.lat() + '</b> ลองจิจูดที่ <b>' + latLng.lng() + '</b></i>';
+                    $("#showInfo").html(html);
+                    //markers["start"] = marker;
+                    markerArray[0] = marker;
+
+                } else if (optionMap == "line") {
+
+                    var checked = $("input:radio[name='point']:checked").val();
+                    //lat and lng is available in e object
+                    var latLng = e.latLng;
+
+                    linePathArr.push(latLng);
+
+                    var marker = new google.maps.Marker({
+                        position: latLng,
+                        map: map,
+                        title: 'Title',
+                        label: labelNameMarker[labelMarkerIndex++ % labelNameMarker.length]
+                    });
+
+                    markerArray.push(marker);
+
+                    var line = new google.maps.Polyline({
+                        path: linePathArr,
+                        geodesic: true,
+                        strokeColor: '#0000FF',
+                        strokeOpacity: 1.0,
+                        strokeWeight: 2
+                    });
+                    line.setMap(map);
+                    polyLineArray.push(line);
+
+                } else if (optionMap == "poly") {
+
+                    var latLng = e.latLng;
+
+                    polygonArr.push(latLng);
+
+                    var marker = new google.maps.Marker({
+                        position: latLng,
+                        map: map,
+                        title: 'Title'
+                    });
+
+                    markerArray.push(marker);
+
+                } else if (optionMap == "circle") {
+
+                    var latLng = e.latLng;
+                    var checked = $("input:radio[name='circle']:checked").val();
+
+                    if (checked == "center") {
+                        //marker start
+                        if (markerArray[1] == undefined)markerArray[1] = null;
+                        var marker = new google.maps.Marker({
+                            position: latLng,
+                            map: map,
+                            title: 'Title',
+                            label: 'A'
+                        });
+                        if (markerArray[0] != undefined)markerArray[0].setMap(null);
+                        markerArray[0] = marker;
+
+                    } else if (checked == "radius") {
+                        //marker end
+                        if (markerArray[0] == undefined)markerArray[0] = null;
+                        var marker = new google.maps.Marker({
+                            position: latLng,
+                            map: map,
+                            title: 'Title',
+                            label: 'B'
+                        });
+                        if (markerArray[1] != undefined)markerArray[1].setMap(null);
+                        markerArray[1] = marker;
+                    }
+                }
+            }//End canClickMap
+        });
+
+        google.maps.event.addListener(map, "mouseover", function (e) {
+            //use refresh map
+            google.maps.event.trigger(window.map, 'resize');
+            window.map.setCenter(positionCenter);
+        });
+    }
+
+    function distance(lat1, lon1, lat2, lon2, unit) {
+
+        var radlat1 = Math.PI * lat1 / 180
+        var radlat2 = Math.PI * lat2 / 180
+        var radlon1 = Math.PI * lon1 / 180
+        var radlon2 = Math.PI * lon2 / 180
+        var theta = lon1 - lon2
+        var radtheta = Math.PI * theta / 180
+        var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        dist = Math.acos(dist)
+        dist = dist * 180 / Math.PI
+        dist = dist * 60 * 1.1515
+        if (unit == "K") {
+            dist = dist * 1.609344
+        }
+        if (unit == "N") {
+            dist = dist * 0.8684
+        }
+        return dist
+    }
+
+    function showView() {
+
+        $("#loadAll").show();
+        var datas = callAjax("{{_context_path}}/api/budget/budgetInfo/viewBuildingOne", "post", {
+            bg145Id: '{{bg145Id}}',
+            type: 1
+        }, "json");
+
+        if (datas["budget"].length > 0) { //is not empty array
+
+            STATUSFORM = "EDIT";
+            $("#loadAll").hide();
+            $(".removeBuildOne").show();
+            datas["budget"].forEach(function (objBudget) {
+
+                $("#formBuildOne input, #formBuildOne textarea").each(function () {
+                    var name = $(this).attr("name");
+                    if (name != "plan" && name != "product")$(this).val(objBudget[name]);
+                    if (name == "geoType") {
+                        var valTypeMap = objBudget[name];
+                        $(this).val(hashMaptype[valTypeMap]);
+                        optionMapUse = valTypeMap;
+                    }
+                });
+
+                for (var i = 0; i < objBudget["listBOQ"].length; i++) {
+                    var obj = objBudget["listBOQ"][i];
+                    var html = '<tr>';
+                    var total = parseFloat(obj.materialTotal) + parseFloat(obj.wageTotal);
+                    html += '<td>' + obj.name + '</td>';
+                    html += '<td class="number">' + obj.quantity + '</td>';
+                    html += '<td>' + obj.unit + '</td>';
+                    html += '<td class="number">' + obj.materialUnit + '</td>';
+                    html += '<td class="number">' + obj.materialTotal + '</td>';
+                    html += '<td class="number">' + obj.wageUnit + '</td>';
+                    html += '<td class="number">' + obj.wageTotal + '</td>';
+                    html += '<td class="number">' + total + '</td>';
+                    html += '<td class="text-center"><button type="button" class="btn btn-warning edit-btnBOQ"><i class="fa fa-pencil"></i></button>';
+                    html += '<button type="button" class="btn btn-default delete-btnBOQ"><i class="fa fa-trash"></i></button></td>';
+                    html += '</tr>';
+                    $('#BoqBody').prepend(html);
+                    $('.number').number(true, 2);
+                    obj["costTotal"] = total; //in db not have
+                    listBOQ.push(obj)
+                }
+
+                for (var i = 0; i < objBudget["listDetail"].length; i++) {
+                    var obj = objBudget["listDetail"][i];
+                    var html = '<tr>';
+                    html += '<td>' + obj.desc + '</td>';
+                    html += '<td class="number">' + obj.quantity + '</td>';
+                    html += '<td class="number">' + obj.costUnit + '</td>';
+                    html += '<td class="number">' + obj.costTotal + '</td>';
+                    html += '<td class="text-center"><button type="button" class="btn btn-warning edit-btn"><i class="fa fa-pencil"></i></button>';
+                    html += '<button type="button" class="btn btn-default delete-btn"><i class="fa fa-trash"></i></button></td>';
+                    html += '</tr>';
+                    $('#buildTbody').prepend(html);
+                    $('.number').number(true, 2);
+                    listBuilding.push(obj)
+                }
+
+                for (var i = 0; i < objBudget["listCoordinates"].length; i++) {
+                    var obj = objBudget["listCoordinates"][i];
+                    var html = '<tr>';
+                    html += '<td class="text-center">จุดที่ ' + (i + 1) + '</td>';
+                    html += '<td>' + obj.latitude + '</td>';
+                    html += '<td>' + obj.longitude + '</td>';
+                    html += '</tr>';
+                    $('#mapTbody').append(html);
+
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(obj.latitude, obj.longitude),
+                        title: 'Marker'
+                    });
+                    listCoordinates.push(obj);
+                    markerArrayForUse.push(marker);
+                }
+                drawPolyOnMap();
+
+                toolsEvent();
+            });
+
+        } else {
+
+            STATUSFORM = "INSERT";
+            $("#loadAll").hide();
+            $(".removeBuildOne").hide();
+        }
+    }
+
+    function buildingOneAction() { // action table row
+
+        $("button.saveBuildOne").unbind("click").click(function () {
+            var fParam = {};
+            var isValid = true;
+            $('form input[required]').each(function () {
+                if ($(this).val() == "" && !$(this).prop("disabled"))
+                    isValid = false;
+            });
+            if (isValid) {
+
+                $("#formBuildOne input, #formBuildOne textarea").each(function () {
+                    var name = $(this).attr("name");
+                    var val = $(this).val();
+                    fParam[name] = val;
+                });
+                fParam["geoType"] = optionMapUse;
+                var fdata = [];
+                fdata.push(fParam);
+                var dataJSON = JSON.stringify({
+                    building: fdata,
+                    listBOQ: listBOQ,
+                    listBuildDetail: listBuilding,
+                    listIDRemoveBOQ: listIDRemoveBOQOne,
+                    listIDRemoveBuildingOne: listIDRemoveBuildingOne,
+                    listCoordinates: listCoordinates,
+                    coordinatesChange: coordinatesChange
+                });
+
+                var dataJSONEN = encodeURIComponent(dataJSON);
+                if (STATUSFORM == "INSERT") {
+                    buildingOneInsert(dataJSONEN);
+                } else if (STATUSFORM == "EDIT") {
+                    buildingOneEdit(dataJSONEN);
+                }
+            } else {
+                alert("กรุญากรอกข้อมูลให้ครบ");
+            }
+
+        }); //Insert TO DB service
+
+        $("button.removeBuildOne").unbind("click").click(function () {
+            var fParam = {};
+            fParam["id"] = $("#id").val();
+            var fdata = [];
+            fdata.push(fParam);
+            var dataJSON = JSON.stringify({
+                building: fdata
+            });
+
+            var dataJSONEN = encodeURIComponent(dataJSON);
+            var r = confirm("ต้องการลบคำชี้แจงใช่ไหม ?");
+            if (r == true) {
+                buildingOneRemove(dataJSONEN);
+            }
+
+        });
+
+        $("button.addBOQ").unbind("click").click(function () {
+
+            if (!addStatusBOQOne) {
+
+                addStatusBOQOne = true;
+                var html = '<tr>' +
+                        '   <td><input type="text" class="form-control" id="name" name="name" ></td>' +
+                        '   <td><input type="number" class="form-control" min="0" id="quantity" name="quantity" onKeyUp="keyPressedOne(this)"></td>' +
+                        '   <td><input type="text" class="form-control" id="unit" name="unit"></td>' +
+                        '   <td><input type="number" class="form-control" id="materialUnit" name="materialUnit" onKeyUp="keyPressedOne(this)"></td>' +
+                        '   <td style="vertical-align: middle"><label id="materialTotal" name="materialTotal"></label></td>' +
+                        '   <td><input type="number" class="form-control" id="wageUnit" name="wageUnit" onKeyUp="keyPressedOne(this)"></td>' +
+                        '   <td style="vertical-align: middle"><label id="wageTotal" name="wageTotal"></label></td>' +
+                        '   <td style="vertical-align: middle"><label id="costTotalBOQ" name="costTotal" ></label></td>' +
+                        '   <td class="text-center"><button type="button" class="btn btn-success save-btnBOQ" title="บันทึก"><i class="fa fa-save"></i></button>' +
+                        '   <button type="button" class="btn btn-default cancel-btnBOQ"><i class="fa fa-close" title="ยกเลิก"></i></button></td>' +
+                        '</tr>';
+
+                $("#BoqBody").prepend(html);
+
+                $(".save-btnBOQ").unbind("click").click(function () {
+                    var fVal = {};
+                    var html = '';
+                    $("#BoqBody input,#BoqBody label").each(function () {
+                        var name = $(this).attr("name");
+                        var val;
+                        if (name != "materialTotal" && name != "wageTotal" && name != "costTotal") {
+                            val = $(this).val();
+                        } else {
+                            val = $(this).html();
+                        }
+                        fVal[name] = val;
+                        if (name != "unit" && name != "name") {
+                            html += '<td class="number">' + fVal[name] + '</td>';
+                        } else {
+                            html += '<td>' + fVal[name] + '</td>';
+                        }
+                    });
+                    listBOQ.push(fVal);
+                    html += '<td class="text-center"><button type="button" class="btn btn-warning edit-btnBOQ"><i class="fa fa-pencil"></i></button>';
+                    html += '<button type="button" class="btn btn-default delete-btnBOQ"><i class="fa fa-trash"></i></button></td>';
+                    addStatusBOQOne = false;
+                    $(this).closest("tr").html(html);
+                    $('.number').number(true, 2);
+                    toolsEvent();
+                });
+
+                $(".cancel-btnBOQ").unbind("click").click(function () {
+                    addStatusBOQOne = false;
+                    $(this).closest("tr").remove();
+                });
+                //button.add
+            } else {
+                $("#floorDesc").focus(); //focus to row add
+            }
+        });
+
+        $("button.add-btn").unbind("click").click(function () {
+
+            if (!addStatusBuildOne) {
+                //is adding
+                console.log("add");
+                addStatusBuildOne = true;
+                var html = '<tr>' +
+                        '   <td><input type="text" class="form-control" id="desc" name="desc"></td>' +
+                        '   <td><input type="number" min = "0" class="form-control" min="0" id="quantity" name="quantity" onKeyUp="keyPressedBuilding(this)"></td>' +
+                        '   <td><input type="number" min = "0" class="form-control" id="costUnit" name="costUnit" onKeyUp="keyPressedBuilding(this)"></td>' +
+                        '   <td style="vertical-align: middle"><label id="costTotalBuild" name="costTotal"></label></td>' +
+                        '   <td class="text-center"><button type="button" class="btn btn-success save-btn" title="บันทึก"><i class="fa fa-save"></i></button>' +
+                        '   <button type="button" class="btn btn-default cancel-btn"><i class="fa fa-close" title="ยกเลิก"></i></button></td></tr>' +
+                        '</tr>';
+
+                $("#buildTbody").prepend(html);
+
+                $(".save-btn").unbind("click").click(function () {
+
+                    var fVal = {};
+                    var html = '';
+                    $("#buildTbody input,#buildTbody label").each(function () {
+                        var name = $(this).attr("name");
+                        var val;
+                        if (name != "costTotal") {
+                            val = $(this).val();
+                        } else {
+                            val = $(this).html();
+                        }
+                        fVal[name] = val;
+                        if (name != "desc") {
+                            html += '<td class="number">' + fVal[name] + '</td>';
+                        } else {
+                            html += '<td>' + fVal[name] + '</td>';
+                        }
+                    });
+
+                    listBuilding.push(fVal);
+
+                    html += '<td class="text-center"><button type="button" class="btn btn-warning edit-btn"><i class="fa fa-pencil"></i></button>';
+                    html += '<button type="button" class="btn btn-default delete-btn"><i class="fa fa-trash"></i></button></td>';
+                    addStatusBuildOne = false;
+                    $(this).closest("tr").html(html);
+                    $('.number').number(true, 2);
+                    toolsEvent();
+                });
+
+                $(".cancel-btn").unbind("click").click(function () {
+                    addStatusBuildOne = false;
+                    $(this).closest("tr").remove();
+                });
+                //button.add
+            } else {
+                $("#activity").focus();
+            }
+        });
+    }
+
+    function toolsEvent() {
+
+        $("button.edit-btnBOQ").unbind("click").click(function () {
+            if (!addStatusBOQOne) {
+                //edit button modal
+                addStatusBOQOne = true;
+                var oldHtml = $(this).closest('tr').html();
+                var row = $(this).closest('tr');
+                var rowIndex = row.index();
+
+                var html = '' +
+                        '   <td><input type="text" class="form-control" id="name" name="name" ></td>' +
+                        '   <td><input type="number" class="form-control" min="0" id="quantity" name="quantity" onKeyUp="keyPressedOne(this)"></td>' +
+                        '   <td><input type="text" class="form-control" id="unit" name="unit"></td>' +
+                        '   <td><input type="number" class="form-control" id="materialUnit" name="materialUnit" onKeyUp="keyPressedOne(this)"></td>' +
+                        '   <td style="vertical-align: middle"><label id="materialTotal" name="materialTotal"></label></td>' +
+                        '   <td><input type="number" class="form-control" id="wageUnit" name="wageUnit" onKeyUp="keyPressedOne(this)"></td>' +
+                        '   <td style="vertical-align: middle"><label id="wageTotal" name="wageTotal"></label></td>' +
+                        '   <td style="vertical-align: middle"><label id="costTotalBOQ" name="costTotal" ></label></td>' +
+                        '   <td class="text-center"><button type="button" class="btn btn-success save-btnBOQ" title="บันทึก"><i class="fa fa-save"></i></button>' +
+                        '   <button type="button" class="btn btn-default cancel-btnBOQ"><i class="fa fa-close" title="ยกเลิก"></i></button></td></tr>';
+
+                row.html(html);
+                var index;
+                $("td input, td label", row).each(function () {
+                    var name = $(this).attr("name");
+                    index = (listBOQ.length - 1) - rowIndex;
+                    var val = listBOQ[index][name];
+                    if (name != "materialTotal" && name != "wageTotal" && name != "costTotal") {
+                        $(this).val(val);
+                    } else {
+                        $(this).html(val);
+                    }
+                });
+
+
+                $(".save-btnBOQ").unbind("click").click(function () {
+                    var fVal = listBOQ[index];
+                    var html = '';
+                    $("#BoqBody input,#BoqBody label").each(function () {
+                        var name = $(this).attr("name");
+                        var val;
+                        if (name != "materialTotal" && name != "wageTotal" && name != "costTotal") {
+                            val = $(this).val();
+                        } else {
+                            val = $(this).html();
+                        }
+                        fVal[name] = val;
+                        if (name != "unit" && name != "name") {
+                            html += '<td class="number">' + fVal[name] + '</td>';
+                        } else {
+                            html += '<td>' + fVal[name] + '</td>';
+                        }
+                    });
+
+                    listBOQ[index] = fVal;
+
+                    html += '<td class="text-center"><button type="button" class="btn btn-warning edit-btnBOQ"><i class="fa fa-pencil"></i></button>';
+                    html += '<button type="button" class="btn btn-default delete-btnBOQ"><i class="fa fa-trash"></i></button></td>';
+                    addStatusBOQOne = false;
+                    $(this).closest("tr").html(html);
+                    $('.number').number(true, 2);
+                    toolsEvent();
+                });
+
+                $(".cancel-btnBOQ").unbind("click").click(function () {
+                    addStatusBOQOne = false;
+                    $(this).closest("tr").html(oldHtml);
+                    toolsEvent();
+                });
+            } else {
+                $("#floorDesc").focus(); //focus to row add
+            }
+
+        }); //Edit on Table BOQ
+
+        $("button.delete-btnBOQ").unbind("click").click(function () {
+            if (!addStatusBOQOne) {
+                var respond = confirm("ต้องการลบใช่ไหม ?");
+                if (respond == true) {
+                    var rowIndex = (listBOQ.length - 1) - $(this).closest('tr').index();
+                    if (listBOQ[rowIndex]["id"] != undefined) {
+                        listIDRemoveBOQOne.push(listBOQ[rowIndex]["id"]);
+                        listBOQ.splice(rowIndex, 1);
+                        $(this).closest('tr').remove();
+                    }
+                }
+            } else {
+                $("#floorDesc").focus(); //focus to row add
+            }
+        });//Delete on Table BOQ
+
+        $("button.edit-btn").unbind("click").click(function () {
+            //edit button
+            if (!addStatusBuildOne) {
+                addStatusBuildOne = true;
+                var oldHtml = $(this).closest('tr').html();
+                var row = $(this).closest('tr');
+                var rowIndex = row.index();
+
+                var html = '' +
+                        '   <td><input type="text" class="form-control" id="desc" name="desc"></td>' +
+                        '   <td><input type="number" min = "0" class="form-control"  id="quantity" name="quantity" onKeyUp="keyPressedBuilding(this)"></td>' +
+                        '   <td><input type="number" min = "0" class="form-control" id="costUnit" name="costUnit" onKeyUp="keyPressedBuilding(this)"></td>' +
+                        '   <td style="vertical-align: middle"><label id="costTotalBuild" name="costTotal"></label></td>' +
+                        '   <td class="text-center"><button type="button" class="btn btn-success save-btn" title="บันทึก"><i class="fa fa-save"></i></button>' +
+                        '   <button type="button" class="btn btn-default cancel-btn"><i class="fa fa-close" title="ยกเลิก"></i></button></td></tr>';
+
+                row.html(html);
+                var index;
+                $("td input, td label", row).each(function () {
+                    var name = $(this).attr("name");
+                    index = (listBuilding.length - 1) - (rowIndex);
+                    var val = listBuilding[index][name];
+                    if (name != "costTotal") {
+                        $(this).val(val);
+                    } else {
+                        $(this).html(val);
+                    }
+                });
+
+                $(".save-btn").unbind("click").click(function () {
+                    var fVal = listBuilding[index];
+                    var html = '';
+                    var total = 0;
+                    $("#buildTbody input,#buildTbody label").each(function () {
+                        var name = $(this).attr("name");
+                        var val;
+                        if (name != "costTotal") {
+                            val = $(this).val();
+                        } else {
+                            val = $(this).html();
+                        }
+                        fVal[name] = val;
+                        if (name != "desc") {
+                            html += '<td class="number">' + fVal[name] + '</td>';
+                        } else {
+                            html += '<td>' + fVal[name] + '</td>';
+                        }
+                    });
+
+                    listBuilding[index] = fVal;
+                    html += '<td class="text-center"><button type="button" class="btn btn-warning edit-btn"><i class="fa fa-pencil"></i></button>';
+                    html += '<button type="button" class="btn btn-default delete-btn"><i class="fa fa-trash"></i></button></td>';
+                    addStatusBuildOne = false;
+                    $(this).closest("tr").html(html);
+                    $('.number').number(true, 2);
+                    toolsEvent();
+                });
+
+                $(".cancel-btn").unbind("click").click(function () {
+                    addStatusBuildOne = false;
+                    $(this).closest("tr").html(oldHtml);
+                    toolsEvent();
+                });
+            } else {
+                $("#activity").focus();
+            }
+        }); //Edit on Table Building
+
+        $("button.delete-btn").unbind("click").click(function () {
+            if (!addStatusBuildOne) {
+                var respond = confirm("ต้องการลบใช่ไหม ?");
+                if (respond == true) {
+                    var rowIndex = (listBuilding.length - 1) - $(this).closest('tr').index();
+                    if (listBuilding[rowIndex]["id"] != undefined) {
+                        listIDRemoveBuildingOne.push(listBuilding[rowIndex]["id"]);
+                        listBuilding.splice(rowIndex, 1);
+                        $(this).closest('tr').remove();
+                    }
+                }
+            } else {
+                $("#activity").focus();
+            }
+        });//Delete on Table Building
+    }
+
+    function buildingOneInsert(dataJSONEN) {
+        $("#showLoad").css("visibility", "visible");
+        setTimeout(function () {
+
+            var datas = callAjax("{{_context_path}}/api/budget/draftBone/insertBuildingOne", "post", dataJSONEN, "json");
+            if (typeof datas !== "undefined" && datas !== null) {
+                if (datas['results']['result'] == true) {
+                    alert("บันทึกสำเร็จ");
+                    window.close();
+                } else {
+                    alert("บันทึกไม่สำเร็จ กรุณาลองอีกครั้ง");
+                }
+            }
+            $("#showLoad").css("visibility", "hidden");
+        }, 500);
+    } //For Insert BuilDone
+
+    function buildingOneEdit(dataJSONEN) {
+        $("#showLoad").css("visibility", "visible");
+        setTimeout(function () {
+
+            var datas = callAjax("{{_context_path}}/api/budget/draftBone/editBuildingOne", "post", dataJSONEN, "json");
+            if (typeof datas !== "undefined" && datas !== null) {
+                if (datas['results']['result'] == true) {
+                    alert("แก้ไขสำเร็จ");
+                    window.close();
+                } else {
+                    alert("แก้ไขไม่สำเร็จ กรุณาลองอีกครั้ง");
+                    location.reload();
+                }
+            }
+            $("#showLoad").css("visibility", "hidden");
+        }, 500);
+    }//For Edit BuilDone
+
+    function buildingOneRemove(dataJSONEN) {
+        $("#showLoad").css("visibility", "visible");
+        setTimeout(function () {
+
+            var datas = callAjax("{{_context_path}}/api/budget/draftBone/removeBuildingOne", "post", dataJSONEN, "json");
+            if (typeof datas !== "undefined" && datas !== null) {
+                if (datas['results']['result'] == true) {
+                    alert("ลบสำเร็จ");
+                    window.close();
+                } else {
+                    alert("ลบไม่สำเร็จ");
+                    location.reload();
+                }
+            }
+            $("#showLoad").css("visibility", "hidden");
+        }, 500);
+    }//For remove BuilDone
+
+    function keyPressedOne(obj) {
+        //auto cal  costTotal
+        var quantity = parseFloat($("#quantity").val());
+        var name = $(obj).attr("name");
+        var totalMat = 0, totalWeg = 0;
+        if (name == "materialUnit") {
+            totalMat = parseFloat($(obj).val()) * quantity;
+            if (isNaN(totalMat)) totalMat = 0;
+            $("#materialTotal").html(totalMat);
+
+        } else if (name == "wageUnit") {
+            totalWeg = parseFloat($(obj).val()) * quantity;
+            if (isNaN(totalWeg)) totalWeg = 0;
+            $("#wageTotal").html(totalWeg);
+        } else if (name == "quantity") {
+            totalWeg = parseFloat($("#wageUnit").val()) * quantity;
+            totalMat = parseFloat($("#materialUnit").val()) * quantity;
+            if (isNaN(totalWeg)) totalWeg = 0;
+            if (isNaN(totalMat)) totalMat = 0;
+            $("#wageTotal").html(totalWeg);
+            $("#materialTotal").html(totalMat);
+        }
+
+        $("#costTotalBOQ").html(parseFloat($("#wageTotal").html()) + parseFloat($("#materialTotal").html()));
+    }
+
+    function keyPressedBuilding(obj) {
+        //auto cal  costTotal
+        var name = $(obj).attr("name");
+        var total = 0;
+        if (name == "quantity") {
+            total = parseFloat($(obj).val()) * parseFloat($("#costUnit").val());
+
+        } else if (name == "costUnit") {
+            total = parseFloat($(obj).val()) * parseFloat($("#quantity").val());
+        }
+        if (isNaN(total)) total = 0;
+
+        $("#costTotalBuild").html(total);
+    }
+
+</script>
