@@ -12,7 +12,7 @@ interface IFinal142Service{
      * @name view
      * @uri /view
      * @param apps\budget\model\BudgetFilter param Description
-     * @return apps\common\entity\Budget142[] budget Description
+     * @return apps\common\entity\Final142[] budget Description
      * @description แสดงข้อมูลฟอร์ม 142
      */
     public function view($param);

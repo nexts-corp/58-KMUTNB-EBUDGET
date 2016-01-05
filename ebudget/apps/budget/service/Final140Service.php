@@ -147,7 +147,7 @@ class Final140Service extends CServiceBase implements IFinal140Service {
         $desc = $conv->desc;
 
         $json = new CJSONDecodeImpl();
-        $budget = $json->decode(new \apps\common\entity\Budget140(), $conv);
+        $budget = $json->decode(new \apps\common\entity\Final140(), $conv);
         $budget->budgetTypeCode = "G";
         $budget->budgetPeriodId = $this->getPeriod()->year;
 
@@ -214,7 +214,7 @@ class Final140Service extends CServiceBase implements IFinal140Service {
                     if (!$this->datacontext->saveObject($update)) {
                         $return = $this->datacontext->getLastMessage();
                     } else {
-                        $update2 = new \apps\common\entity\Budget140();
+                        $update2 = new \apps\common\entity\Final140();
                         $update2->id = $budget->id;
                         $data = $this->datacontext->getObject($update2);
 
@@ -253,7 +253,7 @@ class Final140Service extends CServiceBase implements IFinal140Service {
             $time = date("YmdHis");
             $target_dir = "apps\\budget\\views\\draft\\attachment\\";
 
-            $update = new \apps\common\entity\Budget140();
+            $update = new \apps\common\entity\Final140();
             $update->id = $budget->id;
             $data = $this->datacontext->getObject($update);
 
@@ -294,7 +294,7 @@ class Final140Service extends CServiceBase implements IFinal140Service {
                     if (!$this->datacontext->saveObject($update)) {
                         $return = $this->datacontext->getLastMessage();
                     } else {
-                        $update2 = new \apps\common\entity\Budget140();
+                        $update2 = new \apps\common\entity\Final140();
                         $update2->id = $budget->id;
                         $data = $this->datacontext->getObject($update2);
 
@@ -312,7 +312,7 @@ class Final140Service extends CServiceBase implements IFinal140Service {
     public function delete($budgetId) {
         $result = true;
 
-        $repo = new \apps\common\entity\Budget140();
+        $repo = new \apps\common\entity\Final140();
         $repo->setId($budgetId);
         $data = $this->datacontext->getObject($repo);
         $bgHeadId = $data[0]->budgetHeadId;
@@ -321,7 +321,7 @@ class Final140Service extends CServiceBase implements IFinal140Service {
         if (!$this->datacontext->removeObject($repo)) {
             $return = $this->datacontext->getLastMessage();
         } else {
-            $sql = "SELECT count(bg) as num FROM " . $this->ent . "\\Budget140 as bg WHERE bg.budgetHeadId = " . $bgHeadId;
+            $sql = "SELECT count(bg) as num FROM " . $this->ent . "\\Final140 as bg WHERE bg.budgetHeadId = " . $bgHeadId;
             $obj = $this->datacontext->getObject($sql);
 
             if ($obj[0]["num"] == 0) {
