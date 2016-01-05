@@ -11,7 +11,7 @@ class Final145 extends EntityBase {
     /**
      * @Id 
      * @Column(type="integer",length=11,name="ID")
-     * @GeneratedValue
+    
      */
     public $id;
 
