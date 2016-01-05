@@ -11,29 +11,24 @@ use th\co\bpg\cde\data\CDataContext;
 use apps\budget\interfaces\IFinal140Service;
 use apps\common\entity;
 use apps\common\entity\BudgetHead;
-
 use th\co\bpg\cde\collection\impl\CJSONDecodeImpl;
 
-class Final140Service extends CServiceBase implements IFinal140Service
-{
+class Final140Service extends CServiceBase implements IFinal140Service {
 
     public $datacontext;
     public $ent = "apps\\common\\entity";
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->datacontext = new CDataContext();
     }
 
-    function getPeriod()
-    {
+    function getPeriod() {
         $year = new \apps\common\entity\Year();
         $year->yearStatus = 'Y';
         return $this->datacontext->getObject($year)[0];
     }
 
-    function getBudgetPlanAndProject($budgetPeriodId, $L3DPlanId, $fundgroupId)
-    {
+    function getBudgetPlanAndProject($budgetPeriodId, $L3DPlanId, $fundgroupId) {
         $project = new \apps\common\entity\MappingPlan();
 
         $project->setBudgetperiodId($budgetPeriodId);
@@ -63,20 +58,19 @@ class Final140Service extends CServiceBase implements IFinal140Service
         return $result;
     }
 
-    public function view($param)
-    {
+    public function view($param) {
         $param->budgetPeriodId = $this->getPeriod()->year;
         $param->budgetTypeCode = "G";
 
         $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
-            . " FROM " . $this->ent . "\\BudgetType typ "
-            . " WHERE typ.masterId = '10000000' and typ.typeCode = 'G' and typ.form140 = true ";
+                . " FROM " . $this->ent . "\\BudgetType typ "
+                . " WHERE typ.masterId = '10000000' and typ.typeCode = 'G' and typ.form140 = true ";
         $list1 = $this->datacontext->getObject($sql1);
 
         foreach ($list1 as $key1 => $value1) {
             $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
-                . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = :masterId ";
+                    . " FROM " . $this->ent . "\\BudgetType typ "
+                    . " WHERE typ.masterId = :masterId ";
             $param2 = array(
                 "masterId" => $list1[$key1]["id"]
             );
@@ -84,18 +78,19 @@ class Final140Service extends CServiceBase implements IFinal140Service
             $list1[$key1]["lv2"] = $list2;
 
             foreach ($list2 as $key2 => $value2) {
-                $sql3 = " select head.id AS budgetHeadId, bg.id, bg.positionName, bg.occupy, bg.vacancy, bg.rateNo, bg.salary, bg.salaryTotal, bg.remark,bg.comment,bg.attachmentId,att.desc,att.path,ts.id AS statusId,ts.desc AS statusDesc"
-                    . " from " . $this->ent . "\\Budget140 bg "
-                    . " left join " . $this->ent . "\\BudgetHead head with head.id = bg.budgetHeadId "
-                    . " left join " . $this->ent . "\\Attachment att with bg.attachmentId = att.id "
-                    . " left join " . $this->ent . "\\TrackingStatus ts with bg.statusId = ts.id "
-                    . " where head.formId = :formId "
-                    . " and bg.budgetTypeId = :budgetTypeId "
-                    . " and bg.budgetPeriodId = :budgetPeriodId "
-                    . " and bg.budgetTypeCode = :budgetTypeCode "
-                    . " and bg.l3dPlanId = :l3dPlanId "
-                    . " and bg.fundgroupId = :fundgroupId "
-                    . " and bg.deptId = :deptId";
+                $sql3 = " select head.id AS budgetHeadId, bg.id, bg.positionName, bg.occupy, bg.vacancy, bg.rateNo, bg.salary, bg.salaryTotal, bg.remark,bg.comment,bg.attachmentId,att.desc,att.path,ts.id AS statusId,ts.desc AS statusDesc "
+                        . " ,bg.status "
+                        . " from " . $this->ent . "\\Final140 bg "
+                        . " left join " . $this->ent . "\\BudgetHead head with head.id = bg.budgetHeadId "
+                        . " left join " . $this->ent . "\\Attachment att with bg.attachmentId = att.id "
+                        . " left join " . $this->ent . "\\TrackingStatus ts with bg.statusId = ts.id "
+                        . " where head.formId = :formId "
+                        . " and bg.budgetTypeId = :budgetTypeId "
+                        . " and bg.budgetPeriodId = :budgetPeriodId "
+                        . " and bg.budgetTypeCode = :budgetTypeCode "
+                        . " and bg.l3dPlanId = :l3dPlanId "
+                        . " and bg.fundgroupId = :fundgroupId "
+                        . " and bg.deptId = :deptId";
 
                 $param3 = array(
                     "formId" => "140",
@@ -145,8 +140,7 @@ class Final140Service extends CServiceBase implements IFinal140Service
         return $list1;
     }
 
-    public function insert($budget, $file)
-    {
+    public function insert($budget, $file) {
 
         $conv = json_decode($budget);
 
@@ -229,15 +223,13 @@ class Final140Service extends CServiceBase implements IFinal140Service
 
                         $return["path"] = $fileN;
                     }
-
                 }
             }
         }
         return $return;
     }
 
-    public function update($budget, $file, $fileUpload)
-    {
+    public function update($budget, $file, $fileUpload) {
         $return = array();
 
         $conv = json_decode($budget);
@@ -245,7 +237,7 @@ class Final140Service extends CServiceBase implements IFinal140Service
         $desc = $conv->desc;
 
         $json = new CJSONDecodeImpl();
-        $budget = $json->decode(new \apps\common\entity\Budget140(), $conv);
+        $budget = $json->decode(new \apps\common\entity\Final140(), $conv);
 
         $budget->bgSummary = $budget->salaryTotal;
         $budget->dateUpdated = date('Y-m-d H:i:s');
@@ -311,15 +303,13 @@ class Final140Service extends CServiceBase implements IFinal140Service
 
                         $return["path"] = $fileN;
                     }
-
                 }
             }
         }
         return $return;
     }
 
-    public function delete($budgetId)
-    {
+    public function delete($budgetId) {
         $result = true;
 
         $repo = new \apps\common\entity\Budget140();
@@ -342,7 +332,6 @@ class Final140Service extends CServiceBase implements IFinal140Service
                     $result = false;
                     $return = $this->datacontext->getLastMessage();
                 }
-
             }
         }
 
@@ -366,4 +355,5 @@ class Final140Service extends CServiceBase implements IFinal140Service
 
         return $result;
     }
+
 }
