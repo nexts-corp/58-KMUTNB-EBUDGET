@@ -70,6 +70,21 @@ class Account extends EntityBase {
     /** @Column(type="string",length=1, name="AccountOwner") */
     public $accOwner;
 
+    /** @Column(type="string",length=100, name="AccountNameENG") */
+    public $accNameENG;
+
+    /** @Column(type="string",length=255, name="Description") */
+    public $desc;
+
+    /** @Column(type="string",length=255, name="BankName") */
+    public $bankName;
+
+    /** @Column(type="string",length=1, name="PayDebit") */
+    public $payDebit;
+
+    /** @Column(type="string",length=255, name="CutOffType") */
+    public $cutOffType;
+
     function getId() {
         return $this->id;
     }
