@@ -76,53 +76,53 @@
 
                 <section class="panel">
                     <div class="panel-body">
-                        <div class="col-md-12 text-right">
-                            <button class="requestBGbtn btn btn-success" type="button">ส่งข้อมูลคำของบประมาณ</button>
-                        </div>
+                        <!--                        <div class="col-md-12 text-right">
+                                                    <button class="requestBGbtn btn btn-success" type="button">ส่งข้อมูลคำของบประมาณ</button>
+                                                </div>-->
                         <div class="col-md-12 text-right">
                             <a href="#" id="expandAll"><i class="fa fa-plus-square"></i> แสดงทั้งหมด</a>&nbsp;/&nbsp;
                             <a href="#" id="collapseAll"><i class="fa fa-minus-square"></i> ซ่อนทั้งหมด</a>
                         </div>
                         <table id="table142" class="table table-bordered table-striped mb-none treetable">
                             <thead>
-                            <tr>
-                                <th rowspan="2" class="text-center" style="vertical-align: middle;">ลำดับ</th>
-                                <th rowspan="2" class="text-center" style="vertical-align: middle;">ประเภท-ตำแหน่ง</th>
-                                <th colspan="3" class="text-center" style="vertical-align: middle;">อัตราเดิม</th>
-                                <th colspan="3" class="text-center" style="vertical-align: middle;">คำขอปีงบประมาณ</th>
-                                <th rowspan="2" class="text-center" style="vertical-align: middle;">คำชี้แจง</th>
-                                <th rowspan="2" class="text-center" style="vertical-align: middle;">สถานะคำขอ</th>
-                                <th rowspan="2" class="text-center" style="vertical-align: middle; min-width: 130px;">
-                                    เครื่องมือ
-                                </th>
-                            </tr>
-                            <tr>
-                                <th rowspan="1" class="text-center" style="vertical-align: middle;">อัตราค่าจ้าง</th>
-                                <th rowspan="1" class="text-center" style="vertical-align: middle;">จำนวนอัตรา</th>
-                                <th rowspan="1" class="text-center" style="vertical-align: middle;">จำนวนเงิน</th>
-                                <th rowspan="1" class="text-center" style="vertical-align: middle;">อัตราค่าจ้าง</th>
-                                <th rowspan="1" class="text-center" style="vertical-align: middle;">จำนวนอัตรา</th>
-                                <th rowspan="1" class="text-center" style="vertical-align: middle;">จำนวนเงิน</th>
-                            </tr>
-                            '
-                            <tr id="total">
-                                <th></th>
-                                <th class="text-center">รวมทั้งสิ้น</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
+                                <tr>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle;">ลำดับ</th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle;">ประเภท-ตำแหน่ง</th>
+                                    <th colspan="3" class="text-center" style="vertical-align: middle;">อัตราเดิม</th>
+                                    <th colspan="3" class="text-center" style="vertical-align: middle;">คำขอปีงบประมาณ</th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle;">คำชี้แจง</th>
+                                    <!--                                <th rowspan="2" class="text-center" style="vertical-align: middle;">สถานะคำขอ</th>-->
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle; min-width: 130px;">
+                                        เครื่องมือ
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th rowspan="1" class="text-center" style="vertical-align: middle;">อัตราค่าจ้าง</th>
+                                    <th rowspan="1" class="text-center" style="vertical-align: middle;">จำนวนอัตรา</th>
+                                    <th rowspan="1" class="text-center" style="vertical-align: middle;">จำนวนเงิน</th>
+                                    <th rowspan="1" class="text-center" style="vertical-align: middle;">อัตราค่าจ้าง</th>
+                                    <th rowspan="1" class="text-center" style="vertical-align: middle;">จำนวนอัตรา</th>
+                                    <th rowspan="1" class="text-center" style="vertical-align: middle;">จำนวนเงิน</th>
+                                </tr>
+                                '
+                                <tr id="total">
+                                    <th></th>
+                                    <th class="text-center">รวมทั้งสิ้น</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <!--                                <th></th>-->
+                                    <th></th>
+                                    <th></th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td colspan="10" class="text-center">-</td>
-                            </tr>
+                                <tr>
+                                    <td colspan="10" class="text-center">-</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -217,6 +217,15 @@
                                                placeholder="คำอธิบายประกอบไฟล์">
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-bold" for="status">สถานะ</label>
+                                    <div class="col-md-12">
+                                        <select class="form-control input-sm" name="status" id="status">
+                                            <option value="Y">ใช้งาน</option>
+                                            <option value="N">ไม่ใช้งาน</option>
+                                        </select>
+                                    </div>
+                                </div>
 
                             </form>
                         </div>
@@ -242,39 +251,39 @@
                             <div class="table-responsive">
                                 <table class="table mb-none">
                                     <tbody>
-                                    <tr class="no-border">
-                                        <td class="col-md-3 text-right">ชื่อตำแหน่ง :</td>
-                                        <td class="col-md-9 text-bold" id="positionNameDel"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-md-3 text-right">ระดับ :</td>
-                                        <td class="col-md-9 text-bold" id="rateNoDel"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-md-3 text-right">อัตราเงินเดือน :</td>
-                                        <td class="col-md-9 text-bold" id="salaryDel"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-md-3 text-right">จำนวนอัตรา :</td>
-                                        <td class="col-md-9">
-                                            <table>
-                                                <tr>
-                                                    <td class="col-md-4 text-right">มีคนครอง :</td>
-                                                    <td class="col-md-2 text-bold" id="occupyDel"></td>
-                                                    <td class="col-md-4 text-right">อัตราว่าง :</td>
-                                                    <td class="col-md-2 text-bold" id="vacancyDel"></td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-md-3 text-right">จำนวนเงินทั้งปี :</td>
-                                        <td class="col-md-9 text-bold" id="salaryTotalDel"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-md-3 text-right">คำชี้แจง :</td>
-                                        <td class="col-md-9 text-bold" id="remarkDel"></td>
-                                    </tr>
+                                        <tr class="no-border">
+                                            <td class="col-md-3 text-right">ชื่อตำแหน่ง :</td>
+                                            <td class="col-md-9 text-bold" id="positionNameDel"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-3 text-right">ระดับ :</td>
+                                            <td class="col-md-9 text-bold" id="rateNoDel"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-3 text-right">อัตราเงินเดือน :</td>
+                                            <td class="col-md-9 text-bold" id="salaryDel"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-3 text-right">จำนวนอัตรา :</td>
+                                            <td class="col-md-9">
+                                                <table>
+                                                    <tr>
+                                                        <td class="col-md-4 text-right">มีคนครอง :</td>
+                                                        <td class="col-md-2 text-bold" id="occupyDel"></td>
+                                                        <td class="col-md-4 text-right">อัตราว่าง :</td>
+                                                        <td class="col-md-2 text-bold" id="vacancyDel"></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-3 text-right">จำนวนเงินทั้งปี :</td>
+                                            <td class="col-md-9 text-bold" id="salaryTotalDel"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-3 text-right">คำชี้แจง :</td>
+                                            <td class="col-md-9 text-bold" id="remarkDel"></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -325,7 +334,7 @@
         setTimeout(function () {
             var dataJSON = JSON.stringify({param: param});
             var dataJSONEN = encodeURIComponent(dataJSON);
-            var datas = callAjax("{{_context_path}}/api/budget/draft142/view", "post", dataJSONEN, "json");
+            var datas = callAjax("{{_context_path}}/api/budget/final142/view", "post", dataJSONEN, "json");
             if (typeof datas !== "undefined" && datas !== null) {
                 var html = '';
                 var pCount = 0;
@@ -348,7 +357,7 @@
                             + '<td></td>'
                             + '<td class="text-right text-bold"></td>'
                             + '<td></td>'
-                            + '<td></td>'
+                            //   + '<td></td>'
                             + '<td></td>'
                             + '</tr>';
 
@@ -365,10 +374,10 @@
                                 + '<td></td>'
                                 + '<td></td>'
                                 + '<td class="text-right text-bold"></td>'
-                                + '<td></td>'
+                                //    + '<td></td>'
                                 + '<td></td>'
                                 + '<td class="text-center">'
-                                + ' <button class="btn btn-sm btn-success addList" data-hid="' + value["id"] + '" data-pid="' + value2["id"] + '"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
+                                //   + ' <button class="btn btn-sm btn-success addList" data-hid="' + value["id"] + '" data-pid="' + value2["id"] + '"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
                                 + '</td>'
                                 + '</tr>';
 
@@ -376,7 +385,7 @@
                         sumArr[value["id"]][value2["id"]] = 0;
 
                         $.each(value2["budget"], function (key3, value3) {
-                            html += '<tr data-tt-id="list' + value3["id"] + '" data-tt-parent-id="' + value2["id"] + '">'
+                            html += '<tr data-tt-id="list' + value3["id"] + '" data-tt-parent-id="' + value2["id"] + '" ' + (value3["status"] == "N" ? "class='text-primary'>" : ">")
                                     + '<td class="text-center"></td>'
                                     + '<td>' + value3["positionName"] + '</td>'
                                     + '<td></td>'
@@ -386,11 +395,11 @@
                                     + '<td class="text-center">' + value3["occupy"] + '</td>'
                                     + '<td class="text-right">' + checkZero(value3["salaryTotal"]) + '</td>'
                                     + '<td>' + value3["remark"] + '</td>'
-                                    + '<td class="text-bold text-sm">' + value3["statusDesc"] + '</td>'
+                                    //     + '<td class="text-bold text-sm">' + value3["statusDesc"] + '</td>'
                                     + '<td class="text-bold">'
-                                    + '<div class="btn-group">'
+                                    + '<div class="text-center">'
                                     + '<button class="btn btn-sm btn-warning editList" data-hid="' + value["id"] + '" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                    + '<button class="btn btn-sm btn-default deleteList"  data-hid="' + value["id"] + '" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                                    //    + '<button class="btn btn-sm btn-default deleteList"  data-hid="' + value["id"] + '" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-trash"></i> ลบ</button>'
                                     + '</div>'
                                     + '</td>'
                                     + '</tr>';
@@ -435,7 +444,7 @@
                     $("#fileNew").html(
                             '<input type="file" id="attachment" name="attachment"> '
                             + '<a href="javascript: void(0);" onclick="$(\'#attachment\').val(\'\');">[Reset]</a>'
-                    ).show();
+                            ).show();
                     $("#fileBak").hide();
 
                     $("#panelForm").modal("show");
@@ -455,8 +464,10 @@
 
                             formData.append('budget', JSON.stringify(fdata["Budget"]));
 
-                            if ($('#attachment').length) formData.append('file', $('#attachment')[0].files[0]);
-                            else formData.append('file', '');
+                            if ($('#attachment').length)
+                                formData.append('file', $('#attachment')[0].files[0]);
+                            else
+                                formData.append('file', '');
 
                             insertBudget(headerId, parentId, formData, param)
                         } else {
@@ -486,7 +497,7 @@
 
     function insertBudget(headerId, parentId, dataJSONEN, param) {
         setTimeout(function () {
-            var datas = callAjaxFile("{{_context_path}}/api/budget/draft142/insert", "post", dataJSONEN, "json");
+            var datas = callAjaxFile("{{_context_path}}/api/budget/final142/insert", "post", dataJSONEN, "json");
             if (typeof datas !== "undefined" && datas !== null) {
                 var data = datas["result"];
                 if (data["result"] == true) {
@@ -548,7 +559,7 @@
 
     function updateBudget(id, headerId, parentId, dataJSONEN, param) {
         setTimeout(function () {
-            var datas = callAjaxFile("{{_context_path}}/api/budget/draft142/update", "post", dataJSONEN, "json");
+            var datas = callAjaxFile("{{_context_path}}/api/budget/final142/update", "post", dataJSONEN, "json");
             if (typeof datas !== "undefined" && datas !== null) {
                 var data = datas["result"];
                 if (data["result"] == true) {
@@ -564,16 +575,20 @@
                             + '<td class="text-center">' + $("#occupy").val() + '</td>'
                             + '<td class="text-right">' + checkZero($("#salaryTotal").val()) + '</td>'
                             + '<td>' + $(".noteRemark").code() + '</td>'
-                            + '<td class="text-bold text-sm">' + list142Arr[id]["statusDesc"] + '</td>'
+                            //   + '<td class="text-bold text-sm">' + list142Arr[id]["statusDesc"] + '</td>'
                             + '<td>'
-                            + '<div class="btn-group">'
+                            + '<div class="text-center">'
                             + '<button class="btn btn-sm btn-warning editList" data-hid="' + headerId + '" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                            + '<button class="btn btn-sm btn-default deleteList"  data-hid="' + headerId + '" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-trash"></i> ลบ</button>'
+                            // + '<button class="btn btn-sm btn-default deleteList"  data-hid="' + headerId + '" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-trash"></i> ลบ</button>'
                             + '</div>'
                             + '</td>';
 
                     $('tr[data-tt-id="list' + id + '"]').html(input);
-
+                    if ($("#status").val() == "N") {
+                        $('tr[data-tt-id="list' + id + '"]').attr("class", "text-primary");
+                    } else {
+                        $('tr[data-tt-id="list' + id + '"]').attr("class", "");
+                    }
                     sumArr[headerId][parentId] -= parseFloat(list142Arr[id]["salaryTotal"]);
 
                     $("#form input").each(function () {
@@ -581,7 +596,7 @@
                     });
 
                     list142Arr[id]["remark"] = $("#remark").code();
-
+                    list142Arr[id]["status"] = $("#status").val();
                     if (data.hasOwnProperty("path")) {
                         list142Arr[id]["path"] = data["path"];
                     }
@@ -602,7 +617,7 @@
 
     function deleteBudget(id, headerId, parentId, dataJSONEN) {
 
-        var datas = callAjax("{{_context_path}}/api/budget/draft142/delete", "post", dataJSONEN, "json");
+        var datas = callAjax("{{_context_path}}/api/budget/final142/delete", "post", dataJSONEN, "json");
         if (typeof datas !== "undefined" && datas !== null) {
             if (datas["result"] == true) {
                 sumArr[headerId][parentId] -= parseFloat(list142Arr[id]["salaryTotal"]);
@@ -641,7 +656,7 @@
             });
 
             $('#remark').code(list142Arr[id]["remark"]);
-
+            $("#status").val(list142Arr[id]["status"]);
             var fileUpload = 0;
 
             $("#fileGroup").html('<div id="fileNew"></div><div id="fileBak"></div>');
@@ -652,14 +667,14 @@
                         '<i class="fa fa-file-o"></i>'
                         + '<a href="javascript: void(0);" style="color:blue !important;" onclick="downloadFile(\'' + list142Arr[id]["path"] + '\');"> ' + list142Arr[id]["path"] + '</a> &nbsp;&nbsp;'
                         + '<a href="javascript: void(0);" style="color:blue !important;" title="ลบ" class="ic-edit" id="deleteFile"><i class="fa fa-trash"></i></a>'
-                );
+                        );
 
                 $("#deleteFile").click(function () {
                     $("#fileNew").html(
                             '<input type="file" id="attachment" name="attachment"> '
                             + '<a href="javascript: void(0);" id="fileOld" style="color: blue !important;">[ไฟล์เดิม]</a>&nbsp;&nbsp;'
                             + '<a href="javascript: void(0);" onclick="$(\'#attachment\').val(\'\');">[Reset]</a>'
-                    ).show();
+                            ).show();
                     $("#fileBak").hide();
                     fileUpload = 1;
 
@@ -674,7 +689,7 @@
                 $("#fileNew").html(
                         '<input type="file" id="attachment" name="attachment"> '
                         + '<a href="javascript: void(0);" onclick="$(\'#attachment\').val(\'\');">[Reset]</a>'
-                ).show();
+                        ).show();
                 $("#fileBak").hide();
                 fileUpload = 1;
             }
@@ -695,8 +710,10 @@
                     formData.append('fileUpload', fileUpload);
                     formData.append('budget', JSON.stringify(fdata["Budget"]));
 
-                    if ($('#attachment').length) formData.append('file', $('#attachment')[0].files[0]);
-                    else formData.append('file', '');
+                    if ($('#attachment').length)
+                        formData.append('file', $('#attachment')[0].files[0]);
+                    else
+                        formData.append('file', '');
 
                     updateBudget(id, headerId, parentId, formData, param)
                 } else {
@@ -749,7 +766,7 @@
             data["id"] = id;
         }
 
-        $("#form input, #form textarea").each(function (i) {
+        $("#form input, #form textarea, #form select").each(function (i) {
             var fname = $(this).attr("name");
             var fvalue = $(this).val();
             data[fname] = fvalue;

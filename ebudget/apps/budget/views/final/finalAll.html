@@ -20,7 +20,7 @@
 
     <hr class="tall dashboard">
 
-    <div class="sort-source-wrapper"><!-- button action on header -->
+<!--    <div class="sort-source-wrapper"> button action on header 
         <div class="container">
             <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
                 <li class="active">
@@ -28,7 +28,7 @@
                 </li>
             </ul>
         </div>
-    </div>
+    </div>-->
 
     <div class="container">
         <div class="row">
@@ -166,7 +166,7 @@
                 var l3dPlanId = $("#l3dPlanId").val();
                 var fundgroupId = $("#fundgroupId").val();
                 var deptId = $("#deptId").val();
-                window.location = "{{_context_path}}/api/budget/view/draft/"+formId+"/"+l3dPlanId+"/"+fundgroupId+"/"+deptId;
+                window.location = "{{_context_path}}/api/budget/view/final/"+formId+"/"+l3dPlanId+"/"+fundgroupId+"/"+deptId;
             });
         });
     });
@@ -179,7 +179,7 @@
         var planGroup = {}
         var fundGroup = {};
 
-        var datas = callAjax("{{_context_path}}/api/budget/draft/getAllBudgetRequest", "post", {deptId: 0}, "json");
+        var datas = callAjax("{{_context_path}}/api/budget/final/getAllBudgetRequest", "post", {deptId: 0}, "json");
         var html = '';
         var search = '';
         if (typeof datas !== "undefined" && datas !== null) {
@@ -239,7 +239,7 @@
                         "sClass": "text-center col-md-2",
                         "render": function(data){
                             return '<button class="btn btn-sm btn-warning edit" title="แก้ไข" data-bgh="'+data+'"><i class="fa fa-pencil"></i> แก้ไข</button>&nbsp;&nbsp;'
-                                + '<button class="btn btn-sm btn-default delete" title="ลบ" data-bgh="'+data+'"><i class="fa fa-trash"></i> ลบ</button>'
+                               // + '<button class="btn btn-sm btn-default delete" title="ลบ" data-bgh="'+data+'"><i class="fa fa-trash"></i> ลบ</button>'
 
                         }
                     }
@@ -291,7 +291,7 @@
                 var l3dPlanId = data["l3dPlanId"];
                 var fundgroupId = data["fundgroupId"];
                 var deptId = data["deptId"];
-                window.location = "{{_context_path}}/api/budget/view/draft/"+formId+"/"+l3dPlanId+"/"+fundgroupId+"/"+deptId;
+                window.location = "{{_context_path}}/api/budget/view/final/"+formId+"/"+l3dPlanId+"/"+fundgroupId+"/"+deptId;
             });
 
             $("#table").on("click", "button.delete", function(){
