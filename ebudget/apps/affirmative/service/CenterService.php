@@ -20,17 +20,20 @@ class CenterService extends CServiceBase implements ICenterService {
     }
 
     public function checkApprove() {
-        $center = new \apps\affirmative\entity\AffirmativeCenter();
+        //$center = new \apps\affirmative\entity\AffirmativeCenter();
+        $center = new \apps\common\entity\AffirmativeCenter();
         $center->periodCode = $this->getPeriod()->year;
         $data = $this->datacontext->getObject($center);
         // $center->isApprove = "Y";
         if (count($data) > 0) {
             if ($data[0]->isApprove == "N") {
                 return true;
-            } else {
+            }
+            else {
                 return false;
             }
-        } else {
+        }
+        else {
             return false;
         }
     }
@@ -51,7 +54,7 @@ class CenterService extends CServiceBase implements ICenterService {
     }
 
     function getUnit($unit) {
-        $sqlUnit = "select g.unitId,g.unitName from apps\\affirmative\\entity\\AffirmativeUnit g "
+        $sqlUnit = "select g.unitId,g.unitName from apps\\common\\entity\\AffirmativeUnit g "
                 . " where g.unitId = :unitId ";
         $paramUnit = array(
             "unitId" => $unit
@@ -87,9 +90,9 @@ class CenterService extends CServiceBase implements ICenterService {
         $targetArr = array();
         foreach ($centerData as $keyCenter => $valueCenter) {
             if ($valueCenter->centerId != NULL) {
-                $center = $json->decode(new \apps\affirmative\entity\AffirmativeCenter(), $valueCenter);
-                $centerGroup = $json->decode(new \apps\affirmative\entity\AffirmativeCenterGroup(), $valueCenter);
-                $unit = $json->decode(new \apps\affirmative\entity\AffirmativeUnit(), $valueCenter);
+                $center = $json->decode(new \apps\common\entity\AffirmativeCenter(), $valueCenter);
+                $centerGroup = $json->decode(new \apps\common\entity\AffirmativeCenterGroup(), $valueCenter);
+                $unit = $json->decode(new \apps\common\entity\AffirmativeUnit(), $valueCenter);
                 $name = "";
                 if ($valueCenter->hasIssue == "Y") {
                     if (empty($targetArr[$valueCenter->targetId][$valueCenter->centerId])) {
@@ -109,7 +112,7 @@ class CenterService extends CServiceBase implements ICenterService {
         $typeArr = $this->sortBy("kpiSeq", $typeArr);
         $targetArr = $this->sortBy("kpiSeq", $targetArr);
 
-        $mainSql = "select v from apps\\affirmative\\entity\\AffirmativeMain v where v.periodCode = :periodCode  order by v.mainSeq";
+        $mainSql = "select v from apps\\common\\entity\\AffirmativeMain v where v.periodCode = :periodCode  order by v.mainSeq";
         $mainParam = array("periodCode" => $this->getPeriod()->year);
         $mainData = $this->datacontext->getObject($mainSql, $mainParam);
         foreach ($mainData as $keyMain => $valueMain) {

@@ -33,11 +33,15 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
     }
 
     public function listsType() {
-        $list = new AffirmativeType();
-        $list->isCommon = 1;
-        $list->budgetPeriodId = $this->getPeriod()->year;
-
-        return $this->datacontext->getObject($list);
+        $sql = "SELECT"
+                ." aft"
+            ." FROM ".$this->pathEnt."\\AffirmativeType aft"
+            ." JOIN ".$this->pathEnt."\\AffirmativeMain afm WITH afm.mainId = aft.mainId"
+            ." WHERE afm.periodCode = :year AND aft.isCommon = 1";
+        $param = array(
+            "year" => $this->getPeriod()->year
+        );
+        return $this->datacontext->getObject($sql, $param);
     }
 
     public function viewPlan($typeId) {
