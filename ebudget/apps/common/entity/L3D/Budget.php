@@ -5,49 +5,43 @@ use apps\common\entity\EntityBase;
 
 /**
  * @Entity
- * @Table(name="L3D_BUDGET")
+ * @Table(name="L3D_Budget")
  */
 class Budget extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="BUDGETID")
+     * @Column(type="integer",length=11,name="BudgetId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="DEPARTMENTID") */
+    /** @Column(type="integer",length=11, name="DepartmentId") */
     public $departmentId;
 
-    /** @Column(type="integer",length=11, name="BUDGETPERIODID") */
+    /** @Column(type="integer",length=11, name="BudgetPeriodId") */
     public $budgetperiodId;
 
-    /** @Column(type="integer",length=11, name="ACTIVITYID") */
+    /** @Column(type="integer",length=11, name="ActivityId") */
     public $activityId;
 
-    /** @Column(type="string",length=500, name="BUDGETNAME") */
+    /** @Column(type="string",length=500, name="BudgetName") */
     public $budgetName;
 
-    /** @Column(type="integer",length=11, name="BUDGETGROUPID") */
+    /** @Column(type="integer",length=11, name="BudgetGroupId") */
     public $budgetgroupId;
 
-    /** @Column(type="string", length=10, name="ACCOUNTTYPEID") */
+    /** @Column(type="string", length=10, name="AccountTypeId") */
     public $accTypeId;
 
-    /** @Column(type="integer",length=11, name="FUNDGROUPID") */
+    /** @Column(type="integer",length=11, name="FundGroupId") */
     public $fundgroupId;
 
-    /** @Column(type="integer",length=11, name="PROJECTID") */
+    /** @Column(type="integer",length=11, name="ProjectId") */
     public $projectId;
 
-    /** @Column(type="string",length=1, name="BUDGETTYPE") */
+    /** @Column(type="string",length=1, name="BudgetType") */
     public $budgetType;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
@@ -89,14 +83,6 @@ class Budget extends EntityBase {
         return $this->budgetType;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -136,15 +122,6 @@ class Budget extends EntityBase {
     function setBudgetType($budgetType) {
         $this->budgetType = $budgetType;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }
 
 ?>

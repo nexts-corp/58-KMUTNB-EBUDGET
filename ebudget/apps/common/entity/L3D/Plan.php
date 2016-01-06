@@ -5,27 +5,21 @@ use apps\common\entity\EntityBase;
 
 /**
  * @Entity
- * @Table(name="L3D_PLAN")
+ * @Table(name="L3D_Plan")
  */
 class Plan extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="PLANID")
+     * @Column(type="integer",length=11,name="PlanId")
      */
     public $id;
 
-    /** @Column(type="string",length=100, name="PLANNAME") */
+    /** @Column(type="string",length=100, name="PlanName") */
     public $planName;
 
-    /** @Column(type="integer",length=11, name="MASTERID") */
+    /** @Column(type="integer",length=11, name="MasterId") */
     public $masterId;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
@@ -39,14 +33,6 @@ class Plan extends EntityBase {
         return $this->masterId;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -58,15 +44,6 @@ class Plan extends EntityBase {
     function setMasterId($masterId) {
         $this->masterId = $masterId;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }
 
 ?>

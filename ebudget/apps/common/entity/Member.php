@@ -4,46 +4,40 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="MEMBER")
+ * @Table(name="Member")
  */
 class Member extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="MEMBERID")
+     * @Column(type="integer",length=11,name="MemberId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="string",length=100, name="USERNAME") */
+    /** @Column(type="string",length=100, name="Username") */
     public $username;
 
-    /** @Column(type="string",length=100, name="PASSWORD") */
+    /** @Column(type="string",length=100, name="Password") */
     public $password;
 
-    /** @Column(type="integer",length=11, name="DEPARTMENTID") */
+    /** @Column(type="integer",length=11, name="DepartmentId") */
     public $deptId;
 
-    /** @Column(type="string",length=200, name="FIRSTNAME") */
+    /** @Column(type="string",length=200, name="Firstname") */
     public $firstname;
 
-    /** @Column(type="string",length=200, name="LASTNAME") */
+    /** @Column(type="string",length=200, name="Lastname") */
     public $lastname;
 
-    /** @Column(type="string",length=200, name="EMAIL") */
+    /** @Column(type="string",length=200, name="Email") */
     public $email;
 
-    /** @Column(type="string",length=200, name="TELEPHONE") */
+    /** @Column(type="string",length=200, name="Telephone") */
     public $telephone;
 
-    /** @column(name="LASTLOGIN",type="datetime") */
+    /** @column(type="datetime", name="LastLogin") */
     public $lastLogin;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
     
     public $roleId;
 
@@ -83,14 +77,6 @@ class Member extends EntityBase {
         return $this->lastLogin;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -127,14 +113,6 @@ class Member extends EntityBase {
         $this->lastLogin = $lastLogin;
     }
 
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-    
     public function checkPassword(){
         //echo $this->id."xxxxxxxx";
        // print_r($this);

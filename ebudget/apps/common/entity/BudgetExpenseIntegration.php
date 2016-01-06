@@ -4,34 +4,24 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="BUDGETEXPENSE_INTEGRATION")
+ * @Table(name="Budget_Expense_Integration")
  */
 class BudgetExpenseIntegration extends EntityBase {
-
-
-    
     /** 
      * @Id 
-     * @Column(type="integer",length=11, name="BUDGETEXPENSEID") */
+     * @Column(type="integer",length=11, name="BudgetExpenseId") */
     public $expenseId;
 
     /**
      * @Id
-     * @Column(type="integer",length=11, name="INTEGRATIONID") */
+     * @Column(type="integer",length=11, name="IntegrationId") */
     public $integrationId;
 
-    /** @Column(type="integer",length=11, name="DEPARTMENTID") */
+    /** @Column(type="integer",length=11, name="DepartmentId") */
     public $deptId;
 
-    /** @Column(type="string",length=500, name="INTEGRATIONDESC") */
+    /** @Column(type="string",length=500, name="IntegrationDesc") */
     public $desc;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
-
     
     function getExpenseId() {
         return $this->expenseId;
@@ -49,16 +39,6 @@ class BudgetExpenseIntegration extends EntityBase {
         return $this->desc;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
- 
-    
     function setExpenseId($expenseId) {
         $this->expenseId = $expenseId;
     }
@@ -74,13 +54,4 @@ class BudgetExpenseIntegration extends EntityBase {
     function setDesc($desc) {
         $this->desc = $desc;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }

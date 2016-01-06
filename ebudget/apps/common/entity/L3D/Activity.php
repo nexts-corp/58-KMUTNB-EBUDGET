@@ -5,43 +5,37 @@ use apps\common\entity\EntityBase;
 
 /**
  * @Entity
- * @Table(name="L3D_ACTIVITY")
+ * @Table(name="L3D_Activity")
  */
 class Activity extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="ACTIVITYID")
+     * @Column(type="integer",length=11,name="ActivityId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="PROJECTID") */
+    /** @Column(type="integer",length=11, name="ProjectId") */
     public $projectId;
 
-    /** @Column(type="string", length=100, name="ACTIVITYNAME") */
+    /** @Column(type="string", length=100, name="ActivityName") */
     public $actName;
 
-    /** @Column(type="integer",length=11, name="DEPARTMENTID") */
+    /** @Column(type="integer",length=11, name="DepartmentId") */
     public $departmentId;
 
-    /** @Column(type="string",length=1, name="ACTIVITYSTATUS") */
+    /** @Column(type="string",length=1, name="ActivityStatus") */
     public $actStatus;
 
-    /** @Column(type="string",length=1, name="ACTIVITYTYPE") */
+    /** @Column(type="string",length=1, name="ActivityType") */
     public $actType;
 
-    /** @Column(type="integer",length=11, name="ACTIVITYLEVEL") */
+    /** @Column(type="integer",length=11, name="ActivityLevel") */
     public $actLevel;
 
-    /** @Column(type="string",length=1, name="RECEIVE_ACT") */
+    /** @Column(type="string",length=1, name="ReceiveAct") */
     public $receiveAct;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
@@ -75,14 +69,6 @@ class Activity extends EntityBase {
         return $this->receiveActivity;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -114,13 +100,4 @@ class Activity extends EntityBase {
     function setReceiveActivity($receiveActivity) {
         $this->receiveActivity = $receiveActivity;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }

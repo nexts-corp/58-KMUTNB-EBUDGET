@@ -5,24 +5,18 @@ use apps\common\entity\EntityBase;
 
 /**
  * @Entity
- * @Table(name="L3D_BUDGETPERIOD")
+ * @Table(name="L3D_Budget_Period")
  */
 class BudgetPeriod extends EntityBase {
 
-    /** @Column(type="integer",length=11,name="BUDGETPERIODID") */
+    /** @Column(type="integer",length=11,name="BudgetPeriodId") */
     public $budgetperiodId;
 
-    /** @Column(type="integer",length=11,name="BUDGETGROUPID") */
+    /** @Column(type="integer",length=11,name="BudgetGroupId") */
     public $budgetgroupId;
 
-    /** @Column(type="string",length=1, name="BUDGETPERIODSTATUS") */
+    /** @Column(type="string",length=1, name="BudgetPeriodStatus") */
     public $budgetperiodStatus;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getBudgetperiodId() {
         return $this->budgetperiodId;
@@ -36,14 +30,6 @@ class BudgetPeriod extends EntityBase {
         return $this->budgetperiodStatus;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setBudgetperiodId($budgetperiodId) {
         $this->budgetperiodId = $budgetperiodId;
     }
@@ -55,13 +41,4 @@ class BudgetPeriod extends EntityBase {
     function setBudgetperiodStatus($budgetperiodStatus) {
         $this->budgetperiodStatus = $budgetperiodStatus;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }

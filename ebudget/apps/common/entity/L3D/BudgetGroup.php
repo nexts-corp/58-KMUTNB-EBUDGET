@@ -5,34 +5,28 @@ use apps\common\entity\EntityBase;
 
 /**
  * @Entity
- * @Table(name="L3D_BUDGETGROUP")
+ * @Table(name="L3D_Budget_Group")
  */
 class BudgetGroup extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="BUDGETGROUPID")
+     * @Column(type="integer",length=11,name="BudgetGroupId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="string",length=100, name="BUDGETGROUPNAME") */
+    /** @Column(type="string",length=100, name="BudgetGroupName") */
     public $budgetgroupName;
 
-    /** @Column(type="string",length=1, name="BUDGETGROUPSTATUS") */
+    /** @Column(type="string",length=1, name="BudgetGroupStatus") */
     public $budgetgroupStatus;
 
-    /** @Column(type="string",length=1, name="BUDGETGROUPTYPE") */
+    /** @Column(type="string",length=1, name="BudgetGroupType") */
     public $budgetgroupType;
 
-    /** @Column(type="string",length=1, name="BUDGETSOURCE") */
+    /** @Column(type="string",length=1, name="BudgetSource") */
     public $budgetgroupSource;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
@@ -54,14 +48,6 @@ class BudgetGroup extends EntityBase {
         return $this->budgetgroupSource;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -81,13 +67,4 @@ class BudgetGroup extends EntityBase {
     function setBudgetgroupSource($budgetgroupSource) {
         $this->budgetgroupSource = $budgetgroupSource;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }

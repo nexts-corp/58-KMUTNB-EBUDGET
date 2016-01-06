@@ -4,46 +4,40 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="BUILDING_BOQ")
+ * @Table(name="Building_BOQ")
  */
 class BuildingBOQ extends EntityBase {
 
     /**
      * @Id
-     * @Column(type="integer",length=11,name="BUILDINGBOQID")
+     * @Column(type="integer",length=11,name="BuildingBOQId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="BUILDINGID") */
+    /** @Column(type="integer",length=11, name="BuildingId") */
     public $buildingId;
 
-    /** @Column(type="string",length=300, name="NAME") */
+    /** @Column(type="string",length=300, name="Name") */
     public $name;
 
-    /** @Column(type="string",length=18, name="QUANTITY") */
+    /** @Column(type="string",length=18, name="Quantity") */
     public $quantity;
 
-    /** @Column(type="string",length=50, name="UNIT") */
+    /** @Column(type="string",length=50, name="Unit") */
     public $unit;
 
-    /** @Column(type="string",length=18, name="MATERIALPERUNIT") */
+    /** @Column(type="string",length=18, name="MaterialPerUnit") */
     public $materialUnit;
 
-    /** @Column(type="string",length=18, name="MATERIALTOTAL") */
+    /** @Column(type="string",length=18, name="MaterialTotal") */
     public $materialTotal;
 
-    /** @Column(type="string",length=18, name="WAGEPERUNIT") */
+    /** @Column(type="string",length=18, name="WagePerUnit") */
     public $wageUnit;
 
-    /** @Column(type="string",length=18, name="WAGETOTAL") */
+    /** @Column(type="string",length=18, name="WageTotal") */
     public $wageTotal;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
@@ -81,14 +75,6 @@ class BuildingBOQ extends EntityBase {
         return $this->wageTotal;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -124,13 +110,4 @@ class BuildingBOQ extends EntityBase {
     function setWageTotal($wageTotal) {
         $this->wageTotal = $wageTotal;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }

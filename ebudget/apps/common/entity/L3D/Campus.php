@@ -1,64 +1,49 @@
 <?php
 
 namespace apps\common\entity\L3D;
-
 use apps\common\entity\EntityBase;
 
 /**
  * @Entity
- * @Table(name="L3D_CAMPUS")
+ * @Table(name="L3D_Campus")
  */
 class Campus extends EntityBase
 {
 
     /**
      * @Id
-     * @Column(type="integer",length=11,name="CAMPUSID")
+     * @Column(type="integer",length=11,name="CampusId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="string",length=255, name="CAMPUSNAME") */
+    /** @Column(type="string",length=255, name="CampusName") */
     public $campusName;
 
-    /** @Column(type="string",length=1, name="CAMPUSSTATUS") */
+    /** @Column(type="string",length=1, name="CampusStatus") */
     public $campusStatus;
 
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
-
-    function getId()
-    {
+    function getId(){
         return $this->id;
     }
 
-    function getCampusName()
-    {
+    function getCampusName(){
         return $this->campusName;
     }
 
-    function getCampusStatus()
-    {
+    function getCampusStatus(){
         return $this->campusStatus;
     }
 
-
-    function setId($id)
-    {
+    function setId($id){
         $this->id = $id;
     }
 
-    function setCampusName($campusName)
-    {
+    function setCampusName($campusName){
         $this->campusName = $campusName;
     }
 
-    function setCampusStatus($campusStatus)
-    {
+    function setCampusStatus($campusStatus){
         $this->campusStatus = $campusStatus;
     }
-
 }

@@ -4,77 +4,77 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="AFFIRMATIVETYPE")
+ * @Table(name="Affirmative_Type")
  */
 class AffirmativeType extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="AFFIRMATIVETYPEID")
+     * @Column(type="integer",length=11,name="AffirmativeTypeId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="string",length=300, name="AFFIRMATIVETYPENAME") */
+    /** @Column(type="integer",length=11, name="AffirmativeTypeSeq") */
+    public $typeSeq;
+
+    /** @Column(type="string",length=300, name="AffirmativeTypeName") */
     public $typeName;
 
-    /** @Column(type="integer",length=11, name="BUDGETPERIODID") */
-    public $budgetPeriodId;
+    /** @Column(type="integer",length=11, name="AffirmativeMainId") */
+    public $mainId;
 
-    /** @Column(type="integer",length=11, name="ISCOMMON") */
+    /** @Column(type="integer",length=11, name="IsCommon") */
     public $isCommon;
 
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
+    /** @Column(type="string",length=1, name="HasIssue") */
+    public $hasIssue;
 
     function getId() {
         return $this->id;
+    }
+
+    function getTypeSeq(){
+        return $this->typeSeq;
     }
 
     function getTypeName() {
         return $this->typeName;
     }
 
-    function getBudgetperiodId() {
-        return $this->budgetperiodId;
-    }
-
     function getIsCommon(){
         return $this->isCommon;
     }
 
-    function getCreator() {
-        return $this->creator;
+    function getMainId(){
+        return $this->mainId;
     }
 
-    function getUpdater() {
-        return $this->updater;
+    function getHasIssue(){
+        return $this->hasIssue;
     }
 
     function setId($id) {
         $this->id = $id;
     }
 
-    function setTypeName($typeName) {
-        $this->typeName = $typeName;
+    function setTypeSeq($typeSeq){
+        $this->typeSeq = $typeSeq;
     }
 
-    function setBudgetperiodId($budgetperiodId) {
-        $this->budgetperiodId = $budgetperiodId;
+    function setTypeName($typeName) {
+        $this->typeName = $typeName;
     }
 
     function setIsCommon($isCommon){
         $this->isCommon = $isCommon;
     }
 
-    function setCreator($creator) {
-        $this->creator = $creator;
+    function setMainId($mainId){
+        $this->mainId = $mainId;
     }
 
-    function setUpdater($updater) {
-        $this->updater = $updater;
+    function setHasIssue($hasIssue){
+        $this->hasIssue = $hasIssue;
     }
 }

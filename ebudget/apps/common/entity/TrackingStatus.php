@@ -4,28 +4,22 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="TRACKINGSTATUS")
+ * @Table(name="Tracking_Status")
  */
 class TrackingStatus extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="TRACKINGSTATUSID")
+     * @Column(type="integer",length=11,name="TrackingStatusId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="string",length=100, name="TRACKINGSTATUSNAME") */
+    /** @Column(type="string",length=100, name="TrackingStatusName") */
     public $name;
 
-    /** @Column(type="string",length=100, name="TRACKINGSTATUSDESC") */
+    /** @Column(type="string",length=100, name="TrackingStatusDesc") */
     public $desc;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
@@ -39,14 +33,6 @@ class TrackingStatus extends EntityBase {
         return $this->desc;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -58,13 +44,4 @@ class TrackingStatus extends EntityBase {
     function setDesc($desc) {
         $this->desc = $desc;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }

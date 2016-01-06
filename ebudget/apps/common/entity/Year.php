@@ -4,28 +4,22 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="YEAR")
+ * @Table(name="Year")
  */
 class Year extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="YEARID")
+     * @Column(type="integer",length=11,name="YearId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="BUDGETYEAR") */
+    /** @Column(type="integer",length=11, name="BudgetYear") */
     public $year;
 
-    /** @Column(type="string",length=20, name="YEARSTATUS") */
+    /** @Column(type="string",length=20, name="YearStatus") */
     public $yearStatus;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
@@ -39,14 +33,6 @@ class Year extends EntityBase {
         return $this->yearStatus;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -58,13 +44,4 @@ class Year extends EntityBase {
     function setYearStatus($yearStatus) {
         $this->yearStatus = $yearStatus;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }

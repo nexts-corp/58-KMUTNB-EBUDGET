@@ -4,40 +4,34 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="BUILDING_DETAIL")
+ * @Table(name="Building_Detail")
  */
 class BuildingDetail extends EntityBase {
 
     /**
      * @Id
-     * @Column(type="integer",length=11,name="BUILDINGDETAILID")
+     * @Column(type="integer",length=11,name="BuildingDetailId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="BUILDINGID") */
+    /** @Column(type="integer",length=11, name="BuildingId") */
     public $buildingId;
 
-    /** @Column(type="string",length=200, name="BUILDINGDESC") */
+    /** @Column(type="string",length=200, name="BuildingDesc") */
     public $desc;
 
-    /** @Column(type="string",length=50, name="UNIT") */
+    /** @Column(type="string",length=50, name="Unit") */
     public $unit;
 
-    /** @Column(type="string",length=18, name="QUANTITY") */
+    /** @Column(type="string",length=18, name="Quantity") */
     public $quantity;
 
-    /** @Column(type="string",length=18, name="COSTPERUNIT") */
+    /** @Column(type="string",length=18, name="CostPerUnit") */
     public $costUnit;
 
-    /** @Column(type="string",length=18, name="COSTTOTAL") */
+    /** @Column(type="string",length=18, name="CostTotal") */
     public $costTotal;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
@@ -67,14 +61,6 @@ class BuildingDetail extends EntityBase {
         return $this->costTotal;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -102,13 +88,4 @@ class BuildingDetail extends EntityBase {
     function setCostTotal($costTotal) {
         $this->costTotal = $costTotal;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }

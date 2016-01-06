@@ -5,78 +5,70 @@ use apps\common\entity\EntityBase;
 
 /**
  * @Entity
- * @Table(name="L3D_ACCOUNT")
+ * @Table(name="L3D_Account")
  */
 class Account extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="string",length=10,name="ACCOUNTID")
+     * @Column(type="string",length=10,name="AccountId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="string", length=100, name="ACCOUNTNAME") */
+    /** @Column(type="string", length=100, name="AccountName") */
     public $accName;
 
-    /** @Column(type="string",length=1, name="ACCOUNTSTATUS") */
+    /** @Column(type="string",length=1, name="AccountStatus") */
     public $accStatus;
 
-    /** @Column(type="string",length=20, name="BANKACCOUNT") */
+    /** @Column(type="string",length=20, name="BankAccount") */
     public $bankAccount;
 
-    /** @Column(type="string",length=20, name="BANKCODE") */
+    /** @Column(type="string",length=20, name="BankCode") */
     public $bankCode;
 
-    /** @Column(type="string",length=100, name="BANKBRANCH") */
+    /** @Column(type="string",length=100, name="BankBranch") */
     public $bankBranch;
 
-    /** @Column(type="string",length=1, name="NATURETYPE") */
+    /** @Column(type="string",length=1, name="NatureType") */
     public $natureType;
 
-    /** @Column(type="string", length=10, name="ACCOUNTTYPEID") */
+    /** @Column(type="string", length=10, name="AccountTypeId") */
     public $accTypeId;
 
-    /** @Column(type="string", length=10, name="MASTERID") */
+    /** @Column(type="string", length=10, name="MasterId") */
     public $masterId;
 
-    /** @Column(type="integer",length=11, name="DEFAULTFUNDGROUPID") */
+    /** @Column(type="integer",length=11, name="DefaultFundGroupId") */
     public $fundgroupId;
 
-    /** @Column(type="integer",length=11, name="DEFAULTPROJECTID") */
+    /** @Column(type="integer",length=11, name="DefaultProjectId") */
     public $projectId;
 
-    /** @Column(type="integer",length=11, name="DEFAULTDEPARTMENTID") */
+    /** @Column(type="integer",length=11, name="DefaultDepartmentId") */
     public $departmentId;
 
-    /** @Column(type="integer",length=11, name="ACCOUNTGROUP") */
+    /** @Column(type="integer",length=11, name="AccountGroup") */
     public $accGroup;
 
-    /** @Column(type="integer",length=11, name="DEFAULTREFERID") */
+    /** @Column(type="integer",length=11, name="DefaultReferId") */
     public $referId;
 
-    /** @Column(type="integer",length=11, name="DEFAULTBUDGETGROUPID") */
+    /** @Column(type="integer",length=11, name="DefaultBudgetGroupId") */
     public $budgetgroupId;
 
-    /** @Column(type="integer",length=11, name="ACCOUNTLEVEL") */
+    /** @Column(type="integer",length=11, name="AccountLevel") */
     public $accLevel;
 
-    /** @Column(type="string",length=1, name="CASHFLOW") */
+    /** @Column(type="string",length=1, name="CashFlow") */
     public $cashFlow;
 
-    /** @Column(type="integer",length=11, name="DEFAULTACTIVITYID") */
+    /** @Column(type="integer",length=11, name="DefaultActivityId") */
     public $activityId;
 
-    /** @Column(type="string",length=1, name="ACCOUNTOWNER") */
+    /** @Column(type="string",length=1, name="AccountOwner") */
     public $accOwner;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
-
-
 
     function getId() {
         return $this->id;
@@ -230,27 +222,4 @@ class Account extends EntityBase {
     function setAccOwner($accOwner) {
         $this->accOwner = $accOwner;
     }
-
-    public function getCreator()
-    {
-        return $this->creator;
-    }
-
-
-    public function setCreator($creator)
-    {
-        $this->creator = $creator;
-    }
-
-    public function getUpdater()
-    {
-        return $this->updater;
-    }
-
-
-    public function setUpdater($updater)
-    {
-        $this->updater = $updater;
-    }
-
 }

@@ -4,39 +4,33 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="MAPPINGPLAN")
+ * @Table(name="Mapping_Plan")
  */
 class MappingPlan extends EntityBase {
 
     /**
      * @Id
-     * @Column(type="integer",length=11, name="BUDGETPERIODID") 
+     * @Column(type="integer",length=11, name="BudgetPeriodId")
      */
     public $budgetperiodId;
 
     /**
      * @Id
-     * @Column(type="integer",length=11, name="BUDGETPROJECTID") 
+     * @Column(type="integer",length=11, name="BudgetProjectId")
      */
     public $budgetProjectId;
 
     /**
      * @Id 
-     * @Column(type="integer",length=11, name="PLANID") 
+     * @Column(type="integer",length=11, name="PlanId")
      */
     public $planId;
 
     /**
      * @Id
-     * @Column(type="integer",length=11, name="FUNDGROUPID") 
+     * @Column(type="integer",length=11, name="FundGroupId")
      */
     public $fundgroupId;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getBudgetperiodId() {
         return $this->budgetperiodId;
@@ -54,14 +48,6 @@ class MappingPlan extends EntityBase {
         return $this->fundgroupId;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setBudgetperiodId($budgetperiodId) {
         $this->budgetperiodId = $budgetperiodId;
     }
@@ -77,15 +63,6 @@ class MappingPlan extends EntityBase {
     function setFundgroupId($fundgroupId) {
         $this->fundgroupId = $fundgroupId;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }
 
 ?>

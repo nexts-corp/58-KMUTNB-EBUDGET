@@ -5,35 +5,29 @@ use apps\common\entity\EntityBase;
 
 /**
  * @Entity
- * @Table(name="L3D_PROJECT")
+ * @Table(name="L3D_Project")
  */
 class Project extends EntityBase {
 
-    /** @Column(type="integer",length=11,name="PLANID") */
+    /** @Column(type="integer",length=11,name="PlanId") */
     public $planId;
 
     /**
      * @Id
-     * @Column(type="integer",length=11,name="PROJECTID") */
+     * @Column(type="integer",length=11,name="ProjectId") */
     public $projectId;
 
-    /** @Column(type="string",length=250, name="PROJECTNAME") */
+    /** @Column(type="string",length=250, name="ProjectName") */
     public $projectName;
 
-    /** @column(type="datetime"),name="DATEFROM" */
+    /** @column(type="datetime"),name="DateFrom" */
     public $dateFrom;
 
-    /** @column(type="datetime",name="DATETO") */
+    /** @column(type="datetime",name="DateTo") */
     public $dateTo;
 
-    /** @Column(type="string",length=1, name="PROJECTSTATUS") */
+    /** @Column(type="string",length=1, name="ProjectStatus") */
     public $projectStatus;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getPlanId() {
         return $this->planId;
@@ -59,14 +53,6 @@ class Project extends EntityBase {
         return $this->projectStatus;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setPlanId($planId) {
         $this->planId = $planId;
     }
@@ -90,15 +76,6 @@ class Project extends EntityBase {
     function setProjectStatus($projectStatus) {
         $this->projectStatus = $projectStatus;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }
 
 ?>

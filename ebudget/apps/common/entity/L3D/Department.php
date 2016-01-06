@@ -1,47 +1,40 @@
 <?php
 
 namespace apps\common\entity\L3D;
-
 use apps\common\entity\EntityBase;
 
 /**
  * @Entity
- * @Table(name="L3D_DEPARTMENT")
+ * @Table(name="L3D_Department")
  */
 class Department extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="DEPARTMENTID")
+     * @Column(type="integer",length=11,name="DepartmentId")
      */
     public $id;
 
-    /** @Column(type="string",length=200, name="DEPARTMENTNAME") */
+    /** @Column(type="string",length=200, name="DepartmentName") */
     public $deptName;
 
-    /** @Column(type="integer",length=11, name="DEPARTMENTTYPE") */
+    /** @Column(type="integer",length=11, name="DepartmentType") */
     public $deptType;
 
-    /** @Column(type="string",length=1, name="DEPARTMENTSTATUS") */
+    /** @Column(type="string",length=1, name="DepartmentStatus") */
     public $deptStatus;
 
-    /** @Column(type="integer",length=11, name="MASTERID") */
+    /** @Column(type="integer",length=11, name="MasterId") */
     public $masterId;
 
-    /** @Column(type="string",length=1, name="DEPARTMENTGROUP") */
+    /** @Column(type="string",length=1, name="DepartmentGroup") */
     public $deptGroup;
 
-    /** @Column(type="integer",length=11, name="CAMPUSID") */
+    /** @Column(type="integer",length=11, name="CampusId") */
     public $campusId;
 
-    /** @Column(type="string",length=1, name="ISREVENUE") */
+    /** @Column(type="string",length=1, name="IsRevenue") */
     public $isRevenue;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
@@ -75,14 +68,6 @@ class Department extends EntityBase {
         return $this->isRevenue;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -114,13 +99,4 @@ class Department extends EntityBase {
     function setIsRevenue($isRevenue) {
         $this->isRevenue = $isRevenue;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }

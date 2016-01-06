@@ -4,28 +4,22 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="MAPPINGDEPARTMENTTYPE")
+ * @Table(name="Mapping_Department_Type")
  */
 class MappingDepartmentType extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="MAPPINGDEPARTMENTTYPEID")
+     * @Column(type="integer",length=11,name="MappingDepartmentTypeId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="DEPARTMENTID") */
+    /** @Column(type="integer",length=11, name="DepartmentId") */
     public $deptId;
 
-    /** @Column(type="integer",length=11, name="ACTIVITYTYPEID") */
+    /** @Column(type="integer",length=11, name="ActivityTypeId") */
     public $actId;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
@@ -39,14 +33,6 @@ class MappingDepartmentType extends EntityBase {
         return $this->actId;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -58,15 +44,6 @@ class MappingDepartmentType extends EntityBase {
     function setActId($actId) {
         $this->actId = $actId;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }
 
 ?>

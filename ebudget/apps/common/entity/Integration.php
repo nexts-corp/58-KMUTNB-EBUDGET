@@ -4,25 +4,19 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="INTEGRATION")
+ * @Table(name="Integration")
  */
 class Integration extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="INTEGRATIONID")
+     * @Column(type="integer",length=11,name="IntegrationId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="string",length=500, name="INTEGRATIONNAME") */
+    /** @Column(type="string",length=500, name="IntegrationName") */
     public $name;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
@@ -32,14 +26,6 @@ class Integration extends EntityBase {
         return $this->name;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -47,13 +33,4 @@ class Integration extends EntityBase {
     function setName($name) {
         $this->name = $name;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }

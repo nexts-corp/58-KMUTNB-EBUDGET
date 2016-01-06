@@ -4,27 +4,19 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="MEMBERROLE")
+ * @Table(name="Member_Role")
  */
 class MemberRole extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="MEMBERID")
+     * @Column(type="integer",length=11,name="MemberId")
      */
     public $memberId;
 
-    /**
-     * @Column(type="integer",length=11,name="ROLEID")
-     */
+    /** @Column(type="integer",length=11,name="RoleId") */
     
     public $roleId;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getMemberId() {
         return $this->memberId;
@@ -34,14 +26,6 @@ class MemberRole extends EntityBase {
         return $this->roleId;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setMemberId($memberId) {
         $this->memberId = $memberId;
     }
@@ -49,13 +33,4 @@ class MemberRole extends EntityBase {
     function setRoleId($roleId) {
         $this->roleId = $roleId;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }

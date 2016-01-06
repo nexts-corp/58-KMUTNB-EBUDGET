@@ -4,75 +4,55 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="COORDINATES")
+ * @Table(name="Coordinates")
  */
 class Coordinates  extends EntityBase {
 
     /**
      * @Id
-     * @Column(type="integer",length=11,name="COORDINATES_ID")
+     * @Column(type="integer",length=11,name="CoordinatesId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="decimal",length=18, name="LATITUDE") */
+    /** @Column(type="decimal",length=18, name="Latitude") */
     public $latitude;
 
-    /** @Column(type="decimal",length=18, name="LONGITUDE") */
+    /** @Column(type="decimal",length=18, name="Longitude") */
     public $longitude;
 
-    /** @Column(type="integer",length=11, name="BUILDINGID") */
+    /** @Column(type="integer",length=11, name="BuildingId") */
     public $buildingId;
 
-
-    public function getId()
-    {
+    function getId(){
         return $this->id;
     }
 
-
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-
-    public function getLatitude()
-    {
+    function getLatitude(){
         return $this->latitude;
     }
 
-
-    public function setLatitude($latitude)
-    {
-        $this->latitude = $latitude;
-    }
-
-
-    public function getLongitude()
-    {
+    function getLongitude(){
         return $this->longitude;
     }
 
-
-    public function setLongitude($longitude)
-    {
-        $this->longitude = $longitude;
-    }
-
-
-    public function getBuildingId()
-    {
+    function getBuildingId(){
         return $this->buildingId;
     }
 
-
-    public function setBuildingId($buildingId)
-    {
-        $this->buildingId = $buildingId;
+    function setId($id){
+        $this->id = $id;
     }
 
+    function setLatitude($latitude){
+        $this->latitude = $latitude;
+    }
 
+    function setLongitude($longitude){
+        $this->longitude = $longitude;
+    }
 
-
+    function setBuildingId($buildingId){
+        $this->buildingId = $buildingId;
+    }
 }

@@ -6,7 +6,7 @@ namespace apps\common\entity;
  * @Entity
  * @Table(name="Budget_Summarize")
  */
-class Budget_Summarize extends EntityBase {
+class BudgetSummarize extends EntityBase {
 
     /**
      * @Id 
@@ -24,7 +24,7 @@ class Budget_Summarize extends EntityBase {
     /** @Column(type="integer",length=11, name="DepartmentId") */
     public $deptId;
 
-    /** @Column(type="string",length=1, name="BUDGETTYPECODE") */
+    /** @Column(type="string",length=1, name="BudgetTypeCode") */
     public $bgTypeCode;
 
     /** @Column(type="string",length=18, name="BudgetBeforeReview") */
@@ -35,12 +35,6 @@ class Budget_Summarize extends EntityBase {
 
     /** @Column(type="string",length=18, name="BudgetFinal") */
     public $bgFinal;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
@@ -74,14 +68,6 @@ class Budget_Summarize extends EntityBase {
         return $this->bgFinal;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -113,13 +99,4 @@ class Budget_Summarize extends EntityBase {
     function setBgFinal($bgFinal) {
         $this->bgFinal = $bgFinal;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }

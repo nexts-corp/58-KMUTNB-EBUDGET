@@ -4,28 +4,22 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="BUDGETPLAN")
+ * @Table(name="Budget_Plan")
  */
 class BudgetPlan extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="BUDGETPLANID")
+     * @Column(type="integer",length=11,name="BudgetPlanId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="string",length=500, name="BUDGETPLANNAME") */
+    /** @Column(type="string",length=500, name="BudgetPlanName") */
     public $planName;
 
-    /** @Column(type="integer",length=11, name="BUDGETPERIODID") */
+    /** @Column(type="integer",length=11, name="BudgetPeriodId") */
     public $periodId;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
@@ -37,14 +31,6 @@ class BudgetPlan extends EntityBase {
 
     function getPeriodId() {
         return $this->periodId;
-    }
-
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
     }
 
     function setId($id) {
@@ -59,14 +45,5 @@ class BudgetPlan extends EntityBase {
         $this->periodId = $periodId;
     }
 
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }
-
 ?>

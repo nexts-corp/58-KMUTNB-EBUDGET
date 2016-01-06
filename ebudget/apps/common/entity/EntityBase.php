@@ -7,15 +7,16 @@ namespace apps\common\entity;
  * @HasLifecycleCallbacks
  */
 class EntityBase {
+    /** @Column(type="string",length=20, name="CreateUserId") */
+    public $creator;
 
-    /**
-     * @column(name="CREATEDATETIME",type="datetime")
-     */
+    /** @Column(type="string",length=20, name="LastUpdateUserId") */
+    public $updater;
+
+    /** @column(type="datetime", name="CreateDatetime") */
     public $dateCreated;
 
-    /**
-     * @column(name="LASTUPDATEDATETIME",type="datetime")
-     */
+    /** @column(type="datetime", name="LastUpdateDatetime") */
     public $dateUpdated;
 
     /**
@@ -32,12 +33,28 @@ class EntityBase {
         $this->dateUpdated = new \DateTime("now");
     }
 
+    public function getCreator() {
+        return $this->creator;
+    }
+
+    public function getUpdater() {
+        return $this->updater;
+    }
+
     public function getDateCreated() {
         return $this->dateCreated;
     }
 
     public function getDateUpdated() {
         return $this->dateUpdated;
+    }
+
+    public function setCreator($creator) {
+        $this->creator = $creator;
+    }
+
+    public function setUpdater($updater) {
+        $this->updater = $updater;
     }
 
     public function setDateCreated($dateCreated) {
@@ -47,5 +64,4 @@ class EntityBase {
     public function setDateUpdated($dateUpdated) {
         $this->dateUpdated = $dateUpdated;
     }
-
 }

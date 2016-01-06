@@ -4,34 +4,33 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="AFFIRMATIVEKPI")
+ * @Table(name="Affirmative_Kpi")
  */
 class AffirmativeKpi extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="AFFIRMATIVEKPIID")
+     * @Column(type="integer",length=11,name="AffirmativeKpiId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="SEQ") */
+    /** @Column(type="integer",length=11, name="AffirmativeKpiSeq") */
     public $kpiSeq;
 
-    /** @Column(type="text", name="AFFIRMATIVEKPINAME") */
+    /** @Column(type="text", name="AffirmativeKpiName") */
     public $kpiName;
 
-    /** @Column(type="integer",length=11, name="AFFIRMATIVETARGETID") */
+    /** @Column(type="integer",length=11, name="AffirmativeTargetId") */
     public $targetId;
 
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
+    }
+
+    function getKpiSeq() {
+        return $this->kpiSeq;
     }
 
     function getKpiName() {
@@ -42,20 +41,12 @@ class AffirmativeKpi extends EntityBase {
         return $this->targetId;
     }
 
-    function getSeq() {
-        return $this->seq;
-    }
-
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
+    }
+
+    function setKpiSeq($kpiSeq) {
+        $this->kpiSeq = $kpiSeq;
     }
 
     function setKpiName($kpiName) {
@@ -65,17 +56,4 @@ class AffirmativeKpi extends EntityBase {
     function setTargetId($targetId) {
         $this->targetId = $targetId;
     }
-
-    function setSeq($seq) {
-        $this->seq = $seq;
-    }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }

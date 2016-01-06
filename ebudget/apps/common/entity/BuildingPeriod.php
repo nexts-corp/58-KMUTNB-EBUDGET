@@ -4,34 +4,28 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="BUILDING_PERIOD")
+ * @Table(name="Building_Period")
  */
 class BuildingPeriod extends EntityBase {
 
     /**
      * @Id
-     * @Column(type="integer",length=11,name="BUILDINGPERIODID")
+     * @Column(type="integer",length=11,name="BuildingPeriodId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="BUILDINGID") */
+    /** @Column(type="integer",length=11, name="BuildingId") */
     public $buildingId;
 
-    /** @Column(type="integer",length=11, name="BUDGETPERIODID") */
+    /** @Column(type="integer",length=11, name="BudgetPeriodId") */
     public $budgetPeriodId;
 
-    /** @Column(type="integer",length=11, name="PHASENO") */
+    /** @Column(type="integer",length=11, name="PhaseNo") */
     public $phaseNo;
 
-    /** @Column(type="string",length=18, name="COSTTOTAL") */
+    /** @Column(type="string",length=18, name="CostTotal") */
     public $costTotal;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
@@ -53,14 +47,6 @@ class BuildingPeriod extends EntityBase {
         return $this->costTotal;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -80,13 +66,4 @@ class BuildingPeriod extends EntityBase {
     function setCostTotal($costTotal) {
         $this->costTotal = $costTotal;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }

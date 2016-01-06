@@ -4,28 +4,22 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="PROJECTTYPE")
+ * @Table(name="Project_Type")
  */
 class ProjectType extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="PROJECTTYPEID")
+     * @Column(type="integer",length=11,name="ProjectTypeId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="string",length=50, name="PROJECTTYPENAME") */
+    /** @Column(type="string",length=50, name="ProjectTypeName") */
     public $typeName;
 
-    /** @Column(type="string",length=1, name="PROJECTTYPESTATUS") */
+    /** @Column(type="string",length=1, name="ProjectTypeStatus") */
     public $typeStatus;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
@@ -39,14 +33,6 @@ class ProjectType extends EntityBase {
         return $this->typeStatus;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -58,13 +44,4 @@ class ProjectType extends EntityBase {
     function setTypeStatus($typeStatus) {
         $this->typeStatus = $typeStatus;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }

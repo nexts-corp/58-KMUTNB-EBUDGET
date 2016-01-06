@@ -4,40 +4,33 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="BUDGETEXPENSE_AFFIRMATIVE")
+ * @Table(name="Budget_Expense_Affirmative")
  */
 class BudgetExpenseAffirmative extends EntityBase {
 
     /** 
      * @Id
-     * @Column(type="integer",length=11, name="BUDGETEXPENSEID") */
+     * @Column(type="integer",length=11, name="BudgetExpenseId") */
     public $expenseId;
     
     /**
-     * @Column(type="integer",length=11, name="AFFIRMATIVETYPEID") */
+     * @Column(type="integer",length=11, name="AffirmativeTypeId") */
     public $typeId;
 
     /**
      * @Id
-     * @Column(type="integer",length=11, name="AFFIRMATIVEISSUEID") */
+     * @Column(type="integer",length=11, name="AffirmativeIssueId") */
     public $issueId;
 
     /**
      * @Id
-     * @Column(type="integer",length=11, name="AFFIRMATIVETARGETID") */
+     * @Column(type="integer",length=11, name="AffirmativeTargetId") */
     public $targetId;
 
     /** 
      * @Id
-     * @Column(type="integer",length=11, name="AFFIRMATIVESTRATEGYID") */
+     * @Column(type="integer",length=11, name="AffirmativeStrategyId") */
     public $strategyId;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
-
 
     function getExpenseId() {
         return $this->expenseId;
@@ -59,14 +52,6 @@ class BudgetExpenseAffirmative extends EntityBase {
         return $this->strategyId;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setExpenseId($expenseId) {
         $this->expenseId = $expenseId;
     }
@@ -86,13 +71,4 @@ class BudgetExpenseAffirmative extends EntityBase {
     function setStrategyId($strategyId) {
         $this->strategyId = $strategyId;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }

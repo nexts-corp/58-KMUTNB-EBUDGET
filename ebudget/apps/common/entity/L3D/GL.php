@@ -9,40 +9,40 @@ use apps\common\entity\EntityBase;
  */
 class GL extends EntityBase {
 
-    /** @Column(type="integer",length=11,name="GLHEADID") */
+    /** @Column(type="integer",length=11,name="GLHeadId") */
     public $glHeadId;
 
-    /** @Column(type="integer",length=11,name="GLITEM") */
+    /** @Column(type="integer",length=11,name="GLItem") */
     public $glItem;
 
-    /** @Column(type="string",length=10,name="ACCOUNTID") */
+    /** @Column(type="string",length=10,name="AccountId") */
     public $accId;
 
-    /** @Column(type="integer",length=11,name="DEPARTMENTID") */
+    /** @Column(type="integer",length=11,name="DepartmentId") */
     public $deptId;
 
-    /** @Column(type="integer",length=11,name="BUDGETPERIODID") */
+    /** @Column(type="integer",length=11,name="BudgetPeriodId") */
     public $budgetperiodId;
 
-    /** @Column(type="integer",length=11,name="BUDGETGROUPID") */
+    /** @Column(type="integer",length=11,name="BudgetGroupId") */
     public $budgetgroupId;
 
-    /** @Column(type="integer",length=11,name="FUNDGROUPID") */
+    /** @Column(type="integer",length=11,name="FundGroupId") */
     public $fundgroupId;
 
-    /** @Column(type="integer",length=11,name="PLANID") */
+    /** @Column(type="integer",length=11,name="PlanId") */
     public $planId;
 
-    /** @Column(type="integer",length=11,name="PROJECTID") */
+    /** @Column(type="integer",length=11,name="ProjectId") */
     public $projectId;
 
-    /** @Column(type="integer",length=11,name="ACTIVITYID") */
+    /** @Column(type="integer",length=11,name="ActivityId") */
     public $activityId;
 
-    /** @Column(type="integer",length=11,name="LOTITEM") */
+    /** @Column(type="integer",length=11,name="LotItem") */
     public $lotItem;
 
-    /** @Column(type="string",length=2,name="LOTCODE") */
+    /** @Column(type="string",length=2,name="LotCode") */
     public $lotCode;
 
     /** @Column(type="float",name="DR") */
@@ -51,14 +51,8 @@ class GL extends EntityBase {
     /** @Column(type="float",name="CR") */
     public $cr;
 
-    /** @Column(type="string",length=1,name="GLHEADSTATUS") */
+    /** @Column(type="string",length=1,name="GLHeadStatus") */
     public $glHeadStatus;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getGlHeadId() {
         return $this->glHeadId;
@@ -120,14 +114,6 @@ class GL extends EntityBase {
         return $this->glHeadStatus;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setGlHeadId($glHeadId) {
         $this->glHeadId = $glHeadId;
     }
@@ -187,13 +173,4 @@ class GL extends EntityBase {
     function setGlHeadStatus($glHeadStatus) {
         $this->glHeadStatus = $glHeadStatus;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }

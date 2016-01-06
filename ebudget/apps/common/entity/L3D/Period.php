@@ -5,37 +5,31 @@ use apps\common\entity\EntityBase;
 
 /**
  * @Entity
- * @Table(name="L3D_PERIOD")
+ * @Table(name="L3D_Period")
  */
 class Period extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="PERIODID")
+     * @Column(type="integer",length=11,name="PeriodId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @column(type="datetime"),name="DATEFROM" */
+    /** @column(type="datetime"),name="DateFrom" */
     public $dateFrom;
 
-    /** @column(type="datetime",name="DATETO") */
+    /** @column(type="datetime",name="DateTo") */
     public $dateTo;
 
-    /** @Column(type="string",length=1, name="PERIODSTATUS") */
+    /** @Column(type="string",length=1, name="PeriodStatus") */
     public $periodStatus;
 
-    /** @Column(type="string",length=50, name="PERIODNAME") */
+    /** @Column(type="string",length=50, name="PeriodName") */
     public $periodName;
 
-    /** @Column(type="integer",length=11, name="BUDGETPERIODID") */
+    /** @Column(type="integer",length=11, name="BudgetPeriodId") */
     public $budgetperiodId;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
@@ -61,14 +55,6 @@ class Period extends EntityBase {
         return $this->budgetperiodId;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -92,15 +78,6 @@ class Period extends EntityBase {
     function setBudgetperiodId($budgetperiodId) {
         $this->budgetperiodId = $budgetperiodId;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }
 
 ?>

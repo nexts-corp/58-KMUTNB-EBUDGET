@@ -4,34 +4,28 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="BUDGETEXPENSE_OPERATING")
+ * @Table(name="Budget_Expense_Operating")
  */
 class BudgetExpenseOperating extends EntityBase {
 
     /**
      * @Id
-     * @Column(type="integer",length=11, name="BUDGETEXPENSEID") */
+     * @Column(type="integer",length=11, name="BudgetExpenseId") */
     public $expenseId;
 
     /** 
      * @Id
-     * @Column(type="integer",length=11, name="SEQ") */
+     * @Column(type="integer",length=11, name="Seq") */
     public $seq;
 
-    /** @Column(type="text", name="OPERATINGNAME") */
+    /** @Column(type="text", name="OperatingName") */
     public $operName;
 
-    /** @Column(type="date", name="TIMESTART") */
+    /** @Column(type="date", name="TimeStart") */
     public $timeStart;
 
-    /** @Column(type="date", name="TIMEEND") */
+    /** @Column(type="date", name="TimeEnd") */
     public $timeEnd;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getExpenseId() {
         return $this->expenseId;
@@ -53,14 +47,6 @@ class BudgetExpenseOperating extends EntityBase {
         return $this->timeEnd;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setExpenseId($expenseId) {
         $this->expenseId = $expenseId;
     }
@@ -80,13 +66,4 @@ class BudgetExpenseOperating extends EntityBase {
     function setTimeEnd($timeEnd) {
         $this->timeEnd = $timeEnd;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }

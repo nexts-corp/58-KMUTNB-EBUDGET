@@ -4,88 +4,82 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="FINAL146")
+ * @Table(name="Final_146")
  */
 class Final146 extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="ID")
+     * @Column(type="integer",length=11,name="Id")
      
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="BUDGETHEADID") */
+    /** @Column(type="integer",length=11, name="BudgetHeadId") */
     public $budgetHeadId;
 
-    /** @Column(type="integer",length=11, name="BUDGETPERIODID") */
+    /** @Column(type="integer",length=11, name="BudgetPeriodId") */
     public $budgetPeriodId;
 
-    /** @Column(type="integer",length=11, name="BUDGETTYPEID") */
+    /** @Column(type="integer",length=11, name="BudgetTypeId") */
     public $budgetTypeId;
 
-    /** @Column(type="string",length=1, name="BUDGETTYPECODE") */
+    /** @Column(type="string",length=1, name="BudgetTypeCode") */
     public $budgetTypeCode;
 
-    /** @Column(type="integer",length=11, name="DEPARTMENTID") */
+    /** @Column(type="integer",length=11, name="DepartmentId") */
     public $deptId;
 
-    /** @Column(type="integer",length=11, name="BUDGETPLANID") */
+    /** @Column(type="integer",length=11, name="BudgetPlanId") */
     public $planId;
 
-    /** @Column(type="integer",length=11, name="BUDGETPROJECTID") */
+    /** @Column(type="integer",length=11, name="BudgetProjectId") */
     public $projectId;
 
-    /** @Column(type="integer",length=11, name="L3D_PLANID") */
+    /** @Column(type="integer",length=11, name="L3DPlanId") */
     public $l3dPlanId;
 
-    /** @Column(type="integer",length=11, name="L3D_PROJECTID") */
+    /** @Column(type="integer",length=11, name="L3DProjectId") */
     public $l3dProjectId;
 
-    /** @Column(type="integer",length=11, name="FUNDGROUPID") */
+    /** @Column(type="integer",length=11, name="FundGroupId") */
     public $fundgroupId;
 
-    /** @Column(type="integer",length=11, name="ACTIVITYID") */
+    /** @Column(type="integer",length=11, name="ActivityId") */
     public $activityId;
 
-    /** @Column(type="integer",length=11, name="ATTACHMENTID") */
+    /** @Column(type="integer",length=11, name="AttachmentId") */
     public $attachmentId;
 
-    /** @Column(type="string",length=300, name="BURSARYNAME") */
+    /** @Column(type="string",length=300, name="BursaryName") */
     public $bursaryName;
 
-    /** @Column(type="text", name="BURSARYDESC") */
+    /** @Column(type="text", name="BursaryDesc") */
     public $bursaryDesc;
 
-    /** @Column(type="string",length=18, name="BUDGETREQUEST") */
+    /** @Column(type="string",length=18, name="BudgetRequest") */
     public $bgRequest;
 
-    /** @Column(type="string",length=18, name="BUDGETHISTORY") */
+    /** @Column(type="string",length=18, name="BudgetHistory") */
     public $bgHistory;
 
-    /** @Column(type="text", name="REMARK") */
+    /** @Column(type="text", name="Remark") */
     public $remark;
 
-    /** @Column(type="integer",length=11, name="REFID") */
+    /** @Column(type="integer",length=11, name="RefId") */
     public $refId;
 
-    /** @Column(type="integer",length=11, name="TRACKINGSTATUSID") */
+    /** @Column(type="integer",length=11, name="TrackingStatusId") */
     public $statusId;
 
-    /** @Column(type="text", name="COMMENT") */
+    /** @Column(type="text", name="Comment") */
     public $comment;
 
-    /** @Column(type="string",length=18, name="BUDGETSUMMARY") */
+    /** @Column(type="string",length=18, name="BudgetSummary") */
     public $bgSummary;
 
-    /** @Column(type="string",length=10, name="STATUS") */
+    /** @Column(type="string",length=10, name="Status") */
     public $status;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
@@ -179,14 +173,6 @@ class Final146 extends EntityBase {
         return $this->status;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -278,15 +264,6 @@ class Final146 extends EntityBase {
     function setStatus($status) {
         $this->status = $status;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }
 
 ?>

@@ -4,31 +4,25 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="BUDGETPROJECT")
+ * @Table(name="Budget_Project")
  */
 class BudgetProject extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="BUDGETPROJECTID")
+     * @Column(type="integer",length=11,name="BudgetProjectId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="BUDGETPLANID") */
+    /** @Column(type="integer",length=11, name="BudgetPlanId") */
     public $planId;
 
-    /** @Column(type="string",length=500, name="BUDGETPROJECTNAME") */
+    /** @Column(type="string",length=500, name="BudgetProjectName") */
     public $projectName;
 
-    /** @Column(type="string",length=1, name="BUDGETPROJECTTYPE") */
+    /** @Column(type="string",length=1, name="BudgetProjectType") */
     public $projectType;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
@@ -50,14 +44,6 @@ class BudgetProject extends EntityBase {
         return $this->creator;
     }
 
-    function getUpdater() {
-        return $this->updater;
-    }
-
-    function setId($id) {
-        $this->id = $id;
-    }
-
     function setPlanId($planId) {
         $this->planId = $planId;
     }
@@ -69,13 +55,4 @@ class BudgetProject extends EntityBase {
     function setProjecttype($projecttype) {
         $this->projecttype = $projecttype;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }

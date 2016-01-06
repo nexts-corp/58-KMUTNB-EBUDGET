@@ -4,60 +4,54 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="BUDGETTYPE")
+ * @Table(name="Budget_Type")
  */
 class BudgetType extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="BUDGETTYPEID")
+     * @Column(type="integer",length=11,name="BudgetTypeId")
      */
     public $id;
 
-    /** @Column(type="string",length=500, name="BUDGETTYPENAME") */
+    /** @Column(type="string",length=500, name="BudgetTypeName") */
     public $typeName;
 
-    /** @Column(type="integer",length=11, name="MASTERID") */
+    /** @Column(type="integer",length=11, name="MasterId") */
     public $masterId;
 
-    /** @Column(type="integer",length=11, name="LEVELID") */
+    /** @Column(type="integer",length=11, name="LevelId") */
     public $level;
 
-    /** @Column(type="string",length=1, name="BUDGETTYPECODE") */
+    /** @Column(type="string",length=1, name="BudgetTypeCode") */
     public $typeCode;
 
-    /** @Column(type="boolean", name="ISFIXEDCOST") */
+    /** @Column(type="boolean", name="IsFixedCost") */
     public $isFixedCost;
 
-    /** @Column(type="boolean", name="FORM140") */
+    /** @Column(type="boolean", name="Form140") */
     public $form140;
 
-    /** @Column(type="boolean", name="FORM141") */
+    /** @Column(type="boolean", name="Form141") */
     public $form141;
 
-    /** @Column(type="boolean", name="FORM142") */
+    /** @Column(type="boolean", name="Form142") */
     public $form142;
 
-    /** @Column(type="boolean", name="FORM143") */
+    /** @Column(type="boolean", name="Form143") */
     public $form143;
 
-    /** @Column(type="boolean", name="FORM144") */
+    /** @Column(type="boolean", name="Form144") */
     public $form144;
 
-    /** @Column(type="boolean", name="FORM145") */
+    /** @Column(type="boolean", name="Form145") */
     public $form145;
 
-    /** @Column(type="boolean", name="FORM146") */
+    /** @Column(type="boolean", name="Form146") */
     public $form146;
 
-    /** @Column(type="boolean", name="FORMEXPENSE") */
+    /** @Column(type="boolean", name="FormExpense") */
     public $formExpense;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
@@ -115,14 +109,6 @@ class BudgetType extends EntityBase {
         return $this->formExpense;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -178,15 +164,6 @@ class BudgetType extends EntityBase {
     function setFormExpense($formExpense) {
         $this->formExpense = $formExpense;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }
 
 ?>

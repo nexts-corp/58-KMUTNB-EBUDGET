@@ -4,85 +4,79 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="BUILDING")
+ * @Table(name="Building")
  */
 class Building extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="BUILDINGID")
+     * @Column(type="integer",length=11,name="BuildingId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="BUDGET145ID") */
+    /** @Column(type="integer",length=11, name="Budget145Id") */
     public $bg145Id;
 
-    /** @Column(type="integer",length=11, name="BUILDINGTYPE") */
+    /** @Column(type="integer",length=11, name="BuildingType") */
     public $typeId;
 
-    /** @Column(type="integer",length=11, name="TOTALYEAR") */
+    /** @Column(type="integer",length=11, name="TotalYear") */
     public $totalYear;
 
-    /** @Column(type="string",length=1000, name="NAME") */
+    /** @Column(type="string",length=1000, name="Name") */
     public $name;
 
-    /** @Column(type="string",length=500, name="PLACE") */
+    /** @Column(type="string",length=500, name="Place") */
     public $place;
 
-    /** @Column(type="text", name="RATIONALE") */
+    /** @Column(type="text", name="Rationale") */
     public $rationale;
 
-    /** @Column(type="text", name="OBJECTIVE") */
+    /** @Column(type="text", name="Objective") */
     public $objective;
 
-    /** @Column(type="text", name="GOAL") */
+    /** @Column(type="text", name="Goal") */
     public $goal;
 
-    /** @Column(type="string",length=500, name="AREA") */
+    /** @Column(type="string",length=500, name="Area") */
     public $area;
 
-    /** @Column(type="string",length=300, name="TIMEDESIGN") */
+    /** @Column(type="string",length=300, name="TimeDesign") */
     public $timeDesign;
 
-    /** @Column(type="string",length=300, name="TIMEBID") */
+    /** @Column(type="string",length=300, name="TimeBid") */
     public $timeBid;
 
-    /** @Column(type="string",length=300, name="TIMESIGNCONTRACT") */
+    /** @Column(type="string",length=300, name="TimeSignContract") */
     public $timeContract;
 
-    /** @Column(type="string",length=300, name="TIMEOPERATING") */
+    /** @Column(type="string",length=300, name="TimeOperating") */
     public $timeOperate;
 
-    /** @Column(type="string",length=18, name="COSTARCHITECTURE") */
+    /** @Column(type="string",length=18, name="CostArchitecture") */
     public $costAchitec;
 
-    /** @Column(type="string",length=18, name="COSTSTRUCTURAL") */
+    /** @Column(type="string",length=18, name="CostStructural") */
     public $costStruct;
 
-    /** @Column(type="string",length=18, name="COSTELECTRICAL") */
+    /** @Column(type="string",length=18, name="CostElectrical") */
     public $costElec;
 
-    /** @Column(type="string",length=18, name="COSTSANITATION") */
+    /** @Column(type="string",length=18, name="CostSanitation") */
     public $costSanit;
 
-    /** @Column(type="string",length=18, name="COSTVENTILATE") */
+    /** @Column(type="string",length=18, name="CostVentilate") */
     public $costVen;
 
-    /** @Column(type="string",length=18, name="COSTELEVATORS") */
+    /** @Column(type="string",length=18, name="CostElevators") */
     public $costElev;
 
-    /** @Column(type="string",length=18, name="COSTTOTAL") */
+    /** @Column(type="string",length=18, name="CostTotal") */
     public $costTotal;
 
-    /** @Column(type="string",length=20, name="GEOTYPE") */
+    /** @Column(type="string",length=20, name="GeoType") */
     public $geoType;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
@@ -164,14 +158,6 @@ class Building extends EntityBase {
         return $this->costTotal;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -251,13 +237,4 @@ class Building extends EntityBase {
     function setCostTotal($costTotal) {
         $this->costTotal = $costTotal;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }

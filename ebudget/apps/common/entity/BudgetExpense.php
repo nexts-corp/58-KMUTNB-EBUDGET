@@ -4,94 +4,88 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="BUDGETEXPENSE")
+ * @Table(name="Budget_Expense")
  */
 class BudgetExpense extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="BUDGETEXPENSEID")
+     * @Column(type="integer",length=11,name="BudgetExpenseId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="BUDGETHEADID") */
+    /** @Column(type="integer",length=11, name="BudgetHeadId") */
     public $budgetHeadId;
 
-    /** @Column(type="integer",length=11, name="BUDGETPERIODID") */
+    /** @Column(type="integer",length=11, name="BudgetPeriodId") */
     public $budgetPeriodId;
 
-    /** @Column(type="integer",length=11, name="BUDGETTYPEID") */
+    /** @Column(type="integer",length=11, name="BudgetTypeId") */
     public $budgetTypeId;
 
-    /** @Column(type="string",length=1, name="BUDGETTYPECODE") */
+    /** @Column(type="string",length=1, name="BudgetTypeCode") */
     public $budgetTypeCode;
 
-    /** @Column(type="integer",length=11, name="DEPARTMENTID") */
+    /** @Column(type="integer",length=11, name="DepartmentId") */
     public $deptId;
 
-    /** @Column(type="integer",length=11, name="L3D_PLANID") */
+    /** @Column(type="integer",length=11, name="L3DPlanId") */
     public $planId;
 
-    /** @Column(type="integer",length=11, name="L3D_PROJECTID") */
+    /** @Column(type="integer",length=11, name="L3DProjectId") */
     public $projectId;
 
-    /** @Column(type="integer",length=11, name="FUNDGROUPID") */
+    /** @Column(type="integer",length=11, name="FundGroupId") */
     public $fundgroupId;
 
-    /** @Column(type="integer",length=11, name="ACTIVITYID") */
+    /** @Column(type="integer",length=11, name="ActivityId") */
     public $activityId;
 
-    /** @Column(type="integer",length=11, name="PROJECTTYPEID") */
+    /** @Column(type="integer",length=11, name="ProjectTypeId") */
     public $projectTypeId;
 
-    /** @Column(type="string",length=1000, name="BUDGETEXPENSENAME") */
+    /** @Column(type="string",length=1000, name="BudgetExpenseName") */
     public $name;
 
-    /** @Column(type="string",length=100, name="DIRECTOR") */
+    /** @Column(type="string",length=100, name="Director") */
     public $director;
 
-    /** @Column(type="string",length=100, name="RESPONDER") */
+    /** @Column(type="string",length=100, name="Responder") */
     public $responder;
 
-    /** @Column(type="text", name="RATIONALE") */
+    /** @Column(type="text", name="Rationale") */
     public $rationale;
 
-    /** @Column(type="text", name="OBJECTIVE") */
+    /** @Column(type="text", name="Objective") */
     public $objective;
 
-    /** @Column(type="text", name="TARGET") */
+    /** @Column(type="text", name="Target") */
     public $target;
 
-    /** @Column(type="date", name="TIMESTART") */
+    /** @Column(type="date", name="TimeStart") */
     public $timeStart;
 
-    /** @Column(type="date", name="TIMEEND") */
+    /** @Column(type="date", name="TimeEnd") */
     public $timeEnd;
 
-    /** @Column(type="string",length=18, name="BUDGETESTIMATIONAMOUNT") */
+    /** @Column(type="string",length=18, name="BudgetEstimationAmount") */
     public $budgetEstAmount;
 
-    /** @Column(type="string",length=300, name="BUDGETESTIMATIONTEXT") */
+    /** @Column(type="string",length=300, name="BudgetEstimationText") */
     public $budgetEstText;
 
-    /** @Column(type="text", name="BUDGETESTIMATIONDESC") */
+    /** @Column(type="text", name="BudgetEstimationDesc") */
     public $budgetEstDesc;
 
-    /** @Column(type="text", name="BENEFITS") */
+    /** @Column(type="text", name="Benefits") */
     public $benefits;
 
-    /** @Column(type="integer",length=11, name="TRACKINGSTATUSID") */
+    /** @Column(type="integer",length=11, name="TrackingStatusId") */
     public $statusId;
 
-    /** @Column(type="text", name="COMMENT") */
+    /** @Column(type="text", name="Comment") */
     public $comment;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
@@ -193,14 +187,6 @@ class BudgetExpense extends EntityBase {
         return $this->comment;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -300,13 +286,4 @@ class BudgetExpense extends EntityBase {
     function setComment($comment) {
         $this->comment = $comment;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }

@@ -4,34 +4,32 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="AFFIRMATIVEISSUE")
+ * @Table(name="Affirmative_Issue")
  */
 class AffirmativeIssue extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="AFFIRMATIVEISSUEID")
+     * @Column(type="integer",length=11,name="AffirmativeIssueId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="SEQ") */
+    /** @Column(type="integer",length=11, name="AffirmativeIssueSeq") */
     public $issueSeq;
 
-    /** @Column(type="text", name="AFFIRMATIVEISSUENAME") */
+    /** @Column(type="text", name="AffirmativeIssueName") */
     public $issueName;
 
-    /** @Column(type="integer",length=11, name="AFFIRMATIVETYPEID") */
+    /** @Column(type="integer",length=11, name="AffirmativeTypeId") */
     public $typeId;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
+    }
+
+    function getIssueSeq() {
+        return $this->issueSeq;
     }
 
     function getIssueName() {
@@ -42,20 +40,12 @@ class AffirmativeIssue extends EntityBase {
         return $this->typeId;
     }
 
-    function getSeq() {
-        return $this->seq;
-    }
-
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
+    }
+
+    function setIssueSeq($issueSeq) {
+        $this->issueSeq = $issueSeq;
     }
 
     function setIssueName($issueName) {
@@ -65,17 +55,4 @@ class AffirmativeIssue extends EntityBase {
     function setTypeId($typeId) {
         $this->typeId = $typeId;
     }
-
-    function setSeq($seq) {
-        $this->seq = $seq;
-    }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }

@@ -4,38 +4,26 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="MENUROLE")
+ * @Table(name="Menu_Role")
  */
 class MenuRole extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="MENUID")
+     * @Column(type="integer",length=11,name="MenuId")
      * @GeneratedValue
      */
     public $menuId;
 
-    /**
-     * @Column(type="string",length=20,name="LISTID")
-     */
+    /** @Column(type="string",length=20,name="ListId") */
     public $listId;
 
-    /**
-     * @Column(type="string",length=20,name="ROLE")
-     */
+    /** @Column(type="string",length=20,name="Role") */
     public $roleId;
 
-    /**
-     * @Column(type="integer",length=11,name="MEMBERID")
-     */
+    /** @Column(type="integer",length=11,name="MemberId") */
     public $memberId;
     
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
-
     public function getMenuId() {
         return $this->menuId;
     }
@@ -48,12 +36,8 @@ class MenuRole extends EntityBase {
         return $this->roleId;
     }
 
-    public function getCreator() {
-        return $this->creator;
-    }
-
-    public function getUpdater() {
-        return $this->updater;
+    public function getMemberId() {
+        return $this->memberId;
     }
 
     public function setMenuId($menuId) {
@@ -68,20 +52,7 @@ class MenuRole extends EntityBase {
         $this->roleId = $roleId;
     }
 
-    public function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    public function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-    public function getMemberId() {
-        return $this->memberId;
-    }
     public function setMemberId($memberId) {
         $this->memberId = $memberId;
     }
-
-
-    
 }

@@ -4,58 +4,52 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="BUDGETHEAD")
+ * @Table(name="Budget_Head")
  */
 class BudgetHead extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="BUDGETHEADID")
+     * @Column(type="integer",length=11,name="BudgetHeadId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="integer",length=11, name="FORMBUDGET") */
+    /** @Column(type="integer",length=11, name="FormBudget") */
     public $formId;
 
-    /** @Column(type="integer",length=11, name="BUDGETPERIODID") */
+    /** @Column(type="integer",length=11, name="BudgetPeriodId") */
     public $budgetPeriodId;
 
-    /** @Column(type="string",length=1, name="BUDGETTYPECODE") */
+    /** @Column(type="string",length=1, name="BudgetTypeCode") */
     public $budgetTypeCode;
 
-    /** @Column(type="integer",length=11, name="DEPARTMENTID") */
+    /** @Column(type="integer",length=11, name="DepartmentId") */
     public $deptId;
 
-    /** @Column(type="integer",length=11, name="BUDGETPLANID") */
+    /** @Column(type="integer",length=11, name="BudgetPlanId") */
     public $planId;
 
-    /** @Column(type="integer",length=11, name="BUDGETPROJECTID") */
+    /** @Column(type="integer",length=11, name="BudgetProjectId") */
     public $projectId;
 
-    /** @Column(type="integer",length=11, name="L3D_PLANID") */
+    /** @Column(type="integer",length=11, name="L3DPlanId") */
     public $l3dPlanId;
 
-    /** @Column(type="integer",length=11, name="L3D_PROJECTID") */
+    /** @Column(type="integer",length=11, name="L3DProjectId") */
     public $l3dProjectId;
 
-    /** @Column(type="integer",length=11, name="FUNDGROUPID") */
+    /** @Column(type="integer",length=11, name="FundGroupId") */
     public $fundgroupId;
 
-    /** @Column(type="integer",length=11, name="ACTIVITYID") */
+    /** @Column(type="integer",length=11, name="ActivityId") */
     public $activityId;
 
-    /** @Column(type="integer",length=11, name="TRACKINGSTATUSID") */
+    /** @Column(type="integer",length=11, name="TrackingStatusId") */
     public $statusId;
 
-    /** @Column(type="boolean", name="ISCOBUDGET") */
+    /** @Column(type="boolean", name="IsCoBudget") */
     public $isCoBudget;
-
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
@@ -109,14 +103,6 @@ class BudgetHead extends EntityBase {
         return $this->isCoBudget;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -168,15 +154,6 @@ class BudgetHead extends EntityBase {
     function setIsCoBudget($isCoBudget) {
         $this->isCoBudget = $isCoBudget;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }
 
 ?>
