@@ -161,6 +161,25 @@ class Account extends EntityBase {
         return $this->accOwner;
     }
 
+    function getAccNameENG(){
+        return $this->accNameENG;
+    }
+
+    function getDesc(){
+        return $this->desc;
+    }
+
+    function getBankName(){
+        return $this->bankName;
+    }
+
+    function getPayDebit(){
+        return $this->payDebit;
+    }
+
+    function getCutOffType(){
+        return $this->cutOffType;
+    }
 
     function setId($id) {
         $this->id = $id;
@@ -236,5 +255,25 @@ class Account extends EntityBase {
 
     function setAccOwner($accOwner) {
         $this->accOwner = $accOwner;
+    }
+
+    function setAccNameENG($accNameENG){
+        $this->accNameENG = $accNameENG;
+    }
+
+    function setDesc($desc){
+        $this->desc = $desc;
+    }
+
+    function setBankName($bankName){
+        $this->bankName = $bankName;
+    }
+
+    function setPayDebit($payDebit){
+        $this->payDebit = $payDebit;
+    }
+
+    function setCutOffType($cutOffType){
+        $this->cutOffType = $cutOffType;
     }
 }
