@@ -4,31 +4,26 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="ACTIVITYTYPE")
+ * @Table(name="Activity_Type")
  */
 class ActivityType extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="ACTIVITYTYPEID")
+     * @Column(type="integer",length=11,name="ActivityTypeId")
      * @GeneratedValue
      */
     public $id;
 
-    /** @Column(type="string",length=50, name="ACTIVITYTYPENAME") */
+    /** @Column(type="string",length=50, name="ActivityTypeName") */
     public $actTypeName;
 
-    /** @Column(type="string",length=50, name="ACTIVITYTYPECODE") */
+    /** @Column(type="string",length=50, name="ActivityTypeCode") */
     public $actTypeCode;
 
-    /** @Column(type="string",length=1, name="ACTIVITYTYPESTATUS") */
+    /** @Column(type="string",length=1, name="ActivityTypeStatus") */
     public $actTypeStatus;
 
-    /** @Column(type="string",length=20, name="CREATEUSERID") */
-    public $creator;
-
-    /** @Column(type="string",length=20, name="LASTUPDATEUSERID") */
-    public $updater;
 
     function getId() {
         return $this->id;
@@ -46,14 +41,6 @@ class ActivityType extends EntityBase {
         return $this->actTypeStatus;
     }
 
-    function getCreator() {
-        return $this->creator;
-    }
-
-    function getUpdater() {
-        return $this->updater;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -69,13 +56,4 @@ class ActivityType extends EntityBase {
     function setActTypeStatus($actTypeStatus) {
         $this->actTypeStatus = $actTypeStatus;
     }
-
-    function setCreator($creator) {
-        $this->creator = $creator;
-    }
-
-    function setUpdater($updater) {
-        $this->updater = $updater;
-    }
-
 }
