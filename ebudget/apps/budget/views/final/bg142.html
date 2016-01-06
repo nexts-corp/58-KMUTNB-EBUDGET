@@ -309,7 +309,7 @@
     var l3dPlanId = '{{l3dPlanId}}';
     var fundgroupId = '{{fundgroupId}}';
     var deptId = '{{deptId}}';
-
+    var status = '';
     var typeName142Arr = [];
     var list142Arr = [];
     var sumArr = {};
@@ -405,7 +405,9 @@
                                     + '</tr>';
 
                             list142Arr[value3["id"]] = value3;
-                            sumArr[value["id"]][value2["id"]] += value3["salaryTotal"];
+                            if (value3["status"] == "Y") {
+                                sumArr[value["id"]][value2["id"]] += value3["salaryTotal"];
+                            }
                         });
                     });
                 });
@@ -584,12 +586,10 @@
                             + '</td>';
 
                     $('tr[data-tt-id="list' + id + '"]').html(input);
-                    if ($("#status").val() == "N") {
-                        $('tr[data-tt-id="list' + id + '"]').attr("class", "text-primary");
-                    } else {
-                        $('tr[data-tt-id="list' + id + '"]').attr("class", "");
+                    if (status == "Y") {
+                        sumArr[headerId][parentId] -= parseFloat(list142Arr[id]["salaryTotal"]);
                     }
-                    sumArr[headerId][parentId] -= parseFloat(list142Arr[id]["salaryTotal"]);
+
 
                     $("#form input").each(function () {
                         list142Arr[id][$(this).attr("name")] = $(this).val();
@@ -600,8 +600,13 @@
                     if (data.hasOwnProperty("path")) {
                         list142Arr[id]["path"] = data["path"];
                     }
+                    if ($("#status").val() == "N") {
+                        $('tr[data-tt-id="list' + id + '"]').attr("class", "text-primary");
+                    } else {
+                        $('tr[data-tt-id="list' + id + '"]').attr("class", "");
+                        sumArr[headerId][parentId] += parseFloat(list142Arr[id]["salaryTotal"]);
+                    }
 
-                    sumArr[headerId][parentId] += parseFloat(list142Arr[id]["salaryTotal"]);
                     sumtotal();
 
                     $("#panelForm").modal("hide");
@@ -657,6 +662,7 @@
 
             $('#remark').code(list142Arr[id]["remark"]);
             $("#status").val(list142Arr[id]["status"]);
+            status = list142Arr[id]["status"];
             var fileUpload = 0;
 
             $("#fileGroup").html('<div id="fileNew"></div><div id="fileBak"></div>');

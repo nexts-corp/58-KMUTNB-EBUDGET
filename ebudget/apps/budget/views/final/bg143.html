@@ -76,44 +76,44 @@
 
                 <section class="panel">
                     <div class="panel-body">
-                        <div class="col-md-12 text-right">
-                            <button class="requestBGbtn btn btn-success" type="button">ส่งข้อมูลคำของบประมาณ</button>
-                        </div>
+                        <!--                        <div class="col-md-12 text-right">
+                                                    <button class="requestBGbtn btn btn-success" type="button">ส่งข้อมูลคำของบประมาณ</button>
+                                                </div>-->
                         <div class="col-md-12 text-right">
                             <a href="#" id="expandAll"><i class="fa fa-plus-square"></i> แสดงทั้งหมด</a>&nbsp;/&nbsp;
                             <a href="#" id="collapseAll"><i class="fa fa-minus-square"></i> ซ่อนทั้งหมด</a>
                         </div>
                         <table id="table143" class="table table-bordered table-striped mb-none treetable">
                             <thead>
-                            <tr>
-                                <th class="text-center" style="vertical-align: middle;">ลำดับ</th>
-                                <th class="text-center" style="vertical-align: middle;">หมวดรายจ่าย-รายการ</th>
-                                <th class="text-center" style="vertical-align: middle;">
-                                    งบประมาณที่ได้รับการจัดสรรปีปัจจุบัน
-                                </th>
-                                <th class="text-center" style="vertical-align: middle;">
-                                    คำของบประมาณปีงบประมาณที่ขอตั้ง
-                                </th>
-                                <th class="text-center" style="vertical-align: middle;">คำชี้แจงเหตุผลสรุป</th>
-                                <th class="text-center" style="vertical-align: middle;">สถานะคำขอ</th>
-                                <th class="text-center" style="vertical-align: middle; min-width: 130px;">เครื่องมือ
-                                </th>
-                            </tr>
-                            <tr id="total">
-                                <th></th>
-                                '
-                                <th class="text-center" style="vertical-align: middle;">รวมทั้งสิ้น</th>
-                                <th class="text-right text-bold"></th>
-                                <th class="text-right text-bold"></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
+                                <tr>
+                                    <th class="text-center" style="vertical-align: middle;">ลำดับ</th>
+                                    <th class="text-center" style="vertical-align: middle;">หมวดรายจ่าย-รายการ</th>
+                                    <th class="text-center" style="vertical-align: middle;">
+                                        งบประมาณที่ได้รับการจัดสรรปีปัจจุบัน
+                                    </th>
+                                    <th class="text-center" style="vertical-align: middle;">
+                                        คำของบประมาณปีงบประมาณที่ขอตั้ง
+                                    </th>
+                                    <th class="text-center" style="vertical-align: middle;">คำชี้แจงเหตุผลสรุป</th>
+                                    <!--                                    <th class="text-center" style="vertical-align: middle;">สถานะคำขอ</th>-->
+                                    <th class="text-center" style="vertical-align: middle; min-width: 130px;">เครื่องมือ
+                                    </th>
+                                </tr>
+                                <tr id="total">
+                                    <th></th>
+                                    '
+                                    <th class="text-center" style="vertical-align: middle;">รวมทั้งสิ้น</th>
+                                    <th class="text-right text-bold"></th>
+                                    <th class="text-right text-bold"></th>
+                                    <th></th>
+                                    <!--                                    <th></th>-->
+                                    <th></th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td colspan="10" class="text-center">-</td>
-                            </tr>
+                                <tr>
+                                    <td colspan="10" class="text-center">-</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -188,6 +188,15 @@
                                                placeholder="คำอธิบายประกอบไฟล์">
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-bold" for="status">สถานะ</label>
+                                    <div class="col-md-12">
+                                        <select class="form-control input-sm" name="status" id="status">
+                                            <option value="Y">ใช้งาน</option>
+                                            <option value="N">ไม่ใช้งาน</option>
+                                        </select>
+                                    </div>
+                                </div>
 
                             </form>
                         </div>
@@ -213,26 +222,26 @@
                             <div class="table-responsive">
                                 <table class="table mb-none">
                                     <tbody>
-                                    <tr class="no-border">
-                                        <td class="col-md-4 text-right">หมวดรายจ่าย-รายการ :</td>
-                                        <td class="col-md-8 text-bold" id="operNameDel"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-md-4 text-right">คำอธิบาย :</td>
-                                        <td class="col-md-8 text-bold" id="operDescDel"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-md-4 text-right">งบประมาณที่ได้รับการจัดสรรปีปัจจุบัน :</td>
-                                        <td class="col-md-8 text-bold" id="bgHistoryDel"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-md-4 text-right">คำของบประมาณปีงบประมาณที่ขอตั้ง :</td>
-                                        <td class="col-md-8 text-bold" id="bgRequestDel"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-md-4 text-right">คำชี้แจง :</td>
-                                        <td class="col-md-8 text-bold" id="remarkDel"></td>
-                                    </tr>
+                                        <tr class="no-border">
+                                            <td class="col-md-4 text-right">หมวดรายจ่าย-รายการ :</td>
+                                            <td class="col-md-8 text-bold" id="operNameDel"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-4 text-right">คำอธิบาย :</td>
+                                            <td class="col-md-8 text-bold" id="operDescDel"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-4 text-right">งบประมาณที่ได้รับการจัดสรรปีปัจจุบัน :</td>
+                                            <td class="col-md-8 text-bold" id="bgHistoryDel"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-4 text-right">คำของบประมาณปีงบประมาณที่ขอตั้ง :</td>
+                                            <td class="col-md-8 text-bold" id="bgRequestDel"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-4 text-right">คำชี้แจง :</td>
+                                            <td class="col-md-8 text-bold" id="remarkDel"></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -258,7 +267,7 @@
     var l3dPlanId = '{{l3dPlanId}}';
     var fundgroupId = '{{fundgroupId}}';
     var deptId = '{{deptId}}';
-
+    var status = '';
     var typeName143Arr = [];
     var list143Arr = [];
     var sumArrbgHistory = {};
@@ -285,7 +294,7 @@
         setTimeout(function () {
             var dataJSON = JSON.stringify({param: param});
             var dataJSONEN = encodeURIComponent(dataJSON);
-            var datas = callAjax("{{_context_path}}/api/budget/draft143/view", "post", dataJSONEN, "json");
+            var datas = callAjax("{{_context_path}}/api/budget/final143/view", "post", dataJSONEN, "json");
             if (typeof datas !== "undefined" && datas !== null) {
                 var html = '';
                 var pCount = 0;
@@ -304,7 +313,7 @@
                             + '<td class="text-right text-bold"></td>'
                             + '<td class="text-right text-bold"></td>'
                             + '<td></td>'
-                            + '<td></td>'
+                            //   + '<td></td>'
                             + '<td></td>'
                             + '</tr>';
 
@@ -318,10 +327,10 @@
                                 + '<td class="text-bold" style="padding-left: 20px;">' + pCount + '.' + (++cCount) + ' ' + value2["typeName"] + '</td>'
                                 + '<td class="text-right text-bold"></td>'
                                 + '<td class="text-right text-bold"></td>'
-                                + '<td></td>'
+                                //     + '<td></td>'
                                 + '<td></td>'
                                 + '<td class="text-center">'
-                                + ' <button class="btn btn-sm btn-success addList" data-hid="' + value["id"] + '" data-pid="' + value2["id"] + '"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
+                                //  + ' <button class="btn btn-sm btn-success addList" data-hid="' + value["id"] + '" data-pid="' + value2["id"] + '"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
                                 + '</td>'
                                 + '</tr>';
 
@@ -330,24 +339,27 @@
                         sumArrbgRequest[value["id"]][value2["id"]] = 0;
 
                         $.each(value2["budget"], function (key3, value3) {
-                            html += '<tr data-tt-id="list' + value3["id"] + '" data-tt-parent-id="' + value2["id"] + '">'
+                            html += '<tr data-tt-id="list' + value3["id"] + '" data-tt-parent-id="' + value2["id"] + '" ' + (value3["status"] == "N" ? "class='text-primary'>" : ">")
                                     + '<td class="text-center"></td>'
                                     + '<td>' + value3["operName"] + '</br> &nbsp;' + value3["operDesc"] + '</td>'
                                     + '<td class="number text-right">' + checkZero(value3["bgHistory"]) + '</td>'
                                     + '<td class="number text-right">' + checkZero(value3["bgRequest"]) + '</td>'
                                     + '<td>' + value3["remark"] + '</td>'
-                                    + '<td class="text-bold text-sm">' + value3["statusDesc"] + '</td>'
+                                    //  + '<td class="text-bold text-sm">' + value3["statusDesc"] + '</td>'
                                     + '<td>'
-                                    + '<div class="btn-group">'
+                                    + '<div class="text-center">'
                                     + '<button class="btn btn-sm btn-warning editList" data-hid="' + value["id"] + '" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                    + '<button class="btn btn-sm btn-default deleteList"  data-hid="' + value["id"] + '" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                                    //     + '<button class="btn btn-sm btn-default deleteList"  data-hid="' + value["id"] + '" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-trash"></i> ลบ</button>'
                                     + '</div>'
                                     + '</td>'
                                     + '</tr>';
 
                             list143Arr[value3["id"]] = value3;
-                            sumArrbgHistory[value["id"]][value2["id"]] += parseFloat(value3["bgHistory"]);
-                            sumArrbgRequest[value["id"]][value2["id"]] += parseFloat(value3["bgRequest"]);
+                            if (value3["status"] == "Y") {
+                                sumArrbgHistory[value["id"]][value2["id"]] += parseFloat(value3["bgHistory"]);
+                                sumArrbgRequest[value["id"]][value2["id"]] += parseFloat(value3["bgRequest"]);
+                            }
+
                         });
                     });
                 });
@@ -386,7 +398,7 @@
                     $("#fileNew").html(
                             '<input type="file" id="attachment" name="attachment"> '
                             + '<a href="javascript: void(0);" onclick="$(\'#attachment\').val(\'\');">[Reset]</a>'
-                    ).show();
+                            ).show();
                     $("#fileBak").hide();
 
                     $("#panelForm").modal("show");
@@ -406,8 +418,10 @@
 
                             formData.append('budget', JSON.stringify(fdata["Budget"]));
 
-                            if ($('#attachment').length) formData.append('file', $('#attachment')[0].files[0]);
-                            else formData.append('file', '');
+                            if ($('#attachment').length)
+                                formData.append('file', $('#attachment')[0].files[0]);
+                            else
+                                formData.append('file', '');
 
                             insertBudget(headerId, parentId, formData, param)
                         } else {
@@ -450,7 +464,7 @@
 
     function insertBudget(headerId, parentId, dataJSONEN, param) {
         setTimeout(function () {
-            var datas = callAjaxFile("{{_context_path}}/api/budget/draft143/insert", "post", dataJSONEN, "json");
+            var datas = callAjaxFile("{{_context_path}}/api/budget/final143/insert", "post", dataJSONEN, "json");
             if (typeof datas !== "undefined" && datas !== null) {
                 var data = datas["result"];
                 if (data["result"] == true) {
@@ -508,7 +522,7 @@
 
     function updateBudget(id, headerId, parentId, dataJSONEN, param) {
         setTimeout(function () {
-            var datas = callAjaxFile("{{_context_path}}/api/budget/draft143/update", "post", dataJSONEN, "json");
+            var datas = callAjaxFile("{{_context_path}}/api/budget/final143/update", "post", dataJSONEN, "json");
             if (typeof datas !== "undefined" && datas !== null) {
                 var data = datas["result"];
                 if (data["result"] == true) {
@@ -521,32 +535,42 @@
                             + '<td class="number text-right">' + checkZero($("#bgHistory").val()) + '</td>'
                             + '<td class="number text-right">' + checkZero($("#bgRequest").val()) + '</td>'
                             + '<td>' + $("#remark").code() + '</td>'
-                            + '<td class="text-bold text-sm">' + list143Arr[id]["statusDesc"] + '</td>'
+                            // + '<td class="text-bold text-sm">' + list143Arr[id]["statusDesc"] + '</td>'
                             + '<td>'
-                            + '<div class="btn-group">'
+                            + '<div class="text-center">'
                             + '<button class="btn btn-sm btn-warning editList" data-hid="' + headerId + '" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                            + '<button class="btn btn-sm btn-default deleteList"  data-hid="' + headerId + '" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-trash"></i> ลบ</button>'
+                            //  + '<button class="btn btn-sm btn-default deleteList"  data-hid="' + headerId + '" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-trash"></i> ลบ</button>'
                             + '</div>'
                             + '</td>';
 
                     $('tr[data-tt-id="list' + id + '"]').html(input);
-
-                    sumArrbgHistory[headerId][parentId] -= parseFloat(list143Arr[id]["bgHistory"]);
-                    sumArrbgRequest[headerId][parentId] -= parseFloat(list143Arr[id]["bgRequest"]);
+                    // console.log("ค่าเดิม " + sumArrbgHistory[headerId][parentId] + " " + sumArrbgRequest[headerId][parentId]);
+                    if (status == "Y") {
+                        sumArrbgHistory[headerId][parentId] -= parseFloat(list143Arr[id]["bgHistory"]);
+                        sumArrbgRequest[headerId][parentId] -= parseFloat(list143Arr[id]["bgRequest"]);
+                    }
 
                     $("#form input,#operDesc").each(function () {
                         list143Arr[id][$(this).attr("name")] = $(this).val();
                     });
 
                     list143Arr[id]["remark"] = $("#remark").code();
-
+                    list143Arr[id]["status"] = $("#status").val();
                     if (data.hasOwnProperty("path")) {
                         list143Arr[id]["path"] = data["path"];
                     }
 
-//                  sumArr[headerId][parentId] += parseFloat(list143Arr[id]["salaryTotal"]);
-                    sumArrbgHistory[headerId][parentId] += parseFloat(list143Arr[id]["bgHistory"]);
-                    sumArrbgRequest[headerId][parentId] += parseFloat(list143Arr[id]["bgRequest"]);
+                    // console.log("หลังลบจำนวนเดิม " + sumArrbgHistory[headerId][parentId] + " " + sumArrbgRequest[headerId][parentId]);
+                    if ($("#status").val() == "N") {
+                        // console.log("N");
+                        $('tr[data-tt-id="list' + id + '"]').attr("class", "text-primary");
+                    } else {
+                        //console.log("Y");
+                        $('tr[data-tt-id="list' + id + '"]').attr("class", "");
+                        sumArrbgHistory[headerId][parentId] += parseFloat(list143Arr[id]["bgHistory"]);
+                        sumArrbgRequest[headerId][parentId] += parseFloat(list143Arr[id]["bgRequest"]);
+                    }
+                    // console.log("หลังบวกค่าใหม่ " + sumArrbgHistory[headerId][parentId] + " " + sumArrbgRequest[headerId][parentId]);
                     sumtotal();
 
                     $("#panelForm").modal("hide");
@@ -562,7 +586,7 @@
 
     function deleteBudget(id, headerId, parentId, dataJSONEN) {
 
-        var datas = callAjax("{{_context_path}}/api/budget/draft143/delete", "post", dataJSONEN, "json");
+        var datas = callAjax("{{_context_path}}/api/budget/final143/delete", "post", dataJSONEN, "json");
         if (typeof datas !== "undefined" && datas !== null) {
             if (datas["result"] == true) {
                 sumArrbgHistory[headerId][parentId] -= parseFloat(list143Arr[id]["bgHistory"]);
@@ -602,7 +626,8 @@
             });
 
             $('#remark').code(list143Arr[id]["remark"]);
-
+            $("#status").val(list143Arr[id]["status"]);
+            status = list143Arr[id]["status"];
             var fileUpload = 0;
 
             $("#fileGroup").html('<div id="fileNew"></div><div id="fileBak"></div>');
@@ -613,14 +638,14 @@
                         '<i class="fa fa-file-o"></i>'
                         + '<a href="javascript: void(0);" style="color:blue !important;" onclick="downloadFile(\'' + list143Arr[id]["path"] + '\');"> ' + list143Arr[id]["path"] + '</a> &nbsp;&nbsp;'
                         + '<a href="javascript: void(0);" style="color:blue !important;" title="ลบ" class="ic-edit" id="deleteFile"><i class="fa fa-trash"></i></a>'
-                );
+                        );
 
                 $("#deleteFile").click(function () {
                     $("#fileNew").html(
                             '<input type="file" id="attachment" name="attachment"> '
                             + '<a href="javascript: void(0);" id="fileOld" style="color: blue !important;">[ไฟล์เดิม]</a>&nbsp;&nbsp;'
                             + '<a href="javascript: void(0);" onclick="$(\'#attachment\').val(\'\');">[Reset]</a>'
-                    ).show();
+                            ).show();
                     $("#fileBak").hide();
                     fileUpload = 1;
 
@@ -635,7 +660,7 @@
                 $("#fileNew").html(
                         '<input type="file" id="attachment" name="attachment"> '
                         + '<a href="javascript: void(0);" onclick="$(\'#attachment\').val(\'\');">[Reset]</a>'
-                ).show();
+                        ).show();
                 $("#fileBak").hide();
                 fileUpload = 1;
             }
@@ -656,8 +681,10 @@
                     formData.append('fileUpload', fileUpload);
                     formData.append('budget', JSON.stringify(fdata["Budget"]));
 
-                    if ($('#attachment').length) formData.append('file', $('#attachment')[0].files[0]);
-                    else formData.append('file', '');
+                    if ($('#attachment').length)
+                        formData.append('file', $('#attachment')[0].files[0]);
+                    else
+                        formData.append('file', '');
 
                     updateBudget(id, headerId, parentId, formData, param)
                 } else {
@@ -710,7 +737,7 @@
             data["id"] = id;
         }
 
-        $("#form input, #form textarea").each(function (i) {
+        $("#form input, #form textarea, #form select").each(function (i) {
             var fname = $(this).attr("name");
             var fvalue = $(this).val();
             data[fname] = fvalue;
