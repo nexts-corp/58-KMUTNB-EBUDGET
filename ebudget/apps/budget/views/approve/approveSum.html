@@ -567,7 +567,11 @@ function loadApprove(){
                 
                 $('#ApproveShowEdit').modal('show');
                 
-                $("#ApproveSaveEdit").click(function () { 
+
+                
+                
+                
+                $("#ApproveSaveEdit").unbind("click").click(function () { 
                     
                     var jdata = [];
                     var OpjectData={};
@@ -576,10 +580,10 @@ function loadApprove(){
                         var data = {};
                         //$('#b'+value).val(valueApprove[IndexArr]["data"][value]);
                         //console.log(value);
-                        data['DepartmentId'] = $('#DepartmentId').val();
-                        data['BudgetPeriodId'] = year;
-                        data['BudgetTypeId'] = value;
-                        data['BudgetBeforeReview']=$('#b'+value).val();
+                        data['deptId'] = $('#DepartmentId').val();
+                        data['bgPeriodId'] = year;
+                        data['bgTypeId'] = value;
+                        data['bgAfterReview']=$('#b'+value).val();
                         //jdata["data"].push("OK");
                         //console.log(value);
                         jdata.push(data);
