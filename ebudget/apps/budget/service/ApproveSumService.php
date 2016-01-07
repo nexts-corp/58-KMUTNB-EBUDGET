@@ -9,6 +9,7 @@
 namespace apps\budget\service;
 
 
+use apps\budget\interfaces\apps;
 use apps\budget\interfaces\IApproveSumService;
 use apps\budget\interfaces\year;
 use th\co\bpg\cde\core\CServiceBase;
@@ -33,22 +34,6 @@ class ApproveSumService extends CServiceBase implements IApproveSumService
 
     public function approveSumBudgetRequest($budgetPeriodId)
     {
-
-//        $sql = " SELECT bgAll.*,bgType.BUDGETTYPENAME as bgTypeName FROM " .
-//            "(" .
-//            "SELECT formType,typeId,SUM(bgSum) as Summary FROM " .
-//            "(" .
-//            "SELECT '140' as formType,BUDGETHEADID as headId,BUDGETTYPEID as TypeId,BUDGETSUMMARY as bgSum FROM BUDGET140 WHERE BUDGETPERIODID = " . $year . " AND TRACKINGSTATUSID = 3 UNION ALL " .
-//            "SELECT '141' as formType,BUDGETHEADID as headId,BUDGETTYPEID as TypeId,BUDGETSUMMARY as bgSum FROM BUDGET141 WHERE BUDGETPERIODID = " . $year . " AND TRACKINGSTATUSID = 3  UNION ALL " .
-//            "SELECT '142' as formType,BUDGETHEADID as headId,BUDGETTYPEID as TypeId,BUDGETSUMMARY as bgSum FROM BUDGET142 WHERE BUDGETPERIODID = " . $year . " AND TRACKINGSTATUSID = 3  UNION ALL " .
-//            "SELECT '143' as formType,BUDGETHEADID as headId,BUDGETTYPEID as TypeId,BUDGETSUMMARY as bgSum FROM BUDGET143 WHERE BUDGETPERIODID = " . $year . " AND TRACKINGSTATUSID = 3  UNION ALL " .
-//            "SELECT '144' as formType,BUDGETHEADID as headId,BUDGETTYPEID as TypeId,BUDGETSUMMARY as bgSum FROM BUDGET144 WHERE BUDGETPERIODID = " . $year . " AND TRACKINGSTATUSID = 3  UNION ALL " .
-//            "SELECT '145' as formType,BUDGETHEADID as headId,BUDGETTYPEID as TypeId,BUDGETSUMMARY as bgSum FROM BUDGET145 WHERE BUDGETPERIODID = " . $year . " AND TRACKINGSTATUSID = 3  UNION ALL " .
-//            "SELECT '146' as formType,BUDGETHEADID as headId,BUDGETTYPEID as TypeId,BUDGETSUMMARY as bgSum FROM BUDGET146 WHERE BUDGETPERIODID = " . $year . " AND TRACKINGSTATUSID = 3" .
-//            ") as BUDGETALL GROUP BY TypeId,formType " .
-//
-//            ") bgAll INNER JOIN BUDGETTYPE bgType ON bgAll.typeId = bgType.BUDGETTYPEID ORDER BY bgAll.TypeId ";
-
 
         $sql = 'exec SP_SUM_BG ' . $budgetPeriodId . ',"G"';
         $status = $this->datacontext->pdoInsert($sql);
@@ -94,18 +79,39 @@ class ApproveSumService extends CServiceBase implements IApproveSumService
 
     }
 
-    public function viewApproveSum($year) {
+    public function viewApproveSum($year)
+    {
         $view = new CJView("approve/approveSum", CJViewType::HTML_VIEW_ENGINE);
-        $view->year=$year;
+        $view->year = $year;
         return $view;
     }
 
-    public function LoadpproveSum($year) {
-        
+    public function LoadpproveSum($year)
+    {
+
         $sql = "SELECT l.DEPARTMENTNAME,* FROM Budget_Summarize bs
                 INNER JOIN L3D_DEPARTMENT l ON bs.DepartmentId = l.DEPARTMENTID";
         $result = $this->datacontext->pdoQuery($sql);
         return $result;
     }
 
+
+    public function updateApproveSum($bgSumList)
+    {
+        $sql = '';
+        $status = false;
+        foreach ($bgSumList as $key1 => $value) {
+
+            $sql = "UPDATE Budget_Summarize SET BudgetAfterReview = " . $value->bgAfterReview . ",BudgetFinal = " . $value->bgAfterReview . " WHERE " .
+                "BudgetPeriodId = " . $value->bgPeriodId . " AND BudgetTypeId = " . $value->bgTypeId . " AND DepartmentId = " . $value->deptId . "";
+            if ($this->datacontext->pdoUpdate($sql)) {
+                $status = true;
+            } else {
+                return false;
+            }
+        }
+
+        return $status;
+
+    }
 }
