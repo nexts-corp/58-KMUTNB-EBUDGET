@@ -594,86 +594,32 @@ function loadApprove(){
                     var result=callAjax('{{_context_path}}/api/budget/approveSum/updateApproveSum', 'post', jsonEncode(OpjectData),'json');
 
                     
-                    tr.find("td").eq(0).html("Test");
+                    $.each(bgId, function (key, value) {
+                        
+                        tr.find("td").eq(key+1).html(checkValue($('#b'+value).val()));
+                        
+                    });
+                    
+                    
                     $('#ApproveShowEdit').modal('hide');
                 });
                 
             });
-            /*$('.ApproveEdit').click(function () {
-                
-                var DepartmentId=$(this).attr("data-DepartmentId");
-                var Rows=$(this).closest("tr").index();
-                var IndexArr;
-                
-                $.each(valueApprove, function (key, value) {
-                    if(value["DepartmentId"]==DepartmentId){
-                        IndexArr=key;
-                    }
-                });
-                $.each(bgId, function (key, value) {
-                    $('#b'+value).val(valueApprove[IndexArr]["data"][value]);
-                });
-                
-                $('#DepartmentId').val(DepartmentId);
-                $('#Rows').val(Rows);
-                $('#IndexArr').val(IndexArr);
-                
-                Rows.find("td").eq(0).html("test");
-                
-                $('#ApproveShowEdit').modal('show');
-                
-                $("#ApproveSaveEdit").click(function () {              
-                
-                var jdata = [];
-                var OpjectData={};
-                
-                $.each(bgId, function (key, value) {
-                    var data = {};
-                    //$('#b'+value).val(valueApprove[IndexArr]["data"][value]);
-                    //console.log(value);
-                    data['DepartmentId'] = $('#DepartmentId').val();
-                    data['BudgetPeriodId'] = year;
-                    data['BudgetTypeId'] = value;
-                    data['BudgetBeforeReview']=$('#b'+value).val();
-                    //jdata["data"].push("OK");
-                    console.log(value);
-                    jdata.push(data);
-                });
-                OpjectData['data'] = jdata;
 
-                
-                
-                //t.fnUpdate( 2, $('#table tr#3692')[0]);
-
-                var result=callAjax('{{_context_path}}/api/budget/approveSum/updateApproveSum', 'post', jsonEncode(OpjectData),'json');
-                
-                
-            });
-
-            });*/
             
-            
-            
-            
-            
-    /*
-    var html="";
+}
+function checkValue(data){
     
-    for(var i=0; i<valueApprove.length; i++){
+    if(data!=null){
         
-        html+='<tr>';
-        html+='<td colspan="14">'+valueApprove[i]["Dept"]+'<td>';
-        //html+='';
-        html+='</tr>';
-        html+='<tr>';
-        html+='<td>ยอดเงิน</td>'
-        html+='<td>'+valueApprove[i]["data"][bgId[i]]["BudgetBeforeReview"]+'</td>';
-        html+='</tr>';
+        return $.number(data,2);
+        
+    }else{
+        
+        return "-";
         
     }
-    */
     
-    //$('.loadApprove').html(html);
 }
 </script>
     
