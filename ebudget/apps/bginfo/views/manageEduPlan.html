@@ -221,7 +221,7 @@
         if(typeof datas !== "undefined" && datas !== null){
             var html = '<option value="">- เลือกแผนกลยุทธ์ -</option>';
             $.each(datas["lists"], function(key, value){
-                html += '<option value="'+value["id"]+'">'+value["typeName"]+'</option>';
+                html += '<option value="'+value["typeId"]+'">'+value["typeName"]+'</option>';
             });
 
             return html;
@@ -567,19 +567,21 @@
     function dataObject(planType, parentId, id ){
         var data = {};
 
-        if(id != null) data["id"] = id;
-
         if(planType == "issue"){
             data["typeId"] = $("#typeId").val();
+            if(id != null) data["issueId"] = id;
         }
         else if(planType == "target"){
             data["issueId"] = parentId;
+            if(id != null) data["targetId"] = id;
         }
         else if(planType == "kpi"){
             data["targetId"] = parentId;
+            if(id != null) data["kpiId"] = id;
         }
         else if(planType == "strategy"){
             data["targetId"] = parentId;
+            if(id != null) data["strategyId"] = id;
         }
         $(".form-"+planType+" input[type=text], .form-"+planType+" textarea").each(function (i) {
             var fname = $(this).attr("name");

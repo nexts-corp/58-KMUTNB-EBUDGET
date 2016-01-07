@@ -52,12 +52,12 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
         $target = [];
 
         $sql1 = "SELECT"
-                ." issue.id AS issueId, issue.issueSeq, issue.issueName,"
-                ." target.id AS targetId, target.targetSeq, target.targetName,"
-                ." kpi.id AS kpiId, kpi.kpiSeq, kpi.kpiName"
+                ." issue.issueId, issue.issueSeq, issue.issueName,"
+                ." target.targetId, target.targetSeq, target.targetName,"
+                ." kpi.kpiId, kpi.kpiSeq, kpi.kpiName"
             ." FROM ".$this->pathEnt."\\AffirmativeIssue issue"
-            ." LEFT JOIN ".$this->pathEnt."\\AffirmativeTarget target WITH target.issueId = issue.id"
-            ." LEFT JOIN ".$this->pathEnt."\\AffirmativeKpi kpi WITH kpi.targetId = target.id"
+            ." LEFT JOIN ".$this->pathEnt."\\AffirmativeTarget target WITH target.issueId = issue.issueId"
+            ." LEFT JOIN ".$this->pathEnt."\\AffirmativeKpi kpi WITH kpi.targetId = target.targetId"
             ." WHERE issue.typeId = :typeId"
             ." ORDER BY issue.issueSeq, target.targetSeq, kpi.kpiSeq ASC";
         $param1 = array(
@@ -83,12 +83,12 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
         }
 
         $sql2 = "SELECT"
-                ." issue.id AS issueId, issue.issueSeq, issue.issueName,"
-                ." target.id AS targetId, target.targetSeq, target.targetName,"
-                ." strategy.id AS strategyId, strategy.strategySeq, strategy.strategyName"
+                ." issue.issueId, issue.issueSeq, issue.issueName,"
+                ." target.targetId, target.targetSeq, target.targetName,"
+                ." strategy.strategyId, strategy.strategySeq, strategy.strategyName"
             ." FROM ".$this->pathEnt."\\AffirmativeIssue issue"
-            ." LEFT JOIN ".$this->pathEnt."\\AffirmativeTarget target WITH target.issueId = issue.id"
-            ." LEFT JOIN ".$this->pathEnt."\\AffirmativeStrategy strategy WITH strategy.targetId = target.id"
+            ." LEFT JOIN ".$this->pathEnt."\\AffirmativeTarget target WITH target.issueId = issue.issueId"
+            ." LEFT JOIN ".$this->pathEnt."\\AffirmativeStrategy strategy WITH strategy.targetId = target.targetId"
             ." WHERE issue.typeId = :typeId"
             ." ORDER BY issue.issueSeq, target.targetSeq, strategy.strategySeq ASC";
         $param2 = array(
@@ -183,7 +183,7 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
         $return = true;
 
         $issue = new \apps\common\entity\AffirmativeIssue();
-        $issue->id = $id;
+        $issue->issueId = $id;
         $dIssue = $this->datacontext->getObject($issue);
 
         $target = new \apps\common\entity\AffirmativeTarget();
@@ -192,14 +192,14 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
 
         foreach($dTarget as $key => $value){
             $kpi = new \apps\common\entity\AffirmativeKpi();
-            $kpi->targetId = $value->id;
+            $kpi->targetId = $value->targetId;
             $dKpi = $this->datacontext->getObject($kpi);
             if(!$this->datacontext->removeObject($dKpi)){
                 return $this->datacontext->getLastMessage();
             }
 
             $strategy = new \apps\common\entity\AffirmativeStrategy();
-            $strategy->targetId = $value->id;
+            $strategy->targetId = $value->targetId;
             $dStrategy = $this->datacontext->getObject($strategy);
             if(!$this->datacontext->removeObject($dStrategy)){
                 return $this->datacontext->getLastMessage();
@@ -239,19 +239,19 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
         $return = true;
 
         $target = new \apps\common\entity\AffirmativeTarget();
-        $target->id = $id;
+        $target->targetId = $id;
         $dTarget = $this->datacontext->getObject($target);
 
         foreach($dTarget as $key => $value){
             $kpi = new \apps\common\entity\AffirmativeKpi();
-            $kpi->targetId = $value->id;
+            $kpi->targetId = $value->targetId;
             $dKpi = $this->datacontext->getObject($kpi);
             if(!$this->datacontext->removeObject($dKpi)){
                 return $this->datacontext->getLastMessage();
             }
 
             $strategy = new \apps\common\entity\AffirmativeStrategy();
-            $strategy->targetId = $value->id;
+            $strategy->targetId = $value->targetId;
             $dStrategy = $this->datacontext->getObject($strategy);
             if(!$this->datacontext->removeObject($dStrategy)){
                 return $this->datacontext->getLastMessage();
@@ -287,7 +287,7 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
         $return = true;
 
         $kpi = new \apps\common\entity\AffirmativeKpi();
-        $kpi->id = $id;
+        $kpi->kpiId = $id;
         $dKpi = $this->datacontext->getObject($kpi);
         if(!$this->datacontext->removeObject($dKpi)){
             return $this->datacontext->getLastMessage();
@@ -317,7 +317,7 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
         $return = true;
 
         $strategy = new \apps\common\entity\AffirmativeStrategy();
-        $strategy->id = $id;
+        $strategy->strategyId = $id;
         $dStrategy = $this->datacontext->getObject($strategy);
         if(!$this->datacontext->removeObject($dStrategy)){
             return $this->datacontext->getLastMessage();

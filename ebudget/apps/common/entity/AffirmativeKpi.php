@@ -13,7 +13,7 @@ class AffirmativeKpi extends EntityBase {
      * @Column(type="integer",length=11,name="AffirmativeKpiId")
      * @GeneratedValue
      */
-    public $id;
+    public $kpiId;
 
     /** @Column(type="integer",length=11, name="AffirmativeKpiSeq") */
     public $kpiSeq;
@@ -25,8 +25,8 @@ class AffirmativeKpi extends EntityBase {
     public $targetId;
 
 
-    function getId() {
-        return $this->id;
+    function getKpiId() {
+        return $this->kpiId;
     }
 
     function getKpiSeq() {
@@ -41,8 +41,8 @@ class AffirmativeKpi extends EntityBase {
         return $this->targetId;
     }
 
-    function setId($id) {
-        $this->id = $id;
+    function setKpiId($kpiId) {
+        $this->kpiId = $kpiId;
     }
 
     function setKpiSeq($kpiSeq) {

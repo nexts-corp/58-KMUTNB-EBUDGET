@@ -20,7 +20,6 @@ class CenterService extends CServiceBase implements ICenterService {
     }
 
     public function checkApprove() {
-        //$center = new \apps\affirmative\entity\AffirmativeCenter();
         $center = new \apps\common\entity\AffirmativeCenter();
         $center->periodCode = $this->getPeriod()->year;
         $data = $this->datacontext->getObject($center);
@@ -34,7 +33,7 @@ class CenterService extends CServiceBase implements ICenterService {
             }
         }
         else {
-            return false;
+            return true;
         }
     }
 
@@ -116,25 +115,25 @@ class CenterService extends CServiceBase implements ICenterService {
         $mainParam = array("periodCode" => $this->getPeriod()->year);
         $mainData = $this->datacontext->getObject($mainSql, $mainParam);
         foreach ($mainData as $keyMain => $valueMain) {
-            $typeSql = "select v from apps\\affirmative\\entity\\AffirmativeType v where v.mainId = :mainId  order by v.typeSeq";
-            $typeParam = array("mainId" => $valueMain->mainId);
+            $typeSql = "select v from apps\\common\\entity\\AffirmativeType v where v.mainId = :mainId  order by v.typeSeq";
+            $typeParam = array("mainId" => $valueMain->id);
             $typeData = $this->datacontext->getObject($typeSql, $typeParam);
             $mainData[$keyMain]->type = $typeData;
             foreach ($typeData as $keyType => $valueType) {
-                $issueSql = "select v from apps\\affirmative\\entity\\AffirmativeIssue v where v.typeId = :typeId  order by v.issueSeq";
-                $issueParam = array("typeId" => $valueType->typeId);
+                $issueSql = "select v from apps\\common\\entity\\AffirmativeIssue v where v.typeId = :typeId  order by v.issueSeq";
+                $issueParam = array("typeId" => $valueType->id);
                 $issueData = $this->datacontext->getObject($issueSql, $issueParam);
                 $mainData[$keyMain]->type[$keyType]->issue = $issueData;
-                if (array_key_exists($valueType->typeId, $typeArr)) {
-                    $mainData[$keyMain]->type[$keyType]->kpi = $typeArr[$valueType->typeId];
+                if (array_key_exists($valueType->id, $typeArr)) {
+                    $mainData[$keyMain]->type[$keyType]->kpi = $typeArr[$valueType->id];
                 }
                 foreach ($issueData as $keyIssue => $valueIssue) {
-                    $targetSql = "select v from apps\\affirmative\\entity\\AffirmativeTarget v where v.issueId = :issueId  order by v.targetSeq";
-                    $targetParam = array("issueId" => $valueIssue->issueId);
+                    $targetSql = "select v from apps\\common\\entity\\AffirmativeTarget v where v.issueId = :issueId  order by v.targetSeq";
+                    $targetParam = array("issueId" => $valueIssue->id);
                     $targetData = $this->datacontext->getObject($targetSql, $targetParam);
                     $mainData[$keyMain]->type[$keyType]->issue[$keyIssue]->target = $targetData;
                     foreach ($targetData as $keyTarget => $valueTarget) {
-                        if (array_key_exists($valueTarget->targetId, $targetArr)) {
+                        if (array_key_exists($valueTarget->id, $targetArr)) {
                             $mainData[$keyMain]->type[$keyType]->issue[$keyIssue]->target[$keyTarget]->kpi = $targetArr[$valueTarget->targetId];
                         }
                     }

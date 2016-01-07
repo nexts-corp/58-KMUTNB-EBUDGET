@@ -13,7 +13,7 @@ class AffirmativeType extends EntityBase {
      * @Column(type="integer",length=11,name="AffirmativeTypeId")
      * @GeneratedValue
      */
-    public $id;
+    public $typeId;
 
     /** @Column(type="integer",length=11, name="AffirmativeTypeSeq") */
     public $typeSeq;
@@ -30,8 +30,8 @@ class AffirmativeType extends EntityBase {
     /** @Column(type="string",length=1, name="HasIssue") */
     public $hasIssue;
 
-    function getId() {
-        return $this->id;
+    function getTypeId() {
+        return $this->typeId;
     }
 
     function getTypeSeq(){
@@ -54,8 +54,8 @@ class AffirmativeType extends EntityBase {
         return $this->hasIssue;
     }
 
-    function setId($id) {
-        $this->id = $id;
+    function setTypeId($typeId) {
+        $this->typeId = $typeId;
     }
 
     function setTypeSeq($typeSeq){

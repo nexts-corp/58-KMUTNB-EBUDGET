@@ -13,7 +13,7 @@ class AffirmativeTarget extends EntityBase {
      * @Column(type="integer",length=11,name="AffirmativeTargetId")
      * @GeneratedValue
      */
-    public $id;
+    public $targetId;
 
     /** @Column(type="integer",length=11, name="AffirmativeTargetSeq") */
     public $targetSeq;
@@ -24,8 +24,8 @@ class AffirmativeTarget extends EntityBase {
     /** @Column(type="integer",length=11, name="AffirmativeIssueId") */
     public $issueId;
 
-    function getId() {
-        return $this->id;
+    function getTargetId() {
+        return $this->targetId;
     }
 
     function getTargetSeq() {
@@ -40,8 +40,8 @@ class AffirmativeTarget extends EntityBase {
         return $this->issueId;
     }
 
-    function setId($id) {
-        $this->id = $id;
+    function setTargetId($targetId) {
+        $this->targetId = $targetId;
     }
 
     function setTargetSeq($targetSeq) {

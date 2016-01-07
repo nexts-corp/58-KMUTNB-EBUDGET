@@ -13,7 +13,7 @@ class AffirmativeStrategy extends EntityBase {
      * @Column(type="integer",length=11,name="AffirmativeStrategyId")
      * @GeneratedValue
      */
-    public $id;
+    public $strategyId;
 
     /** @Column(type="integer",length=11, name="AffirmativeStrategySeq") */
     public $strategySeq;
@@ -24,8 +24,8 @@ class AffirmativeStrategy extends EntityBase {
     /** @Column(type="integer",length=11, name="AffirmativeTargetId") */
     public $targetId;
 
-    function getId() {
-        return $this->id;
+    function getStrategyId() {
+        return $this->strategyId;
     }
 
     function getStrategySeq() {
@@ -40,8 +40,8 @@ class AffirmativeStrategy extends EntityBase {
         return $this->targetId;
     }
 
-    function setId($id) {
-        $this->id = $id;
+    function setStrategyId($strategyId) {
+        $this->strategyId = $strategyId;
     }
 
     function setStrategySeq($strategySeq) {

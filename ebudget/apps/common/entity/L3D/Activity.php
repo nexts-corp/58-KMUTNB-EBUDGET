@@ -37,67 +37,78 @@ class Activity extends EntityBase {
     /** @Column(type="string",length=1, name="ReceiveAct") */
     public $receiveAct;
 
-    function getId() {
+    /** @Column(type="string", length=100, name="ActivityNameENG") */
+    public $actNameENG;
+
+    function getId(){
         return $this->id;
     }
 
-    function getProjectId() {
+    function getProjectId(){
         return $this->projectId;
     }
 
-    function getActivityName() {
-        return $this->activityName;
+    function getActName(){
+        return $this->actName;
     }
 
-    function getDepartmentId() {
+    function getDepartmentId(){
         return $this->departmentId;
     }
 
-    function getActivityStatus() {
-        return $this->activityStatus;
+    function getActStatus(){
+        return $this->actStatus;
     }
 
-    function getActivityType() {
-        return $this->activityType;
+    function getActType(){
+        return $this->actType;
     }
 
-    function getActivityLevel() {
-        return $this->activityLevel;
+    function getActLevel(){
+        return $this->actLevel;
     }
 
-    function getReceiveActivity() {
-        return $this->receiveActivity;
+    function getReceiveAct(){
+        return $this->receiveAct;
     }
 
-    function setId($id) {
+    function getActNameENG(){
+        return $this->actNameENG;
+    }
+
+    function setId($id){
         $this->id = $id;
     }
 
-    function setProjectId($projectId) {
+    function setProjectId($projectId){
         $this->projectId = $projectId;
     }
 
-    function setActivityName($activityName) {
-        $this->activityName = $activityName;
+    function setActName($actName){
+        $this->actName = $actName;
     }
 
-    function setDepartmentId($departmentId) {
+    function setDepartmentId($departmentId){
         $this->departmentId = $departmentId;
     }
 
-    function setActivityStatus($activityStatus) {
-        $this->activityStatus = $activityStatus;
+    function setActStatus($actStatus){
+        $this->actStatus = $actStatus;
     }
 
-    function setActivityType($activityType) {
-        $this->activityType = $activityType;
+    function setActType($actType){
+        $this->actType = $actType;
     }
 
-    function setActivityLevel($activityLevel) {
-        $this->activityLevel = $activityLevel;
+    function setActLevel($actLevel){
+        $this->actLevel = $actLevel;
     }
 
-    function setReceiveActivity($receiveActivity) {
-        $this->receiveActivity = $receiveActivity;
+    function setReceiveAct($receiveAct){
+        $this->receiveAct = $receiveAct;
+    }
+
+    function setActNameENG($actNameENG){
+        $this->actNameENG = $actNameENG;
     }
 }
