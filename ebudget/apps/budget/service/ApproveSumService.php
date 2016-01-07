@@ -13,6 +13,12 @@ use apps\budget\interfaces\IApproveSumService;
 use apps\budget\interfaces\year;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
+use th\co\bpg\cde\collection\CJView;
+use th\co\bpg\cde\collection\CJViewType;
+use apps\budget\interfaces\IViewService;
+
+
+use apps\common\service\LookupService;
 
 class ApproveSumService extends CServiceBase implements IApproveSumService
 {
@@ -47,4 +53,19 @@ class ApproveSumService extends CServiceBase implements IApproveSumService
 
         return $result;
     }
+
+    public function viewApproveSum($year) {
+        $view = new CJView("approve/approveSum", CJViewType::HTML_VIEW_ENGINE);
+        $view->year=$year;
+        return $view;
+    }
+
+    public function LoadpproveSum($year) {
+        
+        $sql = "SELECT l.DEPARTMENTNAME,* FROM Budget_Summarize bs
+                INNER JOIN L3D_DEPARTMENT l ON bs.DepartmentId = l.DEPARTMENTID";
+        $result = $this->datacontext->pdoQuery($sql);
+        return $result;
+    }
+
 }

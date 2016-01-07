@@ -70,6 +70,14 @@ interface ILookupService {
     public function listYear();
 
     /**
+     * @name listYearOld
+     * @uri /listYearOld
+     * @return String[] lists Description
+     * @description ข้อมูลปีงบประมาณนับจากอดีต
+     */
+    public function listYearOld();
+    
+    /**
      * @name listBudgetSource
      * @uri /listBudgetSource
      * @return String[] lists Description

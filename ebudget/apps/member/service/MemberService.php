@@ -206,11 +206,9 @@ class MemberService extends CServiceBase implements IMemberService {
         $result = array();
         foreach ($listRole as $key => $value) {
             
-            $listRole[$key]->id = $value->id;
-            $listRole[$key]->role = $value->role;
+            $listRole[$key]->year = $value->year;
             
         }
-        $view->listRole=$listRole;
         
         return $view;
     }

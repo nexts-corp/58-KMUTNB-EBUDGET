@@ -12,7 +12,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h1 id="navBgDept" class="none-padding">ตรวจสอบคำของบประมาณแผ่นดิน</h1>
+                    <h1 class="none-padding">ตรวจสอบคำของบประมาณแผ่นดิน</h1>
                 </div>
             </div>
         </div>
@@ -24,7 +24,7 @@
         <div class="container">
             <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
                 <li class="active">
-                    <button class="btn btn-success goChoice"><i class="fa fa-plus-circle"> เพิ่มคำขอ</i></button>
+                    <button id="BtnSave" disabled="disabled" class="btn btn-success"><i class="fa fa-floppy-o"> สรุปยอดงบประมาณ</i></button>
                 </li>
             </ul>
         </div>
@@ -155,9 +155,25 @@
 <script type="text/javascript">
     var listArr = {};
     var callCount = 0
+    var BtnStatus=true;
+    var budgetPeriodId=0;
     $(function(){
         listsAllBudgetRequest();
-
+        
+        
+        if(BtnStatus==true){
+            $("#BtnSave").removeAttr("disabled");
+        }
+        
+        //approveSum/approveSumBg/2558
+        
+        $("#BtnSave").click(function () {
+            //alert(budgetPeriodId);
+            saveApprove(budgetPeriodId);
+            
+            //approveSum/approveSumBg/2558
+            
+        });
         $("button.goChoice").unbind("click").click(function () {
             $("#divChoice").modal("show");
             listsObject();
@@ -171,7 +187,25 @@
             });
         });
     });
-
+    function saveApprove(year){
+        
+        swal({   
+            title: "สรุปยอดงบประมาณ",   
+            text: "การสรุปยอดงบประมาณ จะเป็นขั้นตอนการรวมงบประมาณในแต่ละหมวดเพื่อดำเนินในขั้นตอนต่อไป",   
+            type: "info",   
+            showCancelButton: true,   
+            closeOnConfirm: true,  
+            confirmButtonText: "ยืนยันการทำงาน",
+            showLoaderOnConfirm: true,
+        }, 
+        function(){   
+            
+            var datas = callAjax("{{_context_path}}/api/budget/approveSum/approveSumBg", "post", {budgetPeriodId: budgetPeriodId}, "json");
+            window.location = "{{_context_path}}/api/budget/approveSum/viewApproveSum/"+budgetPeriodId;
+            
+        });
+        
+    }
     function listsAllBudgetRequest(){
         var dataSet = [];
 
@@ -183,6 +217,9 @@
         var datas = callAjax("{{_context_path}}/api/budget/approve/getAllBudgetRequest", "post", {deptId: 0}, "json");
         var html = '';
         var search = '';
+        
+        budgetPeriodId=datas["result"][0]["budgetPeriodId"];
+        
         if (typeof datas !== "undefined" && datas !== null) {
             $.each(datas["result"], function(key, value){
                 dataSet.push(value);
@@ -199,6 +236,7 @@
                 "data": dataSet,
                 "order": [0, 'asc'],
                 "iDisplayLength": 50,
+                
                 "columnDefs": [
                     {
                         "targets": 0,
@@ -264,17 +302,22 @@
                     },
                     {
                         "targets": 6,
-                        "data": "bghId",
+                        "data": "statusId",
                         "sClass": "text-center col-md-1",
-                        "render": function(data){
-                           
-                            return '<button class="btn btn-sm btn-default approve" data-bgh="'+data+'"><i class="fa fa-pencil"></i> อนุมัติ</button>';
+                        "render": function(data,type,row){
+                            //console.log(row.bghId);
+                            if(data!=5){
+                                //alert(data2);
+                                BtnStatus=false;
+                                return '<button class="btn btn-sm btn-default approve" data-bgh="'+row.bghId+'"><i class="fa fa-pencil"></i> อนุมัติ</button>';
+                            }else{
+                                
+                                return "&nbsp;";
+                            }
                             /*
                             return '<button class="btn btn-sm btn-warning edit" title="แก้ไข" data-bgh="'+data+'"><i class="fa fa-pencil"></i> แก้ไข</button>&nbsp;&nbsp;'
                                 + '<button class="btn btn-sm btn-default delete" title="ลบ" data-bgh="'+data+'"><i class="fa fa-trash"></i> ลบ</button>'
                             */    
-                                
-
                         }
                     }
                 ]
@@ -319,6 +362,8 @@
             
             $("#table").on("click", "button.approve", function(){
                 var id = $(this).attr("data-bgh");
+                //var id = data["bghId"];
+
                 var data = listArr[id];
 
                 var formId = data["formId"];
@@ -339,6 +384,7 @@
                 window.location = "{{_context_path}}/api/budget/view/approve/"+formId+"/"+l3dPlanId+"/"+fundgroupId+"/"+deptId;
             });
         }
+        BtnStatus=true;
     }
 
     function listsObject(){
