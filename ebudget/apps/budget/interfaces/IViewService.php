@@ -100,7 +100,7 @@ interface IViewService {
      * @description ยื่นคำของบประมาณเงินรายได้
      */
     public function formRevenue();
-    
+
     /**
      * @name formScheme
      * @uri /formScheme
@@ -114,6 +114,7 @@ interface IViewService {
      * @description จัดทำคำของบประมาณแผ่นดินทั้งหมด
      */
     public function draftAll();
+
     /**
      * @name finalAll
      * @uri /finalAll
@@ -127,7 +128,14 @@ interface IViewService {
      * @description ตรวจสอบสถานะคำของบประมาณแผ่นดินทั้งหมด
      */
     public function approveAll();
-    
+
+    /**
+     * @name reviewAll
+     * @uri /reviewAll
+     * @description รายงานแผน/ผลการใช้เงินงบประมาณ
+     */
+    public function reviewAll();
+
     /**
      * @name draft
      * @uri /draft
@@ -138,6 +146,7 @@ interface IViewService {
      * @description จัดทำคำของบประมาณแผ่นดิน
      */
     public function draft($formId, $l3dPlanId, $fundgroupId, $deptId);
+
     /**
      * @name final
      * @uri /final
@@ -148,8 +157,8 @@ interface IViewService {
      * @description จัดทำคำของบประมาณแผ่นดิน
      */
     public function finalz($formId, $l3dPlanId, $fundgroupId, $deptId);
-    
-        /**
+
+    /**
      * @name approve
      * @uri /approve
      * @param string formId
