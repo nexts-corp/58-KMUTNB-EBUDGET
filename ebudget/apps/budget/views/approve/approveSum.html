@@ -95,72 +95,147 @@
                 </table>
             </div>
 
-            <div id="divChoice" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true"><!-- delete bidder info form -->
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form id="formChoice" onsubmit="return false;">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title text-success">แบบฟอร์มคำของบประมาณ</h4>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label text-right req" for="formId">แบบคำขอ :</label>
-                                    <div class="col-md-7">
-                                        <select id="formId" name="formId" class="form-control input-sm" required></select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label text-right req" for="l3dPlanId">แผนงาน :</label>
-                                    <div class="col-md-7">
-                                        <select id="l3dPlanId" name="l3dPlanId" class="form-control input-sm" required></select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label text-right req" for="fundgroupId">กองทุน :</label>
-                                    <div class="col-md-7">
-                                        <select id="fundgroupId" name="fundgroupId" class="form-control input-sm" required></select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label text-right req" for="facultyId">คณะ :</label>
-                                    <div class="col-md-7">
-                                        <select id="facultyId" name="facultyId" class="form-control input-sm" required></select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label text-right req" for="deptId">สาขา :</label>
-                                    <div class="col-md-7">
-                                        <select id="deptId" name="deptId" class="form-control input-sm" required></select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <footer class="panel-footer">
-                                <div class="row">
-                                    <div class="col-md-12 text-right">
-                                        <button class="btn btn-success modal-confirm"><i class="fa fa-pencil"></i> จัดทำ</button>
-                                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">ยกเลิก</button>
-                                    </div>
-                                </div>
-                            </footer>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </div>
 </div>
 
+
+
+<div class="modal fade " id="ApproveShowEdit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">แก้ไข้งบประมาณ</h4>
+      </div>
+      <div class="modal-body">
+        <span class="text-bold text-info">งบบุคลากร</span>
+        <fieldset style="border: 1px solid #cccccc; margin: 0 0 20px 0; padding: 0 0 20px 0;">
+            <div class="col-sm-12" style="margin-top: 20px;">
+                <div class="col-sm-6">
+                    <label class="col-sm-5 control-label text-right">เงินเดือน :</label>
+                    <div class="col-sm-7">
+                        <input type="hidden" id="DepartmentId">
+                        <input type="hidden" id="IndexArr">
+                        <input type="hidden" id="Rows">
+                        <input type="number" class="form-control text-right" id="b10100000">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class="col-sm-5 control-label text-right">ค่าจ้างประจำ :</label>
+                    <div class="col-sm-7">
+                        <input type="number" class="form-control text-right" id="b10200000">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12" style="margin-top: 20px;">
+                <div class="col-sm-6">
+                    <label class="col-sm-5 control-label text-right">ค่าตอบแทนพนักงาน :</label>
+                    <div class="col-sm-7">
+                        <input type="number" class="form-control text-right" id="b10103000">
+                    </div>
+                </div>
+                
+            </div>
+        </fieldset>
+        <span class="text-bold text-info">เงินอุดหนุนทั่วไป</span>
+        <fieldset style="border: 1px solid #cccccc; margin: 0 0 20px 0; padding: 0 0 20px 0;">
+            <div class="col-sm-12" style="margin-top: 20px;">
+                <div class="col-sm-6">
+                    <label class="col-sm-5 control-label text-right">เงินเดือน :</label>
+                    <div class="col-sm-7">
+                        <input type="number" class="form-control text-right" id="b20101000">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class="col-sm-5 control-label text-right">ค่าจ้างชั่วคราว :</label>
+                    <div class="col-sm-7">
+                        <input type="number" class="form-control text-right" id="b20102000">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12" style="margin-top: 20px;">
+                <div class="col-sm-6">
+                    <label class="col-sm-5 control-label text-right">ค่าตอบแทน :</label>
+                    <div class="col-sm-7">
+                        <input type="number" class="form-control text-right" id="b20201000">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class="col-sm-5 control-label text-right">ค่าใช้สอย :</label>
+                    <div class="col-sm-7">
+                        <input type="number" class="form-control text-right" id="b20202000">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-sm-12" style="margin-top: 20px;">
+                <div class="col-sm-6">
+                    <label class="col-sm-5 control-label text-right">ค่าวัสดุ :</label>
+                    <div class="col-sm-7">
+                        <input type="number" class="form-control text-right" id="b20203000">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class="col-sm-5 control-label text-right">ค่าสาธารณูปโภค :</label>
+                    <div class="col-sm-7">
+                        <input type="number" class="form-control text-right" id="b20204000">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12" style="margin-top: 20px;">
+                <div class="col-sm-6">
+                    <label class="col-sm-5 control-label text-right">เงินอุดหนุนเป็นค่าครุภัณฑ์ :</label>
+                    <div class="col-sm-7">
+                        <input type="number" class="form-control text-right" id="b20300000">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class="col-sm-5 control-label text-right">เงินอุดหนุนเป็นค่าที่ดิน/สิ่งก่อสร้าง :</label>
+                    <div class="col-sm-7">
+                        <input type="number" class="form-control text-right" id="b20400000">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12" style="margin-top: 20px;">
+                <div class="col-sm-6">
+                    <label class="col-sm-5 control-label text-right">เงินอุดหนุนอื่นๆ :</label>
+                    <div class="col-sm-7">
+                        <input type="number" class="form-control text-right" id="b20500000">
+                    </div>
+                </div>
+               
+            </div>
+        </fieldset>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+        <button type="button" class="btn btn-primary" id="ApproveSaveEdit">บันทึกข้อมูล</button>
+      </div>
+        
+        
+        
+    </div>
+  </div>
+</div>
+
+
 {{> footer}}
 <style>
-    .dataTables_filter{
+    .modal-dialog{
         
+        width: 900px;
+        
+    }
+    .dataTables_filter{
         display: none;
+    }
+    #table{
+        
+        width: 2000px;
         
     }
     
@@ -223,7 +298,7 @@ function loadApprove(){
                     }
                 }
                 valueDept[Dept]=Dept;
-                valueApprove.push({Dept:Dept,data:valueBg});
+                valueApprove.push({Dept:Dept,DepartmentId:datas["result"][i]["DepartmentId"],data:valueBg});
                 keys++;
             }
     }
@@ -233,6 +308,16 @@ function loadApprove(){
                 "data": valueApprove,
                 "order": [0, 'asc'],
                 "iDisplayLength": 50,
+                "bAutoWidth":false,
+                scrollY:        "300px",
+                scrollX:        true,
+                scrollCollapse: true,
+                paging:         false,
+                rowId: 'staffId',
+                fixedColumns:   {
+                    leftColumns: 1,
+                    rightColumns: 1
+                },
                 
                 /*
                 "drawCallback":function(oSetting){
@@ -247,16 +332,17 @@ function loadApprove(){
                     
                     {
                         "targets": 0,
-                        "orderable": false,
+                        "orderable": true,
                         "data": "Dept",
-                        "sClass": "text-left col-md-3"
+                        "width":"400px"
+                        //"sClass": "col-md-3"
                         
                     },{
                         "targets": 1,
                         "searchable": false,
                         "orderable": false,
                         "data": "data",
-                        "sClass": "text-right",
+                        "sClass": "text-right ",
                         render:function(data){
                             if(data[bgId[0]]!=null){
                                 return $.number( data[bgId[0]], 2 );
@@ -340,9 +426,7 @@ function loadApprove(){
                             if(data[bgId[5]]!=null){
                                 return $.number( data[bgId[5]], 2 );
                             }else{
-                                
                                 return "-";
-                                
                             }
                             
                         }
@@ -356,9 +440,7 @@ function loadApprove(){
                             if(data[bgId[6]]!=null){
                                 return $.number( data[bgId[6]], 2 );
                             }else{
-                                
                                 return "-";
-                                
                             }
                             
                         }
@@ -372,9 +454,7 @@ function loadApprove(){
                             if(data[bgId[7]]!=null){
                                 return $.number( data[bgId[7]], 2 );
                             }else{
-                                
                                 return "-";
-                                
                             }
                             
                         }
@@ -388,9 +468,7 @@ function loadApprove(){
                             if(data[bgId[8]]!=null){
                                 return $.number( data[bgId[8]], 2 );
                             }else{
-                                
                                 return "-";
-                                
                             }
                             
                         }
@@ -404,11 +482,8 @@ function loadApprove(){
                             if(data[bgId[9]]!=null){
                                 return $.number( data[bgId[9]], 2 );
                             }else{
-                                
                                 return "-";
-                                
                             }
-                            
                         }
                     },{
                         "targets": 11,
@@ -420,9 +495,7 @@ function loadApprove(){
                             if(data[bgId[10]]!=null){
                                 return $.number( data[bgId[10]], 2 );
                             }else{
-                                
                                 return "-";
-                                
                             }
                             
                         }
@@ -436,12 +509,8 @@ function loadApprove(){
                            if(data[bgId[11]]!=null){
                                 return $.number( data[bgId[11]], 2 );
                             }else{
-                                
                                 return "-";
-                                
                             }
-                            
-                            
                         }
                     },{
                         "targets": 13,
@@ -452,7 +521,6 @@ function loadApprove(){
                         render:function(data){
                             var sum=0;
                             for(var j=0; j<12; j++){
-                                
                                 if((data[bgId[j]])!=null){
                                     sum+=parseFloat(data[bgId[j]]);
                                 }
@@ -463,12 +531,11 @@ function loadApprove(){
                         "targets": 14,
                         "searchable": false,
                         "orderable": false,
-                        //"data": "data",
+                        "data": "DepartmentId",
                         "sClass": "text-center",
-                        render:function(){
+                        render:function(data){
                             
-                            return "OK";
-                            
+                            return '<button class="btn btn-warning btn-xs ApproveEdit" data-DepartmentId="'+data+'" type="submit"><i class="fa fa-pencil-square-o"></i> แก้ไข</button>';
                         }
                     }
                     
@@ -480,9 +547,63 @@ function loadApprove(){
                 search += '<option value="' + value + '">' + value + '</option>';
             });
             $("#searchDept").html(search).select2().change(function() {
-                
                 t.columns(0).search(this.value).draw();
             });
+            
+            $('.ApproveEdit').click(function () {
+                
+                var DepartmentId=$(this).attr("data-DepartmentId");
+                var Rows=$(this).closest("tr").index();
+                
+                var IndexArr;
+                
+                $.each(valueApprove, function (key, value) {
+                    if(value["DepartmentId"]==DepartmentId){
+                        IndexArr=key;
+                    }
+                });
+                $.each(bgId, function (key, value) {
+                    $('#b'+value).val(valueApprove[IndexArr]["data"][value]);
+                });
+                
+                $('#DepartmentId').val(DepartmentId);
+                $('#Rows').val(Rows);
+                $('#IndexArr').val(IndexArr);
+                
+                
+                
+                $('#ApproveShowEdit').modal('show');
+
+            });
+            
+            
+            $("#ApproveSaveEdit").click(function () {
+                
+                
+                
+                var data = {};
+                
+                var jdata = [];
+                
+                var OpjectData={};
+                
+                $.each(bgId, function (key, value) {
+                    //$('#b'+value).val(valueApprove[IndexArr]["data"][value]);
+                    //console.log(value);
+                    data['DepartmentId'] = $('#DepartmentId').val();
+                    data['BudgetPeriodId'] = year;
+                    data['BudgetTypeId'] = value;
+                    data['BudgetBeforeReview']=$('#b'+value).val();
+                    //jdata["data"].push("OK");
+                    jdata.push(data);
+                });
+                OpjectData['data'] = jdata;
+
+                var result=callAjax('{{_context_path}}/api/budget/approveSum/updateApproveSum', 'post', jsonEncode(OpjectData),'json');
+                
+                
+            });
+            
             
     /*
     var html="";
