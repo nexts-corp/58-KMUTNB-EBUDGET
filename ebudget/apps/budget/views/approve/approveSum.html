@@ -293,8 +293,7 @@ function loadApprove(){
                 var valueBg=[];
                 for(var a=0; a<datas["result"].length; a++){
                     if(datas["result"][a]["DEPARTMENTNAME"]==Dept){
-                        
-                        valueBg[datas["result"][a]["BudgetTypeId"]]=datas["result"][a]["BudgetBeforeReview"];
+                        valueBg[datas["result"][a]["BudgetTypeId"]]=datas["result"][a]["BudgetAfterReview"];
                     }
                 }
                 valueDept[Dept]=Dept;
@@ -590,13 +589,21 @@ function loadApprove(){
                     });
                     OpjectData['data'] = jdata;
 
-                    var result=callAjax('{{_context_path}}/api/budget/approveSum/updateApproveSum', 'post', jsonEncode(OpjectData),'json');
+                    var datas=callAjax('{{_context_path}}/api/budget/approveSum/updateApproveSum', 'post', jsonEncode(OpjectData),'json');
+                    if(datas["result"]==true){
+                        
+                        $.each(bgId, function (key, value) {
+                            tr.find("td").eq(key+1).html(checkValue($('#b'+value).val()));
+                        });
+                        $('#ApproveShowEdit').modal('hide');
+                        
+                    }else{
+                        
+                        alert("NO");
+                        $('#ApproveShowEdit').modal('hide');
+                    }
                     
-                    $.each(bgId, function (key, value) {
-                        tr.find("td").eq(key+1).html(checkValue($('#b'+value).val()));
-                    });
                     
-                    $('#ApproveShowEdit').modal('hide');
                 });
                 
             });
