@@ -12,7 +12,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="none-padding">จัดทำคำของบประมาณแผ่นดิน ง.146</h1>
+                    <h1 class="none-padding">ปรับปรุงคำของบประมาณแผ่นดิน ง.146</h1>
                 </div>
             </div>
         </div>
@@ -76,38 +76,38 @@
 
                 <section class="panel">
                     <div class="panel-body">
-                        <div class="col-md-12 text-right">
-                            <button class="requestBGbtn btn btn-success" type="button">ส่งข้อมูลคำของบประมาณ</button>
-                        </div>
+                        <!--                        <div class="col-md-12 text-right">
+                                                    <button class="requestBGbtn btn btn-success" type="button">ส่งข้อมูลคำของบประมาณ</button>
+                                                </div>-->
                         <div class="col-md-12 text-right">
                             <a href="#" id="expandAll"><i class="fa fa-plus-square"></i> แสดงทั้งหมด</a>&nbsp;/&nbsp;
                             <a href="#" id="collapseAll"><i class="fa fa-minus-square"></i> ซ่อนทั้งหมด</a>
                         </div>
                         <table id="table146" class="table table-bordered table-striped mb-none treetable">
                             <thead>
-                            <tr>
-                                <th class="text-center">ลำดับ</th>
-                                <th class="text-center">รายการ - ประเภทเงินอุดหนุน</th>
-                                <th class="text-center">งบประมาณที่ได้รับการจัดสรรปีงบประมาณปัจจุบัน</th>
-                                <th class="text-center">คำของบประมาณปีงบประมาณที่ขอตั้งงบประมาณ</th>
-                                <th class="text-center">คำชี้แจงเหตุผลสรุป</th>
-                                <th class="text-center" style="vertical-align: middle;">สถานะคำขอ</th>
-                                <th class="text-center" style="vertical-align: middle;min-width: 130px;">เครื่องมือ</th>
-                            </tr>
-                            <tr id="total">
-                                <th class="text-center"></th>
-                                <th class="text-center">รวมทั้งสิ้น</th>
-                                <th class="text-right text-bold"></th>
-                                <th class="text-right text-bold"></th>
-                                <th class="text-center"></th>
-                                <th class="text-center"></th>
-                                <th class="text-center"></th>
-                            </tr>
+                                <tr>
+                                    <th class="text-center">ลำดับ</th>
+                                    <th class="text-center">รายการ - ประเภทเงินอุดหนุน</th>
+                                    <th class="text-center">งบประมาณที่ได้รับการจัดสรรปีงบประมาณปัจจุบัน</th>
+                                    <th class="text-center">คำของบประมาณปีงบประมาณที่ขอตั้งงบประมาณ</th>
+                                    <th class="text-center">คำชี้แจงเหตุผลสรุป</th>
+                                    <!--                                <th class="text-center" style="vertical-align: middle;">สถานะคำขอ</th>-->
+                                    <th class="text-center" style="vertical-align: middle;min-width: 130px;">เครื่องมือ</th>
+                                </tr>
+                                <tr id="total">
+                                    <th class="text-center"></th>
+                                    <th class="text-center">รวมทั้งสิ้น</th>
+                                    <th class="text-right text-bold"></th>
+                                    <th class="text-right text-bold"></th>
+                                    <th class="text-center"></th>
+                                    <!--                                <th class="text-center"></th>-->
+                                    <th class="text-center"></th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td colspan="10" class="text-center">-</td>
-                            </tr>
+                                <tr>
+                                    <td colspan="10" class="text-center">-</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -139,8 +139,8 @@
                                         :</label>
 
                                     <div class="col-md-12">
-                                        <textarea type="text" id="bursaryDesc" name="bursaryDesc"
-                                                  class="form-control input-sm" required> </textarea>
+                                        <textarea id="bursaryDesc" name="bursaryDesc"
+                                                  class="form-control input-sm" required></textarea>
                                     </div>
                                 </div>
 
@@ -182,7 +182,15 @@
                                                placeholder="คำอธิบายประกอบไฟล์">
                                     </div>
                                 </div>
-
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-bold" for="status">สถานะ</label>
+                                    <div class="col-md-12">
+                                        <select class="form-control input-sm" name="status" id="status">
+                                            <option value="Y">ใช้งาน</option>
+                                            <option value="N">ไม่ใช้งาน</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                         <div id="loadingForm" class="col-md-12 text-center"></div>
@@ -207,27 +215,27 @@
                             <div class="table-responsive">
                                 <table class="table mb-none">
                                     <tbody>
-                                    <tr class="no-border">
-                                        <td class="col-md-4 text-right">รายการ - ประเภทเงินอุดหนุน :</td>
-                                        <td class="col-md-8 text-bold" id="bursaryNameDel"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-md-4 text-right">คำอธิบาย :</td>
-                                        <td class="col-md-8 text-bold" id="bursaryDescDel"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-md-4 text-right">งบประมาณที่ได้รับการจัดสรรปีงบประมาณปัจจุบัน :
-                                        </td>
-                                        <td class="col-md-8 text-bold" id="bgHistoryDel"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-md-4 text-right">คำของบประมาณปีงบประมาณที่ขอตั้งงบประมาณ :</td>
-                                        <td class="col-md-8 text-bold" id="bgRequestDel"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="col-md-4 text-right">คำชี้แจง :</td>
-                                        <td class="col-md-8 text-bold" id="remarkDel"></td>
-                                    </tr>
+                                        <tr class="no-border">
+                                            <td class="col-md-4 text-right">รายการ - ประเภทเงินอุดหนุน :</td>
+                                            <td class="col-md-8 text-bold" id="bursaryNameDel"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-4 text-right">คำอธิบาย :</td>
+                                            <td class="col-md-8 text-bold" id="bursaryDescDel"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-4 text-right">งบประมาณที่ได้รับการจัดสรรปีงบประมาณปัจจุบัน :
+                                            </td>
+                                            <td class="col-md-8 text-bold" id="bgHistoryDel"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-4 text-right">คำของบประมาณปีงบประมาณที่ขอตั้งงบประมาณ :</td>
+                                            <td class="col-md-8 text-bold" id="bgRequestDel"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-4 text-right">คำชี้แจง :</td>
+                                            <td class="col-md-8 text-bold" id="remarkDel"></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -253,7 +261,7 @@
     var l3dPlanId = '{{l3dPlanId}}';
     var fundgroupId = '{{fundgroupId}}';
     var deptId = '{{deptId}}';
-
+    var status = '';
     var typeName146Arr = [];
     var list146Arr = [];
     var sumArrbgHistory = {};
@@ -282,7 +290,7 @@
 
             var dataJSON = JSON.stringify({param: param});
             var dataJSONEN = encodeURIComponent(dataJSON);
-            var datas = callAjax("{{_context_path}}/api/budget/draft146/view", "post", dataJSONEN, "json");
+            var datas = callAjax("{{_context_path}}/api/budget/final146/view", "post", dataJSONEN, "json");
             if (typeof datas !== "undefined" && datas !== null) {
                 var html = '';
                 var pCount = 0;
@@ -301,9 +309,9 @@
                             + '<td class="text-right text-bold"></td>'
                             + '<td class="text-right text-bold"></td>'
                             + '<td></td>'
-                            + '<td></td>'
+                            //+ '<td></td>'
                             + '<td class="text-center">'
-                            + '<button class="btn btn-sm btn-success addList" data-pid="' + value["id"] + '"><i class="fa fa-plus"></i> เพิ่ม</button>'
+                            //  + '<button class="btn btn-sm btn-success addList" data-pid="' + value["id"] + '"><i class="fa fa-plus"></i> เพิ่ม</button>'
                             + '</td>'
                             + '</tr>';
 
@@ -322,17 +330,19 @@
                                 + '<td class="number text-right">' + value2["bgHistory"] + '</td>'
                                 + '<td class="number text-right">' + value2["bgRequest"] + '</td>'
                                 + '<td>' + value2["remark"] + '</td>'
-                                + '<td class="text-bold text-sm">' + value2["statusDesc"] + '</td>'
+                                //  + '<td class="text-bold text-sm">' + value2["statusDesc"] + '</td>'
                                 + '<td>'
-                                + '<div class="btn-group">'
+                                + '<div class="text-center">'
                                 + '<button class="btn btn-sm btn-warning editList" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                + '<button class="btn btn-sm btn-default deleteList"  data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-trash"></i> ลบ</button>'
-                                + '</div>';
+                                //  + '<button class="btn btn-sm btn-default deleteList"  data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                                + '</div>'
+                                + '</td>';
 
                         list146Arr[value2["id"]] = value2;
-
-                        sumArrbgHistory[value["id"]][value2["id"]] += parseFloat(value2["bgHistory"]);
-                        sumArrbgRequest[value["id"]][value2["id"]] += parseFloat(value2["bgRequest"]);
+                        if (value2["status"] == "Y") {
+                            sumArrbgHistory[value["id"]][value2["id"]] += parseFloat(value2["bgHistory"]);
+                            sumArrbgRequest[value["id"]][value2["id"]] += parseFloat(value2["bgRequest"]);
+                        }
 
                     });
                 });
@@ -371,7 +381,7 @@
                     $("#fileNew").html(
                             '<input type="file" id="attachment" name="attachment"> '
                             + '<a href="javascript: void(0);" onclick="$(\'#attachment\').val(\'\');">[Reset]</a>'
-                    ).show();
+                            ).show();
                     $("#fileBak").hide();
 
                     $("#panelForm").modal("show");
@@ -391,8 +401,10 @@
 
                             formData.append('budget', JSON.stringify(fdata["Budget"]));
 
-                            if ($('#attachment').length) formData.append('file', $('#attachment')[0].files[0]);
-                            else formData.append('file', '');
+                            if ($('#attachment').length)
+                                formData.append('file', $('#attachment')[0].files[0]);
+                            else
+                                formData.append('file', '');
 
                             insertBudget(headerId, parentId, formData, param)
                         } else {
@@ -438,7 +450,7 @@
 
     function insertBudget(headerId, parentId, dataJSONEN, param) {
         setTimeout(function () {
-            var datas = callAjaxFile("{{_context_path}}/api/budget/draft146/insert", "post", dataJSONEN, "json");
+            var datas = callAjaxFile("{{_context_path}}/api/budget/final146/insert", "post", dataJSONEN, "json");
             if (typeof datas !== "undefined" && datas !== null) {
                 var data = datas["result"];
                 if (data["result"] == true) {
@@ -497,7 +509,7 @@
 
     function updateBudget(id, headerId, parentId, dataJSONEN, param) {
         setTimeout(function () {
-            var datas = callAjaxFile("{{_context_path}}/api/budget/draft146/update", "post", dataJSONEN, "json");
+            var datas = callAjaxFile("{{_context_path}}/api/budget/final146/update", "post", dataJSONEN, "json");
             if (typeof datas !== "undefined" && datas !== null) {
                 var data = datas["result"];
                 if (data["result"] == true) {
@@ -509,11 +521,11 @@
                             + '<td class="number text-right">' + $("#bgHistory").val() + '</td>'
                             + '<td class="number text-right">' + $("#bgRequest").val() + '</td>'
                             + '<td>' + $(".noteRemark").code() + '</td>'
-                            + '<td class="status text-bold text-sm">' + list146Arr[id]["statusDesc"] + '</td>'
+                            // + '<td class="status text-bold text-sm">' + list146Arr[id]["statusDesc"] + '</td>'
                             + '<td>'
-                            + '<div class="btn-group">'
+                            + '<div class="text-center">'
                             + '<button class="btn btn-sm btn-warning editList" data-hid="' + headerId + '" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                            + '<button class="btn btn-sm btn-default deleteList"  data-hid="' + headerId + '" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-trash"></i> ลบ</button>'
+                            // + '<button class="btn btn-sm btn-default deleteList"  data-hid="' + headerId + '" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-trash"></i> ลบ</button>'
                             + '</div>'
                             + '</td>';
 
@@ -521,21 +533,28 @@
                     $('tr[data-tt-id="list' + id + '"]').html(input);
                     $('.number').number(true, 2);
 
-                    sumArrbgHistory[parentId][id] -= parseFloat(list146Arr[id]["bgHistory"]);
-                    sumArrbgRequest[parentId][id] -= parseFloat(list146Arr[id]["bgRequest"]);
+                    if (status == "Y") {
+                        sumArrbgHistory[parentId][id] -= parseFloat(list146Arr[id]["bgHistory"]);
+                        sumArrbgRequest[parentId][id] -= parseFloat(list146Arr[id]["bgRequest"]);
+                    }
 
                     $("#form input[type='text'],#bursaryDesc").each(function () {
                         list146Arr[id][$(this).attr("name")] = $(this).val();
                     });
 
                     list146Arr[id]["remark"] = $("#remark").code();
-
+                    list146Arr[id]["status"] = $("#status").val();
                     if (data.hasOwnProperty("path")) {
                         list146Arr[id]["path"] = data["path"];
                     }
 
-                    sumArrbgHistory[parentId][id] += parseFloat(list146Arr[id]["bgHistory"]);
-                    sumArrbgRequest[parentId][id] += parseFloat(list146Arr[id]["bgRequest"]);
+                    if ($("#status").val() == "N") {
+                        $('tr[data-tt-id="list' + id + '"]').attr("class", "text-primary");
+                    } else {
+                        $('tr[data-tt-id="list' + id + '"]').attr("class", "");
+                        sumArrbgHistory[parentId][id] += parseFloat(list146Arr[id]["bgHistory"]);
+                        sumArrbgRequest[parentId][id] += parseFloat(list146Arr[id]["bgRequest"]);
+                    }
                     sumtotal();
 
                     $("#panelForm").modal("hide");
@@ -551,7 +570,7 @@
 
     function deleteBudget(id, headerId, parentId, dataJSONEN) {
 
-        var datas = callAjax("{{_context_path}}/api/budget/draft146/delete", "post", dataJSONEN, "json");
+        var datas = callAjax("{{_context_path}}/api/budget/final146/delete", "post", dataJSONEN, "json");
         if (typeof datas !== "undefined" && datas !== null) {
             if (datas["result"] == true) {
                 sumArrbgHistory[parentId][id] -= parseFloat(list146Arr[id]["bgHistory"]);
@@ -592,7 +611,8 @@
             });
 
             $('#remark').code(list146Arr[id]["remark"]);
-
+            $('#status').val(list146Arr[id]["status"]);
+            status = list146Arr[id]["status"];
             var fileUpload = 0;
 
             $("#fileGroup").html('<div id="fileNew"></div><div id="fileBak"></div>');
@@ -603,14 +623,14 @@
                         '<i class="fa fa-file-o"></i>'
                         + '<a href="javascript: void(0);" style="color:blue !important;" onclick="downloadFile(\'' + list146Arr[id]["path"] + '\');"> ' + list146Arr[id]["path"] + '</a> &nbsp;&nbsp;'
                         + '<a href="javascript: void(0);" style="color:blue !important;" title="ลบ" class="ic-edit" id="deleteFile"><i class="fa fa-trash"></i></a>'
-                );
+                        );
 
                 $("#deleteFile").click(function () {
                     $("#fileNew").html(
                             '<input type="file" id="attachment" name="attachment"> '
                             + '<a href="javascript: void(0);" id="fileOld" style="color: blue !important;">[ไฟล์เดิม]</a>&nbsp;&nbsp;'
                             + '<a href="javascript: void(0);" onclick="$(\'#attachment\').val(\'\');">[Reset]</a>'
-                    ).show();
+                            ).show();
                     $("#fileBak").hide();
                     fileUpload = 1;
 
@@ -625,7 +645,7 @@
                 $("#fileNew").html(
                         '<input type="file" id="attachment" name="attachment"> '
                         + '<a href="javascript: void(0);" onclick="$(\'#attachment\').val(\'\');">[Reset]</a>'
-                ).show();
+                        ).show();
                 $("#fileBak").hide();
                 fileUpload = 1;
             }
@@ -646,8 +666,10 @@
                     formData.append('fileUpload', fileUpload);
                     formData.append('budget', JSON.stringify(fdata["Budget"]));
 
-                    if ($('#attachment').length) formData.append('file', $('#attachment')[0].files[0]);
-                    else formData.append('file', '');
+                    if ($('#attachment').length)
+                        formData.append('file', $('#attachment')[0].files[0]);
+                    else
+                        formData.append('file', '');
 
                     updateBudget(id, headerId, parentId, formData, param)
                 } else {
@@ -700,7 +722,7 @@
             data["id"] = id;
         }
 
-        $("#form input, #form textarea").each(function (i) {
+        $("#form input, #form textarea, #form select").each(function (i) {
             var fname = $(this).attr("name");
             var fvalue = $(this).val();
             data[fname] = fvalue;
