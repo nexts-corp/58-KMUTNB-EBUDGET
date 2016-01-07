@@ -90,7 +90,9 @@ class ApproveSumService extends CServiceBase implements IApproveSumService
     {
 
         $sql = "SELECT l.DEPARTMENTNAME,* FROM Budget_Summarize bs
-                INNER JOIN L3D_DEPARTMENT l ON bs.DepartmentId = l.DEPARTMENTID";
+                INNER JOIN L3D_DEPARTMENT l ON bs.DepartmentId = l.DEPARTMENTID
+                ORDER BY bs.DEPARTMENTID
+                ";
         $result = $this->datacontext->pdoQuery($sql);
         return $result;
     }
