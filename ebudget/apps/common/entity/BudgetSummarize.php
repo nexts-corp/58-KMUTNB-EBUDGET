@@ -35,6 +35,9 @@ class BudgetSummarize extends EntityBase {
 
     /** @Column(type="string",length=18, name="BudgetFinal") */
     public $bgFinal;
+    
+    /** @Column(type="string",length=18, name="BudgetStatus") */
+    public $bgStatus;
 
     public $budget;
     function getId() {
