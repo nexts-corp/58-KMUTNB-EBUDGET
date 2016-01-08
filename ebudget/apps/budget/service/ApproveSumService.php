@@ -104,13 +104,14 @@ class ApproveSumService extends CServiceBase implements IApproveSumService
         $sql = '';
         foreach ($bgSumList as $key => $value) {
 
-            $budget = "NULL";
             if ($value->budget != "") {
-                $budget = $value->budget;
-            }
 
-            $sql .= "UPDATE Budget_Summarize SET " . $type . " = " . $budget . " WHERE " .
-                "BudgetPeriodId = " . $value->bgPeriodId . " AND BudgetTypeId = " . $value->bgTypeId . " AND DepartmentId = " . $value->deptId . ";";
+                $budget = $value->budget;
+
+                $sql .= "UPDATE Budget_Summarize SET " . $type . " = " . $budget . " WHERE " .
+                    "BudgetPeriodId = " . $value->bgPeriodId . " AND BudgetTypeId = " . $value->bgTypeId . " AND DepartmentId = " . $value->deptId . ";";
+            }
+            
         }
 
         if ($this->datacontext->pdoUpdate($sql)) {
