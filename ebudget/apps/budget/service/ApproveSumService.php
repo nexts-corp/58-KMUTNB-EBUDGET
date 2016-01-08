@@ -88,11 +88,11 @@ class ApproveSumService extends CServiceBase implements IApproveSumService
 
     public function LoadpproveSum($year)
     {
-       
+
         $sql = "SELECT l.DEPARTMENTNAME,* FROM Budget_Summarize bs
                 INNER JOIN L3D_DEPARTMENT l ON bs.DepartmentId = l.DEPARTMENTID
-                 WHERE bs.BudgetPeriodId=".$year;
-        $sql .=" ORDER BY bs.DEPARTMENTID";
+                 WHERE bs.BudgetPeriodId=" . $year;
+        $sql .= " ORDER BY bs.DEPARTMENTID";
         $result = $this->datacontext->pdoQuery($sql);
         return $result;
     }
@@ -108,10 +108,18 @@ class ApproveSumService extends CServiceBase implements IApproveSumService
 
                 $budget = $value->budget;
 
-                $sql .= "UPDATE Budget_Summarize SET " . $type . " = " . $budget . " WHERE " .
-                    "BudgetPeriodId = " . $value->bgPeriodId . " AND BudgetTypeId = " . $value->bgTypeId . " AND DepartmentId = " . $value->deptId . ";";
+                if ($type == "BudgetAfterReview") {
+
+                    //update 2 col BudgetAfterReview and BudgetFinal
+                    $sql .= "UPDATE Budget_Summarize SET BudgetAfterReview = " . $budget . " AND BudgetFinal = " . $budget . " WHERE " .
+                        "BudgetPeriodId = " . $value->bgPeriodId . " AND BudgetTypeId = " . $value->bgTypeId . " AND DepartmentId = " . $value->deptId . ";";
+
+                } else {
+                    //update BudgetFinal 1 col
+                    $sql .= "UPDATE Budget_Summarize SET " . $type . " = " . $budget . " WHERE " .
+                        "BudgetPeriodId = " . $value->bgPeriodId . " AND BudgetTypeId = " . $value->bgTypeId . " AND DepartmentId = " . $value->deptId . ";";
+                }
             }
-            
         }
 
         if ($this->datacontext->pdoUpdate($sql)) {
