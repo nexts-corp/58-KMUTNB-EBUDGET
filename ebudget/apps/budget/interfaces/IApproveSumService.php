@@ -49,8 +49,9 @@ interface IApproveSumService{
      * @name updateApproveSum
      * @uri /updateApproveSum
      * @param apps\common\entity\BudgetSummarize data
+     * @param string type
      * @return string[] result
      * @description update BudgetSummarize
      */
-    public function updateApproveSum($data);
+    public function updateApproveSum($data,$type);
 }
