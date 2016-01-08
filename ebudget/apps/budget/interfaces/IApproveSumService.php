@@ -19,13 +19,13 @@ interface IApproveSumService{
     public function approveSumBudgetRequest($budgetPeriodId);
 
     /**
-     * @name BackUptoFinalBg
-     * @uri /toFinalBg
+     * @name closeBudget
+     * @uri /closeBudget
      * @param int year ??????????
      * @return string result
      * @description ???????????????????????
      */
-    public function toFinalBg($year);
+    public function closeBudget($year);
 
     /**
      * @name viewApproveSum

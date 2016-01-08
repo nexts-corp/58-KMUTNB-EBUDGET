@@ -41,41 +41,58 @@ class ApproveSumService extends CServiceBase implements IApproveSumService
         if ($status != -1 && $status != false) {
             return true;
         } else {
+            echo $this->datacontext->getLastMessage();
             return false;
         }
 
     }
 
 
-    public function toFinalBg($year)
+    public function closeBudget($year)
     {
-        $sqlDelete = '';//140 - 146
-        $sqlInsert = '';
-        $sqlUpdate = '';
-        for ($i = 0; $i <= 6; $i++) {
 
-            $sqlDelete .= "DELETE  FROM Final_14" . $i . " WHERE BudgetPeriodId =" . $year . "; ";// clear data on table FINAL
-            $sqlInsert .= "INSERT INTO Final_14" . $i . " SELECT * FROM Budget_14" . $i . " WHERE BudgetPeriodId = " . $year . "; "; //Insert
-            $sqlUpdate .= "UPDATE Final_14" . $i . " SET Status = 'Y' WHERE BudgetPeriodId = " . $year . "; "; //Update status =y
-        }
+        //updateStatusSummarize
 
-        $status = $this->datacontext->pdoDelete($sqlDelete);
+        $sql = "UPDATE Budget_Summarize SET BudgetStatus = 'N' WHERE BudgetPeriodId = " . $year;
+        $status = $this->datacontext->pdoUpdate($sql);
         if ($status != -1 && $status != false) {
-            $status = $this->datacontext->pdoInsert($sqlInsert);
-            if (!$status) {
-                $status = $this->datacontext->pdoUpdate($sqlUpdate);
-                if ($status != -1 && $status != false) {
-                    return true;
+            //copy to FinalBg
+            $sqlDelete = '';//140 - 146
+            $sqlInsert = '';
+            $sqlUpdate = '';
+            for ($i = 0; $i <= 6; $i++) {
+
+                $sqlDelete .= "DELETE  FROM Final_14" . $i . " WHERE BudgetPeriodId =" . $year . "; ";// clear data on table FINAL
+                $sqlInsert .= "INSERT INTO Final_14" . $i . " SELECT * FROM Budget_14" . $i . " WHERE BudgetPeriodId = " . $year . "; "; //Insert
+                $sqlUpdate .= "UPDATE Final_14" . $i . " SET Status = 'Y' WHERE BudgetPeriodId = " . $year . "; "; //Update status =y
+            }
+
+            $status = $this->datacontext->pdoDelete($sqlDelete);
+            if ($status != -1) {
+                $status = $this->datacontext->pdoInsert($sqlInsert);
+                if ($status != -1) {
+                    $status = $this->datacontext->pdoUpdate($sqlUpdate);
+                    if ($status != -1) {
+                        return true;
+                    } else {
+                        echo $this->datacontext->getLastMessage();
+                        return false;
+                    }
                 } else {
+                    echo $this->datacontext->getLastMessage();
                     return false;
                 }
             } else {
+                echo $this->datacontext->getLastMessage();
                 return false;
             }
+
         } else {
 
+            echo $this->datacontext->getLastMessage();
             return false;
         }
+
 
     }
 
@@ -125,6 +142,7 @@ class ApproveSumService extends CServiceBase implements IApproveSumService
         if ($this->datacontext->pdoUpdate($sql)) {
             return true;
         } else {
+            echo $this->datacontext->getLastMessage();
             return false;
         }
 
