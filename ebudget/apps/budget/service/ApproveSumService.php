@@ -88,11 +88,11 @@ class ApproveSumService extends CServiceBase implements IApproveSumService
 
     public function LoadpproveSum($year)
     {
-
+       
         $sql = "SELECT l.DEPARTMENTNAME,* FROM Budget_Summarize bs
                 INNER JOIN L3D_DEPARTMENT l ON bs.DepartmentId = l.DEPARTMENTID
-                ORDER BY bs.DEPARTMENTID
-                ";
+                 WHERE bs.BudgetPeriodId=".$year;
+        $sql .=" ORDER BY bs.DEPARTMENTID";
         $result = $this->datacontext->pdoQuery($sql);
         return $result;
     }

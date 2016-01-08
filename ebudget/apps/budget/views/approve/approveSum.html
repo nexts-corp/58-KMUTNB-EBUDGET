@@ -32,68 +32,84 @@
 
     <div class="container">
             <div class="row">
-                <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="tabs">
                     
-                    <span class="text-bold text-info">ระบบค้นหา</span>
-                    <fieldset style="border: 1px solid #cccccc; margin: 0 0 20px 0; padding: 0 0 20px 0;">
-                        <div class="col-sm-12" style="margin-top: 20px;">
-                            <div class="col-sm-6">
-                                <label class="col-sm-4 control-label text-right">ปีงบประมาณ :</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control listYear"></select> 
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <label class="col-sm-4 control-label text-right">หน่วยงาน/คณะ :</label>
-                                <div class="col-sm-8">
-                                     <select class="form-control" id="searchDept"></select> 
-                                </div>
+                        <ul id="tabMenu" class="nav nav-tabs">
+                            <li class="active">
+                                <a href="#tab-BudgetAfterReview" data-toggle="tab" aria-expanded="false">งบประมาณก่อนส่ง สนง.</a>
+                            </li>
+                            <li class="">
+                                <a href="#tab-BudgetFinal" data-toggle="tab" aria-expanded="true">งประมาณหลังส่ง สนง.</a>
+                            </li>
+                        </ul>
+                        <div id="tabContent" class="tab-content">
+                            <div id="tab-BudgetAfterReview" class="tab-pane active">
+
+                                 <span class="text-bold text-info">ระบบค้นหา</span>
+
+                                    <fieldset style="border: 1px solid #cccccc; margin: 0 0 20px 0; padding: 0 0 20px 0;">
+                                        <div class="col-sm-12" style="margin-top: 20px;">
+                                            <div class="col-sm-6">
+                                                <label class="col-sm-4 control-label text-right">ปีงบประมาณ :</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control listYear"></select> 
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="col-sm-4 control-label text-right">หน่วยงาน/คณะ :</label>
+                                                <div class="col-sm-8">
+                                                     <select class="form-control" id="searchDept"></select> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                
+
+
+                                
+                                    <table id="table" class="table table-bordered table-striped table-condensed mb-none">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="3" class="text-center" style="vertical-align: middle; width:400px;">คณะ/หน่วยงาน</th>
+                                                <th colspan="3" class="text-center" style="vertical-align: middle; width:80px;">(1) งบบุคลากร</th>
+                                                <th colspan="9" class="text-center" style="vertical-align: middle; width:80px;">(2) เงินอุดหนุนทั่วไป</th>
+                                                <th rowspan="3" class="text-center" style="vertical-align: middle; width:100px;">รวม</th>
+                                                <th rowspan="3" class="text-center" style="vertical-align: middle; width:100px;">เครื่องมือ</th>
+                                            </tr>
+                                            <tr>
+                                                <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">เงินเดือน</th>
+                                                <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">ค่าจ้างประจำ</th>
+                                                <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">ค่าตอบแทนพนักงาน</th>
+
+                                                <th colspan="2" class="text-center" style="vertical-align: middle; width:80px;">เงินอุดหนุนเป็นค่าใช้จ่ายบุคลากร</th>
+                                                <th colspan="4" class="text-center" style="vertical-align: middle; width:80px;">เงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน</th>
+
+                                                <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">เงินอุดหนุนเป็นค่าครุภัณฑ์</th>
+                                                <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">เงินอุดหนุนเป็นค่าที่ดิน/สิ่งก่อสร้าง</th>
+                                                <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">เงินอุดหนุนอื่นๆ</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center" style="vertical-align: middle; width:80px;">เงินเดือน</th>
+                                                <th class="text-center" style="vertical-align: middle; width:80px;">ค่าจ้างชั่วคราว</th>
+                                                <th class="text-center" style="vertical-align: middle; width:80px;">ค่าตอบแทน</th>
+                                                <th class="text-center" style="vertical-align: middle; width:80px;">ค่าใช้สอย</th>
+                                                <th class="text-center" style="vertical-align: middle; width:80px;">ค่าวัสดุ</th>
+                                                <th class="text-center" style="vertical-align: middle; width:80px;">ค่าสาธารณูปโภค</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="15" class="text-center">-</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                   
                             </div>
                         </div>
-
-                    </fieldset>
-                    
-            </div>
-
-
-            <div id="divHome" class="col-md-12">
-                <table id="table" class="table table-bordered table-striped table-condensed mb-none">
-                    <thead>
-                        <tr>
-                            <th rowspan="3" class="text-center" style="vertical-align: middle; width:400px;">คณะ/หน่วยงาน</th>
-                            <th colspan="3" class="text-center" style="vertical-align: middle; width:80px;">(1) งบบุคลากร</th>
-                            <th colspan="9" class="text-center" style="vertical-align: middle; width:80px;">(2) เงินอุดหนุนทั่วไป</th>
-                            <th rowspan="3" class="text-center" style="vertical-align: middle; width:100px;">รวม</th>
-                            <th rowspan="3" class="text-center" style="vertical-align: middle; width:100px;">เครื่องมือ</th>
-                        </tr>
-                        <tr>
-                            <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">เงินเดือน</th>
-                            <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">ค่าจ้างประจำ</th>
-                            <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">ค่าตอบแทนพนักงาน</th>
-                            
-                            <th colspan="2" class="text-center" style="vertical-align: middle; width:80px;">เงินอุดหนุนเป็นค่าใช้จ่ายบุคลากร</th>
-                            <th colspan="4" class="text-center" style="vertical-align: middle; width:80px;">เงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน</th>
-                            
-                            <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">เงินอุดหนุนเป็นค่าครุภัณฑ์</th>
-                            <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">เงินอุดหนุนเป็นค่าที่ดิน/สิ่งก่อสร้าง</th>
-                            <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">เงินอุดหนุนอื่นๆ</th>
-                        </tr>
-                        <tr>
-                            <th class="text-center" style="vertical-align: middle; width:80px;">เงินเดือน</th>
-                            <th class="text-center" style="vertical-align: middle; width:80px;">ค่าจ้างชั่วคราว</th>
-                            <th class="text-center" style="vertical-align: middle; width:80px;">ค่าตอบแทน</th>
-                            <th class="text-center" style="vertical-align: middle; width:80px;">ค่าใช้สอย</th>
-                            <th class="text-center" style="vertical-align: middle; width:80px;">ค่าวัสดุ</th>
-                            <th class="text-center" style="vertical-align: middle; width:80px;">ค่าสาธารณูปโภค</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="15" class="text-center">-</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                </div>
+                </div>
+                
 
             
         </div>
@@ -257,10 +273,21 @@ $(function(){
     
         
     loadApprove();
-    
-    $( ".editApprove" ).click(function() {
+    /*
+    $( ".editApprove" ).unbind("click").click(function() {
         alert($(this).attr("data-id"));
     });
+        */
+    $( ".listYear" ).unbind("click").change(function() {
+        
+        loadApprove();
+        
+        
+    });
+    
+    
+    
+    
         
 });
 function loadApprove(){
@@ -342,13 +369,8 @@ function loadApprove(){
                         "data": "data",
                         "sClass": "text-right ",
                         render:function(data){
-                            if(data[bgId[0]]!=null){
-                                return $.number( data[bgId[0]], 2 );
-                            }else{
-                                
-                                return "-";
-                                
-                            }
+                            return checkValueTable(data[bgId[0]]);
+                            
                         }
                     },{
                         "targets": 2,
@@ -357,14 +379,7 @@ function loadApprove(){
                         "data": "data",
                         "sClass": "text-right",
                         render:function(data){
-                            
-                            if(data[bgId[1]]!=null){
-                                return $.number( data[bgId[1]], 2 );
-                            }else{
-                                
-                                return "-";
-                                
-                            }
+                            return checkValueTable(data[bgId[1]]);
                         }
                     },{
                         "targets": 3,
@@ -373,13 +388,8 @@ function loadApprove(){
                         "data": "data",
                         "sClass": "text-right",
                         render:function(data){
-                            if(data[bgId[2]]!=null){
-                                return $.number( data[bgId[2]], 2 );
-                            }else{
-                                
-                                return "-";
-                                
-                            }
+                            return checkValueTable(data[bgId[2]]);
+                           
                             
                         }
                     },{
@@ -389,13 +399,8 @@ function loadApprove(){
                         "data": "data",
                         "sClass": "text-right",
                         render:function(data){
-                            if(data[bgId[3]]!=null){
-                                return $.number( data[bgId[3]], 2 );
-                            }else{
-                                
-                                return "-";
-                                
-                            }
+                            return checkValueTable(data[bgId[3]]);
+                            
                             
                         }
                     },{
@@ -405,13 +410,8 @@ function loadApprove(){
                         "data": "data",
                         "sClass": "text-right",
                         render:function(data){
-                            if(data[bgId[4]]!=null){
-                                return $.number( data[bgId[4]], 2 );
-                            }else{
-                                
-                                return "-";
-                                
-                            }
+                            return checkValueTable(data[bgId[4]]); 
+                            
                             
                         }
                     },{
@@ -421,11 +421,8 @@ function loadApprove(){
                         "data": "data",
                         "sClass": "text-right",
                         render:function(data){
-                            if(data[bgId[5]]!=null){
-                                return $.number( data[bgId[5]], 2 );
-                            }else{
-                                return "-";
-                            }
+                            return checkValueTable(data[bgId[5]]);
+                            
                             
                         }
                     },{
@@ -435,12 +432,7 @@ function loadApprove(){
                         "data": "data",
                         "sClass": "text-right",
                         render:function(data){
-                            if(data[bgId[6]]!=null){
-                                return $.number( data[bgId[6]], 2 );
-                            }else{
-                                return "-";
-                            }
-                            
+                            return checkValueTable(data[bgId[6]]);
                         }
                     },{
                         "targets": 8,
@@ -449,12 +441,7 @@ function loadApprove(){
                         "data": "data",
                         "sClass": "text-right",
                         render:function(data){
-                            if(data[bgId[7]]!=null){
-                                return $.number( data[bgId[7]], 2 );
-                            }else{
-                                return "-";
-                            }
-                            
+                            return checkValueTable(data[bgId[7]]);
                         }
                     },{
                         "targets": 9,
@@ -463,12 +450,7 @@ function loadApprove(){
                         "data": "data",
                         "sClass": "text-right",
                         render:function(data){
-                            if(data[bgId[8]]!=null){
-                                return $.number( data[bgId[8]], 2 );
-                            }else{
-                                return "-";
-                            }
-                            
+                            return checkValueTable(data[bgId[8]]);
                         }
                     },{
                         "targets": 10,
@@ -477,11 +459,7 @@ function loadApprove(){
                         "data": "data",
                         "sClass": "text-right",
                         render:function(data){
-                            if(data[bgId[9]]!=null){
-                                return $.number( data[bgId[9]], 2 );
-                            }else{
-                                return "-";
-                            }
+                            return checkValueTable(data[bgId[9]]);
                         }
                     },{
                         "targets": 11,
@@ -490,12 +468,7 @@ function loadApprove(){
                         "data": "data",
                         "sClass": "text-right",
                         render:function(data){
-                            if(data[bgId[10]]!=null){
-                                return $.number( data[bgId[10]], 2 );
-                            }else{
-                                return "-";
-                            }
-                            
+                            return checkValueTable(data[bgId[10]]);
                         }
                     },{
                         "targets": 12,
@@ -504,11 +477,7 @@ function loadApprove(){
                         "data": "data",
                         "sClass": "text-right",
                         render:function(data){
-                           if(data[bgId[11]]!=null){
-                                return $.number( data[bgId[11]], 2 );
-                            }else{
-                                return "-";
-                            }
+                           return checkValueTable(data[bgId[11]]);
                         }
                     },{
                         "targets": 13,
@@ -565,11 +534,7 @@ function loadApprove(){
                 });
                 
                 $('#ApproveShowEdit').modal('show');
-                
 
-                
-                
-                
                 $("#ApproveSaveEdit").unbind("click").click(function () { 
                     
                     var jdata = [];
@@ -577,30 +542,40 @@ function loadApprove(){
 
                     $.each(bgId, function (key, value) {
                         var data = {};
-                        //$('#b'+value).val(valueApprove[IndexArr]["data"][value]);
-                        //console.log(value);
                         data['deptId'] = DepartmentId;
                         data['bgPeriodId'] = year;
                         data['bgTypeId'] = value;
                         data['bgAfterReview']=$('#b'+value).val();
-                        //jdata["data"].push("OK");
-                        //console.log(value);
                         jdata.push(data);
                     });
                     OpjectData['data'] = jdata;
+                    OpjectData['type'] = "AfTER";
 
                     var datas=callAjax('{{_context_path}}/api/budget/approveSum/updateApproveSum', 'post', jsonEncode(OpjectData),'json');
+                    datas["result"]=true;
                     if(datas["result"]==true){
-                        
+                        var sum=0;
                         $.each(bgId, function (key, value) {
+                            if($('#b'+value).val()!=""){
+                                sum+=parseFloat($('#b'+value).val());
+                                valueApprove[IndexArr]["data"][value]=$('#b'+value).val();
+                            }
                             tr.find("td").eq(key+1).html(checkValue($('#b'+value).val()));
+                            
                         });
+                        
+                        
+                       
+                        tr.find("td").eq(13).html(checkValue(sum));
+
+        
                         $('#ApproveShowEdit').modal('hide');
                         
                     }else{
                         
-                        alert("NO");
+                        //alert("NO");
                         $('#ApproveShowEdit').modal('hide');
+                        sweetAlert("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลได้", "error");
                     }
                     
                     
@@ -611,17 +586,20 @@ function loadApprove(){
             
 }
 function checkValue(data){
-    
     if(data!=""){
-        
         return $.number(data,2);
-        
     }else{
-        
         return "-";
-        
     }
-    
 }
+function checkValueTable(data){
+    if(data!=null){
+        return $.number(data,2);
+    }else{
+        return "-";
+    }
+}
+
+
 </script>
     
