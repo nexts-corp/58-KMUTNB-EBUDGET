@@ -111,7 +111,7 @@ class ApproveSumService extends CServiceBase implements IApproveSumService
                 if ($type == "BudgetAfterReview") {
 
                     //update 2 col BudgetAfterReview and BudgetFinal
-                    $sql .= "UPDATE Budget_Summarize SET BudgetAfterReview = " . $budget . " AND BudgetFinal = " . $budget . " WHERE " .
+                    $sql .= "UPDATE Budget_Summarize SET BudgetAfterReview = " . $budget . ",BudgetFinal = " . $budget . " WHERE " .
                         "BudgetPeriodId = " . $value->bgPeriodId . " AND BudgetTypeId = " . $value->bgTypeId . " AND DepartmentId = " . $value->deptId . ";";
 
                 } else {
