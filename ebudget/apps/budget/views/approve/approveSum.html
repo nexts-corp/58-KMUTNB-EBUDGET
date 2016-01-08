@@ -12,7 +12,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="none-padding">สรุปยอดงบประมาณ</h1>
+                    <h1 class="none-padding">ปิดยอดสรุปยอดงบประมาณ</h1>
                 </div>
             </div>
         </div>
@@ -352,9 +352,37 @@ $(function(){
 function saveApprove(){
     
     var year = $(".listYear").val();
-    var datas = callAjax("{{_context_path}}/api/budget/approveSum/closeBudget", "post",{year: year}, "json");
+    
+    swal({
+            title: "ปิดยอดสรุปงบประมาณ",
+            text: "การปิดยอดสรุปงบประมาณ เป็นขั้นตอนหลังจากส่งข้อมูลให้ สนง. ตรวจสอบแล้ว ข้อมูลนี้จะไม่สามารถแก้ไขได้อีก ท่านต้องการปิดยอดสรุปงบประมาณใช่หรือไม่",
+            type: "info",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            confirmButtonText: "ยืนยันการทำงาน"
+        },
+        function () {
+    
+                    var datas = callAjax("{{_context_path}}/api/budget/approveSum/closeBudget", "post",{year: year}, "json");
 
-    console.log(datas);
+                    if (datas["result"] == true) {
+
+                        swal({
+                            title: "บันทึกการปิดยอดสรุปงบประมาณ",
+                            text: "",
+                            type: "success",
+                            showCancelButton: false,
+                            confirmButtonColor: "#51b451",
+                            confirmButtonText: "OK",
+                            closeOnConfirm: true
+                        }, function () {
+                            window.location = "{{_context_path}}/api/budget/view/finalAll";
+                        });
+
+                    } else {
+                        swal("บันทึกไม่สำเร็จ", "", "error");
+                    }
+        });
 }
 
 function loadApprove(){
@@ -558,8 +586,12 @@ function loadApprove(){
                         "data": "DepartmentId",
                         "sClass": "text-center",
                         render:function(data){
-                            
-                            return '<button class="btn btn-warning btn-xs ApproveEdit" data-DepartmentId="'+data+'" type="submit"><i class="fa fa-pencil-square-o"></i> แก้ไข</button>';
+                            if(status=="true"){
+                                return '<button class="btn btn-warning btn-xs ApproveEdit" data-DepartmentId="'+data+'" type="submit"><i class="fa fa-pencil-square-o"></i> แก้ไข</button>';
+                            }else{
+                                return '<button class="btn btn-warning btn-xs ApproveEdit" data-DepartmentId="'+data+'" disabled type="submit"><i class="fa fa-pencil-square-o"></i> แก้ไข</button>';
+                                
+                            }
                         }
                     }
                     
@@ -857,7 +889,12 @@ function loadApproveFinal(){
                         "sClass": "text-center",
                         render:function(data){
                             
-                            return '<button class="btn btn-warning btn-xs ApproveEditFinal" data-DepartmentId="'+data+'" type="submit"><i class="fa fa-pencil-square-o"></i> แก้ไข</button>';
+                            if(status=="true"){
+                                return '<button class="btn btn-warning btn-xs ApproveEdit" data-DepartmentId="'+data+'" type="submit"><i class="fa fa-pencil-square-o"></i> แก้ไข</button>';
+                            }else{
+                                return '<button class="btn btn-warning btn-xs ApproveEdit" data-DepartmentId="'+data+'" disabled type="submit"><i class="fa fa-pencil-square-o"></i> แก้ไข</button>';
+                                
+                            }
                         }
                     }
                     
@@ -956,13 +993,15 @@ function loadApproveFinal(){
 
 
 function checkStatus(){
-    
-    if(status!=false){
-        if(countData>0){
-            
-            $("#BtnSave").removeAttr("disabled");
-            
+    console.log(status);
+    console.log(countData);
+    if(status=="true"){
+       
+        if(countData!="0"){
+            $("#BtnSave").removeAttr("disabled");       
         }
+    }else{
+         $("#BtnSave").attr("disabled", true);
     }
         
     
