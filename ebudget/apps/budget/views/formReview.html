@@ -346,7 +346,7 @@
 //                }
 
 
-                if (code != "" && dept > 0 && fund > 0 && plan > 0 && year > 0) {
+               // if (code != "" && dept > 0 && fund > 0 && plan > 0 && year > 0) {
                     //var textSelected = $("#expenses-select").find('option:selected').text();
                     //  showTableExpenseInfo(dept, fund, plan, year);
                     //getExpensesList(budgetType);
@@ -359,8 +359,8 @@
                         "planId": plan
                     };
                     var html = "";
-                    var datas = callAjax("{{_context_path}}/api/budget/budgetReview/getBudgetScheme", "post", param, "json")["result"];
-                    //var datas = callAjax("{{_context_path}}/apps/budget/datatest.json", "get", {}, "json")["result"];
+                    //var datas = callAjax("{{_context_path}}/api/budget/budgetReview/getBudgetScheme", "post", param, "json")["result"];
+                    var datas = callAjax("{{_context_path}}/apps/budget/datatest.json", "get", {}, "json")["result"];
                     if (typeof datas !== "undefined" && datas !== null) {
                         var scheme = {};
                         var count = {};
@@ -562,7 +562,7 @@
                         });
                         //  console.log(sumPrice);
                     });
-                }
+            //    }
 
 
 //                if (dept == 0) {

@@ -45,7 +45,7 @@ interface ICenterService {
     /**
      * @name insert
      * @uri /insert
-     * @param apps\affirmative\entity\AffirmativeCenter center
+     * @param apps\common\entity\AffirmativeCenter center
      * @return String[] insert Description
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
@@ -54,7 +54,7 @@ interface ICenterService {
     /**
      * @name update
      * @uri /update
-     * @param apps\affirmative\entity\AffirmativeCenter center
+     * @param apps\common\entity\AffirmativeCenter center
      * @return String[] update Description
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
@@ -63,7 +63,7 @@ interface ICenterService {
     /**
      * @name delete
      * @uri /delete
-     * @param apps\affirmative\entity\AffirmativeCenter center
+     * @param apps\common\entity\AffirmativeCenter center
      * @return boolean delete Description
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */

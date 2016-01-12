@@ -206,3 +206,7 @@ function getHTML(id, link, data) {
         });
     }
 }
+
+function text2html(input){
+    return input.replace(/\n/g, '<br>');
+}

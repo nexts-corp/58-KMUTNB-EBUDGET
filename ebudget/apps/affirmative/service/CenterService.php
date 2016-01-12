@@ -11,7 +11,7 @@ class CenterService extends CServiceBase implements ICenterService {
 
     public $datacontext;
     public $logger;
-    public $md = "apps\\common\\model";
+    public $md = "apps\\affirmative\\model";
     public $ent = "apps\\common\\entity";
 
     public function __construct() {
@@ -39,13 +39,16 @@ class CenterService extends CServiceBase implements ICenterService {
 
     function getPeriod() {
         $year = new \apps\common\entity\Year();
-        $year->yearStatus = 'Y';
+        //$year->yearStatus = 'Y';
+        $year->year = '2559';
         return $this->datacontext->getObject($year)[0];
     }
 
     function getGroup($centerGroupArr) {
-        $sqlGroup = "select g.id,g.actTypeName,g.actTypeCode from apps\\common\\entity\\ActivityType g "
-                . " where g.actTypeCode in (:actTypeCode) ";
+        $sqlGroup = "SELECT"
+                ." g.id, g.actTypeName AS groupName, g.actTypeCode AS groupCode"
+            ." FROM ".$this->ent."\\ActivityType g"
+            ." WHERE g.actTypeCode IN (:actTypeCode)";
         $paramGroup = array(
             "actTypeCode" => $centerGroupArr
         );
@@ -53,8 +56,10 @@ class CenterService extends CServiceBase implements ICenterService {
     }
 
     function getUnit($unit) {
-        $sqlUnit = "select g.unitId,g.unitName from apps\\common\\entity\\AffirmativeUnit g "
-                . " where g.unitId = :unitId ";
+        $sqlUnit = "SELECT"
+                ." g.unitId, g.unitName"
+            ." FROM ".$this->ent."\\AffirmativeUnit g"
+            ." WHERE g.unitId = :unitId";
         $paramUnit = array(
             "unitId" => $unit
         );
@@ -79,10 +84,14 @@ class CenterService extends CServiceBase implements ICenterService {
     function centerData(){
         $json = new CJSONDecodeImpl();
         //  $viewCenter = new \apps\affirmative\model\ViewAffirmativeCenter();
-        $viewSql = "select v from apps\\affirmative\\model\\ViewAffirmativeCenter v "
-            . " where v.periodCode = :periodCode "
-            . " order by v.periodCode,v.mainSeq,v.typeSeq,v.issueSeq,v.targetSeq,v.kpiSeq";
-        $viewParam = array("periodCode" => $this->getPeriod()->year);
+        $viewSql = "SELECT"
+                ." v"
+            ." FROM ".$this->md."\\ViewAffirmativeCenter v"
+            ." WHERE v.periodCode = :periodCode"
+            ." ORDER BY v.periodCode, v.mainSeq, v.typeSeq, v.issueSeq, v.targetSeq, v.kpiSeq ASC";
+        $viewParam = array(
+            "periodCode" => $this->getPeriod()->year
+        );
         $centerData = $this->datacontext->getObject($viewSql, $viewParam);
 
         $typeArr = array();
@@ -111,29 +120,45 @@ class CenterService extends CServiceBase implements ICenterService {
         $typeArr = $this->sortBy("kpiSeq", $typeArr);
         $targetArr = $this->sortBy("kpiSeq", $targetArr);
 
-        $mainSql = "select v from apps\\common\\entity\\AffirmativeMain v where v.periodCode = :periodCode  order by v.mainSeq";
+        $mainSql = "SELECT"
+                ." v"
+            ." FROM ".$this->ent."\\AffirmativeMain v"
+            ." WHERE v.periodCode = :periodCode"
+            ." ORDER BY v.mainSeq ASC";
         $mainParam = array("periodCode" => $this->getPeriod()->year);
         $mainData = $this->datacontext->getObject($mainSql, $mainParam);
         foreach ($mainData as $keyMain => $valueMain) {
-            $typeSql = "select v from apps\\common\\entity\\AffirmativeType v where v.mainId = :mainId  order by v.typeSeq";
-            $typeParam = array("mainId" => $valueMain->id);
+            $typeSql = "SELECT"
+                    ." v"
+                ." FROM ".$this->ent."\\AffirmativeType v"
+                ." WHERE v.mainId = :mainId"
+                ." ORDER BY v.typeSeq ASC";
+            $typeParam = array("mainId" => $valueMain->mainId);
             $typeData = $this->datacontext->getObject($typeSql, $typeParam);
             $mainData[$keyMain]->type = $typeData;
             foreach ($typeData as $keyType => $valueType) {
-                $issueSql = "select v from apps\\common\\entity\\AffirmativeIssue v where v.typeId = :typeId  order by v.issueSeq";
-                $issueParam = array("typeId" => $valueType->id);
+                $issueSql = "SELECT"
+                        ." v"
+                    ." FROM ".$this->ent."\\AffirmativeIssue v"
+                    ." WHERE v.typeId = :typeId"
+                    ." ORDER BY v.issueSeq ASC";
+                $issueParam = array("typeId" => $valueType->typeId);
                 $issueData = $this->datacontext->getObject($issueSql, $issueParam);
                 $mainData[$keyMain]->type[$keyType]->issue = $issueData;
-                if (array_key_exists($valueType->id, $typeArr)) {
+                if (array_key_exists($valueType->typeId, $typeArr)) {
                     $mainData[$keyMain]->type[$keyType]->kpi = $typeArr[$valueType->id];
                 }
                 foreach ($issueData as $keyIssue => $valueIssue) {
-                    $targetSql = "select v from apps\\common\\entity\\AffirmativeTarget v where v.issueId = :issueId  order by v.targetSeq";
-                    $targetParam = array("issueId" => $valueIssue->id);
+                    $targetSql = "SELECT"
+                            ." v"
+                        ." FROM ".$this->ent."\\AffirmativeTarget v"
+                        ." WHERE v.issueId = :issueId"
+                        ." ORDER BY v.targetSeq ASC";
+                    $targetParam = array("issueId" => $valueIssue->issueId);
                     $targetData = $this->datacontext->getObject($targetSql, $targetParam);
                     $mainData[$keyMain]->type[$keyType]->issue[$keyIssue]->target = $targetData;
                     foreach ($targetData as $keyTarget => $valueTarget) {
-                        if (array_key_exists($valueTarget->id, $targetArr)) {
+                        if (array_key_exists($valueTarget->targetId, $targetArr)) {
                             $mainData[$keyMain]->type[$keyType]->issue[$keyIssue]->target[$keyTarget]->kpi = $targetArr[$valueTarget->targetId];
                         }
                     }
@@ -152,13 +177,14 @@ class CenterService extends CServiceBase implements ICenterService {
     }
 
     public function listsKpi($targetId) {
-        $kpi = new \apps\affirmative\entity\AffirmativeKpi();
+        $kpi = new \apps\common\entity\AffirmativeKpi();
         $kpi->targetId = $targetId;
         return $this->datacontext->getObject($kpi);
     }
 
     public function listsUnit() {
-        return $this->datacontext->getObject(new \apps\affirmative\entity\AffirmativeUnit());
+        $unit = new \apps\common\entity\AffirmativeUnit();
+        return $this->datacontext->getObject($unit);
     }
 
     public function insert($center) {
@@ -166,17 +192,19 @@ class CenterService extends CServiceBase implements ICenterService {
         $center->periodCode = $this->getPeriod()->year;
         $center->isApprove = "N";
         if ($center->typeId == 0) {
-            $target = new \apps\affirmative\entity\AffirmativeTarget();
+            $target = new \apps\common\entity\AffirmativeTarget();
             $target->targetId = $center->targetId;
             $issueId = $this->datacontext->getObject($target)[0]->issueId;
-            $issue = new \apps\affirmative\entity\AffirmativeIssue();
+
+            $issue = new \apps\common\entity\AffirmativeIssue();
             $issue->issueId = $issueId;
             $center->typeId = $this->datacontext->getObject($issue)[0]->typeId;
+
         }
         if ($this->datacontext->saveObject($center)) {
             $centerId = $center->centerId;
             foreach ($centerGroup as $keyGroup => $groupCode) {
-                $cGroup = new \apps\affirmative\entity\AffirmativeCenterGroup();
+                $cGroup = new \apps\common\entity\AffirmativeCenterGroup();
                 $cGroup->centerId = $centerId;
                 $cGroup->groupCode = $groupCode;
                 if (!$this->datacontext->saveObject($cGroup)) {
@@ -187,18 +215,21 @@ class CenterService extends CServiceBase implements ICenterService {
             $center->centerGroup = $this->getGroup($centerGroup);
             $center->unit = $this->getUnit($center->unitId);
         }
+        else{
+            return $this->datacontext->getLastMessage();
+        }
         return $center;
     }
 
     public function update($center) {
         $centerGroupArr = $center->centerGroup;
         if ($this->datacontext->updateObject($center)) {
-            $centerGroup = new \apps\affirmative\entity\AffirmativeCenterGroup();
+            $centerGroup = new \apps\common\entity\AffirmativeCenterGroup();
             $centerGroup->centerId = $center->centerId;
             $dataCenterGroup = $this->datacontext->getObject($centerGroup);
             if ($this->datacontext->removeObject($dataCenterGroup)) {
                 foreach ($centerGroupArr as $keyGroup => $groupCode) {
-                    $newCenterGroup = new \apps\affirmative\entity\AffirmativeCenterGroup();
+                    $newCenterGroup = new \apps\common\entity\AffirmativeCenterGroup();
                     $newCenterGroup->centerId = $center->centerId;
                     $newCenterGroup->groupCode = $groupCode;
                     if (!$this->datacontext->saveObject($newCenterGroup)) {
@@ -214,7 +245,7 @@ class CenterService extends CServiceBase implements ICenterService {
             $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
             return false;
         }
-        $newCenter = new \apps\affirmative\entity\AffirmativeCenter();
+        $newCenter = new \apps\common\entity\AffirmativeCenter();
         $newCenter->centerId = $center->centerId;
         $center = $this->datacontext->getObject($newCenter)[0];
         $center->centerGroup = $this->getGroup($centerGroupArr);
@@ -224,7 +255,7 @@ class CenterService extends CServiceBase implements ICenterService {
 
     public function delete($center) {
         if ($this->datacontext->removeObject($center)) {
-            $centerGroup = new \apps\affirmative\entity\AffirmativeCenterGroup();
+            $centerGroup = new \apps\common\entity\AffirmativeCenterGroup();
             $centerGroup->centerId = $center->centerId;
             $data = $this->datacontext->getObject($centerGroup);
             if (!$this->datacontext->removeObject($data)) {
@@ -237,7 +268,7 @@ class CenterService extends CServiceBase implements ICenterService {
     }
 
     public function approve($status) {
-        $center = new \apps\affirmative\entity\AffirmativeCenter();
+        $center = new \apps\common\entity\AffirmativeCenter();
         $center->periodCode = $this->getPeriod()->year;
         $data = $this->datacontext->getObject($center);
         if (count($data) > 0) {
@@ -254,13 +285,13 @@ class CenterService extends CServiceBase implements ICenterService {
                     $data[$key]->isCenter = "Y";
                     $data[$key]->isActive = "Y";
                 }
-                $draft = $json->decode(new \apps\affirmative\entity\AffirmativeDraft(), $data);
+                $draft = $json->decode(new \apps\common\entity\AffirmativeDraft(), $data);
                 if (!$this->datacontext->saveObject($draft)) {
                     $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
                     return false;
                 }
             } elseif ($status == "N") {
-                $data = $this->datacontext->getObject(new \apps\affirmative\entity\AffirmativeDraft());
+                $data = $this->datacontext->getObject(new \apps\common\entity\AffirmativeDraft());
                 $this->datacontext->removeObject($data);
             } else {
                 $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
