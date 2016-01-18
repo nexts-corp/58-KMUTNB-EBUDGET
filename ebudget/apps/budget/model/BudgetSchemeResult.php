@@ -10,6 +10,7 @@ namespace apps\budget\model;
 
 class BudgetSchemeResult {
 
+    public $id;
     public $bgPeriodId;
     public $bgTypeCode;
     public $planId;
@@ -29,6 +30,10 @@ class BudgetSchemeResult {
     public $usedQ3;
     public $usedQ4;
     public $usedSummary;
+
+    function getId() {
+        return $this->id;
+    }
 
     function getBgPeriodId() {
         return $this->bgPeriodId;
@@ -104,6 +109,10 @@ class BudgetSchemeResult {
 
     function getUsedSummary() {
         return $this->usedSummary;
+    }
+
+    function setId($id) {
+        $this->id = $id;
     }
 
     function setBgPeriodId($bgPeriodId) {

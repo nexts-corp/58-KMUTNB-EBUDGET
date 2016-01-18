@@ -44,8 +44,9 @@
                 <table id="table" class="table table-bordered table-striped table-condensed mb-none">
                     <thead>
                         <tr>
-                            <th class="text-center col-lg-3">รายละเอียดคำชี้แจงงบประมาณ</th>
-                            <th class="text-center col-lg-7">หน่วยงาน</th>
+                            <th class="text-center col-lg-2">ปีงบประมาณ</th>
+                            <th class="text-center col-lg-3">รายละเอียดงบประมาณ</th>
+                            <th class="text-center col-lg-5">หน่วยงาน</th>
                             <th class="text-center col-lg-2">เครื่องมือ</th>
                         </tr>
                     </thead>
@@ -185,7 +186,7 @@
     var facultyArr = {};
     var departmentArr = {};
     var allDepArr = listsAllDepartment();
-    
+
     //        var budgetPeriodArr = {2557: 2557, 2558: 2558, 2559: 2559};
     //        var budgetTypeArr = {G: "เงินงบประมาณแผ่นดิน", K: "เงินรายได้", U: "เงินงบประมาณแผ่นดินและเงินรายได้"};
     //        var planArr = {1: "ดำเนินการตามกรอบข้อตกลงของประชาคมอาเซียน", 2: "ขยายโอกาสและพัฒนาคุณภาพการศึกษา", 3: "ส่งเสริมการวิจัยและพัฒนา"};
@@ -198,11 +199,11 @@
 
         listsFormSaved();
         toggleShow("home");
-        
+
         //$("#budgetPeriodId, #budgetTypeCode, #planId, #projectId, #fundgroupId, #facultyId, #deptId").select2().trigger("change");
         $("#budgetPeriodId, #budgetTypeCode, #facultyId, #deptId").select2().trigger("change");
-        
-        
+
+
         // choice changed
         $("#budgetPeriodId").change(function () {
             isForm = 0;
@@ -214,8 +215,8 @@
 
         });
         /*$("#planId").change(function () {
-            listsProject($(this).val());
-        });*/
+         listsProject($(this).val());
+         });*/
         $("#facultyId").change(function () {
             listsDepartment($(this).val());
         });
@@ -232,7 +233,7 @@
         $("button.backAttachment").unbind("click").click(function () {
             toggleShow("form");
         });
-        
+
         $(document).on('click', '#btnViewForm', function (event) {
             var year = $(this).attr('data-year');
             var form = $(this).attr('data-form');
@@ -242,30 +243,30 @@
 
             //go to form
             var param = {};
-            param.budgetPeriodId = year;            
+            param.budgetPeriodId = year;
             param.budgetTypeCode = 'K';
             param.facultyId = allDepArr[dept].masterId;
             param.deptId = dept;
             param.fundgroupId = fund;
             param.l3dPlanId = plan;
             param.formId = form;
-            
+
             var $scopeJS = angular.element(document.querySelector('[ng-app=formBudget]')).scope();
             $scopeJS.$apply(function () {
-                if(param.formId==="500"){
-                    form="manageDepartment";
+                if (param.formId === "500") {
+                    form = "manageDepartment";
                 }
                 $scopeJS.openForm(form, param);
             });
             toggleShow("form");
-            
+
             //toFormBudget(item);
         });
     });
     function listsFormSaved() {
         var param = {
-            budgetPeriodId: 2558,
-            deptId: 1,
+            budgetPeriodId: "",
+            deptId: "",
             budgetTypeCode: "K"
         };
         var datas = callAjax("{{_context_path}}/api/budget/budgetReview/getAllBudgetRequest", "post", param, "json");
@@ -275,31 +276,32 @@
             for (var i = 0; i < data.length; i++) {
                 var item = data[i];
                 var formText = "";
-                if(item.formId === 500) {
+                if (item.formId === 500) {
                     formText = 'เงินรายได้';
                 } else {
                     formText = 'โครงการพัฒนามหาวิทยาลัย';
                 }
                 html += '<tr>'
+                        + '<td>' + item.budgetPeriodId + '</td>'
                         + '<td>' + formText + '</td>'
-                        + '<td>' + item.facultyName + ' / ' + item.deptName + '</td>'
+                        + '<td>' + item.facultyName + '</td>'
                         + '<td>'
-                        + '<button class="btn btn-warning edit" title="แก้ไข" id="btnViewForm" data-year="'+item.budgetPeriodId+'" data-form="' + item.formId + '" data-dept="' + item.deptId + '" data-fund="' + item.fundgroupId + '" data-plan="' + item.l3dPlanId + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                        + '<button class="btn btn-warning edit" title="แก้ไข" id="btnViewForm" data-year="' + item.budgetPeriodId + '" data-form="' + item.formId + '" data-dept="' + item.deptId + '" data-fund="' + item.fundgroupId + '" data-plan="' + item.l3dPlanId + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
                         + '</td>'
                         + '</tr>';
             }
 
             $("#table tbody").html(html);
         }
-        
-        
+
+
     }
 
     function listsForm(type) {
         if (isForm == 0) {
             var formArr;
             formArr = [
-                 {
+                {
                     ng: "true",
                     form: "manageDepartment",
                     name: "รายละเอียดคำชี้แจงงบประมาณ"
@@ -309,7 +311,7 @@
                     form: "project",
                     name: "โครงการที่ตอบสนองยุทธศาสตร์"
                 }
-               
+
             ];
             /*
              if (type == "G") {
@@ -528,20 +530,20 @@
 
         $("#deptId").html(html).trigger("change");
     }
-    
+
     function listsAllDepartment(facultyId) {
         var html = '<option value="" selected="selected">เลือก</option>';
         var datas = callAjax("{{_context_path}}/api/common/lookup/listDepartment", "post", {}, "json");
         var list = {};
         if (typeof datas !== "undefined" && datas !== null) {
             $.each(datas["lists"], function (key, value) {
-                list[value["id"]] = {name:value["name"],masterId:value["masterId"]};
+                list[value["id"]] = {name: value["name"], masterId: value["masterId"]};
             });
         }
         return list;
     }
-    
-    
+
+
 
     function toggleShow(option) {
 

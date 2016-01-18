@@ -39,9 +39,8 @@ class Draft140Service extends CServiceBase implements IDraft140Service
         $project->setBudgetperiodId($budgetPeriodId);
         $project->setPlanId($L3DPlanId);
         $project->setFundgroupId($fundgroupId);
-
         $dataProject = $this->datacontext->getObject($project);
-
+        
         $result = array();
 
         if ($dataProject) {
@@ -246,7 +245,7 @@ class Draft140Service extends CServiceBase implements IDraft140Service
 
         $json = new CJSONDecodeImpl();
         $budget = $json->decode(new \apps\common\entity\Budget140(), $conv);
-
+        $budget->statusId = 1;
         $budget->bgSummary = $budget->salaryTotal;
         $budget->dateUpdated = date('Y-m-d H:i:s');
 

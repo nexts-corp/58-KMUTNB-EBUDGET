@@ -227,73 +227,106 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
     }
 
     public function getAllBudgetRequest($budgetPeriodId, $deptId, $budgetTypeCode) {
-        if ($deptId > 0) {
-            $sqlExt = "and bgh.statusId = 1 ";
-        } else {
-            $sqlExt = "and bgh.statusId <> 1 ";
+//        if ($deptId > 0) {
+//            $sqlExt = "and (bgh.statusId = 1 or bgh.statusId is null) ";
+//        } else {
+//            $sqlExt = "and (bgh.statusId <> 1 or bgh.statusId is null) ";
+//        }
+//        if ($budgetTypeCode == 'G') {
+//            $sql = "select bgh.id as bghId, bgh.budgetTypeCode, bgh.budgetPeriodId, "
+//                    . "case when bgh.budgetTypeCode = 'G' then 'เงินงบประมาณแผ่นดิน' else 'เงินรายได้' end as budgetTypeName, "
+//                    . "bgh.formId as formId, dept.id as deptId, dept.deptName as deptName, "
+//                    . "faculty.id as facultyId, faculty.deptName as facultyName, "
+//                    . "l3dPlan.id as l3dPlanId, l3dPlan.planName as l3dPlanName, "
+//                    . "bgPlan.id as planId, bgPlan.planName as planName, "
+//                    . "bgProj.id as projectId, bgProj.projectName as projectName, "
+//                    . "fund.id as fundgroupId, fund.fundgroupName as fundName, "
+//                    . "status.id as statusId, status.desc as statusDesc "
+//                    . "from " . $this->ent . "\\BudgetHead bgh "
+//                    . "left outer join " . $this->ent . "\\L3D\\Department dept with dept.id = bgh.deptId "
+//                    . "left outer join " . $this->ent . "\\L3D\\Department faculty with faculty.id = dept.masterId "
+//                    . "left outer join " . $this->ent . "\\L3D\\Plan l3dPlan with l3dPlan.id = bgh.l3dPlanId "
+//                    . "left outer join " . $this->ent . "\\BudgetPlan bgPlan with bgPlan.id = bgh.planId "
+//                    . "left outer join " . $this->ent . "\\BudgetProject bgProj with bgProj.id = bgh.projectId "
+//                    . "left outer join " . $this->ent . "\\L3D\\FundGroup fund with fund.id = bgh.fundgroupId "
+//                    . "left outer join " . $this->ent . "\\TrackingStatus status with status.id = bgh.statusId "
+//                    . "where bgh.budgetTypeCode = '" . $budgetTypeCode . "' "
+//                    . $sqlExt
+//                    . "and bgh.budgetPeriodId = :budgetPeriodId "
+//                    . "order by status.id, bgh.formId, dept.id, l3dPlan.id, fund.id asc ";
+//
+//            $param = array("budgetPeriodId" => $budgetPeriodId);
+//            $data = $this->datacontext->getObject($sql, $param);
+//
+//            return $data;
+//        } else if ($budgetTypeCode == "K") {
+//            if (isset($budgetPeriodId) && $budgetPeriodId != "") {
+//                $sqlExt .= "and bgh.budgetPeriodId = " . $budgetPeriodId . " ";
+//            }
+//            if (isset($deptId) && $deptId != "") {
+//                $sqlExt .= "and bgh.deptId = " . $deptId . " ";
+//            }
+//
+//            $sql = "select bgh.id, bgh.budgetPeriodId, bgh.formId, bgh.budgetTypeCode, dept.deptName  "
+//                    . "from " . $this->ent . "\\BudgetHead bgh "
+//                    . "left outer join " . $this->ent . "\\L3D\\Department dept with dept.id = bgh.deptId "
+//                    . "where bgh.budgetTypeCode = '" . $budgetTypeCode . "' "
+//                    . $sqlExt
+//                    . "order by bgh.budgetPeriodId, bgh.deptId asc ";
+//
+//            $dataBgh = $this->datacontext->getObject($sql);
+//            return $dataBgh;
+//        }
+
+        $sqlExt = "";
+        if (isset($budgetPeriodId) && $budgetPeriodId != "") {
+            $sqlExt .= "and bgh.budgetPeriodId = " . $budgetPeriodId . " ";
+        }
+        if (isset($deptId) && $deptId != "") {
+            $sqlExt .= "and bgh.deptId = " . $deptId . " ";
         }
 
-        $sql = "select bgh.id as bghId, bgh.budgetTypeCode, bgh.budgetPeriodId, "
-                . "case when bgh.budgetTypeCode = 'G' then 'เงินงบประมาณแผ่นดิน' else 'เงินรายได้' end as budgetTypeName, "
-                . "bgh.formId as formId, dept.id as deptId, dept.deptName as deptName, "
-                . "faculty.id as facultyId, faculty.deptName as facultyName, "
-                . "l3dPlan.id as l3dPlanId, l3dPlan.planName as l3dPlanName, "
-                . "bgPlan.id as planId, bgPlan.planName as planName, "
-                . "bgProj.id as projectId, bgProj.projectName as projectName, "
-                . "fund.id as fundgroupId, fund.fundgroupName as fundName, "
-                . "status.id as statusId, status.desc as statusDesc "
+        $sql = "select bgh.id, bgh.budgetPeriodId, bgh.formId, bgh.budgetTypeCode, dept.deptId as facultyId, dept.deptName as facultyName  "
                 . "from " . $this->ent . "\\BudgetHead bgh "
                 . "left outer join " . $this->ent . "\\L3D\\Department dept with dept.id = bgh.deptId "
-                . "left outer join " . $this->ent . "\\L3D\\Department faculty with faculty.id = dept.masterId "
-                . "left outer join " . $this->ent . "\\L3D\\Plan l3dPlan with l3dPlan.id = bgh.l3dPlanId "
-                . "left outer join " . $this->ent . "\\BudgetPlan bgPlan with bgPlan.id = bgh.planId "
-                . "left outer join " . $this->ent . "\\BudgetProject bgProj with bgProj.id = bgh.projectId "
-                . "left outer join " . $this->ent . "\\L3D\\FundGroup fund with fund.id = bgh.fundgroupId "
-                . "left outer join " . $this->ent . "\\TrackingStatus status with status.id = bgh.statusId "
                 . "where bgh.budgetTypeCode = '" . $budgetTypeCode . "' "
                 . $sqlExt
-                . "and bgh.budgetPeriodId = :budgetPeriodId "
-                . "order by status.id, bgh.formId, dept.id, l3dPlan.id, fund.id asc ";
+                . "order by bgh.budgetPeriodId, bgh.deptId asc ";
 
-        $param = array("budgetPeriodId" => $budgetPeriodId);
-        $data = $this->datacontext->getObject($sql, $param);
-
-        return $data;
+        $dataBgh = $this->datacontext->getObject($sql);
+        return $dataBgh;
 
         /*
-         * DO NOT DELETE
-          $sql = "select bgh.id as bghId, "
-          . "case when bgh.formId = 140 then bg140.id "
-          . "when bgh.formId = 141 then bg141.id "
-          . "when bgh.formId = 142 then bg142.id "
-          . "when bgh.formId = 143 then bg143.id "
-          . "when bgh.formId = 144 then bg144.id "
-          . "when bgh.formId = 145 then bg145.id "
-          . "when bgh.formId = 146 then bg146.id "
-          . "else 0 end as bgId, "
+          if ($deptId > 0) {
+          $sqlExt = "and (bgh.statusId = 1 or bgh.statusId is null) ";
+          } else {
+          $sqlExt = "and (bgh.statusId <> 1 or bgh.statusId is null) ";
+          }
+
+          $sql = "select bgh.id as bghId, bgh.budgetTypeCode, bgh.budgetPeriodId, "
+          . "case when bgh.budgetTypeCode = 'G' then 'เงินงบประมาณแผ่นดิน' else 'เงินรายได้' end as budgetTypeName, "
           . "bgh.formId as formId, dept.id as deptId, dept.deptName as deptName, "
-          . "bgPlan.planName as planName, bgProj.projectName as projectName, fund.fundgroupName as fundName "
+          . "faculty.id as facultyId, faculty.deptName as facultyName, "
+          . "l3dPlan.id as l3dPlanId, l3dPlan.planName as l3dPlanName, "
+          . "bgPlan.id as planId, bgPlan.planName as planName, "
+          . "bgProj.id as projectId, bgProj.projectName as projectName, "
+          . "fund.id as fundgroupId, fund.fundgroupName as fundName, "
+          . "status.id as statusId, status.desc as statusDesc "
           . "from " . $this->ent . "\\BudgetHead bgh "
-          . "left outer join " . $this->ent . "\\Budget140 bg140 with bgh.id = bg140.budgetHeadId "
-          . "left outer join " . $this->ent . "\\Budget141 bg141 with bgh.id = bg141.budgetHeadId "
-          . "left outer join " . $this->ent . "\\Budget142 bg142 with bgh.id = bg142.budgetHeadId "
-          . "left outer join " . $this->ent . "\\Budget143 bg143 with bgh.id = bg143.budgetHeadId "
-          . "left outer join " . $this->ent . "\\Budget144 bg144 with bgh.id = bg144.budgetHeadId "
-          . "left outer join " . $this->ent . "\\Budget145 bg145 with bgh.id = bg145.budgetHeadId "
-          . "left outer join " . $this->ent . "\\Budget146 bg146 with bgh.id = bg146.budgetHeadId "
           . "left outer join " . $this->ent . "\\L3D\\Department dept with dept.id = bgh.deptId "
+          . "left outer join " . $this->ent . "\\L3D\\Department faculty with faculty.id = dept.masterId "
+          . "left outer join " . $this->ent . "\\L3D\\Plan l3dPlan with l3dPlan.id = bgh.l3dPlanId "
           . "left outer join " . $this->ent . "\\BudgetPlan bgPlan with bgPlan.id = bgh.planId "
           . "left outer join " . $this->ent . "\\BudgetProject bgProj with bgProj.id = bgh.projectId "
           . "left outer join " . $this->ent . "\\L3D\\FundGroup fund with fund.id = bgh.fundgroupId "
-          . "where bgh.budgetTypeCode = 'G' and bgh.statusId = 1 "
+          . "left outer join " . $this->ent . "\\TrackingStatus status with status.id = bgh.statusId "
+          . "where bgh.budgetTypeCode = '" . $budgetTypeCode . "' "
+          . $sqlExt
           . "and bgh.budgetPeriodId = :budgetPeriodId "
-          . "order by bgh.formId asc ";
+          . "order by status.id, bgh.formId, dept.id, l3dPlan.id, fund.id asc ";
+
           $param = array("budgetPeriodId" => $budgetPeriodId);
-          $data = $this->datacontext->getObject($sql, $param);
-
-          return $data;
-
-         */
+          $data = $this->datacontext->getObject($sql, $param); */
     }
 
     /*
@@ -364,14 +397,22 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
 
     public function getBudgetScheme($budgetPeriodId, $budgetTypeCode, $deptId, $fundgroupId, $planId) {
         if ($budgetTypeCode == "G") {
-            $sql = "select *
-                from View_Scheme_Budget_Plan bg
-                where bg.bgPeriodId = '" . $budgetPeriodId . "'
-                and bg.deptId = '" . $deptId . "'
-                and bg.fundgroupId = '" . $fundgroupId . "'
-                and bg.planId = '" . $planId . "'";
+            /*
+              $sql = "select *
+              from View_Scheme_Budget_Plan bg
+              where bg.bgPeriodId = '" . $budgetPeriodId . "'
+              and bg.deptId = '" . $deptId . "'
+              and bg.fundgroupId = '" . $fundgroupId . "'
+              and bg.planId = '" . $planId . "'";
+             */
 
-            $data = $this->datacontext->pdoQuery($sql);
+            $sql = "exec spGetBudgetPlan :bgPeriodId, :deptId, :planId, :fundgroupId";
+            $param = array("bgPeriodId" => $budgetPeriodId,
+                "deptId" => $deptId,
+                "planId" => $planId,
+                "fundgroupId" => $fundgroupId
+            );
+            $data = $this->datacontext->pdoQuery($sql, $param);
 
             return $data;
         } else if ($budgetTypeCode == "K") {
@@ -388,37 +429,49 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
         }
     }
 
-    public function updateScheme($budget) {     
-        
+    public function updateScheme($budget) {
+
         if (is_null($budget) || count($budget) <= 0)
             return false;
 
         for ($i = 0; $i < count($budget); $i++) {
             $bg = new entity\BudgetScheme();
-            
-            if ($budget[$i].bgLevel == 1) {
-                $bg->setBudgetTypeId($budget[$i].bgTypeMasterId);
-            } else if ($budget[$i].bgLevel == 2) {
-                $bg->setBudgetTypeId($budget[$i].bgTypeMainId);
-            } else if ($budget[$i].bgLevel == 3) {
-                $bg->setBudgetTypeId($budget[$i].bgTypeId);
+
+            if ($budget[$i]->bgLevel == "1") {
+                $bg->setBudgetTypeId($budget[$i]->bgTypeMasterId);
+            } else if ($budget[$i]->bgLevel == "2") {
+                $bg->setBudgetTypeId($budget[$i]->bgTypeMainId);
+            } else if ($budget[$i]->bgLevel == "3") {
+                $bg->setBudgetTypeId($budget[$i]->bgTypeId);
             }
-            
-            $bg->setBudgetPeriodId($budget[$i].bgPeriodId);
-            $bg->setBudgetTypeCode($budget[$i].bgTypeCode);            
-            $bg->setL3dPlanId($budget[$i].planId);
-            $bg->setDeptId($budget[$i].deptId);
-            $bg->setFundgroupId($budget[$i].fundgroupId);
+
+            $bg->setBudgetPeriodId($budget[$i]->bgPeriodId);
+            $bg->setBudgetTypeCode($budget[$i]->bgTypeCode);
+            $bg->setL3dPlanId($budget[$i]->planId);
+            $bg->setDeptId($budget[$i]->deptId);
+            $bg->setFundgroupId($budget[$i]->fundgroupId);
+            $bg->setBgPlanQ1(str_replace(',', '', $budget[$i]->planQ1));
+            $bg->setBgPlanQ2(str_replace(',', '', $budget[$i]->planQ2));
+            $bg->setBgPlanQ3(str_replace(',', '', $budget[$i]->planQ3));
+            $bg->setBgPlanQ4(str_replace(',', '', $budget[$i]->planQ4));
+            $bg->setBgPlanSum(str_replace(',', '', $budget[$i]->planSummary));
+            $bg->setBgUsedQ1(str_replace(',', '', $budget[$i]->planQ1));
+            $bg->setBgUsedQ2(str_replace(',', '', $budget[$i]->planQ2));
+            $bg->setBgUsedQ3(str_replace(',', '', $budget[$i]->planQ3));
+            $bg->setBgUsedQ4(str_replace(',', '', $budget[$i]->planQ4));
+            $bg->setBgUsedSum(str_replace(',', '', $budget[$i]->usedSummary));
+
             $dataBg = $this->datacontext->getObject($bg);
 
-            if (!isset($dataBg) || $dataBg == null) {
-                if (!$this->datacontext->saveObject($budget[0])) {
+            if (!isset($dataBg) || $dataBg == null || count($dataBg) <= 0) {
+                if (!$this->datacontext->saveObject($bg)) {
                     return false;
                 }
                 return true;
             } else {
-                $budget[0]->id = $dataBg[0]->id;
-                if (!$this->datacontext->updateObject($budget[0])) {
+                $bg->id = $dataBg[0]->id;
+
+                if (!$this->datacontext->updateObject($bg)) {
                     return false;
                 }
                 return true;

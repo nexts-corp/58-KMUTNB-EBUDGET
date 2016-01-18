@@ -241,7 +241,7 @@ class AllocateService extends CServiceBase implements IAllocateService {
         $return = true;
 
         $obj = new entity\BudgetExpense();
-        $obj->setId($bgHeadId);
+        $obj->setBudgetHeadId($bgHeadId);
         $data = $this->datacontext->getObject($obj);
         if (!$this->datacontext->removeObject($data)) {
             $return = false;
@@ -258,8 +258,7 @@ class AllocateService extends CServiceBase implements IAllocateService {
 
         return $return;
     }
-    
-    
+
     public function getSumRevenue($budgetPeriodId, $facultyId, $bgCategory) {
         $sql3 = " select SUM(bg.bgAmount) as value "
                 . " from " . $this->pathEnt . "BudgetRevenue bg "
@@ -283,21 +282,19 @@ class AllocateService extends CServiceBase implements IAllocateService {
 
         return $this->datacontext->getObject($sql3, $param3);
     }
-    
-    
+
     public function getSumRevenuePlan($budgetPeriodId, $facultyId) {
         $sql = "
             SELECT 
                 SUM(bgrp.budgetEducation) AS education,SUM(bgrp.budgetService) AS service 
-            FROM ".$this->pathEnt."BudgetRevenuePlan bgrp
-            WHERE bgrp.budgetPeriodId = ".$budgetPeriodId."
-            AND bgrp.deptId = ".$facultyId."
+            FROM " . $this->pathEnt . "BudgetRevenuePlan bgrp
+            WHERE bgrp.budgetPeriodId = " . $budgetPeriodId . "
+            AND bgrp.deptId = " . $facultyId . "
             AND bgrp.budgetTypeCode = 'K'
         ";
         $list = $this->datacontext->getObject($sql);
         return $list;
     }
-    
 
     public function fetchRevenue($budgetPeriodId) {
 
@@ -379,7 +376,7 @@ class AllocateService extends CServiceBase implements IAllocateService {
         return $return;
     }
 
-    public function insertRevenueItem($budget,$facultyId) {
+    public function insertRevenueItem($budget, $facultyId) {
         $return = array();
 
         $revenuePlan = new entity\BudgetRevenuePlan();
@@ -401,13 +398,13 @@ class AllocateService extends CServiceBase implements IAllocateService {
             $bgHead->setL3dProjectId($budget->l3dProjectId);
             $bgHead->setFundgroupId($budget->fundgroupId);
             $bgHead->setActivityId($budget->activityId);
-            
+
             $bgPlanProject = $this->getBudgetPlanAndProject($budget->budgetPeriodId, $budget->l3dPlanId, $budget->fundgroupId);
             $bgHead->setPlanId($bgPlanProject["budgetPlanId"]);
             $bgHead->setProjectId($bgPlanProject["budgetProjectId"]);
 
             $bgHeadData = $this->datacontext->getObject($bgHead);
-            
+
             if (!isset($bgHeadData) || $bgHeadData == null) {
                 $bgHead->setStatusId(1);
                 $bgHeadData = $this->datacontext->saveObject($bgHead);
@@ -420,7 +417,7 @@ class AllocateService extends CServiceBase implements IAllocateService {
             $budget->revenuePlanId = $revenuePlanId;
             $budget->planId = $bgPlanProject["budgetPlanId"];
             $budget->projectId = $bgPlanProject["budgetProjectId"];
-            
+
             if ($budget->remark == "") {
                 $budget->remark = "-";
             }
@@ -470,7 +467,7 @@ class AllocateService extends CServiceBase implements IAllocateService {
                 . " FROM " . $this->pathEnt . "BudgetType typ "
                 . " WHERE typ.masterId = '0' and typ.typeCode = 'K' and typ.formExpense = true ";
         $list1 = $this->datacontext->getObject($sql1);
-        
+
         foreach ($list1 as $key1 => $value1) {
             $sql2 = " SELECT typ.id, typ.typeName as name "
                     . " FROM " . $this->pathEnt . "BudgetType typ "
@@ -479,7 +476,7 @@ class AllocateService extends CServiceBase implements IAllocateService {
                 "masterId" => $list1[$key1]["id"]
             );
             $list2 = $this->datacontext->getObject($sql2, $param2);
-            
+
             $list1[$key1]["sub"] = $list2;
 
             foreach ($list2 as $key2 => $value2) {
@@ -548,4 +545,5 @@ class AllocateService extends CServiceBase implements IAllocateService {
 
         return $result;
     }
+
 }

@@ -359,8 +359,8 @@
                         "planId": plan
                     };
                     var html = "";
-                    //var datas = callAjax("{{_context_path}}/api/budget/budgetReview/getBudgetScheme", "post", param, "json")["result"];
-                    var datas = callAjax("{{_context_path}}/apps/budget/datatest.json", "get", {}, "json")["result"];
+                    var datas = callAjax("{{_context_path}}/api/budget/budgetReview/getBudgetScheme", "post", param, "json")["result"];
+                    //var datas = callAjax("{{_context_path}}/apps/budget/datatest.json", "get", {}, "json")["result"];
                     if (typeof datas !== "undefined" && datas !== null) {
                         var scheme = {};
                         var count = {};
@@ -407,7 +407,7 @@
                                     }
                                     // sum[txtId] = {};
                                     html += '<tr id="' + txtId + '" parent-id="' + txtPId.substr(0, txtPId.length - 1) + '" class="' + classData[i] + '"><td style="padding-left: 4em ;vertical-align:middle">' + txtCount + v[nameData[i] + "Name"] + '</td>';
-                                    html += '<td  class="text-right planSummary"></td>';
+                                    html += '<td class="text-right planSummary"></td>';
                                     html += '<td class="text-right usedSummary"></td>';
                                     html += '<td class="text-right planQ1"></td>';
                                     html += '<td class="text-right usedQ1"></td>';
@@ -598,8 +598,11 @@
                     datas.push(data);
                 });
                 
-                var result = callAjaxFile("{{_context_path}}/api/budget/budgetReview/updateScheme", "post", datas, "json");
                 //console.log(datas);
+                var dataJSON = JSON.stringify({budget: datas});
+                var dataJSONEN = encodeURIComponent(dataJSON);
+                var result = callAjaxFile("{{_context_path}}/api/budget/budgetReview/updateScheme", "post", dataJSON, "json");
+                console.log(result);
             });
             $("#facultyId").change(function () {
                 listDepartment($(this).val());
