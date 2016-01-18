@@ -275,6 +275,7 @@ class BudgetScheme extends EntityBase {
     function setStatusId($statusId) {
         $this->statusId = $statusId;
     }
+
 }
 
 ?>

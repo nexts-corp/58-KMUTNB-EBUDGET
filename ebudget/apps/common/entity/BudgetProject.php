@@ -36,12 +36,12 @@ class BudgetProject extends EntityBase {
         return $this->projectName;
     }
 
-    function getProjecttype() {
-        return $this->projecttype;
+    function getProjectType() {
+        return $this->projectType;
     }
 
-    function getCreator() {
-        return $this->creator;
+    function setId($id) {
+        $this->id = $id;
     }
 
     function setPlanId($planId) {
@@ -52,7 +52,8 @@ class BudgetProject extends EntityBase {
         $this->projectName = $projectName;
     }
 
-    function setProjecttype($projecttype) {
-        $this->projecttype = $projecttype;
+    function setProjectType($projectType) {
+        $this->projectType = $projectType;
     }
+
 }

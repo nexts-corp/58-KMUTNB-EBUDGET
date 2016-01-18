@@ -195,11 +195,11 @@ class LookupService extends CServiceBase implements ILookupService {
     }
 
     public function listFundgroupWithPlan($budgetPeriodId, $l3dPlanId) {
-        $sql = "select DISTINCT(map.FUNDGROUPID) as id , fund.FUNDGROUPNAME as name "
-            ."from MAPPINGPLAN map "
-            ."inner join L3D_FUNDGROUP fund on fund.FUNDGROUPID = map.FUNDGROUPID "
-            ."where BUDGETPERIODID = '".$budgetPeriodId."'"
-            ."and PLANID = '".$l3dPlanId."'";
+        $sql = "select DISTINCT(map.fundgroupId) as id , fund.FundGroupName as name "
+            ."from Mapping_Plan map "
+            ."inner join L3D_Fund_Group fund on fund.FundGroupId = map.FundGroupId "
+            ."where map.BudgetPeriodId = '".$budgetPeriodId."'"
+            ."and map.PlanId = '".$l3dPlanId."'";
 
         $data = $this->datacontext->pdoQuery($sql);
 
