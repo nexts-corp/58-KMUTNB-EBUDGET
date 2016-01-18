@@ -13,6 +13,7 @@ interface IMemberService {
      * @name manage
      * @uri /manage
      * @description จัดการข้อมูลผู้ใช้งานระบบ
+     
      */ 
     public function viewManage();
     
