@@ -45,11 +45,13 @@ class ApproveService extends CServiceBase implements IApproveService {
 
     public function getAllBudgetRequest($deptId)
     {
+        /*
         if ($deptId > 0) {
             $sqlExt = "and bgh.statusId = 1 ";
         } else {
             $sqlExt = "and bgh.statusId <> 1 ";
         }
+        */
 
         $sql = "select bgh.id as bghId, bgh.budgetTypeCode, bgh.budgetPeriodId, "
             . "case when bgh.budgetTypeCode = 'G' then 'เงินงบประมาณแผ่นดิน' else 'เงินรายได้' end as budgetTypeName, "
@@ -69,9 +71,9 @@ class ApproveService extends CServiceBase implements IApproveService {
             . "left outer join " . $this->ent . "\\L3D\\FundGroup fund with fund.id = bgh.fundgroupId "
             . "left outer join " . $this->ent . "\\TrackingStatus status with status.id = bgh.statusId "
             . "where bgh.budgetTypeCode = :budgetTypeCode "
-            . $sqlExt
+            . "and bgh.statusId in (2,3,4,5)"
             . "and bgh.budgetPeriodId = :budgetPeriodId "
-            . "order by status.id, bgh.formId, dept.id, l3dPlan.id, fund.id asc ";
+            . "order by bgh.formId asc, faculty.id asc, dept.id asc, l3dPlan.id asc, fund.id asc ";
 
         $param = array(
             "budgetTypeCode" => "G",
