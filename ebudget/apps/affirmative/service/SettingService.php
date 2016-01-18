@@ -29,19 +29,19 @@ class SettingService extends CServiceBase implements ISettingService {
     }
 
     public function listsMain() {
-        $main = new \apps\affirmative\entity\AffirmativeMain();
+        $main = new \apps\common\entity\AffirmativeMain();
         $main->periodCode = $this->getPeriod()->year;
         return $this->datacontext->getObject($main);
     }
 
     public function listsType($mainId) {
-        $type = new \apps\affirmative\entity\AffirmativeType();
+        $type = new \apps\common\entity\AffirmativeType();
         $type->mainId = $mainId;
         return $this->datacontext->getObject($type);
     }
 
     public function listsSetting($groupCode) {
-        $setting = new \apps\affirmative\entity\AffirmativeSetting();
+        $setting = new \apps\common\entity\AffirmativeSetting();
         $setting->periodCode = $this->getPeriod()->year;
         $setting->groupCode = $groupCode;
         return $this->datacontext->getObject($setting);
@@ -51,7 +51,7 @@ class SettingService extends CServiceBase implements ISettingService {
         $periodCode = $this->getPeriod()->year;
         foreach ($setting as $key => $val) {
             $val->periodCode = $periodCode;
-            $set = new \apps\affirmative\entity\AffirmativeSetting();
+            $set = new \apps\common\entity\AffirmativeSetting();
             $set->periodCode = $periodCode;
             $set->groupCode = $val->groupCode;
             $set->mainId = $val->mainId;
