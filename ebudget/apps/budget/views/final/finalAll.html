@@ -225,8 +225,12 @@
                     },
                     {
                         "targets": 3,
-                        "data": "l3dPlanName",
-                        "sClass": "col-md-2"
+                        //"data": "l3dPlanName",
+                        "data": "bghId",
+                        "sClass": "col-md-2",
+                        "render": function(data, key, full) {
+                            return full["l3dPlanName"] + ' <br> ' + '(' + full["projectName"] + ')';
+                        }
                     },
                     {
                         "targets": 4,
