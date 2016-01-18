@@ -151,7 +151,7 @@ class MemberService extends CServiceBase implements IMemberService {
         //ค้นหาประเภทสิทธิการใช้งาน
         $list = new Role();
         $listRole=$this->datacontext->getObject($list);
-        $view->listRole=$listRole;
+        //$view->listRole=$listRole;
         
        
         $view->id=$id; //ส่ง id สำหรับค้นหารหัส member
@@ -224,6 +224,7 @@ class MemberService extends CServiceBase implements IMemberService {
         $model->setTelephone($data->telephone);
         
         if($this->datacontext->updateObject($model)){
+            return true;
            /*
             $MemberRole = new MemberRole();
             $MemberRole->setMemberId($data->id);

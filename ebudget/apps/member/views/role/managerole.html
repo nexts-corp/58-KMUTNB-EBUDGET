@@ -136,7 +136,7 @@ $( document ).ready(function() {
                         }
                     ];
                     
-        console.log(listdata);
+        //console.log(listdata);
         var html="";
        
         for(var i=0;i<listdata.length;i++){
@@ -175,7 +175,7 @@ $( document ).ready(function() {
         
         for(var i=0;i<result.datas.length;i++){
             for(var j=0;j<result.datas[i]["func"].length;j++){
-                    console.log(result.datas[i]["func"][j]["role"]);
+                    //console.log(result.datas[i]["func"][j]["role"]);
                     $('#'+result.datas[i]["func"][j]["id"]).val(result.datas[i]["func"][j]["role"]);
                     //alert(listdata[i][2][j][0]);
             }
