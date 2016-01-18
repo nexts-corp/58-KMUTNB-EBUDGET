@@ -93,11 +93,11 @@ class DraftService extends CServiceBase implements IDraftService {
     }
 
     public function listFundgroupWithPlan($l3dPlanId) {
-        $sql = "select DISTINCT(map.FUNDGROUPID) as id , fund.FUNDGROUPNAME as name "
-            ."from MAPPINGPLAN map "
-            ."inner join L3D_FUNDGROUP fund on fund.FUNDGROUPID = map.FUNDGROUPID "
-            ."where BUDGETPERIODID = :budgetPeriodId "
-            ."and PLANID = :l3dPlanId";
+        $sql = "select DISTINCT(map.FundGroupId) as id , fund.FundGroupName as name "
+            ."from Mapping_Plan map "
+            ."inner join L3D_Fund_Group fund on fund.FundGroupId = map.FundGroupId "
+            ."where BudgetPeriodId = :budgetPeriodId "
+            ."and PlanId = :l3dPlanId";
 
         $param = array(
             "budgetPeriodId" => $this->getPeriod()->year,
