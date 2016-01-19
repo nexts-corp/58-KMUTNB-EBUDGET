@@ -227,58 +227,9 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
     }
 
     public function getAllBudgetRequest($budgetPeriodId, $deptId, $budgetTypeCode) {
-//        if ($deptId > 0) {
-//            $sqlExt = "and (bgh.statusId = 1 or bgh.statusId is null) ";
-//        } else {
-//            $sqlExt = "and (bgh.statusId <> 1 or bgh.statusId is null) ";
-//        }
-//        if ($budgetTypeCode == 'G') {
-//            $sql = "select bgh.id as bghId, bgh.budgetTypeCode, bgh.budgetPeriodId, "
-//                    . "case when bgh.budgetTypeCode = 'G' then 'เงินงบประมาณแผ่นดิน' else 'เงินรายได้' end as budgetTypeName, "
-//                    . "bgh.formId as formId, dept.id as deptId, dept.deptName as deptName, "
-//                    . "faculty.id as facultyId, faculty.deptName as facultyName, "
-//                    . "l3dPlan.id as l3dPlanId, l3dPlan.planName as l3dPlanName, "
-//                    . "bgPlan.id as planId, bgPlan.planName as planName, "
-//                    . "bgProj.id as projectId, bgProj.projectName as projectName, "
-//                    . "fund.id as fundgroupId, fund.fundgroupName as fundName, "
-//                    . "status.id as statusId, status.desc as statusDesc "
-//                    . "from " . $this->ent . "\\BudgetHead bgh "
-//                    . "left outer join " . $this->ent . "\\L3D\\Department dept with dept.id = bgh.deptId "
-//                    . "left outer join " . $this->ent . "\\L3D\\Department faculty with faculty.id = dept.masterId "
-//                    . "left outer join " . $this->ent . "\\L3D\\Plan l3dPlan with l3dPlan.id = bgh.l3dPlanId "
-//                    . "left outer join " . $this->ent . "\\BudgetPlan bgPlan with bgPlan.id = bgh.planId "
-//                    . "left outer join " . $this->ent . "\\BudgetProject bgProj with bgProj.id = bgh.projectId "
-//                    . "left outer join " . $this->ent . "\\L3D\\FundGroup fund with fund.id = bgh.fundgroupId "
-//                    . "left outer join " . $this->ent . "\\TrackingStatus status with status.id = bgh.statusId "
-//                    . "where bgh.budgetTypeCode = '" . $budgetTypeCode . "' "
-//                    . $sqlExt
-//                    . "and bgh.budgetPeriodId = :budgetPeriodId "
-//                    . "order by status.id, bgh.formId, dept.id, l3dPlan.id, fund.id asc ";
-//
-//            $param = array("budgetPeriodId" => $budgetPeriodId);
-//            $data = $this->datacontext->getObject($sql, $param);
-//
-//            return $data;
-//        } else if ($budgetTypeCode == "K") {
-//            if (isset($budgetPeriodId) && $budgetPeriodId != "") {
-//                $sqlExt .= "and bgh.budgetPeriodId = " . $budgetPeriodId . " ";
-//            }
-//            if (isset($deptId) && $deptId != "") {
-//                $sqlExt .= "and bgh.deptId = " . $deptId . " ";
-//            }
-//
-//            $sql = "select bgh.id, bgh.budgetPeriodId, bgh.formId, bgh.budgetTypeCode, dept.deptName  "
-//                    . "from " . $this->ent . "\\BudgetHead bgh "
-//                    . "left outer join " . $this->ent . "\\L3D\\Department dept with dept.id = bgh.deptId "
-//                    . "where bgh.budgetTypeCode = '" . $budgetTypeCode . "' "
-//                    . $sqlExt
-//                    . "order by bgh.budgetPeriodId, bgh.deptId asc ";
-//
-//            $dataBgh = $this->datacontext->getObject($sql);
-//            return $dataBgh;
-//        }
 
         $sqlExt = "";
+        $budgetPeriodId = 2558;
         if (isset($budgetPeriodId) && $budgetPeriodId != "") {
             $sqlExt .= "and bgh.budgetPeriodId = " . $budgetPeriodId . " ";
         }
@@ -286,12 +237,13 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
             $sqlExt .= "and bgh.deptId = " . $deptId . " ";
         }
 
-        $sql = "select bgh.id, bgh.budgetPeriodId, bgh.formId, bgh.budgetTypeCode, dept.deptId as facultyId, dept.deptName as facultyName  "
+        $sql = "select bgh.id, bgh.budgetPeriodId, bgh.formId, bgh.budgetTypeCode, faculty.id as facultyId, faculty.deptName as facultyName, dept.id as deptId, dept.deptName as deptName  "
                 . "from " . $this->ent . "\\BudgetHead bgh "
-                . "left outer join " . $this->ent . "\\L3D\\Department dept with dept.id = bgh.deptId "
+                . "join " . $this->ent . "\\L3D\\Department dept with dept.id = bgh.deptId "
+                . "join " . $this->ent . "\\L3D\\Department faculty with faculty.id = dept.masterId "
                 . "where bgh.budgetTypeCode = '" . $budgetTypeCode . "' "
                 . $sqlExt
-                . "order by bgh.budgetPeriodId, bgh.deptId asc ";
+                . "order by bgh.budgetPeriodId asc, dept.id asc ";
 
         $dataBgh = $this->datacontext->getObject($sql);
         return $dataBgh;
