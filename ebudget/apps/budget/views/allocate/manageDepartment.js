@@ -161,7 +161,7 @@ myApp.controller('manageDepartment', function($scope,$http,$controller,cde,nk) {
         $http.post(cde.getPath("insertRevenueItem"),{
             budget:{
                 budgetPeriodId:$scope.param.budgetPeriodId,
-                deptId:$scope.param.deptId,
+                deptId:$scope.deptId, //$scope.param.deptId,
                 l3dPlanId:$scope.plan3dId,
                 fundgroupId:$scope.fundgroupId,
                 revenueName:arrUse.nameText,

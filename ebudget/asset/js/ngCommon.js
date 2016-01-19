@@ -180,6 +180,12 @@ commonApp.controller('cmListController', function ($scope, $http) {
             $scope.cmDataListFaculty = response.data.lists;
         });
     };
+    
+    $scope.cmListFaculty = function (facultyId) {
+        $http.post(ngContextPath+"/api/common/lookup/listFaculty", {campusId: 0}).then(function (response) {
+            $scope.cmDataListFaculty = response.data.lists;
+        });
+    };
 
     $scope.cmListDepartment = function (facultyId) {
         $http.post(ngContextPath+"/api/common/lookup/listDepartment", {facultyId: facultyId}).then(function (response) {

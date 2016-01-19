@@ -152,15 +152,10 @@ class AllocateService extends CServiceBase implements IAllocateService {
             }
 
             if ($dataIAT[$i]["depId"] != "") {
-                /*$dataList[$j - 1]["sub"][$k]["depId"] = $dataIAT[$i]["depId"];
+                $dataList[$j - 1]["sub"][$k]["depId"] = $dataIAT[$i]["depId"];
                 $dataList[$j - 1]["sub"][$k]["depValue"] = $dataIAT[$i]["depValue"];
                 $dataList[$j - 1]["subC"][$k]["depId"] = $dataIAT[$i]["depId"];
-                $dataList[$j - 1]["subC"][$k]["depValue"] = $dataIAT[$i]["depValue"];*/
-
-                $dataList[$j - 1]["sub"][$k + 1]["depId"] = '';
-                $dataList[$j - 1]["sub"][$k + 1]["depValue"] = 0;
-                $dataList[$j - 1]["subC"][$k + 1]["depId"] = '';
-                $dataList[$j - 1]["subC"][$k + 1]["depValue"] = 0;
+                $dataList[$j - 1]["subC"][$k]["depValue"] = $dataIAT[$i]["depValue"];                
 
                 /* if (!$depId) {
                   $dataList[$j - 1]["sub"][$k + 1]["depId"] = '';
@@ -327,8 +322,9 @@ class AllocateService extends CServiceBase implements IAllocateService {
         return $dataList;
     }
 
-    public function addRevenue($deptId, $budgetPeriodId, $bgEducation, $bgService) {
-
+    public function addRevenue($deptId, $bgEducation, $bgService) {
+        $budgetPeriodId = $this->getPeriod()->year;
+        
         $bg = new entity\BudgetRevenuePlan();
         $bg->setBudgetPeriodId($budgetPeriodId);
         $bg->setDeptId($deptId);
@@ -385,13 +381,13 @@ class AllocateService extends CServiceBase implements IAllocateService {
         return $return;
     }
 
-    public function insertRevenueItem($budget, $facultyId) {
+    public function insertRevenueItem($budget, $deptId) {
         $return = array();
 
         $revenuePlan = new entity\BudgetRevenuePlan();
         $revenuePlan->setBudgetPeriodId($budget->budgetPeriodId);
         $revenuePlan->setBudgetTypeCode("K");
-        $revenuePlan->setDeptId($facultyId);
+        $revenuePlan->setDeptId($deptId);
 
         $revenuePlanData = $this->datacontext->getObject($revenuePlan);
 

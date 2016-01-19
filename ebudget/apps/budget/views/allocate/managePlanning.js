@@ -10,10 +10,10 @@ myApp.controller('mainCtrl', function ($scope, $http, $controller, cde) {
         $scope.page = 1;
         $scope.fetchData();
 
-        $scope.cmListYear();
-        $scope.cmListBudgetType();
+        //$scope.cmListYear();
+        //$scope.cmListBudgetType();
+        //$scope.cmListFaculty();
         $scope.cmListDepartment();
-
 
 
         $scope.dataAllocate = [];
@@ -113,7 +113,7 @@ myApp.controller('mainCtrl', function ($scope, $http, $controller, cde) {
 
 
         $http.post(cde.getPath("addRevenue"), {
-            budgetPeriodId: $scope.selectYear,
+            //budgetPeriodId: $scope.selectYear,
             deptId: parseInt($scope.department),
             bgEducation: $scope.education,
             bgService: $scope.academic
