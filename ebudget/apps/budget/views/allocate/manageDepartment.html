@@ -11,7 +11,8 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="department">ประเภทเงิน</label>
                 <div class="col-md-8">
-                    <select ng-model="bgCategory" ng-change="fetchRevenueItemList();getSumRevenue();" ng-init="bgCategory = ''" class="form-control input-sm selChange">
+                    <select ng-model="bgCategory" ng-change="fetchRevenueItemList();
+                            getSumRevenue();" ng-init="bgCategory = ''" class="form-control input-sm selChange">
                         <option value="">- เลือกประเภทเงิน -</option>
                         <option value="E">ค่าธรรมเนียมการศึกษา</option>
                         <option value="S">งานบริการวิชาการ</option>
@@ -95,8 +96,8 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat-start="list in dataRevenueItemList" style="background-color:#F1F1F1;" nk-cloak>   
-                                <td ng-click="treeToggle(list.show,$index)" class="text-center" style="padding-top: 10px; vertical-align: middle;">
-                                    <label ng-bind="$index+1"></label>
+                                <td ng-click="treeToggle(list.show, $index)" class="text-center" style="padding-top: 10px; vertical-align: middle;">
+                                    <label ng-bind="$index + 1"></label>
                                 </td> 
                                 <td style="vertical-align: middle; padding-top: 10px;">
                                     <div class="form-group" ng-bind="list.name"></div>
@@ -107,12 +108,12 @@
                                 <td class="text-center" style="vertical-align: middle;"></td>
                             </tr>
                             <tr ng-repeat-start="listSub in list.sub" my-repeat-directive nk-cloak>   
-                                <td ng-click="toggleShow($parent.$index+'.'+$index,listSub.show)" class="text-center cssCursor" style="vertical-align: middle;">
+                                <td ng-click="toggleShow($parent.$index + '.' + $index, listSub.show)" class="text-center cssCursor" style="vertical-align: middle;">
                                     <i ng-hide="listSub.show" class="fa fa-plus-square"></i>
                                     <i ng-show="listSub.show" class="fa fa-minus-square"></i>
                                 </td> 
                                 <td style="padding-left:25px;vertical-align: middle;">
-                                    <div class="form-group" ng-bind="($parent.$index+1)+'.'+($index+1)+' '+listSub.name"></div>
+                                    <div class="form-group" ng-bind="($parent.$index + 1) + '.' + ($index + 1) + ' ' + listSub.name"></div>
                                 </td>   
                                 <td class="text-right" style="vertical-align: middle; padding-right: 18px;" ng-bind="sumList($parent.$index+'.'+$index) | currency:'':2"></td> 
                                 <td class="text-center"></td>
@@ -127,28 +128,28 @@
                                 <td class="text-right" style="vertical-align: middle;">
                                     <input ng-model="listData.value" type="text" class="form-control text-right" nk-number="2">
                                 </td> 
-                                <td class="text-center" ng-init="dataIndex=$parent.$parent.$index+'.'+$parent.$index+'.'+$index;">
-                                    <button ng-show="conDataButton(dataIndex)" ng-click="upItemPlanList(dataIndex)" class="btn btn-primary"><i class="fa fa-save"></i> บันทึก</button>
-                                    <button ng-click="openDetail(listData.detail,dataIndex)" class="btn btn-warning"><i class="fa fa-gear"></i> รายละเอียด</button>
+                                <td class="text-center" ng-init="dataIndex = $parent.$parent.$index + '.' + $parent.$index + '.' + $index;">
+                                    <button ng-show="conDataButton(dataIndex) && checkVal" ng-click="upItemPlanList(dataIndex)" class="btn btn-primary"><i class="fa fa-save"></i> บันทึก</button>
+                                    <button ng-click="openDetail(listData.detail, dataIndex)" class="btn btn-warning"><i class="fa fa-gear"></i> รายละเอียด</button>
                                     <button ng-show="conDataButton(dataIndex)" ng-click="undoItemPlanList(dataIndex)" class="btn btn-default"><i class="fa fa-undo"></i> ย้อนกลับ</button>
-                                    <button ng-hide="conDataButton(dataIndex)" ng-click="delItemPlanList(dataIndex,listData.id)" class="btn btn-default"><i class="fa fa-trash-o "></i> ลบ</button> 
+                                    <button ng-hide="conDataButton(dataIndex)" ng-click="delItemPlanList(dataIndex, listData.id)" class="btn btn-default"><i class="fa fa-trash-o "></i> ลบ</button> 
                                 </td>
                             </tr>
                             <tr ng-show="listSub.show" style="background-color:#FFF;" nk-cloak>   
                                 <td class="text-center"></td> 
                                 <td style="padding-left:50px;vertical-align: middle;">
                                     <div class="form-group">
-                                        <input ng-model="listSub.nameText" type="text" placeholder="รายการ" class="form-control" auto-focus="listSub.toggleFocus" ng-keypress="addItemByEnter($parent.$index+'.'+$index,$event)">
+                                        <input ng-model="listSub.nameText" type="text" placeholder="รายการ" class="form-control" auto-focus="listSub.toggleFocus" ng-keypress="addItemByEnter($parent.$index + '.' + $index, $event)">
                                     </div>
                                 </td>
                                 <td style="vertical-align: middle;">
                                     <div class="form-group">
-                                        <input ng-model="listSub.valueText" type="text" placeholder="จำนวนเงิน" class="form-control text-right" ng-keypress="addItemByEnter($parent.$index+'.'+$index,$event)" nk-number="2">
+                                        <input ng-model="listSub.valueText" type="text" placeholder="จำนวนเงิน" class="form-control text-right" ng-keypress="addItemByEnter($parent.$index + '.' + $index, $event)" nk-number="2">
                                     </div>
                                 </td>  
                                 <td class="text-center" style="vertical-align: middle;">
-                                    <button ng-click="openDetail(listSub.detailText,$parent.$index+'.'+$index)" class="btn btn-warning"><i class="fa fa-gear"></i> รายละเอียด</button>
-                                    <button ng-show="listSub.nameText && (listSub.valueText!=null && listSub.valueText!=0)" ng-click="addItemPlanList($parent.$index+'.'+$index)" class="btn btn-success"><i class="fa fa-plus"></i> เพิ่ม</button>
+                                    <button ng-click="openDetail(listSub.detailText, $parent.$index + '.' + $index)" class="btn btn-warning"><i class="fa fa-gear"></i> รายละเอียด</button>
+                                    <button ng-show="listSub.nameText && (listSub.valueText != null && listSub.valueText != 0) && checkVal" ng-click="addItemPlanList($parent.$index + '.' + $index)" class="btn btn-success"><i class="fa fa-plus"></i> เพิ่ม</button>
                                 </td>
                             </tr>
 
