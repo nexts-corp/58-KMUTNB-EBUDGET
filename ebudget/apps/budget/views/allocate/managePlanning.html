@@ -31,8 +31,8 @@
     </div>
 
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
+       <div class="row">
+        <!--    <div class="col-md-12">
                 <div class="form-group">
                     <label class="col-md-2 control-label text-right req" for="selectYear">ปีงบประมาณ : </label>
                     <div class="col-md-3">
@@ -42,7 +42,7 @@
                     </div>
                 </div>
             </div>
-        </div><br>
+        </div><br> -->
         <div class="row">
             <div id="formHome" class="col-md-12">
                 <div id="bidderTable" class="col-md-12"><!-- table shown bidder information list -->
@@ -87,7 +87,7 @@
                                                 <button class="btn btn-default" ng-click="delItem($index)"><i class="fa fa-trash-o "></i> ลบ</button>
                                             </td>
                                         </tr>
-                                        <tr ng-show="selectYear && !loadAllocate" style="background-color: #F1F1F1;" nk-cloak>
+                                        <tr ng-show="!loadAllocate" style="background-color: #F1F1F1;" nk-cloak>
                                             <td></td>
                                             <td>
                                                 <select ui-select2 ng-model="department" class="form-control input-sm" ng-options="dep.id as dep.name for dep in cmDataListDepartment | filter:setMaster" nk-focus="focusDepartment" ng-keypress="addItemByEnter($event)">
@@ -102,7 +102,7 @@
                                             </td>
                                         </tr>
                                         <tr ng-show="loadAllocate" nk-cloak><td colspan="6" style="background-color: #F1F1F1;text-align: center;"><i class="fa fa-cog fa-spin"></i> กำลังโหลด</td></tr>
-                                        <tr ng-hide="selectYear"><td colspan="6" style="background-color: #F1F1F1;text-align: center;">กรุณาเลือกปีงบประมาณ</td></tr>
+                                        <tr ng-hide="selectYear"><td colspan="6" style="background-color: #F1F1F1;text-align: center; display: none;">กรุณาเลือกปีงบประมาณ</td></tr>
                                         
 
                                     </tbody>
@@ -138,7 +138,7 @@
                                                 <button class="btn btn-default" ng-click="delItemAPP($index)"><i class="fa fa-trash-o "></i> ลบ</button>
                                             </td>
                                         </tr>
-                                        <tr ng-show="list.show && selectYear" ng-repeat="listSub in list.sub" nk-cloak>
+                                        <tr ng-show="list.show" ng-repeat="listSub in list.sub" nk-cloak>
                                             <td></td>
                                             <td style="padding-left: 25px;">
                                                 <select ng-model="listSub.depId" ng-change="pushDepAPPSub($parent.$index, $last)" class="form-control input-sm" ng-options="dep.id as dep.name for dep in cmDataListDepartment | filter:setMaster">
@@ -179,7 +179,7 @@
                                             </td>
                                         </tr>
                                         <tr ng-show="loadManageAPP" nk-cloak><td colspan="4" style="background-color: #F1F1F1;text-align: center;"><i class="fa fa-cog fa-spin"></i> กำลังโหลด</td></tr>
-                                        <tr ng-hide="selectYear"><td colspan="4" style="background-color: #F1F1F1;text-align: center;">กรุณาเลือกปีงบประมาณ</td></tr>
+                                        <tr ng-hide="selectYear"><td colspan="4" style="background-color: #F1F1F1;text-align: center; display: none;">กรุณาเลือกปีงบประมาณ</td></tr>
                                     </tbody>
                                 </table>
 

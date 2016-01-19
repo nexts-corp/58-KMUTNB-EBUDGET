@@ -34,7 +34,8 @@
         <div class="container">
             <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
                 <li class="active">
-                    <button class="btn btn-default back"><i> ย้อนกลับ</i></button>
+                    <button class="btn btn-default backHome"><i class="fa fa-angle-double-left">
+                            ย้อนกลับ</i></button>
                 </li>
             </ul>
         </div>
@@ -622,7 +623,11 @@
 
         var total_quater1_plan = 0, total_quater1_used = 0, total_quater2_plan = 0, total_quater2_used = 0, total_quater3_plan = 0, total_quater3_used = 0, total_quater4_plan = 0, total_quater4_used = 0, total_plan = 0, total_used = 0;
         var dataTable = null;
-        //$("#table").hide();           
+        //$("#table").hide();
+        
+        $(".backHome").click(function(){
+            window.location = "{{_context_path}}/api/budget/view/progressAll";
+        });
 
         $("#btnSave").click(function () {
             var datas = [];

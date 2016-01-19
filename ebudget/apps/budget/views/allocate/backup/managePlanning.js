@@ -63,7 +63,7 @@ myApp.controller('mainCtrl', function($scope,$http,$controller,cde) {
         
         $http.post(cde.getPath("addRevenue"),{
             
-            budgetPeriodId : $scope.selectYear,
+            //budgetPeriodId : $scope.selectYear,
             deptId : parseInt($scope.department),
             bgEducation : $scope.education,
             bgService : $scope.academic
