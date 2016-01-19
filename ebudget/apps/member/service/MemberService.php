@@ -151,7 +151,7 @@ class MemberService extends CServiceBase implements IMemberService {
         //ค้นหาประเภทสิทธิการใช้งาน
         $list = new Role();
         $listRole=$this->datacontext->getObject($list);
-        $view->listRole=$listRole;
+        //$view->listRole=$listRole;
         
        
         $view->id=$id; //ส่ง id สำหรับค้นหารหัส member
@@ -164,7 +164,7 @@ class MemberService extends CServiceBase implements IMemberService {
         
         $list = new LookupService();
         $listDept = $list->listDepartment(null);
-        $view->dept=$listDept;
+        $view->depattment=$listDept;
       
         $getMember=new Member();
         if(isset($id) && $id!=null){
@@ -183,12 +183,12 @@ class MemberService extends CServiceBase implements IMemberService {
                     . " exMember.firstname, "
                     . " exMember.lastname, "
                     . " exMember.email, "
-                    . " exMember.telephone, "
-                    . " exRole.roleId "
+                    . " exMember.telephone "
+                    //. " exRole.roleId "
                     . ") "
                . " from " . $this->pathEnt . "\\Member exMember"
                . " join " . $this->pathEnt . "\\L3D\\Department exDept with exMember.deptId = exDept.id"
-               . " join " . $this->pathEnt . "\\MemberRole exRole with exRole.memberId = exMember.id "
+               //. " join " . $this->pathEnt . "\\MemberRole exRole with exRole.memberId = exMember.id "
                . " where exMember.id = :id ";
             $param = array(
                 "id" => $id
@@ -200,6 +200,7 @@ class MemberService extends CServiceBase implements IMemberService {
         $view->member=$getMember;
         //print_r($view->member);
         //ค้นหาประเภทสิทธิการใช้งาน
+        /*
         $list = new Role();
         $listRole=$this->datacontext->getObject($list);
         
@@ -209,7 +210,7 @@ class MemberService extends CServiceBase implements IMemberService {
             $listRole[$key]->year = $value->year;
             
         }
-        
+        */
         return $view;
     }
 
@@ -223,6 +224,7 @@ class MemberService extends CServiceBase implements IMemberService {
         $model->setTelephone($data->telephone);
         
         if($this->datacontext->updateObject($model)){
+            return true;
            /*
             $MemberRole = new MemberRole();
             $MemberRole->setMemberId($data->id);
@@ -400,18 +402,18 @@ class MemberService extends CServiceBase implements IMemberService {
         while($i<count($data)){
             
             $j=0;
-            while($j<count($data[$i]->data)){
+            while($j<count($data[$i]->func)){
                 
                 
                 $MenuRole = new MenuRole();
-                $MenuRole->setListId($data[$i]->data[$j]->id);
+                $MenuRole->setListId($data[$i]->func[$j]->id);
                 $MenuRole->setMemberId($memberId);
                 $MenuRole=$this->datacontext->getObject($MenuRole);
                 
                 //echo count($MenuRole).'<br/>';
                 if(count($MenuRole)>0){
 
-                    $data[$i]->data[$j]->roleselect=$MenuRole[0]->getRoleId();
+                    $data[$i]->func[$j]->role=$MenuRole[0]->getRoleId();
                 }
                 //echo $data[$i]->data[$j]->id.'<br>';
                 

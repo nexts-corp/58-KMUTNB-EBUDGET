@@ -95,7 +95,7 @@
                                 <th class="text-center" rowspan="3" style="vertical-align: middle;">ราคาต่อหน่วย</th>
                                 <th class="text-center" rowspan="3" style="vertical-align: middle;">รวมเงิน</th>
                                 <th class="text-center" colspan="3">คำชี้แจง</th>
-                                <th class="text-center" rowspan="3" style="vertical-align: middle;">เหตุผลความจำเป็น
+                                <th class="text-center" rowspan="3" style="vertical-align: middle;">คำชี้แจง
                                 </th>
                                 <th class="text-center" rowspan="3" style="vertical-align: middle;">สถานะคำขอ</th>
                                 <th rowspan="3" class="text-center" style="vertical-align: middle;min-width: 130px;">
@@ -332,6 +332,18 @@
                 </div>
             </div>
         </div>
+        <div id="panelShowComment" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">หมายเหตุ</h4>
+                    </div>
+                    <div class="modal-body bodyComment">
+                    </div>
+                </div>
+            </div>
+        </div>
         <!--  row  -->
     </div>
     <!--  container  -->
@@ -447,6 +459,7 @@
                             sumArrnumWork[value["id"]][value2["id"]] = 0;
                             sumArrnumUnwork[value["id"]][value2["id"]] = 0;
                         } else {
+                            var remark = value2["remark"].replace(/"/g, "'");
                             //หมวดค่าที่ดินและสิ่งก่อสร้าง มี 2 lvl
                             html += '<tr data-tt-id="list' + value2["id"] + '" data-tt-parent-id="' + value["id"] + '">'
                                     + '<td class="text-center"></td>'
@@ -458,10 +471,10 @@
                                     + '<td>' + value2["numNeeded"] + '</td>'
                                     + '<td>' + value2["numWork"] + '</td>'
                                     + '<td>' + value2["numUnwork"] + '</td>'
-                                    + '<td>' + value2["remark"] + '</td>'
-                                    + '<td class="text-bold text-sm">' + value2["statusDesc"] + '</td>'
+                                    + '<td class="text-center"><a href="#" data-html="true" data-toggle="tooltip" title="' + remark + '"><image src="{{_context_path}}/images/tooltips_ico.png" width="25px" height="25px"></a></td>'
+                                    + '<td class="text-bold text-sm">' + value2["statusDesc"] + '<br>' + isShowComment(value2["statusId"],value2["id"]) + '</td>'
                                     + '<td>'
-                                    + '<div class="col-md-12 none-padding">'
+                                    + isShowBtnGroup(value2["statusId"])
                                     + '<button class="btn btn-sm btn-warning col-md-6 editList" data-hid="-1" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
                                     + '<button class="btn btn-sm btn-default col-md-6 deleteList" data-hid="-1" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-trash"></i> ลบ</button>'
                                     + '<div class="col-md-12"></div>'
@@ -484,7 +497,7 @@
 
 
                         $.each(value2["budget"], function (key3, value3) {
-
+                            var remark = value3["remark"].replace(/"/g, "'");
                             var total = parseFloat(value3["qty"]) * parseFloat(value3["price"]);
                             html += '<tr data-tt-id="list' + value3["id"] + '" data-tt-parent-id="' + value2["id"] + '">'
                                     + '<td class="text-center"></td>'
@@ -496,10 +509,10 @@
                                     + '<td>' + value3["numNeeded"] + '</td>'
                                     + '<td>' + value3["numWork"] + '</td>'
                                     + '<td>' + value3["numUnwork"] + '</td>'
-                                    + '<td>' + value3["remark"] + '</td>'
-                                    + '<td class="text-bold text-sm">' + value3["statusDesc"] + '</td>'
+                                    + '<td class="text-center"><a href="#" data-html="true" data-toggle="tooltip" title="' + remark + '"><image src="{{_context_path}}/images/tooltips_ico.png" width="25px" height="25px"></a></td>'
+                                    + '<td class="text-bold text-sm">' + value3["statusDesc"] + '<br>' + isShowComment(value3["statusId"],value3["id"]) + '</td>'
                                     + '<td class="text-bold status">'
-                                    + '<div class="btn-group">'
+                                    + isShowBtnGroup(value3["statusId"])
                                     + '<button class="btn btn-sm btn-warning editList" data-hid="' + value["id"] + '" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
                                     + '<button class="btn btn-sm btn-default deleteList"  data-hid="' + value["id"] + '" data-pid="' + value2["id"] + '" data-id="' + value3["id"] + '"><i class="fa fa-trash"></i> ลบ</button>'
                                     + '</div>'
@@ -532,6 +545,10 @@
                 // expand all
                 $("#expandAll").unbind("click").click(function () {
                     $("#table145").treetable("expandAll");
+                });
+
+                $('[data-toggle="tooltip"]').tooltip({
+                    placement: 'top'
                 });
 
                 //add list
@@ -661,6 +678,7 @@
                 if (data["result"] == true) {
                     $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
                     var total = parseFloat($("#bgRequest").val()) + parseFloat($("#nonBgRequest").val());
+                    var remark = $(".noteRemark").code().replace(/"/g, "'");
                     // insert node in branch
                     var html = '<tr data-tt-id="list' + data["id"] + '" data-tt-parent-id="' + parentId + '">'
                             + '<td></td>'
@@ -672,12 +690,12 @@
                             + '<td>' + $("#numNeeded").val() + '</td>'
                             + '<td>' + $("#numWork").val() + '</td>'
                             + '<td>' + $("#numUnwork").val() + '</td>'
-                            + '<td>' + $(".noteRemark").code() + '</td>'
+                            + '<td class="text-center"><a href="#" data-html="true" data-toggle="tooltip" title="' + remark + '"><image src="{{_context_path}}/images/tooltips_ico.png" width="25px" height="25px"></a></td>'
                             + '<td class="text-bold text-sm">อยู่ระหว่างการดำเนินการ</td>'
                             + '<td>';
                     if (headerId == "20300000") {
 
-                        html += '<div class="btn-group">'
+                        html += '<div class="col-md-12 none-padding">'
                                 + '<button class="btn btn-sm btn-warning editList" data-hid="' + headerId + '" data-pid="' + parentId + '" data-id="' + data["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
                                 + '<button class="btn btn-sm btn-default deleteList"  data-hid="' + headerId + '" data-pid="' + parentId + '" data-id="' + data["id"] + '"><i class="fa fa-trash"></i> ลบ</button>'
                                 + '</div>';
@@ -703,6 +721,11 @@
                     $("#form input, #form textarea").each(function () {
                         list145Arr[data["id"]][$(this).attr("name")] = $(this).val();
                     });
+
+                    $('[data-toggle="tooltip"]').tooltip({
+                        placement: 'top'
+                    });
+
 
                     list145Arr[data["id"]]["budgetHeadId"] = data["budgetHeadId"];
                     list145Arr[data["id"]]["remark"] = $("#remark").code();
@@ -746,7 +769,7 @@
                 var data = datas["result"];
                 if (data["result"] == true) {
                     $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
-
+                    var remark = $(".noteRemark").code().replace(/"/g, "'");
                     // insert node in branch
                     var html = '<td class="text-center"></td>'
                             + '<td>' + $("#durableName").val() + '</br> &nbsp;' + $("#durableDesc").val() + '</td>'
@@ -757,12 +780,12 @@
                             + '<td>' + $("#numNeeded").val() + '</td>'
                             + '<td>' + $("#numWork").val() + '</td>'
                             + '<td>' + $("#numUnwork").val() + '</td>'
-                            + '<td>' + $(".noteRemark").code() + '</td>'
-                            + '<td class="status text-bold text-sm">' + list145Arr[id]["statusDesc"] + '</td>'
+                            + '<td class="text-center"><a href="#" data-html="true" data-toggle="tooltip" title="' + remark + '"><image src="{{_context_path}}/images/tooltips_ico.png" width="25px" height="25px"></a></td>'
+                            + '<td class="status text-bold text-sm">' + list145Arr[id]["statusDesc"] + '<br>' + isShowComment(list145Arr[id]["statusId"], id) + '</td>'
                             + '<td>';
                     if (headerId == "20300000") {
 
-                        html += '<div class="btn-group">'
+                        html += '<div class="col-md-12 none-padding">'
                                 + '<button class="btn btn-sm btn-warning editList" data-hid="' + headerId + '" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
                                 + '<button class="btn btn-sm btn-default deleteList"  data-hid="' + headerId + '" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-trash"></i> ลบ</button>'
                                 + '</div>';
@@ -791,6 +814,10 @@
 
                     $("#form input,#durableDesc").each(function () {
                         list145Arr[id][$(this).attr("name")] = $(this).val();
+                    });
+
+                    $('[data-toggle="tooltip"]').tooltip({
+                        placement: 'top'
                     });
 
                     list145Arr[id]["remark"] = $("#remark").code();
@@ -1082,6 +1109,35 @@
                 alert("ส่งคำขอผิดพลาด");
             }
         }
+    }
+
+    function isShowBtnGroup(statusId) {
+        var html = "";
+        if (statusId != 3) {
+            html = '<div class="col-md-12 none-padding">';
+        } else {
+            html = '<div class="col-md-12 none-padding" style="display: none;">';
+        }
+        return html;
+    }
+
+    function isShowComment(statusId, id) {
+        var html = "";
+        console.log(id);
+        if (statusId == 4) {
+
+            html = '<a href="javascript:void(0);" onclick="showComment('+id+')"><u>แสดงหมายเหตุ</u></a>';
+        }
+
+        return html;
+    }
+
+    function showComment(id) {
+
+        $(".bodyComment").html('');//reset
+        $(".bodyComment").html(list145Arr[id]["comment"]);
+        $("#panelShowComment").modal("show");
+
     }
 
 </script>

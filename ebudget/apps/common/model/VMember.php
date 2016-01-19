@@ -17,7 +17,7 @@ class VMember extends \apps\common\entity\Member {
 //    public $role;
     public $roleId;
     function __construct($id = null, $username = null, $password = null, $deptId = null
-    , $firstname = null, $lastname = null, $email = null, $telephone = null, $roleId = null) {
+    , $firstname = null, $lastname = null, $email = null, $telephone = null) {
         $this->id = $id;
         $this->username = $username;
         $this->password = $password;
@@ -26,7 +26,6 @@ class VMember extends \apps\common\entity\Member {
         $this->lastname = $lastname;
         $this->email = $email;
         $this->telephone = $telephone;
-        $this->roleId=$roleId;
     }
     
 //    public function checkPassword(){
