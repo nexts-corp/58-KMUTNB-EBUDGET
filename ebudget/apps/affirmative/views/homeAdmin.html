@@ -61,53 +61,91 @@
 <script src="{{_context_path}}/apps/budget/views/bg140.js"></script>
 
 <script type="text/javascript">
-$(function () {
-    listsCenter();
-});
-
-function listsCenter() {
-    var html = '<tr>'
-            + '<td class="text-center">1</td>'
-            + '<td>ตัวชี้วัดคำรับรองการปฏิบัติงานส่วนงานภายในมหาวิทยาลัย</td>'
-            + '<td class="text-center">-</td>'
-            + '<td class="text-center"><button id="center" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
-        + '</tr>'
-        + '<tr>'
-            + '<td class="text-center">2</td>'
-            + '<td>ร่างตัวชี้วัดคำรับรองของส่วนงาน</td>'
-            + '<td class="text-center">-</td>'
-            + '<td class="text-center"><button id="draft" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
-        + '</tr>'
-        + '<tr>'
-            + '<td class="text-center">3</td>'
-            + '<td>จัดทำตัวชี้วัดคำรับรองของส่วนงาน</td>'
-            + '<td class="text-center">-</td>'
-            + '<td class="text-center"><button id="final" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
-        + '</tr>'
-        + '<tr>'
-            + '<td class="text-center">4</td>'
-            + '<td>รายงานผลตัวชี้วัด</td>'
-            + '<td class="text-center">-</td>'
-            + '<td class="text-center"><button id="result" class="btn btn-primary manage" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
-        + '</tr>';
-
-    $("#homeBody").html(html);
-
-    $("#center").click(function () {
-        window.location = "center";
+    $(function () {
+        listsCenter();
     });
 
-    $("#draft").click(function () {
-        window.location = "draftAll";
-    });
+    function listsCenter() {
+        var html = '<tr>'
+                + '<td class="text-center">1</td>'
+                + '<td>ตัวชี้วัดคำรับรองการปฏิบัติงานส่วนงานภายในมหาวิทยาลัย</td>'
+                + '<td class="text-center text-bold" id="centerStatus">-</td>'
+                + '<td class="text-center"><button id="center" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
+            + '</tr>'
+            + '<tr>'
+                + '<td class="text-center">2</td>'
+                + '<td>ร่างตัวชี้วัดคำรับรองของส่วนงาน</td>'
+                + '<td class="text-center text-bold" id="draftStatus">-</td>'
+                + '<td class="text-center"><button id="draft" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
+            + '</tr>'
+            + '<tr>'
+                + '<td class="text-center">3</td>'
+                + '<td>จัดทำตัวชี้วัดคำรับรองของส่วนงาน</td>'
+                + '<td class="text-center text-bold" id="finalStatus">-</td>'
+                + '<td class="text-center"><button id="final" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
+            + '</tr>'
+            + '<tr>'
+                + '<td class="text-center">4</td>'
+                + '<td>รายงานผลตัวชี้วัด</td>'
+                + '<td class="text-center text-bold" id="resultStatus">-</td>'
+                + '<td class="text-center"><button id="result" class="btn btn-primary manage" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
+            + '</tr>';
 
-    $("#final").click(function () {
-        window.location = "finalAll";
-    });
+        $("#homeBody").html(html);
 
-    $("#result").click(function () {
-        window.location = "resultAll";
-    });
-}
+        $("#center").click(function () {
+            window.location = "center";
+        });
+
+        $("#draft").click(function () {
+            window.location = "draftAll";
+        });
+
+        $("#final").click(function () {
+            window.location = "finalAll";
+        });
+
+        $("#result").click(function () {
+            window.location = "resultAll";
+        });
+
+        allStatus();
+    }
+
+    function allStatus(){
+        //center
+        var datas = callAjax("{{_context_path}}/api/affirmative/homeAdmin/centerStatus", "post", {}, "json");
+        if(typeof datas !== "undefined" && datas != null){
+            var data = datas["lists"];
+            if(data["status"] == "complete"){
+                $("#centerStatus").html('<span class="text-success">เสร็จสมบูรณ์</span>');
+            }
+            else{
+                $("#centerStatus").html('<span class="text-danger">ยังไม่เสร็จ</span>');
+            }
+        }
+
+        //draft
+        var datas = callAjax("{{_context_path}}/api/affirmative/homeAdmin/draftStatus", "post", {}, "json");
+        if(typeof datas !== "undefined" && datas != null){
+            var data = datas["lists"];
+            $("#draftStatus").html('<span class="text-success">'+data["deptComplete"]+'</span> / <span>'+data["deptAll"]+'</span>');
+        }
+
+        //final
+        var datas = callAjax("{{_context_path}}/api/affirmative/homeAdmin/finalStatus", "post", {}, "json");
+        if(typeof datas !== "undefined" && datas != null){
+            var data = datas["lists"];
+            $("#finalStatus").html('<span class="text-success">'+data["deptComplete"]+'</span> / <span>'+data["deptAll"]+'</span>');
+        }
+
+        //result
+        var datas = callAjax("{{_context_path}}/api/affirmative/homeAdmin/resultStatus", "post", {}, "json");
+        if(typeof datas !== "undefined" && datas != null){
+            var data = datas["lists"];
+            $("#resultStatus").html('<span class="text-success">'+data["deptComplete"]+'</span> / <span>'+data["deptAll"]+'</span>');
+        }
+    }
+
 
 </script>
