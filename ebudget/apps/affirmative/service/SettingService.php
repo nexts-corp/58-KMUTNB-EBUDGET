@@ -19,7 +19,7 @@ class SettingService extends CServiceBase implements ISettingService {
 
     function getPeriod() {
         $year = new \apps\common\entity\Year();
-        $year->yearStatus = 'Y';
+        $year->year = 2559;
         return $this->datacontext->getObject($year)[0];
     }
 
@@ -51,6 +51,7 @@ class SettingService extends CServiceBase implements ISettingService {
         $periodCode = $this->getPeriod()->year;
         foreach ($setting as $key => $val) {
             $val->periodCode = $periodCode;
+
             $set = new \apps\common\entity\AffirmativeSetting();
             $set->periodCode = $periodCode;
             $set->groupCode = $val->groupCode;
