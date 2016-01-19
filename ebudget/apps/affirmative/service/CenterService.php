@@ -39,8 +39,7 @@ class CenterService extends CServiceBase implements ICenterService {
 
     function getPeriod() {
         $year = new \apps\common\entity\Year();
-        //$year->yearStatus = 'Y';
-        $year->year = '2559';
+        $year->year = 2559;
         return $this->datacontext->getObject($year)[0];
     }
 
@@ -180,6 +179,20 @@ class CenterService extends CServiceBase implements ICenterService {
         $kpi = new \apps\common\entity\AffirmativeKpi();
         $kpi->targetId = $targetId;
         return $this->datacontext->getObject($kpi);
+    }
+
+    public function listsKpiByType($typeId) {
+        $sql = "SELECT"
+                ." ak"
+            ." FROM ".$this->ent."\\AffirmativeKpi ak"
+            ." JOIN ".$this->ent."\\AffirmativeTarget ag WITH ag.targetId = ak.targetId"
+            ." JOIN ".$this->ent."\\AffirmativeIssue ai WITH ai.issueId = ag.issueId"
+            ." JOIN ".$this->ent."\\AffirmativeType ap WITH ap.typeId = ai.typeId"
+            ." WHERE ap.typeId = :typeId";
+        $param = array(
+            "typeId" => $typeId
+        );
+        return $this->datacontext->getObject($sql, $param);
     }
 
     public function listsUnit() {
