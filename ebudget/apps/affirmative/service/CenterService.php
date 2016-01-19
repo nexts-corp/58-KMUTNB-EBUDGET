@@ -145,7 +145,7 @@ class CenterService extends CServiceBase implements ICenterService {
                 $issueData = $this->datacontext->getObject($issueSql, $issueParam);
                 $mainData[$keyMain]->type[$keyType]->issue = $issueData;
                 if (array_key_exists($valueType->typeId, $typeArr)) {
-                    $mainData[$keyMain]->type[$keyType]->kpi = $typeArr[$valueType->id];
+                    $mainData[$keyMain]->type[$keyType]->kpi = $typeArr[$valueType->typeId];
                 }
                 foreach ($issueData as $keyIssue => $valueIssue) {
                     $targetSql = "SELECT"
