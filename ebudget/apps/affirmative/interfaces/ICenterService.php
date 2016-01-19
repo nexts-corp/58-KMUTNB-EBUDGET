@@ -35,6 +35,15 @@ interface ICenterService {
     public function listsKpi($targetId);
 
     /**
+     * @name listsKpiByType
+     * @uri /listsKpiByType
+     * @param int typeId Description
+     * @return String[] lists Description
+     * @description ผู้เสนอราคาสูงสุดต่อคลัง
+     */
+    public function listsKpiByType($typeId);
+
+    /**
      * @name listsUnit
      * @uri /listsUnit
      * @return String[] lists Description

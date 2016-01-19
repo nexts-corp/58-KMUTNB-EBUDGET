@@ -237,7 +237,7 @@
         $(document).on('click', '#btnViewForm', function (event) {
             var year = $(this).attr('data-year');
             var form = $(this).attr('data-form');
-            var dept = $(this).attr('data-dept');
+            var fac = $(this).attr('data-fac');
             var fund = $(this).attr('data-fund');
             var plan = $(this).attr('data-plan');
 
@@ -245,12 +245,15 @@
             var param = {};
             param.budgetPeriodId = year;
             param.budgetTypeCode = 'K';
-            param.facultyId = allDepArr[dept].masterId;
-            param.deptId = dept;
+            if (allDepArr[fac].masterId == 0) {
+                param.facultyId = fac;
+            } else {
+                param.facultyId = allDepArr[fac].masterId;
+            }
+           // param.deptId = dept;
             param.fundgroupId = fund;
             param.l3dPlanId = plan;
             param.formId = form;
-
             var $scopeJS = angular.element(document.querySelector('[ng-app=formBudget]')).scope();
             $scopeJS.$apply(function () {
                 if (param.formId === "500") {
@@ -286,7 +289,7 @@
                         + '<td>' + formText + '</td>'
                         + '<td>' + item.deptName + '</td>'
                         + '<td>'
-                        + '<button class="btn btn-warning edit" title="แก้ไข" id="btnViewForm" data-year="' + item.budgetPeriodId + '" data-form="' + item.formId + '" data-dept="' + item.deptId + '" data-fund="' + item.fundgroupId + '" data-plan="' + item.l3dPlanId + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                        + '<button class="btn btn-warning edit" title="แก้ไข" id="btnViewForm" data-year="' + item.budgetPeriodId + '" data-form="' + item.formId + '" data-fac="' + item.deptId + '" data-fund="' + item.fundgroupId + '" data-plan="' + item.l3dPlanId + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
                         + '</td>'
                         + '</tr>';
             }

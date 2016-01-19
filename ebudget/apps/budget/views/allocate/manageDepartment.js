@@ -9,7 +9,7 @@ myApp.controller('manageDepartment', function($scope,$http,$controller,cde,nk) {
     $controller('cmListController', {$scope: $scope});
     
     $scope.checkSelectAll = function(){
-        return $scope.plan3dId && $scope.fundgroupId && $scope.bgCategory;
+        return $scope.plan3dId && $scope.fundgroupId && $scope.bgCategory && $scope.deptId;
     };
     
     $scope.init = function(){
@@ -17,8 +17,9 @@ myApp.controller('manageDepartment', function($scope,$http,$controller,cde,nk) {
         $('[ng-app]').show();
         $scope.cmListFundgroup();
         $scope.cmList3dPlan();
+        $scope.cmListDepartment($scope.param.facultyId);
         $scope.facultyCurrent = allDepArr[$scope.param.facultyId].name;
-        $scope.departmentCurrent = allDepArr[$scope.param.deptId].name;
+        //$scope.departmentCurrent = allDepArr[$scope.param.deptId].name;
         $scope.getSumRevenuePlan();
     };
     
@@ -31,7 +32,7 @@ myApp.controller('manageDepartment', function($scope,$http,$controller,cde,nk) {
             $scope.loadRevenueItemList = 1;
             $http.post(cde.getPath("getRevenueItemList"),{
                 budgetPeriodId:$scope.param.budgetPeriodId,
-                deptId:$scope.param.deptId,
+                deptId:$scope.deptId,
                 l3dPlanId:$scope.plan3dId,
                 fundgroupId:$scope.fundgroupId,
                 bgCategory:$scope.bgCategory

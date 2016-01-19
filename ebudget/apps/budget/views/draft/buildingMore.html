@@ -95,8 +95,11 @@
                            for="costTotalBuilding">งบประมาณทั้งสิ้น</label>
 
                     <div class="col-md-8">
+                        <div class="input-group">
                         <input type="number" min="0" id="costTotalBuilding" name="costTotal"
-                               class="form-control input-sm" required>
+                               class="form-control input-sm" required> 
+                         <div class="input-group-addon">บาท</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -168,7 +171,7 @@
 
                         <div class="col-md-3"><input type="number" min="0" class="form-control input-sm" name="area"
                                                      onKeyUp="keyPressed(this)"></div>
-                        <label class="col-md-2 text-left">ตรม.</label>
+                        <label class="col-md-2 text-left">ตร.ม.</label>
                     </div>
 
                     <div class="form-group">
@@ -176,7 +179,7 @@
 
                         <div class="col-md-7"><textarea type="text" rows="3" class="form-control input-sm"
                                                         placeholder="ใส่คำอธิบาย" name="floorDesc"></textarea></div>
-                        <label class="col-md-2 text-left">ตรม.</label>
+                        <label class="col-md-2 text-left">ตร.ม.</label>
                     </div>
                 </div>
             </div>
@@ -185,7 +188,7 @@
 
                 <div class="col-md-3">
                     <input type="number" disabled id="totalArea" name="totalArea" class="form-control input-sm"></div>
-                <label class="col-md-4 text-left"><b>ตรม.</b></label>
+                <label class="col-md-4 text-left"><b>ตร.ม.</b></label>
             </div>
 
             <div id="budgetBuilding" class="form-group">
@@ -294,11 +297,14 @@
                     <label class="col-md-5 text-right req">จำนวนปีงบประมาณ</label>
 
                     <div class="col-md-3">
+                        <div class="input-group">
                         <input class="form-control input-sm" type="number" min="0" id="totalYear" name="totalYear"
                                required>
+                        <div class="input-group-addon">ปี</div>
+                        </div>
                     </div>
-                    <button id="addPeriod" class="col-md-1 btn btn-default" type="button" onclick="addPeriodHTML({})">
-                        ตกลง
+                    <button id="addPeriod" class="col-md-1 btn btn-success" type="button" onclick="addPeriodHTML({})">
+                     <i class="fa fa-plus-circle"></i> เพิ่ม
                     </button>
                 </div>
                 <div class="inner-installment"></div>
@@ -689,9 +695,24 @@
     function buildingMoreAction() {
 
         $(".saveBuildMore").unbind("click").click(function () {
+            
             var fParam = {};
             var buildingNo7 = [];
             var periodArr = [];
+            var totalYear = $("#totalYear").val();
+            var sumValue=0;
+            var costTotal=$('[name="costTotal"]').val();
+            for (var i = 0; i < totalYear; i++) {
+                
+                sumValue+=parseFloat($("#costTotal"+i).val());
+                
+            }
+            
+            if(sumValue!=costTotal){
+                
+                alert("ยอดงบประมาณทั้งสิ้น ไม่เท่ากับการแบ่งตามงวดงานกรุณาตรวจสอบข้อมูล");
+                return false;
+            }
 
             var isValid = true;
             $('form input[required]').each(function () {
@@ -1163,12 +1184,12 @@
         html += '     <div class="col-md-3"><input type="text" class="form-control input-sm" value="' + jsonObj["floorNo"] + '" name="floorNo"></div>';
         html += '     <label class="col-md-1 text-center">พื้นที่</label>';
         html += '     <div class="col-md-3"><input type="number" min="0" class="form-control input-sm" id="area" value="' + jsonObj["area"] + '" name="area" onKeyUp="keyPressed(this)"></div>';
-        html += '     <label class="col-md-2 text-left">ตรม.</label>';
+        html += '     <label class="col-md-2 text-left">ตร.ม.</label>';
         html += ' </div>';
         html += ' <div class="form-group">';
         html += '     <label class="col-md-3 text-right">- </label>';
         html += '     <div class="col-md-7"><textarea type="text" rows="3" class="form-control input-sm" placeholder="ใส่คำอธิบาย" name="floorDesc">' + jsonObj["floorDesc"] + '</textarea></div>';
-        html += '     <label class="col-md-1 text-left">ตรม.</label>';
+        html += '     <label class="col-md-1 text-left">ตร.ม.</label>';
         html += '     <button type="button" class="btn btn-default btRemoveBuildDetail" name="removeArea" floorID="' + jsonObj["id"] + '"><i class="fa fa-minus"></i> ลบ</button>';
         html += ' </div>';
         html += '</div>';
@@ -1185,7 +1206,7 @@
         indexDivFloor++;
     }
     function addPeriodHTML(jsonObj) {
-
+        
         var totalYear = $("#totalYear").val();
         var html = '';
         for (var i = 0; i < totalYear; i++) {
@@ -1195,14 +1216,14 @@
                         '<input type="text" name="id" value="' + jsonObj[i]["id"] + '" style="display:none">' +
                         '<label class="col-md-2">ปีงบประมาณ</label><div class="col-md-2"><input type="number" min="0" id="budgetPeriodId" name="budgetPeriodId" class="form-control input-sm" value="' + jsonObj[i]["budgetPeriodId"] + '"></div>' +
                         '<label class="col-md-1">จำนวน</label><div class="col-md-2"><input type="number" id="phaseNo" name="phaseNo" class="form-control input-sm" onKeyUp="keyPressed(this)" value="' + jsonObj[i]["phaseNo"] + '"></div>' +
-                        '<label class="col-md-1">งวดงาน</label><div class="col-md-2"><input type="number" id="costTotal" name="costTotal" class="form-control input-sm" onKeyUp="keyPressed(this)" value="' + jsonObj[i]["costTotal"] + '"></div>' +
+                        '<label class="col-md-1">งวดงาน</label><div class="col-md-2"><input type="number" id="costTotal'+i+'" name="costTotal" class="form-control input-sm" onKeyUp="keyPressed(this)" value="' + jsonObj[i]["costTotal"] + '"></div>' +
                         '<label class="col-md-1 text-left">บาท</label></div>';
             } else {
                 html += ' <div id="period' + i + '" class = "col-md-12 text-right form-group">' +
                         '<input type="text" name="id" value="-1" style="display:none">' +
                         '<label class="col-md-2">ปีงบประมาณ</label><div class="col-md-2"><input type="number" min="0" id="budgetPeriodId" name="budgetPeriodId" class="form-control input-sm"></div>' +
                         '<label class="col-md-1">จำนวน</label><div class="col-md-2"><input type="number" id="phaseNo" name="phaseNo" class="form-control input-sm" onKeyUp="keyPressed(this)" ></div>' +
-                        '<label class="col-md-1">งวดงาน</label><div class="col-md-2"><input type="number" id="costTotal" name="costTotal" class="form-control input-sm" onKeyUp="keyPressed(this)"></div>' +
+                        '<label class="col-md-1">งวดงาน</label><div class="col-md-2"><input type="number" id="costTotal'+i+'" name="costTotal" class="form-control input-sm" onKeyUp="keyPressed(this)"></div>' +
                         '<label class="col-md-1 text-left">บาท</label></div>';
             }
 

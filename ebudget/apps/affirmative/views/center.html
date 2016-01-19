@@ -312,8 +312,8 @@
                                                 + '<td>' + (value5["remark"] ? value5["remark"] : "-") + '</td>'
                                                 + '<td class="text-center">'
                                                     + '<div class="btn-group">'
-                                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + value4["targetId"] + '" data-id="' + value5["centerId"] + '"><i class="fa fa-pencil"></i></button>'
-                                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + value4["targetId"] + '" data-id="' + value5["centerId"] + '"><i class="fa fa-trash"></i></button>'
+                                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + value4["targetId"] + '" data-id="' + value5["centerId"] + '" data-pname="targetId"><i class="fa fa-pencil"></i></button>'
+                                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + value4["targetId"] + '" data-id="' + value5["centerId"] + '" data-pname="targetId"><i class="fa fa-trash"></i></button>'
                                                     + '</div>'
                                                 + '</td>'
                                             + '</tr>';
@@ -348,8 +348,8 @@
                                         + '<td>' + (value5["remark"] ? value5["remark"] : "-") + '</td>'
                                         + '<td class="text-center">'
                                             + '<div class="btn-group">'
-                                                + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + value2["typeId"] + '" data-id="' + value5["centerId"] + '"><i class="fa fa-pencil"></i></button>'
-                                                + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + value2["typeId"] + '" data-id="' + value5["centerId"] + '"><i class="fa fa-trash"></i></button>'
+                                                + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + value2["typeId"] + '" data-id="' + value5["centerId"] + '" data-pname="typeId"><i class="fa fa-pencil"></i></button>'
+                                                + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + value2["typeId"] + '" data-id="' + value5["centerId"] + '" data-pname="typeId"><i class="fa fa-trash"></i></button>'
                                             + '</div>'
                                         + '</td>'
                                         + '</tr>';
@@ -385,7 +385,9 @@
                     $("#loadingForm").html('');
                     $("#form").trigger('reset');
                     $("#panelForm").modal("show");
-                    listsKpi(pId);
+
+                    if(pName == "targetId")  listsKpi(pId);
+                    else listsKpiByType(pId);
                     //   listsUnit();
                     $("button.save").unbind().click(function () {
                         //  autoKpiName();
@@ -420,13 +422,17 @@
     function centerAction() {
         $("button.edit").unbind().click(function () {
             var pId = $(this).attr("data-pid");
+            var pName = $(this).attr("data-pname");
             var centerId = $(this).attr("data-id");
 
             // reset form for new insert
             $("#loadingForm").html('');
             $("#form").trigger('reset');
             $("#panelForm").modal("show");
-            listsKpi(pId);
+
+            if(pName == "targetId")  listsKpi(pId);
+            else listsKpiByType(pId);
+
             //   console.log(listArr[centerId]);
             $("#form input[type=text], #form textarea, #form select").each(function () {
                 var fid = $(this).attr("id");
@@ -508,8 +514,8 @@
                                 + '<td>' + (data["remark"] ? data["remark"] : "-") + '</td>'
                                 + '<td class="text-center">'
                                     + '<div class="btn-group">'
-                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-pencil"></i></button>'
-                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-trash"></i></button>'
+                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '"  data-pname="typeId"><i class="fa fa-pencil"></i></button>'
+                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '" data-pname="typeId"><i class="fa fa-trash"></i></button>'
                                     + '</div>'
                                 + '</td>'
                             + '</tr>';
@@ -527,8 +533,8 @@
                                 + '<td>' + (data["remark"] ? data["remark"] : "-") + '</td>'
                                 + '<td class="text-center">'
                                     + '<div class="btn-group">'
-                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-pencil"></i></button>'
-                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-trash"></i></button>'
+                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '" data-pname="targetId"><i class="fa fa-pencil"></i></button>'
+                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '" data-pname="targetId"><i class="fa fa-trash"></i></button>'
                                     + '</div>'
                                 + '</td>'
                             + '</tr>';
@@ -576,8 +582,8 @@
                                 + '<td>' + (data["remark"] ? data["remark"] : "-") + '</td>'
                                 + '<td class="text-center">'
                                     + '<div class="btn-group">'
-                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-pencil"></i></button>'
-                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-trash"></i></button>'
+                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '" data-pname="typeId"><i class="fa fa-pencil"></i></button>'
+                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '" data-pname="typeId"><i class="fa fa-trash"></i></button>'
                                     + '</div>'
                                 + '</td>';
                         node = $("#tableall").treetable("node", "type" + data["typeId"]);
@@ -596,8 +602,8 @@
                                 + '<td>' + (data["remark"] ? data["remark"] : "-") + '</td>'
                                 + '<td class="text-center">'
                                     + '<div class="btn-group">'
-                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-pencil"></i></button>'
-                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '"><i class="fa fa-trash"></i></button>'
+                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '" data-pname="targetId"><i class="fa fa-pencil"></i></button>'
+                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '" data-pname="targetId"><i class="fa fa-trash"></i></button>'
                                     + '</div>'
                                 + '</td>';
                         node = $("#tableall").treetable("node", "target" + data["targetId"]);
@@ -653,6 +659,20 @@
             listsUnit();
         }
     }
+
+    function listsKpiByType(typeId) {
+        var datas = callAjax("{{_context_path}}/api/affirmative/center/listsKpiByType", "post", {typeId: typeId}, "json");
+        if (typeof datas["lists"] !== "undefined" && datas["lists"] !== null) {
+            var html = '<option value="0">เลือกตัวชี้วัด</option>';
+            $.each(datas["lists"], function (key, value) {
+                html += '<option value="' + value["kpiId"] + '">' + value["kpiName"] + '</option>'
+            });
+            $("#kpiId").html(html);
+            autoKpiName();
+            listsUnit();
+        }
+    }
+
     function autoKpiName() {
         $("#kpiId").change(function () {
             if (this.value != 0) {
