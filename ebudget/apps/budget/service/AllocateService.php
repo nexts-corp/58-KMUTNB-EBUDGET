@@ -21,6 +21,12 @@ class AllocateService extends CServiceBase implements IAllocateService {
         $this->datacontext = new CDataContext();
     }
 
+    function getPeriod() {
+        $year = new \apps\common\entity\Year();
+        $year->yearStatus = 'Y';
+        return $this->datacontext->getObject($year)[0];
+    }
+
     public function budgetTypeTree() {
 
 //        $sql = "
@@ -96,11 +102,8 @@ class AllocateService extends CServiceBase implements IAllocateService {
         return $this->getRoute();
     }
 
-    public function fetchExpenseProject($budgetPeriodId, $depId) {
-        $sqlDep = "";
-        if ($depId) {
-            $sqlDep = "AND be.deptId = " . $depId;
-        }
+    public function fetchExpenseProject() {
+        $budgetPeriodId = $this->getPeriod()->year;
 
         $sql = "
             SELECT 
@@ -113,7 +116,6 @@ class AllocateService extends CServiceBase implements IAllocateService {
             WITH bh.id = be.budgetHeadId
             WHERE bh.formId = 999
             AND bh.budgetTypeCode = 'K'
-            " . $sqlDep . "
             AND bh.budgetPeriodId = " . $budgetPeriodId . "
             ORDER BY bh.id,be.id
         ";
@@ -139,9 +141,10 @@ class AllocateService extends CServiceBase implements IAllocateService {
 
                 $dataList[$j]["id"] = $dataIAT[$i]["id"];
                 $dataList[$j]["pName"] = $dataIAT[$i]["pName"];
-                if (!$depId) {
-                    $dataList[$j]["pNameC"] = $dataIAT[$i]["pName"];
-                }
+                $dataList[$j]["pNameC"] = $dataIAT[$i]["pName"];
+                /* if (!$depId) {
+                  $dataList[$j]["pNameC"] = $dataIAT[$i]["pName"];
+                  } */
 
                 $j++;
                 $k = 0;
@@ -152,14 +155,14 @@ class AllocateService extends CServiceBase implements IAllocateService {
                 $dataList[$j - 1]["sub"][$k]["depId"] = $dataIAT[$i]["depId"];
                 $dataList[$j - 1]["sub"][$k]["depValue"] = $dataIAT[$i]["depValue"];
                 $dataList[$j - 1]["subC"][$k]["depId"] = $dataIAT[$i]["depId"];
-                $dataList[$j - 1]["subC"][$k]["depValue"] = $dataIAT[$i]["depValue"];
+                $dataList[$j - 1]["subC"][$k]["depValue"] = $dataIAT[$i]["depValue"];                
 
-                if (!$depId) {
-                    $dataList[$j - 1]["sub"][$k + 1]["depId"] = '';
-                    $dataList[$j - 1]["sub"][$k + 1]["depValue"] = 0;
-                    $dataList[$j - 1]["subC"][$k + 1]["depId"] = '';
-                    $dataList[$j - 1]["subC"][$k + 1]["depValue"] = 0;
-                }
+                /* if (!$depId) {
+                  $dataList[$j - 1]["sub"][$k + 1]["depId"] = '';
+                  $dataList[$j - 1]["sub"][$k + 1]["depValue"] = 0;
+                  $dataList[$j - 1]["subC"][$k + 1]["depId"] = '';
+                  $dataList[$j - 1]["subC"][$k + 1]["depValue"] = 0;
+                  } */
             }
 
             $k++;
@@ -296,7 +299,8 @@ class AllocateService extends CServiceBase implements IAllocateService {
         return $list;
     }
 
-    public function fetchRevenue($budgetPeriodId) {
+    public function fetchRevenue() {
+        $budgetPeriodId = $this->getPeriod()->year;
 
         $bg = new entity\BudgetRevenuePlan();
         $bg->setBudgetPeriodId($budgetPeriodId);
@@ -318,8 +322,9 @@ class AllocateService extends CServiceBase implements IAllocateService {
         return $dataList;
     }
 
-    public function addRevenue($deptId, $budgetPeriodId, $bgEducation, $bgService) {
-
+    public function addRevenue($deptId, $bgEducation, $bgService) {
+        $budgetPeriodId = $this->getPeriod()->year;
+        
         $bg = new entity\BudgetRevenuePlan();
         $bg->setBudgetPeriodId($budgetPeriodId);
         $bg->setDeptId($deptId);
@@ -376,13 +381,13 @@ class AllocateService extends CServiceBase implements IAllocateService {
         return $return;
     }
 
-    public function insertRevenueItem($budget, $facultyId) {
+    public function insertRevenueItem($budget, $deptId) {
         $return = array();
 
         $revenuePlan = new entity\BudgetRevenuePlan();
         $revenuePlan->setBudgetPeriodId($budget->budgetPeriodId);
         $revenuePlan->setBudgetTypeCode("K");
-        $revenuePlan->setDeptId($facultyId);
+        $revenuePlan->setDeptId($deptId);
 
         $revenuePlanData = $this->datacontext->getObject($revenuePlan);
 

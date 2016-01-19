@@ -43,12 +43,10 @@ interface IAllocateService {
     /**
      * @name fetchExpenseProject
      * @uri /fetchExpenseProject
-     * @param int budgetPeriodId ปีงบประมาณ
-     * @param int depId รหัสหน่วยงาน
      * @return string[] dataList Description
      * @description หน้าเพิ่มเงินจัดสรรเงินรายได้
      */
-    public function fetchExpenseProject($budgetPeriodId, $depId);
+    public function fetchExpenseProject();
 
     /**
      * @name addExpenseProject
@@ -110,23 +108,21 @@ interface IAllocateService {
     /**
      * @name fetchRevenue
      * @uri /fetchRevenue
-     * @param int budgetPeriodId ปีงบประมาณ
      * @return string[] dataList Description
      * @description หน้าเพิ่มเงินจัดสรรเงินรายได้
      */
-    public function fetchRevenue($budgetPeriodId);
+    public function fetchRevenue();
 
     /**
      * @name addRevenue
      * @uri /addRevenue
      * @param int deptId หน่วยงานระดับคณะ
-     * @param int budgetPeriodId
      * @param float bgEducation เงินจัดสรรจากค่าธรรมเนียมการศึกษา
      * @param float bgService เงินจัดสรรจากงานบริการวิชาการ
      * @return int result Description
      * @description หน้าเพิ่มเงินจัดสรรเงินรายได้
      */
-    public function addRevenue($deptId, $budgetPeriodId, $bgEducation, $bgService);
+    public function addRevenue($deptId, $bgEducation, $bgService);
 
     /**
      * @name updateRevenue
@@ -152,7 +148,7 @@ interface IAllocateService {
      * @name insertRevenueItem
      * @uri /insertRevenueItem
      * @param apps\common\entity\BudgetRevenue budget 
-     * @param int facultyId
+     * @param int deptId
      * @return boolean result 
      * @description เพิ่มรายการรายจ่ายจากเงินรายได้
      */
