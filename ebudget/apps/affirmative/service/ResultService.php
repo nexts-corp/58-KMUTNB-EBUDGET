@@ -13,7 +13,6 @@ class ResultService extends CServiceBase implements IResultService {
     public $logger;
     public $md = "apps\\common\\model";
     public $ent = "apps\\common\\entity";
-    public $entA = "apps\\affirmative\\entity";
 
     public function __construct() {
         $this->logger = \Logger::getLogger("root");
@@ -22,7 +21,7 @@ class ResultService extends CServiceBase implements IResultService {
 
     function getPeriod() {
         $year = new \apps\common\entity\Year();
-        $year->yearStatus = 'Y';
+        $year->year = 2559;
         return $this->datacontext->getObject($year)[0];
     }
 
@@ -48,23 +47,20 @@ class ResultService extends CServiceBase implements IResultService {
     }
 
     public function listsDepartment(){
-        $sql = "SELECT"
-                ."  ad.ActivityId, ad.ActivityName, ad.ActivityCode, ad.DepartmentId,"
-                ." ad.DepartmentName, rd.RoundId, rd.RoundName,"
-                ." COUNT(fl.FinalId) AS cFinal, COUNT(rt.ResultId) AS cResult"
-            ." FROM View_Activity_Department ad"
-            ." CROSS JOIN Affirmative_Round rd"
-            ." LEFT OUTER JOIN Affirmative_Final fl ON fl.PeriodCode = rd.PeriodCode AND fl.DepartmentId = ad.DepartmentId"
-            ." LEFT OUTER JOIN Affirmative_Result rt ON ResultId ="
-	            ." ("
-		            ." SELECT TOP 1 ResultId"
-		            ." FROM Affirmative_Result"
-		            ." WHERE FinalId = fl.FinalId AND RoundId <= rd.RoundId"
-		            ." ORDER BY RoundId DESC"
-	            ." )"
-            ." WHERE rd.PeriodCode = :year"
-            ." GROUP BY ad.DepartmentId, ad.DepartmentName, ad.ActivityId, ad.ActivityName, ad.ActivityCode, rd.RoundId, rd.RoundName"
-            ." ORDER BY ActivityId ASC";
+        $sql = "SELECT
+                ad.ActivityId, ad.ActivityName,
+                ad.ActivityCode, ad.DepartmentId,
+                ad.DepartmentName, rd.AffirmativeRoundId AS RoundId, rd.AffirmativeRoundName AS RoundName,
+                COUNT(fl.AffirmativeFinalId) AS cFinal, COUNT(rt.AffirmativeResultId) AS cResult
+            FROM View_Activity_Department ad
+            CROSS JOIN Affirmative_Round rd
+            LEFT OUTER JOIN Affirmative_Final fl ON fl.PeriodCode = rd.PeriodCode AND fl.DepartmentId = ad.DepartmentId
+            LEFT OUTER JOIN Affirmative_Result rt ON rt.AffirmativeResultId = ( SELECT TOP 1 AffirmativeResultId FROM Affirmative_Result WHERE AffirmativeFinalId = fl.AffirmativeFinalId AND AffirmativeRoundId <= rd.AffirmativeRoundId ORDER BY AffirmativeRoundId DESC )
+            WHERE rd.PeriodCode = :year
+            GROUP BY ad.DepartmentId, ad.DepartmentName,
+                ad.ActivityId, ad.ActivityName,
+                ad.ActivityCode, rd.AffirmativeRoundId, rd.AffirmativeRoundName
+            ORDER BY ActivityId ASC";
 
         $param = array(
             "year" => $this->getPeriod()->year
@@ -113,7 +109,7 @@ class ResultService extends CServiceBase implements IResultService {
     public function listsRound(){
         $sql = "SELECT"
                 ." rd"
-            ." FROM ".$this->entA."\\AffirmativeRound rd"
+            ." FROM ".$this->ent."\\AffirmativeRound rd"
             ." WHERE rd.periodCode = :period";
         $param = array(
             "period" => $this->getPeriod()->year
@@ -137,28 +133,41 @@ class ResultService extends CServiceBase implements IResultService {
         $draft->periodCode = $this->getPeriod()->year;
         $draft->departmentId = $deptId;
         $draftData = $this->datacontext->getObject($draft);*/
-        $sql = "SELECT"
-                ." fl.FinalId AS finalId, fl.PeriodCode AS periodCode, fl.DepartmentId AS departmentId,"
-                ." fl.MainId AS mainId, fl.MainSeq AS mainSeq, fl.TypeId AS typeId, fl.TypeSeq AS typeSeq,"
-                ." fl.HasIssue AS hasIssue, fl.IssueId AS issueId, fl.IssueSeq AS issueSeq, fl.TargetId AS targetId,"
-                ." fl.TargetSeq AS targetSeq, fl.KpiId AS kpiId, fl.KpiSeq AS kpiSeq, fl.KpiName AS kpiName,"
-                ." fl.UnitId AS unitId, fl.UnitName AS unitName, fl.KpiGoal AS kpiGoal, fl.Score1 AS score1,"
-                ." fl.Score2 AS score2, fl.Score3 AS score3, fl.Score4 AS score4, fl.Score5 AS score5,"
-                ." rt.ResultId AS resultId, rt.RoundId AS roundId, rt.Detail AS detail, CAST(rt.Dividend AS varchar) AS dividend,"
-                ." CAST(rt.Divisor AS varchar) AS divisor, CAST(rt.Result AS varchar) AS result, CAST(rt.Score AS varchar) AS score, rt.IsSuccess AS isSuccess,"
-                ." rt.Remark AS remark, rt.Attachment AS attachment"
-            ." FROM Affirmative_Final fl"
-            ." LEFT OUTER JOIN Affirmative_Result rt ON ResultId = "
-                ."("
-                    ." SELECT TOP 1 ResultId"
-                    ." FROM Affirmative_Result"
-                    ." WHERE FinalId = fl.FinalId AND RoundId <= :round"
-                    ." ORDER BY RoundId DESC"
-                .")"
-            ." WHERE fl.PeriodCode = :period AND fl.DepartmentId = :dept";
+        $sql = "SELECT
+                fl.AffirmativeFinalId AS finalId, fl.PeriodCode AS periodCode,
+                fl.DepartmentId AS departmentId, fl.AffirmativeMainId AS mainId,
+                fl.AffirmativeMainSeq AS mainSeq, fl.AffirmativeTypeId AS typeId,
+                fl.AffirmativeTypeSeq AS typeSeq, fl.HasIssue AS hasIssue,
+                fl.AffirmativeIssueId AS issueId, fl.AffirmativeIssueSeq AS issueSeq,
+                fl.AffirmativeTargetId AS targetId, fl.AffirmativeTargetSeq AS targetSeq,
+                fl.AffirmativeKpiId AS kpiId, fl.AffirmativeKpiSeq AS kpiSeq,
+                fl.AffirmativeKpiName AS kpiName, fl.AffirmativeUnitId AS unitId,
+                fl.AffirmativeUnitName AS unitName, fl.KpiGoal AS kpiGoal,
+                fl.Score1 AS score1, fl.Score2 AS score2, fl.Score3 AS score3,
+                fl.Score4 AS score4, fl.Score5 AS score5,
+                rt.AffirmativeResultId AS resultId, rt.AffirmativeRoundId AS roundId,
+                rt.Detail AS detail, CAST (rt.Dividend AS VARCHAR) AS dividend,
+                CAST (rt.Divisor AS VARCHAR) AS divisor, CAST (rt.Result AS VARCHAR) AS result,
+                CAST (rt.Score AS VARCHAR) AS score, rt.IsSuccess AS isSuccess,
+                rt.Remark AS remark, rt.Attachment AS attachment
+            FROM
+                Affirmative_Final fl
+            LEFT OUTER JOIN Affirmative_Result rt ON AffirmativeResultId = (
+                SELECT
+                    TOP 1 AffirmativeResultId
+                FROM
+                    Affirmative_Result
+                WHERE
+                    AffirmativeFinalId = fl.AffirmativeFinalId
+                AND AffirmativeRoundId <= :round
+                ORDER BY
+                    AffirmativeRoundId DESC
+            )
+            WHERE
+                fl.PeriodCode = :year AND fl.DepartmentId = :dept";
         $param = array(
             "round" => $roundId,
-            "period" => $this->getPeriod()->year,
+            "year" => $this->getPeriod()->year,
             "dept" => $deptId
         );
 
@@ -180,8 +189,8 @@ class ResultService extends CServiceBase implements IResultService {
         $typeArr = $this->sortBy("kpiSeq", $typeArr);
 
         $sqlMain = "select s.mainId,s.mainSeq,m.mainName "
-            . "from apps\\affirmative\\entity\\AffirmativeSetting s "
-            . "join apps\\affirmative\\entity\\AffirmativeMain m with m.mainId = s.mainId "
+            . "from apps\\common\\entity\\AffirmativeSetting s "
+            . "join apps\\common\\entity\\AffirmativeMain m with m.mainId = s.mainId "
             . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
             . "group by s.mainId,s.mainSeq,m.mainName "
             . "order by s.mainSeq";
@@ -191,8 +200,8 @@ class ResultService extends CServiceBase implements IResultService {
         );
         $mainData = $this->datacontext->getObject($sqlMain, $paramMain);
         $sqlType = "select s.mainId,s.mainSeq,s.typeId,s.typeSeq,m.typeName,m.hasIssue "
-            . "from apps\\affirmative\\entity\\AffirmativeSetting s "
-            . "join apps\\affirmative\\entity\\AffirmativeType m with m.typeId = s.typeId "
+            . "from apps\\common\\entity\\AffirmativeSetting s "
+            . "join apps\\common\\entity\\AffirmativeType m with m.typeId = s.typeId "
             . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
             . "group by s.mainId,s.mainSeq,s.typeId,s.typeSeq,m.typeName,m.hasIssue "
             . "order by s.mainSeq,s.typeSeq";
@@ -205,7 +214,7 @@ class ResultService extends CServiceBase implements IResultService {
             foreach ($typeData as $keyType => $valueType) {
                 if ($valMain["mainSeq"] == $valueType["mainSeq"]) {
                     $mainData[$keyMain]["type"][$valueType["typeSeq"]] = $valueType;
-                    $issueSql = "select v from apps\\affirmative\\entity\\AffirmativeIssue v where v.typeId = :typeId  order by v.issueSeq";
+                    $issueSql = "select v from apps\\common\\entity\\AffirmativeIssue v where v.typeId = :typeId  order by v.issueSeq";
                     $issueParam = array("typeId" => $valueType["typeId"]);
                     $issueData = $this->datacontext->getObject($issueSql, $issueParam);
                     $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"] = $issueData;
@@ -213,7 +222,7 @@ class ResultService extends CServiceBase implements IResultService {
                     if (array_key_exists($valueType["typeId"], $typeArr)) {
                         $mainData[$keyMain]["type"][$valueType["typeSeq"]]["kpi"] = $typeArr[$valueType["typeId"]];
                     }
-                    $title = new \apps\affirmative\entity\AffirmativeSetting();
+                    $title = new \apps\common\entity\AffirmativeSetting();
                     $title->typeId = $valueType["typeId"];
                     $title->periodCode = $this->getPeriod()->year;
                     $title->mainId = $valMain["mainId"];
@@ -223,7 +232,7 @@ class ResultService extends CServiceBase implements IResultService {
                         $mainData[$keyMain]["type"][$valueType["typeSeq"]]["title"] = $title[0]->title;
                     }
                     foreach ($issueData as $keyIssue => $valueIssue) {
-                        $targetSql = "select v from apps\\affirmative\\entity\\AffirmativeTarget v where v.issueId = :issueId  order by v.targetSeq";
+                        $targetSql = "select v from apps\\common\\entity\\AffirmativeTarget v where v.issueId = :issueId  order by v.targetSeq";
                         $targetParam = array("issueId" => $valueIssue->issueId);
                         $targetData = $this->datacontext->getObject($targetSql, $targetParam);
                         $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"][$keyIssue]->target = $targetData;
@@ -244,7 +253,7 @@ class ResultService extends CServiceBase implements IResultService {
     {
         $return = true;
 
-        $check = new \apps\affirmative\entity\AffirmativeResult();
+        $check = new \apps\common\entity\AffirmativeResult();
         $check->finalId = $result["finalId"];
         $check->roundId = $result["roundId"];
         $dataCk = $this->datacontext->getObject($check);
@@ -285,7 +294,7 @@ class ResultService extends CServiceBase implements IResultService {
             $time = date("YmdHis");
             $target_dir = "apps\\affirmative\\views\\result\\";
 
-            $update = new \apps\affirmative\entity\AffirmativeResult();
+            $update = new \apps\common\entity\AffirmativeResult();
             $update->finalId = $result["finalId"];
             $update->roundId = $result["roundId"];
             $data = $this->datacontext->getObject($update);
@@ -371,7 +380,7 @@ class ResultService extends CServiceBase implements IResultService {
         //round detail
         $sql = "SELECT"
                 ." rd.roundName"
-            ." FROM apps\\affirmative\\entity\\AffirmativeRound rd"
+            ." FROM apps\\common\\entity\\AffirmativeRound rd"
             ." WHERE rd.roundId = :round";
         $param = array(
             "round" => $roundId

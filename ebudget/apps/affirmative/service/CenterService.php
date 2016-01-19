@@ -290,7 +290,35 @@ class CenterService extends CServiceBase implements ICenterService {
                 $data[$key]->isApprove = $status;
             }
             if ($this->datacontext->updateObject($data) && $status == "Y") {
-                $view = new \apps\affirmative\model\ViewSettingCenter();
+                $sql = "INSERT INTO Affirmative_Draft(
+                        PeriodCode, DepartmentId,
+                        AffirmativeMainId, AffirmativeMainSeq,
+                        AffirmativeTypeId, AffirmativeTypeSeq,
+                        HasIssue, AffirmativeIssueId, AffirmativeIssueSeq,
+                        AffirmativeTargetId, AffirmativeTargetSeq,
+                        AffirmativeKpiId, AffirmativeKpiSeq, AffirmativeKpiName,
+                        AffirmativeUnitId, AffirmativeUnitName, KpiGoal,
+                        Score1, Score2, Score3, Score4, Score5,
+                        Remark, IsApprove, IsCenter, IsActive
+                    )
+                    SELECT
+                        PeriodCode, DepartmentId,
+                        MainId, MainSeq,
+                        TypeId, TypeSeq,
+                        HasIssue, IssueId, IssueSeq,
+                        TargetId, TargetSeq,
+                        KpiId, KpiSeq, KpiName,
+                        UnitId, UnitName, KpiGoal,
+                        Score1, Score2, Score3, Score4, Score5,
+                        Remark, 'N', 'Y', 'Y'
+                    FROM View_Setting_Center WHERE PeriodCode = :year";
+
+                $param = array(
+                    "year" => $this->getPeriod()->year
+                );
+
+                $this->datacontext->pdoQuery($sql, $param);
+                /*$view = new \apps\affirmative\model\ViewSettingCenter();
                 $view->periodCode = $this->getPeriod()->year;
                 $data = $this->datacontext->getObject($view);
                 foreach ($data as $key => $value) {
@@ -299,10 +327,10 @@ class CenterService extends CServiceBase implements ICenterService {
                     $data[$key]->isActive = "Y";
                 }
                 $draft = $json->decode(new \apps\common\entity\AffirmativeDraft(), $data);
-                if (!$this->datacontext->saveObject($draft)) {
+                /*if (!$this->datacontext->saveObject($draft)) {
                     $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
                     return false;
-                }
+                }*/
             } elseif ($status == "N") {
                 $data = $this->datacontext->getObject(new \apps\common\entity\AffirmativeDraft());
                 $this->datacontext->removeObject($data);

@@ -217,7 +217,7 @@
             var result = callAjax("{{_context_path}}/api/affirmative/draft/approve", "post", {departmentId: deptId, status: "Y"}, "json");
             if (result["approve"] == true) {
                 alert("อนุมัติสำเร็จ!");
-                window.location = "{{_context_path}}/api/affirmative/view/homeAdmin";
+                window.location = "{{_context_path}}/api/affirmative/view/draftAll";
             } else {
                 alert("อนุมัติไม่สำเร็จ! (" + result["msg"] + ")");
             }

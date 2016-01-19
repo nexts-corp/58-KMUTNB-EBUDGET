@@ -23,7 +23,7 @@
         <div class="container">
             <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
                 <li class="active">
-                    <button class="btn btn-primary" id="btnApprove" style="display: none;"><i class="fa fa-send"></i> ส่งแบบตัวชี้วัด</button>
+                    <button class="btn btn-primary" id="btnApprove"><i class="fa fa-send"></i> ส่งแบบตัวชี้วัด</button>
                     <button class="btn btn-success" id="btnExcel"><i class="fa fa-file-excel-o"></i> เอกสาร</button>
                 </li>
             </ul>
@@ -200,7 +200,7 @@
             var result = callAjax("{{_context_path}}/api/affirmative/center/approve", "post", {status: "Y"}, "json");
             if (result["approve"] == true) {
                 alert("อนุมัติสำเร็จ!");
-                window.location = "{{_context_path}}/api/affirmative/view/homeAdmin";
+                window.location = "{{_context_path}}/api/affirmative/view/center";
             } else {
                 alert("อนุมัติไม่สำเร็จ! (" + result["msg"] + ")");
             }
@@ -415,6 +415,7 @@
                 centerAction();
             });
         } else {
+            $("#btnApprove").hide();
             $("#panelHome").html("<div class='text-center text-default col-sm-12'>ตัวชี้วัดคำรับรองการปฏิบัติงาน อนุมัติเรียบร้อยแล้ว</div>");
         }
     }

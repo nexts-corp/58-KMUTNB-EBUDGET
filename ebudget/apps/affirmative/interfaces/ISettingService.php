@@ -46,7 +46,7 @@ interface ISettingService {
     /**
      * @name set
      * @uri /set
-     * @param apps\affirmative\entity\AffirmativeSetting setting
+     * @param apps\common\entity\AffirmativeSetting setting
      * @return String[] set
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
@@ -55,7 +55,7 @@ interface ISettingService {
     /**
      * @name delete
      * @uri /delete
-     * @param apps\affirmative\entity\AffirmativeSetting setting
+     * @param apps\common\entity\AffirmativeSetting setting
      * @return String[] delete
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */

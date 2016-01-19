@@ -18,7 +18,7 @@ class DraftService extends CServiceBase implements IDraftService {
     }
 
     function checkApprove($departmentId) {
-        $final = new \apps\affirmative\entity\AffirmativeFinal();
+        $final = new \apps\common\entity\AffirmativeFinal();
         $final->periodCode = $this->getPeriod()->year;
         $final->departmentId = $departmentId;
         $data = $this->datacontext->getObject($final);
@@ -31,7 +31,7 @@ class DraftService extends CServiceBase implements IDraftService {
 
     function getPeriod() {
         $year = new \apps\common\entity\Year();
-        $year->yearStatus = 'Y';
+        $year->year = 2559;
         return $this->datacontext->getObject($year)[0];
     }
 
@@ -45,7 +45,7 @@ class DraftService extends CServiceBase implements IDraftService {
     }
 
     function getUnit($unit) {
-        $sqlUnit = "select g.unitId,g.unitName from apps\\affirmative\\entity\\AffirmativeUnit g "
+        $sqlUnit = "select g.unitId,g.unitName from apps\\common\\entity\\AffirmativeUnit g "
                 . " where g.unitId = :unitId ";
         $paramUnit = array(
             "unitId" => $unit
@@ -62,7 +62,7 @@ class DraftService extends CServiceBase implements IDraftService {
         $actKey = array();
 
         foreach ($dept as $keyDept => $valDept) {
-            $draft = new \apps\affirmative\entity\AffirmativeDraft();
+            $draft = new \apps\common\entity\AffirmativeDraft();
             $draft->periodCode = $periodCode;
             $draft->departmentId = $valDept->departmentId;
             $draft->isActive = "Y";
@@ -126,10 +126,11 @@ class DraftService extends CServiceBase implements IDraftService {
 
         $typeArr = array();
         $targetArr = array();
-        $draft = new \apps\affirmative\entity\AffirmativeDraft();
+        $draft = new \apps\common\entity\AffirmativeDraft();
         $draft->periodCode = $this->getPeriod()->year;
         $draft->departmentId = $departmentId;
         $draftData = $this->datacontext->getObject($draft);
+        //return $draftData;
         foreach ($draftData as $keyDraft => $valueDraft) {
             if ($valueDraft->hasIssue == "Y") {
                 if (empty($targetArr[$valueDraft->targetId][$valueDraft->draftId])) {
@@ -145,8 +146,8 @@ class DraftService extends CServiceBase implements IDraftService {
         $typeArr = $this->sortBy("kpiSeq", $typeArr);
 
         $sqlMain = "select s.mainId,s.mainSeq,m.mainName "
-            . "from apps\\affirmative\\entity\\AffirmativeSetting s "
-            . "join apps\\affirmative\\entity\\AffirmativeMain m with m.mainId = s.mainId "
+            . "from apps\\common\\entity\\AffirmativeSetting s "
+            . "join apps\\common\\entity\\AffirmativeMain m with m.mainId = s.mainId "
             . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
             . "group by s.mainId,s.mainSeq,m.mainName "
             . "order by s.mainSeq";
@@ -156,8 +157,8 @@ class DraftService extends CServiceBase implements IDraftService {
         );
         $mainData = $this->datacontext->getObject($sqlMain, $paramMain);
         $sqlType = "select s.mainId,s.mainSeq,s.typeId,s.typeSeq,m.typeName,m.hasIssue "
-            . "from apps\\affirmative\\entity\\AffirmativeSetting s "
-            . "join apps\\affirmative\\entity\\AffirmativeType m with m.typeId = s.typeId "
+            . "from apps\\common\\entity\\AffirmativeSetting s "
+            . "join apps\\common\\entity\\AffirmativeType m with m.typeId = s.typeId "
             . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
             . "group by s.mainId,s.mainSeq,s.typeId,s.typeSeq,m.typeName,m.hasIssue "
             . "order by s.mainSeq,s.typeSeq";
@@ -170,7 +171,7 @@ class DraftService extends CServiceBase implements IDraftService {
             foreach ($typeData as $keyType => $valueType) {
                 if ($valMain["mainSeq"] == $valueType["mainSeq"]) {
                     $mainData[$keyMain]["type"][$valueType["typeSeq"]] = $valueType;
-                    $issueSql = "select v from apps\\affirmative\\entity\\AffirmativeIssue v where v.typeId = :typeId  order by v.issueSeq";
+                    $issueSql = "select v from apps\\common\\entity\\AffirmativeIssue v where v.typeId = :typeId  order by v.issueSeq";
                     $issueParam = array("typeId" => $valueType["typeId"]);
                     $issueData = $this->datacontext->getObject($issueSql, $issueParam);
                     $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"] = $issueData;
@@ -178,7 +179,7 @@ class DraftService extends CServiceBase implements IDraftService {
                     if (array_key_exists($valueType["typeId"], $typeArr)) {
                         $mainData[$keyMain]["type"][$valueType["typeSeq"]]["kpi"] = $typeArr[$valueType["typeId"]];
                     }
-                    $title = new \apps\affirmative\entity\AffirmativeSetting();
+                    $title = new \apps\common\entity\AffirmativeSetting();
                     $title->typeId = $valueType["typeId"];
                     $title->periodCode = $this->getPeriod()->year;
                     $title->mainId = $valMain["mainId"];
@@ -188,7 +189,7 @@ class DraftService extends CServiceBase implements IDraftService {
                         $mainData[$keyMain]["type"][$valueType["typeSeq"]]["title"] = $title[0]->title;
                     }
                     foreach ($issueData as $keyIssue => $valueIssue) {
-                        $targetSql = "select v from apps\\affirmative\\entity\\AffirmativeTarget v where v.issueId = :issueId  order by v.targetSeq";
+                        $targetSql = "select v from apps\\common\\entity\\AffirmativeTarget v where v.issueId = :issueId  order by v.targetSeq";
                         $targetParam = array("issueId" => $valueIssue->issueId);
                         $targetData = $this->datacontext->getObject($targetSql, $targetParam);
                         $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"][$keyIssue]->target = $targetData;
@@ -217,12 +218,12 @@ class DraftService extends CServiceBase implements IDraftService {
         $dept->departmentId = $draft->departmentId;
         $deptData = $this->datacontext->getObject($dept)[0];
         if ($draft->typeId == 0) {
-            $target = new \apps\affirmative\entity\AffirmativeTarget();
+            $target = new \apps\common\entity\AffirmativeTarget();
             $target->targetId = $draft->targetId;
             $targetData = $this->datacontext->getObject($target)[0];
             $draft->targetSeq = $targetData->targetSeq;
 
-            $issue = new \apps\affirmative\entity\AffirmativeIssue();
+            $issue = new \apps\common\entity\AffirmativeIssue();
             $issue->issueId = $targetData->issueId;
             $issueData = $this->datacontext->getObject($issue)[0];
             $draft->issueId = $issueData->issueId;
@@ -233,7 +234,7 @@ class DraftService extends CServiceBase implements IDraftService {
         } else {
             $draft->hasIssue = "N";
         }
-        $setting = new \apps\affirmative\entity\AffirmativeSetting();
+        $setting = new \apps\common\entity\AffirmativeSetting();
         $setting->typeId = $draft->typeId;
         $setting->groupCode = $deptData->activityCode;
         $setting->periodCode = $this->getPeriod()->year;
@@ -275,7 +276,7 @@ class DraftService extends CServiceBase implements IDraftService {
 
     public function approve($departmentId, $status) {
         $json = new CJSONDecodeImpl();
-        $draft = new \apps\affirmative\entity\AffirmativeDraft();
+        $draft = new \apps\common\entity\AffirmativeDraft();
         $draft->periodCode = $this->getPeriod()->year;
         $draft->departmentId = $departmentId;
         $draft->isActive = "Y";
@@ -293,14 +294,46 @@ class DraftService extends CServiceBase implements IDraftService {
             }
             if ($check == true) {
                 if ($this->datacontext->updateObject($dataDraft)) {
-                    foreach ($dataDraft as $keyDraft => $valueDraft) {
-                        $final = $json->decode(new \apps\affirmative\entity\AffirmativeFinal(), $valueDraft);
+                    $sql = "INSERT INTO Affirmative_Final(
+                            PeriodCode, AffirmativeDraftId, DepartmentId,
+                            AffirmativeMainId, AffirmativeMainSeq,
+                            AffirmativeTypeId, AffirmativeTypeSeq,
+                            HasIssue, AffirmativeIssueId, AffirmativeIssueSeq,
+                            AffirmativeTargetId, AffirmativeTargetSeq,
+                            AffirmativeKpiId, AffirmativeKpiSeq, AffirmativeKpiName,
+                            AffirmativeUnitId, AffirmativeUnitName,
+                            KpiGoal, Score1, Score2, Score3, Score4, Score5,
+                            Remark, IsApprove, IsActive
+                        )
+                        SELECT
+                            PeriodCode, AffirmativeDraftId, DepartmentId,
+                            AffirmativeMainId, AffirmativeMainSeq,
+                            AffirmativeTypeId, AffirmativeTypeSeq,
+                            HasIssue, AffirmativeIssueId, AffirmativeIssueSeq,
+                            AffirmativeTargetId, AffirmativeTargetSeq,
+                            AffirmativeKpiId, AffirmativeKpiSeq, AffirmativeKpiName,
+                            AffirmativeUnitId, AffirmativeUnitName,
+                            KpiGoal, Score1, Score2, Score3, Score4, Score5,
+                            Remark, 'N', IsActive
+                        FROM Affirmative_Draft WHERE PeriodCode = :year AND DepartmentId = :deptId";
+                    $param = array(
+                        "year" => $this->getPeriod()->year,
+                        "deptId" => $departmentId
+                    );
+                    $this->datacontext->pdoQuery($sql, $param);
+                    /*if (!$this->datacontext->pdoQuery($sql, $param)) {
+                        $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+                        return false;
+                    }*/
+                    /*foreach ($dataDraft as $keyDraft => $valueDraft) {
+                        $final = $json->decode(new \apps\common\entity\AffirmativeFinal(), $valueDraft);
                         $final->isApprove = "N";
                         if (!$this->datacontext->saveObject($final)) {
                             $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
                             return false;
                         }
-                    }
+                    }*/
+
                 } else {
                     $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
                     return false;
@@ -311,7 +344,7 @@ class DraftService extends CServiceBase implements IDraftService {
                 $dataDraft[$keyDraft]->isApprove = $status;
             }
             if ($this->datacontext->updateObject($dataDraft)) {
-                $final = new \apps\affirmative\entity\AffirmativeFinal();
+                $final = new \apps\common\entity\AffirmativeFinal();
                 $final->periodCode = $this->getPeriod()->year;
                 $final->departmentId = $departmentId;
                 $del = $this->datacontext->getObject($final);

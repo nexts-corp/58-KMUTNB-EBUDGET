@@ -29,7 +29,7 @@ interface IDraftService {
     /**
      * @name insert
      * @uri /insert
-     * @param apps\affirmative\entity\AffirmativeDraft draft
+     * @param apps\common\entity\AffirmativeDraft draft
      * @return String[] insert Description
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
@@ -38,7 +38,7 @@ interface IDraftService {
     /**
      * @name update
      * @uri /update
-     * @param apps\affirmative\entity\AffirmativeDraft draft
+     * @param apps\common\entity\AffirmativeDraft draft
      * @return String[] update Description
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
