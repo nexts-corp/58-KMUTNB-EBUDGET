@@ -186,4 +186,22 @@ interface IViewService {
      * @description คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง ต่อเนื่อง
      */
     public function buildMore($bg145Id, $budget);
+
+    /**
+     * @name progressAll
+     * @uri /progressAll
+     * @description จัดทำรายงานแผน/ผลการใช้เงินงบประมาณ
+     */
+    public function progressAll();
+
+    /**
+     * @name progress
+     * @uri /progress
+     * @param int bgPeriodId ปีงบประมาณ
+     * @param int facultyId หน่วยงานระดับคณะ
+     * @param int fundgroupId กองทุน
+     * @param int planId แผนงาน 3 มิติ
+     * @description แสดงรายงานแผน/ผลการใช้เงินงบประมาณ
+     */
+    public function progress($bgPeriodId, $facultyId, $fundgroupId, $planId);
 }

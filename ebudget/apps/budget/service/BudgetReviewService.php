@@ -406,9 +406,9 @@ class BudgetReviewService extends CServiceBase implements IBudgetReviewService {
               and bg.planId = '" . $planId . "'";
              */
 
-            $sql = "exec spGetBudgetPlan :bgPeriodId, :deptId, :planId, :fundgroupId";
+            $sql = "exec spGetBudgetPlan :bgPeriodId, :facultyId, :planId, :fundgroupId";
             $param = array("bgPeriodId" => $budgetPeriodId,
-                "deptId" => $deptId,
+                "facultyId" => $deptId,
                 "planId" => $planId,
                 "fundgroupId" => $fundgroupId
             );

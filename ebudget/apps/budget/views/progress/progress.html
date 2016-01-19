@@ -1,0 +1,1385 @@
+{{>header}}
+
+<div class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">ระบบจัดทำ/จัดสรรงบประมาณ</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">รายงานแผน/ผลการใช้เงินงบประมาณ</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="tall dashboard">
+    
+    <!-- button action on header -->
+    <!-- <div class="sort-source-wrapper">
+        <div class="container">
+            <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+                <li class="active"></li>
+            </ul>
+        </div>
+    </div> -->
+    
+    
+    <div class="sort-source-wrapper">
+        <div class="container">
+            <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+                <li class="active">
+                    <button class="btn btn-default back"><i> ย้อนกลับ</i></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    
+    <!-- end button action on header -->
+
+    <div class="container">
+        <div class="row">
+            <div id="divForm" class="col-md-12">
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <label class="col-md-4 control-label text-right">ปีงบประมาณ : </label>
+
+                        <div class="col-md-6" id="budgetYear"></div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="col-md-4 control-label text-right">แหล่งเงิน : </label>
+
+                        <div class="col-md-6" id="budgetType"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <label class="col-md-4 control-label text-right">แผนงาน : </label>
+
+                        <div class="col-md-6" id="l3dPlan"></div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="col-md-4 control-label text-right">กองทุน : </label>
+
+                        <div class="col-md-6" id="fundgroup"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <label class="col-md-4 control-label text-right">หน่วยงาน/สำนักงาน : </label>
+
+                        <div class="col-md-6" id="facName"></div>
+                    </div>
+
+                    <!--
+                    <div class="col-md-6">
+                        <label class="col-md-4 control-label text-right">ภาควิชา : </label>
+
+                        <div class="col-md-6" id="deptName"></div>
+                    </div>
+                    -->
+                </div>
+
+                <!--
+                <section class="panel">
+                    <div class="panel-body">
+                        <div class="col-md-12 text-right">
+                            <button class="requestBGbtn btn btn-success" type="button">ส่งข้อมูลคำของบประมาณ</button>
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <a href="#" id="expandAll"><i class="fa fa-plus-square"></i> แสดงทั้งหมด</a>&nbsp;/&nbsp;
+                            <a href="#" id="collapseAll"><i class="fa fa-minus-square"></i> ซ่อนทั้งหมด</a>
+                        </div>
+                        <table id="table140" class="table table-bordered table-striped mb-none treetable">
+                            <thead>
+                            <tr>
+                                <th rowspan="3" class="text-center" style="vertical-align: middle;">ลำดับ</th>
+                                <th rowspan="3" class="text-center" style="vertical-align: middle;">ชื่อตำแหน่ง</th>
+                                <th colspan="5" class="text-center" style="vertical-align: middle;">อัตราเดิม</th>
+                                <th rowspan="3" class="text-center" style="vertical-align: middle;">คำชี้แจง</th>
+                                <th rowspan="3" class="text-center" style="vertical-align: middle;">สถานะคำขอ</th>
+                                <th rowspan="3" class="text-center" style="vertical-align: middle; min-width: 130px;">
+                                    เครื่องมือ
+                                </th>
+                            </tr>
+                            <tr>
+                                <th rowspan="2" class="text-center" style="vertical-align: middle;">ระดับ</th>
+                                <th rowspan="2" class="text-center" style="vertical-align: middle;">อัตราเงินเดือน</th>
+                                <th colspan="2" class="text-center" style="vertical-align: middle;">จำนวนอัตรา</th>
+                                <th rowspan="2" class="text-center" style="vertical-align: middle;">จำนวนเงินทั้งปี</th>
+                            </tr>
+                            <tr>
+                                <th class="text-center" style="vertical-align: middle;">มีคนครอง</th>
+                                <th class="text-center" style="vertical-align: middle;">อัตราว่าง</th>
+                            </tr>
+                            <tr id="total">
+                                <th></th>
+                                <th class="text-center">รวมทั้งสิ้น</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th class="text-right text-bold"></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td colspan="10" class="text-center">-</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                
+                -->
+            </div>
+
+            <div class="col-md-12">
+                <table id="table" class="table table-bordered table-condensed mb-none">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" class="text-center" width="10%" id="title-tb"
+                                style="vertical-align: middle; min-width:170px">
+                                {{#i18n}}budgetType{{/i18n}}
+                            </th>
+                            <th colspan="2" class="text-center" width="13%">{{#i18n}}total{{/i18n}}</th>
+                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter1{{/i18n}}</th>
+                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter2{{/i18n}}</th>
+                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter3{{/i18n}}</th>
+                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter4{{/i18n}}</th>
+                            <th rowspan="2" class="text-center" width="10%" style="vertical-align: middle">
+                                {{#i18n}}totalPercent{{/i18n}}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="budgetBody">
+                        <tr>
+                            <td colspan="20" class="text-center">เลือกประเภทงบประมาณ และปีงบประมาณ</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!--
+            <div id="panelForm" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">คำของบประมาณ : <span id="modalHead"></span></h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="form" onsubmit="return false;">
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-bold req" for="positionName">ชื่อตำแหน่ง
+                                        :</label>
+
+                                    <div class="col-md-12">
+                                        <input type="text" id="positionName" name="positionName"
+                                               class="form-control input-sm" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-bold req" for="rateNo">ระดับ :</label>
+
+                                    <div class="col-md-12">
+                                        <input type="text" id="rateNo" name="rateNo" class="form-control input-sm"
+                                               required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-bold req" for="salary">อัตราเงินเดือน
+                                        :</label>
+
+                                    <div class="col-md-12">
+                                        <input type="text" id="salary" name="salary" class="form-control input-sm"
+                                               required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-bold">จำนวนอัตรา</label>
+
+                                    <div class="col-md-12">
+                                        <div class="col-md-4">
+                                            <label class="control-label req" for="occupy">มีคนครอง :</label>
+
+                                            <div>
+                                                <input type="text" id="occupy" name="occupy"
+                                                       class="form-control input-sm" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label req" for="vacancy">อัตราว่าง :</label>
+
+                                            <div>
+                                                <input type="text" id="vacancy" name="vacancy"
+                                                       class="form-control input-sm" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label req" for="salaryTotal">จำนวนเงินทั้งปี :</label>
+
+                                            <div>
+                                                <input type="text" min="0" id="salaryTotal" name="salaryTotal"
+                                                       class="form-control input-sm" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label text-bold" for="remark">คำชี้แจง :</label>
+
+                                    <div class="col-md-12">
+                                        <textarea class="summernote noteRemark" id="remark" name="remark"></textarea>
+                                    </div>
+                                </div>
+
+                                <div id="attachFileDiv" class="form-group">
+                                    <label class="col-md-4 req text-bold">แนบเอกสารประกอบ :</label>
+
+                                    <div id="fileGroup" class="col-md-8">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <input type="text" id="desc" class="form-control input-sm" name="desc"
+                                               placeholder="คำอธิบายประกอบไฟล์">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div id="loadingForm" class="col-md-12 text-center"></div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success save"><i class="fa fa-save"></i> บันทึก
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            -->
+
+            <div id="panelDeleteForm" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">ลบคำของบประมาณ</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-responsive">
+                                <table class="table mb-none">
+                                    <tbody>
+                                        <tr class="no-border">
+                                            <td class="col-md-3 text-right">ชื่อตำแหน่ง :</td>
+                                            <td class="col-md-9 text-bold" id="positionNameDel"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-3 text-right">ระดับ :</td>
+                                            <td class="col-md-9 text-bold" id="rateNoDel"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-3 text-right">อัตราเงินเดือน :</td>
+                                            <td class="col-md-9 text-bold" id="salaryDel"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-3 text-right">จำนวนอัตรา :</td>
+                                            <td class="col-md-9">
+                                                <table>
+                                                    <tr>
+                                                        <td class="col-md-4 text-right">มีคนครอง :</td>
+                                                        <td class="col-md-2 text-bold" id="occupyDel"></td>
+                                                        <td class="col-md-4 text-right">อัตราว่าง :</td>
+                                                        <td class="col-md-2 text-bold" id="vacancyDel"></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-3 text-right">จำนวนเงินทั้งปี :</td>
+                                            <td class="col-md-9 text-bold" id="salaryTotalDel"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="col-md-3 text-right">คำชี้แจง :</td>
+                                            <td class="col-md-9 text-bold" id="remarkDel"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger save"><i class="fa fa-trash"></i> ยืนยันการลบ
+                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  row  -->
+    </div>
+    <!--  container  -->
+</div><!-- main -->
+
+
+<!--
+<div role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">{{#i18n}}trackingBudget{{/i18n}}</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="tall dashboard">
+
+    <div class="sort-source-wrapper">
+        <div class="container">
+            <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+                <li class="active">
+                    <button class="btn btn-default back" style="display: none;"><i> ย้อนกลับ</i></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+ 
+    <div class="container">
+        
+        <div id="formTracking" class="col-md-12">
+            <div class="form-group">
+                <label class="col-md-3 control-label text-right req" for="budgetPeriodId">123ปีงบประมาณ
+                    : </label>
+
+                <div class="col-md-6">
+                    <select id="budgetPeriodId" name="budgetPeriodId" class="form-control input-sm"
+                            required>
+                        <option value="">- เลือกปี -</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3 control-label text-right req" for="budgetTypeCode">แหล่งเงิน
+                    : </label>
+
+                <div class="col-md-6">
+                    <select id="budgetTypeCode" name="budgetTypeCode" class="form-control input-sm"
+                            required>
+                        <option value="">- เลือกแหล่งเงิน -</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3 control-label text-right req" for="facultyId">คณะ : </label>
+
+                <div class="col-md-6">
+                    <select id="facultyId" name="facultyId" class="form-control input-sm" required>
+                        <option value="">- เลือกคณะ -</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3 control-label text-right req" for="deptId">สาขา : </label>
+
+                <div class="col-md-6">
+                    <select id="deptId" name="deptId" class="form-control input-sm" required>
+                        <option value="">- เลือกสาขา -</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3 control-label text-right req" for="l3dPlanId">แผนงาน
+                    : </label>
+
+                <div class="col-md-6">
+                    <select id="l3dPlanId" name="l3dPlanId" class="form-control input-sm" required>
+                        <option value="">- เลือกแผนงาน -</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-3 control-label text-right req" for="fundgroupId">กองทุน
+                    : </label>
+
+                <div class="col-md-6">
+                    <select id="fundgroupId" name="fundgroupId" class="form-control input-sm"
+                            required>
+                        <option value="">- เลือกกองทุน -</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <button class="btn btn-success col-md-3" id="get-form">ค้นหา</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-12">
+                    <hr>
+                </div>
+            </div>
+
+            <div id="divDetail">
+
+            </div>
+
+
+            <div id="bidderTable" class="col-md-12">
+                
+                <div class="col-md-12" id="manage-list" style="margin-top: 20px; display: none">
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><h4 class="panel-title"><a class="accordion-toggle"
+                                                                                  data-toggle="collapse"
+                                                                                  data-parent="#accordion"
+                                                                                  href="#collapse1One">
+                                        <i class="fa fa-plus-circle"></i> จัดการรายการ</a></h4></div>
+                            <div class="accordion-body collapse in">
+                                <div class="panel-body">
+                                    <form onsubmit="return false">
+                                        <div class="form-group">
+                                            <div class="col-md-9"><label class="col-md-4 control-label text-right">หมวดรายจ่าย</label>
+
+                                                <div class="col-md-8">
+                                                    <select id="listExpenses" name="listExpenses"
+                                                            class="form-control input-sm" required="">
+
+                                                        <option value="0">- เลือกประเภทรายจ่าย -</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-9"><label class="col-md-4 control-label text-right">{{#i18n}}quarter{{/i18n}}</label>
+
+                                                <div class="col-md-8">
+                                                    <select id="quarter-select" class="form-control input-sm"
+                                                            required="">
+                                                        <option value="0">- เลือกไตรมาส -</option>
+                                                        <option value="1">{{#i18n}}quarter1{{/i18n}}</option>
+                                                        <option value="2">{{#i18n}}quarter2{{/i18n}}</option>
+                                                        <option value="3">{{#i18n}}quarter3{{/i18n}}</option>
+                                                        <option value="4">{{#i18n}}quarter4{{/i18n}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-9"><label class="col-md-4 control-label text-right">{{#i18n}}expensesPlan{{/i18n}}</label>
+
+                                                <div class="col-md-8">
+                                                    <input id="plan-input" class="form-control input-sm">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-9"><label class="col-md-4 control-label text-right">{{#i18n}}expensesResult{{/i18n}}</label>
+
+                                                <div class="col-md-8">
+                                                    <input id="used-input" class="form-control input-sm">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-right">
+                                            <label id="status-ico" style="display: none" class="text-success"><i
+                                                    class="fa fa-check"> บันทึกเรียบร้อย</i> </label>
+                                            <label id="saving-ico" style="display: none"><i
+                                                    class="fa fa-spinner fa-spin"></i> กำลังบันทึก</label>
+                                            <button id="btn-save" class="btn btn-success "><i class="fa fa-save">
+                                                    บันทึก</i></button>
+                                            &nbsp;
+                                            <button id="clearForm" class="btn btn-default"><i class="fa fa-trash"></i>
+                                                ยกเลิก
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <table id="table" class="table table-bordered table-condensed mb-none" style="display: none;">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" class="text-center" width="10%" id="title-tb"
+                                style="vertical-align: middle; min-width:170px">
+                                {{#i18n}}budgetType{{/i18n}}
+                            </th>
+                            <th colspan="2" class="text-center" width="13%">{{#i18n}}total{{/i18n}}</th>
+                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter1{{/i18n}}</th>
+                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter2{{/i18n}}</th>
+                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter3{{/i18n}}</th>
+                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter4{{/i18n}}</th>
+                            <th rowspan="2" class="text-center" width="10%" style="vertical-align: middle">
+                                {{#i18n}}totalPercent{{/i18n}}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
+                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="budgetBody">
+                        <tr>
+                            <td colspan="20" class="text-center">เลือกประเภทงบประมาณ และปีงบประมาณ</td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+            <div class="center">
+                <button class="btn btn-primary" id="btnSave">บันทึก</button>
+            </div>
+        </div>
+        
+        
+    </div>
+        
+-->
+{{>footer}}
+
+<script type="text/javascript">
+
+    var PERMISSION = "DEPARTMENT";
+    var budgetPeriodArr = {};
+    var budgetTypeArr = {};
+    var facultyArr = {};
+    var departmentArr = {};
+    var fundgroupArr = {};
+    var planArr = {};
+    var dataArr = [];
+    var nameData = ["bgTypeMaster", "bgTypeMain", "bgType", "bgTypeSub"];
+    var classData = ["active", "success", "warning", "info"];
+    //var projectArr = {};
+    //var listSTATUSTRACKING = [];
+
+
+    var bgPeriodId = '{{bgPeriodId}}';
+    var facultyId = '{{facultyId}}';
+    var fundgroupId = '{{fundgroupId}}';
+    var planId = '{{planId}}';
+
+
+    $(document).ready(function () {
+        var param = {
+            bgPeriodId: bgPeriodId,
+            facultyId: facultyId,
+            fundgroupId: fundgroupId,
+            planId: planId
+        };
+
+        listProgress(param);
+
+        var total_quater1_plan = 0, total_quater1_used = 0, total_quater2_plan = 0, total_quater2_used = 0, total_quater3_plan = 0, total_quater3_used = 0, total_quater4_plan = 0, total_quater4_used = 0, total_plan = 0, total_used = 0;
+        var dataTable = null;
+        //$("#table").hide();           
+
+        $("#btnSave").click(function () {
+            var datas = [];
+            $(".frmData").each(function () {
+                var data = {};
+                var idArr = $(this).attr("id").split("-");
+                for (var i = 0; i < idArr.length; i++) {
+                    var id = idArr[i].replace(nameData[i], "");
+                    data[nameData[i] + "Id"] = id;
+                }
+                $($(this).find(".frmReview")).each(function (k, v) {
+                    data[this.name] = this.value;
+                });
+                datas.push(data);
+            });
+
+            //console.log(datas);
+            var dataJSON = JSON.stringify({budget: datas});
+            var dataJSONEN = encodeURIComponent(dataJSON);
+            var result = callAjaxFile("{{_context_path}}/api/budget/budgetReview/updateScheme", "post", dataJSON, "json");
+            console.log(result);
+        });
+
+
+
+        $("#facultyId").change(function () {
+            listDepartment($(this).val());
+        });
+        $("#l3dPlanId").change(function () {
+            var periodId = $("#budgetPeriodId").val();
+            var plan = $(this).val();
+            listFundgroupWithPlan(periodId, plan);
+        });
+        $("#expenses-select").change(function () {
+            $("#expenses-select").parent().removeClass("has-error")
+            $("#warning-expenses").hide(10);
+        });
+        $("#year-select").change(function () {
+            $("#year-select").parent().removeClass("has-error")
+            $("#warning-year").hide(10);
+        });
+        $("#btn-save").click(function () {
+            $("#btn-save").attr("disabled", true);
+            $("#saving-ico").show(10);
+            var planValue = toUnNumberFormat($("#plan-input").val());
+            var usedValue = toUnNumberFormat($("#used-input").val());
+            var expendsID = $("#listExpenses").val();
+            var budgetType = $("#expenses-select").val();
+            var year = $("#year-select").val();
+            var quater = $("#quarter-select").val();
+            var objArr = [{
+                    valuePlan: planValue,
+                    valueUsed: usedValue,
+                    id: expendsID,
+                    budgetType: budgetType,
+                    quater: quater,
+                    year: year
+                }];
+            if (budgetType != 0 && quater != 0 && expendsID != 0) {
+                $.post("{{_context_path}}/api/budget/budgetTracking/saveTracking/", {objBudget: objArr}, function (data) {
+                    if (data.status == true) {
+                        showTableContent($("#expenses-select option:selected").text(), budgetType, year); //refresh table
+                        $("#saving-ico").hide(10);
+                        $("#btn-save").attr("disabled", false);
+                        $("#status-ico").show(10).delay(2500).fadeOut();
+                    } else {
+                        alert("ไม่สามารถบันทึกได้");
+                    }
+                });
+            }
+        });
+        $("#quarter-select").change(function () {
+            getPlanAndUsedClient();
+        });
+        $("#listExpenses").change(function () {
+            getPlanAndUsedClient();
+        });
+        $("#clearForm").click(function () {
+            resetPanel();
+        });
+        $(document).on("blur", "input", function (e) {
+            e.preventDefault();
+            var value = $(this).val();
+            if (value == 0 || value == "") {
+                $(this).val("0");
+            } else {
+                $(this).val(toNumberFormat(value));
+            }
+        });
+
+        function listProgress(param) {
+            $("#table tbody").html('<td colspan="13" class="text-center">Loading...</td>');
+
+            total_quater1_plan = 0, total_quater1_used = 0, total_quater2_plan = 0, total_quater2_used = 0, total_quater3_plan = 0, total_quater3_used = 0, total_quater4_plan = 0, total_quater4_used = 0, total_plan = 0, total_used = 0;
+            resetPanel();
+            disablePanel();
+
+            setTimeout(function () {
+                var dataJSON = JSON.stringify(param);
+                var dataJSONEN = encodeURIComponent(dataJSON);
+                var datas = callAjax("{{_context_path}}/api/budget/progress/viewProgress", "post", dataJSONEN, "json");
+                
+                var html = "";
+
+                    if (typeof datas !== "undefined" && datas !== null) {
+                        datas = datas.result;
+                        
+                        var scheme = {};
+                        var count = {};
+                        for (var i = 0; i < 4; i++) {
+                            scheme[nameData[i] + "Id"] = 0;
+                            count[nameData[i]] = 0;
+                        }
+                        var sum = {};
+                        $.each(datas, function (k, v) {
+                            var level = v["bgLevel"];
+                            if (v[nameData[0] + "Id"] != scheme[nameData[0] + "Id"]) {
+                                for (var i = 1; i < 4; i++) {
+                                    scheme[nameData[i] + "Id"] = 0;
+                                    count[nameData[i]] = 0;
+                                }
+                            } else if (v[nameData[1] + "Id"] != scheme[nameData[1] + "Id"]) {
+                                for (var i = 2; i < 4; i++) {
+                                    scheme[nameData[i] + "Id"] = 0;
+                                    count[nameData[i]] = 0;
+                                }
+                            } else if (v[nameData[2] + "Id"] != scheme[nameData[2] + "Id"]) {
+                                for (var i = 3; i < 4; i++) {
+                                    scheme[nameData[i] + "Id"] = 0;
+                                    count[nameData[i]] = 0;
+                                }
+                            }
+                            for (var i = 0; i < level - 1; i++) {
+                                if (v[nameData[i] + "Id"] != scheme[nameData[i] + "Id"]) {
+                                    scheme[nameData[i] + "Id"] = v[nameData[i] + "Id"];
+                                    count[nameData[i]]++;
+                                    var txtCount = "";
+                                    var txtId = "";
+                                    var txtPId = "";
+                                    for (var x = 0; x <= i; x++) {
+                                        txtCount += count[nameData[x]] + ". ";
+                                        txtId += nameData[x] + v[nameData[x] + "Id"];
+
+                                        if (x != i) {
+                                            txtPId += nameData[x] + v[nameData[x] + "Id"];
+                                            txtId += "-";
+                                            txtPId += "-";
+                                        }
+
+                                    }
+                                    // sum[txtId] = {};
+                                    html += '<tr id="' + txtId + '" parent-id="' + txtPId.substr(0, txtPId.length - 1) + '" class="' + classData[i] + '"><td style="padding-left: 4em ;vertical-align:middle">' + txtCount + v[nameData[i] + "Name"] + '</td>';
+                                    html += '<td class="text-right planSummary"></td>';
+                                    html += '<td class="text-right usedSummary"></td>';
+                                    html += '<td class="text-right planQ1"></td>';
+                                    html += '<td class="text-right usedQ1"></td>';
+                                    html += '<td class="text-right planQ2"></td>';
+                                    html += '<td class="text-right usedQ2"></td>';
+                                    html += '<td class="text-right planQ3"></td>';
+                                    html += '<td class="text-right usedQ3"></td>';
+                                    html += '<td class="text-right planQ4"></td>';
+                                    html += '<td class="text-right usedQ4"></td>';
+                                    html += '<td class="text-right"><b>' + '(%)' + '</b></td></tr>';
+                                }
+                            }
+                            var txtId = "";
+                            var txtCount = "";
+                            var txtPId = "";
+                            count[nameData[level - 1]]++;
+                            for (var x = 0; x < level; x++) {
+                                txtCount += count[nameData[x]] + ". ";
+                                txtId += nameData[x] + v[nameData[x] + "Id"];
+                                if ((level - x) != 1) {
+                                    txtPId += nameData[x] + v[nameData[x] + "Id"] + "-";
+                                    txtId += "-";
+                                }
+                            }
+                            sum[txtId] = {};
+                            html += '<tr id="' + txtId + '" parent-id="' + txtPId.substr(0, txtPId.length - 1) + '"class="frmData ' + classData[level - 1] + '"><td style="padding-left: 4em ;vertical-align:middle">' + /*(++count[nameData[level - 1]])*/txtCount + v[nameData[level - 1] + "Name"] + '</td>';
+                            html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planSummary" value="' + (v.planSummary == null ? 0 : v.planSummary) + '" /></td>';
+                            html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedSummary" value="' + (v.usedSummary == null ? 0 : v.usedSummary) + '" /></td>';
+                            html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ1" value="' + (v.planQ1 == null ? 0 : v.planQ1) + '" /></td>';
+                            html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ1" value="' + (v.usedQ1 == null ? 0 : v.usedQ1) + '" /></td>';
+                            html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ2" value="' + (v.planQ2 == null ? 0 : v.planQ2) + '" /></td>';
+                            html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ2" value="' + (v.usedQ2 == null ? 0 : v.usedQ2) + '" /></td>';
+                            html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ3" value="' + (v.planQ3 == null ? 0 : v.planQ3) + '" /></td>';
+                            html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ3" value="' + (v.usedQ3 == null ? 0 : v.usedQ3) + '" /></td>';
+                            html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ4" value="' + (v.planQ4 == null ? 0 : v.planQ4) + '" /></td>';
+                            html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ4" value="' + (v.usedQ4 == null ? 0 : v.usedQ4) + '" /></td>';
+
+                            html += '<td class="text-right"><b>' + '(%)' + '</b></td>';
+                            html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="bgLevel" value="' + v.bgLevel + '" />';
+                            html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="bgPeriodId" value="' + v.bgPeriodId + '" />';
+                            html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="planId" value="' + v.planId + '" />';
+                            //html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="deptId" value="' + v.deptId + '" />';
+                            html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="fundgroupId" value="' + v.fundgroupId + '" />';
+                            html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="facultyId" value="' + v.facultyId + '" />';
+                            //html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="bgTypeCode" value="' + v.bgTypeCode + '" />';
+                            html += '</tr>';
+                            sum[txtId]["planSummary"] = parseFloat((v.planSummary == null ? 0 : v.planSummary));
+                            sum[txtId]["usedSummary"] = parseFloat((v.usedSummary == null ? 0 : v.usedSummary));
+                            sum[txtId]["planQ1"] = parseFloat((v.planQ1 == null ? 0 : v.planQ1));
+                            sum[txtId]["usedQ1"] = parseFloat((v.usedQ1 == null ? 0 : v.usedQ1));
+                            sum[txtId]["planQ2"] = parseFloat((v.planQ2 == null ? 0 : v.planQ2));
+                            sum[txtId]["usedQ2"] = parseFloat((v.usedQ2 == null ? 0 : v.usedQ2));
+                            sum[txtId]["planQ3"] = parseFloat((v.planQ3 == null ? 0 : v.planQ3));
+                            sum[txtId]["usedQ3"] = parseFloat((v.usedQ3 == null ? 0 : v.usedQ3));
+                            sum[txtId]["planQ4"] = parseFloat((v.planQ4 == null ? 0 : v.planQ4));
+                            sum[txtId]["usedQ4"] = parseFloat((v.usedQ4 == null ? 0 : v.usedQ4));
+                        });
+                        $("#budgetBody").html(html);
+                        var sumParent = {};
+                        $.each(sum, function (key, obj) {
+                            var idArr = key.split("-");
+                            var idLength = idArr.length;
+                            var name = "";
+                            for (var i = 0; i < idLength - 1; i++) {
+                                name += idArr[i];
+                                if (typeof sumParent[name] === "undefined") {
+                                    sumParent[name] = {};
+                                }
+                                if (idLength - i != 1) {
+                                    name += "-";
+                                }
+                            }
+                            $.each(obj, function (index, value) {
+                                var name = "";
+                                for (var i = 0; i < idLength - 1; i++) {
+                                    name += idArr[i];
+                                    if (typeof sumParent[name][index] === "undefined") {
+                                        sumParent[name][index] = 0;
+                                    }
+                                    sumParent[name][index] += parseFloat(value);
+                                    if (idLength - i != 1) {
+                                        name += "-";
+                                    }
+                                }
+
+                            });
+                        });
+                        $.each(sumParent, function (id, obj) {
+                            $.each(obj, function (index, value) {
+                                $("#" + id + " > td." + index).text(toNumberFormat(value));
+                            });
+                        });
+                    }
+                
+
+                $("input").change(function () {
+                    var className = $(this).attr("name");
+                    var prId = $(this).closest("tr").attr("parent-id");
+                    var trId = $(this).closest("tr").attr("id");
+                    var arrId = trId.split("-");
+                    var lenId = arrId.length;
+                    var name = "";
+                    var sumPrice = {};
+                    var arrName = [];
+                    for (var i = 0; i < lenId - 1; i++) {
+                        name += arrId[i];
+                        if (typeof sumPrice[name] === "undefined") {
+                            sumPrice[name] = 0;
+                        }
+                        $("tr[parent-id='" + name + "']").each(function (k, v) {
+                            // console.log(this.id);
+                            if ($(this).attr("class").indexOf("frmData") >= 0) {
+                                //console.log('frm ' + this.id);
+                                var no = parseFloat($(this).find("input[name='" + className + "']").val());
+                                if (isNaN(no)) {
+                                    sumPrice[name] += parseFloat(0);
+                                } else {
+                                    sumPrice[name] += parseFloat(no);
+                                }
+
+                            } else {
+                                if (this.id != prId) {
+                                    // console.log('txt ' + this.id);
+                                    var no = parseFloat($(this).find('td.' + className).text());
+                                    if (isNaN(no)) {
+                                        sumPrice[name] += parseFloat(0);
+                                    } else {
+                                        sumPrice[name] += parseFloat(no);
+                                    }
+                                }
+                            }
+                            //  console.log(sumPrice);
+                        });
+                        if (lenId - i != 1) {
+                            name += "-";
+                        }
+                    }
+                    var tempVal = 0;
+                    var tempKey = "";
+                    $.each(sumPrice, function (key, value) {
+                        var arrId = key.split("-");
+                        var lenId = arrId.length;
+                        if (lenId == 1) {
+                            tempVal = parseFloat(value);
+                            tempKey = key;
+                        } else {
+                            tempVal = parseFloat(tempVal) + parseFloat(value);
+                            $("#" + tempKey + " > td." + className).text(toNumberFormat(tempVal));
+                        }
+                        $("#" + key + " > td." + className).text(toNumberFormat(value));
+                        //console.log(lenId);
+                        //$("#" + key + " > td." + className).text(toNumberFormat(value));
+                    });
+                    //console.log(sumPrice);
+                });
+            }, 0);
+
+        }
+
+        /* mssql version */
+        function showTableExpenseInfo(dept, fund, plan, year) {
+            var html = '';
+            $.get("{{_context_path}}/api/budget/budgetReview/listBudgetExpenseInfo", {
+                budgetPeriodId: year,
+                fundgroupId: fund,
+                planId: plan,
+                deptId: dept
+            }, function (data) {
+
+                if (data != null && data.result.length > 0) {
+                    dataTable = data.result;
+                    //debugger;
+                    var sumPlanTotal = parseInt(dataTable[0]["list"]["expensePlanTotal"]) + parseInt(dataTable[1]["list"]["expensePlanTotal"]) + parseInt(dataTable[2]["list"]["expensePlanTotal"]) + parseInt(dataTable[3]["list"]["expensePlanTotal"]);
+                    var sumUsedTotal = parseInt(dataTable[0]["list"]["expenseUsedTotal"]) + parseInt(dataTable[1]["list"]["expenseUsedTotal"]) + parseInt(dataTable[2]["list"]["expenseUsedTotal"]) + parseInt(dataTable[3]["list"]["expenseUsedTotal"]);
+                    html = '<tr><td style="padding-left: 4em ;vertical-align:middle">' + 'งบเงินอุดหนุน' + '</td>';
+                    html += '<td class="text-right">' + toNumberFormat(sumPlanTotal) + '</td>';
+                    html += '<td class="text-right">' + toNumberFormat(sumUsedTotal) + '</td>';
+                    html += '<td class="text-right">' + toNumberFormat(dataTable[0]["list"]["expensePlanTotal"]) + '</td>';
+                    html += '<td class="text-right">' + toNumberFormat(dataTable[0]["list"]["expenseUsedTotal"]) + '</td>';
+                    html += '<td class="text-right">' + toNumberFormat(dataTable[1]["list"]["expensePlanTotal"]) + '</td>';
+                    html += '<td class="text-right">' + toNumberFormat(dataTable[1]["list"]["expenseUsedTotal"]) + '</td>';
+                    html += '<td class="text-right">' + toNumberFormat(dataTable[2]["list"]["expensePlanTotal"]) + '</td>';
+                    html += '<td class="text-right">' + toNumberFormat(dataTable[2]["list"]["expenseUsedTotal"]) + '</td>';
+                    html += '<td class="text-right">' + toNumberFormat(dataTable[3]["list"]["expensePlanTotal"]) + '</td>';
+                    html += '<td class="text-right">' + toNumberFormat(dataTable[3]["list"]["expenseUsedTotal"]) + '</td>';
+                    html += '<td class="text-right"><b>' + '(%)' + '</b></td></tr>';
+                }
+
+                $("#budgetBody").html(html);
+                $("#title-tb").html(budgetName);
+                $("#get-form").attr("disabled", false);
+            });
+        }
+
+        function getPlanAndUsedClient() {
+
+            var expendsID = $("#listExpenses").val();
+            var quarter = $("#quarter-select").val();
+            var result;
+            for (var i = 0; i < dataTable.listTracking.length; i++) {
+                if (dataTable.listTracking[i].id == expendsID) {
+
+                    result = getBudgetQuater(dataTable.listTracking[i], quarter);
+                }
+                for (var y = 0; y < dataTable.listTracking[i].list.length; y++) {
+                    if (dataTable.listTracking[i].list[y].id == expendsID) {
+
+                        result = getBudgetQuater(dataTable.listTracking[i].list[y], quarter);
+                    }
+                    for (var z = 0; z < dataTable.listTracking[i].list[y].list2.length; z++) {
+                        if (dataTable.listTracking[i].list[y].list2[z].id == expendsID) {
+
+                            result = getBudgetQuater(dataTable.listTracking[i].list[y].list2[z], quarter);
+                        }
+                        for (var x = 0; x < dataTable.listTracking[i].list[y].list2[z].list3.length; x++) {
+
+                            if (dataTable.listTracking[i].list[y].list2[z].list3[x].id == expendsID) {
+
+                                result = getBudgetQuater(dataTable.listTracking[i].list[y].list2[z].list3[x], quarter);
+                            }
+                        }
+                    }
+                }
+            }
+            $("#plan-input").val(toNumberFormat(result[0]));
+            $("#used-input").val(toNumberFormat(result[1]));
+        }
+
+        function getBudgetQuater(data, quater) {
+
+            if (quater == 1) {
+                return [data.budget_quater1_plan, data.budget_quater1_used];
+            } else if (quater == 2) {
+                return [data.budget_quater2_plan, data.budget_quater2_used];
+            } else if (quater == 3) {
+                return [data.budget_quater3_plan, data.budget_quater3_used];
+            } else if (quater == 4) {
+                return [data.budget_quater4_plan, data.budget_quater4_used];
+            }
+
+            return ["", ""];
+        }
+
+        function showTableContent(budgetName, budgetType, year) {
+            var html = '';
+            $.get("{{_context_path}}/api/budget/budgetReview/getReview", {
+                budgetType: budgetType,
+                year: year
+            }, function (data) {
+
+                if (data != null && data.listTracking.length > 0) {
+                    dataTable = data;
+                    for (var i = 0; i < data.listTracking.length; i++) {
+                        //lvl1
+                        html += checkShowLv1(data.listTracking[i]);
+                        for (var y = 0; y < data.listTracking[i].list.length; y++) {
+                            //lvl2
+                            html += checkShowLv2(data.listTracking[i].list[y]);
+                            for (var z = 0; z < data.listTracking[i].list[y].list2.length; z++) {
+                                //lvl3
+                                html += checkShowLv3(data.listTracking[i].list[y].list2[z]);
+                                for (var x = 0; x < data.listTracking[i].list[y].list2[z].list3.length; x++) {
+                                    //lvl4
+                                    var obj = data.listTracking[i].list[y].list2[z].list3[x];
+                                    var total = getTotal(obj);
+                                    var plan = getTotalPlan(obj);
+                                    var used = getTotalUsed(obj);
+                                    total_plan += plan;
+                                    total_used += used;
+                                    html += '<tr><td style="padding-left: 4em ;vertical-align:middle">' + obj.type_name + '</td>';
+                                    html += '<td class="text-right">' + toNumberFormat(plan) + '</td>';
+                                    html += '<td class="text-right">' + toNumberFormat(used) + '</td>';
+                                    html += '<td class="text-right">' + toNumberFormat(obj.budget_quater1_plan) + '</td>';
+                                    html += '<td class="text-right">' + toNumberFormat(obj.budget_quater1_used) + '</td>';
+                                    html += '<td class="text-right">' + toNumberFormat(obj.budget_quater2_plan) + '</td>';
+                                    html += '<td class="text-right">' + toNumberFormat(obj.budget_quater2_used) + '</td>';
+                                    html += '<td class="text-right">' + toNumberFormat(obj.budget_quater3_plan) + '</td>';
+                                    html += '<td class="text-right">' + toNumberFormat(obj.budget_quater3_used) + '</td>';
+                                    html += '<td class="text-right">' + toNumberFormat(obj.budget_quater4_plan) + '</td>';
+                                    html += '<td class="text-right">' + toNumberFormat(obj.budget_quater4_used) + '</td>';
+                                    html += '<td class="text-right"><b>' + toNumberFormat(total) + '</b></td></tr>';
+                                    getTotalColumn(obj);
+                                }//end lvl4
+                            }//end lvl3
+                        }//end lvl2
+                    }//end lvl1
+                    var sumTotal = total_quater1_plan + total_quater1_used + total_quater2_plan + total_quater2_used + total_quater3_plan + total_quater3_used + total_quater4_plan + total_quater4_used;
+                    html += '<tr>';
+                    html += '  <td class="text-center"><b>รวม</b></td>';
+                    html += '<td class="text-right"><b>' + toNumberFormat(total_plan) + '</b></td>';
+                    html += '<td class="text-right"><b>' + toNumberFormat(total_used) + '</b></td>';
+                    html += '<td class="text-right"><b>' + toNumberFormat(total_quater1_plan) + '</b></td>';
+                    html += '<td class="text-right"><b>' + toNumberFormat(total_quater1_used) + '</b></td>';
+                    html += '<td class="text-right"><b>' + toNumberFormat(total_quater2_plan) + '</b></td>';
+                    html += '<td class="text-right"><b>' + toNumberFormat(total_quater2_used) + '</b></td>';
+                    html += '<td class="text-right"><b>' + toNumberFormat(total_quater3_plan) + '</b></td>';
+                    html += '<td class="text-right"><b>' + toNumberFormat(total_quater3_used) + '</b></td>';
+                    html += '<td class="text-right"><b>' + toNumberFormat(total_quater4_plan) + '</b></td>';
+                    html += '<td class="text-right"><b>' + toNumberFormat(total_quater4_used) + '</b></td>';
+                    html += '<td class="text-right"><b>' + toNumberFormat(sumTotal) + '</b></td>';
+                    html += '</tr>';
+                    $("#manage-list").show(10);
+                } else {
+
+                    html += '<tr>';
+                    html += '  <td colspan="100" class="text-center">ไม่พบข้อมูล</td>';
+                    html += '</tr>';
+                    $("#manage-list").hide(10);
+                }
+                $("#budgetBody").html(html);
+                $("#title-tb").html(budgetName);
+                $("#get-form").attr("disabled", false);
+            });
+        }
+
+        function checkShowLv1(obj) {
+
+            var html = '';
+            if (obj.list.length > 0) { //have lvl2
+
+                html += '<tr><td style="vertical-align:middle"><b>' + obj.type_name + '</b></td>';
+                html += '<td class="text-center" colspan="100"></td>';
+            }
+            else {
+                var total = getTotal(obj);
+                var plan = getTotalPlan(obj);
+                var used = getTotalUsed(obj);
+                total_plan += plan;
+                total_used += used;
+                html += '<tr><td style="vertical-align:middle"><b>' + obj.type_name + '</b></td>';
+                html += '<td class="text-right">' + toNumberFormat(plan) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(used) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater1_plan) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater1_used) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater2_plan) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater2_used) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater3_plan) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater3_used) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater4_plan) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater4_used) + '</td>';
+                html += '<td class="text-right"><b>' + toNumberFormat(total) + '</b></td></tr>';
+            }
+            getTotalColumn(obj);
+            return html;
+        }
+
+        function checkShowLv2(obj) {
+
+            var html = '';
+            if (obj.list2.length > 0) { //have lvl3
+
+                html += '<tr><td style="padding-left: 1em ;vertical-align:middle"><b>' + obj.type_name + '</b></td>';
+                html += '<td class="text-center" colspan="100"></td>';
+            }
+            else {
+                var total = getTotal(obj);
+                var plan = getTotalPlan(obj);
+                var used = getTotalUsed(obj);
+                total_plan += plan;
+                total_used += used;
+                html += '<tr><td style="padding-left: 1em ;vertical-align:middle">' + obj.type_name + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(plan) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(used) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater1_plan) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater1_used) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater2_plan) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater2_used) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater3_plan) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater3_used) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater4_plan) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(obj.budget_quater4_used) + '</td>';
+                html += '<td class="text-right"><b>' + toNumberFormat(total) + '</b></td></tr>';
+            }
+            getTotalColumn(obj);
+            return html;
+        }
+
+        function checkShowLv3(obj) {
+
+            var html = '';
+            if (obj.list3.length > 0) { //have lvl4
+
+                html += '<tr><td style="padding-left: 2em ;vertical-align:middle"><b>' + obj.type_name + '</b></td>';
+                html += '<td class="text-center" colspan="100"></td>';
+            }
+            else {
+                var total = getTotal(obj);
+                var plan = getTotalPlan(obj);
+                var used = getTotalUsed(obj);
+                total_plan += plan;
+                total_used += used;
+                html += '<tr><td style="padding-left: 2em ;vertical-align:middle">' + obj.type_name + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(plan) + '</td>';
+                html += '<td class="text-right">' + toNumberFormat(used) + '</td>';
+                html += '<td class="text-right">' + (toNumberFormat(obj.budget_quater1_plan)) + '</td>';
+                html += '<td class="text-right">' + (toNumberFormat(obj.budget_quater1_used)) + '</td>';
+                html += '<td class="text-right">' + (toNumberFormat(obj.budget_quater2_plan)) + '</td>';
+                html += '<td class="text-right">' + (toNumberFormat(obj.budget_quater2_used)) + '</td>';
+                html += '<td class="text-right">' + (toNumberFormat(obj.budget_quater3_plan)) + '</td>';
+                html += '<td class="text-right">' + (toNumberFormat(obj.budget_quater3_used)) + '</td>';
+                html += '<td class="text-right">' + (toNumberFormat(obj.budget_quater4_plan)) + '</td>';
+                html += '<td class="text-right">' + (toNumberFormat(obj.budget_quater4_used)) + '</td>';
+                html += '<td class="text-right"><b>' + toNumberFormat(total) + '</b></td></tr>';
+            }
+
+            getTotalColumn(obj);
+            return html;
+        }
+
+        function getTotal(data) {
+            var total = 0;
+            if (data.budget_quater1_plan != ' ') {
+                total += parseFloat(data.budget_quater1_plan);
+            }
+            if (data.budget_quater1_used != ' ') {
+                total += parseFloat(data.budget_quater1_used);
+            }
+            if (data.budget_quater2_plan != ' ') {
+                total += parseFloat(data.budget_quater2_plan);
+            }
+            if (data.budget_quater2_used != ' ') {
+                total += parseFloat(data.budget_quater2_used);
+            }
+            if (data.budget_quater3_plan != ' ') {
+                total += parseFloat(data.budget_quater3_plan);
+            }
+            if (data.budget_quater3_used != ' ') {
+                total += parseFloat(data.budget_quater3_used);
+            }
+            if (data.budget_quater4_plan != ' ') {
+                total += parseFloat(data.budget_quater4_plan);
+            }
+            if (data.budget_quater4_used != ' ') {
+                total += parseFloat(data.budget_quater4_used);
+            }
+
+            return total;
+        }
+
+        function getTotalColumn(obj) {
+
+            if (obj.budget_quater1_plan != ' ') {
+                total_quater1_plan += parseFloat(obj.budget_quater1_plan);
+            }
+            if (obj.budget_quater1_used != ' ') {
+                total_quater1_used += parseFloat(obj.budget_quater1_used);
+            }
+            if (obj.budget_quater2_plan != ' ') {
+                total_quater2_plan += parseFloat(obj.budget_quater2_plan);
+            }
+            if (obj.budget_quater2_used != ' ') {
+                total_quater2_used += parseFloat(obj.budget_quater2_used);
+            }
+            if (obj.budget_quater3_plan != ' ') {
+                total_quater3_plan += parseFloat(obj.budget_quater3_plan);
+            }
+            if (obj.budget_quater3_used != ' ') {
+                total_quater3_used += parseFloat(obj.budget_quater3_used);
+            }
+            if (obj.budget_quater4_plan != ' ') {
+                total_quater4_plan += parseFloat(obj.budget_quater4_plan);
+            }
+            if (obj.budget_quater4_used != ' ') {
+                total_quater4_used += parseFloat(obj.budget_quater4_used);
+            }
+
+        }
+
+        function getTotalPlan(data) {
+            var total = 0;
+            if (data.budget_quater1_plan != ' ') {
+                total += parseFloat(data.budget_quater1_plan);
+            }
+
+            if (data.budget_quater2_plan != ' ') {
+                total += parseFloat(data.budget_quater2_plan);
+            }
+
+            if (data.budget_quater3_plan != ' ') {
+                total += parseFloat(data.budget_quater3_plan);
+            }
+
+            if (data.budget_quater4_plan != ' ') {
+                total += parseFloat(data.budget_quater4_plan);
+            }
+
+
+            return total;
+        }
+
+        function getTotalUsed(data) {
+
+            var total = 0;
+            if (data.budget_quater1_used != ' ') {
+                total += parseFloat(data.budget_quater1_used);
+            }
+
+            if (data.budget_quater2_used != ' ') {
+                total += parseFloat(data.budget_quater2_used);
+            }
+
+            if (data.budget_quater3_used != ' ') {
+                total += parseFloat(data.budget_quater3_used);
+            }
+
+            if (data.budget_quater4_used != ' ') {
+                total += parseFloat(data.budget_quater4_used);
+            }
+
+            return total;
+        }
+
+        function toNumberFormat(value) {
+            value += ''; //to string
+
+            if (value === ' ' || value === '' || value === undefined || value == 0) {
+
+                return '';
+            } else {
+
+                Number.prototype.formatMoney = function (c, d, t) {
+                    var n = this,
+                            c = isNaN(c = Math.abs(c)) ? 2 : c,
+                            d = d == undefined ? "." : d,
+                            t = t == undefined ? "," : t,
+                            s = n < 0 ? "-" : "",
+                            i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+                            j = (j = i.length) > 3 ? j % 3 : 0;
+                    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+                };
+                return (toUnNumberFormat(value)).formatMoney(2, '.', ',');
+            }
+        }
+
+
+        function toUnNumberFormat(value) {
+
+            if (value === ' ' || value === '' || value === undefined) {
+                return "";
+            } else {
+
+                return parseFloat(value.replace(/[^0-9-.]/g, ''));
+            }
+        }
+
+        function getExpensesList(budgetType) {
+
+            $.get("{{_context_path}}/api/budget/budgetReview/getCatagory/", {budgetType: budgetType}, function (data) {
+
+                var html = '<option value="0">- เลือกประเภทรายจ่าย -</option>';
+                for (var i = 0; i < data.listCatagory.length; i++) {
+
+                    var topic = data.listCatagory[i].typeName;
+                    if (data.listCatagory[i].list.length == 0) {
+                        html += '<option value="' + data.listCatagory[i].id + '">' + topic + '</option>';
+                    }
+
+                    for (var y = 0; y < data.listCatagory[i].list.length; y++) {
+
+                        if (data.listCatagory[i].list[y].list2.length == 0) {
+                            html += '<option value="' + data.listCatagory[i].list[y].id + '">' + topic + ' - ' + data.listCatagory[i].list[y].typeName + '</option>';
+                        }
+
+                        for (var z = 0; z < data.listCatagory[i].list[y].list2.length; z++) {
+
+                            html += '<option value="' + data.listCatagory[i].list[y].list2[z].id + '">' + topic + ' - ' + data.listCatagory[i].list[y].typeName + ' - ' + data.listCatagory[i].list[y].list2[z].typeName + '</option>';
+                        }
+                    }
+                }
+
+                $("#listExpenses").html(html);
+                enablePanel();
+            });
+        }
+
+        function disablePanel() {
+
+            $("#listExpenses").attr("disabled", true);
+            $("#quarter-select").attr("disabled", true);
+            $("#plan-input").attr("disabled", true);
+            $("#used-input").attr("disabled", true);
+        }
+
+        function enablePanel() {
+            //event cancel
+            $("#listExpenses").attr("disabled", false);
+            $("#quarter-select").attr("disabled", false);
+            $("#plan-input").attr("disabled", false);
+            $("#used-input").attr("disabled", false);
+        }
+
+        function resetPanel() {
+            $("#listExpenses").val(0);
+            $("#quarter-select").val(0);
+            $("#plan-input").val("");
+            $("#used-input").val("");
+        }
+
+
+
+
+
+    });
+
+
+</script>
+
