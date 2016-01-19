@@ -18,8 +18,8 @@ interface IProgressService {
     public function getAllScheme();
 
     /**
-     * @name viewProgress
-     * @uri /viewProgress
+     * @name viewProgressBudget
+     * @uri /viewProgressBudget
      * @param int bgPeriodId ปีงบประมาณ
      * @param int facultyId หน่วยงานระดับคณะ
      * @param int fundgroupId กองทุน
@@ -28,5 +28,5 @@ interface IProgressService {
      * @description แสดงแผน/ผลการใช้งบประมาณ
      * @description เรียกดูรายงานแผน/ผลการใช้เงินงบประมาณ
      */
-    public function viewProgress($bgPeriodId, $facultyId, $fundgroupId, $planId);
+    public function viewProgressBudget($bgPeriodId, $facultyId, $fundgroupId, $planId);
 }

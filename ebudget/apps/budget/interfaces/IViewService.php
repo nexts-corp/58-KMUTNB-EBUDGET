@@ -188,20 +188,20 @@ interface IViewService {
     public function buildMore($bg145Id, $budget);
 
     /**
-     * @name progressAll
-     * @uri /progressAll
+     * @name progressBudgetAll
+     * @uri /progressBudgetAll
      * @description จัดทำรายงานแผน/ผลการใช้เงินงบประมาณ
      */
-    public function progressAll();
+    public function progressBudgetAll();
 
     /**
-     * @name progress
-     * @uri /progress
+     * @name progressBudget
+     * @uri /progressBudget
      * @param int bgPeriodId ปีงบประมาณ
      * @param int facultyId หน่วยงานระดับคณะ
      * @param int fundgroupId กองทุน
      * @param int planId แผนงาน 3 มิติ
      * @description แสดงรายงานแผน/ผลการใช้เงินงบประมาณ
      */
-    public function progress($bgPeriodId, $facultyId, $fundgroupId, $planId);
+    public function progressBudget($bgPeriodId, $facultyId, $fundgroupId, $planId);
 }

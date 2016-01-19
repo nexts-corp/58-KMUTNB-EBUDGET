@@ -12,7 +12,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="none-padding">รายงานแผน/ผลการใช้เงินงบประมาณ</h1>
+                    <h1 class="none-padding">รายงานแผน/ผลการใช้เงินงบประมาณแผ่นดิน</h1>
                 </div>
             </div>
         </div>
@@ -90,64 +90,8 @@
                     </div>
                     -->
                 </div>
-
-                <!--
-                <section class="panel">
-                    <div class="panel-body">
-                        <div class="col-md-12 text-right">
-                            <button class="requestBGbtn btn btn-success" type="button">ส่งข้อมูลคำของบประมาณ</button>
-                        </div>
-                        <div class="col-md-12 text-right">
-                            <a href="#" id="expandAll"><i class="fa fa-plus-square"></i> แสดงทั้งหมด</a>&nbsp;/&nbsp;
-                            <a href="#" id="collapseAll"><i class="fa fa-minus-square"></i> ซ่อนทั้งหมด</a>
-                        </div>
-                        <table id="table140" class="table table-bordered table-striped mb-none treetable">
-                            <thead>
-                            <tr>
-                                <th rowspan="3" class="text-center" style="vertical-align: middle;">ลำดับ</th>
-                                <th rowspan="3" class="text-center" style="vertical-align: middle;">ชื่อตำแหน่ง</th>
-                                <th colspan="5" class="text-center" style="vertical-align: middle;">อัตราเดิม</th>
-                                <th rowspan="3" class="text-center" style="vertical-align: middle;">คำชี้แจง</th>
-                                <th rowspan="3" class="text-center" style="vertical-align: middle;">สถานะคำขอ</th>
-                                <th rowspan="3" class="text-center" style="vertical-align: middle; min-width: 130px;">
-                                    เครื่องมือ
-                                </th>
-                            </tr>
-                            <tr>
-                                <th rowspan="2" class="text-center" style="vertical-align: middle;">ระดับ</th>
-                                <th rowspan="2" class="text-center" style="vertical-align: middle;">อัตราเงินเดือน</th>
-                                <th colspan="2" class="text-center" style="vertical-align: middle;">จำนวนอัตรา</th>
-                                <th rowspan="2" class="text-center" style="vertical-align: middle;">จำนวนเงินทั้งปี</th>
-                            </tr>
-                            <tr>
-                                <th class="text-center" style="vertical-align: middle;">มีคนครอง</th>
-                                <th class="text-center" style="vertical-align: middle;">อัตราว่าง</th>
-                            </tr>
-                            <tr id="total">
-                                <th></th>
-                                <th class="text-center">รวมทั้งสิ้น</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th class="text-right text-bold"></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td colspan="10" class="text-center">-</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-                
-                -->
             </div>
-
+            <br>
             <div class="col-md-12">
                 <table id="table" class="table table-bordered table-condensed mb-none">
                     <thead>
@@ -188,405 +132,12 @@
                 </table>
             </div>
 
-            <!--
-            <div id="panelForm" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">คำของบประมาณ : <span id="modalHead"></span></h4>
-                        </div>
-                        <div class="modal-body">
-                            <form id="form" onsubmit="return false;">
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-bold req" for="positionName">ชื่อตำแหน่ง
-                                        :</label>
-
-                                    <div class="col-md-12">
-                                        <input type="text" id="positionName" name="positionName"
-                                               class="form-control input-sm" required>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-bold req" for="rateNo">ระดับ :</label>
-
-                                    <div class="col-md-12">
-                                        <input type="text" id="rateNo" name="rateNo" class="form-control input-sm"
-                                               required>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-bold req" for="salary">อัตราเงินเดือน
-                                        :</label>
-
-                                    <div class="col-md-12">
-                                        <input type="text" id="salary" name="salary" class="form-control input-sm"
-                                               required>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-bold">จำนวนอัตรา</label>
-
-                                    <div class="col-md-12">
-                                        <div class="col-md-4">
-                                            <label class="control-label req" for="occupy">มีคนครอง :</label>
-
-                                            <div>
-                                                <input type="text" id="occupy" name="occupy"
-                                                       class="form-control input-sm" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="control-label req" for="vacancy">อัตราว่าง :</label>
-
-                                            <div>
-                                                <input type="text" id="vacancy" name="vacancy"
-                                                       class="form-control input-sm" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="control-label req" for="salaryTotal">จำนวนเงินทั้งปี :</label>
-
-                                            <div>
-                                                <input type="text" min="0" id="salaryTotal" name="salaryTotal"
-                                                       class="form-control input-sm" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-bold" for="remark">คำชี้แจง :</label>
-
-                                    <div class="col-md-12">
-                                        <textarea class="summernote noteRemark" id="remark" name="remark"></textarea>
-                                    </div>
-                                </div>
-
-                                <div id="attachFileDiv" class="form-group">
-                                    <label class="col-md-4 req text-bold">แนบเอกสารประกอบ :</label>
-
-                                    <div id="fileGroup" class="col-md-8">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <input type="text" id="desc" class="form-control input-sm" name="desc"
-                                               placeholder="คำอธิบายประกอบไฟล์">
-                                    </div>
-                                </div>
-
-                            </form>
-                        </div>
-                        <div id="loadingForm" class="col-md-12 text-center"></div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-success save"><i class="fa fa-save"></i> บันทึก
-                            </button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            -->
-
-            <div id="panelDeleteForm" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">ลบคำของบประมาณ</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="table-responsive">
-                                <table class="table mb-none">
-                                    <tbody>
-                                        <tr class="no-border">
-                                            <td class="col-md-3 text-right">ชื่อตำแหน่ง :</td>
-                                            <td class="col-md-9 text-bold" id="positionNameDel"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="col-md-3 text-right">ระดับ :</td>
-                                            <td class="col-md-9 text-bold" id="rateNoDel"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="col-md-3 text-right">อัตราเงินเดือน :</td>
-                                            <td class="col-md-9 text-bold" id="salaryDel"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="col-md-3 text-right">จำนวนอัตรา :</td>
-                                            <td class="col-md-9">
-                                                <table>
-                                                    <tr>
-                                                        <td class="col-md-4 text-right">มีคนครอง :</td>
-                                                        <td class="col-md-2 text-bold" id="occupyDel"></td>
-                                                        <td class="col-md-4 text-right">อัตราว่าง :</td>
-                                                        <td class="col-md-2 text-bold" id="vacancyDel"></td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="col-md-3 text-right">จำนวนเงินทั้งปี :</td>
-                                            <td class="col-md-9 text-bold" id="salaryTotalDel"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="col-md-3 text-right">คำชี้แจง :</td>
-                                            <td class="col-md-9 text-bold" id="remarkDel"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger save"><i class="fa fa-trash"></i> ยืนยันการลบ
-                            </button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <!--  row  -->
     </div>
     <!--  container  -->
 </div><!-- main -->
 
-
-<!--
-<div role="main" class="main">
-    <section class="page-top none-margin">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1 class="none-padding">{{#i18n}}trackingBudget{{/i18n}}</h1>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <hr class="tall dashboard">
-
-    <div class="sort-source-wrapper">
-        <div class="container">
-            <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
-                <li class="active">
-                    <button class="btn btn-default back" style="display: none;"><i> ย้อนกลับ</i></button>
-                </li>
-            </ul>
-        </div>
-    </div>
- 
-    <div class="container">
-        
-        <div id="formTracking" class="col-md-12">
-            <div class="form-group">
-                <label class="col-md-3 control-label text-right req" for="budgetPeriodId">123ปีงบประมาณ
-                    : </label>
-
-                <div class="col-md-6">
-                    <select id="budgetPeriodId" name="budgetPeriodId" class="form-control input-sm"
-                            required>
-                        <option value="">- เลือกปี -</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-3 control-label text-right req" for="budgetTypeCode">แหล่งเงิน
-                    : </label>
-
-                <div class="col-md-6">
-                    <select id="budgetTypeCode" name="budgetTypeCode" class="form-control input-sm"
-                            required>
-                        <option value="">- เลือกแหล่งเงิน -</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-3 control-label text-right req" for="facultyId">คณะ : </label>
-
-                <div class="col-md-6">
-                    <select id="facultyId" name="facultyId" class="form-control input-sm" required>
-                        <option value="">- เลือกคณะ -</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-3 control-label text-right req" for="deptId">สาขา : </label>
-
-                <div class="col-md-6">
-                    <select id="deptId" name="deptId" class="form-control input-sm" required>
-                        <option value="">- เลือกสาขา -</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-3 control-label text-right req" for="l3dPlanId">แผนงาน
-                    : </label>
-
-                <div class="col-md-6">
-                    <select id="l3dPlanId" name="l3dPlanId" class="form-control input-sm" required>
-                        <option value="">- เลือกแผนงาน -</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-3 control-label text-right req" for="fundgroupId">กองทุน
-                    : </label>
-
-                <div class="col-md-6">
-                    <select id="fundgroupId" name="fundgroupId" class="form-control input-sm"
-                            required>
-                        <option value="">- เลือกกองทุน -</option>
-                    </select>
-                </div>
-
-                <div class="col-md-3">
-                    <button class="btn btn-success col-md-3" id="get-form">ค้นหา</button>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-12">
-                    <hr>
-                </div>
-            </div>
-
-            <div id="divDetail">
-
-            </div>
-
-
-            <div id="bidderTable" class="col-md-12">
-                
-                <div class="col-md-12" id="manage-list" style="margin-top: 20px; display: none">
-                    <div class="panel-group">
-                        <div class="panel panel-default">
-                            <div class="panel-heading"><h4 class="panel-title"><a class="accordion-toggle"
-                                                                                  data-toggle="collapse"
-                                                                                  data-parent="#accordion"
-                                                                                  href="#collapse1One">
-                                        <i class="fa fa-plus-circle"></i> จัดการรายการ</a></h4></div>
-                            <div class="accordion-body collapse in">
-                                <div class="panel-body">
-                                    <form onsubmit="return false">
-                                        <div class="form-group">
-                                            <div class="col-md-9"><label class="col-md-4 control-label text-right">หมวดรายจ่าย</label>
-
-                                                <div class="col-md-8">
-                                                    <select id="listExpenses" name="listExpenses"
-                                                            class="form-control input-sm" required="">
-
-                                                        <option value="0">- เลือกประเภทรายจ่าย -</option>
-
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-md-9"><label class="col-md-4 control-label text-right">{{#i18n}}quarter{{/i18n}}</label>
-
-                                                <div class="col-md-8">
-                                                    <select id="quarter-select" class="form-control input-sm"
-                                                            required="">
-                                                        <option value="0">- เลือกไตรมาส -</option>
-                                                        <option value="1">{{#i18n}}quarter1{{/i18n}}</option>
-                                                        <option value="2">{{#i18n}}quarter2{{/i18n}}</option>
-                                                        <option value="3">{{#i18n}}quarter3{{/i18n}}</option>
-                                                        <option value="4">{{#i18n}}quarter4{{/i18n}}</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-md-9"><label class="col-md-4 control-label text-right">{{#i18n}}expensesPlan{{/i18n}}</label>
-
-                                                <div class="col-md-8">
-                                                    <input id="plan-input" class="form-control input-sm">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-md-9"><label class="col-md-4 control-label text-right">{{#i18n}}expensesResult{{/i18n}}</label>
-
-                                                <div class="col-md-8">
-                                                    <input id="used-input" class="form-control input-sm">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 text-right">
-                                            <label id="status-ico" style="display: none" class="text-success"><i
-                                                    class="fa fa-check"> บันทึกเรียบร้อย</i> </label>
-                                            <label id="saving-ico" style="display: none"><i
-                                                    class="fa fa-spinner fa-spin"></i> กำลังบันทึก</label>
-                                            <button id="btn-save" class="btn btn-success "><i class="fa fa-save">
-                                                    บันทึก</i></button>
-                                            &nbsp;
-                                            <button id="clearForm" class="btn btn-default"><i class="fa fa-trash"></i>
-                                                ยกเลิก
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <table id="table" class="table table-bordered table-condensed mb-none" style="display: none;">
-                    <thead>
-                        <tr>
-                            <th rowspan="2" class="text-center" width="10%" id="title-tb"
-                                style="vertical-align: middle; min-width:170px">
-                                {{#i18n}}budgetType{{/i18n}}
-                            </th>
-                            <th colspan="2" class="text-center" width="13%">{{#i18n}}total{{/i18n}}</th>
-                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter1{{/i18n}}</th>
-                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter2{{/i18n}}</th>
-                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter3{{/i18n}}</th>
-                            <th colspan="2" class="text-center" width="13%">{{#i18n}}quarter4{{/i18n}}</th>
-                            <th rowspan="2" class="text-center" width="10%" style="vertical-align: middle">
-                                {{#i18n}}totalPercent{{/i18n}}
-                            </th>
-                        </tr>
-                        <tr>
-                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
-                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}</th>
-                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
-                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}</th>
-                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
-                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}</th>
-                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
-                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}</th>
-                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesPlan{{/i18n}}</th>
-                            <th class="text-center" width="6.5%" style="min-width:70px">{{#i18n}}expensesResult{{/i18n}}</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="budgetBody">
-                        <tr>
-                            <td colspan="20" class="text-center">เลือกประเภทงบประมาณ และปีงบประมาณ</td>
-                        </tr>
-                        
-                    </tbody>
-                </table>
-            </div>
-            <div class="center">
-                <button class="btn btn-primary" id="btnSave">บันทึก</button>
-            </div>
-        </div>
-        
-        
-    </div>
-        
--->
 {{>footer}}
 
 <script type="text/javascript">
@@ -626,7 +177,7 @@
         //$("#table").hide();
         
         $(".backHome").click(function(){
-            window.location = "{{_context_path}}/api/budget/view/progressAll";
+            window.location = "{{_context_path}}/api/budget/view/progressBudgetAll";
         });
 
         $("#btnSave").click(function () {
@@ -728,12 +279,19 @@
             setTimeout(function () {
                 var dataJSON = JSON.stringify(param);
                 var dataJSONEN = encodeURIComponent(dataJSON);
-                var datas = callAjax("{{_context_path}}/api/budget/progress/viewProgress", "post", dataJSONEN, "json");
+                var datas = callAjax("{{_context_path}}/api/budget/progress/viewProgressBudget", "post", dataJSONEN, "json");
                 
                 var html = "";
 
                     if (typeof datas !== "undefined" && datas !== null) {
                         datas = datas.result;
+                        
+                        $("#budgetYear").html(datas[0]["bgPeriodId"]);
+                        $("#budgetType").html('เงินรายได้');
+                        $("#l3dPlan").html(datas[0]["planName"]);
+                        $("#fundgroup").html(datas[0]["fundgroupName"]);
+                        $("#facName").html(datas[0]["facultyName"]);
+                        //$("#deptName").html(datas["deptName"]);
                         
                         var scheme = {};
                         var count = {};

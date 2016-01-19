@@ -37,7 +37,7 @@ class ProgressService extends CServiceBase implements IProgressService {
         return $data;
     }
 
-    public function viewProgress($bgPeriodId, $facultyId, $fundgroupId, $planId) {
+    public function viewProgressBudget($bgPeriodId, $facultyId, $fundgroupId, $planId) {
         $sql = "exec spGetBudgetPlan :bgPeriodId, :facultyId, :planId, :fundgroupId";
         $param = array("bgPeriodId" => $bgPeriodId,
             "facultyId" => $facultyId,
