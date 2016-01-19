@@ -29,7 +29,7 @@ interface IFinalService {
     /**
      * @name insert
      * @uri /insert
-     * @param apps\affirmative\entity\AffirmativeFinal final
+     * @param apps\common\entity\AffirmativeFinal final
      * @return String[] insert Description
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
@@ -38,7 +38,7 @@ interface IFinalService {
     /**
      * @name update
      * @uri /update
-     * @param apps\affirmative\entity\AffirmativeFinal final
+     * @param apps\common\entity\AffirmativeFinal final
      * @return String[] update Description
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
@@ -47,7 +47,7 @@ interface IFinalService {
     /**
      * @name delete
      * @uri /delete
-     * @param apps\affirmative\entity\AffirmativeFinal final
+     * @param apps\common\entity\AffirmativeFinal final
      * @return boolean delete Description
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */

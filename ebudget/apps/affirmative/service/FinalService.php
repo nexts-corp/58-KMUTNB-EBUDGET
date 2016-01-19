@@ -18,7 +18,7 @@ class FinalService extends CServiceBase implements IFinalService {
     }
 
     function checkApprove($departmentId) {
-        $final = new \apps\affirmative\entity\AffirmativeFinal();
+        $final = new \apps\common\entity\AffirmativeFinal();
         $final->periodCode = $this->getPeriod()->year;
         $final->departmentId = $departmentId;
         $final->isApprove = 'Y';
@@ -32,7 +32,7 @@ class FinalService extends CServiceBase implements IFinalService {
 
     function getPeriod() {
         $year = new \apps\common\entity\Year();
-        $year->yearStatus = 'Y';
+        $year->year = 2559;
         return $this->datacontext->getObject($year)[0];
     }
 
@@ -46,7 +46,7 @@ class FinalService extends CServiceBase implements IFinalService {
     }
 
     function getUnit($unit) {
-        $sqlUnit = "select g.unitId,g.unitName from apps\\affirmative\\entity\\AffirmativeUnit g "
+        $sqlUnit = "select g.unitId,g.unitName from apps\\common\\entity\\AffirmativeUnit g "
                 . " where g.unitId = :unitId ";
         $paramUnit = array(
             "unitId" => $unit
@@ -63,11 +63,12 @@ class FinalService extends CServiceBase implements IFinalService {
         $actKey = array();
 
         foreach ($dept as $keyDept => $valDept) {
-            $draft = new \apps\affirmative\entity\AffirmativeDraft();
+            $draft = new \apps\common\entity\AffirmativeDraft();
             $draft->periodCode = $periodCode;
             $draft->departmentId = $valDept->departmentId;
             $draft->isActive = "Y";
             $get = $this->datacontext->getObject($draft);
+
             if (count($get) > 0) {
                 $status = "Y";
             } else {
@@ -78,9 +79,10 @@ class FinalService extends CServiceBase implements IFinalService {
                     $status = "N";
                 }
             }
+
             $dept[$keyDept]->statusDept = $status;
 
-            $final = new \apps\affirmative\entity\AffirmativeFinal();
+            $final = new \apps\common\entity\AffirmativeFinal();
             $final->periodCode = $periodCode;
             $final->departmentId = $valDept->departmentId;
             $final->isActive = "Y";
@@ -144,7 +146,7 @@ class FinalService extends CServiceBase implements IFinalService {
 
         $typeArr = array();
         $targetArr = array();
-        $final = new \apps\affirmative\entity\AffirmativeFinal();
+        $final = new \apps\common\entity\AffirmativeFinal();
         $final->periodCode = $this->getPeriod()->year;
         $final->departmentId = $departmentId;
         $finalData = $this->datacontext->getObject($final);
@@ -163,8 +165,8 @@ class FinalService extends CServiceBase implements IFinalService {
         $typeArr = $this->sortBy("kpiSeq", $typeArr);
 
         $sqlMain = "select s.mainId,s.mainSeq,m.mainName "
-            . "from apps\\affirmative\\entity\\AffirmativeSetting s "
-            . "join apps\\affirmative\\entity\\AffirmativeMain m with m.mainId = s.mainId "
+            . "from apps\\common\\entity\\AffirmativeSetting s "
+            . "join apps\\common\\entity\\AffirmativeMain m with m.mainId = s.mainId "
             . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
             . "group by s.mainId,s.mainSeq,m.mainName "
             . "order by s.mainSeq";
@@ -174,8 +176,8 @@ class FinalService extends CServiceBase implements IFinalService {
         );
         $mainData = $this->datacontext->getObject($sqlMain, $paramMain);
         $sqlType = "select s.mainId,s.mainSeq,s.typeId,s.typeSeq,m.typeName,m.hasIssue "
-            . "from apps\\affirmative\\entity\\AffirmativeSetting s "
-            . "join apps\\affirmative\\entity\\AffirmativeType m with m.typeId = s.typeId "
+            . "from apps\\common\\entity\\AffirmativeSetting s "
+            . "join apps\\common\\entity\\AffirmativeType m with m.typeId = s.typeId "
             . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
             . "group by s.mainId,s.mainSeq,s.typeId,s.typeSeq,m.typeName,m.hasIssue "
             . "order by s.mainSeq,s.typeSeq";
@@ -188,7 +190,7 @@ class FinalService extends CServiceBase implements IFinalService {
             foreach ($typeData as $keyType => $valueType) {
                 if ($valMain["mainSeq"] == $valueType["mainSeq"]) {
                     $mainData[$keyMain]["type"][$valueType["typeSeq"]] = $valueType;
-                    $issueSql = "select v from apps\\affirmative\\entity\\AffirmativeIssue v where v.typeId = :typeId  order by v.issueSeq";
+                    $issueSql = "select v from apps\\common\\entity\\AffirmativeIssue v where v.typeId = :typeId  order by v.issueSeq";
                     $issueParam = array("typeId" => $valueType["typeId"]);
                     $issueData = $this->datacontext->getObject($issueSql, $issueParam);
                     $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"] = $issueData;
@@ -196,7 +198,7 @@ class FinalService extends CServiceBase implements IFinalService {
                     if (array_key_exists($valueType["typeId"], $typeArr)) {
                         $mainData[$keyMain]["type"][$valueType["typeSeq"]]["kpi"] = $typeArr[$valueType["typeId"]];
                     }
-                    $title = new \apps\affirmative\entity\AffirmativeSetting();
+                    $title = new \apps\common\entity\AffirmativeSetting();
                     $title->typeId = $valueType["typeId"];
                     $title->periodCode = $this->getPeriod()->year;
                     $title->mainId = $valMain["mainId"];
@@ -206,7 +208,7 @@ class FinalService extends CServiceBase implements IFinalService {
                         $mainData[$keyMain]["type"][$valueType["typeSeq"]]["title"] = $title[0]->title;
                     }
                     foreach ($issueData as $keyIssue => $valueIssue) {
-                        $targetSql = "select v from apps\\affirmative\\entity\\AffirmativeTarget v where v.issueId = :issueId  order by v.targetSeq";
+                        $targetSql = "select v from apps\\common\\entity\\AffirmativeTarget v where v.issueId = :issueId  order by v.targetSeq";
                         $targetParam = array("issueId" => $valueIssue->issueId);
                         $targetData = $this->datacontext->getObject($targetSql, $targetParam);
                         $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"][$keyIssue]->target = $targetData;
@@ -236,12 +238,12 @@ class FinalService extends CServiceBase implements IFinalService {
         $dept->departmentId = $final->departmentId;
         $deptData = $this->datacontext->getObject($dept)[0];
         if ($final->typeId == 0) {
-            $target = new \apps\affirmative\entity\AffirmativeTarget();
+            $target = new \apps\common\entity\AffirmativeTarget();
             $target->targetId = $final->targetId;
             $targetData = $this->datacontext->getObject($target)[0];
             $final->targetSeq = $targetData->targetSeq;
 
-            $issue = new \apps\affirmative\entity\AffirmativeIssue();
+            $issue = new \apps\common\entity\AffirmativeIssue();
             $issue->issueId = $targetData->issueId;
             $issueData = $this->datacontext->getObject($issue)[0];
             $final->issueId = $issueData->issueId;
@@ -252,7 +254,7 @@ class FinalService extends CServiceBase implements IFinalService {
         } else {
             $final->hasIssue = "N";
         }
-        $setting = new \apps\affirmative\entity\AffirmativeSetting();
+        $setting = new \apps\common\entity\AffirmativeSetting();
         $setting->typeId = $final->typeId;
         $setting->groupCode = $deptData->activityCode;
         $setting->periodCode = $this->getPeriod()->year;
@@ -284,11 +286,11 @@ class FinalService extends CServiceBase implements IFinalService {
     }
 
     public function delete($final) {
-        $get = new \apps\affirmative\entity\AffirmativeFinal();
+        $get = new \apps\common\entity\AffirmativeFinal();
         $get->finalId = $final->finalId;
         $data = $this->datacontext->getObject($get)[0];
         if ($data->draftId != 0) {
-            $draft = new \apps\affirmative\entity\AffirmativeDraft();
+            $draft = new \apps\common\entity\AffirmativeDraft();
             $draft->draftId = $data->draftId;
             $data = $this->datacontext->getObject($draft)[0];
             $data->isApprove = "N";
@@ -307,7 +309,7 @@ class FinalService extends CServiceBase implements IFinalService {
 
     public function approve($departmentId, $status) {
         $json = new CJSONDecodeImpl();
-        $final = new \apps\affirmative\entity\AffirmativeFinal();
+        $final = new \apps\common\entity\AffirmativeFinal();
         $final->periodCode = $this->getPeriod()->year;
         $final->departmentId = $departmentId;
         $final->isActive = "Y";
