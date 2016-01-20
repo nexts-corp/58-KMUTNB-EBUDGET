@@ -154,7 +154,7 @@
                                                 </td>
                                             </tr>
                                             <tr ng-repeat-end class="nk-cloak"><td colspan="4">Repeat End</td></tr>
-                                            <tr ng-show="selectYear && !loadManageAPP" style="background-color: #E5E5E5;" nk-cloak>
+                                            <tr ng-show="!loadManageAPP" style="background-color: #E5E5E5;" nk-cloak>
                                                 <td></td>
                                                 <td><input ng-model="manageAPP.projectTxt" placeholder="( โครงการ )" type="text" class="form-control input-sm"></td>
                                                 <td></td>
@@ -162,7 +162,7 @@
                                                     <button ng-show="checkAddItemAPP()" ng-click="addItemAPP()" class="btn btn-success"><i class="fa fa-plus"></i> เพิ่ม</button>
                                                 </td>
                                             </tr>
-                                            <tr ng-show="selectYear && !loadManageAPP" ng-repeat="listTxt in manageAPP.depTxt" style="background-color: #E5E5E5;" nk-cloak>
+                                            <tr ng-show="!loadManageAPP" ng-repeat="listTxt in manageAPP.depTxt" style="background-color: #E5E5E5;" nk-cloak>
                                                 <td></td>
                                                 <td style="padding-left: 25px;">
                                                     <select ui-select2 ng-model="listTxt.depId" ng-change="pushDepTxt($last)" class="form-control input-sm" ng-options="dep.id as dep.name for dep in cmDataListDepartment | filter:setMaster">

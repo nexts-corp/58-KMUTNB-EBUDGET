@@ -7,8 +7,7 @@ namespace apps\budget\interfaces;
  * @uri /budgetReview
  * @description BudgetReviewService
  */
-interface IBudgetReviewService
-{
+interface IBudgetReviewService {
 
     /**
      * @name getReview
@@ -49,7 +48,6 @@ interface IBudgetReviewService
      */
     public function listBudgetExpenseInfo($budgetPeriodId, $fundgroupId, $planId, $deptId);
 
-
     /**
      * @name getAllBudgetRequest
      * @uri /getAllBudgetRequest
@@ -68,9 +66,7 @@ interface IBudgetReviewService
      * @description สถานะการติดตาม
      */
     public function listStatusTracking();
-    
-    
-    
+
     /**
      * @name getBudgetScheme
      * @uri /getBudgetScheme
@@ -83,7 +79,7 @@ interface IBudgetReviewService
      * @description แสดงข้อมูลแผนผลตามแหล่งเงิน
      */
     public function getBudgetScheme($budgetPeriodId, $budgetTypeCode, $deptId, $fundgroupId, $planId);
-        
+
     /**
      * @name updateScheme
      * @uri /updateScheme
@@ -92,4 +88,49 @@ interface IBudgetReviewService
      * @description ปรับปรุงข้อมูลแผนผล
      */
     public function updateScheme($budget);
+
+    /**
+     * @name listAllBudgetExpense
+     * @uri /listAllBudgetExpense
+     * @param int facultyId คณะ
+     * @return String[] list
+     * @description รายการโครงการจากเงินรายได้
+     */
+    public function listAllBudgetExpense($facultyId);
+
+    /**
+     * @name viewBudgetExpense
+     * @uri /viewBudgetExpense
+     * @param int expId
+     * @return string[] result
+     * @description แบบเสนอโครงการจากเงินรายได้
+     */
+    public function viewBudgetExpense($expId);
+
+    /**
+     * @name addBudgetExpense
+     * @uri /addBudgetExpense
+     * @param apps\common\entity\BudgetExpense bgExp
+     * @param apps\common\entity\BudgetExpenseAffirmative[] bgAff
+     * @param apps\common\entity\BudgetExpenseIntegration[] bgInt
+     * @param apps\common\entity\BudgetExpenseOperating[] bgOper
+     * @param apps\common\entity\BudgetExpensePlan[] bgPlan
+     * @return string[] result
+     * @description แบบเสนอโครงการจากเงินรายได้
+     */
+    public function addBudgetExpense($bgExp, $bgAff, $bgInt, $bgOper, $bgPlan);
+    
+    /**
+     * @name updateBudgetExpense
+     * @uri /updateBudgetExpense
+     * @param apps\common\entity\BudgetExpense bgExp
+     * @param apps\common\entity\BudgetExpenseAffirmative[] bgAff
+     * @param apps\common\entity\BudgetExpenseIntegration[] bgInt
+     * @param apps\common\entity\BudgetExpenseOperating[] bgOper
+     * @param apps\common\entity\BudgetExpensePlan[] bgPlan
+     * @return string[] result
+     * @description แบบเสนอโครงการจากเงินรายได้
+     */
+    public function updateBudgetExpense($bgExp, $bgAff, $bgInt, $bgOper, $bgPlan);
+    
 }
