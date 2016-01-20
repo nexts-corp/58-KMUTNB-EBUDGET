@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
+	<property name="ireport.zoom" value="1.1586575189468076"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
+	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
+	<style name="Default" isDefault="true" fontName="TH SarabunPSK" fontSize="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
+	<parameter name="PUBLISHER" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["พงศ์ปณต ทัศนียาชุมพาลี"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATE_CURRENT" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PLAN_NAME" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PRODUCT_NAME" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA["-"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FUND_NAME" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA["-"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DEPT_NAME" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PERIOD_ID" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="HEAD_RPT" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["รายละเอียดงบประมาณรายจ่ายเงินรายได้จากงบประมาณแผ่นดิน  ประจำปีงบประมาณ  พ.ศ."+$P{PERIOD_ID}+" \n จำแนกตามแผนงาน/กองทุน/งบรายจ่าย \n "+$P{DEPT_NAME}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[-- รายงานแบบ ง.3
+
+select
+	faculty.DEPARTMENTID as facultyId, faculty.DEPARTMENTNAME as facultyName,
+	bgAll.deptId, dept.DEPARTMENTNAME as deptName,
+	bgAll.planId, l3dPlan.PLANNAME as planName,
+	bgAll.fundgroupId, fundgroup.FUNDGROUPNAME as fundgroupName,
+	masterBgId, masterBgName,
+	mainBgId, mainBgName,
+	bgId, bgName,
+	bgAll.budgetSummary
+from
+(
+	select
+	bgh.DEPARTMENTID as deptId,
+	bgh.L3D_PLANID as planId,
+	bgh.FUNDGROUPID as fundgroupId,
+	(case
+		when bgh.FORMBUDGET = 140 then bg140.BUDGETTYPEID
+		when bgh.FORMBUDGET = 141 then bg141.BUDGETTYPEID
+		when bgh.FORMBUDGET = 142 then bg142.BUDGETTYPEID
+		when bgh.FORMBUDGET = 143 then bg143.BUDGETTYPEID
+		when bgh.FORMBUDGET = 144 then bg144.BUDGETTYPEID
+		when bgh.FORMBUDGET = 145 then bg145.BUDGETTYPEID
+		when bgh.FORMBUDGET = 146 then bg146.BUDGETTYPEID
+	else 0 end) as budgetTypeId,
+	coalesce(sum(bg140.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg141.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg142.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg143.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg144.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg145.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg146.BUDGETSUMMARY), 0) as budgetSummary
+	from BUDGETHEAD bgh
+	left outer join BUDGET140 bg140 on bgh.BUDGETHEADID = bg140.BUDGETHEADID
+	left outer join BUDGET141 bg141 on bgh.BUDGETHEADID = bg141.BUDGETHEADID
+	left outer join BUDGET142 bg142 on bgh.BUDGETHEADID = bg142.BUDGETHEADID
+	left outer join BUDGET143 bg143 on bgh.BUDGETHEADID = bg143.BUDGETHEADID
+	left outer join BUDGET144 bg144 on bgh.BUDGETHEADID = bg144.BUDGETHEADID
+	left outer join BUDGET145 bg145 on bgh.BUDGETHEADID = bg145.BUDGETHEADID
+	left outer join BUDGET146 bg146 on bgh.BUDGETHEADID = bg146.BUDGETHEADID
+	where bgh.BUDGETTYPECODE = 'G'
+	and bgh.BUDGETPERIODID = 2558
+	--and dept.DEPARTMENTID = 30100
+	group by bgh.DEPARTMENTID, bgh.L3D_PLANID, bgh.FUNDGROUPID, bgh.FORMBUDGET,
+	bg140.BUDGETTYPEID, bg141.BUDGETTYPEID, bg142.BUDGETTYPEID, bg143.BUDGETTYPEID, bg144.BUDGETTYPEID, bg145.BUDGETTYPEID, bg146.BUDGETTYPEID
+) bgAll inner join (
+	select
+	bgTypeMaster.BUDGETTYPEID as masterBgId, bgTypeMaster.BUDGETTYPENAME as masterBgName,
+	bgTypeMain.BUDGETTYPEID as mainBgId, bgTypeMain.BUDGETTYPENAME as mainBgName,
+	case when bgType.BUDGETTYPEID is null then bgTypeMain.BUDGETTYPEID else bgType.BUDGETTYPEID end as bgId,
+	case when bgType.BUDGETTYPENAME is null then bgTypeMain.BUDGETTYPENAME else bgType.BUDGETTYPENAME end as bgName,
+	case when bgType.BUDGETTYPEID is null then bgTypeMain.BUDGETTYPEID
+		 when bgTypeSub.BUDGETTYPEID is null then bgType.BUDGETTYPEID else bgTypeSub.BUDGETTYPEID end as subBgId,
+	case when bgType.BUDGETTYPENAME is null then bgTypeMain.BUDGETTYPENAME
+		 when bgTypeSub.BUDGETTYPENAME is null then bgType.BUDGETTYPENAME else bgTypeSub.BUDGETTYPENAME end as subBgName
+	from BUDGETTYPE bgTypeMaster
+	left outer join BUDGETTYPE bgTypeMain on bgTypeMaster.BUDGETTYPEID = bgTypeMain.MASTERID
+	left outer join BUDGETTYPE bgType on bgTypeMain.BUDGETTYPEID = bgType.MASTERID
+	left outer join BUDGETTYPE bgTypeSub on bgType.BUDGETTYPEID = bgTypeSub.MASTERID
+	where bgTypeMaster.BUDGETTYPECODE = 'G'
+	and bgTypeMain.BUDGETTYPECODE = 'G'
+	and bgTypeMaster.MASTERID = 0
+	--order by bgTypeMaster.BUDGETTYPEID, bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID, bgTypeSub.BUDGETTYPEID
+) bgType on bgType.subBgId = bgAll.budgetTypeId
+inner join L3D_DEPARTMENT dept on dept.DEPARTMENTID = bgAll.deptId
+inner join L3D_DEPARTMENT faculty on faculty.DEPARTMENTID = dept.MASTERID
+inner join L3D_PLAN l3dPlan on l3dPlan.PLANID = bgAll.planId
+inner join L3D_FUNDGROUP fundgroup on fundgroup.FUNDGROUPID = bgAll.fundgroupId]]>
+	</queryString>
+	<field name="facultyId" class="java.lang.Integer"/>
+	<field name="facultyName" class="java.lang.String"/>
+	<field name="deptId" class="java.lang.Integer"/>
+	<field name="deptName" class="java.lang.String"/>
+	<field name="planId" class="java.lang.Integer"/>
+	<field name="planName" class="java.lang.String"/>
+	<field name="fundgroupId" class="java.lang.Integer"/>
+	<field name="fundgroupName" class="java.lang.String"/>
+	<field name="masterBgId" class="java.lang.Integer"/>
+	<field name="masterBgName" class="java.lang.String"/>
+	<field name="mainBgId" class="java.lang.Integer"/>
+	<field name="mainBgName" class="java.lang.String"/>
+	<field name="bgId" class="java.lang.Integer"/>
+	<field name="bgName" class="java.lang.String"/>
+	<field name="budgetSummary" class="java.math.BigDecimal"/>
+	<variable name="CURRENT_PAGE" class="java.lang.Integer" resetType="None" calculation="DistinctCount">
+		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer(1)]]></initialValueExpression>
+	</variable>
+	<variable name="CURRENT_DATE" class="java.util.Date">
+		<variableExpression><![CDATA[new Date()]]></variableExpression>
+	</variable>
+	<variable name="รวมเงิน" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
+		<variableExpression><![CDATA[$F{budgetSummary}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<group name="G1">
+		<groupExpression><![CDATA[$F{masterBgId}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="405" height="20" uuid="833f28a4-9a47-41a4-80a6-7fa55b422f33"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement>
+						<font isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{masterBgName}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="405" y="0" width="150" height="20" uuid="7cf173ea-1290-4d7f-936b-b68f93be4d4d"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<text><![CDATA[]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="1">
+				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
+				<line>
+					<reportElement x="0" y="0" width="555" height="1" uuid="e27513c1-1a62-4251-acb9-6b1269301b45"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="G2">
+		<groupExpression><![CDATA[$F{mainBgId}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="405" height="20" uuid="f94f9ebd-6e30-4733-bb9a-3e0aa733febf"/>
+					<box leftPadding="15">
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement>
+						<font isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{mainBgName}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="405" y="0" width="150" height="20" uuid="ecf4b0e1-d766-416a-83d6-ccc08ba4d092"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<text><![CDATA[]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="G3">
+		<groupExpression><![CDATA[$F{bgId}]]></groupExpression>
+		<groupFooter>
+			<band height="20" splitType="Prevent">
+				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
+				<textField isStretchWithOverflow="true">
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="405" height="20" uuid="483881d0-a84b-43cc-9885-10b974ea6b32"/>
+					<box leftPadding="30">
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement>
+						<font isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bgName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="##,##0.00">
+					<reportElement stretchType="RelativeToBandHeight" x="405" y="0" width="150" height="20" uuid="aa932f41-a7a7-4438-8b6e-886e0f8bb1b9"/>
+					<box leftPadding="2" rightPadding="2">
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{รวมเงิน}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band height="802" splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="555" height="20" uuid="f46aee95-03fb-4f8c-a89b-2612b52f7647"/>
+				<textElement textAlignment="Center">
+					<font size="16" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{HEAD_RPT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="132" splitType="Stretch">
+			<textField>
+				<reportElement style="FBold" x="0" y="0" width="555" height="20" uuid="13d9ce8e-0feb-4f4f-ae27-047292e22b62"/>
+				<textElement textAlignment="Right">
+					<font size="14" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["แบบ ง.3"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FBold" x="0" y="20" width="555" height="20" uuid="a587d0f2-5341-40f5-86b8-e732df0d62c9"/>
+				<textElement textAlignment="Right">
+					<font size="14" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[(หน่วย : บาท)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="0" y="40" width="405" height="40" uuid="9d65808b-b64f-4d67-a7a2-618e41c1752b"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[แผนงาน/กองทุน/งบรายจ่าย]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="405" y="40" width="150" height="40" uuid="4bd3e18a-161c-45cb-9a05-e87f064c4c5c"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[งบประมาณ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="39" y="80" width="176" height="20" uuid="fe8ff488-d359-4e14-8e52-cf3b302abe16"/>
+				<box>
+					<bottomPen lineWidth="1.5" lineStyle="Dotted"/>
+				</box>
+				<textElement>
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PLAN_NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="39" y="100" width="176" height="20" uuid="9ab07894-59fc-4bcc-b1d4-66868d1642ab"/>
+				<box>
+					<bottomPen lineWidth="1.5" lineStyle="Dotted"/>
+				</box>
+				<textElement>
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FUND_NAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="80" width="39" height="20" uuid="c6f6b203-5e96-4134-bebd-bba442113465"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[แผนงาน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="100" width="39" height="20" uuid="868cc13a-5198-4dd3-ab6a-9f88af948ce4"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[กองทุน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="120" width="555" height="12" uuid="7c45360d-139d-471b-bc4e-f8fcb73b43f9"/>
+				<box>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[""]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="395" y="80" width="10" height="52" uuid="42ad978b-48cb-4729-bb27-83e8c19d5a98"/>
+				<box>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="544" y="80" width="11" height="52" uuid="64f6da40-5628-4cb0-9578-3fd6c2abb784"/>
+				<box>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{planId} == null&&$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="36" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH:mm:ss">
+				<reportElement x="0" y="24" width="405" height="12" uuid="6c13bc20-06bd-4a29-b6b1-b74bcef75220"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["วันที่พิมพ์ : "+$V{CURRENT_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="405" y="24" width="150" height="12" uuid="0108af85-d9cc-4885-8987-acb8f0ad2986"/>
+				<textElement textAlignment="Right">
+					<font size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["พิมพ์โดย : "+$P{PUBLISHER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="30" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,6 +1,6 @@
 var myApp = angular.module('report3D', ['commonApp']);
 
-myApp.controller('mainController', function ($scope, $http, $controller) {
+myApp.controller('mainController', function ($scope, $http, $controller, $filter) {
 
 
     var listPeriod = []; //Global Variable
@@ -8,8 +8,8 @@ myApp.controller('mainController', function ($scope, $http, $controller) {
     var listDeptGroupB = []; //Global Variable
     var listL3DPlan = []; //Global Variable
     var listL3DFund = []; //Global Variable
-    var pathJavaserver = "http://202.44.34.67/reporter2/api";
-    //var pathJavaserver = "http://localhost:9999/api";
+    // var pathJavaserver = "http://202.44.34.67/reporter2/api";
+    var pathJavaserver = "http://localhost:8888/api";
     $controller('cmListController', {$scope: $scope});
 
     $scope.init = function () {
@@ -93,7 +93,7 @@ myApp.controller('mainController', function ($scope, $http, $controller) {
             },
             {
                 name: 'รายงาน ร.3', type: 'K',
-                id: 'R3'
+                id: 'LR3'
             }
         ];
 
@@ -146,8 +146,8 @@ myApp.controller('mainController', function ($scope, $http, $controller) {
 
 
     $scope.fetchDept = function (groupDept) {
- 
-       if (groupDept.toUpperCase() == "A") {
+
+        if (groupDept.toUpperCase() == "A") {
 
             if (listDeptGroupA.length <= 0) {
                 $http.post(ngContextPath + "/api/report/rptservice/listDept/A").then(function (response) {
@@ -217,51 +217,127 @@ myApp.controller('mainController', function ($scope, $http, $controller) {
         var PERIOD_ID = $scope.budgetPeriodId["year"];
         var FACULTY_ID = $scope.facultyId["id"];
         var FACULTY_NAME = $scope.facultyId["deptName"];
-        var DEPT_ID = $scope.deptId["id"];
-        var DEPT_NAME = $scope.deptId["deptName"];
-        var PLAN_ID = $scope.l3dPlanId["id"];
-        var PLAN_NAME = $scope.l3dPlanId["planName"];
-        var FUND_ID = $scope.l3dFundId["id"];
-        var FUND_NAME = $scope.l3dFundId["fundgroupName"];
-        
+        var DEPT_ID_START, DEPT_NAME_START, DEPT_ID_END, DEPT_NAME_END;
+        var PLAN_ID_START, PLAN_NAME_START, PLAN_ID_END, PLAN_NAME_END;
+        var FUND_ID_START, FUND_NAME_START, FUND_ID_END, FUND_NAME_END;
+
+        if ($scope.deptId == null) {
+            //select between
+            DEPT_ID_START = $scope.resultFilterDept[0].id;
+            DEPT_NAME_START = $scope.resultFilterDept[0].deptName;
+            DEPT_ID_END = $scope.resultFilterDept[$scope.resultFilterDept.length - 1].id;
+            DEPT_NAME_END = $scope.resultFilterDept[$scope.resultFilterDept.length - 1].deptName;
+
+        } else {
+
+            DEPT_ID_START = $scope.deptId["id"];
+            DEPT_NAME_START = $scope.deptId["deptName"];
+            DEPT_ID_END = $scope.deptId["id"];
+            DEPT_NAME_END = $scope.deptId["deptName"];
+        }
+
+        if ($scope.l3dPlanId == null) {
+            //select between
+            PLAN_ID_START = $scope.listL3DPlan[0].id;
+            PLAN_NAME_START = $scope.listL3DPlan[0].planName;
+            PLAN_ID_END = $scope.listL3DPlan[$scope.listL3DPlan.length - 1].id;
+            PLAN_NAME_END = $scope.listL3DPlan[$scope.listL3DPlan.length - 1].planName;
+
+        } else {
+
+            PLAN_ID_START = $scope.l3dPlanId["id"];
+            PLAN_NAME_START = $scope.l3dPlanId["planName"];
+            PLAN_ID_END = $scope.l3dPlanId["id"];
+            PLAN_NAME_END = $scope.l3dPlanId["planName"];
+        }
+
+        if ($scope.l3dFundId == null) {
+            //select between
+            FUND_ID_START = $scope.listL3DFund[0].id;
+            FUND_NAME_START = $scope.listL3DFund[0].fundgroupName;
+            FUND_ID_END = $scope.listL3DFund[$scope.listL3DFund.length - 1].id;
+            FUND_NAME_END = $scope.listL3DFund[$scope.listL3DFund.length - 1].fundgroupName;
+
+        } else {
+
+            FUND_ID_START = $scope.l3dFundId["id"];
+            FUND_NAME_START = $scope.l3dFundId["fundgroupName"];
+            FUND_ID_END = $scope.l3dFundId["id"];
+            FUND_NAME_END = $scope.l3dFundId["fundgroupName"];
+        }
+
+        console.log("DEPT_ID_START: " + DEPT_ID_START + " DEPT_ID_END: " + DEPT_ID_END);
+        console.log("PLAN_ID_START: " + PLAN_ID_START + " PLAN_ID_END: " + PLAN_ID_END);
+        console.log("FUND_ID_START: " + FUND_ID_START + " FUND_ID_START: " + FUND_ID_END);
+
+        //var params = {
+        //
+        //    REPORT_CODE: String(dataItem["id"]),
+        //    BUDGET_TYPE: dataItem["type"],
+        //    EXPORT_TYPE: exportType,
+        //    PERIOD_ID: String($scope.budgetPeriodId["year"]),
+        //    FACULTY_ID: String($scope.facultyId["id"]),
+        //    FACULTY_NAME: $scope.facultyId["deptName"],
+        //    DEPT_ID: String($scope.deptId["id"]),
+        //    DEPT_NAME: $scope.deptId["deptName"],
+        //    PLAN_ID: String($scope.l3dPlanId["id"]),
+        //    PLAN_NAME: $scope.l3dPlanId["planName"],
+        //    FUND_ID: String($scope.l3dFundId["id"]),
+        //    FUND_NAME: $scope.l3dFundId["fundgroupName"]
+        //};
+
         var params = {
+
             REPORT_CODE: String(dataItem["id"]),
             BUDGET_TYPE: dataItem["type"],
             EXPORT_TYPE: exportType,
             PERIOD_ID: String($scope.budgetPeriodId["year"]),
             FACULTY_ID: String($scope.facultyId["id"]),
             FACULTY_NAME: $scope.facultyId["deptName"],
-            DEPT_ID: String($scope.deptId["id"]),
-            DEPT_NAME: $scope.deptId["deptName"],
-            PLAN_ID: String($scope.l3dPlanId["id"]),
-            PLAN_NAME: $scope.l3dPlanId["planName"],
-            FUND_ID: String($scope.l3dFundId["id"]),
-            FUND_NAME: $scope.l3dFundId["fundgroupName"]
+            DEPT_ID_START: String(DEPT_ID_START),
+            DEPT_NAME_START: DEPT_NAME_START,
+            DEPT_ID_END: String(DEPT_ID_END),
+            DEPT_NAME_END: DEPT_NAME_END,
+            PLAN_ID_START: String(PLAN_ID_START),
+            PLAN_NAME_START: PLAN_NAME_START,
+            PLAN_ID_END: String(PLAN_ID_END),
+            PLAN_NAME_END: PLAN_NAME_END,
+            FUND_ID_START: String(FUND_ID_START),
+            FUND_NAME_START: FUND_NAME_START,
+            FUND_ID_END: String(FUND_ID_END),
+            FUND_NAME_END: FUND_NAME_END
+
         };
+
         console.log(params);
-        //var paramstr=encodeURIComponent(JSON.stringify(params));
+
+        var paramstr = encodeURIComponent(JSON.stringify(params));
         var bytes = utf8.encode(JSON.stringify(params));
         var paramstr = base64.encode(bytes);
 
-        console.log(DEPT_ID);
-        console.log(DEPT_NAME);
+        // var url = pathJavaserver + "/ebudget/report/export/" + REPORT_CODE + "/" + EXPORT_TYPE + "/" + PERIOD_ID + "/" + BUDGET_TYPE + "/" + FACULTY_ID + "/" + FACULTY_NAME + "/" + DEPT_ID
+        //     + "/" + DEPT_NAME + "/" + PLAN_ID + "/" + PLAN_NAME + "/" + FUND_ID + "/" + FUND_NAME + "/0/0";
 
-//        var url = pathJavaserver + "/ebudget/report/export/" + REPORT_CODE + "/" + EXPORT_TYPE + "/" + PERIOD_ID + "/" + BUDGET_TYPE+ "/" +FACULTY_ID+ "/" +FACULTY_NAME+ "/" +DEPT_ID
-//            + "/" +DEPT_NAME+ "/" +PLAN_ID+ "/" +PLAN_NAME+ "/" +FUND_ID+ "/" +FUND_NAME+ "/0/0";
-
-        var url = pathJavaserver + "/ebudget/report/export?params="+paramstr;
-        window.open(url,"_blank");
+        var url = pathJavaserver + "/ebudget/report/export?params=" + paramstr;
+        window.open(url, "_blank");
     };
-
 
 
     $scope.checkShowTable = function () {
 
-        if ($scope.budgetPeriodId != undefined && $scope.reportType != undefined && $scope.facultyId != undefined && $scope.deptId != undefined && $scope.l3dPlanId != undefined && $scope.l3dFundId != undefined) {
+        if ($scope.budgetPeriodId != undefined && $scope.reportType != undefined && $scope.facultyId != undefined) {
 
             $scope.showTable = true;
         } else {
             $scope.showTable = false;
+        }
+    };
+
+    $scope.getFilterDept = function (names, query) {
+
+        if ($filter('filter')(names, query) != undefined) {
+            $scope.resultFilterDept = $filter('filter')(names, query);
+            $("#dept").select2("val", "");
         }
     };
 

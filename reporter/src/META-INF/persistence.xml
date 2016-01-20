@@ -18,6 +18,8 @@
     <class>th.ac.kmutnb.ebudget.model.NG146_model</class>
     <class>th.ac.kmutnb.ebudget.model.LR2_1_model</class>
     <class>th.ac.kmutnb.ebudget.model.LR2_2_model</class>
+    <class>th.ac.kmutnb.ebudget.model.LR4_model</class>
+    <class>th.ac.kmutnb.ebudget.model.LR3_model</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://202.44.34.86:1433;databaseName=Ebudget"/>
       <property name="javax.persistence.jdbc.user" value="ebudget"/>

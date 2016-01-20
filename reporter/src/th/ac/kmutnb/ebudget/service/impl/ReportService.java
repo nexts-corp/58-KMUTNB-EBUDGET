@@ -116,28 +116,12 @@ public class ReportService extends CServiceBase implements IReportService {
             CJMessage json = new CJMessage();
             json.parse(sparam);
             BaseParameter param = (BaseParameter) json.getValue(BaseParameter.class, "");
-//            BaseParameter param = new BaseParameter();
-//            param.setREPORT_CODE("RPT_01");
-//            param.setEXPORT_TYPE("pdfview");
 
-//            BaseParameter param = new BaseParameter();
-//            param.setREPORT_CODE(REPORT_CODE);
-//            param.setEXPORT_TYPE(EXPORT_TYPE);
-//            param.setPERIOD_ID(PERIOD_ID);
-//            param.setBUDGET_TYPE(BUDGET_TYPE);
             param.setREPORT_NAME(param.getREPORT_CODE());
             param.setPUBLISHER("Admin");
             param.setREPORT_TYPE(param.getEXPORT_TYPE());
-//            param.setDEPT_ID(DEPT_ID);
-//            param.setDEPT_NAME(DEPT_NAME);
-//            param.setFACULTY_ID(FAC_ID);
-//            param.setFACULTY_NAME(FAC_NAME);
-//            param.setPLAN_ID(PLAN_ID);
-//            param.setPLAN_NAME(PLAN_NAME);
-//            param.setFUND_ID(FUND_ID);
-//            param.setFUND_NAME(FUND_NAME);
-//            param.setPRODUCT_ID(PRODUCT_ID);
-//            param.setPRODUCT_NAME(PRODUCT_NAME);
+
+            
             param.setREPORT_LOCALE(this.locale);
 
             String reportCode = param.getREPORT_CODE();

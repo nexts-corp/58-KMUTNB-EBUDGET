@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
+	<property name="ireport.zoom" value="1.05332501722436"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
+	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
+	<style name="Default" isDefault="true" fontName="TH SarabunPSK" fontSize="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
+	<parameter name="PUBLISHER" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["พงศ์ปณต ทัศนียาชุมพาลี"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATE_CURRENT" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="HEAD_RPT" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["แบบงบประมาณรายจ่ายเงินรายได้ \n จำแนกตามแผนงาน/กองทุน/หมวดรายจ่าย \n ประจำปีงบประมาณ พ.ศ.........................."]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM
+  (
+    SELECT ROW_NUMBER() OVER (ORDER BY maps.M_ACCOUNT_ID) AS id,
+      regexp_substr(maps.M_ACCOUNT_ID,'[^|]+', 1, 1) M_ACCOUNT_ID_1,
+      regexp_substr(maps.M_ACCOUNT_NAME,'[^|]+', 1, 1) M_ACCOUNT_NAME_1,
+      regexp_substr(maps.M_ACCOUNT_ID,'[^|]+', 1, 2) M_ACCOUNT_ID_2,
+      regexp_substr(maps.M_ACCOUNT_NAME,'[^|]+', 1, 2) M_ACCOUNT_NAME_2,
+      regexp_substr(maps.M_ACCOUNT_ID,'[^|]+', 1, 3) M_ACCOUNT_ID_3,
+      regexp_substr(maps.M_ACCOUNT_NAME,'[^|]+', 1, 3) M_ACCOUNT_NAME_3,
+      regexp_substr(maps.M_ACCOUNT_ID,'[^|]+', 1, 4) M_ACCOUNT_ID_4,
+      regexp_substr(maps.M_ACCOUNT_NAME,'[^|]+', 1, 4) M_ACCOUNT_NAME_4,
+      regexp_substr(maps.M_ACCOUNT_ID,'[^|]+', 1, 5) M_ACCOUNT_ID_5,
+      regexp_substr(maps.M_ACCOUNT_NAME,'[^|]+', 1, 5) M_ACCOUNT_NAME_5,
+      regexp_substr(maps.M_ACCOUNT_ID,'[^|]+', 1, 6) M_ACCOUNT_ID_6,
+      regexp_substr(maps.M_ACCOUNT_NAME,'[^|]+', 1, 6) M_ACCOUNT_NAME_6,
+      maps.ACCOUNTID   AS ACCOUNT_ID,
+      maps.ACCOUNTNAME AS ACCOUNT_NAME,
+
+      COALESCE(gl.DR_T, 0) AS DR_T,
+      COALESCE(gl.CR_T, 0) AS CR_T,
+      COALESCE(gl.DR_U, 0) AS DR_U,
+      COALESCE(gl.CR_U, 0) AS CR_U,
+      COALESCE(gl.DR_B, 0) AS DR_B,
+      COALESCE(gl.CR_B, 0) AS CR_B
+    FROM
+
+
+    (
+
+
+
+      SELECT
+        CASE
+          WHEN glt.ACCOUNTID IS NULL
+          THEN glb.ACCOUNTID
+          ELSE glt.ACCOUNTID
+        END    AS ACCOUNTID,
+        glt.DR AS DR_T,
+        glt.CR AS CR_T,
+        0 AS DR_U,
+        0 AS CR_U,
+        glb.DR AS DR_B,
+        glb.CR AS CR_B
+      FROM
+        (
+          SELECT
+            ACCOUNTID,
+            SUM(DR) AS DR,
+            SUM(CR) AS CR
+          FROM
+            (
+              SELECT gl.ACCOUNTID,
+                SUM(DR) AS DR,
+                SUM(CR) AS CR
+              FROM MASTER3D.GL gl
+              LEFT JOIN MASTER3D.GLHEAD glh
+              ON gl.GLHEADID = glh.GLHEADID
+              WHERE
+                (
+                  gl.ACCOUNTID LIKE '1%'
+                  OR gl.ACCOUNTID LIKE '2%'
+                  OR
+                    (
+                      gl.ACCOUNTID LIKE '3%'
+                      AND gl.accountid NOT IN (3200002000,3200003000)
+                    )
+                )
+
+              AND glh.GLHEADSTATUS != 'V'
+              AND ( glh.GLHEADDATE < TO_DATE('31/10/2014', 'DD/MM/YYYY') )
+              GROUP BY gl.ACCOUNTID
+
+              UNION ALL
+
+              SELECT
+                3200003000 AS ACCOUNTID,DR,CR
+              FROM
+                (
+                    SELECT
+                      SUM(DR) AS DR,
+                      SUM(CR) AS CR
+                    FROM MASTER3D.GL gl
+                    LEFT JOIN MASTER3D.GLHEAD glh
+                    ON glh.GLHEADID = gl.GLHEADID
+                    WHERE
+                      (
+                        gl.ACCOUNTID IN (3200002000,3200003000)
+                      )
+                    AND glh.GLHEADSTATUS != 'V'
+                    AND
+                      (
+                        glh.GLHEADDATE >= TO_DATE('01/10/2014', 'DD/MM/YYYY')
+                        AND glh.GLHEADDATE < TO_DATE('31/10/2014', 'DD/MM/YYYY')
+                      )
+
+                )
+
+                UNION ALL
+
+                SELECT
+                  3200003000 AS ACCOUNTID,DR,CR
+                FROM
+                  (
+                      SELECT
+                        SUM(DR) AS DR,
+                        SUM(CR) AS CR
+                      FROM MASTER3D.GL gl
+                      LEFT JOIN MASTER3D.GLHEAD glh
+                      ON glh.GLHEADID = gl.GLHEADID
+                      WHERE
+                        (
+                          gl.ACCOUNTID IN (3200002000,3200003000)
+                          OR gl.ACCOUNTID LIKE '4%'
+                          OR gl.ACCOUNTID LIKE '5%'
+                        )
+                      AND glh.GLHEADSTATUS != 'V'
+                      AND ( glh.GLHEADDATE < TO_DATE('01/10/2014', 'DD/MM/YYYY') )
+
+                  )
+
+                  UNION ALL
+
+                  SELECT gl.ACCOUNTID,
+                    SUM(DR) AS DR,
+                    SUM(CR) AS CR
+                  FROM MASTER3D.GL gl
+                  LEFT JOIN MASTER3D.GLHEAD glh
+                  ON gl.GLHEADID = glh.GLHEADID
+                  WHERE
+                    (
+                      gl.ACCOUNTID LIKE '4%'
+                      OR gl.ACCOUNTID LIKE '5%'
+                    )
+
+                  AND glh.GLHEADSTATUS != 'V'
+                  AND
+                    (
+                      glh.GLHEADDATE >= TO_DATE('01/10/2014', 'DD/MM/YYYY')
+                      AND glh.GLHEADDATE < TO_DATE('31/10/2014', 'DD/MM/YYYY')
+                    )
+                  GROUP BY gl.ACCOUNTID
+            )
+          GROUP BY ACCOUNTID
+        )glt
+
+      FULL JOIN
+
+        (
+          SELECT
+            3200003000 AS ACCOUNTID,DR,CR
+          FROM
+            (
+              SELECT
+                SUM(CR) AS CR,
+                SUM(DR) AS DR
+              FROM MASTER3D.GL gl
+              LEFT JOIN MASTER3D.GLHEAD glh
+              ON glh.GLHEADID = gl.GLHEADID
+              WHERE
+                (
+                  gl.ACCOUNTID IN (3200002000,3200003000)
+                  OR GL.ACCOUNTID LIKE '4%'
+                  OR GL.ACCOUNTID LIKE '5%'
+                )
+              AND glh.GLHEADSTATUS != 'V'
+              AND ( glh.GLHEADDATE <= TO_DATE('31/10/2014', 'DD/MM/YYYY') )
+
+            )
+        )glb
+      ON glt.ACCOUNTID = glb.ACCOUNTID
+
+
+
+    )gl
+
+
+
+    LEFT OUTER JOIN
+      (
+        SELECT ACCOUNTID,
+          ACCOUNTNAME,
+          LEVEL                                AS ACCOUNT_LEVEL ,
+          SYS_CONNECT_BY_PATH(ACCOUNTID,'|')   AS M_ACCOUNT_ID ,
+          SYS_CONNECT_BY_PATH(ACCOUNTNAME,'|') AS M_ACCOUNT_NAME
+        FROM MASTER3D.ACCOUNT
+        START WITH MASTERID        = '0'
+        AND ACCOUNTSTATUS            = 'Y'
+        CONNECT BY PRIOR ACCOUNTID = MASTERID
+        ORDER SIBLINGS BY ACCOUNTID
+      ) maps
+    ON maps.ACCOUNTID = gl.ACCOUNTID
+    ORDER BY maps.ACCOUNTID
+
+  )]]>
+	</queryString>
+	<field name="ID" class="java.lang.String"/>
+	<field name="M_ACCOUNT_ID_1" class="java.lang.String"/>
+	<field name="M_ACCOUNT_NAME_1" class="java.lang.String"/>
+	<field name="M_ACCOUNT_ID_2" class="java.lang.String"/>
+	<field name="M_ACCOUNT_NAME_2" class="java.lang.String"/>
+	<field name="M_ACCOUNT_ID_3" class="java.lang.String"/>
+	<field name="M_ACCOUNT_NAME_3" class="java.lang.String"/>
+	<field name="M_ACCOUNT_ID_4" class="java.lang.String"/>
+	<field name="M_ACCOUNT_NAME_4" class="java.lang.String"/>
+	<field name="M_ACCOUNT_ID_5" class="java.lang.String"/>
+	<field name="M_ACCOUNT_NAME_5" class="java.lang.String"/>
+	<field name="M_ACCOUNT_ID_6" class="java.lang.String"/>
+	<field name="M_ACCOUNT_NAME_6" class="java.lang.String"/>
+	<field name="ACCOUNT_ID" class="java.lang.String"/>
+	<field name="ACCOUNT_NAME" class="java.lang.String"/>
+	<field name="DR_T" class="java.math.BigDecimal"/>
+	<field name="CR_T" class="java.math.BigDecimal"/>
+	<field name="DR_U" class="java.math.BigDecimal"/>
+	<field name="CR_U" class="java.math.BigDecimal"/>
+	<field name="DR_B" class="java.math.BigDecimal"/>
+	<field name="CR_B" class="java.math.BigDecimal"/>
+	<variable name="CURRENT_PAGE" class="java.lang.Integer" resetType="None" calculation="DistinctCount">
+		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer(1)]]></initialValueExpression>
+	</variable>
+	<variable name="CURRENT_DATE" class="java.util.Date">
+		<variableExpression><![CDATA[new Date()]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="802" height="20" uuid="f46aee95-03fb-4f8c-a89b-2612b52f7647"/>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{HEAD_RPT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="100" splitType="Stretch">
+			<staticText>
+				<reportElement style="FBold" x="735" y="40" width="67" height="60" uuid="9fc5fbc2-c19a-48cb-8ef9-3e4583e0054d"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[รวม]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="199" y="40" width="268" height="20" uuid="ed3c56cc-5df6-4a9a-ad67-f960a727d23d"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[งบดำเนินงาน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="601" y="40" width="134" height="20" uuid="84454550-2450-43f4-95cf-2918bcf8355d"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[งบลงทุน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="534" y="40" width="67" height="60" uuid="de237225-bb22-451b-80ba-430fba6cd262"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[งบรายจ่ายอื่น
+รายจ่ายอื่น]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="467" y="40" width="67" height="60" uuid="3e5d786f-19de-47e1-b45e-a9d01ab0d703"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[งบเงินอุดหนุน
+เงินอุดหนุน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="400" y="60" width="67" height="40" uuid="7533075b-7789-4d68-8c5e-fb05794eb812"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ค่าสาธารณูปโภค]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="333" y="60" width="67" height="40" uuid="b180976c-4b46-40fb-a320-1f90b518d90c"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ค่าวัสดุ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="266" y="60" width="67" height="40" uuid="83399594-fb52-4dca-ba78-312a4acd96e5"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ค่าใช้สอย]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="199" y="60" width="67" height="40" uuid="e51f71e0-8e2c-4e8b-9b0d-6b6575e968ee"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ค่าตอบแทน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="132" y="40" width="67" height="60" uuid="2e5c0dc7-62c5-48d5-92e0-94e0fbfe6a3e"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[งบบุคลการ
+ค่าจ้าง
+ชั่วคราว]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="601" y="60" width="67" height="40" uuid="b0e05887-6b48-4aa3-93ca-5d488e266293"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ค่าครุภัณฑ์]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="668" y="60" width="67" height="40" uuid="1019d452-d01b-4c32-b86d-8d04b3a5d201"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ค่าที่ดินและ
+สิ่งก่อสร้าง]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="FBold" x="1" y="0" width="801" height="20" uuid="13d9ce8e-0feb-4f4f-ae27-047292e22b62"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["แบบ ร.2"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FBold" x="132" y="20" width="670" height="20" uuid="a587d0f2-5341-40f5-86b8-e732df0d62c9"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[(หน่วย : บาท)]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="FBold" x="0" y="40" width="132" height="60" uuid="b537e80b-bc0d-42c4-8b99-c53116dc1b10"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["แผนงาน/กองทุน"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="FBold" x="1" y="20" width="131" height="20" uuid="bf8d7089-6ec1-44f6-9ac4-9375bebcbce3"/>
+				<textFieldExpression><![CDATA["หน่วยงาน............................"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="32" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH:mm:ss">
+				<reportElement x="0" y="20" width="802" height="12" uuid="6c13bc20-06bd-4a29-b6b1-b74bcef75220"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["วันที่พิมพ์ : "+$V{CURRENT_DATE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="30" splitType="Stretch"/>
+	</summary>
+</jasperReport>

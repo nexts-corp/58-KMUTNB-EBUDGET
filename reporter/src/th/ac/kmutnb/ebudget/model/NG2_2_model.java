@@ -15,9 +15,13 @@ import javax.persistence.Entity;
  */
 @Entity
 public class NG2_2_model extends BaseReport {
+    
+    @Column
+    private Integer planId;
+    @Column
+    private String planName;
     @Column
     private Integer facultyId ;
-    
     @Column
     private String facultyName;
     @Column
@@ -56,10 +60,7 @@ public class NG2_2_model extends BaseReport {
     private BigDecimal inventoryFund;
     @Column
     private BigDecimal techKMUTNBFund;
-    @Column
-    private Integer planId;
-    @Column
-    private String planName;
+  
 
     public Integer getFacultyId() {
         return facultyId;
