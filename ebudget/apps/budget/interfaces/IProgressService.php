@@ -51,7 +51,7 @@ interface IProgressService {
      * @param int facultyId หน่วยงานระดับคณะ
      * @param int fundgroupId กองทุน
      * @param int planId แผนงาน 3 มิติ
-     * @param int catId แหล่งเงิน
+     * @param string catId แหล่งเงิน
      * @return string[] result
      * @description เรียกดูรายงานแผน/ผลการใช้เงินงบประมาณเงินรายได้
      */

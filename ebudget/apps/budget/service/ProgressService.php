@@ -126,7 +126,7 @@ class ProgressService extends CServiceBase implements IProgressService {
     public function viewProgressRevenue($facultyId, $fundgroupId, $planId, $catId) {
         $bgPeriodId = $this->getPeriod()->year;
 
-        $sql = "exec spGetBudgetPlan :bgPeriodId, :facultyId, :planId, :fundgroupId, :catId";
+        $sql = "exec spGetRevenuePlan :bgPeriodId, :facultyId, :planId, :fundgroupId, :catId";
         $param = array("bgPeriodId" => $bgPeriodId,
             "facultyId" => $facultyId,
             "planId" => $planId,
@@ -134,6 +134,12 @@ class ProgressService extends CServiceBase implements IProgressService {
             "catId" => $catId
         );
         $data = $this->datacontext->pdoQuery($sql, $param);
+
+        if ($catId == "E") {
+            $data["BgCatDesc"] = "ค่าธรรมเนียมการศึกษา";
+        } else if ($catId == "S") {
+            $data["BgCatDesc"] = "งานบริการวิชาการ";
+        }
         return $data;
     }
 
@@ -148,8 +154,6 @@ class ProgressService extends CServiceBase implements IProgressService {
                 $bg->setBudgetTypeId($value->bgTypeMasterId);
             } else if ($value->bgLevel == "2") {
                 $bg->setBudgetTypeId($value->bgTypeMainId);
-            } else if ($value->bgLevel == "3") {
-                $bg->setBudgetTypeId($value->bgTypeId);
             }
 
             $budgetPeriodId = $this->getPeriod()->year;

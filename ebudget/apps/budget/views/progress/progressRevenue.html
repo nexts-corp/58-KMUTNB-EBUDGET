@@ -294,7 +294,7 @@
                     datas = datas.result;
 
                     $("#budgetYear").html(datas[0]["bgPeriodId"]);
-                    $("#budgetType").html('เงินแผ่นดิน');
+                    $("#budgetType").html(datas["BgCatDesc"]);
                     $("#l3dPlan").html(datas[0]["planName"]);
                     $("#fundgroup").html(datas[0]["fundgroupName"]);
                     $("#facName").html(datas[0]["facultyName"]);
