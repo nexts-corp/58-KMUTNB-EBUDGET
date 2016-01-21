@@ -734,7 +734,7 @@
         positionCenter = new google.maps.LatLng(13.8192445, 100.513857);
         window.map = new google.maps.Map(document.getElementById('map'), mapOptions);
         google.maps.event.trigger(window.map, "resize");
-
+        window.map.setCenter(positionCenter);
         //listerner map
         addListernerClickOnMap();
         showViewMore();
@@ -1038,7 +1038,7 @@
         google.maps.event.addListener(map, "mouseover", function (e) {
             //use refresh map
             google.maps.event.trigger(window.map, 'resize');
-            window.map.setCenter(positionCenter);
+//            window.map.setCenter(positionCenter);
         });
     }
 

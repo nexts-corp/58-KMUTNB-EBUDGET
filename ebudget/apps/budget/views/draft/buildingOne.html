@@ -159,10 +159,10 @@
                         <tfoot id="buildTfoot">
                         <tr>
                             <td class="text-center">รวม</td>
+                            <td class="text-center" id="sumQuantity"></td>
                             <td class="text-center"></td>
-                            <td class="text-center"></td>
-                            <td class="text-center"></td>
-                            <td class="text-center"></td>
+                            <td class="text-center" id="sumPriceUnit"></td>
+                            <td class="text-center" id="sumPrice"></td>
                             <td class="text-center"></td>
                         </tr>
                         </tfoot>
@@ -594,7 +594,7 @@
         positionCenter = new google.maps.LatLng(13.8192445, 100.513857);
         window.map = new google.maps.Map(document.getElementById('map'), mapOptions);
         google.maps.event.trigger(window.map, "resize");
-
+        window.map.setCenter(positionCenter);
         //listerner map
         addListernerClickOnMap();
         showView();
@@ -838,6 +838,8 @@
                 drawPolyOnMap();
 
                 toolsEvent();
+
+                sumBuildingDetail();
             });
 
         } else {
@@ -1034,6 +1036,7 @@
                     $(this).closest("tr").html(html);
                     $('.number').number(true, 2);
                     toolsEvent();
+                    sumBuildingDetail();
                 });
 
                 $(".cancel-btn").unbind("click").click(function () {
@@ -1199,6 +1202,7 @@
                     $(this).closest("tr").html(html);
                     $('.number').number(true, 2);
                     toolsEvent();
+                    sumBuildingDetail();
                 });
 
                 $(".cancel-btn").unbind("click").click(function () {
@@ -1218,9 +1222,10 @@
                     var rowIndex = (listBuilding.length - 1) - $(this).closest('tr').index();
                     if (listBuilding[rowIndex]["id"] != undefined) {
                         listIDRemoveBuildingOne.push(listBuilding[rowIndex]["id"]);
-                        listBuilding.splice(rowIndex, 1);
-                        $(this).closest('tr').remove();
                     }
+                    listBuilding.splice(rowIndex, 1);
+                    $(this).closest('tr').remove();
+                    sumBuildingDetail();
                 }
             } else {
                 $("#activity").focus();
@@ -1328,6 +1333,22 @@
         link.download = path;
         link.href = '{{{{_context_path}}}}/apps/budget/views/draft/attachment/';
         link.click();
+    }
+
+    function sumBuildingDetail() {
+
+        var qutity = 0, costUnit = 0, costTotal = 0;
+
+        $.each(listBuilding, function (key, value) {
+            qutity += parseFloat(value["quantity"]);
+            costUnit += parseFloat(value["costUnit"]);
+            costTotal += parseFloat(value["costTotal"]);
+        });
+
+        $("#sumQuantity").html('<b class="number">' + qutity + '</b>');
+        $("#sumPriceUnit").html('<b class="number">' + costUnit + '</b>');
+        $("#sumPrice").html('<b class="number">' + costTotal + '</b>');
+        $('.number').number(true, 2);
     }
 
 </script>
