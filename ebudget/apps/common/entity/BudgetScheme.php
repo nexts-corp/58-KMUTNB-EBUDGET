@@ -84,6 +84,9 @@ class BudgetScheme extends EntityBase {
     /** @Column(type="integer",length=11, name="TrackingStatusId") */
     public $statusId;
 
+    /** @Column(type="string",length=18, name="BudgetCategory") */
+    public $bgCategory;
+
     function getId() {
         return $this->id;
     }
@@ -180,6 +183,10 @@ class BudgetScheme extends EntityBase {
         return $this->statusId;
     }
 
+    function getBgCategory() {
+        return $this->bgCategory;
+    }
+
     function setId($id) {
         $this->id = $id;
     }
@@ -274,6 +281,10 @@ class BudgetScheme extends EntityBase {
 
     function setStatusId($statusId) {
         $this->statusId = $statusId;
+    }
+
+    function setBgCategory($bgCategory) {
+        $this->bgCategory = $bgCategory;
     }
 
 }

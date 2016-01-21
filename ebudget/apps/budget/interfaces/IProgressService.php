@@ -13,7 +13,7 @@ interface IProgressService {
      * @name getAllBudgetScheme
      * @uri /getAllBudgetScheme
      * @return string[] result
-     * @description แสดงแผน/ผลการใช้งบประมาณ
+     * @description แสดงแผน/ผลการใช้งบประมาณแผ่นดิน
      */
     public function getAllBudgetScheme();
 
@@ -24,17 +24,45 @@ interface IProgressService {
      * @param int fundgroupId กองทุน
      * @param int planId แผนงาน 3 มิติ
      * @return string[] result
-     * @description แสดงแผน/ผลการใช้งบประมาณ
-     * @description เรียกดูรายงานแผน/ผลการใช้เงินงบประมาณ
+     * @description เรียกดูรายงานแผน/ผลการใช้เงินงบประมาณแผ่นดิน
      */
     public function viewProgressBudget($facultyId, $fundgroupId, $planId);
 
     /**
-     * @name updateScheme
-     * @uri /updateScheme
+     * @name updateBudgetScheme
+     * @uri /updateBudgetScheme
      * @param apps\budget\model\BudgetSchemeResult[] budget
      * @return boolean result Description
-     * @description ปรับปรุงข้อมูลแผน/ผล
+     * @description ปรับปรุงข้อมูลแผน/ผลเงินงบประมาณแผ่นดิน
      */
-    public function updateScheme($budget);
+    public function updateBudgetScheme($budget);
+
+    /**
+     * @name getAllRevenueScheme
+     * @uri /getAllRevenueScheme
+     * @return string[] result
+     * @description แสดงแผน/ผลการใช้งบประมาณเงินรายได้
+     */
+    public function getAllRevenueScheme();
+
+    /**
+     * @name viewProgressRevenue
+     * @uri /viewProgressRevenue
+     * @param int facultyId หน่วยงานระดับคณะ
+     * @param int fundgroupId กองทุน
+     * @param int planId แผนงาน 3 มิติ
+     * @param int catId แหล่งเงิน
+     * @return string[] result
+     * @description เรียกดูรายงานแผน/ผลการใช้เงินงบประมาณเงินรายได้
+     */
+    public function viewProgressRevenue($facultyId, $fundgroupId, $planId, $catId);
+    
+        /**
+     * @name updateRevenueScheme
+     * @uri /updateRevenueScheme
+     * @param apps\budget\model\BudgetSchemeResult[] budget
+     * @return boolean result Description
+     * @description ปรับปรุงข้อมูลแผน/ผลเงินงบประมาณเงินรายได้
+     */
+    public function updateRevenueScheme($budget);
 }

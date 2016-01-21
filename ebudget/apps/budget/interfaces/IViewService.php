@@ -190,7 +190,7 @@ interface IViewService {
     /**
      * @name progressBudgetAll
      * @uri /progressBudgetAll
-     * @description จัดทำรายงานแผน/ผลการใช้เงินงบประมาณ
+     * @description จัดทำรายงานแผน/ผลการใช้เงินงบประมาณแผ่นดิน
      */
     public function progressBudgetAll();
 
@@ -200,7 +200,24 @@ interface IViewService {
      * @param int facultyId หน่วยงานระดับคณะ
      * @param int fundgroupId กองทุน
      * @param int planId แผนงาน 3 มิติ
-     * @description แสดงรายงานแผน/ผลการใช้เงินงบประมาณ
+     * @description แสดงรายงานแผน/ผลการใช้เงินงบประมาณแผ่นดิน
      */
     public function progressBudget($facultyId, $fundgroupId, $planId);
+
+    /**
+     * @name progressRevenueAll
+     * @uri /progressRevenueAll
+     * @description จัดทำรายงานแผน/ผลการใช้เงินงบประมาณเงินรายได้
+     */
+    public function progressRevenueAll();
+
+    /**
+     * @name progressRevenue
+     * @uri /progressRevenue
+     * @param int facultyId หน่วยงานระดับคณะ
+     * @param int fundgroupId กองทุน
+     * @param int planId แผนงาน 3 มิติ
+     * @description แสดงรายงานแผน/ผลการใช้เงินงบประมาณเงินรายได้
+     */
+    public function progressRevenue($facultyId, $fundgroupId, $planId);
 }

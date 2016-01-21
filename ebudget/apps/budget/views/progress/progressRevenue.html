@@ -12,7 +12,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="none-padding">รายงานแผน/ผลการใช้เงินงบประมาณแผ่นดิน</h1>
+                    <h1 class="none-padding">รายงานแผน/ผลการใช้เงินงบประมาณรายจ่ายเงินรายได้</h1>
                 </div>
             </div>
         </div>
@@ -154,6 +154,7 @@
     var departmentArr = {};
     var fundgroupArr = {};
     var planArr = {};
+    var categoryArr = {};
     var dataArr = [];
     var nameData = ["bgTypeMaster", "bgTypeMain", "bgType", "bgTypeSub"];
     var classData = ["active", "success", "warning", "info"];
@@ -165,14 +166,15 @@
     var facultyId = '{{facultyId}}';
     var fundgroupId = '{{fundgroupId}}';
     var planId = '{{planId}}';
-
+    var catId = '{{catId}}';
 
     $(document).ready(function () {
         var param = {
             //bgPeriodId: bgPeriodId,
             facultyId: facultyId,
             fundgroupId: fundgroupId,
-            planId: planId
+            planId: planId,
+            catId: catId
         };
 
         listProgress(param);
@@ -182,7 +184,7 @@
         //$("#table").hide();
 
         $(".backHome").click(function () {
-            window.location = "{{_context_path}}/api/budget/view/progressBudgetAll";
+            window.location = "{{_context_path}}/api/budget/view/progressRevenueAll";
         });
 
         $("#btnSave").click(function () {
@@ -203,7 +205,7 @@
             //console.log(datas);
             var dataJSON = JSON.stringify({budget: datas});
             var dataJSONEN = encodeURIComponent(dataJSON);
-            var result = callAjaxFile("{{_context_path}}/api/budget/progress/updateBudgetScheme", "post", dataJSON, "json");
+            var result = callAjaxFile("{{_context_path}}/api/budget/progress/updateRevenueScheme", "post", dataJSON, "json");
             console.log(result);
         });
 
@@ -284,7 +286,7 @@
             setTimeout(function () {
                 var dataJSON = JSON.stringify(param);
                 var dataJSONEN = encodeURIComponent(dataJSON);
-                var datas = callAjax("{{_context_path}}/api/budget/progress/viewProgressBudget", "post", dataJSONEN, "json");
+                var datas = callAjax("{{_context_path}}/api/budget/progress/viewProgressRevenue", "post", dataJSONEN, "json");
 
                 var html = "";
 
@@ -292,7 +294,7 @@
                     datas = datas.result;
 
                     $("#budgetYear").html(datas[0]["bgPeriodId"]);
-                    $("#budgetType").html('เงินรายได้');
+                    $("#budgetType").html('เงินแผ่นดิน');
                     $("#l3dPlan").html(datas[0]["planName"]);
                     $("#fundgroup").html(datas[0]["fundgroupName"]);
                     $("#facName").html(datas[0]["facultyName"]);
