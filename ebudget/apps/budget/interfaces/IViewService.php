@@ -217,7 +217,8 @@ interface IViewService {
      * @param int facultyId หน่วยงานระดับคณะ
      * @param int fundgroupId กองทุน
      * @param int planId แผนงาน 3 มิติ
+     * @param string catId แหล่งเงิน
      * @description แสดงรายงานแผน/ผลการใช้เงินงบประมาณเงินรายได้
      */
-    public function progressRevenue($facultyId, $fundgroupId, $planId);
+    public function progressRevenue($facultyId, $fundgroupId, $planId, $catId);
 }
