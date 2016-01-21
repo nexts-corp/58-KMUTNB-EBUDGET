@@ -78,6 +78,9 @@ class Building extends EntityBase {
     /** @Column(type="string",length=20, name="GeoType") */
     public $geoType;
 
+    /** @Column(type="integer",length=11, name="AttachmentId") */
+    public $attachmentId;
+
     function getId() {
         return $this->id;
     }
@@ -237,4 +240,40 @@ class Building extends EntityBase {
     function setCostTotal($costTotal) {
         $this->costTotal = $costTotal;
     }
+
+    public function getCostVen()
+    {
+        return $this->costVen;
+    }
+
+
+    public function setCostVen($costVen)
+    {
+        $this->costVen = $costVen;
+    }
+
+
+    public function getGeoType()
+    {
+        return $this->geoType;
+    }
+
+
+    public function setGeoType($geoType)
+    {
+        $this->geoType = $geoType;
+    }
+
+
+    public function getAttachmentId()
+    {
+        return $this->attachmentId;
+    }
+
+    public function setAttachmentId($attachmentId)
+    {
+        $this->attachmentId = $attachmentId;
+    }
+
+
 }

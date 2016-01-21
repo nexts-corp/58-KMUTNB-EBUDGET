@@ -647,9 +647,9 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
 
 
     public function viewBuildingOne($bg145Id, $type)
-    {
-        $sql = " SELECT build"
-            . " FROM " . $this->ent . "\\Building build"
+    {   //build.id,build.bg145Id,build.typeId,build.totalYear,build.name,build.place,build.rationale,build.objective,build.goal,build.area,build.timeDesign,build.timeBid,build.timeContract,build.timeOperate,build.costAchitec "
+        $sql = " SELECT build "
+            . " FROM " . $this->ent . "\\Building build "
             . " WHERE build.bg145Id = :bg145Id AND build.typeId = :typeId";
         $param = array(
             "bg145Id" => $bg145Id,
@@ -659,6 +659,18 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
         $listBuilding = $this->datacontext->getObject($sql, $param);
 
         foreach ($listBuilding as $key1 => $value1) {
+
+            $sql2 = " SELECT att"
+                . " FROM " . $this->ent . "\\Attachment att"
+                . " WHERE att.id = :attId";
+
+            $param2 = array(
+                "attId" => $value1->attachmentId
+            );
+
+            $listAtt = $this->datacontext->getObject($sql2, $param2);
+            if(count($listAtt) > 0) $listBuilding[$key1]->path = $listAtt[0]->path;
+
             $sql2 = " SELECT detail"
                 . " FROM " . $this->ent . "\\BuildingDetail detail"
                 . " WHERE detail.buildingId = :buildingId";
@@ -669,13 +681,13 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
             $listDetail = $this->datacontext->getObject($sql2, $param2);
             $listBuilding[$key1]->listDetail = $listDetail;
 
-            $sql2 = " SELECT boq"
-                . " FROM " . $this->ent . "\\BuildingBOQ boq"
-                . " WHERE boq.buildingId = :buildingId";
-
-
-            $listBOQ = $this->datacontext->getObject($sql2, $param2);
-            $listBuilding[$key1]->listBOQ = $listBOQ;
+//            $sql2 = " SELECT boq"
+//                . " FROM " . $this->ent . "\\BuildingBOQ boq"
+//                . " WHERE boq.buildingId = :buildingId";
+//
+//
+//            $listBOQ = $this->datacontext->getObject($sql2, $param2);
+//            $listBuilding[$key1]->listBOQ = $listBOQ;
 
             $sql2 = " SELECT cor"
                 . " FROM " . $this->ent . "\\Coordinates cor"
@@ -702,6 +714,17 @@ class BudgetInfoService extends CServiceBase implements IBudgetInfoService
         $listBuilding = $this->datacontext->getObject($sql, $param);
 
         foreach ($listBuilding as $key1 => $value1) {
+
+            $sql2 = " SELECT att"
+                . " FROM " . $this->ent . "\\Attachment att"
+                . " WHERE att.id = :attId";
+
+            $param2 = array(
+                "attId" => $value1->attachmentId
+            );
+
+            $listAtt = $this->datacontext->getObject($sql2, $param2);
+            if(count($listAtt) > 0) $listBuilding[$key1]->path = $listAtt[0]->path;
 
             $sql2 = " SELECT boq"
                 . " FROM " . $this->ent . "\\BuildingBOQ boq"
