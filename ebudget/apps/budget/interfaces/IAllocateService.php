@@ -85,23 +85,21 @@ interface IAllocateService {
     /**
      * @name getSumRevenuePlan
      * @uri /getSumRevenuePlan
-     * @param int budgetPeriodId
      * @param int facultyId
      * @return string[] dataList Description
      * @description ดึงเงินรวมของแผน
      */
-    public function getSumRevenuePlan($budgetPeriodId,$facultyId);
+    public function getSumRevenuePlan($facultyId);
     
     /**
      * @name getSumRevenue
      * @uri /getSumRevenue
-     * @param int budgetPeriodId
      * @param int facultyId
      * @param String bgCategory
      * @return string[] dataList Description
      * @description ดึงเงินรวมของแจกแจง
      */
-    public function getSumRevenue($budgetPeriodId,$facultyId,$bgCategory);
+    public function getSumRevenue($facultyId,$bgCategory);
     
     
     /**
@@ -147,7 +145,7 @@ interface IAllocateService {
      * @name insertRevenueItem
      * @uri /insertRevenueItem
      * @param apps\common\entity\BudgetRevenue budget 
-     * @param int deptId
+     * @param int facultyId คณะ
      * @return boolean result 
      * @description เพิ่มรายการรายจ่ายจากเงินรายได้
      */
@@ -174,7 +172,6 @@ interface IAllocateService {
     /**
      * @name getRevenueItemList
      * @uri /getRevenueItemList
-     * @param int budgetPeriodId 
      * @param int deptId 
      * @param int l3dPlanId 
      * @param int fundgroupId
@@ -182,5 +179,5 @@ interface IAllocateService {
      * @return string[] dataList Description
      * @description โหลดรายการรายละเอียดเงินรายได้
      */
-    public function getRevenueItemList($budgetPeriodId, $deptId, $l3dPlanId, $fundgroupId, $bgCategory);
+    public function getRevenueItemList($deptId, $l3dPlanId, $fundgroupId, $bgCategory);
 }

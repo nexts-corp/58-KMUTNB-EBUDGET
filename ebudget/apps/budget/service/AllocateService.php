@@ -173,7 +173,7 @@ class AllocateService extends CServiceBase implements IAllocateService {
 
     public function addExpenseProject($projectName, $budgetTotal, $deptId) {
         $budgetPeriodId = $this->getPeriod()->year;
-        
+
         $return = true;
 
         $bgHead = new entity\BudgetHead();
@@ -264,7 +264,9 @@ class AllocateService extends CServiceBase implements IAllocateService {
         return $return;
     }
 
-    public function getSumRevenue($budgetPeriodId, $facultyId, $bgCategory) {
+    public function getSumRevenue($facultyId, $bgCategory) {
+        $budgetPeriodId = $this->getPeriod()->year;
+
         $sql3 = " select SUM(bg.bgAmount) as value "
                 . " from " . $this->pathEnt . "BudgetRevenue bg "
                 . " left join " . $this->pathEnt . "BudgetHead head with head.id = bg.budgetHeadId "
@@ -288,7 +290,9 @@ class AllocateService extends CServiceBase implements IAllocateService {
         return $this->datacontext->getObject($sql3, $param3);
     }
 
-    public function getSumRevenuePlan($budgetPeriodId, $facultyId) {
+    public function getSumRevenuePlan($facultyId) {
+        $budgetPeriodId = $this->getPeriod()->year;
+
         $sql = "
             SELECT 
                 SUM(bgrp.budgetEducation) AS education,SUM(bgrp.budgetService) AS service 
@@ -383,13 +387,16 @@ class AllocateService extends CServiceBase implements IAllocateService {
         return $return;
     }
 
-    public function insertRevenueItem($budget, $deptId) {
+    public function insertRevenueItem($budget, $facultyId) {
+        $budgetPeriodId = $this->getPeriod()->year;
+        $budget->budgetPeriodId = $budgetPeriodId;
+        
         $return = array();
 
         $revenuePlan = new entity\BudgetRevenuePlan();
-        $revenuePlan->setBudgetPeriodId($budget->budgetPeriodId);
+        $revenuePlan->setBudgetPeriodId($budgetPeriodId);
         $revenuePlan->setBudgetTypeCode("K");
-        $revenuePlan->setDeptId($deptId);
+        $revenuePlan->setDeptId($facultyId);
 
         $revenuePlanData = $this->datacontext->getObject($revenuePlan);
 
@@ -468,7 +475,8 @@ class AllocateService extends CServiceBase implements IAllocateService {
         return $result;
     }
 
-    public function getRevenueItemList($budgetPeriodId, $deptId, $l3dPlanId, $fundgroupId, $bgCategory) {
+    public function getRevenueItemList($deptId, $l3dPlanId, $fundgroupId, $bgCategory) {
+        $budgetPeriodId = $this->getPeriod()->year;
 
         $sql1 = " SELECT typ.id, typ.typeName as name "
                 . " FROM " . $this->pathEnt . "BudgetType typ "
