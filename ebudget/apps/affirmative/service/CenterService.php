@@ -398,7 +398,7 @@ class CenterService extends CServiceBase implements ICenterService {
         }
 
         $data = $this->centerData();
-        //return $data;
+
         $row = 4;
         foreach($data as $key => $value){
             $objWorkSheet->mergeCells('A'.$row.':D'.$row)
@@ -423,7 +423,7 @@ class CenterService extends CServiceBase implements ICenterService {
                                 ->setCellValueByColumnAndRow(0, $row, "เป้าประสงค์ที่ " . $value3->issueSeq . "." . $value4->targetSeq . " " . $value4->targetName);
 
                             $row++;
-                            if (is_array($value4->kpi) && count($value4->kpi) > 0) {
+                            if (isset($value4->kpi) && count($value4->kpi) > 0) {
                                 foreach ($value4->kpi as $key5 => $value5) {
 
                                     $objWorkSheet->setCellValueByColumnAndRow(0, $row, $value3->issueSeq . "." . $value4->targetSeq . "." . $value5->kpiSeq . " " . $value5->kpiName)
