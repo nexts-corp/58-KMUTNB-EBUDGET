@@ -22,6 +22,8 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function homeAdmin() {
         $view = new CJView("homeAdmin", CJViewType::HTML_VIEW_ENGINE);
+        $groupS = new HomeAdminService();
+        $view->year = $groupS->getPeriod()->year;
         return $view;
     }
 
@@ -34,6 +36,8 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function center() {
         $view = new CJView("center", CJViewType::HTML_VIEW_ENGINE);
+        $groupS = new CenterService();
+        $view->year = $groupS->getPeriod()->year;
         return $view;
     }
 
