@@ -31,7 +31,7 @@ myApp.controller('projectForm', function($scope,$http,$controller,cde,nk) {
         //ข้อมูลพร้อมส่ง
         $scope.seriesData = {
             
-            budgetPeriodId:budgetPeriodArr[$scope.param.budgetPeriodId],
+            //budgetPeriodId:budgetPeriodArr[$scope.param.budgetPeriodId],
             deptName:departmentArr[$scope.param.deptId],
             facName:facultyArr[$scope.param.facultyId],
             
@@ -62,7 +62,7 @@ myApp.controller('projectForm', function($scope,$http,$controller,cde,nk) {
     $scope.getLatouts = function(){
         $scope.loadLayouts= true;
         $http.post(cde.getPath("getLayouts"),{
-            budgetPeriodId:$scope.param.budgetPeriodId,
+            //budgetPeriodId:$scope.param.budgetPeriodId,
             facultyId:$scope.param.facultyId
         }).then(function (response) {
             var layouts = response.data.layouts;

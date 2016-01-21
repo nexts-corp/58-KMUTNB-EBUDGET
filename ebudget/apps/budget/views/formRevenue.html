@@ -255,10 +255,12 @@
             $scopeJS.$apply(function () {
                 if (param.formId === "500") {
                     form = "manageDepartment";
+                    $scopeJS.openForm(form, param);
+                    toggleShow("form");
                 }
-                $scopeJS.openForm(form, param);
+
             });
-            toggleShow("form");
+
             //toFormBudget(item);
         });
     });
@@ -285,6 +287,18 @@
             }
 
             $("#table tbody").html(html);
+
+            $("button.edit").unbind("click").click(function(){
+                var formId = $(this).attr("data-form");
+
+                if(formId == 999){
+                    var $scopeJS = angular.element(document.querySelector('[ng-app=formBudget]')).scope();
+                    $scopeJS.$apply(function () {
+                        $scopeJS.openForm("project", param);
+                    });
+                    toggleShow("form");
+                }
+            });
         }
 
 
@@ -522,7 +536,7 @@
 
     function listsAllDepartment(facultyId) {
         var html = '<option value="" selected="selected">เลือก</option>';
-        var datas = callAjax("{{_context_path}}/api/common/lookup/listDepartment", "post", {}, "json");
+        var datas = callAjax("{{_context_path}}/api/common/lookup/listDepartment", "post", {facultyId: ""}, "json");
         var list = {};
         if (typeof datas !== "undefined" && datas !== null) {
             $.each(datas["lists"], function (key, value) {

@@ -7,7 +7,6 @@ use th\co\bpg\cde\data\CDataContext;
 use apps\budget\interfaces\IProjectUniverService;
 
 use apps\common\service\LookupService;
-use apps\budget\service\ProjectUniverService;
 
 use apps\budget\model\ViewAffirmativeLevel;
 
@@ -29,13 +28,19 @@ class ProjectUniverService extends CServiceBase implements IProjectUniverService
         $this->logger = \Logger::getLogger("root");
         $this->datacontext = new CDataContext(NULL);
     }
-    
-    public function getLayouts($budgetPeriodId,$facultyId) {
+
+    function getPeriod() {
+        $year = new \apps\common\entity\Year();
+        $year->yearStatus = 'Y';
+        return $this->datacontext->getObject($year)[0];
+    }
+
+    public function getLayouts($facultyId) {
         $lookUpSer = new LookupService();
         $proUniSer = new ProjectUniverService();
         
         $listProject = new BudgetExpense();
-        $listProject->setBudgetPeriodId($budgetPeriodId);
+        $listProject->setBudgetPeriodId($this->getPeriod()->year);
         $listProject->setDeptId($facultyId);
         
         return array(
