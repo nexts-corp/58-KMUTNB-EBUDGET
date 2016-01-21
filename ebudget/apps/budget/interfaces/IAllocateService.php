@@ -52,13 +52,12 @@ interface IAllocateService {
      * @name addExpenseProject
      * @uri /addExpenseProject
      * @param string projectName ชื่อโครงการ
-     * @param int budgetPeriodId ปีงบประมาณ
      * @param float[] budgetTotal
      * @param int[] deptId
      * @return boolean result Description
      * @description หน้าเพิ่มเงินจัดสรรสำหรับโครงการพัฒนามหาวิทยาลัย
      */
-    public function addExpenseProject($projectName, $budgetPeriodId, $budgetTotal, $deptId);
+    public function addExpenseProject($projectName, $budgetTotal, $deptId);
 
     /**
      * @name updateExpenseProject

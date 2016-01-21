@@ -117,7 +117,7 @@ class AllocateService extends CServiceBase implements IAllocateService {
             WHERE bh.formId = 999
             AND bh.budgetTypeCode = 'K'
             AND bh.budgetPeriodId = " . $budgetPeriodId . "
-            ORDER BY bh.id,be.id
+            ORDER BY bh.id, be.id
         ";
 
         //return $sql;
@@ -155,7 +155,7 @@ class AllocateService extends CServiceBase implements IAllocateService {
                 $dataList[$j - 1]["sub"][$k]["depId"] = $dataIAT[$i]["depId"];
                 $dataList[$j - 1]["sub"][$k]["depValue"] = $dataIAT[$i]["depValue"];
                 $dataList[$j - 1]["subC"][$k]["depId"] = $dataIAT[$i]["depId"];
-                $dataList[$j - 1]["subC"][$k]["depValue"] = $dataIAT[$i]["depValue"];                
+                $dataList[$j - 1]["subC"][$k]["depValue"] = $dataIAT[$i]["depValue"];
 
                 /* if (!$depId) {
                   $dataList[$j - 1]["sub"][$k + 1]["depId"] = '';
@@ -171,7 +171,9 @@ class AllocateService extends CServiceBase implements IAllocateService {
         return $dataList;
     }
 
-    public function addExpenseProject($projectName, $budgetPeriodId, $budgetTotal, $deptId) {
+    public function addExpenseProject($projectName, $budgetTotal, $deptId) {
+        $budgetPeriodId = $this->getPeriod()->year;
+        
         $return = true;
 
         $bgHead = new entity\BudgetHead();
@@ -324,7 +326,7 @@ class AllocateService extends CServiceBase implements IAllocateService {
 
     public function addRevenue($deptId, $bgEducation, $bgService) {
         $budgetPeriodId = $this->getPeriod()->year;
-        
+
         $bg = new entity\BudgetRevenuePlan();
         $bg->setBudgetPeriodId($budgetPeriodId);
         $bg->setDeptId($deptId);

@@ -138,8 +138,8 @@
                                                     <button class="btn btn-default" ng-click="delItemAPP($index)"><i class="fa fa-trash-o "></i> ลบ</button>
                                                 </td>
                                             </tr>
-                                            <!--<tr ng-show="list.show" ng-repeat="listSub in list.sub" nk-cloak>-->
-                                                <tr ng-show="list.show" style="background-color: #F1F1F1;" nk-cloak>
+                                            
+                                            <tr ng-show="list.show" ng-repeat="listSub in list.sub" nk-cloak>
                                                 <td></td>
                                                 <td style="padding-left: 25px;">
                                                     <select ui-select2 ng-model="listSub.depId" ng-change="pushDepAPPSub($parent.$index, $last)" class="form-control input-sm" ng-options="dep.id as dep.name for dep in cmDataListDepartment | filter:setMaster">
@@ -162,6 +162,7 @@
                                                     <button ng-show="checkAddItemAPP()" ng-click="addItemAPP()" class="btn btn-success"><i class="fa fa-plus"></i> เพิ่ม</button>
                                                 </td>
                                             </tr>
+                                            <tr ng-repeat-end class="nk-cloak"><td colspan="4">Repeat End</td></tr>
                                             <tr ng-show="!loadManageAPP" ng-repeat="listTxt in manageAPP.depTxt" style="background-color: #E5E5E5;" nk-cloak>
                                                 <td></td>
                                                 <td style="padding-left: 25px;">
