@@ -18,6 +18,9 @@ class BudgetExpensePlan extends EntityBase {
     /** @Column(type="integer",length=11, name="BudgetExpenseId") */
     public $expenseId;
 
+    /** @Column(type="integer",length=11, name="BudgetTypeId") */
+    public $bgTypeId;
+
     /** @Column(type="integer",length=11, name="BudgetQuarter") */
     public $quarterId;
 
@@ -39,6 +42,10 @@ class BudgetExpensePlan extends EntityBase {
 
     function getExpenseId() {
         return $this->expenseId;
+    }
+
+    function getBgTypeId() {
+        return $this->bgTypeId;
     }
 
     function getQuarterId() {
@@ -69,6 +76,10 @@ class BudgetExpensePlan extends EntityBase {
         $this->expenseId = $expenseId;
     }
 
+    function setBgTypeId($bgTypeId) {
+        $this->bgTypeId = $bgTypeId;
+    }
+
     function setQuarterId($quarterId) {
         $this->quarterId = $quarterId;
     }
@@ -88,4 +99,5 @@ class BudgetExpensePlan extends EntityBase {
     function setExpenseUsed($expenseUsed) {
         $this->expenseUsed = $expenseUsed;
     }
+
 }

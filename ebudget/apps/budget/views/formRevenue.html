@@ -155,7 +155,8 @@
 </style>
 
 <script type="text/javascript">
-            var js_context_path = "{{_context_path}}";</script>
+            var js_context_path = "{{_context_path}}";
+</script>
 
 <!--
 <script type="text/javascript" src="{{_context_path}}/apps/budget/views/bg140.js"></script>
@@ -186,7 +187,7 @@
     var facultyArr = {};
     var departmentArr = {};
     var allDepArr = listsAllDepartment();
-
+    
     //        var budgetPeriodArr = {2557: 2557, 2558: 2558, 2559: 2559};
     //        var budgetTypeArr = {G: "เงินงบประมาณแผ่นดิน", K: "เงินรายได้", U: "เงินงบประมาณแผ่นดินและเงินรายได้"};
     //        var planArr = {1: "ดำเนินการตามกรอบข้อตกลงของประชาคมอาเซียน", 2: "ขยายโอกาสและพัฒนาคุณภาพการศึกษา", 3: "ส่งเสริมการวิจัยและพัฒนา"};
@@ -199,11 +200,8 @@
 
         listsFormSaved();
         toggleShow("home");
-
         //$("#budgetPeriodId, #budgetTypeCode, #planId, #projectId, #fundgroupId, #facultyId, #deptId").select2().trigger("change");
         $("#budgetPeriodId, #budgetTypeCode, #facultyId, #deptId").select2().trigger("change");
-
-
         // choice changed
         $("#budgetPeriodId").change(function () {
             isForm = 0;
@@ -217,6 +215,7 @@
         /*$("#planId").change(function () {
          listsProject($(this).val());
          });*/
+
         $("#facultyId").change(function () {
             listsDepartment($(this).val());
         });
@@ -233,24 +232,22 @@
         $("button.backAttachment").unbind("click").click(function () {
             toggleShow("form");
         });
-
         $(document).on('click', '#btnViewForm', function (event) {
-            var year = $(this).attr('data-year');
+            //var year = $(this).attr('data-year');
             var form = $(this).attr('data-form');
             var fac = $(this).attr('data-fac');
             var fund = $(this).attr('data-fund');
             var plan = $(this).attr('data-plan');
-
             //go to form
             var param = {};
-            param.budgetPeriodId = year;
+            //param.budgetPeriodId = year;
             param.budgetTypeCode = 'K';
             if (allDepArr[fac].masterId == 0) {
                 param.facultyId = fac;
             } else {
                 param.facultyId = allDepArr[fac].masterId;
             }
-           // param.deptId = dept;
+            // param.deptId = dept;
             param.fundgroupId = fund;
             param.l3dPlanId = plan;
             param.formId = form;
@@ -262,13 +259,11 @@
                 $scopeJS.openForm(form, param);
             });
             toggleShow("form");
-
             //toFormBudget(item);
         });
     });
     function listsFormSaved() {
         var param = {
-            budgetPeriodId: "",
             deptId: "",
             budgetTypeCode: "K"
         };
@@ -278,18 +273,13 @@
             var data = datas["result"];
             for (var i = 0; i < data.length; i++) {
                 var item = data[i];
-                var formText = "";
-                if (item.formId === 500) {
-                    formText = 'เงินรายได้';
-                } else {
-                    formText = 'โครงการพัฒนามหาวิทยาลัย';
-                }
+                
                 html += '<tr>'
                         + '<td>' + item.budgetPeriodId + '</td>'
-                        + '<td>' + formText + '</td>'
+                        + '<td>' + item.formName + '</td>'
                         + '<td>' + item.deptName + '</td>'
                         + '<td>'
-                        + '<button class="btn btn-warning edit" title="แก้ไข" id="btnViewForm" data-year="' + item.budgetPeriodId + '" data-form="' + item.formId + '" data-fac="' + item.deptId + '" data-fund="' + item.fundgroupId + '" data-plan="' + item.l3dPlanId + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                        + '<button class="btn btn-warning edit" title="แก้ไข" id="btnViewForm" data-form="' + item.formId + '" data-fac="' + item.deptId + '" data-fund="' + item.fundgroupId + '" data-plan="' + item.l3dPlanId + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
                         + '</td>'
                         + '</tr>';
             }
@@ -410,22 +400,18 @@
             $("button.form").unbind("click").click(function () {
 
                 var form = $(this).attr("data-form");
-
                 var param = {};
                 $("#formChoice select").each(function () {
                     var name = $(this).attr("name");
                     param[name] = $(this).val();
                 });
-
                 var hasNg = $(this).attr("has-ng");
-
                 // open Form for AngularJS
                 var $scopeJS = angular.element(document.querySelector('[ng-app=formBudget]')).scope();
                 $scopeJS.$apply(function () {
                     $scopeJS.openForm(form, param);
                 });
                 toggleShow("form");
-
             });
             isForm = 1;
         }
@@ -609,7 +595,7 @@
             param.path = filePath;
             var fdata = [];
             fdata.push(param);
-            var datas = callAjax(js_context_path + "/api/budget/budgetSave/insertAtt", "post", JSON.stringify({att: fdata}), "json");
+            var datas = callAjax("{{_context_path}}/api/budget/budgetSave/insertAtt", "post", JSON.stringify({att: fdata}), "json");
             if (datas != undefined && datas !== null) {
                 param.id = datas["results"]["id"];
             }
@@ -633,7 +619,7 @@
             var fdata = [];
             param.path = oldFileName;
             fdata.push(param);
-            var datas = callAjax(js_context_path + "/api/budget/budgetSave/editAtt", "post", JSON.stringify({att: fdata}), "json");
+            var datas = callAjax("{{_context_path}}/api/budget/budgetSave/editAtt", "post", JSON.stringify({att: fdata}), "json");
             if (datas != undefined && datas !== null) {
                 result = datas["results"]["attObj"];
             } else {
@@ -649,7 +635,7 @@
 
             var fdata = [];
             fdata.push(param);
-            var datas = callAjax(js_context_path + "/api/budget/budgetSave/editAtt", "post", JSON.stringify({att: fdata}), "json");
+            var datas = callAjax("{{_context_path}}/api/budget/budgetSave/editAtt", "post", JSON.stringify({att: fdata}), "json");
             if (datas != undefined && datas !== null) {
                 result = datas["results"]["attObj"];
             } else {
@@ -660,7 +646,7 @@
 
             if (attachmentID != null && $("#removeFile").val() == undefined) {
                 //delete service at attachmentID
-                var datas = callAjax(js_context_path + "/api/budget/budgetSave/delAtt", "post", JSON.stringify({
+                var datas = callAjax("{{_context_path}}/api/budget/budgetSave/delAtt", "post", JSON.stringify({
                     attachmentID: attachmentID,
                     path: oldFileName,
                     budgetID: budgetListID,
@@ -690,7 +676,7 @@
             var form_data = new FormData(); // Creating object of FormData class
             form_data.append("file", file_data);
             $.ajax({
-                url: js_context_path + "/api/budget/budgetSave/uploadF",
+                url: "{{_context_path}}/api/budget/budgetSave/uploadF",
                 data: form_data,
                 cache: false,
                 async: false,

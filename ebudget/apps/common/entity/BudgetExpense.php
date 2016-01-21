@@ -286,4 +286,5 @@ class BudgetExpense extends EntityBase {
     function setComment($comment) {
         $this->comment = $comment;
     }
+
 }
