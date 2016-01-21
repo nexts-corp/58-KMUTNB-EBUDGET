@@ -11,7 +11,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="none-padding">ส่วนงานภายในมหาวิทยาลัย</h1>
+                    <h1 class="none-padding">ส่วนงานภายในมหาวิทยาลัย ปี {{year}}</h1>
                 </div>
             </div>
         </div>
@@ -177,6 +177,33 @@
                     </div>
                 </div>
             </div>
+
+            <div id="panelApprove" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">ยืนยันการส่งแบบตัวชี้วัด</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p class="text-dark">
+                                ยืนยันการส่งแบบตัวชี้วัดคำรับรองการปฏิบัติงาน ?
+                            </p>
+                        </div>
+                        <div id="loadingApprove" class="col-md-12 text-center" style="margin: 20px;"></div>
+                        <div class="modal-footer">
+                            <ul class="nav nav-pills sort-source pull-right" data-option-key="filter">
+                                <li data-option-value="*" class="">
+                                    <button class="btn btn-success" id="confirmApprove"><i class="fa fa-save"></i> ยืนยัน</button>
+                                </li>
+                                <li data-option-value="" class="padding-left">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div><!--  row  -->
     </div><!--  container  -->
 </div><!-- main -->
@@ -196,14 +223,28 @@
 
     $(function () {
         centerForm();
+
         $("#btnApprove").click(function () {
-            var result = callAjax("{{_context_path}}/api/affirmative/center/approve", "post", {status: "Y"}, "json");
-            if (result["approve"] == true) {
-                alert("อนุมัติสำเร็จ!");
-                window.location = "{{_context_path}}/api/affirmative/view/center";
-            } else {
-                alert("อนุมัติไม่สำเร็จ! (" + result["msg"] + ")");
-            }
+            $("#panelApprove").modal("show");
+            $("#loadingApprove").html('');
+
+            $("#confirmApprove").click(function () {
+                $("#loadingApprove").html('กำลังบันทึกข้อมูล...');
+
+                setTimeout(function() {
+                    var result = callAjax("{{_context_path}}/api/affirmative/center/approve", "post", {status: "Y"}, "json");
+                    if (result["approve"] == true) {
+                        $("#loadingApprove").html('<span class="text-success">อนุมัติสำเร็จ</span>');
+                        setTimeout(function () {
+                            $("#panelApprove").modal("hide");
+                            centerForm();
+                        }, 500);
+
+                    } else {
+                        $("#loadingApprove").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
+                    }
+                }, 0);
+            });
         });
 
         $("#btnExcel").click(function(){
@@ -224,7 +265,7 @@
                         + '<thead>'
                             + '<tr>'
                                 + '<th class="text-center col-md-1" style="vertical-align: middle;">ลำดับ</th>'
-                                + '<th class="text-center col-md-5" style="vertical-align: middle;">ตัวชี้วัดคำรับรอง ปี 2558</th>'
+                                + '<th class="text-center col-md-5" style="vertical-align: middle;">ตัวชี้วัดคำรับรอง</th>'
                                 + '<th class="text-center col-md-1" style="vertical-align: middle;">หน่วยนับ</th>'
                                 + '<th class="text-center col-md-2" style="vertical-align: middle;">ประเภทส่วนงานที่ต้องดำเนินการ</th>'
                                 + '<th class="text-center col-md-2" style="vertical-align: middle;">หมายเหตุ</th>'
@@ -248,7 +289,7 @@
                                 + '<thead>'
                                     + '<tr>'
                                         + '<th class="text-center col-md-1" style="vertical-align: middle;">ลำดับ</th>'
-                                        + '<th class="text-center col-md-5" style="vertical-align: middle;">ตัวชี้วัดคำรับรอง ปี 2558</th>'
+                                        + '<th class="text-center col-md-5" style="vertical-align: middle;">ตัวชี้วัดคำรับรอง</th>'
                                         + '<th class="text-center col-md-1" style="vertical-align: middle;">หน่วยนับ</th>'
                                         + '<th class="text-center col-md-2" style="vertical-align: middle;">ประเภทส่วนงานที่ต้องดำเนินการ</th>'
                                         + '<th class="text-center col-md-2" style="vertical-align: middle;">หมายเหตุ</th>'
@@ -294,7 +335,7 @@
                                             + '<span class="text-bold">เป้าประสงค์ที่ ' + value3["issueSeq"] + '.' + value4["targetSeq"] + ' ' + value4["targetName"] + '</span>'
                                         + '</td>'
                                         + '<td class="text-center">'
-                                            + '<button class="btn btn-sm btn-success add" data-pid="' + value4["targetId"] + '" data-pname="targetId"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
+                                            + '<button class="btn btn-sm btn-success add" data-pid="' + value4["targetId"] + '" data-pname="targetId" title="เพิ่มข้อมูล"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
                                         + '</td>'
                                     + '</tr>';
 
@@ -312,8 +353,8 @@
                                                 + '<td>' + (value5["remark"] ? value5["remark"] : "-") + '</td>'
                                                 + '<td class="text-center">'
                                                     + '<div class="btn-group">'
-                                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + value4["targetId"] + '" data-id="' + value5["centerId"] + '" data-pname="targetId"><i class="fa fa-pencil"></i></button>'
-                                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + value4["targetId"] + '" data-id="' + value5["centerId"] + '" data-pname="targetId"><i class="fa fa-trash"></i></button>'
+                                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + value4["targetId"] + '" data-id="' + value5["centerId"] + '" data-pname="targetId" title="แก้ไขข้อมูล"><i class="fa fa-pencil"></i></button>'
+                                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + value4["targetId"] + '" data-id="' + value5["centerId"] + '" data-pname="targetId" title="ลบข้อมูล"><i class="fa fa-trash"></i></button>'
                                                     + '</div>'
                                                 + '</td>'
                                             + '</tr>';
@@ -330,7 +371,7 @@
                                     + '<span class="text-bold" style="text-decoration: underline;">ส่วนที่ ' + value1["mainSeq"] + '.' + value2['typeSeq'] + ' ' + value2["typeName"] + '</span>'
                                 + '</td>'
                                 + '<td class="text-center">'
-                                    + '<button class="btn btn-sm btn-success add" data-pid="' + value2["typeId"] + '" data-pname="typeId"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
+                                    + '<button class="btn btn-sm btn-success add" data-pid="' + value2["typeId"] + '" data-pname="typeId" title="เพิ่มข้อมูล"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
                                 + '</td>'
                             + '</tr>';
 
@@ -348,8 +389,8 @@
                                         + '<td>' + (value5["remark"] ? value5["remark"] : "-") + '</td>'
                                         + '<td class="text-center">'
                                             + '<div class="btn-group">'
-                                                + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + value2["typeId"] + '" data-id="' + value5["centerId"] + '" data-pname="typeId"><i class="fa fa-pencil"></i></button>'
-                                                + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + value2["typeId"] + '" data-id="' + value5["centerId"] + '" data-pname="typeId"><i class="fa fa-trash"></i></button>'
+                                                + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + value2["typeId"] + '" data-id="' + value5["centerId"] + '" data-pname="typeId" title="แก้ไขข้อมูล"><i class="fa fa-pencil"></i></button>'
+                                                + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + value2["typeId"] + '" data-id="' + value5["centerId"] + '" data-pname="typeId" title="ลบข้อมูล"><i class="fa fa-trash"></i></button>'
                                             + '</div>'
                                         + '</td>'
                                         + '</tr>';
@@ -515,8 +556,8 @@
                                 + '<td>' + (data["remark"] ? data["remark"] : "-") + '</td>'
                                 + '<td class="text-center">'
                                     + '<div class="btn-group">'
-                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '"  data-pname="typeId"><i class="fa fa-pencil"></i></button>'
-                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '" data-pname="typeId"><i class="fa fa-trash"></i></button>'
+                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '"  data-pname="typeId" title="แก้ไขข้อมูล"><i class="fa fa-pencil"></i></button>'
+                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '" data-pname="typeId" title="ลบข้อมูล"><i class="fa fa-trash"></i></button>'
                                     + '</div>'
                                 + '</td>'
                             + '</tr>';
@@ -534,8 +575,8 @@
                                 + '<td>' + (data["remark"] ? data["remark"] : "-") + '</td>'
                                 + '<td class="text-center">'
                                     + '<div class="btn-group">'
-                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '" data-pname="targetId"><i class="fa fa-pencil"></i></button>'
-                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '" data-pname="targetId"><i class="fa fa-trash"></i></button>'
+                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '" data-pname="targetId" title="แก้ไขข้อมูล"><i class="fa fa-pencil"></i></button>'
+                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '" data-pname="targetId" title="ลบข้อมูล"><i class="fa fa-trash"></i></button>'
                                     + '</div>'
                                 + '</td>'
                             + '</tr>';
@@ -583,8 +624,8 @@
                                 + '<td>' + (data["remark"] ? data["remark"] : "-") + '</td>'
                                 + '<td class="text-center">'
                                     + '<div class="btn-group">'
-                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '" data-pname="typeId"><i class="fa fa-pencil"></i></button>'
-                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '" data-pname="typeId"><i class="fa fa-trash"></i></button>'
+                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '" data-pname="typeId" title="แก้ไขข้อมูล"><i class="fa fa-pencil"></i></button>'
+                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["typeId"] + '" data-id="' + data["centerId"] + '" data-pname="typeId" title="ลบข้อมูล"><i class="fa fa-trash"></i></button>'
                                     + '</div>'
                                 + '</td>';
                         node = $("#tableall").treetable("node", "type" + data["typeId"]);
@@ -603,8 +644,8 @@
                                 + '<td>' + (data["remark"] ? data["remark"] : "-") + '</td>'
                                 + '<td class="text-center">'
                                     + '<div class="btn-group">'
-                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '" data-pname="targetId"><i class="fa fa-pencil"></i></button>'
-                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '" data-pname="targetId"><i class="fa fa-trash"></i></button>'
+                                        + '<button type="button" class="btn btn-sm btn-warning edit" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '" data-pname="targetId" title="แก้ไขข้อมูล"><i class="fa fa-pencil"></i></button>'
+                                        + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["targetId"] + '" data-id="' + data["centerId"] + '" data-pname="targetId" title="ลบข้อมูล"><i class="fa fa-trash"></i></button>'
                                     + '</div>'
                                 + '</td>';
                         node = $("#tableall").treetable("node", "target" + data["targetId"]);

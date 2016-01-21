@@ -15,7 +15,7 @@
             {{#budget}}
             <div class="col-md-8">
                 <div class="col-md-12">
-                    <div class="col-md-3"><label class="control-label">หมวดรายจ่ายรายการ : </label> </div>
+                    <div class="col-md-3"><label class="control-label">หมวดรายจ่ายรายการ : </label></div>
                     <div class="col-md-9">{{durableName}}</div>
                 </div>
                 <div class="col-md-12">
@@ -84,8 +84,9 @@
 
                     <div class="col-md-8">
                         <div class="input-group">
-                        <input type="number" id="costTotal" name="costTotal" class="form-control input-sm" required>
-                        <div class="input-group-addon">บาท</div>
+                            <input type="number" id="costTotal" name="costTotal" class="form-control input-sm" required>
+
+                            <div class="input-group-addon">บาท</div>
                         </div>
                     </div>
                 </div>
@@ -146,10 +147,11 @@
                     <table class="table table-bordered table-striped table-condensed mb-none">
                         <thead>
                         <tr>
-                            <th class="col-md-4 text-center">กิจกรรม/ดำเนินงาน</th>
+                            <th class="col-md-3 text-center">กิจกรรม/ดำเนินงาน</th>
                             <th class="col-md-2 text-center">ขนาด/ปริมาณ</th>
-                            <th class="col-md-2 text-center">ราคาต่อหน่วย</th>
-                            <th class="col-md-2 text-center">เงิน</th>
+                            <th class="col-md-1 text-center">หน่วย</th>
+                            <th class="col-md-2 text-center">ราคาต่อหน่วย (บาท)</th>
+                            <th class="col-md-2 text-center">เงิน (บาท)</th>
                             <th class="col-md-2 text-center">เครื่องมือ</th>
                         </tr>
                         </thead>
@@ -157,9 +159,10 @@
                         <tfoot id="buildTfoot">
                         <tr>
                             <td class="text-center">รวม</td>
+                            <td class="text-center" id="sumQuantity"></td>
                             <td class="text-center"></td>
-                            <td class="text-center"></td>
-                            <td class="text-center"></td>
+                            <td class="text-center" id="sumPriceUnit"></td>
+                            <td class="text-center" id="sumPrice"></td>
                             <td class="text-center"></td>
                         </tr>
                         </tfoot>
@@ -170,9 +173,9 @@
             <div class="form-group">
                 <div class="col-md-9">
                     <div class="col-md-12" style="margin: 3px 0;">
-                        <label class="col-md-4 control-label text-right text-bold">แผนการดำเนินงาน</label>
+                        <label class="col-md-3 control-label text-right text-bold">แผนการดำเนินงาน</label>
 
-                        <div class="col-md-8">
+                        <div class="col-md-9">
                             <label class="col-md-4 control-label text-right req" for="timeDesign">ออกแบบ</label>
 
                             <div class="col-md-8">
@@ -182,9 +185,9 @@
                         </div>
                     </div>
                     <div class="col-md-12" style="margin: 3px 0;">
-                        <label class="col-md-4 control-label text-right "></label>
+                        <label class="col-md-3 control-label text-right "></label>
 
-                        <div class="col-md-8">
+                        <div class="col-md-9">
                             <label class="col-md-4 control-label text-right req" for="timeBid">ประกวดราคา</label>
 
                             <div class="col-md-8">
@@ -193,9 +196,9 @@
                         </div>
                     </div>
                     <div class="col-md-12" style="margin: 3px 0;">
-                        <label class="col-md-4 control-label text-right"></label>
+                        <label class="col-md-3 control-label text-right"></label>
 
-                        <div class="col-md-8">
+                        <div class="col-md-9">
                             <label class="col-md-4 control-label text-right req" for="timeContract">เซ็นสัญญา</label>
 
                             <div class="col-md-8">
@@ -205,9 +208,9 @@
                         </div>
                     </div>
                     <div class="col-md-12" style="margin: 3px 0;">
-                        <label class="col-md-4 control-label text-right"></label>
+                        <label class="col-md-3 control-label text-right"></label>
 
-                        <div class="col-md-8">
+                        <div class="col-md-9">
                             <label class="col-md-4 control-label text-right req"
                                    for="timeOperate">ระยะเวลาการดำเนินการ</label>
 
@@ -217,64 +220,26 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                    <div class="col-md-12" style="margin: 10px 0;">
 
-            <div class="form-group">
-                <div class="col-md-12">
-                    <!--
-                    <div class="col-md-9"><label class="col-md-4 control-label text-right">แบบ BOQ</label></div>
-                    <div class="col-md-3 text-right">
-                        <button type="button" class="btn btn-success addBOQ" style="margin-bottom: 5px;"><i
-                                class="fa fa-plus-circle"></i> เพิ่ม
-                        </button>
-                    </div>
-                    -->
-                    <div class="form-group">
-                        <label for="exampleInputFile" class="col-md-5 control-label text-right"><b>แบบ BOQ</b></label>
-                        <div class="col-md-3 fileinput fileinput-new">
-                            <input type="file" />
+                        <label class="col-md-3 control-label text-right"></label>
+
+                        <div class="col-md-9">
+                            <label class="col-md-4 control-label text-right"><b>เอกสารแนบแบบ BOQ</b></label>
+
+                            <div id="attachFileDiv" class="form-group">
+
+                                <div id="fileGroup" class="col-md-8">
+                                    <div id="fileNew"></div>
+                                    <div id="fileBak"></div>
+                                </div>
+
+                            </div>
                         </div>
-
                     </div>
                 </div>
-                <!--
-                <div class="col-md-12">
-                    <table class="table table-bordered table-striped table-condensed mb-none">
-                        <thead>
-                        <tr>
-                            <th rowspan="2" class="col-md-3 text-center">รายการ</th>
-                            <th colspan="2" class="col-md-2 text-center">ปริมาณ</th>
-                            <th colspan="2" class="col-md-2 text-center">ค่าวัสดุ</th>
-                            <th colspan="2" class="col-md-2 text-center">ค่าแรงงาน</th>
-                            <th rowspan="2" class="col-md-2 text-center">รวม</th>
-                            <th rowspan="2" class="col-md-3 text-center">เครื่องมือ</th>
-                        </tr>
-                        <tr>
-                            <th rowspan="1" class="col-md-1 text-center">จำนวน</th>
-                            <th rowspan="1" class="col-md-1 text-center">หน่วย</th>
-                            <th rowspan="1" class="col-md-1 text-center">หน่วยละ</th>
-                            <th rowspan="1" class="col-md-1 text-center">จำนวนเงิน</th>
-                            <th rowspan="1" class="col-md-1 text-center">หน่วยละ</th>
-                            <th rowspan="1" class="col-md-1 text-center">จำนวนเงิน</th>
-                        </tr>
-                        </thead>
-                        <tbody id="BoqBody"></tbody>
-                        <tfoot id="Boqfoot">
-                        <tr>
-                            <td class="text-center" colspan="3">รวม</td>
-                            <td class="text-center"></td>
-                            <td class="text-center"></td>
-                            <td class="text-center"></td>
-                            <td class="text-center"></td>
-                            <td class="text-center"></td>
-                            <td class="text-center"></td>
-                        </tr>
-                        </tfoot>
-                    </table>
-                </div>
-                -->
             </div>
+
 
             <div class="col-md-12 text-right">
                 <div id="showLoad" style="display: inline; visibility: hidden;"><i class="fa fa-spinner fa-spin"></i>
@@ -365,6 +330,7 @@
     hashMaptype["poly"] = "รูปแบบรูปทรง";
     hashMaptype["circle"] = "รูปแบบวงกลม";
     var positionCenter;
+    var fileUpload = 0;
 
     $('#btnGroup button').addClass('active').not($("#point")).removeClass('active'); //active on button point
     $("#btn-map").unbind("click").click(function () {
@@ -628,7 +594,7 @@
         positionCenter = new google.maps.LatLng(13.8192445, 100.513857);
         window.map = new google.maps.Map(document.getElementById('map'), mapOptions);
         google.maps.event.trigger(window.map, "resize");
-
+        window.map.setCenter(positionCenter);
         //listerner map
         addListernerClickOnMap();
         showView();
@@ -731,7 +697,7 @@
         google.maps.event.addListener(map, "mouseover", function (e) {
             //use refresh map
             google.maps.event.trigger(window.map, 'resize');
-            window.map.setCenter(positionCenter);
+//            window.map.setCenter(positionCenter);
         });
     }
 
@@ -764,6 +730,7 @@
             type: 1
         }, "json");
 
+
         if (datas["budget"].length > 0) { //is not empty array
 
             STATUSFORM = "EDIT";
@@ -780,35 +747,34 @@
                         optionMapUse = valTypeMap;
                     }
                 });
-
-                for (var i = 0; i < objBudget["listBOQ"].length; i++) {
-                    var obj = objBudget["listBOQ"][i];
-                    var html = '<tr>';
-                    var total = parseFloat(obj.materialTotal) + parseFloat(obj.wageTotal);
-                    html += '<td>' + obj.name + '</td>';
-                    html += '<td class="number">' + obj.quantity + '</td>';
-                    html += '<td>' + obj.unit + '</td>';
-                    html += '<td class="number">' + obj.materialUnit + '</td>';
-                    html += '<td class="number">' + obj.materialTotal + '</td>';
-                    html += '<td class="number">' + obj.wageUnit + '</td>';
-                    html += '<td class="number">' + obj.wageTotal + '</td>';
-                    html += '<td class="number">' + total + '</td>';
-                    html += '<td class="text-center"><button type="button" class="btn btn-warning edit-btnBOQ"><i class="fa fa-pencil"></i></button>';
-                    html += '<button type="button" class="btn btn-default delete-btnBOQ"><i class="fa fa-trash"></i></button></td>';
-                    html += '</tr>';
-                    $('#BoqBody').prepend(html);
-                    $('.number').number(true, 2);
-                    obj["costTotal"] = total; //in db not have
-                    listBOQ.push(obj)
-                }
-
+//                for (var i = 0; i < objBudget["listBOQ"].length; i++) {
+//                    var obj = objBudget["listBOQ"][i];
+//                    var html = '<tr>';
+//                    var total = parseFloat(obj.materialTotal) + parseFloat(obj.wageTotal);
+//                    html += '<td>' + obj.name + '</td>';
+//                    html += '<td class="number">' + obj.quantity + '</td>';
+//                    html += '<td>' + obj.unit + '</td>';
+//                    html += '<td class="number">' + obj.materialUnit + '</td>';
+//                    html += '<td class="number">' + obj.materialTotal + '</td>';
+//                    html += '<td class="number">' + obj.wageUnit + '</td>';
+//                    html += '<td class="number">' + obj.wageTotal + '</td>';
+//                    html += '<td class="number">' + total + '</td>';
+//                    html += '<td class="text-center"><button type="button" class="btn btn-warning edit-btnBOQ"><i class="fa fa-pencil"></i></button>';
+//                    html += '<button type="button" class="btn btn-default delete-btnBOQ"><i class="fa fa-trash"></i></button></td>';
+//                    html += '</tr>';
+//                    $('#BoqBody').prepend(html);
+//                    $('.number').number(true, 2);
+//                    obj["costTotal"] = total; //in db not have
+//                    listBOQ.push(obj)
+//                }
                 for (var i = 0; i < objBudget["listDetail"].length; i++) {
                     var obj = objBudget["listDetail"][i];
                     var html = '<tr>';
                     html += '<td>' + obj.desc + '</td>';
-                    html += '<td class="number">' + obj.quantity + '</td>';
-                    html += '<td class="number">' + obj.costUnit + '</td>';
-                    html += '<td class="number">' + obj.costTotal + '</td>';
+                    html += '<td class="number text-right">' + obj.quantity + '</td>';
+                    html += '<td type="text" class="text-right">' + obj.unit + '</td>';
+                    html += '<td class="number text-right">' + obj.costUnit + '</td>';
+                    html += '<td class="number text-right">' + obj.costTotal + '</td>';
                     html += '<td class="text-center"><button type="button" class="btn btn-warning edit-btn"><i class="fa fa-pencil"></i></button>';
                     html += '<button type="button" class="btn btn-default delete-btn"><i class="fa fa-trash"></i></button></td>';
                     html += '</tr>';
@@ -833,12 +799,57 @@
                     listCoordinates.push(obj);
                     markerArrayForUse.push(marker);
                 }
+
+
+                if (getTag(objBudget["path"], "") != "") {
+
+                    $("#fileNew").hide();
+                    $("#fileBak").html(
+                            '<i class="fa fa-file-o"></i>'
+                            + '<a href="javascript: void(0);" style="color:blue !important;" onclick="downloadFile(\'' + objBudget["path"] + '\');"> ' + objBudget["path"] + '</a> &nbsp;&nbsp;'
+                            + '<a href="javascript: void(0);" style="color:blue !important;" title="ลบ" class="ic-edit" id="deleteFile"><i class="fa fa-trash"></i></a>'
+                    );
+
+                    $("#deleteFile").click(function () {
+                        $("#fileNew").html(
+                                '<input type="file" id="attachment" name="attachment"> '
+                                + '<a href="javascript: void(0);" id="fileOld" style="color: blue !important;">[ไฟล์เดิม]</a>&nbsp;&nbsp;'
+                                + '<a href="javascript: void(0);" onclick="$(\'#attachment\').val(\'\');">[Reset]</a>'
+                        ).show();
+                        $("#fileBak").hide();
+                        fileUpload = 1;
+
+                        $("#fileOld").click(function () {
+                            $("#fileNew").hide();
+                            $("#fileBak").show();
+                            fileUpload = 0;
+                        });
+                    });
+
+                } else {
+                    $("#fileNew").html(
+                            '<input type="file" id="attachment" name="attachment"> '
+                            + '<a href="javascript: void(0);" onclick="$(\'#attachment\').val(\'\');">[Reset]</a>'
+                    ).show();
+                    $("#fileBak").hide();
+                    fileUpload = 1;
+                }
+
                 drawPolyOnMap();
 
                 toolsEvent();
+
+                sumBuildingDetail();
             });
 
         } else {
+
+            $("#fileGroup").html('<div id="fileNew"></div><div id="fileBak"></div>');
+            $("#fileNew").html(
+                    '<input type="file" id="attachment" name="attachment"> '
+                    + '<a href="javascript: void(0);" onclick="$(\'#attachment\').val(\'\');">[Reset]</a>'
+            ).show();
+            $("#fileBak").hide();
 
             STATUSFORM = "INSERT";
             $("#loadAll").hide();
@@ -875,13 +886,28 @@
                     coordinatesChange: coordinatesChange
                 });
 
-                var dataJSONEN = encodeURIComponent(dataJSON);
+                var formData = new FormData();
+                formData.append('building', JSON.stringify(fdata));
+//                formData.append('listBOQ', JSON.stringify(listBOQ));
+                formData.append('listBuildDetail', JSON.stringify(listBuilding));
+                formData.append('listCoordinates', JSON.stringify(listCoordinates));
+//              formData.append('listIDRemoveBOQ', JSON.stringify(listIDRemoveBOQOne));
+                formData.append('listIDRemoveBuildingOne', JSON.stringify(listIDRemoveBuildingOne));
+                formData.append('coordinatesChange', JSON.stringify(coordinatesChange));
+                formData.append('fileUpload', fileUpload);
+
+                if ($('#attachment').length) formData.append('file', $('#attachment')[0].files[0]);
+                else formData.append('file', '');
+
                 if (STATUSFORM == "INSERT") {
-                    buildingOneInsert(dataJSONEN);
+
+                    buildingOneInsert(formData);
                 } else if (STATUSFORM == "EDIT") {
-                    buildingOneEdit(dataJSONEN);
+
+                    buildingOneEdit(formData);
                 }
             } else {
+
                 alert("กรุญากรอกข้อมูลให้ครบ");
             }
 
@@ -970,6 +996,7 @@
                 var html = '<tr>' +
                         '   <td><input type="text" class="form-control" id="desc" name="desc"></td>' +
                         '   <td><input type="number" min = "0" class="form-control" min="0" id="quantity" name="quantity" onKeyUp="keyPressedBuilding(this)"></td>' +
+                        '   <td><input type="text" class="form-control" id="unit" name="unit"></td>' +
                         '   <td><input type="number" min = "0" class="form-control" id="costUnit" name="costUnit" onKeyUp="keyPressedBuilding(this)"></td>' +
                         '   <td style="vertical-align: middle"><label id="costTotalBuild" name="costTotal"></label></td>' +
                         '   <td class="text-center"><button type="button" class="btn btn-success save-btn" title="บันทึก"><i class="fa fa-save"></i></button>' +
@@ -991,8 +1018,11 @@
                             val = $(this).html();
                         }
                         fVal[name] = val;
-                        if (name != "desc") {
-                            html += '<td class="number">' + fVal[name] + '</td>';
+                        if (name != "desc" && name != "unit") {
+                            html += '<td class="number text-right">' + fVal[name] + '</td>';
+                        } else if (name == "unit") {
+
+                            html += '<td type="text" class="text-right">' + fVal[name] + '</td>';
                         } else {
                             html += '<td>' + fVal[name] + '</td>';
                         }
@@ -1006,6 +1036,7 @@
                     $(this).closest("tr").html(html);
                     $('.number').number(true, 2);
                     toolsEvent();
+                    sumBuildingDetail();
                 });
 
                 $(".cancel-btn").unbind("click").click(function () {
@@ -1121,9 +1152,10 @@
 
                 var html = '' +
                         '   <td><input type="text" class="form-control" id="desc" name="desc"></td>' +
-                        '   <td><input type="number" min = "0" class="form-control"  id="quantity" name="quantity" onKeyUp="keyPressedBuilding(this)"></td>' +
-                        '   <td><input type="number" min = "0" class="form-control" id="costUnit" name="costUnit" onKeyUp="keyPressedBuilding(this)"></td>' +
-                        '   <td style="vertical-align: middle"><label id="costTotalBuild" name="costTotal"></label></td>' +
+                        '   <td><input type="number" min = "0" class="form-control text-right"  id="quantity" name="quantity" onKeyUp="keyPressedBuilding(this)"></td>' +
+                        '   <td><input type="text" class="form-control" id="unit" name="unit"></td>' +
+                        '   <td><input type="number" min = "0" class="form-control text-right" id="costUnit" name="costUnit" onKeyUp="keyPressedBuilding(this)"></td>' +
+                        '   <td style="vertical-align: middle" class="text-right"><label id="costTotalBuild" name="costTotal"></label></td>' +
                         '   <td class="text-center"><button type="button" class="btn btn-success save-btn" title="บันทึก"><i class="fa fa-save"></i></button>' +
                         '   <button type="button" class="btn btn-default cancel-btn"><i class="fa fa-close" title="ยกเลิก"></i></button></td></tr>';
 
@@ -1153,8 +1185,11 @@
                             val = $(this).html();
                         }
                         fVal[name] = val;
-                        if (name != "desc") {
-                            html += '<td class="number">' + fVal[name] + '</td>';
+                        if (name != "desc" && name != "unit") {
+                            html += '<td class="number text-right">' + fVal[name] + '</td>';
+                        } else if (name == "unit") {
+
+                            html += '<td type="text" class="text-right">' + fVal[name] + '</td>';
                         } else {
                             html += '<td>' + fVal[name] + '</td>';
                         }
@@ -1167,6 +1202,7 @@
                     $(this).closest("tr").html(html);
                     $('.number').number(true, 2);
                     toolsEvent();
+                    sumBuildingDetail();
                 });
 
                 $(".cancel-btn").unbind("click").click(function () {
@@ -1186,9 +1222,10 @@
                     var rowIndex = (listBuilding.length - 1) - $(this).closest('tr').index();
                     if (listBuilding[rowIndex]["id"] != undefined) {
                         listIDRemoveBuildingOne.push(listBuilding[rowIndex]["id"]);
-                        listBuilding.splice(rowIndex, 1);
-                        $(this).closest('tr').remove();
                     }
+                    listBuilding.splice(rowIndex, 1);
+                    $(this).closest('tr').remove();
+                    sumBuildingDetail();
                 }
             } else {
                 $("#activity").focus();
@@ -1200,7 +1237,7 @@
         $("#showLoad").css("visibility", "visible");
         setTimeout(function () {
 
-            var datas = callAjax("{{_context_path}}/api/budget/draftBone/insertBuildingOne", "post", dataJSONEN, "json");
+            var datas = callAjaxFile("{{_context_path}}/api/budget/draftBone/insertBuildingOne", "post", dataJSONEN, "json");
             if (typeof datas !== "undefined" && datas !== null) {
                 if (datas['results']['result'] == true) {
                     alert("บันทึกสำเร็จ");
@@ -1217,7 +1254,7 @@
         $("#showLoad").css("visibility", "visible");
         setTimeout(function () {
 
-            var datas = callAjax("{{_context_path}}/api/budget/draftBone/editBuildingOne", "post", dataJSONEN, "json");
+            var datas = callAjaxFile("{{_context_path}}/api/budget/draftBone/editBuildingOne", "post", dataJSONEN, "json");
             if (typeof datas !== "undefined" && datas !== null) {
                 if (datas['results']['result'] == true) {
                     alert("แก้ไขสำเร็จ");
@@ -1288,6 +1325,30 @@
         if (isNaN(total)) total = 0;
 
         $("#costTotalBuild").html(total);
+    }
+
+    function downloadFile(path) {
+
+        var link = document.createElement("a");
+        link.download = path;
+        link.href = '{{{{_context_path}}}}/apps/budget/views/draft/attachment/';
+        link.click();
+    }
+
+    function sumBuildingDetail() {
+
+        var qutity = 0, costUnit = 0, costTotal = 0;
+
+        $.each(listBuilding, function (key, value) {
+            qutity += parseFloat(value["quantity"]);
+            costUnit += parseFloat(value["costUnit"]);
+            costTotal += parseFloat(value["costTotal"]);
+        });
+
+        $("#sumQuantity").html('<b class="number">' + qutity + '</b>');
+        $("#sumPriceUnit").html('<b class="number">' + costUnit + '</b>');
+        $("#sumPrice").html('<b class="number">' + costTotal + '</b>');
+        $('.number').number(true, 2);
     }
 
 </script>

@@ -564,8 +564,9 @@
         var data = listArr[finalId];
         var result = parseFloat(result);
 
-        var score = '';
+        var score = 0;
         var target = '';
+        var tmp = 0;
         for(var i = 1; i <= 5; i++){
             data["score"+i] = data["score"+i].replace(/ /gi,"");
 
@@ -593,9 +594,26 @@
                     score = i;
                 }
             }
-            else if(data["score"+i] == result) {
+            /*else if(data["score"+i] == result) {
                 score = i;
+            }*/
+            else{
+                var num1 = 0;
+                var num2 = parseFloat(data["score"+i].replace(/>/gi,""));
+                if(i != 1) num1 = parseFloat(data["score"+tmp].replace(/>/gi,""));
+
+                if(result < num1 && i == 1){
+                    score = 0;
+                }
+                else if(result >= num1 && result < num2){
+                    score = i - 1;
+                }
+                else if(result >= num2 && i == 5){
+                    score = 5;
+                }
             }
+
+            tmp = i;
         }
 
         var isSuccess = 0;
@@ -621,12 +639,9 @@
         var row = 1;
         if(getTag(listArr[finalId]["divisor"], "") != "") row = 2;
 
-
-
         var link = '';
         if(getTag(listArr[finalId]["attachment"], "") != "")
             link = '<i class="fa fa-file-o"></i> <a href="javascript: void(0);" onclick="downloadFile(\''+listArr[finalId]["attachment"]+'\');">'+fileNameCut(listArr[finalId]["attachment"])+'</a>';
-
 
         $('tr[data-tt-id=final'+finalId+']').find("td").eq(0).attr("rowspan", row);
         $('tr[data-tt-id=final'+finalId+']').find("td").eq(1).attr("rowspan", row);
