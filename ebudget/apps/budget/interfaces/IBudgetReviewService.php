@@ -84,7 +84,7 @@ interface IBudgetReviewService {
      * @uri /updateScheme
      * @param apps\budget\model\BudgetSchemeResult[] budget
      * @return boolean result Description
-     * @description ปรับปรุงข้อมูลแผนผล
+     * @description ปรับปรุงข้อมูลแผน/ผล
      */
     public function updateScheme($budget);
 

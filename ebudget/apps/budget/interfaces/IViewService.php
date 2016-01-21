@@ -197,11 +197,10 @@ interface IViewService {
     /**
      * @name progressBudget
      * @uri /progressBudget
-     * @param int bgPeriodId ปีงบประมาณ
      * @param int facultyId หน่วยงานระดับคณะ
      * @param int fundgroupId กองทุน
      * @param int planId แผนงาน 3 มิติ
      * @description แสดงรายงานแผน/ผลการใช้เงินงบประมาณ
      */
-    public function progressBudget($bgPeriodId, $facultyId, $fundgroupId, $planId);
+    public function progressBudget($facultyId, $fundgroupId, $planId);
 }

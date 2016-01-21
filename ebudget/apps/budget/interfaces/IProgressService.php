@@ -10,17 +10,16 @@ namespace apps\budget\interfaces;
 interface IProgressService {
 
     /**
-     * @name getAllScheme
-     * @uri /getAllScheme
+     * @name getAllBudgetScheme
+     * @uri /getAllBudgetScheme
      * @return string[] result
      * @description แสดงแผน/ผลการใช้งบประมาณ
      */
-    public function getAllScheme();
+    public function getAllBudgetScheme();
 
     /**
      * @name viewProgressBudget
      * @uri /viewProgressBudget
-     * @param int bgPeriodId ปีงบประมาณ
      * @param int facultyId หน่วยงานระดับคณะ
      * @param int fundgroupId กองทุน
      * @param int planId แผนงาน 3 มิติ
@@ -28,5 +27,14 @@ interface IProgressService {
      * @description แสดงแผน/ผลการใช้งบประมาณ
      * @description เรียกดูรายงานแผน/ผลการใช้เงินงบประมาณ
      */
-    public function viewProgressBudget($bgPeriodId, $facultyId, $fundgroupId, $planId);
+    public function viewProgressBudget($facultyId, $fundgroupId, $planId);
+
+    /**
+     * @name updateScheme
+     * @uri /updateScheme
+     * @param apps\budget\model\BudgetSchemeResult[] budget
+     * @return boolean result Description
+     * @description ปรับปรุงข้อมูลแผน/ผล
+     */
+    public function updateScheme($budget);
 }

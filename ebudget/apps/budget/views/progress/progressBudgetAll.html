@@ -112,7 +112,7 @@
         var planGroup = {}
         var fundGroup = {};
 
-        var datas = callAjax("{{_context_path}}/api/budget/progress/getAllScheme", "post", {}, "json");
+        var datas = callAjax("{{_context_path}}/api/budget/progress/getAllBudgetScheme", "post", {}, "json");
         var html = '';
         var search = '';
         if (typeof datas !== "undefined" && datas !== null) {
@@ -203,7 +203,7 @@
                 var data = listArr[id];
 
                 //var formId = data["formId"];
-                var bgPeriodId = $(this).attr("data-year");
+                //var bgPeriodId = $(this).attr("data-year");
                 var planId = $(this).attr("data-plan");
                 var fundgroupId = $(this).attr("data-fundgroup");
                 var facultyId = $(this).attr("data-faculty");
@@ -213,7 +213,7 @@
                  var fundgroupId = data["fundgroupId"];
                  var facultyId = data["facultyId"];
                  */
-                window.location = "{{_context_path}}/api/budget/view/progressBudget/" + bgPeriodId + "/" + facultyId + "/" + fundgroupId + "/" + planId;
+                window.location = "{{_context_path}}/api/budget/view/progressBudget/" + facultyId + "/" + fundgroupId + "/" + planId;
             });
 
             /*

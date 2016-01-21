@@ -19,7 +19,7 @@
     </section>
 
     <hr class="tall dashboard">
-    
+
     <!-- button action on header -->
     <!-- <div class="sort-source-wrapper">
         <div class="container">
@@ -28,8 +28,8 @@
             </ul>
         </div>
     </div> -->
-    
-    
+
+
     <div class="sort-source-wrapper">
         <div class="container">
             <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
@@ -40,8 +40,8 @@
             </ul>
         </div>
     </div>
-    
-    
+
+
     <!-- end button action on header -->
 
     <div class="container">
@@ -130,6 +130,11 @@
 
                     </tbody>
                 </table>
+                <br>
+                <div class="center">
+                    <button class="btn btn-primary" id="btnSave">บันทึก</button>
+                </div>
+
             </div>
 
         </div>
@@ -156,7 +161,7 @@
     //var listSTATUSTRACKING = [];
 
 
-    var bgPeriodId = '{{bgPeriodId}}';
+    //var bgPeriodId = '{{bgPeriodId}}';
     var facultyId = '{{facultyId}}';
     var fundgroupId = '{{fundgroupId}}';
     var planId = '{{planId}}';
@@ -164,7 +169,7 @@
 
     $(document).ready(function () {
         var param = {
-            bgPeriodId: bgPeriodId,
+            //bgPeriodId: bgPeriodId,
             facultyId: facultyId,
             fundgroupId: fundgroupId,
             planId: planId
@@ -175,8 +180,8 @@
         var total_quater1_plan = 0, total_quater1_used = 0, total_quater2_plan = 0, total_quater2_used = 0, total_quater3_plan = 0, total_quater3_used = 0, total_quater4_plan = 0, total_quater4_used = 0, total_plan = 0, total_used = 0;
         var dataTable = null;
         //$("#table").hide();
-        
-        $(".backHome").click(function(){
+
+        $(".backHome").click(function () {
             window.location = "{{_context_path}}/api/budget/view/progressBudgetAll";
         });
 
@@ -198,7 +203,7 @@
             //console.log(datas);
             var dataJSON = JSON.stringify({budget: datas});
             var dataJSONEN = encodeURIComponent(dataJSON);
-            var result = callAjaxFile("{{_context_path}}/api/budget/budgetReview/updateScheme", "post", dataJSON, "json");
+            var result = callAjaxFile("{{_context_path}}/api/budget/progress/updateScheme", "post", dataJSON, "json");
             console.log(result);
         });
 
@@ -280,159 +285,159 @@
                 var dataJSON = JSON.stringify(param);
                 var dataJSONEN = encodeURIComponent(dataJSON);
                 var datas = callAjax("{{_context_path}}/api/budget/progress/viewProgressBudget", "post", dataJSONEN, "json");
-                
+
                 var html = "";
 
-                    if (typeof datas !== "undefined" && datas !== null) {
-                        datas = datas.result;
-                        
-                        $("#budgetYear").html(datas[0]["bgPeriodId"]);
-                        $("#budgetType").html('เงินรายได้');
-                        $("#l3dPlan").html(datas[0]["planName"]);
-                        $("#fundgroup").html(datas[0]["fundgroupName"]);
-                        $("#facName").html(datas[0]["facultyName"]);
-                        //$("#deptName").html(datas["deptName"]);
-                        
-                        var scheme = {};
-                        var count = {};
-                        for (var i = 0; i < 4; i++) {
-                            scheme[nameData[i] + "Id"] = 0;
-                            count[nameData[i]] = 0;
+                if (typeof datas !== "undefined" && datas !== null) {
+                    datas = datas.result;
+
+                    $("#budgetYear").html(datas[0]["bgPeriodId"]);
+                    $("#budgetType").html('เงินรายได้');
+                    $("#l3dPlan").html(datas[0]["planName"]);
+                    $("#fundgroup").html(datas[0]["fundgroupName"]);
+                    $("#facName").html(datas[0]["facultyName"]);
+                    //$("#deptName").html(datas["deptName"]);
+
+                    var scheme = {};
+                    var count = {};
+                    for (var i = 0; i < 4; i++) {
+                        scheme[nameData[i] + "Id"] = 0;
+                        count[nameData[i]] = 0;
+                    }
+                    var sum = {};
+                    $.each(datas, function (k, v) {
+                        var level = v["bgLevel"];
+                        if (v[nameData[0] + "Id"] != scheme[nameData[0] + "Id"]) {
+                            for (var i = 1; i < 4; i++) {
+                                scheme[nameData[i] + "Id"] = 0;
+                                count[nameData[i]] = 0;
+                            }
+                        } else if (v[nameData[1] + "Id"] != scheme[nameData[1] + "Id"]) {
+                            for (var i = 2; i < 4; i++) {
+                                scheme[nameData[i] + "Id"] = 0;
+                                count[nameData[i]] = 0;
+                            }
+                        } else if (v[nameData[2] + "Id"] != scheme[nameData[2] + "Id"]) {
+                            for (var i = 3; i < 4; i++) {
+                                scheme[nameData[i] + "Id"] = 0;
+                                count[nameData[i]] = 0;
+                            }
                         }
-                        var sum = {};
-                        $.each(datas, function (k, v) {
-                            var level = v["bgLevel"];
-                            if (v[nameData[0] + "Id"] != scheme[nameData[0] + "Id"]) {
-                                for (var i = 1; i < 4; i++) {
-                                    scheme[nameData[i] + "Id"] = 0;
-                                    count[nameData[i]] = 0;
-                                }
-                            } else if (v[nameData[1] + "Id"] != scheme[nameData[1] + "Id"]) {
-                                for (var i = 2; i < 4; i++) {
-                                    scheme[nameData[i] + "Id"] = 0;
-                                    count[nameData[i]] = 0;
-                                }
-                            } else if (v[nameData[2] + "Id"] != scheme[nameData[2] + "Id"]) {
-                                for (var i = 3; i < 4; i++) {
-                                    scheme[nameData[i] + "Id"] = 0;
-                                    count[nameData[i]] = 0;
-                                }
-                            }
-                            for (var i = 0; i < level - 1; i++) {
-                                if (v[nameData[i] + "Id"] != scheme[nameData[i] + "Id"]) {
-                                    scheme[nameData[i] + "Id"] = v[nameData[i] + "Id"];
-                                    count[nameData[i]]++;
-                                    var txtCount = "";
-                                    var txtId = "";
-                                    var txtPId = "";
-                                    for (var x = 0; x <= i; x++) {
-                                        txtCount += count[nameData[x]] + ". ";
-                                        txtId += nameData[x] + v[nameData[x] + "Id"];
+                        for (var i = 0; i < level - 1; i++) {
+                            if (v[nameData[i] + "Id"] != scheme[nameData[i] + "Id"]) {
+                                scheme[nameData[i] + "Id"] = v[nameData[i] + "Id"];
+                                count[nameData[i]]++;
+                                var txtCount = "";
+                                var txtId = "";
+                                var txtPId = "";
+                                for (var x = 0; x <= i; x++) {
+                                    txtCount += count[nameData[x]] + ". ";
+                                    txtId += nameData[x] + v[nameData[x] + "Id"];
 
-                                        if (x != i) {
-                                            txtPId += nameData[x] + v[nameData[x] + "Id"];
-                                            txtId += "-";
-                                            txtPId += "-";
-                                        }
-
+                                    if (x != i) {
+                                        txtPId += nameData[x] + v[nameData[x] + "Id"];
+                                        txtId += "-";
+                                        txtPId += "-";
                                     }
-                                    // sum[txtId] = {};
-                                    html += '<tr id="' + txtId + '" parent-id="' + txtPId.substr(0, txtPId.length - 1) + '" class="' + classData[i] + '"><td style="padding-left: 4em ;vertical-align:middle">' + txtCount + v[nameData[i] + "Name"] + '</td>';
-                                    html += '<td class="text-right planSummary"></td>';
-                                    html += '<td class="text-right usedSummary"></td>';
-                                    html += '<td class="text-right planQ1"></td>';
-                                    html += '<td class="text-right usedQ1"></td>';
-                                    html += '<td class="text-right planQ2"></td>';
-                                    html += '<td class="text-right usedQ2"></td>';
-                                    html += '<td class="text-right planQ3"></td>';
-                                    html += '<td class="text-right usedQ3"></td>';
-                                    html += '<td class="text-right planQ4"></td>';
-                                    html += '<td class="text-right usedQ4"></td>';
-                                    html += '<td class="text-right"><b>' + '(%)' + '</b></td></tr>';
-                                }
-                            }
-                            var txtId = "";
-                            var txtCount = "";
-                            var txtPId = "";
-                            count[nameData[level - 1]]++;
-                            for (var x = 0; x < level; x++) {
-                                txtCount += count[nameData[x]] + ". ";
-                                txtId += nameData[x] + v[nameData[x] + "Id"];
-                                if ((level - x) != 1) {
-                                    txtPId += nameData[x] + v[nameData[x] + "Id"] + "-";
-                                    txtId += "-";
-                                }
-                            }
-                            sum[txtId] = {};
-                            html += '<tr id="' + txtId + '" parent-id="' + txtPId.substr(0, txtPId.length - 1) + '"class="frmData ' + classData[level - 1] + '"><td style="padding-left: 4em ;vertical-align:middle">' + /*(++count[nameData[level - 1]])*/txtCount + v[nameData[level - 1] + "Name"] + '</td>';
-                            html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planSummary" value="' + (v.planSummary == null ? 0 : v.planSummary) + '" /></td>';
-                            html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedSummary" value="' + (v.usedSummary == null ? 0 : v.usedSummary) + '" /></td>';
-                            html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ1" value="' + (v.planQ1 == null ? 0 : v.planQ1) + '" /></td>';
-                            html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ1" value="' + (v.usedQ1 == null ? 0 : v.usedQ1) + '" /></td>';
-                            html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ2" value="' + (v.planQ2 == null ? 0 : v.planQ2) + '" /></td>';
-                            html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ2" value="' + (v.usedQ2 == null ? 0 : v.usedQ2) + '" /></td>';
-                            html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ3" value="' + (v.planQ3 == null ? 0 : v.planQ3) + '" /></td>';
-                            html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ3" value="' + (v.usedQ3 == null ? 0 : v.usedQ3) + '" /></td>';
-                            html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ4" value="' + (v.planQ4 == null ? 0 : v.planQ4) + '" /></td>';
-                            html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ4" value="' + (v.usedQ4 == null ? 0 : v.usedQ4) + '" /></td>';
 
-                            html += '<td class="text-right"><b>' + '(%)' + '</b></td>';
-                            html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="bgLevel" value="' + v.bgLevel + '" />';
-                            html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="bgPeriodId" value="' + v.bgPeriodId + '" />';
-                            html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="planId" value="' + v.planId + '" />';
-                            //html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="deptId" value="' + v.deptId + '" />';
-                            html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="fundgroupId" value="' + v.fundgroupId + '" />';
-                            html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="facultyId" value="' + v.facultyId + '" />';
-                            //html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="bgTypeCode" value="' + v.bgTypeCode + '" />';
-                            html += '</tr>';
-                            sum[txtId]["planSummary"] = parseFloat((v.planSummary == null ? 0 : v.planSummary));
-                            sum[txtId]["usedSummary"] = parseFloat((v.usedSummary == null ? 0 : v.usedSummary));
-                            sum[txtId]["planQ1"] = parseFloat((v.planQ1 == null ? 0 : v.planQ1));
-                            sum[txtId]["usedQ1"] = parseFloat((v.usedQ1 == null ? 0 : v.usedQ1));
-                            sum[txtId]["planQ2"] = parseFloat((v.planQ2 == null ? 0 : v.planQ2));
-                            sum[txtId]["usedQ2"] = parseFloat((v.usedQ2 == null ? 0 : v.usedQ2));
-                            sum[txtId]["planQ3"] = parseFloat((v.planQ3 == null ? 0 : v.planQ3));
-                            sum[txtId]["usedQ3"] = parseFloat((v.usedQ3 == null ? 0 : v.usedQ3));
-                            sum[txtId]["planQ4"] = parseFloat((v.planQ4 == null ? 0 : v.planQ4));
-                            sum[txtId]["usedQ4"] = parseFloat((v.usedQ4 == null ? 0 : v.usedQ4));
-                        });
-                        $("#budgetBody").html(html);
-                        var sumParent = {};
-                        $.each(sum, function (key, obj) {
-                            var idArr = key.split("-");
-                            var idLength = idArr.length;
+                                }
+                                // sum[txtId] = {};
+                                html += '<tr id="' + txtId + '" parent-id="' + txtPId.substr(0, txtPId.length - 1) + '" class="' + classData[i] + '"><td style="padding-left: 4em ;vertical-align:middle">' + txtCount + v[nameData[i] + "Name"] + '</td>';
+                                html += '<td class="text-right planSummary"></td>';
+                                html += '<td class="text-right usedSummary"></td>';
+                                html += '<td class="text-right planQ1"></td>';
+                                html += '<td class="text-right usedQ1"></td>';
+                                html += '<td class="text-right planQ2"></td>';
+                                html += '<td class="text-right usedQ2"></td>';
+                                html += '<td class="text-right planQ3"></td>';
+                                html += '<td class="text-right usedQ3"></td>';
+                                html += '<td class="text-right planQ4"></td>';
+                                html += '<td class="text-right usedQ4"></td>';
+                                html += '<td class="text-right"><b>' + '(%)' + '</b></td></tr>';
+                            }
+                        }
+                        var txtId = "";
+                        var txtCount = "";
+                        var txtPId = "";
+                        count[nameData[level - 1]]++;
+                        for (var x = 0; x < level; x++) {
+                            txtCount += count[nameData[x]] + ". ";
+                            txtId += nameData[x] + v[nameData[x] + "Id"];
+                            if ((level - x) != 1) {
+                                txtPId += nameData[x] + v[nameData[x] + "Id"] + "-";
+                                txtId += "-";
+                            }
+                        }
+                        sum[txtId] = {};
+                        html += '<tr id="' + txtId + '" parent-id="' + txtPId.substr(0, txtPId.length - 1) + '"class="frmData ' + classData[level - 1] + '"><td style="padding-left: 4em ;vertical-align:middle">' + /*(++count[nameData[level - 1]])*/txtCount + v[nameData[level - 1] + "Name"] + '</td>';
+                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planSummary" value="' + (v.planSummary == null ? 0 : v.planSummary) + '" /></td>';
+                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedSummary" value="' + (v.usedSummary == null ? 0 : v.usedSummary) + '" /></td>';
+                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ1" value="' + (v.planQ1 == null ? 0 : v.planQ1) + '" /></td>';
+                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ1" value="' + (v.usedQ1 == null ? 0 : v.usedQ1) + '" /></td>';
+                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ2" value="' + (v.planQ2 == null ? 0 : v.planQ2) + '" /></td>';
+                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ2" value="' + (v.usedQ2 == null ? 0 : v.usedQ2) + '" /></td>';
+                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ3" value="' + (v.planQ3 == null ? 0 : v.planQ3) + '" /></td>';
+                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ3" value="' + (v.usedQ3 == null ? 0 : v.usedQ3) + '" /></td>';
+                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ4" value="' + (v.planQ4 == null ? 0 : v.planQ4) + '" /></td>';
+                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ4" value="' + (v.usedQ4 == null ? 0 : v.usedQ4) + '" /></td>';
+
+                        html += '<td class="text-right"><b>' + '(%)' + '</b></td>';
+                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="bgLevel" value="' + v.bgLevel + '" />';
+                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="bgPeriodId" value="' + v.bgPeriodId + '" />';
+                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="planId" value="' + v.planId + '" />';
+                        //html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="deptId" value="' + v.deptId + '" />';
+                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="fundgroupId" value="' + v.fundgroupId + '" />';
+                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="facultyId" value="' + v.facultyId + '" />';
+                        //html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="bgTypeCode" value="' + v.bgTypeCode + '" />';
+                        html += '</tr>';
+                        sum[txtId]["planSummary"] = parseFloat((v.planSummary == null ? 0 : v.planSummary));
+                        sum[txtId]["usedSummary"] = parseFloat((v.usedSummary == null ? 0 : v.usedSummary));
+                        sum[txtId]["planQ1"] = parseFloat((v.planQ1 == null ? 0 : v.planQ1));
+                        sum[txtId]["usedQ1"] = parseFloat((v.usedQ1 == null ? 0 : v.usedQ1));
+                        sum[txtId]["planQ2"] = parseFloat((v.planQ2 == null ? 0 : v.planQ2));
+                        sum[txtId]["usedQ2"] = parseFloat((v.usedQ2 == null ? 0 : v.usedQ2));
+                        sum[txtId]["planQ3"] = parseFloat((v.planQ3 == null ? 0 : v.planQ3));
+                        sum[txtId]["usedQ3"] = parseFloat((v.usedQ3 == null ? 0 : v.usedQ3));
+                        sum[txtId]["planQ4"] = parseFloat((v.planQ4 == null ? 0 : v.planQ4));
+                        sum[txtId]["usedQ4"] = parseFloat((v.usedQ4 == null ? 0 : v.usedQ4));
+                    });
+                    $("#budgetBody").html(html);
+                    var sumParent = {};
+                    $.each(sum, function (key, obj) {
+                        var idArr = key.split("-");
+                        var idLength = idArr.length;
+                        var name = "";
+                        for (var i = 0; i < idLength - 1; i++) {
+                            name += idArr[i];
+                            if (typeof sumParent[name] === "undefined") {
+                                sumParent[name] = {};
+                            }
+                            if (idLength - i != 1) {
+                                name += "-";
+                            }
+                        }
+                        $.each(obj, function (index, value) {
                             var name = "";
                             for (var i = 0; i < idLength - 1; i++) {
                                 name += idArr[i];
-                                if (typeof sumParent[name] === "undefined") {
-                                    sumParent[name] = {};
+                                if (typeof sumParent[name][index] === "undefined") {
+                                    sumParent[name][index] = 0;
                                 }
+                                sumParent[name][index] += parseFloat(value);
                                 if (idLength - i != 1) {
                                     name += "-";
                                 }
                             }
-                            $.each(obj, function (index, value) {
-                                var name = "";
-                                for (var i = 0; i < idLength - 1; i++) {
-                                    name += idArr[i];
-                                    if (typeof sumParent[name][index] === "undefined") {
-                                        sumParent[name][index] = 0;
-                                    }
-                                    sumParent[name][index] += parseFloat(value);
-                                    if (idLength - i != 1) {
-                                        name += "-";
-                                    }
-                                }
 
-                            });
                         });
-                        $.each(sumParent, function (id, obj) {
-                            $.each(obj, function (index, value) {
-                                $("#" + id + " > td." + index).text(toNumberFormat(value));
-                            });
+                    });
+                    $.each(sumParent, function (id, obj) {
+                        $.each(obj, function (index, value) {
+                            $("#" + id + " > td." + index).text(toNumberFormat(value));
                         });
-                    }
-                
+                    });
+                }
+
 
                 $("input").change(function () {
                     var className = $(this).attr("name");
