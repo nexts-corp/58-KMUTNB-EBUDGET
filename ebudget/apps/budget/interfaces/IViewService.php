@@ -221,4 +221,12 @@ interface IViewService {
      * @description แสดงรายงานแผน/ผลการใช้เงินงบประมาณเงินรายได้
      */
     public function progressRevenue($facultyId, $fundgroupId, $planId, $catId);
+    
+     /**
+     * @name setting
+     * @uri /setting
+     * @description แสดงหน้าตั้งค่าการจัดทำ งปม.
+     */
+    public function setting();
+    
 }
