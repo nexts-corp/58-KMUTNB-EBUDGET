@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="0.7913786756005803"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.15865751894681"/>
+	<property name="ireport.x" value="172"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
 	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -126,6 +126,7 @@ order by bg.planId, bg.deptId, bg.fundgroupId,bgType.bgTypeMainId, bgType.bgType
 	</variable>
 	<variable name="Total" class="java.math.BigDecimal" resetType="None">
 		<variableExpression><![CDATA[$F{planSummary}+$F{usedSummary}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
 	<group name="G1">
 		<groupExpression><![CDATA[$F{bgTypeMasterId}]]></groupExpression>
@@ -635,7 +636,7 @@ order by bg.planId, bg.deptId, bg.fundgroupId,bgType.bgTypeMainId, bgType.bgType
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{planQ1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{planQ1}==null)?0:$F{planQ1}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="312" y="0" width="60" height="20" uuid="78c093c4-2cba-46d1-adc1-7f32a896f6c7"/>
@@ -648,7 +649,7 @@ order by bg.planId, bg.deptId, bg.fundgroupId,bgType.bgTypeMainId, bgType.bgType
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{usedQ1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{usedQ1}==null)?0:$F{usedQ1}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="372" y="0" width="60" height="20" uuid="3f6c0660-448b-426a-a7db-6db5fd24b432"/>
@@ -661,7 +662,7 @@ order by bg.planId, bg.deptId, bg.fundgroupId,bgType.bgTypeMainId, bgType.bgType
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{planQ2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{planQ2}==null)?0:$F{planQ2}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="432" y="0" width="60" height="20" uuid="f10cb526-d9f8-47f4-abd6-89f8d4b06539"/>
@@ -674,7 +675,7 @@ order by bg.planId, bg.deptId, bg.fundgroupId,bgType.bgTypeMainId, bgType.bgType
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{usedQ2}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{usedQ2}==null)?0:$F{usedQ2}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="492" y="0" width="60" height="20" uuid="5dbfa4fd-5ae0-4b8f-ad2a-4a76058de49b"/>
@@ -687,7 +688,7 @@ order by bg.planId, bg.deptId, bg.fundgroupId,bgType.bgTypeMainId, bgType.bgType
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{planQ3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{planQ3}==null)?0:$F{planQ3}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="552" y="0" width="60" height="20" uuid="ad4ddf94-9770-468b-a50e-aeb7a57dc752"/>
@@ -700,7 +701,7 @@ order by bg.planId, bg.deptId, bg.fundgroupId,bgType.bgTypeMainId, bgType.bgType
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{usedQ3}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{usedQ3}==null)?0:$F{usedQ3}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="612" y="0" width="60" height="20" uuid="029b1493-1ca1-40c0-8ab5-2ce7957c209a"/>
@@ -713,7 +714,7 @@ order by bg.planId, bg.deptId, bg.fundgroupId,bgType.bgTypeMainId, bgType.bgType
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{planQ4}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{planQ4}==null)?0:$F{planQ4}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="672" y="0" width="60" height="20" uuid="a507b7b8-ed0f-468a-9932-4d0a93b84885"/>
@@ -726,7 +727,7 @@ order by bg.planId, bg.deptId, bg.fundgroupId,bgType.bgTypeMainId, bgType.bgType
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{usedQ4}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{usedQ4}==null)?0:$F{usedQ4}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="192" y="0" width="60" height="20" uuid="2226a2be-5a4f-4953-8939-19ff25772337"/>
@@ -739,7 +740,7 @@ order by bg.planId, bg.deptId, bg.fundgroupId,bgType.bgTypeMainId, bgType.bgType
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{usedSummary}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{usedSummary}==null)?0:$F{usedSummary}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="132" y="0" width="60" height="20" uuid="282edef9-4ae8-49e6-9e53-cffcc3c112c6"/>
@@ -752,7 +753,7 @@ order by bg.planId, bg.deptId, bg.fundgroupId,bgType.bgTypeMainId, bgType.bgType
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{planSummary}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{planSummary} == null)?0:$F{planSummary}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="732" y="0" width="70" height="20" uuid="0bbc1c45-ab22-40bd-ab0a-5a66cb427c1e"/>
@@ -765,7 +766,7 @@ order by bg.planId, bg.deptId, bg.fundgroupId,bgType.bgTypeMainId, bgType.bgType
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{Total}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{Total}==null)?0:$V{Total}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="0" y="0" width="132" height="20" uuid="3ba3a28e-8f48-479d-8161-ed6222c4f2fa"/>
