@@ -54,4 +54,13 @@ interface IApproveSumService{
      * @description update BudgetSummarize
      */
     public function updateApproveSum($data,$type);
+
+    /**
+     * @name updatebgsetting
+     * @uri /updatebgsetting
+     * @param string periodId
+     * @return string result
+     * @description updatebgsetting after close budget
+     */
+    public function updateBudgetSetting($periodId);
 }

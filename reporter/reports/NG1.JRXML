@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="1.6963904734900137"/>
+	<property name="ireport.zoom" value="1.274523270841483"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
@@ -260,8 +260,8 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			<band height="60">
 				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" x="132" y="40" width="60" height="20" uuid="b284e919-8e75-495d-aa73-340af7609f70"/>
-					<box>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="132" y="40" width="60" height="20" uuid="b284e919-8e75-495d-aa73-340af7609f70"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -273,8 +273,8 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textFieldExpression><![CDATA[$V{generalFundTotal}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" x="312" y="40" width="60" height="20" uuid="efbf5d50-1a32-4a53-ba8e-d436adf584d5"/>
-					<box>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="312" y="40" width="60" height="20" uuid="efbf5d50-1a32-4a53-ba8e-d436adf584d5"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -286,8 +286,8 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textFieldExpression><![CDATA[$V{outreachFundTotal}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" x="192" y="40" width="60" height="20" uuid="fad6d8be-61af-4d90-97c0-5e9f0b3ab24d"/>
-					<box>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="192" y="40" width="60" height="20" uuid="fad6d8be-61af-4d90-97c0-5e9f0b3ab24d"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -299,8 +299,8 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textFieldExpression><![CDATA[$V{eduFundTotal}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" x="252" y="40" width="60" height="20" uuid="30886597-49c7-43e9-992d-82b7868d0ebe"/>
-					<box>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="252" y="40" width="60" height="20" uuid="30886597-49c7-43e9-992d-82b7868d0ebe"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -312,8 +312,8 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textFieldExpression><![CDATA[$V{researchFundTotal}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" x="492" y="40" width="60" height="20" uuid="e77618fc-d8f9-469a-988b-166f29bd78b3"/>
-					<box>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="492" y="40" width="60" height="20" uuid="e77618fc-d8f9-469a-988b-166f29bd78b3"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -324,8 +324,8 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{devFundTotal}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement style="FBold" x="0" y="40" width="132" height="20" uuid="4281046f-68c3-44d9-8a76-b1e4ddc50903"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="40" width="132" height="20" uuid="4281046f-68c3-44d9-8a76-b1e4ddc50903"/>
 					<box topPadding="1" leftPadding="2" bottomPadding="1" rightPadding="1">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -338,8 +338,8 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textFieldExpression><![CDATA[$F{facultyName}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" x="432" y="40" width="60" height="20" uuid="ea448bb5-b88d-4b9a-bb9f-c3182033cf93"/>
-					<box>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="432" y="40" width="60" height="20" uuid="ea448bb5-b88d-4b9a-bb9f-c3182033cf93"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -351,8 +351,8 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textFieldExpression><![CDATA[$V{assetsFundTotal}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" x="372" y="40" width="60" height="20" uuid="f5340a8b-926d-46b2-b39b-78ee95cd0842"/>
-					<box>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="372" y="40" width="60" height="20" uuid="f5340a8b-926d-46b2-b39b-78ee95cd0842"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -364,8 +364,8 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textFieldExpression><![CDATA[$V{affairsFundTotal}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" x="672" y="40" width="60" height="20" uuid="988c0814-0887-4d30-b88a-a45fea61057f"/>
-					<box>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="672" y="40" width="60" height="20" uuid="988c0814-0887-4d30-b88a-a45fea61057f"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -377,8 +377,8 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textFieldExpression><![CDATA[$V{totalFundTotal}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" x="612" y="40" width="60" height="20" uuid="ac51e0a4-10a3-48aa-b73c-1a7410fa2a78"/>
-					<box>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="612" y="40" width="60" height="20" uuid="ac51e0a4-10a3-48aa-b73c-1a7410fa2a78"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -390,8 +390,8 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textFieldExpression><![CDATA[$V{culturalFundTotal}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" x="732" y="40" width="70" height="20" uuid="14c18f6c-fb40-4615-82a3-dc9c4344b333"/>
-					<box>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="732" y="40" width="70" height="20" uuid="14c18f6c-fb40-4615-82a3-dc9c4344b333"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -403,8 +403,8 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textFieldExpression><![CDATA[$V{totalTotal}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" x="552" y="40" width="60" height="20" uuid="9e4cccbf-7e15-43a0-bde0-ba10040e3bd1"/>
-					<box>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="552" y="40" width="60" height="20" uuid="9e4cccbf-7e15-43a0-bde0-ba10040e3bd1"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -435,7 +435,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<reportElement style="FBold" isPrintRepeatedValues="false" x="252" y="0" width="60" height="40" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="a51c5ac3-e493-4a12-810b-adae82d64b01">
 						<printWhenExpression><![CDATA[$V{PAGE_COUNT} == 0]]></printWhenExpression>
 					</reportElement>
-					<box>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -450,7 +450,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<reportElement style="FBold" isPrintRepeatedValues="false" x="672" y="0" width="60" height="40" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="6b12649d-3cef-48e3-b195-50458e57fb03">
 						<printWhenExpression><![CDATA[$V{PAGE_COUNT} == 0]]></printWhenExpression>
 					</reportElement>
-					<box>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -465,7 +465,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<reportElement style="FBold" isPrintRepeatedValues="false" x="132" y="0" width="60" height="40" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="728a9a01-7164-4d17-859a-181e4a7ca934">
 						<printWhenExpression><![CDATA[$V{PAGE_COUNT} == 0]]></printWhenExpression>
 					</reportElement>
-					<box>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -480,7 +480,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<reportElement style="FBold" isPrintRepeatedValues="false" x="612" y="0" width="60" height="40" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="13cff6d6-1f08-4a05-a1b2-633c9e95ea90">
 						<printWhenExpression><![CDATA[$V{PAGE_COUNT} == 0]]></printWhenExpression>
 					</reportElement>
-					<box>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -495,7 +495,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<reportElement style="FBold" isPrintRepeatedValues="false" x="492" y="0" width="60" height="40" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="569b8eb7-e636-4a12-8f1e-930e57b517aa">
 						<printWhenExpression><![CDATA[$V{PAGE_COUNT} == 0]]></printWhenExpression>
 					</reportElement>
-					<box>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -510,7 +510,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<reportElement style="FBold" isPrintRepeatedValues="false" x="192" y="0" width="60" height="40" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="0afaa7b6-a42e-405c-af21-2a56773ca5d9">
 						<printWhenExpression><![CDATA[$V{PAGE_COUNT} == 0]]></printWhenExpression>
 					</reportElement>
-					<box>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -525,7 +525,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<reportElement style="FBold" isPrintRepeatedValues="false" x="552" y="0" width="60" height="40" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="510ab14d-cbb7-4932-b9e6-8c9a3e0a6c7b">
 						<printWhenExpression><![CDATA[$V{PAGE_COUNT} == 0]]></printWhenExpression>
 					</reportElement>
-					<box>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -540,7 +540,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<reportElement style="FBold" isPrintRepeatedValues="false" x="732" y="0" width="70" height="40" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="552ddaaf-8e4b-4351-a0dd-39be464a9515">
 						<printWhenExpression><![CDATA[$V{PAGE_COUNT} == 0]]></printWhenExpression>
 					</reportElement>
-					<box>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -555,7 +555,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<reportElement style="FBold" isPrintRepeatedValues="false" x="312" y="0" width="60" height="40" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="804b0f93-badd-41fe-8f2f-02fc3ba2a318">
 						<printWhenExpression><![CDATA[$V{PAGE_COUNT} == 0]]></printWhenExpression>
 					</reportElement>
-					<box>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -570,7 +570,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<reportElement style="FBold" isPrintRepeatedValues="false" x="432" y="0" width="60" height="40" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="f41edeac-b412-4a3e-b906-2a3408a929d6">
 						<printWhenExpression><![CDATA[$V{PAGE_COUNT} == 0]]></printWhenExpression>
 					</reportElement>
-					<box>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -585,7 +585,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<reportElement style="FBold" isPrintRepeatedValues="false" x="372" y="0" width="60" height="40" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="6895815a-4423-453b-8611-2f6fff9d0a38">
 						<printWhenExpression><![CDATA[$V{PAGE_COUNT} == 0]]></printWhenExpression>
 					</reportElement>
-					<box>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -818,7 +818,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
 			<textField pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="192" y="0" width="60" height="20" uuid="a2f362ba-136b-4219-8bcd-a37b637ab87d"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -831,7 +831,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="372" y="0" width="60" height="20" uuid="ce1e77ee-f3ef-4816-a1d7-bcb06ca95d5e"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -844,7 +844,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="252" y="0" width="60" height="20" uuid="0721846e-01ff-4cfb-ba00-97a16c573ec7"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -857,7 +857,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="312" y="0" width="60" height="20" uuid="3895c4f6-42d7-4f8e-8018-daf8cda5ad01"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -870,7 +870,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="552" y="0" width="60" height="20" uuid="f6cd466a-0f53-4723-af94-98ca317d3c99"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -883,7 +883,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="132" y="0" width="60" height="20" uuid="299a03f8-fb74-4baa-9b2c-43e90d9bcf7f"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -896,7 +896,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="492" y="0" width="60" height="20" uuid="2034fc14-6feb-434c-9b4e-b2612ad786aa"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -909,7 +909,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="432" y="0" width="60" height="20" uuid="83a03e15-f876-43f1-b251-7201a5e948c6"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -922,7 +922,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="672" y="0" width="60" height="20" uuid="d4308c72-9f53-4f55-8ebb-a359e1dd43bc"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -948,7 +948,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="732" y="0" width="70" height="20" uuid="08cbda34-7270-4790-8bb9-ee354130431c"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -961,7 +961,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="612" y="0" width="60" height="20" uuid="7ba73d3c-1ed4-478a-80c5-7af2efa85c77"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>

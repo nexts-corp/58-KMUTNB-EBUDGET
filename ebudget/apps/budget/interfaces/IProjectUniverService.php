@@ -14,7 +14,6 @@ interface IProjectUniverService {
      * @name getLayouts
      * @uri /getLayouts
      * @description ดึงโครงสร้างโครงการ
-     * @param int budgetPeriodId ปีงบประมาณ
      * @param int facultyId รหัสหน่วยงาน
      * @return String[] layouts
      */ 

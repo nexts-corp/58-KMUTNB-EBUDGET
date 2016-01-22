@@ -35,4 +35,14 @@ interface IReport3DService
      */
     public function listL3DFund();
 
+    /**
+     * @name bgsetting
+     * @uri /bgsetting
+     * @param String periodId
+     * @description L3D_Fundgroup
+     * @return String[] status Description
+     */
+    public function budgetSetting($periodId);
+
+
 }

@@ -24,346 +24,420 @@
         <div class="container">
             <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
                 <li class="active">
-                    <button id="BtnSave" disabled="disabled" class="btn btn-success"><i class="fa fa-floppy-o"> ปิดยอดสรุปงบประมาณ</i></button>
+                    <button id="BtnSave" disabled="disabled" class="btn btn-success"><i class="fa fa-floppy-o">
+                        ปิดยอดสรุปงบประมาณ</i></button>
                 </li>
             </ul>
         </div>
     </div>
 
     <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    
-                    <span class="text-bold text-info">ระบบค้นหา</span>
-                                    <fieldset style="border: 1px solid #cccccc; margin: 0 0 20px 0; padding: 0 0 20px 0;">
-                                        <div class="col-sm-12" style="margin-top: 20px;">
-                                            <div class="col-sm-6">
-                                                <label class="col-sm-4 control-label text-right">ปีงบประมาณ :</label>
-                                                <div class="col-sm-8">
-                                                    <select class="form-control listYear"></select> 
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <label class="col-sm-4 control-label text-right">หน่วยงาน/คณะ :</label>
-                                                <div class="col-sm-8">
-                                                     <select class="form-control" id="searchDept"></select> 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                    
-                    <div class="tabs">
-                    
-                        <ul id="tabMenu" class="nav nav-tabs">
-                            <li class="active">
-                                <a href="#tab-BudgetAfterReview" data-toggle="tab" aria-expanded="false">งบประมาณก่อนส่ง สนง.</a>
-                            </li>
-                            <li class="">
-                                <a href="#tab-BudgetFinal" data-toggle="tab" aria-expanded="true">งประมาณหลังส่ง สนง.</a>
-                            </li>
-                        </ul>
-                        <div id="tabContent" class="tab-content">
-                            <div id="tab-BudgetAfterReview" class="tab-pane active">
-                                    
-                                    <table id="table" class="table table-bordered table-striped table-condensed mb-none">
-                                        <thead>
-                                            <tr>
-                                                <th rowspan="3" class="text-center" style="vertical-align: middle; width:400px;">คณะ/หน่วยงาน</th>
-                                                <th colspan="3" class="text-center" style="vertical-align: middle; width:80px;">(1) งบบุคลากร</th>
-                                                <th colspan="9" class="text-center" style="vertical-align: middle; width:80px;">(2) เงินอุดหนุนทั่วไป</th>
-                                                <th rowspan="3" class="text-center" style="vertical-align: middle; width:100px;">รวม</th>
-                                                <th rowspan="3" class="text-center" style="vertical-align: middle; width:100px;">เครื่องมือ</th>
-                                            </tr>
-                                            <tr>
-                                                <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">เงินเดือน</th>
-                                                <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">ค่าจ้างประจำ</th>
-                                                <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">ค่าตอบแทนพนักงาน</th>
+        <div class="row">
+            <div class="col-md-12">
 
-                                                <th colspan="2" class="text-center" style="vertical-align: middle; width:80px;">เงินอุดหนุนเป็นค่าใช้จ่ายบุคลากร</th>
-                                                <th colspan="4" class="text-center" style="vertical-align: middle; width:80px;">เงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน</th>
+                <span class="text-bold text-info">ระบบค้นหา</span>
+                <fieldset style="border: 1px solid #cccccc; margin: 0 0 20px 0; padding: 0 0 20px 0;">
+                    <div class="col-sm-12" style="margin-top: 20px;">
+                        <div class="col-sm-6">
+                            <label class="col-sm-4 control-label text-right">ปีงบประมาณ :</label>
 
-                                                <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">เงินอุดหนุนเป็นค่าครุภัณฑ์</th>
-                                                <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">เงินอุดหนุนเป็นค่าที่ดิน/สิ่งก่อสร้าง</th>
-                                                <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">เงินอุดหนุนอื่นๆ</th>
-                                            </tr>
-                                            <tr>
-                                                <th class="text-center" style="vertical-align: middle; width:80px;">เงินเดือน</th>
-                                                <th class="text-center" style="vertical-align: middle; width:80px;">ค่าจ้างชั่วคราว</th>
-                                                <th class="text-center" style="vertical-align: middle; width:80px;">ค่าตอบแทน</th>
-                                                <th class="text-center" style="vertical-align: middle; width:80px;">ค่าใช้สอย</th>
-                                                <th class="text-center" style="vertical-align: middle; width:80px;">ค่าวัสดุ</th>
-                                                <th class="text-center" style="vertical-align: middle; width:80px;">ค่าสาธารณูปโภค</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td colspan="15" class="text-center">-</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            <div class="col-sm-8">
+                                <select class="form-control listYear"></select>
                             </div>
-                            <div id="tab-BudgetFinal" class="tab-pane">
-                               
-                                    <table id="table2" class="table table-bordered table-striped table-condensed mb-none">
-                                        <thead>
-                                            <tr>
-                                                <th rowspan="3" class="text-center" style="vertical-align: middle; width:400px;">คณะ/หน่วยงาน</th>
-                                                <th colspan="3" class="text-center" style="vertical-align: middle; width:80px;">(1) งบบุคลากร</th>
-                                                <th colspan="9" class="text-center" style="vertical-align: middle; width:80px;">(2) เงินอุดหนุนทั่วไป</th>
-                                                <th rowspan="3" class="text-center" style="vertical-align: middle; width:100px;">รวม</th>
-                                                <th rowspan="3" class="text-center" style="vertical-align: middle; width:100px;">เครื่องมือ</th>
-                                            </tr>
-                                            <tr>
-                                                <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">เงินเดือน</th>
-                                                <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">ค่าจ้างประจำ</th>
-                                                <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">ค่าตอบแทนพนักงาน</th>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="col-sm-4 control-label text-right">หน่วยงาน/คณะ :</label>
 
-                                                <th colspan="2" class="text-center" style="vertical-align: middle; width:80px;">เงินอุดหนุนเป็นค่าใช้จ่ายบุคลากร</th>
-                                                <th colspan="4" class="text-center" style="vertical-align: middle; width:80px;">เงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน</th>
-
-                                                <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">เงินอุดหนุนเป็นค่าครุภัณฑ์</th>
-                                                <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">เงินอุดหนุนเป็นค่าที่ดิน/สิ่งก่อสร้าง</th>
-                                                <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">เงินอุดหนุนอื่นๆ</th>
-                                            </tr>
-                                            <tr>
-                                                <th class="text-center" style="vertical-align: middle; width:80px;">เงินเดือน</th>
-                                                <th class="text-center" style="vertical-align: middle; width:80px;">ค่าจ้างชั่วคราว</th>
-                                                <th class="text-center" style="vertical-align: middle; width:80px;">ค่าตอบแทน</th>
-                                                <th class="text-center" style="vertical-align: middle; width:80px;">ค่าใช้สอย</th>
-                                                <th class="text-center" style="vertical-align: middle; width:80px;">ค่าวัสดุ</th>
-                                                <th class="text-center" style="vertical-align: middle; width:80px;">ค่าสาธารณูปโภค</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td colspan="15" class="text-center">-</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="searchDept"></select>
                             </div>
-                            
                         </div>
                     </div>
-                </div>
-                
+                </fieldset>
 
-            
+                <div class="tabs">
+
+                    <ul id="tabMenu" class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#tab-BudgetAfterReview" data-toggle="tab" aria-expanded="false">งบประมาณก่อนส่ง
+                                สนง.</a>
+                        </li>
+                        <li class="">
+                            <a href="#tab-BudgetFinal" data-toggle="tab" aria-expanded="true">งประมาณหลังส่ง สนง.</a>
+                        </li>
+                    </ul>
+                    <div id="tabContent" class="tab-content">
+                        <div id="tab-BudgetAfterReview" class="tab-pane active">
+
+                            <table id="table" class="table table-bordered table-striped table-condensed mb-none">
+                                <thead>
+                                <tr>
+                                    <th rowspan="3" class="text-center" style="vertical-align: middle; width:400px;">
+                                        คณะ/หน่วยงาน
+                                    </th>
+                                    <th colspan="3" class="text-center" style="vertical-align: middle; width:80px;">(1)
+                                        งบบุคลากร
+                                    </th>
+                                    <th colspan="9" class="text-center" style="vertical-align: middle; width:80px;">(2)
+                                        เงินอุดหนุนทั่วไป
+                                    </th>
+                                    <th rowspan="3" class="text-center" style="vertical-align: middle; width:100px;">
+                                        รวม
+                                    </th>
+                                    <th rowspan="3" class="text-center" style="vertical-align: middle; width:100px;">
+                                        เครื่องมือ
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">
+                                        เงินเดือน
+                                    </th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">
+                                        ค่าจ้างประจำ
+                                    </th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">
+                                        ค่าตอบแทนพนักงาน
+                                    </th>
+
+                                    <th colspan="2" class="text-center" style="vertical-align: middle; width:80px;">
+                                        เงินอุดหนุนเป็นค่าใช้จ่ายบุคลากร
+                                    </th>
+                                    <th colspan="4" class="text-center" style="vertical-align: middle; width:80px;">
+                                        เงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน
+                                    </th>
+
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">
+                                        เงินอุดหนุนเป็นค่าครุภัณฑ์
+                                    </th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">
+                                        เงินอุดหนุนเป็นค่าที่ดิน/สิ่งก่อสร้าง
+                                    </th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">
+                                        เงินอุดหนุนอื่นๆ
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th class="text-center" style="vertical-align: middle; width:80px;">เงินเดือน</th>
+                                    <th class="text-center" style="vertical-align: middle; width:80px;">
+                                        ค่าจ้างชั่วคราว
+                                    </th>
+                                    <th class="text-center" style="vertical-align: middle; width:80px;">ค่าตอบแทน</th>
+                                    <th class="text-center" style="vertical-align: middle; width:80px;">ค่าใช้สอย</th>
+                                    <th class="text-center" style="vertical-align: middle; width:80px;">ค่าวัสดุ</th>
+                                    <th class="text-center" style="vertical-align: middle; width:80px;">ค่าสาธารณูปโภค
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td colspan="15" class="text-center">-</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="tab-BudgetFinal" class="tab-pane">
+
+                            <table id="table2" class="table table-bordered table-striped table-condensed mb-none">
+                                <thead>
+                                <tr>
+                                    <th rowspan="3" class="text-center" style="vertical-align: middle; width:400px;">
+                                        คณะ/หน่วยงาน
+                                    </th>
+                                    <th colspan="3" class="text-center" style="vertical-align: middle; width:80px;">(1)
+                                        งบบุคลากร
+                                    </th>
+                                    <th colspan="9" class="text-center" style="vertical-align: middle; width:80px;">(2)
+                                        เงินอุดหนุนทั่วไป
+                                    </th>
+                                    <th rowspan="3" class="text-center" style="vertical-align: middle; width:100px;">
+                                        รวม
+                                    </th>
+                                    <th rowspan="3" class="text-center" style="vertical-align: middle; width:100px;">
+                                        เครื่องมือ
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">
+                                        เงินเดือน
+                                    </th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">
+                                        ค่าจ้างประจำ
+                                    </th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">
+                                        ค่าตอบแทนพนักงาน
+                                    </th>
+
+                                    <th colspan="2" class="text-center" style="vertical-align: middle; width:80px;">
+                                        เงินอุดหนุนเป็นค่าใช้จ่ายบุคลากร
+                                    </th>
+                                    <th colspan="4" class="text-center" style="vertical-align: middle; width:80px;">
+                                        เงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน
+                                    </th>
+
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">
+                                        เงินอุดหนุนเป็นค่าครุภัณฑ์
+                                    </th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">
+                                        เงินอุดหนุนเป็นค่าที่ดิน/สิ่งก่อสร้าง
+                                    </th>
+                                    <th rowspan="2" class="text-center" style="vertical-align: middle; width:80px;">
+                                        เงินอุดหนุนอื่นๆ
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th class="text-center" style="vertical-align: middle; width:80px;">เงินเดือน</th>
+                                    <th class="text-center" style="vertical-align: middle; width:80px;">
+                                        ค่าจ้างชั่วคราว
+                                    </th>
+                                    <th class="text-center" style="vertical-align: middle; width:80px;">ค่าตอบแทน</th>
+                                    <th class="text-center" style="vertical-align: middle; width:80px;">ค่าใช้สอย</th>
+                                    <th class="text-center" style="vertical-align: middle; width:80px;">ค่าวัสดุ</th>
+                                    <th class="text-center" style="vertical-align: middle; width:80px;">ค่าสาธารณูปโภค
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td colspan="15" class="text-center">-</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
 </div>
 
 
-
 <div class="modal fade " id="ApproveShowEdit" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-        <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">แก้ไข้งบประมาณ</h4>
-      </div>
-      <div class="modal-body">
-        <span class="text-bold text-info">งบบุคลากร</span>
-        <fieldset style="border: 1px solid #cccccc; margin: 0 0 20px 0; padding: 0 0 20px 0;">
-            <div class="col-sm-12" style="margin-top: 20px;">
-                <div class="col-sm-6">
-                    <label class="col-sm-5 control-label text-right">เงินเดือน :</label>
-                    <div class="col-sm-7">
-                        <input type="hidden" id="DepartmentId">
-                        <input type="hidden" id="IndexArr">
-                        <input type="hidden" id="Rows">
-                        <input type="number" class="form-control text-right" id="b10100000">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">แก้ไข้งบประมาณ</h4>
+            </div>
+            <div class="modal-body">
+                <span class="text-bold text-info">งบบุคลากร</span>
+                <fieldset style="border: 1px solid #cccccc; margin: 0 0 20px 0; padding: 0 0 20px 0;">
+                    <div class="col-sm-12" style="margin-top: 20px;">
+                        <div class="col-sm-6">
+                            <label class="col-sm-5 control-label text-right">เงินเดือน :</label>
+
+                            <div class="col-sm-7">
+                                <input type="hidden" id="DepartmentId">
+                                <input type="hidden" id="IndexArr">
+                                <input type="hidden" id="Rows">
+                                <input type="number" class="form-control text-right" id="b10100000">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="col-sm-5 control-label text-right">ค่าจ้างประจำ :</label>
+
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control text-right" id="b10200000">
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-6">
-                    <label class="col-sm-5 control-label text-right">ค่าจ้างประจำ :</label>
-                    <div class="col-sm-7">
-                        <input type="number" class="form-control text-right" id="b10200000">
+
+                    <div class="col-sm-12" style="margin-top: 20px;">
+                        <div class="col-sm-6">
+                            <label class="col-sm-5 control-label text-right">ค่าตอบแทนพนักงาน :</label>
+
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control text-right" id="b10300000">
+                            </div>
+                        </div>
+
                     </div>
-                </div>
+                </fieldset>
+                <span class="text-bold text-info">เงินอุดหนุนทั่วไป</span>
+                <fieldset style="border: 1px solid #cccccc; margin: 0 0 20px 0; padding: 0 0 20px 0;">
+                    <div class="col-sm-12" style="margin-top: 20px;">
+                        <div class="col-sm-6">
+                            <label class="col-sm-5 control-label text-right">เงินเดือน :</label>
+
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control text-right" id="b20101000">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="col-sm-5 control-label text-right">ค่าจ้างชั่วคราว :</label>
+
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control text-right" id="b20102000">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12" style="margin-top: 20px;">
+                        <div class="col-sm-6">
+                            <label class="col-sm-5 control-label text-right">ค่าตอบแทน :</label>
+
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control text-right" id="b20201000">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="col-sm-5 control-label text-right">ค่าใช้สอย :</label>
+
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control text-right" id="b20202000">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12" style="margin-top: 20px;">
+                        <div class="col-sm-6">
+                            <label class="col-sm-5 control-label text-right">ค่าวัสดุ :</label>
+
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control text-right" id="b20203000">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="col-sm-5 control-label text-right">ค่าสาธารณูปโภค :</label>
+
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control text-right" id="b20204000">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" style="margin-top: 20px;">
+                        <div class="col-sm-6">
+                            <label class="col-sm-5 control-label text-right">เงินอุดหนุนเป็นค่าครุภัณฑ์ :</label>
+
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control text-right" id="b20300000">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="col-sm-5 control-label text-right">เงินอุดหนุนเป็นค่าที่ดิน/สิ่งก่อสร้าง
+                                :</label>
+
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control text-right" id="b20400000">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" style="margin-top: 20px;">
+                        <div class="col-sm-6">
+                            <label class="col-sm-5 control-label text-right">เงินอุดหนุนอื่นๆ :</label>
+
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control text-right" id="b20500000">
+                            </div>
+                        </div>
+
+                    </div>
+                </fieldset>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                <button type="button" class="btn btn-primary" id="ApproveSaveEdit">บันทึกข้อมูล</button>
             </div>
 
-            <div class="col-sm-12" style="margin-top: 20px;">
-                <div class="col-sm-6">
-                    <label class="col-sm-5 control-label text-right">ค่าตอบแทนพนักงาน :</label>
-                    <div class="col-sm-7">
-                        <input type="number" class="form-control text-right" id="b10300000">
-                    </div>
-                </div>
-                
-            </div>
-        </fieldset>
-        <span class="text-bold text-info">เงินอุดหนุนทั่วไป</span>
-        <fieldset style="border: 1px solid #cccccc; margin: 0 0 20px 0; padding: 0 0 20px 0;">
-            <div class="col-sm-12" style="margin-top: 20px;">
-                <div class="col-sm-6">
-                    <label class="col-sm-5 control-label text-right">เงินเดือน :</label>
-                    <div class="col-sm-7">
-                        <input type="number" class="form-control text-right" id="b20101000">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <label class="col-sm-5 control-label text-right">ค่าจ้างชั่วคราว :</label>
-                    <div class="col-sm-7">
-                        <input type="number" class="form-control text-right" id="b20102000">
-                    </div>
-                </div>
-            </div>
 
-            <div class="col-sm-12" style="margin-top: 20px;">
-                <div class="col-sm-6">
-                    <label class="col-sm-5 control-label text-right">ค่าตอบแทน :</label>
-                    <div class="col-sm-7">
-                        <input type="number" class="form-control text-right" id="b20201000">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <label class="col-sm-5 control-label text-right">ค่าใช้สอย :</label>
-                    <div class="col-sm-7">
-                        <input type="number" class="form-control text-right" id="b20202000">
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-sm-12" style="margin-top: 20px;">
-                <div class="col-sm-6">
-                    <label class="col-sm-5 control-label text-right">ค่าวัสดุ :</label>
-                    <div class="col-sm-7">
-                        <input type="number" class="form-control text-right" id="b20203000">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <label class="col-sm-5 control-label text-right">ค่าสาธารณูปโภค :</label>
-                    <div class="col-sm-7">
-                        <input type="number" class="form-control text-right" id="b20204000">
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12" style="margin-top: 20px;">
-                <div class="col-sm-6">
-                    <label class="col-sm-5 control-label text-right">เงินอุดหนุนเป็นค่าครุภัณฑ์ :</label>
-                    <div class="col-sm-7">
-                        <input type="number" class="form-control text-right" id="b20300000">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <label class="col-sm-5 control-label text-right">เงินอุดหนุนเป็นค่าที่ดิน/สิ่งก่อสร้าง :</label>
-                    <div class="col-sm-7">
-                        <input type="number" class="form-control text-right" id="b20400000">
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12" style="margin-top: 20px;">
-                <div class="col-sm-6">
-                    <label class="col-sm-5 control-label text-right">เงินอุดหนุนอื่นๆ :</label>
-                    <div class="col-sm-7">
-                        <input type="number" class="form-control text-right" id="b20500000">
-                    </div>
-                </div>
-               
-            </div>
-        </fieldset>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-        <button type="button" class="btn btn-primary" id="ApproveSaveEdit">บันทึกข้อมูล</button>
-      </div>
-        
-        
-        
+        </div>
     </div>
-  </div>
 </div>
 
 
 {{> footer}}
 <style>
-    .modal-dialog{
-        
+    .modal-dialog {
+
         width: 900px;
-        
+
     }
-    .dataTables_filter{
+
+    .dataTables_filter {
         display: none;
     }
-    #table{
+
+    #table {
         width: 2000px;
     }
-    #table2{
+
+    #table2 {
         width: 2000px;
     }
-    
+
 </style>
 
 <script>
-//ตัวแปรรหัสสำหรับใช้ค้นหา
-var bgId = ["10100000", //เงินเดือน
-            "10200000", //ค่าจ้างประจำ
-            "10300000", //ค่าตอบแทนพนักงานราชการ
-            "20101000", //เงินเดือน
-            "20102000", //ค่าจ้างชั่วคราว
-            "20201000", //ค่าตอบแทน
-            "20202000", //ค่าใช้สอย
-            "20203000", //ค่าวัสดุ
-            "20204000", //ค่าสาธารนูปโภค
-            "20300000", //เงินอุดหนุนเป็นค่าครุภัณฑ์
-            "20400000", //เงินอุดหนุนเป็นค่าที่ดิน/สิ่งก่อสร้าง
-            "20500000"  //เงินอุดหนุนอื่นๆ
-            ];    
-var status=true;   
-var countData=0;
-$(function(){    
-    
-    var datas = callAjax("{{_context_path}}/api/common/lookup/listYearOld", "post",{}, "json");
-    var years='{{year}}';
-    $.each(datas["lists"],function(key,value){
-        $(".listYear").append('<option value="'+ value["year"] +'">'+ value["year"] +'</option>');
-        
-    });
-    if(years!=""){
-        $(".listYear").val(years);
-    }
-        
-    loadApprove();
-    checkStatus();
-    
-    $( ".listYear" ).unbind("click").change(function() {
+    //ตัวแปรรหัสสำหรับใช้ค้นหา
+    var bgId = ["10100000", //เงินเดือน
+        "10200000", //ค่าจ้างประจำ
+        "10300000", //ค่าตอบแทนพนักงานราชการ
+        "20101000", //เงินเดือน
+        "20102000", //ค่าจ้างชั่วคราว
+        "20201000", //ค่าตอบแทน
+        "20202000", //ค่าใช้สอย
+        "20203000", //ค่าวัสดุ
+        "20204000", //ค่าสาธารนูปโภค
+        "20300000", //เงินอุดหนุนเป็นค่าครุภัณฑ์
+        "20400000", //เงินอุดหนุนเป็นค่าที่ดิน/สิ่งก่อสร้าง
+        "20500000"  //เงินอุดหนุนอื่นๆ
+    ];
+    var status = true;
+    var countData = 0;
+    $(function () {
+
+        var datas = callAjax("{{_context_path}}/api/common/lookup/listYearOld", "post", {}, "json");
+        var years = '{{year}}';
+        $.each(datas["lists"], function (key, value) {
+            $(".listYear").append('<option value="' + value["year"] + '">' + value["year"] + '</option>');
+
+        });
+        if (years != "") {
+            $(".listYear").val(years);
+        }
+
         loadApprove();
-        loadApproveFinal();
         checkStatus();
-    });
+
+        $(".listYear").unbind("click").change(function () {
+            loadApprove();
+            loadApproveFinal();
+            checkStatus();
+        });
 
 
+        $('[href="#tab-BudgetFinal"]').unbind("click").click(function () {
+            loadApproveFinal();
+        });
 
-    
-    $( '[href="#tab-BudgetFinal"]' ).unbind("click").click(function() {
-        loadApproveFinal();
-    });
-
-    $("#BtnSave").unbind("click").click(function () {
+        $("#BtnSave").unbind("click").click(function () {
             //alert(budgetPeriodId);
             saveApprove();
-       
+
             //approveSum/approveSumBg/2558
 
-    });
-        
-});
+        });
 
-function saveApprove(){
-    
-    var year = $(".listYear").val();
-    
-    swal({
-            title: "ปิดยอดสรุปงบประมาณ",
-            text: "การปิดยอดสรุปงบประมาณ เป็นขั้นตอนหลังจากส่งข้อมูลให้ สนง. ตรวจสอบแล้ว ข้อมูลนี้จะไม่สามารถแก้ไขได้อีก ท่านต้องการปิดยอดสรุปงบประมาณใช่หรือไม่",
-            type: "info",
-            showCancelButton: true,
-            closeOnConfirm: false,
-            confirmButtonText: "ยืนยันการทำงาน"
-        },
-        function () {
-    
-                    var datas = callAjax("{{_context_path}}/api/budget/approveSum/closeBudget", "post",{year: year}, "json");
+    });
+
+    function saveApprove() {
+
+        var year = $(".listYear").val();
+
+        swal({
+                    title: "ปิดยอดสรุปงบประมาณ",
+                    text: "การปิดยอดสรุปงบประมาณ เป็นขั้นตอนหลังจากส่งข้อมูลให้ สนง. ตรวจสอบแล้ว ข้อมูลนี้จะไม่สามารถแก้ไขได้อีก ท่านต้องการปิดยอดสรุปงบประมาณใช่หรือไม่",
+                    type: "info",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    confirmButtonText: "ยืนยันการทำงาน"
+                },
+                function () {
+
+                    var datas = callAjax("{{_context_path}}/api/budget/approveSum/closeBudget", "post", {year: year}, "json");
 
                     if (datas["result"] == true) {
 
@@ -379,647 +453,652 @@ function saveApprove(){
                             window.location = "{{_context_path}}/api/budget/view/finalAll";
                         });
 
+                        updateBudgetSetting();
+
                     } else {
                         swal("บันทึกไม่สำเร็จ", "", "error");
                     }
-        });
-}
+                });
+    }
 
-function loadApprove(){
-    
-    var year = $(".listYear").val();
-    var datas = callAjax("{{_context_path}}/api/budget/approveSum/LoadpproveSum", "post",{budgetPeriodId: year}, "json");
-    
-    
-    var Dept="";
-    var valueApprove=[];
-    var valueDept={};
-    var number=0;
-    var keys=0;
-    for(var i=0; i<datas["result"].length; i++){
-            if(datas["result"][i]["DEPARTMENTNAME"]!=Dept){
-                Dept=datas["result"][i]["DEPARTMENTNAME"];
-                var valueBg=[];
-                for(var a=0; a<datas["result"].length; a++){
-                    if(datas["result"][a]["DEPARTMENTNAME"]==Dept){
-                        valueBg[datas["result"][a]["BudgetTypeId"]]=datas["result"][a]["BudgetAfterReview"];
+    function updateBudgetSetting() {
+
+        var year = $(".listYear").val();
+        var datas = callAjax("{{_context_path}}/api/budget/approveSum/updatebgsetting", "post", {periodId: year}, "json");
+    }
+
+    function loadApprove() {
+
+        var year = $(".listYear").val();
+        var datas = callAjax("{{_context_path}}/api/budget/approveSum/LoadpproveSum", "post", {budgetPeriodId: year}, "json");
+
+
+        var Dept = "";
+        var valueApprove = [];
+        var valueDept = {};
+        var number = 0;
+        var keys = 0;
+        for (var i = 0; i < datas["result"].length; i++) {
+            if (datas["result"][i]["DEPARTMENTNAME"] != Dept) {
+                Dept = datas["result"][i]["DEPARTMENTNAME"];
+                var valueBg = [];
+                for (var a = 0; a < datas["result"].length; a++) {
+                    if (datas["result"][a]["DEPARTMENTNAME"] == Dept) {
+                        valueBg[datas["result"][a]["BudgetTypeId"]] = datas["result"][a]["BudgetAfterReview"];
                     }
                 }
-                valueDept[Dept]=Dept;
-                valueApprove.push({Dept:Dept,DepartmentId:datas["result"][i]["DepartmentId"],data:valueBg});
+                valueDept[Dept] = Dept;
+                valueApprove.push({Dept: Dept, DepartmentId: datas["result"][i]["DepartmentId"], data: valueBg});
                 keys++;
             }
             countData++;
-            if(datas["result"][i]["BudgetStatus"]=="N")status=false;
-            
-    }
-    //console.log(valueApprove);
-    var t = $("#table").DataTable({
-                "destroy": true,
-                "data": valueApprove,
-                "order": [0, 'asc'],
-                "iDisplayLength": 50,
-                "bAutoWidth":false,
-                "scrollY":"300px",
-                "scrollX":true,
-                "scrollCollapse": true,
-                "fixedColumns":   {
-                    leftColumns: 1,
-                    rightColumns: 1
-                },
-                
-                /*
-                "drawCallback":function(oSetting){
-                    var api=this.api();
-                    var rows=api.rows({page:'current'}).nodes();
-                    api.column(0,{page:'current'}).data().each(function(group,i){
-                        $(rows).eq(i).before('<tr><td colspan="15" class="text-left"><strong>'+valueApprove[i]["Dept"]+'</strong></td></tr>');
-                    });
-                },
-                */
-                "columnDefs": [
-                    
-                    {
-                        "targets": 0,
-                        "orderable": true,
-                        "data": "Dept",
-                        "width":"400px"
-                        //"sClass": "col-md-3"
-                        
-                    },{
-                        "targets": 1,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right ",
-                        render:function(data){
-                            return checkValueTable(data[bgId[0]]);
-                            
-                        }
-                    },{
-                        "targets": 2,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                            return checkValueTable(data[bgId[1]]);
-                        }
-                    },{
-                        "targets": 3,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                            return checkValueTable(data[bgId[2]]);
-                           
-                            
-                        }
-                    },{
-                        "targets": 4,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                            return checkValueTable(data[bgId[3]]);
-                            
-                            
-                        }
-                    },{
-                        "targets": 5,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                            return checkValueTable(data[bgId[4]]); 
-                            
-                            
-                        }
-                    },{
-                        "targets": 6,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                            return checkValueTable(data[bgId[5]]);
-                            
-                            
-                        }
-                    },{
-                        "targets": 7,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                            return checkValueTable(data[bgId[6]]);
-                        }
-                    },{
-                        "targets": 8,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                            return checkValueTable(data[bgId[7]]);
-                        }
-                    },{
-                        "targets": 9,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                            return checkValueTable(data[bgId[8]]);
-                        }
-                    },{
-                        "targets": 10,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                            return checkValueTable(data[bgId[9]]);
-                        }
-                    },{
-                        "targets": 11,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                            return checkValueTable(data[bgId[10]]);
-                        }
-                    },{
-                        "targets": 12,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                           return checkValueTable(data[bgId[11]]);
-                        }
-                    },{
-                        "targets": 13,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                            var sum=0;
-                            for(var j=0; j<12; j++){
-                                if((data[bgId[j]])!=null){
-                                    sum+=parseFloat(data[bgId[j]]);
-                                }
-                            }
-                            return $.number(sum, 2 );
-                        }
-                    },{
-                        "targets": 14,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "DepartmentId",
-                        "sClass": "text-center",
-                        render:function(data){
-                            if(status=="true"){
-                                return '<button class="btn btn-warning btn-xs ApproveEdit" data-DepartmentId="'+data+'" type="submit"><i class="fa fa-pencil-square-o"></i> แก้ไข</button>';
-                            }else{
-                                return '<button class="btn btn-warning btn-xs ApproveEdit" data-DepartmentId="'+data+'" disabled type="submit"><i class="fa fa-pencil-square-o"></i> แก้ไข</button>';
-                                
+            if (datas["result"][i]["BudgetStatus"] == "N")status = false;
+
+        }
+        //console.log(valueApprove);
+        var t = $("#table").DataTable({
+            "destroy": true,
+            "data": valueApprove,
+            "order": [0, 'asc'],
+            "iDisplayLength": 50,
+            "bAutoWidth": false,
+            "scrollY": "300px",
+            "scrollX": true,
+            "scrollCollapse": true,
+            "fixedColumns": {
+                leftColumns: 1,
+                rightColumns: 1
+            },
+
+            /*
+             "drawCallback":function(oSetting){
+             var api=this.api();
+             var rows=api.rows({page:'current'}).nodes();
+             api.column(0,{page:'current'}).data().each(function(group,i){
+             $(rows).eq(i).before('<tr><td colspan="15" class="text-left"><strong>'+valueApprove[i]["Dept"]+'</strong></td></tr>');
+             });
+             },
+             */
+            "columnDefs": [
+
+                {
+                    "targets": 0,
+                    "orderable": true,
+                    "data": "Dept",
+                    "width": "400px"
+                    //"sClass": "col-md-3"
+
+                }, {
+                    "targets": 1,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right ",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[0]]);
+
+                    }
+                }, {
+                    "targets": 2,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[1]]);
+                    }
+                }, {
+                    "targets": 3,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[2]]);
+
+
+                    }
+                }, {
+                    "targets": 4,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[3]]);
+
+
+                    }
+                }, {
+                    "targets": 5,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[4]]);
+
+
+                    }
+                }, {
+                    "targets": 6,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[5]]);
+
+
+                    }
+                }, {
+                    "targets": 7,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[6]]);
+                    }
+                }, {
+                    "targets": 8,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[7]]);
+                    }
+                }, {
+                    "targets": 9,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[8]]);
+                    }
+                }, {
+                    "targets": 10,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[9]]);
+                    }
+                }, {
+                    "targets": 11,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[10]]);
+                    }
+                }, {
+                    "targets": 12,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[11]]);
+                    }
+                }, {
+                    "targets": 13,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        var sum = 0;
+                        for (var j = 0; j < 12; j++) {
+                            if ((data[bgId[j]]) != null) {
+                                sum += parseFloat(data[bgId[j]]);
                             }
                         }
+                        return $.number(sum, 2);
                     }
-                    
-                ]
-            });
-            
-            search = '<option value="" selected="selected">ทั้งหมด</option>';
-            $.each(valueDept, function (key, value) {
-                search += '<option value="' + value + '">' + value + '</option>';
-            });
-            $("#searchDept").html(search).select2().change(function() {
-                t.columns(0).search(this.value).draw();
-            });
+                }, {
+                    "targets": 14,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "DepartmentId",
+                    "sClass": "text-center",
+                    render: function (data) {
+                        if (status == "true") {
+                            return '<button class="btn btn-warning btn-xs ApproveEdit" data-DepartmentId="' + data + '" type="submit"><i class="fa fa-pencil-square-o"></i> แก้ไข</button>';
+                        } else {
+                            return '<button class="btn btn-warning btn-xs ApproveEdit" data-DepartmentId="' + data + '" disabled type="submit"><i class="fa fa-pencil-square-o"></i> แก้ไข</button>';
 
-            
-            $('.ApproveEdit').unbind("click").click(function () {
-                
-                
-                var DepartmentId=$(this).attr("data-DepartmentId");
-                var Rows=$(this).closest("tr").index();
-                var tr = $(this).closest("tr");
-                var IndexArr;
-                
-                $.each(valueApprove, function (key, value) {
-                    if(value["DepartmentId"]==DepartmentId){
-                        IndexArr=key;
-                    }
-                });
-                
-                $.each(bgId, function (key, value) {
-                    $('#b'+value).val(valueApprove[IndexArr]["data"][value]);
-                    //console.log($(valueApprove[IndexArr]["data"][value]));
-                    if(valueApprove[IndexArr]["data"][value]==null){
-                        $('#b'+value).prop('readonly', true);
-                    }else{
-                        $('#b'+value).prop('readonly', false);
-                        
-                    }
-                });
-                
-                $('#ApproveShowEdit').modal('show');
-                
-                $("#ApproveSaveEdit").unbind("click").click(function () { 
-                    
-                    var jdata = [];
-                    var OpjectData={};
-
-                    $.each(bgId, function (key, value) {
-                        var data = {};
-                        data['deptId'] = DepartmentId;
-                        data['bgPeriodId'] = year;
-                        data['bgTypeId'] = value;
-                        data['budget']=$('#b'+value).val();
-                        jdata.push(data);
-                    });
-                    OpjectData['data'] = jdata;
-                    
-
-                    OpjectData['type'] = "BudgetAfterReview";
-                    
-                    
-                    var datas=callAjax('{{_context_path}}/api/budget/approveSum/updateApproveSum', 'post', jsonEncode(OpjectData),'json');
-                    
-                    if(datas["result"]==true){
-                        var sum=0;
-                        $.each(bgId, function (key, value) {
-                            if($('#b'+value).val()!=""){
-                                sum+=parseFloat($('#b'+value).val());
-                                
-                                valueApprove[IndexArr]["data"][value]=$('#b'+value).val();
-                            }
-                            tr.find("td").eq(key+1).html(checkValue($('#b'+value).val()));
-                            
-                        });
-                        
-                        
-                       
-                        tr.find("td").eq(13).html(checkValue(sum));
-
-        
-                        $('#ApproveShowEdit').modal('hide');
-                        
-                    }else{
-                        
-                        //alert("NO");
-                        $('#ApproveShowEdit').modal('hide');
-                        sweetAlert("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลได้", "error");
-                    }
-                    
-                    
-                });
-                
-            });
-
-            
-}
-
-function loadApproveFinal(){
-    
-    var year = $(".listYear").val();
-    var datas = callAjax("{{_context_path}}/api/budget/approveSum/LoadpproveSum", "post",{budgetPeriodId: year}, "json");
-    
-    
-    var Dept="";
-    var valueApproveFinal=[];
-    var valueDept={};
-    var number=0;
-    var keys=0;
-    for(var i=0; i<datas["result"].length; i++){
-            if(datas["result"][i]["DEPARTMENTNAME"]!=Dept){
-                Dept=datas["result"][i]["DEPARTMENTNAME"];
-                var valueBg=[];
-                for(var a=0; a<datas["result"].length; a++){
-                    if(datas["result"][a]["DEPARTMENTNAME"]==Dept){
-                        valueBg[datas["result"][a]["BudgetTypeId"]]=datas["result"][a]["BudgetFinal"];
+                        }
                     }
                 }
-                valueDept[Dept]=Dept;
-                valueApproveFinal.push({Dept:Dept,DepartmentId:datas["result"][i]["DepartmentId"],data:valueBg});
+
+            ]
+        });
+
+        search = '<option value="" selected="selected">ทั้งหมด</option>';
+        $.each(valueDept, function (key, value) {
+            search += '<option value="' + value + '">' + value + '</option>';
+        });
+        $("#searchDept").html(search).select2().change(function () {
+            t.columns(0).search(this.value).draw();
+        });
+
+
+        $('.ApproveEdit').unbind("click").click(function () {
+
+
+            var DepartmentId = $(this).attr("data-DepartmentId");
+            var Rows = $(this).closest("tr").index();
+            var tr = $(this).closest("tr");
+            var IndexArr;
+
+            $.each(valueApprove, function (key, value) {
+                if (value["DepartmentId"] == DepartmentId) {
+                    IndexArr = key;
+                }
+            });
+
+            $.each(bgId, function (key, value) {
+                $('#b' + value).val(valueApprove[IndexArr]["data"][value]);
+                //console.log($(valueApprove[IndexArr]["data"][value]));
+                if (valueApprove[IndexArr]["data"][value] == null) {
+                    $('#b' + value).prop('readonly', true);
+                } else {
+                    $('#b' + value).prop('readonly', false);
+
+                }
+            });
+
+            $('#ApproveShowEdit').modal('show');
+
+            $("#ApproveSaveEdit").unbind("click").click(function () {
+
+                var jdata = [];
+                var OpjectData = {};
+
+                $.each(bgId, function (key, value) {
+                    var data = {};
+                    data['deptId'] = DepartmentId;
+                    data['bgPeriodId'] = year;
+                    data['bgTypeId'] = value;
+                    data['budget'] = $('#b' + value).val();
+                    jdata.push(data);
+                });
+                OpjectData['data'] = jdata;
+
+
+                OpjectData['type'] = "BudgetAfterReview";
+
+
+                var datas = callAjax('{{_context_path}}/api/budget/approveSum/updateApproveSum', 'post', jsonEncode(OpjectData), 'json');
+
+                if (datas["result"] == true) {
+                    var sum = 0;
+                    $.each(bgId, function (key, value) {
+                        if ($('#b' + value).val() != "") {
+                            sum += parseFloat($('#b' + value).val());
+
+                            valueApprove[IndexArr]["data"][value] = $('#b' + value).val();
+                        }
+                        tr.find("td").eq(key + 1).html(checkValue($('#b' + value).val()));
+
+                    });
+
+
+                    tr.find("td").eq(13).html(checkValue(sum));
+
+
+                    $('#ApproveShowEdit').modal('hide');
+
+                } else {
+
+                    //alert("NO");
+                    $('#ApproveShowEdit').modal('hide');
+                    sweetAlert("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลได้", "error");
+                }
+
+
+            });
+
+        });
+
+
+    }
+
+    function loadApproveFinal() {
+
+        var year = $(".listYear").val();
+        var datas = callAjax("{{_context_path}}/api/budget/approveSum/LoadpproveSum", "post", {budgetPeriodId: year}, "json");
+
+
+        var Dept = "";
+        var valueApproveFinal = [];
+        var valueDept = {};
+        var number = 0;
+        var keys = 0;
+        for (var i = 0; i < datas["result"].length; i++) {
+            if (datas["result"][i]["DEPARTMENTNAME"] != Dept) {
+                Dept = datas["result"][i]["DEPARTMENTNAME"];
+                var valueBg = [];
+                for (var a = 0; a < datas["result"].length; a++) {
+                    if (datas["result"][a]["DEPARTMENTNAME"] == Dept) {
+                        valueBg[datas["result"][a]["BudgetTypeId"]] = datas["result"][a]["BudgetFinal"];
+                    }
+                }
+                valueDept[Dept] = Dept;
+                valueApproveFinal.push({Dept: Dept, DepartmentId: datas["result"][i]["DepartmentId"], data: valueBg});
                 keys++;
             }
-            if(datas["result"][i]["BudgetStatus"]=="N")status=false;
-    }
-    //console.log(valueApprove);
-    var t = $("#table2").DataTable({
-                "destroy": true,
-                "data": valueApproveFinal,
-                "order": [0, 'asc'],
-                "iDisplayLength": 50,
-                "bAutoWidth":false,
-
-                scrollCollapse: true,
-                paging:         false,
-                rowId: 'staffId',
-                fixedColumns:   {
-                    leftColumns: 1,
-                    rightColumns: 1
-                },
-                
-                /*
-                "drawCallback":function(oSetting){
-                    var api=this.api();
-                    var rows=api.rows({page:'current'}).nodes();
-                    api.column(0,{page:'current'}).data().each(function(group,i){
-                        $(rows).eq(i).before('<tr><td colspan="15" class="text-left"><strong>'+valueApprove[i]["Dept"]+'</strong></td></tr>');
-                    });
-                },
-                */
-                "columnDefs": [
-                    
-                    {
-                        "targets": 0,
-                        "orderable": true,
-                        "data": "Dept",
-                        "width":"400px"
-                        //"sClass": "col-md-3"
-                        
-                    },{
-                        "targets": 1,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right ",
-                        render:function(data){
-                            return checkValueTable(data[bgId[0]]);
-                            
-                        }
-                    },{
-                        "targets": 2,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                            return checkValueTable(data[bgId[1]]);
-                        }
-                    },{
-                        "targets": 3,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                            return checkValueTable(data[bgId[2]]);
-                           
-                            
-                        }
-                    },{
-                        "targets": 4,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                            return checkValueTable(data[bgId[3]]);
-                            
-                            
-                        }
-                    },{
-                        "targets": 5,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                            return checkValueTable(data[bgId[4]]); 
-                            
-                            
-                        }
-                    },{
-                        "targets": 6,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                            return checkValueTable(data[bgId[5]]);
-                            
-                            
-                        }
-                    },{
-                        "targets": 7,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                            return checkValueTable(data[bgId[6]]);
-                        }
-                    },{
-                        "targets": 8,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                            return checkValueTable(data[bgId[7]]);
-                        }
-                    },{
-                        "targets": 9,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                            return checkValueTable(data[bgId[8]]);
-                        }
-                    },{
-                        "targets": 10,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                            return checkValueTable(data[bgId[9]]);
-                        }
-                    },{
-                        "targets": 11,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                            return checkValueTable(data[bgId[10]]);
-                        }
-                    },{
-                        "targets": 12,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                           return checkValueTable(data[bgId[11]]);
-                        }
-                    },{
-                        "targets": 13,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "data",
-                        "sClass": "text-right",
-                        render:function(data){
-                            var sum=0;
-                            for(var j=0; j<12; j++){
-                                if((data[bgId[j]])!=null){
-                                    sum+=parseFloat(data[bgId[j]]);
-                                }
-                            }
-                            return $.number(sum, 2 );
-                        }
-                    },{
-                        "targets": 14,
-                        "searchable": false,
-                        "orderable": false,
-                        "data": "DepartmentId",
-                        "sClass": "text-center",
-                        render:function(data){
-                            
-                            if(status=="true"){
-                                return '<button class="btn btn-warning btn-xs ApproveEdit" data-DepartmentId="'+data+'" type="submit"><i class="fa fa-pencil-square-o"></i> แก้ไข</button>';
-                            }else{
-                                return '<button class="btn btn-warning btn-xs ApproveEdit" data-DepartmentId="'+data+'" disabled type="submit"><i class="fa fa-pencil-square-o"></i> แก้ไข</button>';
-                                
-                            }
-                        }
-                    }
-                    
-                ]
-            });
-            
-            search = '<option value="" selected="selected">ทั้งหมด</option>';
-            $.each(valueDept, function (key, value) {
-                search += '<option value="' + value + '">' + value + '</option>';
-            });
-            $("#searchDept").html(search).select2().change(function() {
-                t.columns(0).search(this.value).draw();
-            });
-            
-            $('.ApproveEdit').unbind("click").click(function () {
-                
-                
-                var DepartmentId=$(this).attr("data-DepartmentId");
-                var Rows=$(this).closest("tr").index();
-                var tr = $(this).closest("tr");
-                var IndexArr;
-                
-                $.each(valueApproveFinal, function (key, value) {
-                    if(value["DepartmentId"]==DepartmentId){
-                        IndexArr=key;
-                    }
-                });
-                
-                $.each(bgId, function (key, value) {
-                    $('#b'+value).val(valueApproveFinal[IndexArr]["data"][value]);
-                    //console.log($(valueApprove[IndexArr]["data"][value]));
-                    //console.log(valueApproveFinal[IndexArr]["data"][value]);
-                    if(valueApproveFinal[IndexArr]["data"][value]==null){
-                        $('#b'+value).prop('readonly', true);
-                    }else{
-                        $('#b'+value).prop('readonly', false);
-                        
-                    }
-                });
-                
-                $('#ApproveShowEdit').modal('show');
-                
-                $("#ApproveSaveEdit").unbind("click").click(function () { 
-                    
-                    var jdata = [];
-                    var OpjectData={};
-
-                    $.each(bgId, function (key, value) {
-                        var data = {};
-                        data['deptId'] = DepartmentId;
-                        data['bgPeriodId'] = year;
-                        data['bgTypeId'] = value;
-                        data['budget']=$('#b'+value).val();
-                        jdata.push(data);
-                    });
-                    OpjectData['data'] = jdata;
-                    
-                    OpjectData['type'] = "BudgetFinal";
-                    
-                    
-                    var datas=callAjax('{{_context_path}}/api/budget/approveSum/updateApproveSum', 'post', jsonEncode(OpjectData),'json');
-                    
-                    if(datas["result"]==true){
-                        var sum=0;
-                        $.each(bgId, function (key, value) {
-                            if($('#b'+value).val()!=""){
-                                sum+=parseFloat($('#b'+value).val());
-                                valueApproveFinal[IndexArr]["data"][value]=$('#b'+value).val();
-                            }
-                            tr.find("td").eq(key+1).html(checkValue($('#b'+value).val()));
-                            
-                        });
-                        
-                        
-                       
-                        tr.find("td").eq(13).html(checkValue(sum));
-
-        
-                        $('#ApproveShowEdit').modal('hide');
-                        
-                    }else{
-                        
-                        //alert("NO");
-                        $('#ApproveShowEdit').modal('hide');
-                        sweetAlert("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลได้", "error");
-                    }
-                    
-                    
-                });
-                
-            });
-            
-            
-            
-}
-
-
-function checkStatus(){
-    console.log(status);
-    console.log(countData);
-    if(status=="true"){
-       
-        if(countData!="0"){
-            $("#BtnSave").removeAttr("disabled");       
+            if (datas["result"][i]["BudgetStatus"] == "N")status = false;
         }
-    }else{
-         $("#BtnSave").attr("disabled", true);
-    }
-        
-    
-}
+        //console.log(valueApprove);
+        var t = $("#table2").DataTable({
+            "destroy": true,
+            "data": valueApproveFinal,
+            "order": [0, 'asc'],
+            "iDisplayLength": 50,
+            "bAutoWidth": false,
 
-function checkValue(data){
-    if(data!=""){
-        return $.number(data,2);
-    }else{
-        return "-";
+            scrollCollapse: true,
+            paging: false,
+            rowId: 'staffId',
+            fixedColumns: {
+                leftColumns: 1,
+                rightColumns: 1
+            },
+
+            /*
+             "drawCallback":function(oSetting){
+             var api=this.api();
+             var rows=api.rows({page:'current'}).nodes();
+             api.column(0,{page:'current'}).data().each(function(group,i){
+             $(rows).eq(i).before('<tr><td colspan="15" class="text-left"><strong>'+valueApprove[i]["Dept"]+'</strong></td></tr>');
+             });
+             },
+             */
+            "columnDefs": [
+
+                {
+                    "targets": 0,
+                    "orderable": true,
+                    "data": "Dept",
+                    "width": "400px"
+                    //"sClass": "col-md-3"
+
+                }, {
+                    "targets": 1,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right ",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[0]]);
+
+                    }
+                }, {
+                    "targets": 2,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[1]]);
+                    }
+                }, {
+                    "targets": 3,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[2]]);
+
+
+                    }
+                }, {
+                    "targets": 4,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[3]]);
+
+
+                    }
+                }, {
+                    "targets": 5,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[4]]);
+
+
+                    }
+                }, {
+                    "targets": 6,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[5]]);
+
+
+                    }
+                }, {
+                    "targets": 7,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[6]]);
+                    }
+                }, {
+                    "targets": 8,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[7]]);
+                    }
+                }, {
+                    "targets": 9,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[8]]);
+                    }
+                }, {
+                    "targets": 10,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[9]]);
+                    }
+                }, {
+                    "targets": 11,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[10]]);
+                    }
+                }, {
+                    "targets": 12,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        return checkValueTable(data[bgId[11]]);
+                    }
+                }, {
+                    "targets": 13,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "data",
+                    "sClass": "text-right",
+                    render: function (data) {
+                        var sum = 0;
+                        for (var j = 0; j < 12; j++) {
+                            if ((data[bgId[j]]) != null) {
+                                sum += parseFloat(data[bgId[j]]);
+                            }
+                        }
+                        return $.number(sum, 2);
+                    }
+                }, {
+                    "targets": 14,
+                    "searchable": false,
+                    "orderable": false,
+                    "data": "DepartmentId",
+                    "sClass": "text-center",
+                    render: function (data) {
+
+                        if (status == "true") {
+                            return '<button class="btn btn-warning btn-xs ApproveEdit" data-DepartmentId="' + data + '" type="submit"><i class="fa fa-pencil-square-o"></i> แก้ไข</button>';
+                        } else {
+                            return '<button class="btn btn-warning btn-xs ApproveEdit" data-DepartmentId="' + data + '" disabled type="submit"><i class="fa fa-pencil-square-o"></i> แก้ไข</button>';
+
+                        }
+                    }
+                }
+
+            ]
+        });
+
+        search = '<option value="" selected="selected">ทั้งหมด</option>';
+        $.each(valueDept, function (key, value) {
+            search += '<option value="' + value + '">' + value + '</option>';
+        });
+        $("#searchDept").html(search).select2().change(function () {
+            t.columns(0).search(this.value).draw();
+        });
+
+        $('.ApproveEdit').unbind("click").click(function () {
+
+
+            var DepartmentId = $(this).attr("data-DepartmentId");
+            var Rows = $(this).closest("tr").index();
+            var tr = $(this).closest("tr");
+            var IndexArr;
+
+            $.each(valueApproveFinal, function (key, value) {
+                if (value["DepartmentId"] == DepartmentId) {
+                    IndexArr = key;
+                }
+            });
+
+            $.each(bgId, function (key, value) {
+                $('#b' + value).val(valueApproveFinal[IndexArr]["data"][value]);
+                //console.log($(valueApprove[IndexArr]["data"][value]));
+                //console.log(valueApproveFinal[IndexArr]["data"][value]);
+                if (valueApproveFinal[IndexArr]["data"][value] == null) {
+                    $('#b' + value).prop('readonly', true);
+                } else {
+                    $('#b' + value).prop('readonly', false);
+
+                }
+            });
+
+            $('#ApproveShowEdit').modal('show');
+
+            $("#ApproveSaveEdit").unbind("click").click(function () {
+
+                var jdata = [];
+                var OpjectData = {};
+
+                $.each(bgId, function (key, value) {
+                    var data = {};
+                    data['deptId'] = DepartmentId;
+                    data['bgPeriodId'] = year;
+                    data['bgTypeId'] = value;
+                    data['budget'] = $('#b' + value).val();
+                    jdata.push(data);
+                });
+                OpjectData['data'] = jdata;
+
+                OpjectData['type'] = "BudgetFinal";
+
+
+                var datas = callAjax('{{_context_path}}/api/budget/approveSum/updateApproveSum', 'post', jsonEncode(OpjectData), 'json');
+
+                if (datas["result"] == true) {
+                    var sum = 0;
+                    $.each(bgId, function (key, value) {
+                        if ($('#b' + value).val() != "") {
+                            sum += parseFloat($('#b' + value).val());
+                            valueApproveFinal[IndexArr]["data"][value] = $('#b' + value).val();
+                        }
+                        tr.find("td").eq(key + 1).html(checkValue($('#b' + value).val()));
+
+                    });
+
+
+                    tr.find("td").eq(13).html(checkValue(sum));
+
+
+                    $('#ApproveShowEdit').modal('hide');
+
+                } else {
+
+                    //alert("NO");
+                    $('#ApproveShowEdit').modal('hide');
+                    sweetAlert("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลได้", "error");
+                }
+
+
+            });
+
+        });
+
+
     }
-}
-function checkValueTable(data){
-    if(data!=null){
-        return $.number(data,2);
-    }else{
-        return "-";
+
+
+    function checkStatus() {
+        console.log(status);
+        console.log(countData);
+        if (status == "true") {
+
+            if (countData != "0") {
+                $("#BtnSave").removeAttr("disabled");
+            }
+        } else {
+            $("#BtnSave").attr("disabled", true);
+        }
+
+
     }
-}
+
+    function checkValue(data) {
+        if (data != "") {
+            return $.number(data, 2);
+        } else {
+            return "-";
+        }
+    }
+    function checkValueTable(data) {
+        if (data != null) {
+            return $.number(data, 2);
+        } else {
+            return "-";
+        }
+    }
 
 
 </script>

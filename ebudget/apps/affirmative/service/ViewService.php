@@ -28,21 +28,21 @@ class ViewService extends CServiceBase implements IViewService {
     }
 
     public function setting() {
-        $view = new CJView("setting", CJViewType::HTML_VIEW_ENGINE);
+        $view = new CJView("setting/setting", CJViewType::HTML_VIEW_ENGINE);
         $groupS = new DraftService();
         $view->year = $groupS->getPeriod()->year;
         return $view;
     }
 
     public function center() {
-        $view = new CJView("center", CJViewType::HTML_VIEW_ENGINE);
+        $view = new CJView("center/center", CJViewType::HTML_VIEW_ENGINE);
         $groupS = new CenterService();
         $view->year = $groupS->getPeriod()->year;
         return $view;
     }
 
     public function draftAll() {
-        $view = new CJView("draftAll", CJViewType::HTML_VIEW_ENGINE);
+        $view = new CJView("draft/draftAll", CJViewType::HTML_VIEW_ENGINE);
         $groupS = new DraftService();
         $view->year = $groupS->getPeriod()->year;
         return $view;
@@ -52,7 +52,7 @@ class ViewService extends CServiceBase implements IViewService {
         $viewDept = new \apps\affirmative\model\ViewActivityDepartment();
         $viewDept->departmentId = $deptId;
         $data = $this->datacontext->getObject($viewDept)[0];
-        $view = new CJView("draft", CJViewType::HTML_VIEW_ENGINE);
+        $view = new CJView("draft/draft", CJViewType::HTML_VIEW_ENGINE);
         $view->department = $data;
         $groupS = new DraftService();
         $view->year = $groupS->getPeriod()->year;
@@ -60,7 +60,7 @@ class ViewService extends CServiceBase implements IViewService {
     }
 
     public function finalAll() {
-        $view = new CJView("finalAll", CJViewType::HTML_VIEW_ENGINE);
+        $view = new CJView("final/finalAll", CJViewType::HTML_VIEW_ENGINE);
         return $view;
     }
 
@@ -68,7 +68,7 @@ class ViewService extends CServiceBase implements IViewService {
         $viewDept = new \apps\affirmative\model\ViewActivityDepartment();
         $viewDept->departmentId = $deptId;
         $data = $this->datacontext->getObject($viewDept)[0];
-        $view = new CJView("final", CJViewType::HTML_VIEW_ENGINE);
+        $view = new CJView("final/final", CJViewType::HTML_VIEW_ENGINE);
         $view->department = $data;
         $groupS = new DraftService();
         $view->year = $groupS->getPeriod()->year;
@@ -76,7 +76,7 @@ class ViewService extends CServiceBase implements IViewService {
     }
 
     public function resultAll() {
-        $view = new CJView("resultAll", CJViewType::HTML_VIEW_ENGINE);
+        $view = new CJView("result/resultAll", CJViewType::HTML_VIEW_ENGINE);
         return $view;
     }
 
@@ -84,7 +84,7 @@ class ViewService extends CServiceBase implements IViewService {
         $viewDept = new \apps\affirmative\model\ViewActivityDepartment();
         $viewDept->departmentId = $deptId;
         $data = $this->datacontext->getObject($viewDept)[0];
-        $view = new CJView("result", CJViewType::HTML_VIEW_ENGINE);
+        $view = new CJView("result/result", CJViewType::HTML_VIEW_ENGINE);
         $view->department = $data;
         $groupS = new DraftService();
         $view->year = $groupS->getPeriod()->year;

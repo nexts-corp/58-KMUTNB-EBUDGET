@@ -290,8 +290,13 @@
 
             $("button.edit").unbind("click").click(function(){
                 var formId = $(this).attr("data-form");
+                var facId = $(this).attr("data-fac");
 
                 if(formId == 999){
+                    var param = {};
+                    //param.budgetPeriodId = year;
+                    param.facultyId = facId;
+
                     var $scopeJS = angular.element(document.querySelector('[ng-app=formBudget]')).scope();
                     $scopeJS.$apply(function () {
                         $scopeJS.openForm("project", param);
