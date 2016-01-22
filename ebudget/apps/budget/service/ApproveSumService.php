@@ -11,6 +11,7 @@ namespace apps\budget\service;
 
 use apps\budget\interfaces\apps;
 use apps\budget\interfaces\IApproveSumService;
+use apps\budget\interfaces\periodId;
 use apps\budget\interfaces\year;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
@@ -143,6 +144,18 @@ class ApproveSumService extends CServiceBase implements IApproveSumService
             return true;
         } else {
             echo $this->datacontext->getLastMessage();
+            return false;
+        }
+
+    }
+
+    public function updateBudgetSetting($periodId)
+    {
+        $sql = "UPDATE Budget_Setting SET IsClosed = 'Y' WHERE BudgetPeriodId = " . $periodId;
+
+        if ($this->datacontext->pdoUpdate($sql)) {
+            return true;
+        } else {
             return false;
         }
 
