@@ -9,7 +9,7 @@ myApp.controller('mainController', function ($scope, $http, $controller, $filter
     var listL3DPlan = []; //Global Variable
     var listL3DFund = []; //Global Variable
     var pathJavaserver = "http://202.44.34.67/reporter2/api";
-    //var pathJavaserver = "http://localhost:8888/api";
+   // var pathJavaserver = "http://localhost:8888/api";
     $controller('cmListController', {$scope: $scope});
 
     $scope.init = function () {
@@ -96,9 +96,14 @@ myApp.controller('mainController', function ($scope, $http, $controller, $filter
                 id: 'LR3'
             },
             {
-                name: 'แผน/ผล การใช้จ่ายงบประมาณรายจ่ายเงินรายได้ประจำปีงบประมาณ (ร.4)', type: 'K',
-                id: 'LR4'
+                name: 'แผน/ผล การใช้จ่ายงบประมาณรายจ่ายเงินรายได้ (รายรับจากค่าบำรุงการศึกษา ค่าลงทะเบียนเรียนและค่าธรรมเนียมประเภทต่างๆ) (ร.4)', type: 'K',
+                id: 'LR4',catId:'E'
+            },
+            {
+                name: 'แผน/ผล การใช้จ่ายงบประมาณรายจ่ายเงินรายได (รายรับจากงานบริการวิชาการ) (ร.4)', type: 'K',
+                id: 'LR4',catId:'S'
             }
+
         ];
 
         $scope.listReportType = [
@@ -217,6 +222,7 @@ myApp.controller('mainController', function ($scope, $http, $controller, $filter
         var REPORT_CODE = dataItem["id"];
         var BUDGET_TYPE = dataItem["type"];
         var EXPORT_TYPE = exportType;
+        if(REPORT_CODE == "LR4")var CAT_ID = dataItem["catId"];
 
         var PERIOD_ID = $scope.budgetPeriodId["year"];
         var FACULTY_ID = $scope.facultyId["id"];
@@ -297,7 +303,8 @@ myApp.controller('mainController', function ($scope, $http, $controller, $filter
                 FUND_NAME_START: FUND_NAME_START,
                 FUND_ID_END: String(FUND_ID_END),
                 FUND_NAME_END: FUND_NAME_END,
-                STATUS: STATUS
+                STATUS: STATUS,
+                CAT_ID:CAT_ID
 
             };
 
