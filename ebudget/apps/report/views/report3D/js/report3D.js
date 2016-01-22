@@ -9,7 +9,7 @@ myApp.controller('mainController', function ($scope, $http, $controller, $filter
     var listL3DPlan = []; //Global Variable
     var listL3DFund = []; //Global Variable
     var pathJavaserver = "http://202.44.34.67/reporter2/api";
-   // var pathJavaserver = "http://localhost:8888/api";
+    //var pathJavaserver = "http://localhost:8888/api";
     $controller('cmListController', {$scope: $scope});
 
     $scope.init = function () {
@@ -352,7 +352,9 @@ myApp.controller('mainController', function ($scope, $http, $controller, $filter
 
         if ($filter('filter')(names, query) != undefined) {
             $scope.resultFilterDept = $filter('filter')(names, query);
+            //console.log($scope.resultFilterDept);
             $("#dept").select2("val", "");
+            $scope.deptId = null;
         }
     };
 
