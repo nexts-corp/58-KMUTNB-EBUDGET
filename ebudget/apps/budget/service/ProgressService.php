@@ -135,11 +135,6 @@ class ProgressService extends CServiceBase implements IProgressService {
         );
         $data = $this->datacontext->pdoQuery($sql, $param);
 
-        if ($catId == "E") {
-            $data["BgCatDesc"] = "ค่าธรรมเนียมการศึกษา";
-        } else if ($catId == "S") {
-            $data["BgCatDesc"] = "งานบริการวิชาการ";
-        }
         return $data;
     }
 

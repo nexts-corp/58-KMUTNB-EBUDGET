@@ -25,10 +25,6 @@ class SettingService extends CServiceBase implements ISettingService {
         return $this->datacontext->getObject($year)[0];
     }
 
-    public function view() {
-        return true;
-    }
-
     public function listsYear() {
         $year = "select year.id, year.year, year.yearStatus, setting.dateClose, setting.isClosed "
                 . "from " . $this->ent . "\\Year year "
@@ -36,6 +32,29 @@ class SettingService extends CServiceBase implements ISettingService {
 
         $dataYear = $this->datacontext->getObject($year);
         return $dataYear;
+    }
+
+    public function saveSetting($bgPeriodId, $activeYear, $setClose, $dateClose) {
+        $year = new entity\Year();
+        $year->setYear($bgPeriodId);
+        $dataYear = $this->datacontext->getObject($year);
+
+        $year->setYearStatus($activeYear);
+        if (!$this->datacontext->updateObject($year)) {
+            return false;
+        }
+
+        $setting = new entity\BudgetSetting();
+        $setting->setBudgetPeriodId($bgPeriodId);
+        $dataSetting = $this->datacontext->getObject($setting);
+
+        $setting->setIsClosed($setClose);
+        $setting->setDateClose($dateClose);
+        if (!$this->datacontext->updateObject($setting)) {
+            return false;
+        }
+
+        return true;
     }
 
 }

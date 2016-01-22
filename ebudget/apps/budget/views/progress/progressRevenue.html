@@ -293,8 +293,17 @@
                 if (typeof datas !== "undefined" && datas !== null) {
                     datas = datas.result;
 
+                    var bgSource = "";
+                    if (catId == "E") {
+                        bgSource = "ค่าธรรมเนียมการศึกษา";
+                    } else if (catId = "S") {
+                        bgSource = "งานบริการวิชาการ";
+                    } else {
+                        bgSource = catId;
+                    }
+
                     $("#budgetYear").html(datas[0]["bgPeriodId"]);
-                    $("#budgetType").html(datas["BgCatDesc"]);
+                    $("#budgetType").html(bgSource);
                     $("#l3dPlan").html(datas[0]["planName"]);
                     $("#fundgroup").html(datas[0]["fundgroupName"]);
                     $("#facName").html(datas[0]["facultyName"]);
