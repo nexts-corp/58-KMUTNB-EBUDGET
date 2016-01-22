@@ -23,6 +23,8 @@ import th.co.bpg.cde.data.CDataContext;
 import th.co.bpg.cde.report.CReportGenerater;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
+import th.ac.kmutnb.ebudget.model.NG1_model;
 import th.co.bpg.cde.collection.CJMessage;
 
 /**
@@ -130,8 +132,10 @@ public class ReportService extends CServiceBase implements IReportService {
             String reportName = param.getREPORT_CODE();// REPORT_CODE;
             Class reportClass = Class.forName("th.ac.kmutnb.ebudget.model." + reportCode.toUpperCase() + "_model");
             String reportSQL = this.readSQL(reportName, param);
+            System.out.println("SQL : "+reportSQL);
             List<BaseReport> datas = (List<BaseReport>) this.dbcon.nativeQuery(reportClass, reportSQL);
             //this.dbcon.nativeQuery(reportClass, sparam, Parameters);
+      
             CReportGenerater gen = this.newReportGenerater(reportName, exportType);
 
             if (datas != null && !datas.isEmpty()) {

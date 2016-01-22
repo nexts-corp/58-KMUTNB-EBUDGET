@@ -18,7 +18,7 @@ interface IProjectUniverService {
      * @param int facultyId รหัสหน่วยงาน
      * @return String[] layouts
      */ 
-    public function getLayouts($budgetPeriodId,$facultyId);
+    public function getLayouts($facultyId);
 
     
     /**

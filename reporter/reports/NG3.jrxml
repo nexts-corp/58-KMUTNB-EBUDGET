@@ -12,7 +12,7 @@
 	<parameter name="DATE_CURRENT" class="java.util.Date" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
 	</parameter>
-	<parameter name="PLAN_NAME" class="java.lang.String" isForPrompting="false">
+	<parameter name="PLAN_NAME_START" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
 	</parameter>
@@ -20,18 +20,18 @@
 		<parameterDescription><![CDATA["-"]]></parameterDescription>
 		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="FUND_NAME" class="java.lang.String" isForPrompting="false">
+	<parameter name="FUND_NAME_START" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA["-"]]></parameterDescription>
 		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="DEPT_NAME" class="java.lang.String" isForPrompting="false">
+	<parameter name="FACULTY_NAME" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PERIOD_ID" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="HEAD_RPT" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["รายละเอียดงบประมาณรายจ่ายเงินรายได้จากงบประมาณแผ่นดิน  ประจำปีงบประมาณ  พ.ศ."+$P{PERIOD_ID}+" \n จำแนกตามแผนงาน/กองทุน/งบรายจ่าย \n "+$P{DEPT_NAME}]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["รายละเอียดงบประมาณรายจ่ายเงินรายได้จากงบประมาณแผ่นดิน  ประจำปีงบประมาณ  พ.ศ."+$P{PERIOD_ID}+" \n จำแนกตามแผนงาน/กองทุน/งบรายจ่าย \n "+$P{FACULTY_NAME}]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[-- รายงานแบบ ง.3
@@ -218,7 +218,7 @@ inner join L3D_FUNDGROUP fundgroup on fundgroup.FUNDGROUPID = bgAll.fundgroupId]
 					</textElement>
 					<textFieldExpression><![CDATA[$F{bgName}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" pattern="##,##0.00">
+				<textField isStretchWithOverflow="true" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="405" y="0" width="150" height="20" uuid="aa932f41-a7a7-4438-8b6e-886e0f8bb1b9"/>
 					<box leftPadding="2" rightPadding="2">
 						<topPen lineWidth="0.0"/>
@@ -234,9 +234,6 @@ inner join L3D_FUNDGROUP fundgroup on fundgroup.FUNDGROUPID = bgAll.fundgroupId]
 			</band>
 		</groupFooter>
 	</group>
-	<background>
-		<band height="802" splitType="Stretch"/>
-	</background>
 	<title>
 		<band splitType="Stretch"/>
 	</title>
@@ -301,7 +298,7 @@ inner join L3D_FUNDGROUP fundgroup on fundgroup.FUNDGROUPID = bgAll.fundgroupId]
 				<textElement>
 					<font isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{PLAN_NAME}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{PLAN_NAME_START}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="39" y="100" width="176" height="20" uuid="9ab07894-59fc-4bcc-b1d4-66868d1642ab"/>
@@ -311,10 +308,10 @@ inner join L3D_FUNDGROUP fundgroup on fundgroup.FUNDGROUPID = bgAll.fundgroupId]
 				<textElement>
 					<font isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{FUND_NAME}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{FUND_NAME_START}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="80" width="39" height="20" uuid="c6f6b203-5e96-4134-bebd-bba442113465"/>
+				<reportElement style="FBold" x="0" y="80" width="39" height="20" uuid="c6f6b203-5e96-4134-bebd-bba442113465"/>
 				<box leftPadding="2">
 					<leftPen lineWidth="0.75"/>
 				</box>
@@ -324,7 +321,7 @@ inner join L3D_FUNDGROUP fundgroup on fundgroup.FUNDGROUPID = bgAll.fundgroupId]
 				<text><![CDATA[แผนงาน]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="100" width="39" height="20" uuid="868cc13a-5198-4dd3-ab6a-9f88af948ce4"/>
+				<reportElement style="FBold" x="0" y="100" width="39" height="20" uuid="868cc13a-5198-4dd3-ab6a-9f88af948ce4"/>
 				<box leftPadding="2">
 					<leftPen lineWidth="0.75"/>
 				</box>

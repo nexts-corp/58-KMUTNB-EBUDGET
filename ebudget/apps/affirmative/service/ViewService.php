@@ -43,6 +43,8 @@ class ViewService extends CServiceBase implements IViewService {
 
     public function draftAll() {
         $view = new CJView("draftAll", CJViewType::HTML_VIEW_ENGINE);
+        $groupS = new DraftService();
+        $view->year = $groupS->getPeriod()->year;
         return $view;
     }
 

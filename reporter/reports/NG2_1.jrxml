@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="1.158657518946799"/>
+	<property name="ireport.zoom" value="0.9575681974766935"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
@@ -365,7 +365,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="176" y="20" width="51" height="20" uuid="09d800f7-d7b4-4039-a679-5ae87d14b835"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -391,7 +391,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="125" y="20" width="51" height="20" uuid="c2bf9421-ec79-41db-9a8b-ad18039dab4d"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -404,7 +404,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="227" y="20" width="51" height="20" uuid="ef4421f2-2fa9-4880-911c-844524a48c08"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -417,7 +417,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="278" y="20" width="55" height="20" uuid="950d6617-3b49-4d6b-aa83-b95c82b15750"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -430,7 +430,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="333" y="20" width="55" height="20" uuid="968e6f6a-ef38-4048-877a-041fb7045fb5"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -443,7 +443,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="388" y="20" width="51" height="20" uuid="535a4605-27cf-4ec1-8c46-0d6441a874f0"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -456,7 +456,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="490" y="20" width="51" height="20" uuid="479dedc1-9736-4499-8ab0-c6198c29e2d9"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -469,7 +469,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="439" y="20" width="51" height="20" uuid="ba01549a-6159-486c-9cff-330a5a07ffed"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -482,7 +482,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="541" y="20" width="51" height="20" uuid="ec7baa19-1b3c-4914-bf81-6a112a4dda5e"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -495,7 +495,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="592" y="0" width="51" height="40" uuid="f7b11f74-aa79-48d5-b49c-f0ce51e56b7c"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -508,7 +508,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="643" y="0" width="51" height="40" uuid="36080b6f-fd54-4813-8266-74b95ddbb9ca"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -521,7 +521,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="694" y="0" width="51" height="40" uuid="b8e0d1c1-fba7-431c-bc9f-1620a41fd24d"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -573,7 +573,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="745" y="0" width="57" height="40" uuid="0ccf6b9a-610a-4581-a0e6-bdefe883a37f"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -595,7 +595,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
 				<textField isStretchWithOverflow="true" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="125" y="0" width="51" height="20" uuid="056fc183-a5e5-4209-b7c2-e48314ef2c01"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -621,7 +621,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="176" y="0" width="51" height="20" uuid="19e256ed-b30d-485c-9cef-4b8f096b9ef7"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -634,7 +634,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="227" y="0" width="51" height="20" uuid="0853f6bc-e692-45bf-bf21-f27e1231b1ca"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -647,7 +647,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="278" y="0" width="55" height="20" uuid="1bf960b8-4cae-4197-90fe-f672bbf575a0"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -660,7 +660,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="333" y="0" width="55" height="20" uuid="d2b93d61-95fa-496c-959d-48cbe2961ed9"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -673,7 +673,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="388" y="0" width="51" height="20" uuid="74e99799-6fe3-488d-8d05-34f065ca4a26"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -686,7 +686,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="439" y="0" width="51" height="20" uuid="69b962b2-3ab9-4e5f-a7ba-c37756ae99be"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -699,7 +699,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="490" y="0" width="51" height="20" uuid="36136e1c-3aac-4aa1-b1ee-675540103557"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -712,7 +712,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="541" y="0" width="51" height="20" uuid="c7d3263b-9132-451e-9caf-3bd4ce29e3e7"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -725,7 +725,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="592" y="0" width="51" height="20" uuid="806798a2-3e12-4b7d-8ae9-789404678c1e"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -738,7 +738,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="643" y="0" width="51" height="20" uuid="92d61892-5576-44ea-9ae5-f22a73fa2c9c"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -751,7 +751,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="694" y="0" width="51" height="20" uuid="083ff0da-9b04-4b77-a4fd-6e6a4dbb5913"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -764,7 +764,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="745" y="0" width="57" height="20" uuid="7c8f623f-fd98-41b3-a4d1-342194d0258c"/>
-					<box rightPadding="1">
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -1073,7 +1073,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<reportElement style="FBold" x="643" y="120" width="51" height="40" isRemoveLineWhenBlank="true" uuid="73599986-bc42-40b4-8025-95d524c8a063">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
-				<box>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -1088,7 +1088,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<reportElement style="FBold" x="125" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="59f05de4-103d-4e2c-8d31-12830e681bb6">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
-				<box rightPadding="1">
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -1103,7 +1103,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<reportElement style="FBold" x="439" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="2a5d6eee-80d5-4ffb-b278-9bec05643279">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
-				<box>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -1118,7 +1118,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<reportElement style="FBold" x="278" y="140" width="55" height="20" isRemoveLineWhenBlank="true" uuid="4b603b3e-eeb3-4579-b0d6-356f3a08a692">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
-				<box>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -1133,7 +1133,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<reportElement style="FBold" x="745" y="120" width="57" height="40" isRemoveLineWhenBlank="true" uuid="fde41b7e-0482-4d68-b826-7663b06b62b8">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
-				<box>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -1149,7 +1149,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<reportElement style="FBold" x="227" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="2575e0e9-67e7-4694-b873-ae938e3b1382">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
-				<box rightPadding="1">
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -1164,7 +1164,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<reportElement style="FBold" x="333" y="140" width="55" height="20" isRemoveLineWhenBlank="true" uuid="13b4bd29-7510-4db3-81f1-a566bcf2384f">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
-				<box>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -1179,7 +1179,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<reportElement style="FBold" x="125" y="120" width="153" height="20" isRemoveLineWhenBlank="true" uuid="3ff3041c-fb53-4ac8-b1ab-77638212bd80">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
-				<box>
+				<box rightPadding="0">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -1194,7 +1194,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<reportElement style="FBold" x="694" y="120" width="51" height="40" isRemoveLineWhenBlank="true" uuid="0908d9ee-2228-412a-b288-c960b882bac1">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
-				<box>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -1209,7 +1209,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<reportElement style="FBold" x="541" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="8782aab0-3c10-49cc-908e-752c7df5bdea">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
-				<box>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -1224,7 +1224,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<reportElement style="FBold" x="592" y="120" width="51" height="40" isRemoveLineWhenBlank="true" uuid="5825c347-9282-47e1-8032-ca5eb806b8cd">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
-				<box>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -1239,7 +1239,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<reportElement style="FBold" x="278" y="120" width="110" height="20" isRemoveLineWhenBlank="true" uuid="eaf37708-ce51-4ef1-9eb6-06ec6794f2e6">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
-				<box>
+				<box rightPadding="0">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -1254,7 +1254,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<reportElement style="FBold" x="176" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="3d4e4fa0-e721-4725-975a-4612652ac390">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
-				<box rightPadding="1">
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -1269,7 +1269,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<reportElement style="FBold" x="388" y="120" width="204" height="20" isRemoveLineWhenBlank="true" uuid="7bede69a-d8f6-4ad0-855b-f4283256f7f9">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
-				<box>
+				<box rightPadding="0">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -1284,7 +1284,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<reportElement style="FBold" x="388" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="09867cae-bf52-4461-99e6-039f6e615dbd">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
-				<box>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -1299,7 +1299,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<reportElement style="FBold" x="490" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="b7045245-0af0-4fc0-bf70-3d63c53c6fca">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
-				<box>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>

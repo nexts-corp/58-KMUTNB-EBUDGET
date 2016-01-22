@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="1.158657518946798"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="0.9575681974766925"/>
+	<property name="ireport.x" value="31"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
 	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -289,7 +289,7 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				<text><![CDATA[(หน่วย : บาท)]]></text>
 			</staticText>
 			<textField>
-				<reportElement style="FBold" x="1" y="40" width="132" height="60" uuid="60dc77fe-04b3-4e47-a838-04e7b2a4b57a"/>
+				<reportElement style="FBold" x="0" y="40" width="133" height="60" uuid="60dc77fe-04b3-4e47-a838-04e7b2a4b57a"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -305,18 +305,21 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="0" width="133" height="20" uuid="4259be94-2e71-4c8e-ae05-9a14883ea9d4"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="133" height="20" uuid="4259be94-2e71-4c8e-ae05-9a14883ea9d4"/>
 				<box leftPadding="1" rightPadding="1">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
+				<textElement>
+					<font size="12"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{deptName}]]></textFieldExpression>
 			</textField>
-			<textField pattern="##,##">
-				<reportElement x="133" y="0" width="66" height="20" uuid="22bddb2c-f10b-4580-b930-626da4ed070e"/>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="133" y="0" width="66" height="20" uuid="22bddb2c-f10b-4580-b930-626da4ed070e"/>
 				<box leftPadding="1" rightPadding="1">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -328,8 +331,8 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{generalFund}]]></textFieldExpression>
 			</textField>
-			<textField pattern="##,##">
-				<reportElement x="199" y="0" width="67" height="20" uuid="7c937fd0-e925-4fd6-834b-e5f430677c16"/>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="199" y="0" width="67" height="20" uuid="7c937fd0-e925-4fd6-834b-e5f430677c16"/>
 				<box leftPadding="1" rightPadding="1">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -341,8 +344,8 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{eduFund}]]></textFieldExpression>
 			</textField>
-			<textField pattern="##,##">
-				<reportElement x="266" y="0" width="67" height="20" uuid="2fd2d3f2-9347-4935-b49e-79c9c5691bc3"/>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="266" y="0" width="67" height="20" uuid="2fd2d3f2-9347-4935-b49e-79c9c5691bc3"/>
 				<box leftPadding="1" rightPadding="1">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -354,8 +357,8 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{researchFunds}]]></textFieldExpression>
 			</textField>
-			<textField pattern="##,##">
-				<reportElement x="333" y="0" width="67" height="20" uuid="670a8207-3496-4f25-9b9e-0cb7ee6ef665"/>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="333" y="0" width="67" height="20" uuid="670a8207-3496-4f25-9b9e-0cb7ee6ef665"/>
 				<box leftPadding="1" rightPadding="1">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -367,8 +370,8 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{outreachFund}]]></textFieldExpression>
 			</textField>
-			<textField pattern="##,##">
-				<reportElement x="400" y="0" width="67" height="20" uuid="00b0cdab-8592-45ef-ad15-9aae03405920"/>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="400" y="0" width="67" height="20" uuid="00b0cdab-8592-45ef-ad15-9aae03405920"/>
 				<box leftPadding="1" rightPadding="1">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -380,8 +383,8 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{affairsFund}]]></textFieldExpression>
 			</textField>
-			<textField pattern="##,##">
-				<reportElement x="467" y="0" width="67" height="20" uuid="6aaddb56-7f64-4e8c-aefe-66adfc21a3be"/>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="467" y="0" width="67" height="20" uuid="6aaddb56-7f64-4e8c-aefe-66adfc21a3be"/>
 				<box leftPadding="1" rightPadding="1">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -393,8 +396,8 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{assetsFund}]]></textFieldExpression>
 			</textField>
-			<textField pattern="##,##">
-				<reportElement x="534" y="0" width="67" height="20" uuid="9e7b4e62-40f8-4404-b987-642c324e904d"/>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="534" y="0" width="67" height="20" uuid="9e7b4e62-40f8-4404-b987-642c324e904d"/>
 				<box leftPadding="1" rightPadding="1">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -406,8 +409,8 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{devFund}]]></textFieldExpression>
 			</textField>
-			<textField pattern="##,##">
-				<reportElement x="601" y="0" width="67" height="20" uuid="5cb11b4f-46cb-4dd4-ac56-fa42ea14e318"/>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="601" y="0" width="67" height="20" uuid="5cb11b4f-46cb-4dd4-ac56-fa42ea14e318"/>
 				<box leftPadding="1" rightPadding="1">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -419,8 +422,8 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{funds}]]></textFieldExpression>
 			</textField>
-			<textField pattern="##,##">
-				<reportElement x="668" y="0" width="67" height="20" uuid="41f2bcd4-e97a-4b37-a3cb-93d8a5a97a82"/>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="668" y="0" width="67" height="20" uuid="41f2bcd4-e97a-4b37-a3cb-93d8a5a97a82"/>
 				<box leftPadding="1" rightPadding="1">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -432,8 +435,8 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{culturalFund}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement style="FBold" x="735" y="0" width="67" height="20" uuid="5a0af001-ab67-4d46-95b8-3dd9caadade0"/>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="735" y="0" width="67" height="20" uuid="5a0af001-ab67-4d46-95b8-3dd9caadade0"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>

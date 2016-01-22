@@ -60,22 +60,17 @@ public class BaseParameter {
     private String FUND_NAME_START;
     private String FUND_ID_END;
     private String FUND_NAME_END;
+    private String STATUS;
+    private String CAT_ID;
 
-//    public String getPRODUCT_ID() {
-//        return PRODUCT_ID;
-//    }
-//
-//    public void setPRODUCT_ID(String PRODUCT_ID) {
-//        this.PRODUCT_ID = PRODUCT_ID;
-//    }
-//
-//    public String getPRODUCT_NAME() {
-//        return PRODUCT_NAME;
-//    }
-//
-//    public void setPRODUCT_NAME(String PRODUCT_NAME) {
-//        this.PRODUCT_NAME = PRODUCT_NAME;
-//    }
+    public String getCAT_ID() {
+        return CAT_ID;
+    }
+
+    public void setCAT_ID(String CAT_ID) {
+        this.CAT_ID = CAT_ID;
+    }
+
     public String getREPORT_CODE() {
         return REPORT_CODE;
     }
@@ -165,55 +160,13 @@ public class BaseParameter {
         this.FACULTY_NAME = FACULTY_NAME;
     }
 
-//    public String getDEPT_ID() {
-//        return DEPT_ID;
-//    }
-//
-//    public void setDEPT_ID(String DEPT_ID) {
-//        this.DEPT_ID = DEPT_ID;
-//    }
-//
-//    public String getDEPT_NAME() {
-//        return DEPT_NAME;
-//    }
-//
-//    public void setDEPT_NAME(String DEPT_NAME) {
-//        this.DEPT_NAME = DEPT_NAME;
-//    }
-//
-//    public String getPLAN_ID() {
-//        return PLAN_ID;
-//    }
-//
-//    public void setPLAN_ID(String PLAN_ID) {
-//        this.PLAN_ID = PLAN_ID;
-//    }
-//
-//    public String getPLAN_NAME() {
-//        return PLAN_NAME;
-//    }
-//
-//    public void setPLAN_NAME(String PLAN_NAME) {
-//        this.PLAN_NAME = PLAN_NAME;
-//    }
-//
-//    public String getFUND_ID() {
-//        return FUND_ID;
-//    }
-//
-//    public void setFUND_ID(String FUND_ID) {
-//        this.FUND_ID = FUND_ID;
-//    }
-//
-//    public String getFUND_NAME() {
-//        return FUND_NAME;
-//    }
-//
-//    public void setFUND_NAME(String FUND_NAME) {
-//        this.FUND_NAME = FUND_NAME;
-//    }
-//
-//
+  public String getSTATUS() {
+        return STATUS;
+    }
+
+    public void setSTATUS(String STATUS) {
+        this.STATUS = STATUS;
+    }
     public String getBUDGET_TYPE() {
         return BUDGET_TYPE;
     }

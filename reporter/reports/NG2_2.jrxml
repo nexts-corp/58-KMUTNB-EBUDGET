@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="1.5421731577181859"/>
+	<property name="ireport.zoom" value="1.158657518946796"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
@@ -220,14 +220,14 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 						<bottomPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Center">
+					<textElement textAlignment="Left">
 						<font size="11"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{facultyName}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" x="732" y="0" width="70" height="20" uuid="863af8f4-2624-4770-8949-c52ae1ad34c9"/>
-					<box leftPadding="1" rightPadding="1">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="732" y="0" width="70" height="20" uuid="863af8f4-2624-4770-8949-c52ae1ad34c9"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -238,9 +238,9 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{รวมเงินG1สุทธิ}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" x="432" y="0" width="60" height="20" uuid="b6457894-dd96-4a9e-971b-c41631b93f8a"/>
-					<box leftPadding="1" rightPadding="1">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="432" y="0" width="60" height="20" uuid="b6457894-dd96-4a9e-971b-c41631b93f8a"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -251,9 +251,9 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{รวมกองทุนสินทรัพย์ถาวร}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" x="132" y="0" width="60" height="20" uuid="70ef6fe0-534f-4671-978e-6dc26a26a838"/>
-					<box leftPadding="1" rightPadding="1">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="132" y="0" width="60" height="20" uuid="70ef6fe0-534f-4671-978e-6dc26a26a838"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -264,9 +264,9 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{รวมกองทุนทั่วไปสุทธิ}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" x="192" y="0" width="60" height="20" uuid="3a1c8d79-8f43-4938-b293-5d292cf5028b"/>
-					<box leftPadding="1" rightPadding="1">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="192" y="0" width="60" height="20" uuid="3a1c8d79-8f43-4938-b293-5d292cf5028b"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -277,9 +277,9 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{รวมกองทุนเพื่อการศึกษาสุทธิ}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" x="252" y="0" width="60" height="20" uuid="43947017-a855-4b3f-995c-0b1e1ef2e45d"/>
-					<box leftPadding="1" rightPadding="1">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="252" y="0" width="60" height="20" uuid="43947017-a855-4b3f-995c-0b1e1ef2e45d"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -290,9 +290,9 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{รวมกองทุนวิจัยสุทธิ}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" x="552" y="0" width="60" height="20" uuid="6f58678d-8828-4521-ab89-14e62ae0d446"/>
-					<box leftPadding="1" rightPadding="1">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="552" y="0" width="60" height="20" uuid="6f58678d-8828-4521-ab89-14e62ae0d446"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -303,9 +303,9 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{รวมกองทุนสำรอง}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" x="612" y="0" width="60" height="20" uuid="96bbe7b5-e6d7-4275-9dda-220b2bf3171c"/>
-					<box leftPadding="1" rightPadding="1">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="612" y="0" width="60" height="20" uuid="96bbe7b5-e6d7-4275-9dda-220b2bf3171c"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -316,9 +316,9 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{รวมกองทุุนทำนุบำรุงศิลปสุทธิ}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" x="312" y="0" width="60" height="20" uuid="920402c7-065f-4112-9f9d-03384e205a86"/>
-					<box leftPadding="1" rightPadding="1">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="312" y="0" width="60" height="20" uuid="920402c7-065f-4112-9f9d-03384e205a86"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -329,9 +329,9 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{รวมกองทุนบริการวิชาการสุทธิ}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" x="672" y="0" width="60" height="20" uuid="6bbd54dd-b5fc-41ba-899d-083f17a9c531"/>
-					<box leftPadding="1" rightPadding="1">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="672" y="0" width="60" height="20" uuid="6bbd54dd-b5fc-41ba-899d-083f17a9c531"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -342,9 +342,9 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{รวมกองทุนอื่นๆG1สุทธิ}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" x="492" y="0" width="60" height="20" uuid="e8d5458d-0998-4944-89ef-5e7ab49da42e"/>
-					<box leftPadding="1" rightPadding="1">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="492" y="0" width="60" height="20" uuid="e8d5458d-0998-4944-89ef-5e7ab49da42e"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -355,9 +355,9 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{รวมกองทุนพัฒนาบุคลากร}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" x="372" y="0" width="60" height="20" uuid="f5f0b255-0512-4794-8e42-db5832e8d1af"/>
-					<box leftPadding="1" rightPadding="1">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="372" y="0" width="60" height="20" uuid="f5f0b255-0512-4794-8e42-db5832e8d1af"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -378,7 +378,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="132" height="20" uuid="43f81259-a01b-43c0-bc29-f436cc87b85b"/>
-					<box leftPadding="2">
+					<box leftPadding="10">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -389,9 +389,9 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{planName}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
-					<reportElement style="FBold" x="132" y="0" width="60" height="20" uuid="8d349fdf-a5b2-4fdf-a514-0cabbf733ffb"/>
-					<box leftPadding="1" rightPadding="1">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="132" y="0" width="60" height="20" uuid="8d349fdf-a5b2-4fdf-a514-0cabbf733ffb"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -402,9 +402,9 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{รวมกองทุนทั่วไป}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
-					<reportElement style="FBold" x="192" y="0" width="60" height="20" uuid="0546366c-38ac-4d88-9a4f-35c04dd732e5"/>
-					<box leftPadding="1" rightPadding="1">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="192" y="0" width="60" height="20" uuid="0546366c-38ac-4d88-9a4f-35c04dd732e5"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -415,9 +415,9 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{รวมกองทุนเพื่อการศึกษา}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
-					<reportElement style="FBold" x="252" y="0" width="60" height="20" uuid="639b806b-0b96-44dc-8090-34cc9528f2e3"/>
-					<box leftPadding="1" rightPadding="1">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="252" y="0" width="60" height="20" uuid="639b806b-0b96-44dc-8090-34cc9528f2e3"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -428,9 +428,9 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{รวมกองทุนวิจัย}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
-					<reportElement style="FBold" x="312" y="0" width="60" height="20" uuid="c9f3aaa1-1ae4-446a-9b0b-c7fd150f74af"/>
-					<box leftPadding="1" rightPadding="1">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="312" y="0" width="60" height="20" uuid="c9f3aaa1-1ae4-446a-9b0b-c7fd150f74af"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -441,9 +441,9 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{รวมกองทุนบริการวิชาการ}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
-					<reportElement style="FBold" x="372" y="0" width="60" height="20" uuid="f35b9dbf-815c-44bd-9af1-3ecb91a654f9"/>
-					<box leftPadding="1" rightPadding="1">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="372" y="0" width="60" height="20" uuid="f35b9dbf-815c-44bd-9af1-3ecb91a654f9"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -454,9 +454,9 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{รวมกองทุนกิจการนักศึกษา}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
-					<reportElement style="FBold" x="432" y="0" width="60" height="20" uuid="b99c4737-00fa-44b4-ad35-ffdc3239ab1b"/>
-					<box leftPadding="1" rightPadding="1">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="432" y="0" width="60" height="20" uuid="b99c4737-00fa-44b4-ad35-ffdc3239ab1b"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -467,9 +467,9 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{รวมกองทุนสินทรัพย์ถาวร}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
-					<reportElement style="FBold" x="492" y="0" width="60" height="20" uuid="df744b10-b5ce-446d-8226-ca79a045d63f"/>
-					<box leftPadding="1" rightPadding="1">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="492" y="0" width="60" height="20" uuid="df744b10-b5ce-446d-8226-ca79a045d63f"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -480,9 +480,9 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{รวมกองทุนพัฒนาบุคลากร}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
-					<reportElement style="FBold" x="552" y="0" width="60" height="20" uuid="71289a37-6c08-48cd-8ecd-7fab0a813eb7"/>
-					<box leftPadding="1" rightPadding="1">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="552" y="0" width="60" height="20" uuid="71289a37-6c08-48cd-8ecd-7fab0a813eb7"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -493,9 +493,9 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{รวมกองทุนสำรอง}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
-					<reportElement style="FBold" x="612" y="0" width="60" height="20" uuid="27d2d594-172e-4bb4-8fe4-0e643c973b56"/>
-					<box leftPadding="1" rightPadding="1">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="612" y="0" width="60" height="20" uuid="27d2d594-172e-4bb4-8fe4-0e643c973b56"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -506,9 +506,9 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{รวมกองทุุนทำนุบำรุงศิลป}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
-					<reportElement style="FBold" x="672" y="0" width="60" height="20" uuid="6e7c9c70-a9c2-4fc6-ac94-1b3920508baf"/>
-					<box leftPadding="1" rightPadding="1">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="672" y="0" width="60" height="20" uuid="6e7c9c70-a9c2-4fc6-ac94-1b3920508baf"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -519,9 +519,9 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{รวมกองทุนอื่นๆG2}]]></textFieldExpression>
 				</textField>
-				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
-					<reportElement style="FBold" x="732" y="0" width="70" height="20" uuid="9582b91d-3e7b-44e9-9667-5e984cb8ec34"/>
-					<box leftPadding="1" rightPadding="1">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="732" y="0" width="70" height="20" uuid="9582b91d-3e7b-44e9-9667-5e984cb8ec34"/>
+					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -750,7 +750,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
 			<textField isStretchWithOverflow="true">
 				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="132" height="20" uuid="5c7a55b2-18ab-4a14-bc6a-0e9fab814370"/>
-				<box leftPadding="10" rightPadding="1">
+				<box leftPadding="15" rightPadding="1">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -763,7 +763,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="132" y="0" width="60" height="20" uuid="375aa38e-73ee-468f-9cbc-5cd5b878f8b2"/>
-				<box leftPadding="1" rightPadding="1">
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -776,7 +776,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="192" y="0" width="60" height="20" uuid="5453c018-dcd7-4b8e-a14d-c19ff836c9ce"/>
-				<box leftPadding="1" rightPadding="1">
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -789,7 +789,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="252" y="0" width="60" height="20" uuid="26a30080-af58-4656-82a1-e992aa0b1eeb"/>
-				<box leftPadding="1" rightPadding="1">
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -802,7 +802,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="312" y="0" width="60" height="20" uuid="4ba22b24-cbf8-4f50-b35c-0a83743469bd"/>
-				<box leftPadding="1" rightPadding="1">
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -815,7 +815,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="372" y="0" width="60" height="20" uuid="34c2b193-6912-4f19-961d-71284a55ef97"/>
-				<box leftPadding="1" rightPadding="1">
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -828,7 +828,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="432" y="0" width="60" height="20" uuid="29dca920-8f55-478f-b73a-e40b3d244af4"/>
-				<box leftPadding="1" rightPadding="1">
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -841,7 +841,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="492" y="0" width="60" height="20" uuid="1cf5f7b6-1ec4-4281-bc46-7381d25136b1"/>
-				<box leftPadding="1" rightPadding="1">
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -854,7 +854,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="552" y="0" width="60" height="20" uuid="733f65e1-a3d2-47bd-9191-57bd44b11029"/>
-				<box leftPadding="1" rightPadding="1">
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -867,7 +867,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="612" y="0" width="60" height="20" uuid="da277583-62cf-4e53-9e63-a397e1c46805"/>
-				<box leftPadding="1" rightPadding="1">
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -880,7 +880,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="672" y="0" width="60" height="20" uuid="19d2c1e6-eb41-4769-98fc-8c946137d95c"/>
-				<box>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -893,7 +893,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="732" y="0" width="70" height="20" uuid="5acdf40b-ba1f-46f8-b76d-577a23849326"/>
-				<box leftPadding="1" rightPadding="1">
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>

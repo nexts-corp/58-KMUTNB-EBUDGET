@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="1.158657518946801"/>
-	<property name="ireport.x" value="11"/>
+	<property name="ireport.zoom" value="1.0533250172243644"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
 	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -23,7 +23,15 @@
 		<parameterDescription><![CDATA["-"]]></parameterDescription>
 		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="PLAN_NAME" class="java.lang.String" isForPrompting="false">
+	<parameter name="FACULTY_NAME" class="java.lang.String">
+		<parameterDescription><![CDATA["-"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PLAN_NAME_START" class="java.lang.String">
+		<parameterDescription><![CDATA["-"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PLAN_NAME_END" class="java.lang.String">
 		<parameterDescription><![CDATA["-"]]></parameterDescription>
 		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
 	</parameter>
@@ -123,7 +131,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<box>
 					<bottomPen lineWidth="1.25" lineStyle="Dotted"/>
 				</box>
-				<textFieldExpression><![CDATA[$P{PLAN_NAME}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{PLAN_NAME_START}+" - "+$P{PLAN_NAME_END}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement style="FBold" x="536" y="150" width="64" height="40" uuid="5bb579ac-ac5a-43d3-888e-71e6923d55f3"/>
@@ -364,7 +372,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<box>
 					<bottomPen lineWidth="1.25" lineStyle="Dotted"/>
 				</box>
-				<textFieldExpression><![CDATA[$P{DEPT_NAME}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{FACULTY_NAME}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement style="FBold" x="1" y="20" width="61" height="20" uuid="c2653869-37eb-4f26-a995-cab30ba06227"/>
@@ -374,10 +382,6 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<reportElement style="FBold" x="1" y="40" width="61" height="20" uuid="985c2ce8-6705-4d37-897a-b450d792d786"/>
 				<text><![CDATA[หน่วยงาน]]></text>
 			</staticText>
-			<textField>
-				<reportElement style="FBold" x="386" y="40" width="278" height="20" uuid="a7f2c927-f347-46b2-8f2e-28b7371e4ad7"/>
-				<textFieldExpression><![CDATA["ส่งกองแผนงานภายในวันที่ .........................."]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement style="FBold" x="98" y="150" width="62" height="40" uuid="9b11f7a7-0766-4ee6-89af-79a942446b5a"/>
 				<box>
@@ -397,7 +401,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 	<detail>
 		<band height="20" splitType="Prevent">
 			<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
-			<textField isStretchWithOverflow="true" pattern="##,##">
+			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="600" y="0" width="62" height="20" uuid="ac8300e8-89ff-40ad-b9c1-82e96c7cc773"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -420,7 +424,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				</box>
 				<text><![CDATA[]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true" pattern="##,##">
+			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="536" y="0" width="64" height="20" uuid="0d17c39c-defe-4368-84c6-b75e3d60b15d"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -463,7 +467,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				</box>
 				<text><![CDATA[]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true" pattern="##,##">
+			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="474" y="0" width="62" height="20" uuid="94eb914a-cc09-4f62-af6e-cf3e3ce7218f"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.75"/>
