@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="1.5421731577181914"/>
+	<property name="ireport.zoom" value="1.1586575189468005"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
@@ -13,20 +13,29 @@
 	<parameter name="DATE_CURRENT" class="java.util.Date" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
 	</parameter>
-	<parameter name="DEPT_NAME" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="PLAN_NAME" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="FUND_NAME" class="java.lang.String" isForPrompting="false">
+	<parameter name="FUND_NAME_START" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PERIOD_ID" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="FACULTY_NAME" class="java.lang.String">
+		<parameterDescription><![CDATA["-"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PLAN_NAME_START" class="java.lang.String">
+		<parameterDescription><![CDATA["-"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PLAN_NAME_END" class="java.lang.String">
+		<parameterDescription><![CDATA["-"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FUND_NAME_END" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
 	<parameter name="HEAD_RPT" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["หน่วยงาน"+$P{DEPT_NAME}+"\n คำชี้แจงงบประมาณรายจ่ายเงินรายได้ประจำปีงบประมาณ พ.ศ."+$P{PERIOD_ID}+" \n จำแนกตาม แผนงาน/กองทุน/หมวดรายจ่าย"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["หน่วยงาน"+$P{FACULTY_NAME}+"\n คำชี้แจงงบประมาณรายจ่ายเงินรายได้ประจำปีงบประมาณ พ.ศ."+$P{PERIOD_ID}+" \n จำแนกตาม แผนงาน/กองทุน/หมวดรายจ่าย"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[-- รายงานแบบ ร.3
@@ -114,16 +123,16 @@ group by bg.deptId, bg.deptName,
 		<variableExpression><![CDATA[$F{budgetSummary}]]></variableExpression>
 	</variable>
 	<group name="G1">
-		<groupExpression><![CDATA[$F{bgTypeMainId}]]></groupExpression>
+		<groupExpression><![CDATA[$F{bgTypeMasterId}]]></groupExpression>
 		<groupHeader>
 			<band height="20">
 				<textField>
-					<reportElement x="0" y="0" width="428" height="20" uuid="814e30bc-89d2-4e5d-a57e-94d80c1c0ced"/>
+					<reportElement style="FBold" x="0" y="0" width="428" height="20" uuid="814e30bc-89d2-4e5d-a57e-94d80c1c0ced"/>
 					<box leftPadding="2">
 						<leftPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textFieldExpression><![CDATA[$F{bgTypeMainName}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{bgTypeMasterName}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="428" y="0" width="127" height="20" uuid="6327e7fe-b7a0-468a-99ff-20001a374f83"/>
@@ -141,7 +150,7 @@ group by bg.deptId, bg.deptName,
 			<band height="20">
 				<textField>
 					<reportElement x="0" y="0" width="428" height="20" uuid="474f6dd4-89c7-4ffa-9e06-0669329c3626"/>
-					<box leftPadding="20">
+					<box leftPadding="15">
 						<leftPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
@@ -209,7 +218,7 @@ group by bg.deptId, bg.deptName,
 					<leftPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textFieldExpression><![CDATA["แผนงาน : "+$P{PLAN_NAME}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["แผนงาน : "+$P{PLAN_NAME_START}+" - "+$P{PLAN_NAME_END}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="FBold" x="0" y="40" width="428" height="20" uuid="bd5191a5-20ea-4f76-8071-9af7b0dd2de7"/>
@@ -218,7 +227,7 @@ group by bg.deptId, bg.deptName,
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textFieldExpression><![CDATA["กองทุน : "+$P{FUND_NAME}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["กองทุน : "+$P{FUND_NAME_START}+" - "+$P{FUND_NAME_END}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="428" y="20" width="127" height="20" uuid="38f5f9fa-880e-4195-93a8-a60795d0de49"/>
@@ -242,7 +251,7 @@ group by bg.deptId, bg.deptName,
 		<band height="20" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="428" height="20" uuid="04025943-2bd5-4e7b-b941-cfd508c1c70c"/>
-				<box leftPadding="40">
+				<box leftPadding="30">
 					<leftPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>

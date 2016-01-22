@@ -8,8 +8,8 @@ myApp.controller('mainController', function ($scope, $http, $controller, $filter
     var listDeptGroupB = []; //Global Variable
     var listL3DPlan = []; //Global Variable
     var listL3DFund = []; //Global Variable
-    // var pathJavaserver = "http://202.44.34.67/reporter2/api";
-    var pathJavaserver = "http://localhost:8888/api";
+    var pathJavaserver = "http://202.44.34.67/reporter2/api";
+    //var pathJavaserver = "http://localhost:8888/api";
     $controller('cmListController', {$scope: $scope});
 
     $scope.init = function () {
@@ -92,8 +92,12 @@ myApp.controller('mainController', function ($scope, $http, $controller, $filter
                 id: 'LR2_2'
             },
             {
-                name: 'รายงาน ร.3', type: 'K',
+                name: 'คำชี้แจงงบประมาณรายจ่ายเงินรายได้ จำแนกตาม แผนงาน/กองทุน/หมวดรายจ่าย (ร.3)', type: 'K',
                 id: 'LR3'
+            },
+            {
+                name: 'แผน/ผล การใช้จ่ายงบประมาณรายจ่ายเงินรายได้ประจำปีงบประมาณ (ร.4)', type: 'K',
+                id: 'LR4'
             }
         ];
 
@@ -266,9 +270,47 @@ myApp.controller('mainController', function ($scope, $http, $controller, $filter
             FUND_NAME_END = $scope.l3dFundId["fundgroupName"];
         }
 
-        console.log("DEPT_ID_START: " + DEPT_ID_START + " DEPT_ID_END: " + DEPT_ID_END);
-        console.log("PLAN_ID_START: " + PLAN_ID_START + " PLAN_ID_END: " + PLAN_ID_END);
-        console.log("FUND_ID_START: " + FUND_ID_START + " FUND_ID_START: " + FUND_ID_END);
+        var STATUS;
+        $http.get(ngContextPath + "/api/report/rptservice/bgsetting/" + PERIOD_ID).then(function (response) {
+
+            STATUS = response.data["status"];
+
+        }).finally(function () {
+
+            var params = {
+
+                REPORT_CODE: String(dataItem["id"]),
+                BUDGET_TYPE: dataItem["type"],
+                EXPORT_TYPE: exportType,
+                PERIOD_ID: String($scope.budgetPeriodId["year"]),
+                FACULTY_ID: String($scope.facultyId["id"]),
+                FACULTY_NAME: $scope.facultyId["deptName"],
+                DEPT_ID_START: String(DEPT_ID_START),
+                DEPT_NAME_START: DEPT_NAME_START,
+                DEPT_ID_END: String(DEPT_ID_END),
+                DEPT_NAME_END: DEPT_NAME_END,
+                PLAN_ID_START: String(PLAN_ID_START),
+                PLAN_NAME_START: PLAN_NAME_START,
+                PLAN_ID_END: String(PLAN_ID_END),
+                PLAN_NAME_END: PLAN_NAME_END,
+                FUND_ID_START: String(FUND_ID_START),
+                FUND_NAME_START: FUND_NAME_START,
+                FUND_ID_END: String(FUND_ID_END),
+                FUND_NAME_END: FUND_NAME_END,
+                STATUS: STATUS
+
+            };
+
+            console.log(params);
+
+            var paramstr = encodeURIComponent(JSON.stringify(params));
+            var bytes = utf8.encode(JSON.stringify(params));
+            var paramstr = base64.encode(bytes);
+
+            var url = pathJavaserver + "/ebudget/report/export?params=" + paramstr;
+            window.open(url, "_blank");
+
+        });
 
         //var params = {
         //
@@ -286,40 +328,6 @@ myApp.controller('mainController', function ($scope, $http, $controller, $filter
         //    FUND_NAME: $scope.l3dFundId["fundgroupName"]
         //};
 
-        var params = {
-
-            REPORT_CODE: String(dataItem["id"]),
-            BUDGET_TYPE: dataItem["type"],
-            EXPORT_TYPE: exportType,
-            PERIOD_ID: String($scope.budgetPeriodId["year"]),
-            FACULTY_ID: String($scope.facultyId["id"]),
-            FACULTY_NAME: $scope.facultyId["deptName"],
-            DEPT_ID_START: String(DEPT_ID_START),
-            DEPT_NAME_START: DEPT_NAME_START,
-            DEPT_ID_END: String(DEPT_ID_END),
-            DEPT_NAME_END: DEPT_NAME_END,
-            PLAN_ID_START: String(PLAN_ID_START),
-            PLAN_NAME_START: PLAN_NAME_START,
-            PLAN_ID_END: String(PLAN_ID_END),
-            PLAN_NAME_END: PLAN_NAME_END,
-            FUND_ID_START: String(FUND_ID_START),
-            FUND_NAME_START: FUND_NAME_START,
-            FUND_ID_END: String(FUND_ID_END),
-            FUND_NAME_END: FUND_NAME_END
-
-        };
-
-        console.log(params);
-
-        var paramstr = encodeURIComponent(JSON.stringify(params));
-        var bytes = utf8.encode(JSON.stringify(params));
-        var paramstr = base64.encode(bytes);
-
-        // var url = pathJavaserver + "/ebudget/report/export/" + REPORT_CODE + "/" + EXPORT_TYPE + "/" + PERIOD_ID + "/" + BUDGET_TYPE + "/" + FACULTY_ID + "/" + FACULTY_NAME + "/" + DEPT_ID
-        //     + "/" + DEPT_NAME + "/" + PLAN_ID + "/" + PLAN_NAME + "/" + FUND_ID + "/" + FUND_NAME + "/0/0";
-
-        var url = pathJavaserver + "/ebudget/report/export?params=" + paramstr;
-        window.open(url, "_blank");
     };
 
 

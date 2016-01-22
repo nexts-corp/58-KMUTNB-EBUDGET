@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="1.2745232708414762"/>
-	<property name="ireport.x" value="144"/>
+	<property name="ireport.zoom" value="0.9575681974766913"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
 	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -332,8 +332,8 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="0" width="132" height="20" uuid="6b12240d-a73f-4341-8a03-f91f62b07e79"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="132" height="20" uuid="6b12240d-a73f-4341-8a03-f91f62b07e79"/>
 				<box leftPadding="1" rightPadding="1">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -345,9 +345,9 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{deptName}]]></textFieldExpression>
 			</textField>
-			<textField pattern="##,##">
-				<reportElement x="132" y="0" width="67" height="20" uuid="6fdcc5e6-c39f-490c-a575-8b736e4d34ec"/>
-				<box leftPadding="1" rightPadding="1">
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="132" y="0" width="67" height="20" uuid="6fdcc5e6-c39f-490c-a575-8b736e4d34ec"/>
+				<box leftPadding="1" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -358,9 +358,9 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tempWages}]]></textFieldExpression>
 			</textField>
-			<textField pattern="##,##">
-				<reportElement x="199" y="0" width="67" height="20" uuid="74b12ffb-b4b3-4a18-9e0d-ff53734a8507"/>
-				<box leftPadding="1" rightPadding="1">
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="199" y="0" width="67" height="20" uuid="74b12ffb-b4b3-4a18-9e0d-ff53734a8507"/>
+				<box leftPadding="1" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -371,9 +371,9 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{compensation}]]></textFieldExpression>
 			</textField>
-			<textField pattern="##,##">
-				<reportElement x="266" y="0" width="67" height="20" uuid="116d6e2d-3799-4a91-813e-dea74b2ec5bb"/>
-				<box leftPadding="1" rightPadding="1">
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="266" y="0" width="67" height="20" uuid="116d6e2d-3799-4a91-813e-dea74b2ec5bb"/>
+				<box leftPadding="1" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -384,9 +384,9 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{livingCost}]]></textFieldExpression>
 			</textField>
-			<textField pattern="##,##">
-				<reportElement x="333" y="0" width="67" height="20" uuid="345eb771-225d-4859-a00e-e7ff5bc74615"/>
-				<box leftPadding="1" rightPadding="1">
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="333" y="0" width="67" height="20" uuid="345eb771-225d-4859-a00e-e7ff5bc74615"/>
+				<box leftPadding="1" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -397,9 +397,9 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{matCost}]]></textFieldExpression>
 			</textField>
-			<textField pattern="##,##">
-				<reportElement x="400" y="0" width="67" height="20" uuid="9e93c409-96e8-4db7-86dd-583e9745d5fc"/>
-				<box leftPadding="1" rightPadding="1">
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="400" y="0" width="67" height="20" uuid="9e93c409-96e8-4db7-86dd-583e9745d5fc"/>
+				<box leftPadding="1" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -410,9 +410,9 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{livingCost}]]></textFieldExpression>
 			</textField>
-			<textField pattern="##,##">
-				<reportElement x="467" y="0" width="67" height="20" uuid="348ae1d8-258c-4be7-bafc-58cca073db0d"/>
-				<box leftPadding="1" rightPadding="1">
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="467" y="0" width="67" height="20" uuid="348ae1d8-258c-4be7-bafc-58cca073db0d"/>
+				<box leftPadding="1" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -423,9 +423,9 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{subSide}]]></textFieldExpression>
 			</textField>
-			<textField pattern="##,##">
-				<reportElement x="534" y="0" width="67" height="20" uuid="36a08e8e-bfd3-468f-9843-5ec68b2f8e96"/>
-				<box leftPadding="1" rightPadding="1">
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="534" y="0" width="67" height="20" uuid="36a08e8e-bfd3-468f-9843-5ec68b2f8e96"/>
+				<box leftPadding="1" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -436,9 +436,9 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{otherCost}]]></textFieldExpression>
 			</textField>
-			<textField pattern="##,##">
-				<reportElement x="601" y="0" width="67" height="20" uuid="b37769fd-7a1e-4c02-aba5-cf52b7eaf9a0"/>
-				<box leftPadding="1" rightPadding="1">
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="601" y="0" width="67" height="20" uuid="b37769fd-7a1e-4c02-aba5-cf52b7eaf9a0"/>
+				<box leftPadding="1" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -449,9 +449,9 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{durableCost}]]></textFieldExpression>
 			</textField>
-			<textField pattern="##,##">
-				<reportElement x="668" y="0" width="67" height="20" uuid="fb346654-b794-4ccd-80ed-3d26727dc797"/>
-				<box leftPadding="1" rightPadding="1">
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="668" y="0" width="67" height="20" uuid="fb346654-b794-4ccd-80ed-3d26727dc797"/>
+				<box leftPadding="1" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -462,9 +462,9 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{buildingCost}]]></textFieldExpression>
 			</textField>
-			<textField pattern="##,##">
-				<reportElement style="FBold" x="735" y="0" width="67" height="20" uuid="9fbc0078-aa03-4d30-9fa5-b923541e8307"/>
-				<box leftPadding="1" rightPadding="1">
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="735" y="0" width="67" height="20" uuid="9fbc0078-aa03-4d30-9fa5-b923541e8307"/>
+				<box leftPadding="1" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>

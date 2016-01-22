@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="1.4019755979256379"/>
+	<property name="ireport.zoom" value="0.7913786756005803"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
@@ -13,10 +13,19 @@
 	<parameter name="DATE_CURRENT" class="java.util.Date" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
 	</parameter>
-	<parameter name="DEPT_NAME" class="java.lang.String" isForPrompting="false">
+	<parameter name="PERIOD_ID" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="PERIOD_ID" class="java.lang.String" isForPrompting="false">
+	<parameter name="PLAN_NAME_END" class="java.lang.String">
+		<parameterDescription><![CDATA["-"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PLAN_NAME_START" class="java.lang.String">
+		<parameterDescription><![CDATA["-"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FACULTY_NAME" class="java.lang.String">
+		<parameterDescription><![CDATA["-"]]></parameterDescription>
 		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="HEAD_RPT" class="java.lang.String" isForPrompting="false">
@@ -118,6 +127,169 @@ order by bg.planId, bg.deptId, bg.fundgroupId,bgType.bgTypeMainId, bgType.bgType
 	<variable name="Total" class="java.math.BigDecimal" resetType="None">
 		<variableExpression><![CDATA[$F{planSummary}+$F{usedSummary}]]></variableExpression>
 	</variable>
+	<group name="G1">
+		<groupExpression><![CDATA[$F{bgTypeMasterId}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField isStretchWithOverflow="true">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="132" height="20" uuid="a4cf1751-aa0c-4f6d-9ac6-eee9ff7575e9"/>
+					<box leftPadding="2" rightPadding="0">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bgTypeMasterName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+					<reportElement style="Default" stretchType="RelativeToBandHeight" x="552" y="0" width="60" height="20" uuid="eaa84a4b-b13b-4c81-95e7-6d2c9f8e8bd4"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="12" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+					<reportElement style="Default" stretchType="RelativeToBandHeight" x="132" y="0" width="60" height="20" uuid="395b8898-1efb-4d4f-9c4c-aa19b2c8bb46"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="12" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+					<reportElement style="Default" stretchType="RelativeToBandHeight" x="252" y="0" width="60" height="20" uuid="025b75d0-32c1-4a4c-a83a-41d80fc858db"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="12" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+					<reportElement style="Default" stretchType="RelativeToBandHeight" x="372" y="0" width="60" height="20" uuid="8a174c5a-9a43-459f-9605-c4ace580be89"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="12" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="732" y="0" width="70" height="20" uuid="b60b3911-435a-449e-8d60-39efc03040a5"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="12" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+					<reportElement style="Default" stretchType="RelativeToBandHeight" x="492" y="0" width="60" height="20" uuid="98237fa7-554f-47e5-b50f-95f4fa3f98a0"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="12" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+					<reportElement style="Default" stretchType="RelativeToBandHeight" x="432" y="0" width="60" height="20" uuid="dba59170-b21e-4a3c-a1c7-4199c60565bd"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="12" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+					<reportElement style="Default" stretchType="RelativeToBandHeight" x="312" y="0" width="60" height="20" uuid="c24424bc-3b43-4988-9337-b93c8f4c0737"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="12" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+					<reportElement style="Default" stretchType="RelativeToBandHeight" x="192" y="0" width="60" height="20" uuid="8397ea9a-aff9-423a-9dd2-c5ea87016ae5"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="12" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+					<reportElement style="Default" stretchType="RelativeToBandHeight" x="672" y="0" width="60" height="20" uuid="0d33b13f-82fd-4df3-b34b-30333d4f4e56"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="12" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+					<reportElement style="Default" stretchType="RelativeToBandHeight" x="612" y="0" width="60" height="20" uuid="14cad6f8-3099-4418-84d3-641684ad4933"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="12" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -256,21 +428,21 @@ order by bg.planId, bg.deptId, bg.fundgroupId,bgType.bgTypeMainId, bgType.bgType
 				<text><![CDATA[รวม]]></text>
 			</staticText>
 			<textField>
-				<reportElement style="FBold" x="0" y="20" width="312" height="20" uuid="c6059aca-7c03-4879-8d45-5bf5e2ff8b0a"/>
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="20" width="390" height="20" uuid="c6059aca-7c03-4879-8d45-5bf5e2ff8b0a"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textFieldExpression><![CDATA["แผนงาน : บริหารการศึกษา"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["แผนงาน :"+$P{PLAN_NAME_START}+" - "+$P{PLAN_NAME_END}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="FBold" x="0" y="40" width="312" height="20" uuid="c5c7af9c-7e4f-4156-9bb1-de4f343302f9"/>
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="40" width="390" height="20" uuid="c5c7af9c-7e4f-4156-9bb1-de4f343302f9"/>
 				<box leftPadding="2" rightPadding="2">
 					<leftPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textFieldExpression><![CDATA["หน่วยงาน : "+$P{DEPT_NAME}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["หน่วยงาน : "+$P{FACULTY_NAME}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement style="FBold" x="0" y="80" width="802" height="20" uuid="2a68f8dc-2992-4191-a264-4866d0b727a2"/>
@@ -280,15 +452,15 @@ order by bg.planId, bg.deptId, bg.fundgroupId,bgType.bgTypeMainId, bgType.bgType
 				<text><![CDATA[แผน/ผลการปฎิบัติงานประจำปี (จำแนกเป็นไตรมาส)]]></text>
 			</staticText>
 			<textField>
-				<reportElement style="FBold" x="354" y="40" width="448" height="20" uuid="aa89dd0a-a6fd-4f2a-87b9-eb532770c5c4"/>
-				<box leftPadding="2" rightPadding="2">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="390" y="40" width="412" height="20" uuid="aa89dd0a-a6fd-4f2a-87b9-eb532770c5c4"/>
+				<box leftPadding="40" rightPadding="2">
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textFieldExpression><![CDATA["รายงานแผน"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="FBold" x="354" y="60" width="448" height="20" uuid="b4098ccd-39fd-49a0-af77-8539a681c547"/>
-				<box leftPadding="2" rightPadding="2">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="390" y="60" width="412" height="20" uuid="b4098ccd-39fd-49a0-af77-8539a681c547"/>
+				<box leftPadding="40" rightPadding="2">
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
@@ -412,7 +584,7 @@ order by bg.planId, bg.deptId, bg.fundgroupId,bgType.bgTypeMainId, bgType.bgType
 				<text><![CDATA[แผนการใช้จ่าย]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="312" y="20" width="490" height="20" uuid="84f39342-374e-4067-ad50-bb521fb21100"/>
+				<reportElement stretchType="RelativeToBandHeight" x="390" y="20" width="412" height="20" uuid="84f39342-374e-4067-ad50-bb521fb21100"/>
 				<box leftPadding="2" rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
@@ -420,7 +592,7 @@ order by bg.planId, bg.deptId, bg.fundgroupId,bgType.bgTypeMainId, bgType.bgType
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="60" width="312" height="20" uuid="4bcc91e5-019c-4431-96e1-8fd1183fe88e"/>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="60" width="390" height="20" uuid="4bcc91e5-019c-4431-96e1-8fd1183fe88e"/>
 				<box leftPadding="2" rightPadding="2">
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -428,182 +600,185 @@ order by bg.planId, bg.deptId, bg.fundgroupId,bgType.bgTypeMainId, bgType.bgType
 				</box>
 				<text><![CDATA[]]></text>
 			</staticText>
-			<textField>
-				<reportElement style="Symbol" x="312" y="40" width="42" height="20" uuid="d02b029c-df09-495a-82df-2edf0fe2f604"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="14" isBold="true" isPdfEmbedded="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[""]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="Symbol" x="312" y="60" width="42" height="20" uuid="1fc22c8f-84cb-4f7d-a200-dd68d2f2d763"/>
+			<staticText>
+				<reportElement x="404" y="42" width="15" height="15" uuid="4888332d-d868-4a1e-b16f-f29328baeb40"/>
 				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="14" isPdfEmbedded="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[""]]></textFieldExpression>
-			</textField>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="404" y="62" width="15" height="15" uuid="1df7c4e3-3ea1-4055-be5f-aa690d30a215"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
-			<textField isBlankWhenNull="true">
-				<reportElement style="Default" x="252" y="0" width="60" height="20" uuid="f469ddc3-4b8d-4268-be19-44c740488496"/>
-				<box>
+			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="252" y="0" width="60" height="20" uuid="f469ddc3-4b8d-4268-be19-44c740488496"/>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{planQ1}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement style="Default" x="312" y="0" width="60" height="20" uuid="78c093c4-2cba-46d1-adc1-7f32a896f6c7"/>
-				<box>
+			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="312" y="0" width="60" height="20" uuid="78c093c4-2cba-46d1-adc1-7f32a896f6c7"/>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{usedQ1}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement style="Default" x="372" y="0" width="60" height="20" uuid="3f6c0660-448b-426a-a7db-6db5fd24b432"/>
-				<box>
+			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="372" y="0" width="60" height="20" uuid="3f6c0660-448b-426a-a7db-6db5fd24b432"/>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{planQ2}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement style="Default" x="432" y="0" width="60" height="20" uuid="f10cb526-d9f8-47f4-abd6-89f8d4b06539"/>
-				<box>
+			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="432" y="0" width="60" height="20" uuid="f10cb526-d9f8-47f4-abd6-89f8d4b06539"/>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{usedQ2}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement style="Default" x="492" y="0" width="60" height="20" uuid="5dbfa4fd-5ae0-4b8f-ad2a-4a76058de49b"/>
-				<box>
+			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="492" y="0" width="60" height="20" uuid="5dbfa4fd-5ae0-4b8f-ad2a-4a76058de49b"/>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{planQ3}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement style="Default" x="552" y="0" width="60" height="20" uuid="ad4ddf94-9770-468b-a50e-aeb7a57dc752"/>
-				<box>
+			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="552" y="0" width="60" height="20" uuid="ad4ddf94-9770-468b-a50e-aeb7a57dc752"/>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{usedQ3}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement style="Default" x="612" y="0" width="60" height="20" uuid="029b1493-1ca1-40c0-8ab5-2ce7957c209a"/>
-				<box>
+			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="612" y="0" width="60" height="20" uuid="029b1493-1ca1-40c0-8ab5-2ce7957c209a"/>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{planQ4}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement style="Default" x="672" y="0" width="60" height="20" uuid="a507b7b8-ed0f-468a-9932-4d0a93b84885"/>
-				<box>
+			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="672" y="0" width="60" height="20" uuid="a507b7b8-ed0f-468a-9932-4d0a93b84885"/>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{usedQ4}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement style="Default" x="192" y="0" width="60" height="20" uuid="2226a2be-5a4f-4953-8939-19ff25772337"/>
-				<box>
+			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="192" y="0" width="60" height="20" uuid="2226a2be-5a4f-4953-8939-19ff25772337"/>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{usedSummary}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement style="Default" x="132" y="0" width="60" height="20" uuid="282edef9-4ae8-49e6-9e53-cffcc3c112c6"/>
-				<box>
+			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="132" y="0" width="60" height="20" uuid="282edef9-4ae8-49e6-9e53-cffcc3c112c6"/>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{planSummary}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement style="Default" x="732" y="0" width="70" height="20" uuid="0bbc1c45-ab22-40bd-ab0a-5a66cb427c1e"/>
-				<box>
+			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="732" y="0" width="70" height="20" uuid="0bbc1c45-ab22-40bd-ab0a-5a66cb427c1e"/>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{Total}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement style="Default" x="0" y="0" width="132" height="20" uuid="3ba3a28e-8f48-479d-8161-ed6222c4f2fa"/>
-				<box leftPadding="2">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="0" y="0" width="132" height="20" uuid="3ba3a28e-8f48-479d-8161-ed6222c4f2fa"/>
+				<box leftPadding="10">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{bgTypeSubName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{bgTypeMainName}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -622,6 +797,6 @@ order by bg.planId, bg.deptId, bg.fundgroupId,bgType.bgTypeMainId, bgType.bgType
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="30" splitType="Stretch"/>
+		<band height="31" splitType="Stretch"/>
 	</summary>
 </jasperReport>
