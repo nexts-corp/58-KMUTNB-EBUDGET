@@ -383,6 +383,8 @@
                         html += '<tr id="' + txtId + '" parent-id="' + txtPId.substr(0, txtPId.length - 1) + '"class="frmData ' + classData[level - 1] + '"><td style="padding-left: 4em ;vertical-align:middle">' + /*(++count[nameData[level - 1]])*/txtCount + v[nameData[level - 1] + "Name"] + '</td>';
                         html += '<td class="text-right planSummary">' + (v.planSummary == null ? 0 : v.planSummary) + '</td>';
                         html += '<td class="text-right usedSummary">' + (v.usedSummary == null ? 0 : v.usedSummary) + '</td>';
+                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="planSummary" value="' + v.planSummary + '" />';
+                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="usedSummary" value="' + v.usedSummary + '" />';
                         html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ1" value="' + (v.planQ1 == null ? 0 : v.planQ1) + '" /></td>';
                         html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ1" value="' + (v.usedQ1 == null ? 0 : v.usedQ1) + '" /></td>';
                         html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ2" value="' + (v.planQ2 == null ? 0 : v.planQ2) + '" /></td>';
