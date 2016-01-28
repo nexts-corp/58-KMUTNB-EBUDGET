@@ -9,13 +9,11 @@ use apps\revenue\interfaces\IViewService;
 
 class ViewService extends CServiceBase implements IViewService {
 
-    public function allocateAll() {
-        $view = new CJView("allocate/budget", CJViewType::HTML_VIEW_ENGINE);
+    public function planing() {
+        $view = new CJView("allocate/planing", CJViewType::HTML_VIEW_ENGINE);
+        $groupS = new PlaningService();
+        $view->year = $groupS->getPeriod()->year;
         return $view;
-    }
-
-    public function doRevenue($budgetYear, $deptId) {
-        
     }
 
 }

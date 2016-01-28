@@ -1,10 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{{> header}}
+<div role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">ระบบจัดทำ/จัดสรรงบประมาณ</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">จัดสรรงบประมาณเงินรายได้ ปี {{year}}</h1>
+                </div>
+            </div>
+        </div>
+    </section>
 
-</body>
-</html>
+    <hr class="tall dashboard">
+    <div class="sort-source-wrapper"><!-- button action on header -->
+        <div class="container">
+            <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+                <li class="active">
+                    <button class="btn btn-primary" id="btnApprove"><i class="fa fa-send"></i> ยืนยันการจัดสรร</button>
+                </li>
+            </ul>
+        </div>
+    </div><!-- end button action on header -->
+
+    <div class="container">
+        <div class="row">
+            <div class="tabs">
+                <ul id="tabMenu" class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#tab-budget" data-toggle="tab" aria-expanded="false">เงินรายได้</a>
+                    </li>
+                    <li class="">
+                        <a href="#tab-project" data-toggle="tab" aria-expanded="true">โครงการพัฒนามหาวิทยาลัย</a>
+                    </li>
+                </ul>
+                <div id="tabContent" class="tab-content">
+                    <div id="tab-budget" class="tab-pane active">
+                        <table class="table table-bordered table-condensed mb-none">
+                            <thead>
+                                <tr>
+                                    <th class="text-center col-lg-1">ลำดับ</th>
+                                    <th class="text-center col-lg-3">หน่วยงาน</th>
+                                    <th class="text-center col-lg-2">ค่าธรรมเนียมการศึกษา</th>
+                                    <th class="text-center col-lg-2">งานบริการวิชาการ</th>
+                                    <th class="text-center col-lg-2">รวม</th>
+                                    <th class="text-center col-lg-2">จัดการ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="6" class="text-center">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="tab-project" class="tab-pane">
+                        <table class="table table-bordered table-condensed mb-none">
+                            <thead>
+                            <tr>
+                                <th class="text-center col-lg-1">ลำดับ</th>
+                                <th class="text-center col-lg-5">โครงการ / หน่วยงานที่รับผิดชอบ</th>
+                                <th class="text-center col-lg-3">งบประมาณที่จัดสรร</th>
+                                <th class="text-center col-lg-3">จัดการ</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="6" class="text-center">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div><!--  row  -->
+    </div><!--  container  -->
+</div><!-- main -->
+
+{{> footer}}
+
+<script>
+    $(function(){
+
+    });
+
+    function listBudget(){
+
+    }
+
+    function listProject(){
+
+    }
+</script>
