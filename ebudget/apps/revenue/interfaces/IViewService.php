@@ -10,10 +10,10 @@ namespace apps\revenue\interfaces;
 interface IViewService {
 
     /**
-     * @name planing
-     * @uri /planing
+     * @name planning
+     * @uri /planning
      * @description จัดสรรงบประมาณเงินรายได้
      */    
-    public function planing();
+    public function planning();
 
 }

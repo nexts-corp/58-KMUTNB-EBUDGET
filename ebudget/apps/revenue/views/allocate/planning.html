@@ -1,0 +1,261 @@
+{{> header}}
+<div role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">ระบบจัดทำ/จัดสรรงบประมาณ</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">จัดสรรงบประมาณเงินรายได้ ปี {{year}}</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="tall dashboard">
+    <div class="sort-source-wrapper"><!-- button action on header -->
+        <div class="container">
+            <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+                <li class="active">
+                    <button class="btn btn-primary" id="btnApprove"><i class="fa fa-send"></i> ยืนยันการจัดสรร</button>
+                </li>
+            </ul>
+        </div>
+    </div><!-- end button action on header -->
+
+    <div class="container">
+        <div class="row">
+            <div class="tabs">
+                <ul id="tabMenu" class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#tab-budget" data-toggle="tab" aria-expanded="false">เงินรายได้</a>
+                    </li>
+                    <li class="">
+                        <a href="#tab-project" data-toggle="tab" aria-expanded="true">โครงการพัฒนามหาวิทยาลัย</a>
+                    </li>
+                </ul>
+                <div id="tabContent" class="tab-content">
+                    <div id="tab-budget" class="tab-pane active">
+                        <table class="table table-bordered table-condensed mb-none">
+                            <thead>
+                                <tr>
+                                    <th class="text-center col-lg-1" rowspan="2" style="vertical-align: middle;">ลำดับ</th>
+                                    <th class="text-center col-lg-4" rowspan="2" style="vertical-align: middle;">หน่วยงาน</th>
+                                    <th class="text-center col-lg-6" colspan="3" style="vertical-align: middle;">งบประมาณเงินรายได้ (บาท)</th>
+                                    <th class="text-center col-lg-1" rowspan="2" style="vertical-align: middle;">เครื่องมือ</th>
+                                </tr>
+                                <tr>
+                                    <th class="text-center col-lg-2">ค่าธรรมเนียมการศึกษา</th>
+                                    <th class="text-center col-lg-2">งานบริการวิชาการ</th>
+                                    <th class="text-center col-lg-2">รวม</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="6" class="text-center">-</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th class="text-center" colspan="2">รวม</th>
+                                    <th class="text-right">-</th>
+                                    <th class="text-right">-</th>
+                                    <th class="text-right">-</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <div id="tab-project" class="tab-pane">
+                        <table class="table table-bordered table-condensed mb-none">
+                            <thead>
+                            <tr>
+                                <th class="text-center col-lg-1">ลำดับ</th>
+                                <th class="text-center col-lg-5">โครงการ / หน่วยงานที่รับผิดชอบ</th>
+                                <th class="text-center col-lg-3">งบประมาณที่จัดสรร</th>
+                                <th class="text-center col-lg-3">จัดการ</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="6" class="text-center">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="deleteForm" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">ลบข้อมูล : <span id="headDel"></span></h4>
+                        </div>
+                        <div class="modal-body">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td class="col-md-5 text-right text-bold" style="vertical-align: top;">หน่วยงาน : </td>
+                                    <td class="col-md-7" id="deptNameDel"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="loadingDel" class="col-md-12 text-center" style="margin: 20px;"></div>
+                        <div class="modal-footer">
+                            <ul class="nav nav-pills sort-source pull-right" data-option-key="filter">
+                                <li data-option-value="*" class="">
+                                    <button class="btn btn-danger save"><i class="fa fa-trash"></i> ยืนยันการลบ</button>
+                                </li>
+                                <li data-option-value="" class="padding-left">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--  row  -->
+    </div><!--  container  -->
+</div><!-- main -->
+
+{{> footer}}
+
+<script>
+    var listsArr = {};
+
+    $(function(){
+        listRevenue();
+    });
+
+    function listRevenue(){
+        $("#tab-budget table tbody").html('<tr><td colspan="6" class="text-center"><i class="fa fa-spin fa-cog"></i> Loading...</td>');
+
+        setTimeout(function(){
+            var datas = callAjax("{{_context_path}}/api/revenue/planing/fetchRevenue", "post", {}, "json");
+            if(typeof datas !== "undefined" && datas !== null){
+                var dataSet = [];
+                $.each(datas["lists"], function(key, val){
+                    dataSet.push(val);
+
+                    listsArr[val["id"]] = val;
+                });
+
+                var t = $("#tab-budget table").DataTable({
+                    "destroy": true,
+                    "data": dataSet,
+                    "order": [0, 'asc'],
+                    "iDisplayLength": 50,
+                    "columnDefs": [
+                        {
+                            "targets": 0,
+                            "searchable": false,
+                            "orderable": false,
+                            "data": "id",
+                            "sClass": "text-center col-lg-1"
+                        },
+                        {
+                            "targets": 1,
+                            "data": "deptName",
+                            "sClass": "col-lg-4"
+                        },
+                        {
+                            "targets": 2,
+                            "data": "budgetEducation",
+                            "sClass": "text-right col-lg-2",
+                            "render": function(data){
+                                return accounting.formatNumber(data, 2, ",", ".");
+                            }
+                        },
+                        {
+                            "targets": 3,
+                            "data": "budgetService",
+                            "sClass": "text-right col-lg-2",
+                            "render": function(data){
+                                return accounting.formatNumber(data, 2, ",", ".");
+                            }
+                        },
+                        {
+                            "targets": 4,
+                            "data": "budgetTotal",
+                            "sClass": "text-right col-lg-2",
+                            "render": function(data){
+                                return accounting.formatNumber(data, 2, ",", ".");
+                            }
+                        },
+                        {
+                            "targets": 5,
+                            "data": "id",
+                            "sClass": "text-center col-lg-1",
+                            "render": function(data){
+                                var content = '<button class="btn btn-warning edit" title="แก้ไข" data-id="'+data+'"><i class="fa fa-pencil"></i></button>&nbsp'
+                                        + '<button class="btn btn-default delete" title="ลบ" data-id="'+data+'"><i class="fa fa-trash"></i></button>';
+                                return content;
+                            }
+                        }
+                    ]
+                });
+                t.on('order.dt search.dt', function () {
+                    t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1;
+                    });
+                }).draw();
+
+                $("#tab-budget table").off("click", "button.edit").on("click", "button.edit", function(){
+
+                });
+
+                $("#tab-budget table").off("click", "button.delete").on("click", "button.delete", function(){
+                    $("#deleteForm").modal("show");
+
+                    var id = $(this).attr("data-id");
+
+                    var data = listsArr[id];
+
+                    $("#loadingDel").html('');
+                    $("#headDel").html("เงินรายได้");
+                    $("#deptNameDel").html(data["deptName"]);
+
+                    $("button.save").unbind().click(function(){
+                        deleteRevenue(id);
+                    });
+                });
+            }
+        }, 0);
+    }
+
+    function editRevenue(){
+
+    }
+
+    function deleteRevenue(id){
+        $("#loadingDel").html("กำลังบันทึกข้อมูล...");
+
+        setTimeout(function() {
+            var datas = callAjax("{{_context_path}}/api/revenue/planing/deleteRevenue", "post", {id: id}, "json");
+            if (typeof datas["delete"] !== "undefined" && datas["delete"] !== null) {
+                if(datas["delete"] == true){
+                    $("#loadingDel").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
+                    setTimeout(function(){
+                        $("#deleteForm").modal("hide");
+                        listRevenue();
+                    }, 200);
+                }
+                else{
+                    $("#loadingDel").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
+                }
+            }
+        }, 0);
+    }
+
+    function listProject(){
+
+    }
+</script>

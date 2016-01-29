@@ -26,26 +26,29 @@ class PlaningService extends CServiceBase implements IPlaningService {
     }
 
     public function fetchRevenue() {
-        $budgetPeriodId = $this->getPeriod()->year;
+        $sql = "SELECT"
+                ." rp.id, rp.deptId, dp.deptName, rp.budgetEducation, rp.budgetService, rp.budgetTotal"
+            ." FROM ".$this->ent."\\BudgetRevenuePlan rp"
+            ." JOIN ".$this->ent."\\L3D\\Department dp WITH dp.id = rp.deptId"
+            ." WHERE rp.budgetPeriodId = :year";
+        $param = array(
+            "year" => $this->getPeriod()->year
+        );
 
-        $bg = new entity\BudgetRevenuePlan();
-        $bg->setBudgetPeriodId($budgetPeriodId);
+        $data = $this->datacontext->getObject($sql, $param);
 
-        $data = $this->datacontext->getObject($bg);
-
-        $dataList = null;
-
-        for ($i = 0; $i < count($data); $i++) {
-            $dataList[$i]["id"] = $data[$i]->id;
-            $dataList[$i]["department"] = $data[$i]->deptId;
-            $dataList[$i]["departmentC"] = $data[$i]->deptId;
-            $dataList[$i]["education"] = $data[$i]->budgetEducation;
-            $dataList[$i]["educationC"] = $data[$i]->budgetEducation;
-            $dataList[$i]["academic"] = $data[$i]->budgetService;
-            $dataList[$i]["academicC"] = $data[$i]->budgetService;
-        }
-
-        return $dataList;
+        return $data;
     }
 
+    public function deleteRevenue($id) {
+        $return = true;
+
+        $bg = new \apps\common\entity\BudgetRevenuePlan();
+        $bg->setId($id);
+        if (!$this->datacontext->removeObject($bg)) {
+            $return = $this->datacontext->getLastMessage();
+        }
+
+        return $return;
+    }
 }
