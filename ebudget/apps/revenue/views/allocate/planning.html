@@ -41,6 +41,9 @@
                 </ul>
                 <div id="tabContent" class="tab-content">
                     <div id="tab-budget" class="tab-pane active">
+                        <div class="text-right" style="margin-bottom: 20px;">
+                            <button class="btn btn-success addRevenue"><i class="fa fa-plus-circle"></i> เพิ่มข้อมูล</button>
+                        </div>
                         <table class="table table-bordered table-condensed mb-none">
                             <thead>
                                 <tr>
@@ -91,6 +94,59 @@
                 </div>
             </div>
 
+            <div id="revenuePanel" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form id="formRevenue" onsubmit="return false;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">เพิ่มข้อมูล : เงินรายได้</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right req" for="deptId">หน่วยงาน : </label>
+                                    <div class="col-md-6">
+                                        <select class="form-control input-sm" name="deptId" id="deptId" required></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right req" for="budgetEducation">ค่าธรรมเนียมการศึกษา : </label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control input-sm text-right numeric" name="budgetEducation" id="budgetEducation" placeholder="0.00" required>
+                                    </div>
+                                    <div>บาท</div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right req" for="budgetService">งานบริการวิชาการ : </label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control input-sm text-right numeric" name="budgetService" id="budgetService" placeholder="0.00" required>
+                                    </div>
+                                    <div>บาท</div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right">รวม : </label>
+                                    <div class="col-md-6 text-center">
+                                        <span id="budgetTotal" class="text-bold"></span>
+                                    </div>
+                                    <div>บาท</div>
+                                </div>
+                            </div>
+                            <div id="loadingAdd" class="col-md-12 text-center" style="margin: 20px;"></div>
+                            <div class="modal-footer">
+                                <ul class="nav nav-pills sort-source pull-right" data-option-key="filter">
+                                    <li data-option-value="*" class="">
+                                        <button class="btn btn-success save"><i class="fa fa-save"></i> บันทึก</button>
+                                    </li>
+                                    <li data-option-value="" class="padding-left">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <div id="deleteForm" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -103,7 +159,11 @@
                                 <tbody>
                                 <tr>
                                     <td class="col-md-5 text-right text-bold" style="vertical-align: top;">หน่วยงาน : </td>
-                                    <td class="col-md-7" id="deptNameDel"></td>
+                                    <td class="col-md-7"><span id="deptNameDel"></span></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-5 text-right text-bold" style="vertical-align: top;">เงินรายได้ : </td>
+                                    <td class="col-md-7"><span id="budgetTotalDel"></span> บาท</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -129,23 +189,88 @@
 {{> footer}}
 
 <script>
+    var callDept = 0;
     var listsArr = {};
+    var listsArrProj = {};
+    var deptArr = {};
 
-    $(function(){
-        listRevenue();
+    var dataDept = '';
+
+    $(function() {
+        listsRevenue();
+        listsProject();
+
+        $('.numeric').numeric({
+            decimal : ".",
+            negative : false,
+            scale: 3
+        });
+
+        $("button.addRevenue").unbind().click(function () {
+            $("#revenuePanel").modal("show");
+
+            $("#formRevenue")[0].reset();
+            $("#loadingAdd").html('');
+            $("#budgetTotal").html('0.00');
+
+            if(callDept == 0){
+                dataDept = listsDepartment();
+                callDept = 1;
+            }
+            $("#deptId").html(dataDept).select2();
+
+            calNumeric();
+
+            $("button.save").unbind().click(function () {
+                var isValid = true;
+                $('#formRevenue select[required], #formRevenue input[required]').each(function () {
+                    if ($(this).val() == "" && !$(this).prop("disabled"))
+                        isValid = false;
+                });
+                if (isValid) {
+                    var fParam = {};
+
+                    $("#formRevenue select[required], #formRevenue input[required]").each(function(){
+                        var name = $(this).attr("name");
+                        var value = $(this).val();
+                        fParam[name] = value;
+                    });
+
+                    var dataJSON = JSON.stringify({revenuePlan: fParam});
+                    var dataJSONEN = encodeURIComponent(dataJSON);
+
+                    insertRevenue(dataJSONEN);
+                }
+
+            });
+        });
+
     });
 
-    function listRevenue(){
+    function listsRevenue(){
         $("#tab-budget table tbody").html('<tr><td colspan="6" class="text-center"><i class="fa fa-spin fa-cog"></i> Loading...</td>');
 
         setTimeout(function(){
-            var datas = callAjax("{{_context_path}}/api/revenue/planing/fetchRevenue", "post", {}, "json");
+            var datas = callAjax("{{_context_path}}/api/revenue/planning/fetchRevenue", "post", {}, "json");
             if(typeof datas !== "undefined" && datas !== null){
                 var dataSet = [];
+
+                var sumEducation = 0;
+                var sumService = 0;
+                var sumTotal = 0;
+
+                listsArr = {};
+                deptArr = {};
+
                 $.each(datas["lists"], function(key, val){
                     dataSet.push(val);
 
                     listsArr[val["id"]] = val;
+                    deptArr[val["deptId"]] = val["deptId"];
+
+                    sumEducation += val["budgetEducation"];
+                    sumService += val["budgetService"];
+                    sumTotal += val["budgetTotal"];
                 });
 
                 var t = $("#tab-budget table").DataTable({
@@ -208,8 +333,48 @@
                     });
                 }).draw();
 
-                $("#tab-budget table").off("click", "button.edit").on("click", "button.edit", function(){
 
+                //sum footer
+                $("#tab-budget table tfoot").find("th").eq(1).html(accounting.formatNumber(sumEducation, 2, ",", "."));
+                $("#tab-budget table tfoot").find("th").eq(2).html(accounting.formatNumber(sumService, 2, ",", "."));
+                $("#tab-budget table tfoot").find("th").eq(3).html(accounting.formatNumber(sumTotal, 2, ",", "."));
+
+                $("#tab-budget table").off("click", "button.edit").on("click", "button.edit", function(){
+                    var id = $(this).attr("data-id");
+                    $("#revenuePanel").modal("show");
+
+                    $("#formRevenue")[0].reset();
+                    $("#loadingAdd").html('');
+                    $("#budgetTotal").html('0.00');
+
+                    $("#deptId").html('<option value="'+listsArr[id]["deptId"]+'" selected="selected">'+listsArr[id]["deptName"]+'</option>').select2();
+
+                    calNumeric();
+                    $("#budgetEducation").val(listsArr[id]["budgetEducation"]);
+                    $("#budgetService").val(listsArr[id]["budgetService"]).trigger("keyup");
+
+                    $("button.save").unbind().click(function () {
+                        var isValid = true;
+                        $('#formRevenue select[required], #formRevenue input[required]').each(function () {
+                            if ($(this).val() == "" && !$(this).prop("disabled"))
+                                isValid = false;
+                        });
+                        if (isValid) {
+                            var fParam = {id: id};
+
+                            $("#formRevenue select[required], #formRevenue input[required]").each(function(){
+                                var name = $(this).attr("name");
+                                var value = $(this).val();
+                                fParam[name] = value;
+                            });
+
+                            var dataJSON = JSON.stringify({revenuePlan: fParam});
+                            var dataJSONEN = encodeURIComponent(dataJSON);
+
+                            editRevenue(dataJSONEN);
+                        }
+
+                    });
                 });
 
                 $("#tab-budget table").off("click", "button.delete").on("click", "button.delete", function(){
@@ -222,6 +387,7 @@
                     $("#loadingDel").html('');
                     $("#headDel").html("เงินรายได้");
                     $("#deptNameDel").html(data["deptName"]);
+                    $("#budgetTotalDel").html(data["budgetTotal"]);
 
                     $("button.save").unbind().click(function(){
                         deleteRevenue(id);
@@ -231,21 +397,57 @@
         }, 0);
     }
 
-    function editRevenue(){
+    function insertRevenue(dataJSONEN){
+        $("#loadingAdd").html("กำลังบันทึกข้อมูล...");
 
+        setTimeout(function() {
+            var datas = callAjax("{{_context_path}}/api/revenue/planning/addRevenue", "post", dataJSONEN, "json");
+            if (typeof datas !== "undefined" && datas !== null) {
+                if(datas["add"] == true){
+                    $("#loadingAdd").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
+                    setTimeout(function(){
+                        $("#revenuePanel").modal("hide");
+                        listsRevenue();
+                    }, 200);
+                }
+                else{
+                    $("#loadingAdd").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
+                }
+            }
+        }, 0);
+    }
+
+    function editRevenue(dataJSONEN){
+        $("#loadingAdd").html("กำลังบันทึกข้อมูล...");
+
+        setTimeout(function() {
+            var datas = callAjax("{{_context_path}}/api/revenue/planning/updateRevenue", "post", dataJSONEN, "json");
+            if (typeof datas !== "undefined" && datas !== null) {
+                if(datas["update"] == true){
+                    $("#loadingAdd").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
+                    setTimeout(function(){
+                        $("#revenuePanel").modal("hide");
+                        listsRevenue();
+                    }, 200);
+                }
+                else{
+                    $("#loadingAdd").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
+                }
+            }
+        }, 0);
     }
 
     function deleteRevenue(id){
         $("#loadingDel").html("กำลังบันทึกข้อมูล...");
 
         setTimeout(function() {
-            var datas = callAjax("{{_context_path}}/api/revenue/planing/deleteRevenue", "post", {id: id}, "json");
-            if (typeof datas["delete"] !== "undefined" && datas["delete"] !== null) {
+            var datas = callAjax("{{_context_path}}/api/revenue/planning/deleteRevenue", "post", {id: id}, "json");
+            if (typeof datas !== "undefined" && datas !== null) {
                 if(datas["delete"] == true){
                     $("#loadingDel").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
                     setTimeout(function(){
                         $("#deleteForm").modal("hide");
-                        listRevenue();
+                        listsRevenue();
                     }, 200);
                 }
                 else{
@@ -255,7 +457,178 @@
         }, 0);
     }
 
-    function listProject(){
+    function listsProject(){
+        $("#tab-project table tbody").html('<tr><td colspan="6" class="text-center"><i class="fa fa-spin fa-cog"></i> Loading...</td>');
 
+        setTimeout(function(){
+            var datas = callAjax("{{_context_path}}/api/revenue/planning/fetchProject", "post", {}, "json");
+            if(typeof datas !== "undefined" && datas !== null){
+                var dataSet = [];
+
+                var sumEducation = 0;
+                var sumService = 0;
+                var sumTotal = 0;
+
+                listsArrProj = {};
+
+                $.each(datas["lists"], function(key, val){
+                    dataSet.push(val);
+
+                    listsArr[val["id"]] = val;
+                    deptArr[val["deptId"]] = val["deptId"];
+
+                    sumEducation += val["budgetEducation"];
+                    sumService += val["budgetService"];
+                    sumTotal += val["budgetTotal"];
+                });
+
+                var t = $("#tab-budget table").DataTable({
+                    "destroy": true,
+                    "data": dataSet,
+                    "order": [0, 'asc'],
+                    "iDisplayLength": 50,
+                    "columnDefs": [
+                        {
+                            "targets": 0,
+                            "searchable": false,
+                            "orderable": false,
+                            "data": "id",
+                            "sClass": "text-center col-lg-1"
+                        },
+                        {
+                            "targets": 1,
+                            "data": "deptName",
+                            "sClass": "col-lg-4"
+                        },
+                        {
+                            "targets": 2,
+                            "data": "budgetEducation",
+                            "sClass": "text-right col-lg-2",
+                            "render": function(data){
+                                return accounting.formatNumber(data, 2, ",", ".");
+                            }
+                        },
+                        {
+                            "targets": 3,
+                            "data": "budgetService",
+                            "sClass": "text-right col-lg-2",
+                            "render": function(data){
+                                return accounting.formatNumber(data, 2, ",", ".");
+                            }
+                        },
+                        {
+                            "targets": 4,
+                            "data": "budgetTotal",
+                            "sClass": "text-right col-lg-2",
+                            "render": function(data){
+                                return accounting.formatNumber(data, 2, ",", ".");
+                            }
+                        },
+                        {
+                            "targets": 5,
+                            "data": "id",
+                            "sClass": "text-center col-lg-1",
+                            "render": function(data){
+                                var content = '<button class="btn btn-warning edit" title="แก้ไข" data-id="'+data+'"><i class="fa fa-pencil"></i></button>&nbsp'
+                                        + '<button class="btn btn-default delete" title="ลบ" data-id="'+data+'"><i class="fa fa-trash"></i></button>';
+                                return content;
+                            }
+                        }
+                    ]
+                });
+                t.on('order.dt search.dt', function () {
+                    t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1;
+                    });
+                }).draw();
+
+
+                //sum footer
+                $("#tab-budget table tfoot").find("th").eq(1).html(accounting.formatNumber(sumEducation, 2, ",", "."));
+                $("#tab-budget table tfoot").find("th").eq(2).html(accounting.formatNumber(sumService, 2, ",", "."));
+                $("#tab-budget table tfoot").find("th").eq(3).html(accounting.formatNumber(sumTotal, 2, ",", "."));
+
+                $("#tab-budget table").off("click", "button.edit").on("click", "button.edit", function(){
+                    var id = $(this).attr("data-id");
+                    $("#revenuePanel").modal("show");
+
+                    $("#formRevenue")[0].reset();
+                    $("#loadingAdd").html('');
+                    $("#budgetTotal").html('0.00');
+
+                    $("#deptId").html('<option value="'+listsArr[id]["deptId"]+'" selected="selected">'+listsArr[id]["deptName"]+'</option>').select2();
+
+                    calNumeric();
+                    $("#budgetEducation").val(listsArr[id]["budgetEducation"]);
+                    $("#budgetService").val(listsArr[id]["budgetService"]).trigger("keyup");
+
+                    $("button.save").unbind().click(function () {
+                        var isValid = true;
+                        $('#formRevenue select[required], #formRevenue input[required]').each(function () {
+                            if ($(this).val() == "" && !$(this).prop("disabled"))
+                                isValid = false;
+                        });
+                        if (isValid) {
+                            var fParam = {id: id};
+
+                            $("#formRevenue select[required], #formRevenue input[required]").each(function(){
+                                var name = $(this).attr("name");
+                                var value = $(this).val();
+                                fParam[name] = value;
+                            });
+
+                            var dataJSON = JSON.stringify({revenuePlan: fParam});
+                            var dataJSONEN = encodeURIComponent(dataJSON);
+
+                            editRevenue(dataJSONEN);
+                        }
+
+                    });
+                });
+
+                $("#tab-budget table").off("click", "button.delete").on("click", "button.delete", function(){
+                    $("#deleteForm").modal("show");
+
+                    var id = $(this).attr("data-id");
+
+                    var data = listsArr[id];
+
+                    $("#loadingDel").html('');
+                    $("#headDel").html("เงินรายได้");
+                    $("#deptNameDel").html(data["deptName"]);
+                    $("#budgetTotalDel").html(data["budgetTotal"]);
+
+                    $("button.save").unbind().click(function(){
+                        deleteRevenue(id);
+                    });
+                });
+            }
+        }, 0);
+    }
+
+    function listsDepartment(){
+        var html = '<option value="" selected="selected">- เลือกหน่วยงาน -</option>';
+
+        var datas = callAjax("{{_context_path}}/api/revenue/planning/listsDepartment", "post", {}, "json");
+        if (typeof datas !== "undefined" && datas !== null) {
+            $.each(datas["lists"], function(key, val){
+                if (!deptArr[val["id"]]) {
+                    html += '<option value="'+val["id"]+'">'+val["name"]+'</option>';
+                }
+            });
+        }
+        return html;
+    }
+
+    function calNumeric(){
+        $("#budgetEducation, #budgetService").keyup(function(){
+            var val1 = 0;
+            if($("#budgetEducation").val() != '') val1 = parseFloat($("#budgetEducation").val());
+            var val2 = 0;
+            if($("#budgetService").val() != '') val2 = parseFloat($("#budgetService").val());
+
+
+            $("#budgetTotal").html(accounting.formatNumber(val1 + val2, 2, ",", "."));
+        });
     }
 </script>
