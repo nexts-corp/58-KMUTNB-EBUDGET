@@ -17,10 +17,20 @@ interface IViewService {
     public function planning();
 
     /**
-     * @name manage
-     * @uri /manage
+     * @name manageAll
+     * @uri /manageAll
      * @description จัดสรรงบประมาณเงินรายได้
      */
-    public function manage();
+    public function manageAll();
+
+    /**
+     * @name manage
+     * @uri /manage
+     * @param string formId
+     * @param string budgetHeadId
+     * @param string deptId
+     * @description จัดทำคำของบประมาณแผ่นดิน
+     */
+    public function manage($formId, $budgetHeadId, $deptId);
 
 }

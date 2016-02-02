@@ -8,5 +8,11 @@ namespace apps\revenue\interfaces;
  * @description ประมูล
  */
 interface IManageService {
-
+    /**
+     * @name getAllBudgetRequest
+     * @uri /getAllBudgetRequest
+     * @return string[] lists
+     * @description แสดงข้อมูลประเภทตามแหล่งเงิน
+     */
+    public function getAllBudgetRequest();
 }
