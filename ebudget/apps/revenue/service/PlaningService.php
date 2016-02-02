@@ -103,7 +103,8 @@ class PlaningService extends CServiceBase implements IPlaningService {
 
     public function fetchProject() {
         $sql = "SELECT"
-                ." bh.id,"
+                ." be.id,"
+                ." bh.id AS headId,"
                 ." be.name AS projName,"
                 ." be.deptId,"
                 ." dp.deptName,"
@@ -171,7 +172,6 @@ class PlaningService extends CServiceBase implements IPlaningService {
         $data = $this->datacontext->getObject($exp);
 
         if (!$this->datacontext->removeObject($data)) {
-            $return = false;
             return $this->datacontext->getLastMessage();
         }
 
@@ -199,7 +199,6 @@ class PlaningService extends CServiceBase implements IPlaningService {
         $obj->setBudgetHeadId($bgHeadId);
         $data = $this->datacontext->getObject($obj);
         if (!$this->datacontext->removeObject($data)) {
-            $return = false;
             return $this->datacontext->getLastMessage();
         }
 

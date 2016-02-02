@@ -75,7 +75,6 @@ interface IPlaningService {
      * @uri /updateProject
      * @param int bgHeadId
      * @param string projectName ชื่อโครงการ
-     * @param int budgetPeriodId ปีงบประมาณ
      * @param float[] budgetTotal
      * @param int[] deptId
      * @return boolean update Description

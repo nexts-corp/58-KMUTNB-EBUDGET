@@ -111,7 +111,7 @@
                         <form id="formRevenue" onsubmit="return false;">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title">เพิ่มข้อมูล : เงินรายได้</h4>
+                                <h4 class="modal-title">ข้อมูล : เงินรายได้</h4>
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
@@ -164,7 +164,7 @@
                         <form id="formProject" onsubmit="return false;">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title">เพิ่มข้อมูล : โครงการ</h4>
+                                <h4 class="modal-title">ข้อมูล : โครงการ</h4>
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
@@ -174,16 +174,6 @@
                                     </div>
                                 </div>
                                 <div id="formDept">
-                                    <div class="form-group">
-                                        <div class="col-md-7">
-                                            <select class="form-control input-sm deptId" name="deptId" required>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <input class="form-control input-sm text-right" name="deptValue" placeholder="จำนวนเงิน (บาท)" required>
-                                        </div>
-                                        <button class="btn btn-success addDept"><i class="fa fa-plus-circle"></i></button>
-                                    </div>
                                 </div>
                             </div>
                             <div id="loadingAdd2" class="col-md-12 text-center" style="margin: 20px;"></div>
@@ -202,12 +192,12 @@
                 </div>
             </div>
 
-            <div id="deleteForm" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div id="revenueDelete" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">ลบข้อมูล : <span id="headDel"></span></h4>
+                            <h4 class="modal-title">ลบข้อมูล : เงินรายได้</h4>
                         </div>
                         <div class="modal-body">
                             <table>
@@ -216,14 +206,42 @@
                                     <td class="col-md-5 text-right text-bold" style="vertical-align: top;">หน่วยงาน : </td>
                                     <td class="col-md-7"><span id="deptNameDel"></span></td>
                                 </tr>
-                                <tr>
-                                    <td class="col-md-5 text-right text-bold" style="vertical-align: top;">เงินรายได้ : </td>
-                                    <td class="col-md-7"><span id="budgetTotalDel"></span> บาท</td>
-                                </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div id="loadingDel" class="col-md-12 text-center" style="margin: 20px;"></div>
+                        <div class="modal-footer">
+                            <ul class="nav nav-pills sort-source pull-right" data-option-key="filter">
+                                <li data-option-value="*" class="">
+                                    <button class="btn btn-danger save"><i class="fa fa-trash"></i> ยืนยันการลบ</button>
+                                </li>
+                                <li data-option-value="" class="padding-left">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="projectDelete" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">ลบข้อมูล : โครงการ</h4>
+                        </div>
+                        <div class="modal-body">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td class="col-md-5 text-right text-bold" style="vertical-align: top;">โครงการ : </td>
+                                    <td class="col-md-7"><span id="projNameDel"></span></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="loadingDel2" class="col-md-12 text-center" style="margin: 20px;"></div>
                         <div class="modal-footer">
                             <ul class="nav nav-pills sort-source pull-right" data-option-key="filter">
                                 <li data-option-value="*" class="">
@@ -275,6 +293,7 @@
                 dataDept = listsDepartment();
                 callDept = 1;
             }
+
             $("#deptId").html(dataDept).select2();
 
             calNumeric();
@@ -315,6 +334,17 @@
             }
 
             $("select.deptId").html(dataDeptAll);
+
+            $("#formDept").html('<div class="form-group">'
+                    + '<div class="col-md-7">'
+                        + '<select class="form-control input-sm deptId" name="deptId" required>'
+                        + '</select>'
+                    + '</div>'
+                    + '<div class="col-md-4">'
+                        + '<input class="form-control input-sm text-right" name="deptValue" placeholder="จำนวนเงิน (บาท)" required>'
+                    + '</div>'
+                    + '<button class="btn btn-success addDept"><i class="fa fa-plus-circle"></i></button>'
+                + '</div>');
 
             $("button.addDept").unbind().click(function() {
                 $("#formDept").append('<div class="form-group">'
@@ -490,16 +520,14 @@
                 });
 
                 $("#tab-budget table").off("click", "button.delete").on("click", "button.delete", function(){
-                    $("#deleteForm").modal("show");
+                    $("#revenueDelete").modal("show");
 
                     var id = $(this).attr("data-id");
 
                     var data = listsArr[id];
 
                     $("#loadingDel").html('');
-                    $("#headDel").html("เงินรายได้");
                     $("#deptNameDel").html(data["deptName"]);
-                    $("#budgetTotalDel").html(data["budgetTotal"]);
 
                     $("button.save").unbind().click(function(){
                         deleteRevenue(id);
@@ -585,14 +613,16 @@
                 $.each(datas["lists"], function(key, val){
                     dataSet.push(val);
 
-                    if ($.inArray(val["id"], listsArrProj) == -1) listsArrProj[val["id"]] = [];
-                    listsArrProj[val["id"]].push(val);
+                    if (!listsArrProj[val["headId"]]) listsArrProj[val["headId"]] = [];
+                    listsArrProj[val["headId"]].push(val);
 
-                    if ($.inArray(val["projName"], sumGroup) == -1) sumGroup[val["projName"]] = 0;
+                    if (!sumGroup[val["projName"]]) sumGroup[val["projName"]] = 0;
                     sumGroup[val["projName"]] += parseFloat(val["deptValue"]);
 
                     sumTotal += parseFloat(val["deptValue"]);
                 });
+
+
 
                 var t = $("#tab-project table").DataTable({
                     "destroy": true,
@@ -608,6 +638,7 @@
                         //Calculates the total of the column
                         api.column(0, {page:'current'}).data().each(function(group, i) {
                             var proj = listsArrProj[group][0]["projName"];
+                            var head = listsArrProj[group][0]["headId"];
 
                             if (lastProj !== proj) {
                                 $(rows).eq(i).before('<tr>'
@@ -615,8 +646,8 @@
                                         + '<td class="text-bold">'+proj+'</td>'
                                         + '<td class="text-bold text-right">'+accounting.formatNumber(sumGroup[proj], 2, ",", ".")+'</td>'
                                         + '<td class="text-bold">'
-                                            + '<button class="btn btn-warning edit" title="แก้ไข" data-id="'+group+'"><i class="fa fa-pencil"></i></button>&nbsp'
-                                            + '<button class="btn btn-default delete" title="ลบ" data-id="'+group+'"><i class="fa fa-trash"></i></button>'
+                                            + '<button class="btn btn-warning edit" title="แก้ไข" data-id="'+head+'"><i class="fa fa-pencil"></i></button>&nbsp'
+                                            + '<button class="btn btn-default delete" title="ลบ" data-id="'+head+'"><i class="fa fa-trash"></i></button>'
                                         + '</td>'
                                     + '</tr>'
                                 );
@@ -629,7 +660,7 @@
                             "targets": 0,
                             "searchable": false,
                             "orderable": false,
-                            "data": "id",
+                            "data": "headId",
                             "sClass": "text-center col-lg-1",
                             "render": function(data){
                                 return "";
@@ -669,35 +700,33 @@
                     $("#projectPanel").modal("show");
 
                     $("#formProject")[0].reset();
-                    $("#loadingAdd2").html('');
-
-                    $("#projName").val(data[0]["projName"]);
-                    $("select[name=deptId]").val(data[0]["deptId"]);
-                    $("input[name=deptValue]").val(data[0]["deptValue"]);
-
-                    $.each(data, function(key, value){
-                        if(key > 0){
-                            console.log(value);
-                            $("#formDept").append('<div class="form-group">'
-                                    + '<div class="col-md-7">'
-                                        + '<select class="form-control input-sm" name="deptId" id="deptId" required>'
-                                            + dataDeptAll
-                                        + '</select>'
-                                    + '</div>'
-                                    + '<div class="col-md-4">'
-                                        + '<input class="form-control input-sm text-right" name="deptValue" placeholder="จำนวนเงิน (บาท)" value="'+value["deptValue"]+'" required>'
-                                    + '</div>'
-                                    + '<button class="btn btn-danger delDept"><i class="fa fa-trash"></i></button>'
-                                + '</div>');
-                            }
-                        });
+                    $("#loadingAdd2, #formDept").html('');
 
                     if(callDeptAll == 0){
                         dataDeptAll = listsDepartmentAll();
                         callDeptAll = 1;
                     }
 
-                    $("select.deptId").html(dataDeptAll);
+                    $("#projName").val(data[0]["projName"]);
+
+                    $.each(data, function(key, value){
+                        var icon = '<button class="btn btn-danger delDept"><i class="fa fa-trash"></i></button>';
+                        if(key == 0) icon = '<button class="btn btn-success addDept"><i class="fa fa-trash"></i></button>';
+                        $("#formDept").append('<div class="form-group">'
+                                + '<div class="col-md-7">'
+                                    + '<select class="form-control input-sm" name="deptId" id="deptId'+key+'" required>'
+                                        + dataDeptAll
+                                    + '</select>'
+                                + '</div>'
+                                + '<div class="col-md-4">'
+                                    + '<input class="form-control input-sm text-right" name="deptValue" placeholder="จำนวนเงิน (บาท)" value="'+value["deptValue"]+'" required>'
+                                + '</div>'
+                                + '<button class="btn btn-danger delDept"><i class="fa fa-trash"></i></button>'
+                            + '</div>');
+
+                        $("#deptId"+key).val(data[key]["deptId"]);
+
+                    });
 
                     $("button.addDept").unbind().click(function() {
                         $("#formDept").append('<div class="form-group">'
@@ -740,19 +769,17 @@
                 });
 
                 $("#tab-project table").off("click", "button.delete").on("click", "button.delete", function(){
-                    $("#deleteForm").modal("show");
+                    $("#projectDelete").modal("show");
 
                     var id = $(this).attr("data-id");
 
-                    var data = listsArr[id];
+                    var data = listsArrProj[id];
 
-                    $("#loadingDel").html('');
-                    $("#headDel").html("เงินรายได้");
-                    $("#deptNameDel").html(data["deptName"]);
-                    $("#budgetTotalDel").html(data["budgetTotal"]);
+                    $("#loadingDel2").html('');
+                    $("#projNameDel").html(data[0]["projName"]);
 
                     $("button.save").unbind().click(function(){
-                        deleteRevenue(id);
+                        deleteProject(id);
                     });
                 });
             }
@@ -809,20 +836,20 @@
     }
 
     function deleteProject(id){
-        $("#loadingDel").html("กำลังบันทึกข้อมูล...");
+        $("#loadingDel2").html("กำลังบันทึกข้อมูล...");
 
         setTimeout(function() {
-            var datas = callAjax("{{_context_path}}/api/revenue/planning/deleteRevenue", "post", {id: id}, "json");
+            var datas = callAjax("{{_context_path}}/api/revenue/planning/deleteProject", "post", {bgHeadId: id}, "json");
             if (typeof datas !== "undefined" && datas !== null) {
                 if(datas["delete"] == true){
-                    $("#loadingDel").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
+                    $("#loadingDel2").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
                     setTimeout(function(){
-                        $("#deleteForm").modal("hide");
-                        listsRevenue();
+                        $("#projectDelete").modal("hide");
+                        listsProject();
                     }, 200);
                 }
                 else{
-                    $("#loadingDel").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
+                    $("#loadingDel2").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
                 }
             }
         }, 0);
