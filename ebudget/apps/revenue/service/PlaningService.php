@@ -106,9 +106,11 @@ class PlaningService extends CServiceBase implements IPlaningService {
                 ." bh.id,"
                 ." be.name AS projName,"
                 ." be.deptId,"
+                ." dp.deptName,"
                 ." be.budgetEstAmount As deptValue"
             ." FROM " . $this->ent . "\\BudgetHead bh"
             ." JOIN " . $this->ent . "\\BudgetExpense be WITH bh.id = be.budgetHeadId"
+            ." JOIN " . $this->ent . "\\L3D\\Department dp WITH dp.id = be.deptId"
             ." WHERE bh.formId = :form"
                 ." AND bh.budgetTypeCode = :type"
                 ." AND bh.budgetPeriodId = :year"
@@ -126,14 +128,88 @@ class PlaningService extends CServiceBase implements IPlaningService {
     }
 
     public function addProject($projectName, $budgetTotal, $deptId) {
+        $budgetPeriodId = $this->getPeriod()->year;
 
+        $return = true;
+
+        $bgHead = new \apps\common\entity\BudgetHead();
+        $bgHead->setFormId(999);
+        $bgHead->setBudgetPeriodId($budgetPeriodId);
+        $bgHead->setBudgetTypeCode('K');
+        if (count($deptId) == 1) {
+            $bgHead->setIsCoBudget(false);
+            $bgHead->setDeptId($deptId[0]);
+        } else {
+            $bgHead->setIsCoBudget(true);
+        }
+
+        $dataHead = $this->datacontext->saveObject($bgHead);
+        $headId = $bgHead->id;
+
+        foreach ($deptId as $key => $value) {
+            $obj = new \apps\common\entity\BudgetExpense();
+            $obj->budgetHeadId = $headId;
+            $obj->name = $projectName;
+            $obj->budgetPeriodId = $budgetPeriodId;
+            $obj->budgetTypeId = 30100000;
+            $obj->budgetTypeCode = "K";
+            $obj->budgetEstAmount = $budgetTotal[$key];
+            $obj->deptId = $deptId[$key];
+            if (!$this->datacontext->saveObject($obj)) {
+                return $this->datacontext->getLastMessage();
+            }
+        }
+
+        return $return;
     }
 
-    public function updateProject($bgHeadId, $projectName, $budgetPeriodId, $budgetTotal, $deptId) {
+    public function updateProject($bgHeadId, $projectName, $budgetTotal, $deptId) {
+        $return = true;
 
+        $exp = new \apps\common\entity\BudgetExpense();
+        $exp->setBudgetHeadId($bgHeadId);
+        $data = $this->datacontext->getObject($exp);
+
+        if (!$this->datacontext->removeObject($data)) {
+            $return = false;
+            return $this->datacontext->getLastMessage();
+        }
+
+        foreach ($deptId as $key => $value) {
+            $obj = new \apps\common\entity\BudgetExpense();
+            $obj->budgetHeadId = $bgHeadId;
+            $obj->name = $projectName;
+            $obj->budgetPeriodId = $this->getPeriod()->year;
+            $obj->budgetTypeId = 30100000;
+            $obj->budgetTypeCode = "K";
+            $obj->budgetEstAmount = $budgetTotal[$key];
+            $obj->deptId = $deptId[$key];
+            if (!$this->datacontext->saveObject($obj)) {
+                return $this->datacontext->getLastMessage();
+            }
+        }
+
+        return $return;
     }
 
     public function deleteProject($bgHeadId) {
+        $return = true;
 
+        $obj = new \apps\common\entity\BudgetExpense();
+        $obj->setBudgetHeadId($bgHeadId);
+        $data = $this->datacontext->getObject($obj);
+        if (!$this->datacontext->removeObject($data)) {
+            $return = false;
+            return $this->datacontext->getLastMessage();
+        }
+
+        $bgHead = new \apps\common\entity\BudgetHead();
+        $bgHead->setId($bgHeadId);
+        $dataHead = $this->datacontext->getObject($bgHead);
+        if (!$this->datacontext->removeObject($dataHead)) {
+            return $this->datacontext->getLastMessage();
+        }
+
+        return $return;
     }
 }

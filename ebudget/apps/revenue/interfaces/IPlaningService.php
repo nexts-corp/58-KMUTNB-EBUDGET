@@ -65,7 +65,7 @@ interface IPlaningService {
      * @param string projectName ชื่อโครงการ
      * @param float[] budgetTotal
      * @param int[] deptId
-     * @return boolean result Description
+     * @return boolean add Description
      * @description หน้าเพิ่มเงินจัดสรรสำหรับโครงการพัฒนามหาวิทยาลัย
      */
     public function addProject($projectName, $budgetTotal, $deptId);
@@ -78,16 +78,16 @@ interface IPlaningService {
      * @param int budgetPeriodId ปีงบประมาณ
      * @param float[] budgetTotal
      * @param int[] deptId
-     * @return boolean result Description
+     * @return boolean update Description
      * @description หน้าบันทึกเงินจัดสรรสำหรับโครงการพัฒนามหาวิทยาลัย
      */
-    public function updateProject($bgHeadId, $projectName, $budgetPeriodId, $budgetTotal, $deptId);
+    public function updateProject($bgHeadId, $projectName, $budgetTotal, $deptId);
 
     /**
      * @name deleteProject
      * @uri /deleteProject
      * @param int bgHeadId
-     * @return boolean result Description
+     * @return boolean delete Description
      * @description หน้าเพิ่มเงินจัดสรรสำหรับโครงการพัฒนามหาวิทยาลัย
      */
     public function deleteProject($bgHeadId);
