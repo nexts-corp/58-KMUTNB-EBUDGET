@@ -11,7 +11,6 @@ class PlaningService extends CServiceBase implements IPlaningService {
 
     public $datacontext;
     public $logger;
-    public $md = "apps\\affirmative\\model";
     public $ent = "apps\\common\\entity";
 
     public function __construct() {

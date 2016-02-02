@@ -16,4 +16,11 @@ interface IViewService {
      */    
     public function planning();
 
+    /**
+     * @name manage
+     * @uri /manage
+     * @description จัดสรรงบประมาณเงินรายได้
+     */
+    public function manage();
+
 }
