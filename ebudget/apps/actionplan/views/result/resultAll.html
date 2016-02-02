@@ -1,0 +1,126 @@
+{{>header}}
+<div role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">ตัวชี้วัดคำรับรองการปฏิบัติงาน</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">รายงานผลการดำเนินงาน</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="tall dashboard">
+
+    <div class="sort-source-wrapper"><!-- button action on header -->
+        <div class="container">
+            <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+                <li class="active">
+                    <button class="btn btn-default back" style="display: none;"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
+                </li>
+            </ul>
+        </div>
+    </div><!-- end button action on header -->
+
+    <div class="container">
+        <div class="row">
+
+            <div id="deptList">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-md-1" style="vertical-align: middle;">ลำดับ</th>
+                            <th class="text-center col-md-6" style="vertical-align: middle;">คณะ / หน่วยงาน</th>
+                            <th class="text-center col-md-3" style="vertical-align: middle;">สถานะ<br>(ตัวชี้วัดที่รายงานผลแล้ว / ตัวชี้วัดทั้งหมด)</th>
+                            <th class="text-center col-md-2" style="vertical-align: middle;">เครื่องมือ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div><!--  row  -->
+    </div><!--  container  -->
+</div><!-- main -->
+
+{{>footer}}
+<script src="{{_context_path}}/asset/vendor/bootstrap/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+    var findNode = {};
+    var listArr = {};
+
+    $(function () {
+        listsDepartment();
+
+        $("button.back").unbind("click").click(function () {
+            toggleShow("home");
+        })
+    });
+
+    function listsDepartment(){
+        $("#deptList table tbody").html('<tr><td colspan="5" class="text-center">Loading...</td></tr>');
+
+        setTimeout(function() {
+            var datas = callAjax("{{_context_path}}/api/actionplan/result/listsDepartment", "post", {}, "json");
+            if (typeof datas !== "undefined" && datas !== null) {
+                var html = '';
+                var count = 0;
+                $.each(datas["lists"], function (key, val) {
+                    html += '<tr>'
+                            + '<td class="bg-default"></td>'
+                            + '<td colspan="3" class="bg-default text-dark text-bold">' + val["actName"] + '</td>'
+                        + '</tr>';
+                    $.each(val["dept"], function (key2, val2) {
+                        var round = '';
+                        var cFinal = 0;
+                        var cResult = 0;
+                        $.each(val2["round"], function(key3, val3) {
+                            round += '<li><a class="excel" href="javascript: void(0);" data-id="'+val2["deptId"]+'" data-round="'+val3["roundId"]+'">' + val3["roundName"] + '</a></li>';
+                            cFinal = val3["cFinal"];
+                            cResult = val3["cResult"];
+                        });
+
+                        html += '<tr>'
+                                + '<td class="text-center">' + (++count) + '</td>'
+                                + '<td>' + val2["deptName"] + '</td>'
+                                + '<td class="text-center text-bold"><span class="text-success">'+cResult+'</span> / '+cFinal+'</td>'
+                                + '<td class="text-center">'
+                                    + '<button class="btn btn-primary btn-sm tracking" data-id="' + val2["deptId"] + '"><i class="fa fa-pencil"></i> รายงานผล</button>'+'&nbsp;&nbsp;'
+                                    + '<div class="btn-group">'
+                                        + '<button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">'
+                                            + '<i class="fa fa-file-excel-o"></i> เอกสาร <span class="caret"></span>'
+                                        + '</button>'
+                                        + '<ul class="dropdown-menu" role="menu">'+round+'</ul>'
+                                    + '</div>'
+                                + '</td>'
+                            + '</tr>';
+                    });
+                });
+
+                $("#deptList table tbody").html(html);
+
+                $("button.tracking").unbind().click(function () {
+                    var deptId = $(this).attr("data-id");
+                    window.location = "{{_context_path}}/api/actionplan/view/result/" + deptId;
+                });
+
+                $("a.excel").unbind().click(function(){
+                    var id = $(this).attr("data-id");
+                    var round = $(this).attr("data-round");
+
+                    window.open("{{_context_path}}/api/actionplan/result/export?departmentId="+id+"&roundId="+round);
+                });
+            }
+        }, 0);
+    }
+
+</script>

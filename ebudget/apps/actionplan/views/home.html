@@ -1,0 +1,110 @@
+{{>header}}
+<div role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <!--<div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">ตัวชี้วัดคำรับรองการปฏิบัติงาน</li>
+                    </ul>
+                </div>
+            </div>-->
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">ตัวชี้วัดคำรับรองการปฏิบัติงาน</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="tall dashboard">
+
+    <div class="sort-source-wrapper"><!-- button action on header -->
+        <div class="container">
+            <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+                <li class="active">
+                    <button class="btn btn-default back" style="display: none;"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
+                </li>
+            </ul>
+        </div>
+    </div><!-- end button action on header -->
+
+    <div class="container">
+        <div class="row">
+
+            <div id="homeDiv" class="col-md-12">
+                <div class="col-md-12"><!-- table shown bidder information list -->
+                    <table id="homeTable" class="table table-bordered table-striped table-condensed mb-none">
+                        <thead>
+                            <tr>
+                                <th class="text-center col-lg-1">ลำดับที่</th>
+                                <th class="text-center col-lg-6">รายละเอียด</th>
+                                <th class="text-center col-lg-3">สถานะ</th>
+                                <th class="text-center col-lg-2">เครื่องมือ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="homeBody">
+                            <tr>
+                                <td colspan="4" class="text-center">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!-- end table shown bidder information list -->
+            </div>
+
+            <div id="formDiv" class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="tabs">
+                            <ul id="tabMenu" class="nav nav-tabs">
+
+                            </ul>
+                            <div id="tabContent" class="tab-content">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--  row  -->
+    </div><!--  container  -->
+</div><!-- main -->
+
+{{>footer}}
+
+<script src="{{_context_path}}/apps/budget/views/bg140.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        listsCenter();
+    });
+
+    function listsCenter(){
+        var html = '<tr>'
+            + '<td class="text-center">1</td>'
+            + '<td>ตัวชี้วัดคำรับรองการปฏิบัติงานส่วนงานภายในมหาวิทยาลัย</td>'
+            + '<td class="text-center">-</td>'
+            + '<td class="text-center"><button class="btn btn-primary add" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
+        + '</tr>'
+        + '<tr>'
+            + '<td class="text-center">1</td>'
+            + '<td>ร่างตัวชี้วัดคำรับรองของส่วนงาน</td>'
+            + '<td class="text-center">-</td>'
+            + '<td class="text-center"><button class="btn btn-primary add" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
+        + '</tr>'
+        + '<tr>'
+            + '<td class="text-center">1</td>'
+            + '<td>จัดทำตัวชี้วัดคำรับรองของส่วนงาน</td>'
+            + '<td class="text-center">-</td>'
+            + '<td class="text-center"><button class="btn btn-primary add" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
+        + '</tr>'
+        + '<tr>'
+            + '<td class="text-center">1</td>'
+            + '<td>รายงานผลตัวชี้วัด</td>'
+            + '<td class="text-center">-</td>'
+            + '<td class="text-center"><button class="btn btn-primary add" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
+        + '</tr>';
+
+        $("#homeBody").html(html);
+    }
+</script>
