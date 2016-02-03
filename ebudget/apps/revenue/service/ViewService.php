@@ -5,6 +5,7 @@ namespace apps\revenue\service;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
+use th\co\bpg\cde\collection\impl\CJSONDecodeImpl;
 use apps\revenue\interfaces\IViewService;
 
 class ViewService extends CServiceBase implements IViewService {
