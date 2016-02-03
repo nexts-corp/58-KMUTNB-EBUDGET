@@ -235,23 +235,6 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
-    public function progressRevenueAll() {
-        $view = new CJView("progress/progressRevenueAll", CJViewType::HTML_VIEW_ENGINE);
-        return $view;
-    }
-
-    public function progressRevenue($facultyId, $fundgroupId, $planId, $catId) {
-        $view = new CJView("progress/progressRevenue", CJViewType::HTML_VIEW_ENGINE);
-
-        //$view->bgPeriodId = $bgPeriodId;
-        $view->facultyId = $facultyId;
-        $view->fundgroupId = $fundgroupId;
-        $view->planId = $planId;
-        $view->catId = $catId;
-
-        return $view;
-    }
-
     public function setting() {
         $view = new CJView("setting/setting", CJViewType::HTML_VIEW_ENGINE);
         return $view;

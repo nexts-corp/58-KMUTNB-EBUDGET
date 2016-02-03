@@ -12,7 +12,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h1 id="navBgDept" class="none-padding">รายงานผลการใช้เงินงบประมาณแผ่นดิน</h1>
+                    <h1 id="navBgDept" class="none-padding">รายงานผลการใช้เงินงบประมาณรายจ่ายเงินรายได้</h1>
                 </div>
             </div>
         </div>
@@ -44,25 +44,25 @@
                                 <select id="searchFaculty" class="form-control"></select>
                             </div>
                         </div>
-                        <!--<div class="col-sm-6">
-                            <label class="col-sm-4 control-label text-right">หน่วยงาน :</label>
-                            <div class="col-sm-8">
-                                <select id="searchDepartment" class="form-control"></select>
-                            </div>
-                        </div>-->
-                    </div>
-
-                    <div class="col-sm-12" style="margin-top: 20px;">
                         <div class="col-sm-6">
                             <label class="col-sm-4 control-label text-right">แผนงาน :</label>
                             <div class="col-sm-8">
                                 <select id="searchPlan" class="form-control"></select>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="col-sm-12" style="margin-top: 20px;">
                         <div class="col-sm-6">
                             <label class="col-sm-4 control-label text-right">กองทุน :</label>
                             <div class="col-sm-8">
                                 <select id="searchFund" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="col-sm-4 control-label text-right">แหล่งเงิน :</label>
+                            <div class="col-sm-8">
+                                <select id="searchCategory" class="form-control"></select>
                             </div>
                         </div>
                     </div>
@@ -74,10 +74,11 @@
                     <thead>
                         <tr>
                             <th class="text-center col-md-1">ลำดับ</th>
-                            <th class="text-center col-md-3">หน่วยงาน</th>
+                            <th class="text-center col-md-2">หน่วยงาน</th>
                             <!--<th class="text-center col-md-4">หน่วยงาน</th>-->
                             <th class="text-center col-md-3">แผนงาน</th>
-                            <th class="text-center col-md-3">กองทุน</th>
+                            <th class="text-center col-md-2">กองทุน</th>
+                            <th class="text-center col-md-2">แหล่งเงิน</th>
                             <th class="text-center col-md-2">เครื่องมือ</th>
                         </tr>
                     </thead>
@@ -111,8 +112,9 @@
         var facultyGroup = {};
         var planGroup = {}
         var fundGroup = {};
+        var categoryGroup = {};
 
-        var datas = callAjax("{{_context_path}}/api/budget/progress/getAllBudgetScheme", "post", {}, "json");
+        var datas = callAjax("{{_context_path}}/api/revenue/progress/getAllRevenueScheme", "post", {}, "json");
         var html = '';
         var search = '';
         if (typeof datas !== "undefined" && datas !== null) {
@@ -125,6 +127,7 @@
                 periodGroup[value["BudgetPeriodId"]] = value["BudgetPeriodId"];
                 planGroup[value["PlanName"]] = value["PlanName"];
                 fundGroup[value["fundgroupName"]] = value["fundgroupName"];
+                categoryGroup[value["BudgetCategoryDesc"]] = value["BudgetCategoryDesc"];
             });
 
             var t = $("#table").DataTable({
@@ -143,7 +146,7 @@
                     {
                         "targets": 1,
                         "data": "facultyName",
-                        "sClass": "col-md-3"
+                        "sClass": "col-md-2"
                     },
                     {
                         "targets": 2,
@@ -153,14 +156,19 @@
                     {
                         "targets": 3,
                         "data": "fundgroupName",
-                        "sClass": "col-md-3"
+                        "sClass": "col-md-2"
                     },
                     {
                         "targets": 4,
+                        "data": "BudgetCategoryDesc",
+                        "sClass": "col-md-2"
+                    },
+                    {
+                        "targets": 5,
                         "data": "bghId",
                         "sClass": "text-center col-md-2",
                         "render": function (data, key, full) {
-                            return '<button class="btn btn-sm btn-warning edit" title="แก้ไข" data-year="' + full["BudgetPeriodId"] + '" data-plan="' + full["PlanId"] + '" data-fundgroup="' + full["fundgroupId"] + '" data-faculty="' + full["facultyId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>&nbsp;&nbsp;'
+                            return '<button class="btn btn-sm btn-warning edit" title="แก้ไข" data-year="' + full["BudgetPeriodId"] + '" data-plan="' + full["PlanId"] + '" data-fundgroup="' + full["fundgroupId"] + '" data-faculty="' + full["facultyId"] + '" data-cat="' + full["BudgetCategory"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>&nbsp;&nbsp;'
                             //+ '<button class="btn btn-sm btn-default delete" title="ลบ" data-bgh="' + data + '"><i class="fa fa-trash"></i> ลบ</button>'
 
                         }
@@ -197,6 +205,17 @@
                 t.columns(3).search(this.value).draw();
             });
 
+            search = '<option value="" selected="selected">ทั้งหมด</option>';
+            $.each(categoryGroup, function (key, value) {
+                search += '<option value="' + value + '">' + value + '</option>';
+            });
+            $("#searchCategory").html(search).select2().change(function () {
+                t.columns(4).search(this.value).draw();
+            });
+
+
+
+
             $("#table").on("click", "button.edit", function () {
                 //var id = $(this).attr("data-bgh");
                 var id = $(this).attr("facultyId");
@@ -207,27 +226,17 @@
                 var planId = $(this).attr("data-plan");
                 var fundgroupId = $(this).attr("data-fundgroup");
                 var facultyId = $(this).attr("data-faculty");
+                var catId = $(this).attr("data-cat");
                 /*
                  var bgPeriodId = data["BudgetPeriodId"];
                  var planId = data["PlanId"];
                  var fundgroupId = data["fundgroupId"];
                  var facultyId = data["facultyId"];
                  */
-                window.location = "{{_context_path}}/api/budget/view/progressBudget/" + facultyId + "/" + fundgroupId + "/" + planId;
+
+                window.location = "{{_context_path}}/api/revenue/view/progressRevenue/" + facultyId + "/" + fundgroupId + "/" + planId + "/" + catId;
             });
 
-            /*
-             $("#table").on("click", "button.delete", function () {
-             var id = $(this).attr("data-bgh");
-             var data = listArr[id];
-             
-             var formId = data["formId"];
-             var l3dPlanId = data["l3dPlanId"];
-             var fundgroupId = data["fundgroupId"];
-             var deptId = data["deptId"];
-             window.location = "{{_context_path}}/api/budget/view/draft/" + formId + "/" + l3dPlanId + "/" + fundgroupId + "/" + deptId;
-             });
-             */
         }
     }
 
@@ -237,10 +246,19 @@
                 listsForm();
                 listsPlan3D();
                 listsFaculty();
+                listCategory();
             }, 10);
 
             callCount = 1;
         }
+    }
+
+    function listCategory() {
+        var html = '<option value="" selected="selected">เลือก</option>';
+        html += '<option value="E">ค่าธรรมเนียมการศึกษา</option>';
+        html += '<option value="S">งานบริการวิชาการ</option>';
+
+        $("#searchCategory").html(html).select2();
     }
 
     function listsForm() {

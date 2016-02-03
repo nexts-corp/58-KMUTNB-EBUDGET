@@ -25,6 +25,7 @@ class BudgetSchemeResult {
     public $planQ3;
     public $planQ4;
     public $planSummary;
+    public $bgCategory;
 
     function getId() {
         return $this->id;
@@ -86,6 +87,10 @@ class BudgetSchemeResult {
         return $this->planSummary;
     }
 
+    function getBgCategory() {
+        return $this->bgCategory;
+    }
+
     function setId($id) {
         $this->id = $id;
     }
@@ -144,6 +149,10 @@ class BudgetSchemeResult {
 
     function setPlanSummary($planSummary) {
         $this->planSummary = $planSummary;
+    }
+
+    function setBgCategory($bgCategory) {
+        $this->bgCategory = $bgCategory;
     }
 
 }
