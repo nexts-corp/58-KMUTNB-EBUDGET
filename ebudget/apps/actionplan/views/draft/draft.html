@@ -263,42 +263,39 @@
                     + '</div>';
 
             $.each(datas["lists"], function (key1, value1) {
-                $.each(value1.issue, function (key2, value2) {s
+                $.each(value1["issue"], function (key2, value2) {
 
-                    contentArr[value2["issueSeq"]] += '<tr data-tt-id="type' + value2["typeId"] + '" data-tt-parent-id="main' + value1["mainSeq"] + '" data-seq="' + value2["typeSeq"] + '">'
+                    contentArr[value1["typeSeq"]] += '<tr data-tt-id="issue' + value2["issueId"] + '" data-seq="' + value2["issueSeq"] + '">'
                             + '<td class="text-center"></td>'
                             + '<td colspan="10">'
-                            + '<span class="text-bold" style="text-decoration: underline;">ส่วนที่ ' + value1["mainSeq"] + '.' + value2['typeSeq'] + ' ' + value2["typeName"] + (value2["title"] != "" ? "<h3>" + value2["title"] + "</h3>" : "") + '</span>'
+                            + '<span class="text-bold" style="text-decoration: underline;">ประเด็นยุทธศาสตร์ที่ ' + value2['issueSeq'] + ' ' + value2["issueName"] + '</span>'
                             + '</td>'
                             + '</tr>';
-
-                    $.each(value2["issue"], function (key3, value3) {
-                        contentArr[value2["issueSeq"]] += '<tr data-tt-id="issue' + value3["issueId"] + '" data-tt-parent-id="type' + value2["typeId"] + '" data-seq="' + value3["issueSeq"] + '">'
+                    $.each(value2["target"], function (key3, value3) {
+                        contentArr[value1["typeSeq"]] += '<tr data-tt-id="target' + value3["targetId"] + '" data-tt-parent-id="issue' + value2["issueId"] + '" data-seq="' + value3["targetSeq"] + '" >'
                                 + '<td class="text-center"></td>'
                                 + '<td colspan="10">'
-                                + '<span class="text-bold">ประเด็นยุทธศาสตร์ที่ ' + value3['issueSeq'] + ' ' + value3["issueName"] + '</span>'
+                                + '<span class="text-bold">เป้าประสงค์ที่ ' + value2["issueSeq"] + '.' + value3["targetSeq"] + ' ' + value3["targetName"] + '</span>'
                                 + '</td>'
                                 + '</tr>';
-
-                        $.each(value3["target"], function (key4, value4) {
-                            contentArr[value2["issueSeq"]] += '<tr data-tt-id="target' + value4["targetId"] + '" data-tt-parent-id="issue' + value3["issueId"] + '" data-seq="' + value4["targetSeq"] + '" >'
+                        $.each(value3["strategy"], function (key4, value4) {
+                            contentArr[value1["typeSeq"]] += '<tr data-tt-id="strategy' + value4["strategyId"] + '" data-tt-parent-id="target' + value3["targetId"] + '" data-seq="' + value4["strategySeq"] + '" >'
                                     + '<td class="text-center"></td>'
                                     + '<td colspan="9">'
-                                    + '<span class="text-bold">เป้าประสงค์ที่ ' + value3["issueSeq"] + '.' + value4["targetSeq"] + ' ' + value4["targetName"] + '</span>'
+                                    + '<span class="text-bold">กลยุทธ์ที่ ' + value3["targetSeq"] + '.' + value4["strategySeq"] + ' ' + value4["strategyName"] + '</span>'
                                     + '</td>'
                                     + '<td class="text-center">'
-                                    + '<button class="btn btn-sm btn-success add" data-pid="' + value4["targetId"] + '" data-pname="targetId"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
+                                    + '<button class="btn btn-sm btn-success add" data-pid="' + value4["strategyId"] + '" data-pname="targetId"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
                                     + '</td>'
                                     + '</tr>';
+                            if (typeof value4["draft"] !== "undefined" && value4["draft"] !== null) {
+                                $.each(value4["draft"], function (key5, value5) {
 
-                            if (typeof value4["strategy"] !== "undefined" && value4["strategy"] !== null) {
-                                $.each(value4["strategy"], function (key5, value5) {
-
-                                    contentArr[value2["issueSeq"]] += '<tr data-tt-id="draft' + value5["draftId"] + '" data-tt-parent-id="target' + value4["targetId"] + '"  data-seq="' + value5["strategySeq"] + '">'
+                                    contentArr[value1["typeSeq"]] += '<tr data-tt-id="draft' + value5["draftId"] + '" data-tt-parent-id="target' + value4["strategyId"] + '"  data-seq="' + value5["kpiSeq"] + '">'
                                             + '<td class="text-center"></td>'
-                                            + (value5["isActive"] == "Y" ? '<td>' : '<td class="text-primary">') + value3["issueSeq"] + '.' + value4["targetSeq"] + '.' + value5["strategySeq"] + ' ' + text2html(value5["strategyName"]) + '</td>'
+                                            + (value5["isActive"] == "Y" ? '<td>' : '<td class="text-primary">') + value3["issueSeq"] + '.' + value4["targetSeq"] + '.' + value5["kpiSeq"] + ' ' + text2html(value5["kpiName"]) + '</td>'
                                             + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + value5["unitName"] + '</td>'
-                                            + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value5["strategyGoal"] ? value5["strategyGoal"] : "") + '</td>'
+                                            + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value5["kpiGoal"] ? value5["kpiGoal"] : "") + '</td>'
                                             + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value5["score1"] ? value5["score1"] : "") + '</td>'
                                             + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value5["score2"] ? value5["score2"] : "") + '</td>'
                                             + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value5["score3"] ? value5["score3"] : "") + '</td>'
@@ -332,6 +329,7 @@
                             }
                         });
                     });
+
                 });
                 //   });
                 $("#tabMenu").html(menu);

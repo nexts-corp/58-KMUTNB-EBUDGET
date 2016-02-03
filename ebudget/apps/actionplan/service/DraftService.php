@@ -124,7 +124,7 @@ class DraftService extends CServiceBase implements IDraftService {
         $dept->departmentId = $departmentId;
         $dataDept = $this->datacontext->getObject($dept)[0];
         //ข้อมูลที่มีอยู่แล้วใน Draft
-        $targetArr = array();
+        $strategyArr = array();
         $draft = new \apps\common\entity\ActionPlanDraft();
         $draft->periodCode = $this->getPeriod()->year;
         $draft->departmentId = $departmentId;
@@ -132,12 +132,13 @@ class DraftService extends CServiceBase implements IDraftService {
         $draftData = $this->datacontext->getObject($draft);
 
         foreach ($draftData as $keyDraft => $valueDraft) {
-            if (empty($targetArr[$valueDraft->targetId][$valueDraft->draftId])) {
-                $targetArr[$valueDraft->targetId][$valueDraft->draftId] = $valueDraft;
+            if (empty($strategyArr[$valueDraft->strategyId][$valueDraft->draftId])) {
+                $strategyArr[$valueDraft->strategyId][$valueDraft->draftId] = $valueDraft;
             }
         }
-        $targetArr = $this->sortBy("strategySeq", $targetArr);
+        $strategyArr = $this->sortBy("strategySeq", $strategyArr);
         //--ข้อมูลใน draft
+        // return $strategyArr;
 
         $type = new \apps\common\entity\AffirmativeType();
         $type->typeId = $typeId;
@@ -152,9 +153,16 @@ class DraftService extends CServiceBase implements IDraftService {
             $targetData = $this->datacontext->getObject($targetSql, $targetParam);
             $typeData[0]->issue[$keyIssue]->target = $targetData;
             foreach ($typeData[0]->issue[$keyIssue]->target as $keyTarget => $valueTarget) {
-                if (array_key_exists($valueTarget->targetId, $targetArr)) {
-                    $typeData[0]->issue[$keyIssue]->target[$keyTarget]->strategy = $targetArr[$valueTarget->targetId];
+                $strategySql = "select v from apps\\common\\entity\\AffirmativeStrategy v where v.targetId = :targetId  order by v.strategySeq";
+                $strategyParam = array("targetId" => $valueTarget->targetId);
+                $strategyData = $this->datacontext->getObject($strategySql, $strategyParam);
+                $typeData[0]->issue[$keyIssue]->target[$keyTarget]->strategy = $strategyData;
+                foreach ($typeData[0]->issue[$keyIssue]->target[$keyTarget]->strategy as $keyStrategy => $valueStrategy) {
+                    if (array_key_exists($valueStrategy->strategyId, $strategyArr)) {
+                        $typeData[0]->issue[$keyIssue]->target[$keyTarget]->strategy[$keyStrategy]->draft = $strategyArr[$valueStrategy->strategyId];
+                    }
                 }
+//                
             }
         }
 

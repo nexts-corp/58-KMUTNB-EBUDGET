@@ -24,47 +24,18 @@ class ActionPlanDraft extends EntityBase {
     /** @Column(type="integer",length=11,name="ActionPlanTypeId") */
     public $typeId;
 
-    /** @Column(type="integer",length=11,name="ActionPlanIssueId") */
-    public $issueId;
-
-    /** @Column(type="integer",length=11, name="ActionPlanIssueSeq") */
-    public $issueSeq;
-
-    /** @Column(type="integer",length=11, name="ActionPlanTargetId") */
-    public $targetId;
-
-    /** @Column(type="integer",length=11, name="ActionPlanTargetSeq") */
-    public $targetSeq;
-
     /** @Column(type="integer",length=11, name="ActionPlanStrategyId") */
     public $strategyId;
 
     /** @Column(type="integer",length=11, name="ActionPlanStrategySeq") */
     public $strategySeq;
 
-    /** @Column(type="string",length=255, name="ActionPlanStrategyName") */
-    public $strategyName;
+    /** @Column(type="integer",length=11, name="ActionPlanProjectSeq") */
+    public $projectSeq;
 
-    /** @Column(type="string",length=255, name="Value1") */
-    public $value1;
-
-    /** @Column(type="string",length=255, name="Value2") */
-    public $value2;
-
-    /** @Column(type="string",length=255, name="Value3") */
-    public $value3;
-
-    /** @Column(type="string",length=255, name="Value4") */
-    public $value4;
-
-    /** @Column(type="string",length=255, name="Value5") */
-    public $value5;
-
-    /** @Column(type="string",length=255, name="Value6") */
-    public $value6;
-
-    /** @Column(type="string",length=255, name="Value7") */
-    public $value7;
+    /** @Column(type="string",length=255, name="ActionPlanProjectName") */
+    public $projectName;
+    public $detail;
 
     /** @Column(type="string",length=255, name="Remark") */
     public $remark;
@@ -91,22 +62,6 @@ class ActionPlanDraft extends EntityBase {
         return $this->typeId;
     }
 
-    function getIssueId() {
-        return $this->issueId;
-    }
-
-    function getIssueSeq() {
-        return $this->issueSeq;
-    }
-
-    function getTargetId() {
-        return $this->targetId;
-    }
-
-    function getTargetSeq() {
-        return $this->targetSeq;
-    }
-
     function getStrategyId() {
         return $this->strategyId;
     }
@@ -115,36 +70,16 @@ class ActionPlanDraft extends EntityBase {
         return $this->strategySeq;
     }
 
-    function getStrategyName() {
-        return $this->strategyName;
+    function getProjectSeq() {
+        return $this->projectSeq;
     }
 
-    function getValue1() {
-        return $this->value1;
+    function getProjectName() {
+        return $this->projectName;
     }
 
-    function getValue2() {
-        return $this->value2;
-    }
-
-    function getValue3() {
-        return $this->value3;
-    }
-
-    function getValue4() {
-        return $this->value4;
-    }
-
-    function getValue5() {
-        return $this->value5;
-    }
-
-    function getValue6() {
-        return $this->value6;
-    }
-
-    function getValue7() {
-        return $this->value7;
+    function getDetail() {
+        return $this->detail;
     }
 
     function getRemark() {
@@ -175,22 +110,6 @@ class ActionPlanDraft extends EntityBase {
         $this->typeId = $typeId;
     }
 
-    function setIssueId($issueId) {
-        $this->issueId = $issueId;
-    }
-
-    function setIssueSeq($issueSeq) {
-        $this->issueSeq = $issueSeq;
-    }
-
-    function setTargetId($targetId) {
-        $this->targetId = $targetId;
-    }
-
-    function setTargetSeq($targetSeq) {
-        $this->targetSeq = $targetSeq;
-    }
-
     function setStrategyId($strategyId) {
         $this->strategyId = $strategyId;
     }
@@ -199,36 +118,16 @@ class ActionPlanDraft extends EntityBase {
         $this->strategySeq = $strategySeq;
     }
 
-    function setStrategyName($strategyName) {
-        $this->strategyName = $strategyName;
+    function setProjectSeq($projectSeq) {
+        $this->projectSeq = $projectSeq;
     }
 
-    function setValue1($value1) {
-        $this->value1 = $value1;
+    function setProjectName($projectName) {
+        $this->projectName = $projectName;
     }
 
-    function setValue2($value2) {
-        $this->value2 = $value2;
-    }
-
-    function setValue3($value3) {
-        $this->value3 = $value3;
-    }
-
-    function setValue4($value4) {
-        $this->value4 = $value4;
-    }
-
-    function setValue5($value5) {
-        $this->value5 = $value5;
-    }
-
-    function setValue6($value6) {
-        $this->value6 = $value6;
-    }
-
-    function setValue7($value7) {
-        $this->value7 = $value7;
+    function setDetail($detail) {
+        $this->detail = $detail;
     }
 
     function setRemark($remark) {
