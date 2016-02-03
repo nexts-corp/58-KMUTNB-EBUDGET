@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="0.7913786756005776"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.5421731577182016"/>
+	<property name="ireport.x" value="411"/>
+	<property name="ireport.y" value="160"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
 	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
 	<style name="Default" isDefault="true" fontName="TH SarabunPSK" fontSize="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -100,6 +100,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 	</variable>
 	<variable name="CURRENT_DATE" class="java.util.Date">
 		<variableExpression><![CDATA[new Date()]]></variableExpression>
+		<initialValueExpression><![CDATA[new Date()]]></initialValueExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -439,9 +440,41 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="81" splitType="Stretch">
+		<band height="54" splitType="Stretch">
+			<textField evaluationTime="Auto">
+				<reportElement x="608" y="22" width="194" height="20" uuid="ef85adfc-f23e-4e79-b139-01fadc02c763"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["หน้า " + $V{CURRENT_PAGE}+" / " +$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH:mm:ss">
+				<reportElement x="0" y="42" width="418" height="12" uuid="6c13bc20-06bd-4a29-b6b1-b74bcef75220"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["วันที่พิมพ์ : "+$V{CURRENT_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="418" y="42" width="384" height="12" uuid="b2d6c192-8577-44c8-b0f0-0351df3024dc"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["พิมพ์โดย : "+$P{PUBLISHER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="106">
+			<textField evaluationTime="Auto">
+				<reportElement x="608" y="74" width="194" height="20" uuid="7b0d220e-cdda-473a-97c6-bddc3b080096"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["หน้า " + $V{CURRENT_PAGE}+" / " +$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement x="0" y="2" width="802" height="66" uuid="93a72ddc-fd19-4a07-aea6-fc8d8e342aaf"/>
+				<reportElement x="0" y="2" width="802" height="66" uuid="eaba23e7-130c-4524-adf3-57fe38d2c4fa"/>
 				<textElement markup="html">
 					<font size="12"/>
 				</textElement>
@@ -450,22 +483,22 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
      <p>&nbsp&nbsp 2. ช่องเหตุผลความจำเป็น กรุณากรอกรายละเอียด เช่น ซื้อทดแทนเพราะอะไร หรือ ซื้อใหม่มีความจำเป็นอย่างไร ฯลฯ อธิบายมาให้ชัดเจน</p>
      <b>&nbsp&nbsp 3. ถ้าไม่ใส่สเปคครุภัณฑ์ และเหตุผลความจำเป็นของแต่ละรายการจะไม่นำมาพิจารณาตั้งคำของบประมาณให้</b>]]></text>
 			</staticText>
-			<textField pattern="dd/MM/yyyy HH:mm:ss">
-				<reportElement x="0" y="68" width="418" height="12" uuid="6c13bc20-06bd-4a29-b6b1-b74bcef75220"/>
-				<textElement verticalAlignment="Bottom">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA["วันที่พิมพ์ : "+$V{CURRENT_DATE}]]></textFieldExpression>
-			</textField>
 			<textField>
-				<reportElement x="418" y="68" width="384" height="12" uuid="b2d6c192-8577-44c8-b0f0-0351df3024dc"/>
+				<reportElement x="418" y="94" width="384" height="12" uuid="52997e76-bb67-43bf-bf7a-ebf4010d72aa"/>
 				<textElement textAlignment="Right">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA["พิมพ์โดย : "+$P{PUBLISHER}]]></textFieldExpression>
 			</textField>
+			<textField pattern="dd/MM/yyyy HH:mm:ss">
+				<reportElement x="0" y="94" width="418" height="12" uuid="0decbbef-00e9-40a6-b881-d7bc3d945c20"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["วันที่พิมพ์ : "+$V{CURRENT_DATE}]]></textFieldExpression>
+			</textField>
 		</band>
-	</pageFooter>
+	</lastPageFooter>
 	<summary>
 		<band height="30" splitType="Stretch"/>
 	</summary>

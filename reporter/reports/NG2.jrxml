@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="1.1000000000000005"/>
+	<property name="ireport.zoom" value="0.9090909090909105"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
@@ -16,11 +16,13 @@
 		<parameterDescription><![CDATA["-"]]></parameterDescription>
 		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="FACULTY_ID" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="PERIOD_ID" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="HEAD_RPT" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["แบบสรุปงบประมาณรายจ่ายเงินรายได้จากงบประมาณแผ่นดิน  จำแนกตามหน่วยงาน/แผนงาน/กองทุน/งบรายจ่าย \n ประจำปีงบประมาณ พ.ศ."+$P{PERIOD_ID}]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["แบบสรุปงบประมาณรายจ่ายเงินรายได้จากงบประมาณแผ่นดิน  จำแนกตามหน่วยงาน/แผนงาน/กองทุน/งบรายจ่าย \n ประจำปีงบประมาณ พ.ศ."+$P{PERIOD_ID}
++"\n มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[-- รายงานแบบ ง.2
@@ -195,8 +197,9 @@ bgAll.budgetTypeMainId, bgAll.budgetTypeMainName]]>
 		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
 		<initialValueExpression><![CDATA[new Integer(1)]]></initialValueExpression>
 	</variable>
-	<variable name="CURRENT_DATE" class="java.util.Date">
+	<variable name="CURRENT_DATE" class="java.util.Date" resetType="None">
 		<variableExpression><![CDATA[new Date()]]></variableExpression>
+		<initialValueExpression><![CDATA[new Date()]]></initialValueExpression>
 	</variable>
 	<variable name="เงินเดือน" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
 		<variableExpression><![CDATA[$F{salary}]]></variableExpression>
@@ -802,7 +805,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 			<textField isStretchWithOverflow="true">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="802" height="20" uuid="f46aee95-03fb-4f8c-a89b-2612b52f7647"/>
 				<textElement textAlignment="Center">
-					<font size="16"/>
+					<font size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{HEAD_RPT}]]></textFieldExpression>
 			</textField>
@@ -926,7 +929,9 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<text><![CDATA[ค่าจ้างประจำ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="42" y="20" width="358" height="20" uuid="9fe339c1-732c-49fb-a552-75e8b9d08947"/>
+				<reportElement x="42" y="20" width="358" height="20" isRemoveLineWhenBlank="true" uuid="9fe339c1-732c-49fb-a552-75e8b9d08947">
+					<printWhenExpression><![CDATA[!($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+				</reportElement>
 				<textFieldExpression><![CDATA[$P{FACULTY_NAME}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -950,7 +955,9 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<textFieldExpression><![CDATA["แผนงาน/กองทุน"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement style="FBold" x="-1" y="20" width="43" height="20" uuid="87ae77f8-2658-48db-a4c9-6437bce3b533"/>
+				<reportElement style="FBold" x="-1" y="20" width="43" height="20" isRemoveLineWhenBlank="true" uuid="87ae77f8-2658-48db-a4c9-6437bce3b533">
+					<printWhenExpression><![CDATA[!($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+				</reportElement>
 				<text><![CDATA[หน่วยงาน]]></text>
 			</staticText>
 			<staticText>
@@ -1077,7 +1084,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 			</staticText>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="125" y="120" width="153" height="20" isRemoveLineWhenBlank="true" uuid="a1797b1f-9d88-406b-b05d-e0f55fe7aee1">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box>
 					<topPen lineWidth="0.75"/>
@@ -1092,7 +1099,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="227" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="2436b120-90d0-4788-a5eb-d1a4608c55eb">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -1107,7 +1114,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="176" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="c20cbe69-7ec9-4775-845c-16eaa43beae0">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -1122,7 +1129,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="125" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="7dded793-82c2-4cb1-8626-8c99045e3e69">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -1137,7 +1144,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="278" y="140" width="55" height="20" isRemoveLineWhenBlank="true" uuid="8e5d9b99-8f6a-4f29-bf33-023c7baa247f">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -1152,7 +1159,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="333" y="140" width="55" height="20" isRemoveLineWhenBlank="true" uuid="4bfcd6cf-e2d5-4a11-8d49-47bc3b2298b2">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -1167,7 +1174,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="278" y="120" width="110" height="20" isRemoveLineWhenBlank="true" uuid="673964df-8e66-4926-93fa-3383435bbc57">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box>
 					<topPen lineWidth="0.75"/>
@@ -1182,7 +1189,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="388" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="6913a90f-1a8e-469b-898c-5f3c901f8b6e">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -1197,7 +1204,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="439" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="ee93d768-f79d-4b81-bc0c-f16401d26219">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -1212,7 +1219,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="490" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="a3b6425a-f5ca-4dc6-8407-d2f4d15537df">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -1227,7 +1234,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="541" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="473dcdaa-46df-4c74-831e-ef9e01aadfb8">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -1242,7 +1249,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="388" y="120" width="204" height="20" isRemoveLineWhenBlank="true" uuid="d0d3f01b-713d-4eaa-8ece-518c3549747d">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box>
 					<topPen lineWidth="0.75"/>
@@ -1257,7 +1264,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="592" y="120" width="51" height="40" isRemoveLineWhenBlank="true" uuid="ee9fe610-17de-4b3f-b357-e97771f53b1e">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -1272,7 +1279,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="643" y="120" width="51" height="40" isRemoveLineWhenBlank="true" uuid="31798f97-c5ef-4ce3-95a0-dc882e866857">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -1287,7 +1294,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="694" y="120" width="51" height="40" isRemoveLineWhenBlank="true" uuid="e775526d-6bff-4f76-a046-3e0d0fedbc96">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -1302,7 +1309,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="745" y="120" width="57" height="40" isRemoveLineWhenBlank="true" uuid="79070182-d2f1-4a66-b6b2-9f38ef4702d0">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -1318,7 +1325,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="0" y="120" width="125" height="40" isRemoveLineWhenBlank="true" uuid="4fd2f65a-8930-4f81-9064-71a33be19c87">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box>
 					<topPen lineWidth="0.75"/>
@@ -1357,6 +1364,13 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textElement>
 				<textFieldExpression><![CDATA["พิมพ์โดย : "+$P{PUBLISHER}]]></textFieldExpression>
 			</textField>
+			<textField evaluationTime="Auto">
+				<reportElement x="592" y="0" width="210" height="20" uuid="7053303e-33a4-4508-bb32-232e184e6384"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["หน้า " + $V{CURRENT_PAGE}+" / " +$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 	<summary>
@@ -1372,7 +1386,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<text><![CDATA[รวมเงินสุทธิ]]></text>
+				<text><![CDATA[รวม]]></text>
 			</staticText>
 			<textField pattern="#,###">
 				<reportElement style="FBold" x="176" y="0" width="51" height="30" isRemoveLineWhenBlank="true" uuid="9892aad7-4df0-462f-b344-5b35a9a8d41d"/>

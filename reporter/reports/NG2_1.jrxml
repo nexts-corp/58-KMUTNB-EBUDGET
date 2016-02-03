@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="0.9575681974766935"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.6963904734900188"/>
+	<property name="ireport.x" value="14"/>
+	<property name="ireport.y" value="71"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
 	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
 	<style name="Default" isDefault="true" fontName="TH SarabunPSK" fontSize="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -15,8 +15,14 @@
 	<parameter name="PERIOD_ID" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="FACULTY_NAME" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA["-"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FACULTY_ID" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="HEAD_RPT" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["แบบสรุปงบประมาณรายจ่ายเงินรายได้จากงบประมาณแผ่นดิน  จำแนกตามหน่วยงาน/แผนงาน/สำนักงาน/ภาควิชา/สาขาวิชา/และงบรายจ่าย \n ประจำปีงบประมาณ พ.ศ."+$P{PERIOD_ID}]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["แบบสรุปงบประมาณรายจ่ายเงินรายได้จากงบประมาณแผ่นดิน  จำแนกตามหน่วยงาน/แผนงาน/สำนักงาน/ภาควิชา/สาขาวิชา/และงบรายจ่าย \n ประจำปีงบประมาณ พ.ศ."+$P{PERIOD_ID}
++"\n มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[-- รายงานแบบ ง.2-1
@@ -182,58 +188,59 @@ bgAll.budgetTypeMainId, bgAll.budgetTypeMainName]]>
 		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
 		<initialValueExpression><![CDATA[new Integer(1)]]></initialValueExpression>
 	</variable>
-	<variable name="CURRENT_DATE" class="java.util.Date">
+	<variable name="CURRENT_DATE" class="java.util.Date" resetType="None">
 		<variableExpression><![CDATA[new Date()]]></variableExpression>
+		<initialValueExpression><![CDATA[new Date()]]></initialValueExpression>
 	</variable>
-	<variable name="เงินเดือน" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+	<variable name="เงินเดือน" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
 		<variableExpression><![CDATA[$F{salary}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
-	<variable name="ค่าจ้างประจำ" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+	<variable name="ค่าจ้างประจำ" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
 		<variableExpression><![CDATA[$F{wages}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
-	<variable name="ค่าตอบแทนพนักงานราชการ" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+	<variable name="ค่าตอบแทนพนักงานราชการ" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
 		<variableExpression><![CDATA[$F{compensationEmp}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
-	<variable name="เงินอุดหนุนเงินเดือน" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+	<variable name="เงินอุดหนุนเงินเดือน" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
 		<variableExpression><![CDATA[$F{staffSalary}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
-	<variable name="ค่าจ้างชั่วคราว" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+	<variable name="ค่าจ้างชั่วคราว" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
 		<variableExpression><![CDATA[$F{tempWages}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
-	<variable name="ค่าตอบแทน" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+	<variable name="ค่าตอบแทน" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
 		<variableExpression><![CDATA[$F{compensationEmp}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
-	<variable name="ค่าใช้สอย" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+	<variable name="ค่าใช้สอย" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
 		<variableExpression><![CDATA[$F{livingCost}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
-	<variable name="ค่าวัสดุ" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+	<variable name="ค่าวัสดุ" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
 		<variableExpression><![CDATA[$F{matCost}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
-	<variable name="ค่าสาธารณูปโภค" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+	<variable name="ค่าสาธารณูปโภค" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
 		<variableExpression><![CDATA[$F{utilityCost}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
-	<variable name="ค่าครุภัณฑ์" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+	<variable name="ค่าครุภัณฑ์" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
 		<variableExpression><![CDATA[$F{durableCost}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
-	<variable name="ค่าที่ดิน" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+	<variable name="ค่าที่ดิน" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
 		<variableExpression><![CDATA[$F{buildingCost}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
-	<variable name="เงินอุดหนุนอื่นๆ" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+	<variable name="เงินอุดหนุนอื่นๆ" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
 		<variableExpression><![CDATA[$F{otherCost}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
-	<variable name="รวมเงิน" class="java.math.BigDecimal" resetType="Group" resetGroup="G2">
+	<variable name="รวมเงิน" class="java.math.BigDecimal" resetType="Group" resetGroup="G3">
 		<variableExpression><![CDATA[$V{เงินเดือน}+$V{ค่าจ้างประจำ}+$V{ค่าตอบแทนพนักงานราชการ}+$V{เงินอุดหนุนเงินเดือน}+$V{ค่าจ้างชั่วคราว}+$V{ค่าตอบแทน}+
 $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสาธารณูปโภค}+$V{ค่าครุภัณฑ์}+$V{ค่าที่ดิน}+$V{เงินอุดหนุนอื่นๆ}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
@@ -356,6 +363,59 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 	</variable>
 	<variable name="รวมเงินอุดหนุนอื่นๆสุทธิ" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{otherCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="เงินเดือน_1" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{salary}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="ค่าจ้างประจำ_1" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{wages}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="ค่าตอบแทนพนักงานราชการ_1" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{compensationEmp}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="เงินอุดหนุนเงินเดือน_1" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{staffSalary}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="ค่าจ้างชั่วคราว_1" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{tempWages}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="ค่าตอบแทน_1" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{compensationEmp}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="ค่าใช้สอย_1" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{livingCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="ค่าวัสดุ_1" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{matCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="ค่าสาธารณูปโภค_1" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{utilityCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="ค่าครุภัณฑ์_1" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{durableCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="ค่าที่ดิน_1" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{buildingCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="เงินอุดหนุนอื่นๆ_1" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{otherCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมเงิน_1" class="java.math.BigDecimal" resetType="Group" resetGroup="G2">
+		<variableExpression><![CDATA[$V{เงินเดือน_1}+$V{ค่าจ้างประจำ_1}+$V{ค่าตอบแทนพนักงานราชการ_1}+$V{เงินอุดหนุนเงินเดือน_1}+$V{ค่าจ้างชั่วคราว_1}+$V{ค่าตอบแทน_1}+
+$V{ค่าใช้สอย_1}+$V{ค่าวัสดุ_1}+$V{ค่าสาธารณูปโภค_1}+$V{ค่าครุภัณฑ์_1}+$V{ค่าที่ดิน_1}+$V{เงินอุดหนุนอื่นๆ_1}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
 	<group name="G1">
@@ -589,11 +649,240 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 		</groupHeader>
 	</group>
 	<group name="G2">
-		<groupExpression><![CDATA[$F{deptId}]]></groupExpression>
-		<groupFooter>
+		<groupExpression><![CDATA[$F{facultyId}]]></groupExpression>
+		<groupHeader>
 			<band height="20">
-				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
-				<textField isStretchWithOverflow="true" pattern="#,###">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="125" height="20" isRemoveLineWhenBlank="true" uuid="1a663398-8f88-41e9-b957-87f349e831e5">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="10">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement>
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{facultyName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="125" y="0" width="51" height="20" isRemoveLineWhenBlank="true" uuid="73c4c4fb-b9bb-4a5f-b6d1-33828e73d371">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{เงินเดือน_1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="592" y="0" width="51" height="20" isRemoveLineWhenBlank="true" uuid="7af681f7-f425-4fce-88fd-edd223b0a6b6">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{ค่าครุภัณฑ์_1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="176" y="0" width="51" height="20" isRemoveLineWhenBlank="true" uuid="f1c28aab-d560-4daf-a78d-7760ae1d03a3">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{ค่าจ้างประจำ_1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="227" y="0" width="51" height="20" isRemoveLineWhenBlank="true" uuid="4edc4802-4b0f-4159-a982-53d0e73e3012">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{ค่าตอบแทนพนักงานราชการ_1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="278" y="0" width="55" height="20" isRemoveLineWhenBlank="true" uuid="52e09e0a-2da2-412b-9a5f-8aaf908c70f9">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{เงินอุดหนุนเงินเดือน_1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="333" y="0" width="55" height="20" isRemoveLineWhenBlank="true" uuid="df5ad755-a616-49b7-b6f1-4b4d673f4639">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{ค่าจ้างชั่วคราว_1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="388" y="0" width="51" height="20" isRemoveLineWhenBlank="true" uuid="206c2e7d-a4aa-41c2-8014-cc22d23d711d">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{ค่าตอบแทน_1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="439" y="0" width="51" height="20" isRemoveLineWhenBlank="true" uuid="e93ad122-edf1-490e-ac5e-1c1187d267a4">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{ค่าใช้สอย_1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="490" y="0" width="51" height="20" isRemoveLineWhenBlank="true" uuid="b6409ee3-bb38-4f03-952e-5b03a7a65300">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{ค่าวัสดุ_1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="541" y="0" width="51" height="20" isRemoveLineWhenBlank="true" uuid="6b677c10-4e80-42f8-9811-7ba673e8f85a">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{ค่าสาธารณูปโภค_1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="643" y="0" width="51" height="20" isRemoveLineWhenBlank="true" uuid="d623f1f1-e440-4045-ab1c-74222a598c78">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{ค่าที่ดิน_1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="694" y="0" width="51" height="20" isRemoveLineWhenBlank="true" uuid="1869a8b9-2481-4040-9df2-06e1743feaf4">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{เงินอุดหนุนอื่นๆ_1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="745" y="0" width="57" height="20" isRemoveLineWhenBlank="true" uuid="286e83d5-d571-4789-b1c2-58fa45d8389f">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{รวมเงิน_1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="G3">
+		<groupExpression><![CDATA[$F{deptId}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField isStretchWithOverflow="true">
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="125" height="20" uuid="d100542c-9621-4466-bd89-d5a17263a78e"/>
+					<box leftPadding="20">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement>
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{deptName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="125" y="0" width="51" height="20" uuid="056fc183-a5e5-4209-b7c2-e48314ef2c01"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
@@ -606,20 +895,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					</textElement>
 					<textFieldExpression><![CDATA[$V{เงินเดือน}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true">
-					<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="125" height="20" uuid="1a663398-8f88-41e9-b957-87f349e831e5"/>
-					<box leftPadding="10">
-						<topPen lineWidth="0.75"/>
-						<leftPen lineWidth="0.75"/>
-						<bottomPen lineWidth="0.75"/>
-						<rightPen lineWidth="0.75"/>
-					</box>
-					<textElement>
-						<font size="11"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{deptName}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" pattern="#,###">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="176" y="0" width="51" height="20" uuid="19e256ed-b30d-485c-9cef-4b8f096b9ef7"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
@@ -632,7 +908,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ค่าจ้างประจำ}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" pattern="#,###">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="227" y="0" width="51" height="20" uuid="0853f6bc-e692-45bf-bf21-f27e1231b1ca"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
@@ -645,7 +921,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ค่าตอบแทนพนักงานราชการ}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" pattern="#,###">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="278" y="0" width="55" height="20" uuid="1bf960b8-4cae-4197-90fe-f672bbf575a0"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
@@ -658,7 +934,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					</textElement>
 					<textFieldExpression><![CDATA[$V{เงินอุดหนุนเงินเดือน}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" pattern="#,###">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="333" y="0" width="55" height="20" uuid="d2b93d61-95fa-496c-959d-48cbe2961ed9"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
@@ -671,7 +947,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ค่าจ้างชั่วคราว}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" pattern="#,###">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="388" y="0" width="51" height="20" uuid="74e99799-6fe3-488d-8d05-34f065ca4a26"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
@@ -684,7 +960,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ค่าตอบแทน}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" pattern="#,###">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="439" y="0" width="51" height="20" uuid="69b962b2-3ab9-4e5f-a7ba-c37756ae99be"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
@@ -697,7 +973,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ค่าใช้สอย}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" pattern="#,###">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="490" y="0" width="51" height="20" uuid="36136e1c-3aac-4aa1-b1ee-675540103557"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
@@ -710,7 +986,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ค่าวัสดุ}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" pattern="#,###">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="541" y="0" width="51" height="20" uuid="c7d3263b-9132-451e-9caf-3bd4ce29e3e7"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
@@ -723,7 +999,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ค่าสาธารณูปโภค}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" pattern="#,###">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="592" y="0" width="51" height="20" uuid="806798a2-3e12-4b7d-8ae9-789404678c1e"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
@@ -736,7 +1012,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ค่าครุภัณฑ์}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" pattern="#,###">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="643" y="0" width="51" height="20" uuid="92d61892-5576-44ea-9ae5-f22a73fa2c9c"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
@@ -749,7 +1025,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ค่าที่ดิน}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" pattern="#,###">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="694" y="0" width="51" height="20" uuid="083ff0da-9b04-4b77-a4fd-6e6a4dbb5913"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
@@ -762,7 +1038,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					</textElement>
 					<textFieldExpression><![CDATA[$V{เงินอุดหนุนอื่นๆ}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" pattern="#,###">
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="745" y="0" width="57" height="20" uuid="7c8f623f-fd98-41b3-a4d1-342194d0258c"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
@@ -776,7 +1052,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textFieldExpression><![CDATA[$V{รวมเงิน}]]></textFieldExpression>
 				</textField>
 			</band>
-		</groupFooter>
+		</groupHeader>
 	</group>
 	<background>
 		<band splitType="Stretch"/>
@@ -789,7 +1065,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 			<textField isStretchWithOverflow="true">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="802" height="20" uuid="f46aee95-03fb-4f8c-a89b-2612b52f7647"/>
 				<textElement textAlignment="Center">
-					<font size="16"/>
+					<font size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{HEAD_RPT}]]></textFieldExpression>
 			</textField>
@@ -1054,23 +1330,8 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textElement>
 				<text><![CDATA[เงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน]]></text>
 			</staticText>
-			<staticText>
-				<reportElement style="FBold" x="0" y="120" width="125" height="40" isRemoveLineWhenBlank="true" uuid="b944673d-3067-45d4-97ba-5ba4c135bcad">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
-				</reportElement>
-				<box>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[คณะ/วิทยาลัย]]></text>
-			</staticText>
-			<textField evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" x="643" y="120" width="51" height="40" isRemoveLineWhenBlank="true" uuid="73599986-bc42-40b4-8025-95d524c8a063">
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="643" y="120" width="51" height="40" isRemoveLineWhenBlank="true" uuid="73599986-bc42-40b4-8025-95d524c8a063">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
@@ -1084,8 +1345,8 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textElement>
 				<textFieldExpression><![CDATA[$V{รวมเงินค่าที่ดินและสิ่งก่อสร้างสุทธิ}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" x="125" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="59f05de4-103d-4e2c-8d31-12830e681bb6">
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="125" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="59f05de4-103d-4e2c-8d31-12830e681bb6">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
@@ -1099,8 +1360,8 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textElement>
 				<textFieldExpression><![CDATA[$V{รวมเงินเดือนสุทธิ}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" x="439" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="2a5d6eee-80d5-4ffb-b278-9bec05643279">
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="439" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="2a5d6eee-80d5-4ffb-b278-9bec05643279">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
@@ -1114,8 +1375,8 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textElement>
 				<textFieldExpression><![CDATA[$V{ค่าใช้สอยสุทธิ}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" x="278" y="140" width="55" height="20" isRemoveLineWhenBlank="true" uuid="4b603b3e-eeb3-4579-b0d6-356f3a08a692">
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="278" y="140" width="55" height="20" isRemoveLineWhenBlank="true" uuid="4b603b3e-eeb3-4579-b0d6-356f3a08a692">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
@@ -1129,8 +1390,8 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textElement>
 				<textFieldExpression><![CDATA[$V{รวมเงินอุดหนุนเงินเดือนสุทธิ}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" x="745" y="120" width="57" height="40" isRemoveLineWhenBlank="true" uuid="fde41b7e-0482-4d68-b826-7663b06b62b8">
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="745" y="120" width="57" height="40" isRemoveLineWhenBlank="true" uuid="fde41b7e-0482-4d68-b826-7663b06b62b8">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
@@ -1145,8 +1406,8 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<textFieldExpression><![CDATA[$V{รวมงบบุคลากรสุทธิ}+$V{รวมเงินอุดหนุนเป็นค่าใช้จ่ายบุคลากรสุทธิ}+$V{รวมเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงานสุทธิ}
 +$V{รวมเงินค่าครุภัณฑ์สุทธิ}+$V{รวมเงินค่าที่ดินและสิ่งก่อสร้างสุทธิ}+$V{รวมเงินอุดหนุนอื่นๆสุทธิ}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" x="227" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="2575e0e9-67e7-4694-b873-ae938e3b1382">
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="227" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="2575e0e9-67e7-4694-b873-ae938e3b1382">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
@@ -1160,8 +1421,8 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textElement>
 				<textFieldExpression><![CDATA[$V{รวมเงินค่าตอบแทนพนักงานราชการสุทธิ}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" x="333" y="140" width="55" height="20" isRemoveLineWhenBlank="true" uuid="13b4bd29-7510-4db3-81f1-a566bcf2384f">
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="333" y="140" width="55" height="20" isRemoveLineWhenBlank="true" uuid="13b4bd29-7510-4db3-81f1-a566bcf2384f">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
@@ -1175,8 +1436,8 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textElement>
 				<textFieldExpression><![CDATA[$V{ค่าจ้างชั่วคราวสุทธิ}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" x="125" y="120" width="153" height="20" isRemoveLineWhenBlank="true" uuid="3ff3041c-fb53-4ac8-b1ab-77638212bd80">
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="125" y="120" width="153" height="20" isRemoveLineWhenBlank="true" uuid="3ff3041c-fb53-4ac8-b1ab-77638212bd80">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="0">
@@ -1190,8 +1451,8 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textElement>
 				<textFieldExpression><![CDATA[$V{รวมงบบุคลากรสุทธิ}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" x="694" y="120" width="51" height="40" isRemoveLineWhenBlank="true" uuid="0908d9ee-2228-412a-b288-c960b882bac1">
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="694" y="120" width="51" height="40" isRemoveLineWhenBlank="true" uuid="0908d9ee-2228-412a-b288-c960b882bac1">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
@@ -1205,8 +1466,8 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textElement>
 				<textFieldExpression><![CDATA[$V{รวมเงินอุดหนุนอื่นๆสุทธิ}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" x="541" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="8782aab0-3c10-49cc-908e-752c7df5bdea">
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="541" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="8782aab0-3c10-49cc-908e-752c7df5bdea">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
@@ -1220,8 +1481,8 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textElement>
 				<textFieldExpression><![CDATA[$V{ค่าสาธารณูปโภคสุทธิ}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" x="592" y="120" width="51" height="40" isRemoveLineWhenBlank="true" uuid="5825c347-9282-47e1-8032-ca5eb806b8cd">
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="592" y="120" width="51" height="40" isRemoveLineWhenBlank="true" uuid="5825c347-9282-47e1-8032-ca5eb806b8cd">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
@@ -1235,8 +1496,8 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textElement>
 				<textFieldExpression><![CDATA[$V{รวมเงินค่าครุภัณฑ์สุทธิ}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" x="278" y="120" width="110" height="20" isRemoveLineWhenBlank="true" uuid="eaf37708-ce51-4ef1-9eb6-06ec6794f2e6">
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="278" y="120" width="110" height="20" isRemoveLineWhenBlank="true" uuid="eaf37708-ce51-4ef1-9eb6-06ec6794f2e6">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="0">
@@ -1250,8 +1511,8 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textElement>
 				<textFieldExpression><![CDATA[$V{รวมเงินอุดหนุนเป็นค่าใช้จ่ายบุคลากรสุทธิ}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" x="176" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="3d4e4fa0-e721-4725-975a-4612652ac390">
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="176" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="3d4e4fa0-e721-4725-975a-4612652ac390">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
@@ -1265,8 +1526,8 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textElement>
 				<textFieldExpression><![CDATA[$V{รวมเงินค่าจ้างประจำสุทธิ}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" x="388" y="120" width="204" height="20" isRemoveLineWhenBlank="true" uuid="7bede69a-d8f6-4ad0-855b-f4283256f7f9">
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="388" y="120" width="204" height="20" isRemoveLineWhenBlank="true" uuid="7bede69a-d8f6-4ad0-855b-f4283256f7f9">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="0">
@@ -1280,8 +1541,8 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textElement>
 				<textFieldExpression><![CDATA[$V{รวมเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงานสุทธิ}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" x="388" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="09867cae-bf52-4461-99e6-039f6e615dbd">
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="388" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="09867cae-bf52-4461-99e6-039f6e615dbd">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
@@ -1295,8 +1556,8 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				</textElement>
 				<textFieldExpression><![CDATA[$V{ค่าตอบแทนสุทธิ}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" x="490" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="b7045245-0af0-4fc0-bf70-3d63c53c6fca">
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="490" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="b7045245-0af0-4fc0-bf70-3d63c53c6fca">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
@@ -1309,6 +1570,21 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{ค่าวัสดุสุทธิ}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="120" width="125" height="40" isRemoveLineWhenBlank="true" uuid="0b54328a-ad1d-44f4-85e4-b4955344f5ad">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FACULTY_NAME}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>
@@ -1335,6 +1611,13 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA["พิมพ์โดย : "+$P{PUBLISHER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Auto">
+				<reportElement x="592" y="0" width="210" height="20" uuid="5ab88a07-9a71-4cb8-b01b-a3cf9a5c637d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["หน้า " + $V{CURRENT_PAGE}+" / " +$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
