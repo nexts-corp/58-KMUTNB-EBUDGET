@@ -35,34 +35,14 @@ interface IProgressService {
      * @return boolean result Description
      * @description ปรับปรุงข้อมูลแผน/ผลเงินงบประมาณแผ่นดิน
      */
-    public function updateBudgetScheme($budget);
-
-    /**
-     * @name getAllRevenueScheme
-     * @uri /getAllRevenueScheme
-     * @return string[] result
-     * @description แสดงแผน/ผลการใช้งบประมาณเงินรายได้
-     */
-    public function getAllRevenueScheme();
-
-    /**
-     * @name viewProgressRevenue
-     * @uri /viewProgressRevenue
-     * @param int facultyId หน่วยงานระดับคณะ
-     * @param int fundgroupId กองทุน
-     * @param int planId แผนงาน 3 มิติ
-     * @param string catId แหล่งเงิน
-     * @return string[] result
-     * @description เรียกดูรายงานแผน/ผลการใช้เงินงบประมาณเงินรายได้
-     */
-    public function viewProgressRevenue($facultyId, $fundgroupId, $planId, $catId);
+    public function updateBudgetScheme($budget);   
     
-        /**
-     * @name updateRevenueScheme
-     * @uri /updateRevenueScheme
-     * @param apps\budget\model\BudgetSchemeResult[] budget
+    /**
+     * @name updateBudgetPlan
+     * @uri /updateBudgetPlan
+     * @param apps\budget\model\BudgetSchemePlan[] budget
      * @return boolean result Description
-     * @description ปรับปรุงข้อมูลแผน/ผลเงินงบประมาณเงินรายได้
+     * @description ปรับปรุงข้อมูลแผน/ผลเงินงบประมาณแผ่นดิน
      */
-    public function updateRevenueScheme($budget);
+    public function updateBudgetPlan($budget);
 }

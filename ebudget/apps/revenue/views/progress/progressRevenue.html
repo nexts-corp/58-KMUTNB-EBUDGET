@@ -12,7 +12,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="none-padding">รายงานแผน/ผลการใช้เงินงบประมาณรายจ่ายเงินรายได้</h1>
+                    <h1 class="none-padding">รายงานผลการใช้เงินงบประมาณรายจ่ายเงินรายได้</h1>
                 </div>
             </div>
         </div>
@@ -184,7 +184,7 @@
         //$("#table").hide();
 
         $(".backHome").click(function () {
-            window.location = "{{_context_path}}/api/budget/view/progressRevenueAll";
+            window.location = "{{_context_path}}/api/revenue/view/progressRevenueAll";
         });
 
         $("#btnSave").click(function () {
@@ -203,9 +203,9 @@
             });
 
             //console.log(datas);
-            var dataJSON = JSON.stringify({budget: datas});
+            var dataJSON = JSON.stringify({budget: datas, catId: catId});
             var dataJSONEN = encodeURIComponent(dataJSON);
-            var result = callAjaxFile("{{_context_path}}/api/budget/progress/updateRevenueScheme", "post", dataJSON, "json");
+            var result = callAjaxFile("{{_context_path}}/api/revenue/progress/updateRevenueScheme", "post", dataJSON, "json");
             console.log(result);
         });
 
@@ -286,24 +286,15 @@
             setTimeout(function () {
                 var dataJSON = JSON.stringify(param);
                 var dataJSONEN = encodeURIComponent(dataJSON);
-                var datas = callAjax("{{_context_path}}/api/budget/progress/viewProgressRevenue", "post", dataJSONEN, "json");
+                var datas = callAjax("{{_context_path}}/api/revenue/progress/viewProgressRevenue", "post", dataJSONEN, "json");
 
                 var html = "";
 
                 if (typeof datas !== "undefined" && datas !== null) {
                     datas = datas.result;
 
-                    var bgSource = "";
-                    if (catId == "E") {
-                        bgSource = "ค่าธรรมเนียมการศึกษา";
-                    } else if (catId = "S") {
-                        bgSource = "งานบริการวิชาการ";
-                    } else {
-                        bgSource = catId;
-                    }
-
                     $("#budgetYear").html(datas[0]["bgPeriodId"]);
-                    $("#budgetType").html(bgSource);
+                    $("#budgetType").html('งบประมาณแผ่นดิน');
                     $("#l3dPlan").html(datas[0]["planName"]);
                     $("#fundgroup").html(datas[0]["fundgroupName"]);
                     $("#facName").html(datas[0]["facultyName"]);
@@ -315,7 +306,7 @@
                         scheme[nameData[i] + "Id"] = 0;
                         count[nameData[i]] = 0;
                     }
-                    var sum = {};
+                    sum = {};
                     $.each(datas, function (k, v) {
                         var level = v["bgLevel"];
                         if (v[nameData[0] + "Id"] != scheme[nameData[0] + "Id"]) {
@@ -364,7 +355,7 @@
                                 html += '<td class="text-right usedQ3"></td>';
                                 html += '<td class="text-right planQ4"></td>';
                                 html += '<td class="text-right usedQ4"></td>';
-                                html += '<td class="text-right"><b>' + '(%)' + '</b></td></tr>';
+                                html += '<td class="text-right percent"><b>' + '(%)' + '</b></td></tr>';
                             }
                         }
                         var txtId = "";
@@ -380,27 +371,6 @@
                             }
                         }
                         sum[txtId] = {};
-                        html += '<tr id="' + txtId + '" parent-id="' + txtPId.substr(0, txtPId.length - 1) + '"class="frmData ' + classData[level - 1] + '"><td style="padding-left: 4em ;vertical-align:middle">' + /*(++count[nameData[level - 1]])*/txtCount + v[nameData[level - 1] + "Name"] + '</td>';
-                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planSummary" value="' + (v.planSummary == null ? 0 : v.planSummary) + '" /></td>';
-                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedSummary" value="' + (v.usedSummary == null ? 0 : v.usedSummary) + '" /></td>';
-                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ1" value="' + (v.planQ1 == null ? 0 : v.planQ1) + '" /></td>';
-                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ1" value="' + (v.usedQ1 == null ? 0 : v.usedQ1) + '" /></td>';
-                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ2" value="' + (v.planQ2 == null ? 0 : v.planQ2) + '" /></td>';
-                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ2" value="' + (v.usedQ2 == null ? 0 : v.usedQ2) + '" /></td>';
-                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ3" value="' + (v.planQ3 == null ? 0 : v.planQ3) + '" /></td>';
-                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ3" value="' + (v.usedQ3 == null ? 0 : v.usedQ3) + '" /></td>';
-                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ4" value="' + (v.planQ4 == null ? 0 : v.planQ4) + '" /></td>';
-                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ4" value="' + (v.usedQ4 == null ? 0 : v.usedQ4) + '" /></td>';
-
-                        html += '<td class="text-right"><b>' + '(%)' + '</b></td>';
-                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="bgLevel" value="' + v.bgLevel + '" />';
-                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="bgPeriodId" value="' + v.bgPeriodId + '" />';
-                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="planId" value="' + v.planId + '" />';
-                        //html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="deptId" value="' + v.deptId + '" />';
-                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="fundgroupId" value="' + v.fundgroupId + '" />';
-                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="facultyId" value="' + v.facultyId + '" />';
-                        //html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="bgTypeCode" value="' + v.bgTypeCode + '" />';
-                        html += '</tr>';
                         sum[txtId]["planSummary"] = parseFloat((v.planSummary == null ? 0 : v.planSummary));
                         sum[txtId]["usedSummary"] = parseFloat((v.usedSummary == null ? 0 : v.usedSummary));
                         sum[txtId]["planQ1"] = parseFloat((v.planQ1 == null ? 0 : v.planQ1));
@@ -411,44 +381,42 @@
                         sum[txtId]["usedQ3"] = parseFloat((v.usedQ3 == null ? 0 : v.usedQ3));
                         sum[txtId]["planQ4"] = parseFloat((v.planQ4 == null ? 0 : v.planQ4));
                         sum[txtId]["usedQ4"] = parseFloat((v.usedQ4 == null ? 0 : v.usedQ4));
+                        sum[txtId]["percent"] = ((sum[txtId]["usedQ1"] + sum[txtId]["usedQ2"] + sum[txtId]["usedQ3"] + sum[txtId]["usedQ4"]) / sum[txtId]["planSummary"]) * 100;
+                        html += '<tr id="' + txtId + '" parent-id="' + txtPId.substr(0, txtPId.length - 1) + '"class="frmData ' + classData[level - 1] + '"><td style="padding-left: 4em ;vertical-align:middle">' + /*(++count[nameData[level - 1]])*/txtCount + v[nameData[level - 1] + "Name"] + '</td>';
+                        html += '<td class="text-right planSummary">' + (v.planSummary == null ? 0 : v.planSummary) + '</td>';
+                        html += '<td class="text-right usedSummary">' + (v.usedSummary == null ? 0 : v.usedSummary) + '</td>';
+                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="planSummary" value="' + v.planSummary + '" />';
+                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="usedSummary" value="' + v.usedSummary + '" />';
+                        //html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ1" value="' + (v.planQ1 == null ? 0 : v.planQ1) + '" /></td>';
+                        html += '<td class="text-right">' + (v.planQ1 == null ? 0 : v.planQ1) + '</td>';
+                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ1" value="' + (v.usedQ1 == null ? 0 : v.usedQ1) + '" /></td>';
+                        //html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ2" value="' + (v.planQ2 == null ? 0 : v.planQ2) + '" /></td>';
+                        html += '<td class="text-right">' + (v.planQ2 == null ? 0 : v.planQ2) + '</td>';
+                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ2" value="' + (v.usedQ2 == null ? 0 : v.usedQ2) + '" /></td>';
+                        //html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ3" value="' + (v.planQ3 == null ? 0 : v.planQ3) + '" /></td>';
+                        html += '<td class="text-right">' + (v.planQ3 == null ? 0 : v.planQ3) + '</td>';
+                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ3" value="' + (v.usedQ3 == null ? 0 : v.usedQ3) + '" /></td>';
+                        //html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ4" value="' + (v.planQ4 == null ? 0 : v.planQ4) + '" /></td>';
+                        html += '<td class="text-right">' + (v.planQ4 == null ? 0 : v.planQ4) + '</td>';
+                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ4" value="' + (v.usedQ4 == null ? 0 : v.usedQ4) + '" /></td>';
+
+                        html += '<td class="text-right percent"><b>' + toNumberFormat(sum[txtId]["percent"]) + '(%)' + '</b></td>';
+                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="bgLevel" value="' + v.bgLevel + '" />';
+                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="bgPeriodId" value="' + v.bgPeriodId + '" />';
+                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="planId" value="' + v.planId + '" />';
+                        //html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="deptId" value="' + v.deptId + '" />';
+                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="fundgroupId" value="' + v.fundgroupId + '" />';
+                        html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="facultyId" value="' + v.facultyId + '" />';
+                        //html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="bgTypeCode" value="' + v.bgTypeCode + '" />';
+                        html += '</tr>';
+
                     });
                     $("#budgetBody").html(html);
-                    var sumParent = {};
-                    $.each(sum, function (key, obj) {
-                        var idArr = key.split("-");
-                        var idLength = idArr.length;
-                        var name = "";
-                        for (var i = 0; i < idLength - 1; i++) {
-                            name += idArr[i];
-                            if (typeof sumParent[name] === "undefined") {
-                                sumParent[name] = {};
-                            }
-                            if (idLength - i != 1) {
-                                name += "-";
-                            }
-                        }
-                        $.each(obj, function (index, value) {
-                            var name = "";
-                            for (var i = 0; i < idLength - 1; i++) {
-                                name += idArr[i];
-                                if (typeof sumParent[name][index] === "undefined") {
-                                    sumParent[name][index] = 0;
-                                }
-                                sumParent[name][index] += parseFloat(value);
-                                if (idLength - i != 1) {
-                                    name += "-";
-                                }
-                            }
-
-                        });
-                    });
-                    $.each(sumParent, function (id, obj) {
-                        $.each(obj, function (index, value) {
-                            $("#" + id + " > td." + index).text(toNumberFormat(value));
-                        });
+                    sumParent(sum);
+                    $.each(sum, function (trId, v) {
+                        sumRow(trId);
                     });
                 }
-
 
                 $("input").change(function () {
                     var className = $(this).attr("name");
@@ -457,6 +425,8 @@
                     var arrId = trId.split("-");
                     var lenId = arrId.length;
                     var name = "";
+                    sum[trId][className] = parseFloat($(this).val().replace(",", ""));
+                    sum[trId]["percent"] = ((sum[trId]["usedQ1"] + sum[trId]["usedQ2"] + sum[trId]["usedQ3"] + sum[trId]["usedQ4"]) / sum[trId]["planSummary"]) * 100;
                     var sumPrice = {};
                     var arrName = [];
                     for (var i = 0; i < lenId - 1; i++) {
@@ -468,17 +438,19 @@
                             // console.log(this.id);
                             if ($(this).attr("class").indexOf("frmData") >= 0) {
                                 //console.log('frm ' + this.id);
-                                var no = parseFloat($(this).find("input[name='" + className + "']").val());
+                                var no = parseFloat($(this).find("input[name='" + className + "']").val().replace(",", ""));
+                                
                                 if (isNaN(no)) {
                                     sumPrice[name] += parseFloat(0);
                                 } else {
                                     sumPrice[name] += parseFloat(no);
                                 }
+                                
 
                             } else {
                                 if (this.id != prId) {
                                     // console.log('txt ' + this.id);
-                                    var no = parseFloat($(this).find('td.' + className).text());
+                                    var no = parseFloat($(this).find('td.' + className).text().replace(",", ""));
                                     if (isNaN(no)) {
                                         sumPrice[name] += parseFloat(0);
                                     } else {
@@ -502,6 +474,7 @@
                             tempKey = key;
                         } else {
                             tempVal = parseFloat(tempVal) + parseFloat(value);
+                            //console.log("temp "+tempKey);
                             $("#" + tempKey + " > td." + className).text(toNumberFormat(tempVal));
                         }
                         $("#" + key + " > td." + className).text(toNumberFormat(value));
@@ -509,8 +482,112 @@
                         //$("#" + key + " > td." + className).text(toNumberFormat(value));
                     });
                     //console.log(sumPrice);
+                    sumParent(sum);
+                    sumRow(trId);
                 });
             }, 0);
+
+        }
+        /*txt to sum parent */
+        function sumParent(sum) {
+            var sumParent = {};
+            $.each(sum, function (key, obj) {
+                var idArr = key.split("-");
+                var idLength = idArr.length;
+                var name = "";
+                for (var i = 0; i < idLength - 1; i++) {
+                    name += idArr[i];
+                    if (typeof sumParent[name] === "undefined") {
+                        sumParent[name] = {};
+                    }
+                    if (idLength - i != 1) {
+                        name += "-";
+                    }
+                }
+                $.each(obj, function (index, value) {
+                    var name = "";
+                    for (var i = 0; i < idLength - 1; i++) {
+                        name += idArr[i];
+                        if (typeof sumParent[name][index] === "undefined") {
+                            sumParent[name][index] = 0;
+                        }
+                        sumParent[name][index] += parseFloat(value);
+                        if (idLength - i != 1) {
+                            name += "-";
+                        }
+                    }
+
+                });
+            });
+            $.each(sumParent, function (id, obj) {
+                //$(this).attr("class").indexOf("frmData") >= 0
+                // if ($("#" + id).attr("parent-id") == "") {
+                if ($("#" + id).attr("class").indexOf("frmData") < 0) {
+                    var sumPlan = 0;
+                    var sumUsed = 0;
+                    for (var x = 1; x <= 4; x++) {
+                        sumPlan += parseFloat(obj["planQ" + x]);
+                        sumUsed += parseFloat(obj["usedQ" + x]);
+                    }
+                    var plan = parseFloat(obj.planSummary) - parseFloat(sumPlan);
+                    var used = parseFloat(obj.usedSummary) - parseFloat(sumUsed);
+                    if (plan > 0)
+                        $("#" + id + " > td.planSummary").html("<p style='color:white'>" + toNumberFormat(obj.planSummary) + "</p><p style='color:white'>(+" + toNumberFormat(plan) + ")</p>");
+                    else if (plan < 0)
+                        $("#" + id + " > td.planSummary").html("<p style='color:white'>" + toNumberFormat(obj.planSummary) + "</p><p style='color:white'>(" + toNumberFormat(plan) + ")</p>");
+                    else
+                        $("#" + id + " > td.planSummary").html("<p style='color:white'>" + toNumberFormat(obj.planSummary) + "</p><p style='color:white'>(" + 0 + ")</p>");
+
+                    if (used > 0)
+                        $("#" + id + " > td.usedSummary").html("<p style='color:white'>" + toNumberFormat(obj.usedSummary) + "</p><p style='color:white'>(+" + toNumberFormat(used) + ")</p>");
+                    else if (used < 0)
+                        $("#" + id + " > td.usedSummary").html("<p style='color:white'>" + toNumberFormat(obj.usedSummary) + "</p><p style='color:white'>(" + toNumberFormat(used) + ")</p>");
+                    else
+                        $("#" + id + " > td.usedSummary").html("<p style='color:white'>" + toNumberFormat(obj.usedSummary) + "</p><p style='color:white'>(" + 0 + ")</p>");
+
+                }
+                $.each(obj, function (index, value) {
+                    if ($("#" + id).attr("parent-id") == "" && (index != "planSummary" && index != "usedSummary")) {
+                        if (index == "percent") {
+                            $("#" + id + " > td." + index).html("<b>" + toNumberFormat(value) + " (%)</b>");
+                        } else {
+                            $("#" + id + " > td." + index).text(toNumberFormat(value));
+                        }
+                    }
+                    if ($("#" + id).attr("parent-id") != "") {
+                        if (index == "percent") {
+                            $("#" + id + " > td." + index).html("<b>" + toNumberFormat(value) + " (%)</b>");
+                        } else {
+                            $("#" + id + " > td." + index).text(toNumberFormat(value));
+                        }
+                    }
+                });
+            });
+        }
+        function sumRow(trId) {
+            var sumPlan = 0;
+            var sumUsed = 0;
+            for (var x = 1; x <= 4; x++) {
+                sumPlan += parseFloat(sum[trId]["planQ" + x]);
+                sumUsed += parseFloat(sum[trId]["usedQ" + x]);
+            }
+            var plan = parseFloat(sum[trId].planSummary) - parseFloat(sumPlan);
+            var used = parseFloat(sum[trId].usedSummary) - parseFloat(sumUsed);
+            if (plan > 0)
+                $("#" + trId + " > td.planSummary").html("<p style='color:white'>" + toNumberFormat(sum[trId].planSummary) + "</p><p style='color:white'>(+" + toNumberFormat(plan) + ")</p>");
+            else if (plan < 0)
+                $("#" + trId + " > td.planSummary").html("<p style='color:white'>" + toNumberFormat(sum[trId].planSummary) + "</p><p style='color:white'>(" + toNumberFormat(plan) + ")</p>");
+            else
+                $("#" + trId + " > td.planSummary").html("<p style='color:white'>" + toNumberFormat(sum[trId].planSummary) + "</p><p style='color:white'>(" + 0 + ")</p>");
+
+            if (used > 0)
+                $("#" + trId + " > td.usedSummary").html("<p style='color:white'>" + toNumberFormat(sum[trId].usedSummary) + "</p><p style='color:white'>(+" + toNumberFormat(used) + ")</p>");
+            else if (used < 0)
+                $("#" + trId + " > td.usedSummary").html("<p style='color:white'>" + toNumberFormat(sum[trId].usedSummary) + "</p><p style='color:white'>(" + toNumberFormat(used) + ")</p>");
+            else
+                $("#" + trId + " > td.usedSummary").html("<p style='color:white'>" + toNumberFormat(sum[trId].usedSummary) + "</p><p style='color:white'>(" + 0 + ")</p>");
+
+            $("#" + trId + " > td.percent").html("<b>" + toNumberFormat(sum[trId]["percent"]) + " (%)</b>");
 
         }
 

@@ -1,10 +1,659 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{{>header}}
 
-</body>
-</html>
+<div role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">ระบบจัดทำ/จัดสรรงบประมาณ</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">แบบเสนอโครงการที่ตอบสนองยุทธศาสตร์การพัฒนามหาวิทยาลัย ปี {{year}}</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="tall dashboard">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="col-md-12 control-label">{{deptName}}</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label class="col-md-1 control-label">โครงการ</label>
+                <div class="col-md-5">
+                    <select class="form-control input-sm">
+                        <option value="">- เลือกโครงการ -</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="col-md-12">
+            <section class="panel form-wizard" id="wizard">
+                <div class="panel-body">
+                    <div class="wizard-progress wizard-progress-lg">
+                        <div class="steps-progress">
+                            <div class="progress-indicator"></div>
+                        </div>
+                        <ul class="wizard-steps">
+                            <li class="active">
+                                <a href="#wizard-general" data-toggle="tab" aria-expanded="false"><span>1</span>ทั่วไป</a>
+                            </li>
+                            <li>
+                                <a href="#wizard-objective" data-toggle="tab" aria-expanded="false"><span>2</span>หลักการและวัตถุประสงค์</a>
+                            </li>
+                            <li>
+                                <a href="#wizard-target" data-toggle="tab" aria-expanded="false"><span>3</span>ตัวชี้วัดและกลุ่มเป้าหมาย</a>
+                            </li>
+                            <li>
+                                <a href="#wizard-time" data-toggle="tab" aria-expanded="false"><span>4</span>ขั้นตอนและระยะเวลา</a>
+                            </li>
+                            <li>
+                                <a href="#wizard-budget" data-toggle="tab" aria-expanded="false"><span>5</span>งบประมาณ</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <form id="form" class="form-horizontal" novalidate="novalidate">
+                        <div id="tabContent" class="tab-content">
+                            <div id="wizard-general" class="tab-pane active">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <h5>1. หน่วยงานที่รับผิดชอบโครงการ</h5>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label class="col-md-2 control-label text-right">คณะ/สำนัก/วิทยาลัย</label>
+                                        <div class="col-md-6">
+                                            <input id="facName" class="form-control input-sm" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12" style="margin: 5px 0;">
+                                        <label class="col-md-2 control-label text-right">ภาควิชา/ศูนย์/ฝ่าย/กอง</label>
+                                        <div class="col-md-6">
+                                            <input id="deptName" type="text" class="form-control input-sm" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" style="margin: 5px 0;">
+                                        <label class="col-md-2 control-label text-right">ผู้รับผิดชอบ</label>
+                                        <div class="col-md-6">
+                                            <input id="responder" type="text" class="form-control input-sm">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" style="margin: 5px 0;">
+                                        <label class="col-md-2 control-label text-right">ผู้กำกับ</label>
+                                        <div class="col-md-6">
+                                            <input id="director" type="text" class="form-control input-sm">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <h5>2. ลักษณะโครงการ/กิจกรรม</h5>
+                                    </div>
+
+                                    <div id="listProjectType" class="col-md-12"></div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <h5>3. การบูรณาการโครงการ</h5>
+                                    </div>
+
+                                    <div id="listInt" class="col-md-12"></div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <h5>4. ความเชื่อมโยงสอดคล้องกับแผนกลยุทธ์</h5>
+                                    </div>
+                                    <div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="col-md-2 control-label text-right">แผนกลยุทธ์</label>
+                                                <div class="col-md-6">
+                                                    <select id="typeId" class="form-control input-sm">
+                                                        <option value="">เลือก</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12" style="margin: 5px 0;">
+                                                <label class="col-md-3 control-label text-right">ประเด็นยุทธศาสตร์</label>
+                                                <div class="col-md-5">
+                                                    <select id="issueId" class="form-control input-sm">
+                                                        <option value="">เลือก</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12" style="margin: 5px 0;">
+                                                <label class="col-md-3 control-label text-right">เป้าประสงค์</label>
+                                                <div class="col-md-5">
+                                                    <select id="targetId" class="form-control input-sm">
+                                                        <option value="">เลือก</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12" style="margin: 5px 0;">
+                                                <label class="col-md-3 control-label text-right">กลยุทธ์</label>
+                                                <div class="col-md-5">
+                                                    <select id="strategyId" class="form-control input-sm">
+                                                        <option value="">เลือก</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                    </div>
+
+                                    <!--<div class="col-md-12" style="margin: 5px 0;">
+                                        <div class="col-md-offset-3 col-md-5" style="text-align: right;">
+                                            <button class="btn btn-primary"><i class="fa fa-plus"></i> เพิ่ม</button>
+                                        </div>
+                                    </div>-->
+                                </div>
+
+                            </div>
+                            <div id="wizard-objective" class="tab-pane">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <h5>5. หลักการและเหตุผลของโครงการ</h5>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-6">
+                                            <textarea type="text" class="form-control" rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <h5>6. วัตถุประสงค์</h5>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-6">
+                                            <textarea type="text" class="form-control" rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <h5>7. ประโยชน์ที่คาดว่าจะได้รับ</h5>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-6">
+                                            <textarea type="text" class="form-control" rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div id="wizard-target" class="tab-pane">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <h5>8. ตัวชี้วัดความสำเร็จระดับโครงการ (Output/Outcome) และค่าเป้าหมาย (ระบุหน่วยนับ)</h5>
+                                    </div>
+
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-6 text-center">ตัวชี้วัดความสำเร็จ</th>
+                                                    <th class="col-md-2 text-center">หน่วยนับ</th>
+                                                    <th class="col-md-2 text-center">ค่าเป้าหมาย</th>
+                                                    <th class="col-md-2 text-center">จัดการ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr style="background-color: #F1F1F1;">
+                                                    <td>-</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <h5>9. กลุ่มเป้าหมาย (ระบุกลุ่มเป้าหมายและจำนวนปุ่มเป้าหมายที่เข้าร่วมโครงการ)</h5>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-6">
+                                            <textarea type="text" class="form-control" rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div id="wizard-time" class="tab-pane">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <h5>10. ขั้นตอนการดำเนินการ</h5>
+                                    </div>
+
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th class="col-md-6 text-center">ขั้นตอนการดำเนินการ/รายการกิจกรรม</th>
+                                                <th class="col-md-2 text-center">วันที่เริ่มต้น</th>
+                                                <th class="col-md-2 text-center">วันที่สิ้นสุด</th>
+                                                <th class="col-md-2 text-center">จัดการ</th>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="form-control input-sm"></td>
+                                                <td><input type="text" class="form-control input-sm" nk-date></td>
+                                                <td><input type="text" class="form-control input-sm" nk-date></td>
+                                                <td class="text-center">
+                                                    <button class="btn btn-default"><i class="fa fa-trash"></i> ลบ</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"></td>
+                                                <td class="text-center">
+                                                    <button class="btn btn-primary"><i class="fa fa-plus"></i> เพิ่ม</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <h5>11. ระยะเวลาการดำเนินงาน</h5>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div style="margin: 5px 0;" class="col-md-12">
+                                            <label class="col-md-2 control-label text-right">วันที่เริ่มต้น</label>
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control input-sm">
+                                            </div>
+                                            <label class="col-md-1 control-label text-right">วันที่สิ้นสุด</label>
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control input-sm">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="wizard-budget" class="tab-pane">
+
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <h5>12. ประมาณการงบประมาณที่ใช้</h5>
+                                    </div>
+                                    <div class="col-md-12" style="margin: 5px 0;">
+                                        <label class="col-md-2 control-label text-right">ตัวเลข</label>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control input-sm">
+                                        </div>
+                                        <label class="col-md-1 control-label text-right">ตัวอักษร</label>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control input-sm">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" style="margin: 5px 0;">
+
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <h5>13. แหล่งเงิน/ประเภทงบประมาณที่ใช้/แผนงาน</h5>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-offset-1" style="font-weight: bold;">งบประมาณแผ่นดิน หมวดเงินอุดหนุนอื่นๆ</div>
+                                            </div><br>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-offset-2 col-md-10">
+                                                    <input type="radio" value="{[listSub.id]}">
+                                                    <label>{[listSub.typeName]}</label>
+                                                </div>
+                                            </div><br>
+                                        </div>
+                                    </div><br>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-offset-1" style="font-weight: bold;">แผนงาน</div>
+                                            </div><br>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-offset-2 col-md-10">
+                                                    <input type="radio" value="{[listPlan.id]}">
+                                                    <label>{[listPlan.planName]}</label>
+                                                </div>
+                                            </div><br>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <h5>14. งบประมาณและแผนการใช้จ่ายงบประมาณ</h5>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th rowspan="2" class="text-center" style="vertical-align: middle;">งบรายจ่าย</th>
+                                                <th class="text-center">ไตรมาส 1</th>
+                                                <th class="text-center">ไตรมาส 2</th>
+                                                <th class="text-center">ไตรมาส 3</th>
+                                                <th class="text-center">ไตรมาส 4</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center">แผนการใช้จ่าย</th>
+                                                <th class="text-center">แผนการใช้จ่าย</th>
+                                                <th class="text-center">แผนการใช้จ่าย</th>
+                                                <th class="text-center">แผนการใช้จ่าย</th>
+                                            </tr>
+                                            <tr style="background-color: #F1F1F1;">
+                                                <td>{[($index+1)+ '. ' + list.typeName]}</td>
+                                                <td colspan="4">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-left: 50px;">{[($parent.$index+1)+ '.' + ($index+1) + ' ' + listSub.typeName]}</td>
+                                                <td><input type="number" class="form-control input-sm"></td>
+                                                <td><input type="number" class="form-control input-sm"></td>
+                                                <td><input type="number" class="form-control input-sm"></td>
+                                                <td><input type="number" class="form-control input-sm"></td>
+                                            </tr>
+                                            <tr colspan="6"><td></td></tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <h5>15. รายละเอียดการใช้งบประมาณ</h5>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th class="col-md-3 text-center">รายการ</th>
+                                                <th class="col-md-2 text-center">จำนวนหน่วย</th>
+                                                <th class="col-md-2 text-center">ราคาต่อหน่วย</th>
+                                                <th class="col-md-2 text-center">รวมเงิน</th>
+                                                <th class="col-md-2 text-center">หมายเหตุ</th>
+                                                <th class="col-md-1 text-center">จัดการ</th>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="form-control input-sm"></td>
+                                                <td><input type="text" class="form-control input-sm"></td>
+                                                <td><input type="text" class="form-control input-sm"></td>
+                                                <td><input type="text" class="form-control input-sm"></td>
+                                                <td><input type="text" class="form-control input-sm"></td>
+                                                <td class="text-center">
+                                                    <button class="btn btn-default"><i class="fa fa-trash"></i> ลบ</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="5"></td>
+                                                <td class="text-center">
+                                                    <button class="btn btn-primary"><i class="fa fa-plus"></i> เพิ่ม</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div id="loading" class="col-xs-12" style="text-align: center;"></div>
+                <div class="panel-footer">
+                    <ul class="pager">
+                        <li class="previous disabled">
+                            <a><i class="fa fa-angle-left"></i> ย้อนกลับ</a>
+                        </li>
+                        <li class="finish hidden pull-right">
+                            <a><i class="fa fa-save"></i> บันทึก</a>
+                        </li>
+                        <li class="next">
+                            <a>ถัดไป <i class="fa fa-angle-right"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div><!--  container  -->
+</div><!-- main -->
+
+{{> footer}}
+
+<script src="{{_context_path}}/asset/vendor/bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
+<script>
+    (function( $ ) {
+        'use strict';
+        var $w4finish = $('#wizard').find('ul.pager li.finish'),
+                $w4validator = $("#wizard form").validate({
+                    highlight: function(element) {
+                        $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                    },
+                    success: function(element) {
+                        $(element).closest('.form-group').removeClass('has-error');
+                        $(element).remove();
+                    },
+                    errorPlacement: function( error, element ) {
+                        element.parent().append( error );
+                    }
+                });
+
+        $w4finish.on('click', function(ev) {
+            ev.preventDefault();
+            var validated = $('#wizard form').valid();
+            /*if (validated) {
+                if(action == "insert"){
+                    var fdata = dataObject(null);
+                    var dataJSON = JSON.stringify({reserveList: fdata["ReserveList"], riceReserve: fdata["RiceReserve"]});
+                    var dataJSONEN = encodeURIComponent(dataJSON);
+
+                    insertReserve(dataJSONEN);
+                }
+                else if(action == "edit"){
+                    var fdata = dataObject(listArr[selectedId]["id"]);
+                    var dataJSON = JSON.stringify({reserveList: fdata["ReserveList"], riceReserve: fdata["RiceReserve"]});
+                    var dataJSONEN = encodeURIComponent(dataJSON);
+
+                    editReserve(dataJSONEN);
+                }
+            }*/
+        });
+
+        $('#wizard').bootstrapWizard({
+            tabClass: 'wizard-steps',
+            nextSelector: 'ul.pager li.next',
+            previousSelector: 'ul.pager li.previous',
+            firstSelector: null,
+            lastSelector: null,
+            onNext: function( tab, navigation, index, newindex ) {
+                var validated = $('#wizard form').valid();
+                if( !validated ) {
+                    $w4validator.focusInvalid();
+                    return false;
+                }
+                /*$(".reserveDisplay").html($("#reserveCode option:selected").text()+" - "+$("#detail").val());
+                $(".targetDisplay").html($("#target").val());
+
+                if(index == 1){
+                    $("select.lookup").each(function(){
+                        var id = $(this).attr("id");
+                        var call = $(this).attr("data-call");
+
+                        var result = listsObject(call);
+                        $("#"+id).html(result).select2();
+                    });
+
+                    listsRice();
+                }
+                else if(index == 2) {
+                    if (Object.keys(selectedArr).length == 0) {
+                        alert("กรุณาเลือกคลัง");
+                        return false;
+                    }
+                    else {
+                        summarySelected();
+                    }
+                }*/
+            },
+            onTabClick: function( tab, navigation, index, newindex ) {
+                if ( newindex == index + 1 ) {
+                    return this.onNext( tab, navigation, index, newindex);
+                } else if ( newindex > index + 1 ) {
+                    return false;
+                } else {
+                    return true;
+                }
+            },
+            onTabChange: function( tab, navigation, index, newindex ) {
+                var $total = navigation.find('li').size() - 1;
+                $w4finish[ newindex != $total ? 'addClass' : 'removeClass' ]( 'hidden' );
+                $('#wizard').find(this.nextSelector)[ newindex == $total ? 'addClass' : 'removeClass' ]( 'hidden' );
+            },
+            onTabShow: function( tab, navigation, index ) {
+                var $total = navigation.find('li').length - 1;
+                var $current = index;
+                var $percent = Math.floor(( $current / $total ) * 100);
+                $('#wizard').find('.progress-indicator').css({ 'width': $percent + '%' });
+                tab.prevAll().addClass('completed');
+                tab.nextAll().removeClass('completed');
+            }
+        });
+
+    }).apply( this, [ jQuery ]);
+
+    var facultyId = '{{deptId}}';
+
+    var typeArr = {};
+    var issueArr = {};
+    var targetArr = {};
+    var strategyArr = {};
+
+
+    $(function(){
+        getLayouts();
+    });
+
+    function getLayouts() {
+        var datas = callAjax("{{_context_path}}/api/revenue/project/getLayouts", "post", {facultyId: facultyId}, "json");
+        if (typeof datas !== "undefined" && datas !== null) {
+            var htmlType = '';
+            $.each(datas["layouts"]["projectType"], function(key, val){
+                htmlType += '<div class="col-md-2">'
+                        + '<div class="col-md-offset-2 col-md-10 radio-custom radio-primary">'
+                            + '<input id="projectTypeId" type="radio" value="'+val["id"]+'">'
+                            + '<label style="padding-left: 10px;">'+val["name"]+'</label>'
+                        + '</div>'
+                    + '</div>';
+            });
+
+            $("#listProjectType").html(htmlType);
+
+            var htmlIntegration = '';
+            $.each(datas["layouts"]["integration"], function(key, val){
+                htmlIntegration += '<div class="row">'
+                        + '<div class="col-md-offset-1 col-md-3 checkbox-custom checkbox-primary">'
+                            + '<input class="integration" type="checkbox" name="intId'+val["id"]+'" value="'+val["id"]+'">'
+                            + '<label style="padding-left: 10px;">'+val["name"]+'</label>'
+                        + '</div>'
+                        + '<div class="col-md-6">'
+                            + '<input type="text" name="intName'+val["id"]+'" class="form-control input-sm" disabled>'
+                        + '</div>'
+                    + '</div>'
+                    + '<br>';
+            });
+
+            $("#listInt").html(htmlIntegration);
+
+            $.each(datas["layouts"]["affirmative"], function(key, val){
+                typeArr[val["typeId"]] = val["typeName"];
+
+                issueArr[val["typeId"]] = {};
+                $.each(val["issue"], function(key2, val2) {
+                    issueArr[val["typeId"]][val2["issueId"]] = val2["issueName"];
+
+                    targetArr[val2["issueId"]] = {};
+                    $.each(val2["target"], function(key3, val3) {
+                        targetArr[val2["issueId"]][val3["targetId"]] = val3["targetName"];
+
+                        strategyArr[val3["targetId"]] = {};
+                        $.each(val3["strategy"], function(key4, val4) {
+                            strategyArr[val3["targetId"]][val4["strategyId"]] = val4["strategyName"];
+                        });
+                    });
+                });
+
+            });
+
+
+            $("#typeId").html(getAffirmative("type", null)).change(function(){
+                if($("#typeId").val() == ""){
+                    $("#issueId, #targetId, #strategyId").html('<option value="">- เลือก -</option>');
+                }
+                else {
+                    $("#issueId").html(getAffirmative("issue", $("#typeId").val())).change(function () {
+                        if($("#issueId").val() == ""){
+                            $("#targetId, #strategyId").html('<option value="">- เลือก -</option>');
+                        }
+                        else {
+                            $("#targetId").html(getAffirmative("target", $("#issueId").val())).change(function () {
+                                if($("#targetId").val() == ""){
+                                    $("#strategyId").html('<option value="">- เลือก -</option>');
+                                }
+                                else {
+                                    $("#strategyId").html(getAffirmative("strategy", $("#targetId").val()));
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    function getAffirmative(type, pId){
+        var data;
+        if(type == "type") data = typeArr;
+        else if(type == "issue") data = issueArr[pId];
+        else if(type == "target") data = targetArr[pId];
+        else if(type == "strategy") data = strategyArr[pId];
+
+        var html = '<option value="">- เลือก -</option>';
+        $.each(data, function(key, value){
+            html += '<option value="'+key+'">'+value+'</option>';
+        });
+        return html;
+    }
+
+</script>

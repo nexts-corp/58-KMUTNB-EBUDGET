@@ -188,9 +188,26 @@ interface IViewService {
     public function buildMore($bg145Id, $budget);
 
     /**
+     * @name progressBudgetPlanAll
+     * @uri /progressBudgetPlanAll
+     * @description จัดทำรายงานแผน/ผลการใช้เงินงบประมาณแผ่นดิน
+     */
+    public function progressBudgetPlanAll();
+
+    /**
+     * @name progressBudgetPlan
+     * @uri /progressBudgetPlan
+     * @param int facultyId หน่วยงานระดับคณะ
+     * @param int fundgroupId กองทุน
+     * @param int planId แผนงาน 3 มิติ
+     * @description แสดงรายงานแผนการใช้เงินงบประมาณแผ่นดิน
+     */
+    public function progressBudgetPlan($facultyId, $fundgroupId, $planId);
+
+    /**
      * @name progressBudgetAll
      * @uri /progressBudgetAll
-     * @description จัดทำรายงานแผน/ผลการใช้เงินงบประมาณแผ่นดิน
+     * @description จัดทำรายงานผลการใช้เงินงบประมาณแผ่นดิน
      */
     public function progressBudgetAll();
 
@@ -200,33 +217,14 @@ interface IViewService {
      * @param int facultyId หน่วยงานระดับคณะ
      * @param int fundgroupId กองทุน
      * @param int planId แผนงาน 3 มิติ
-     * @description แสดงรายงานแผน/ผลการใช้เงินงบประมาณแผ่นดิน
+     * @description แสดงรายงานผลการใช้เงินงบประมาณแผ่นดิน
      */
     public function progressBudget($facultyId, $fundgroupId, $planId);
 
     /**
-     * @name progressRevenueAll
-     * @uri /progressRevenueAll
-     * @description จัดทำรายงานแผน/ผลการใช้เงินงบประมาณเงินรายได้
-     */
-    public function progressRevenueAll();
-
-    /**
-     * @name progressRevenue
-     * @uri /progressRevenue
-     * @param int facultyId หน่วยงานระดับคณะ
-     * @param int fundgroupId กองทุน
-     * @param int planId แผนงาน 3 มิติ
-     * @param string catId แหล่งเงิน
-     * @description แสดงรายงานแผน/ผลการใช้เงินงบประมาณเงินรายได้
-     */
-    public function progressRevenue($facultyId, $fundgroupId, $planId, $catId);
-    
-     /**
      * @name setting
      * @uri /setting
      * @description แสดงหน้าตั้งค่าการจัดทำ งปม.
      */
     public function setting();
-    
 }
