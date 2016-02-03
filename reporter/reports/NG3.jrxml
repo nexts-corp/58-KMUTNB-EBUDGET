@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="1.1586575189468076"/>
+	<property name="ireport.zoom" value="1.274523270841494"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
@@ -125,6 +125,7 @@ inner join L3D_FUNDGROUP fundgroup on fundgroup.FUNDGROUPID = bgAll.fundgroupId]
 	</variable>
 	<variable name="CURRENT_DATE" class="java.util.Date">
 		<variableExpression><![CDATA[new Date()]]></variableExpression>
+		<initialValueExpression><![CDATA[new Date()]]></initialValueExpression>
 	</variable>
 	<variable name="รวมเงิน" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
 		<variableExpression><![CDATA[$F{budgetSummary}]]></variableExpression>
@@ -377,6 +378,13 @@ inner join L3D_FUNDGROUP fundgroup on fundgroup.FUNDGROUPID = bgAll.fundgroupId]
 					<font size="10" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["พิมพ์โดย : "+$P{PUBLISHER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Auto">
+				<reportElement x="405" y="4" width="150" height="20" uuid="22eabe17-d939-487f-baed-988aa0d4d754"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["หน้า " + $V{CURRENT_PAGE}+" / " +$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

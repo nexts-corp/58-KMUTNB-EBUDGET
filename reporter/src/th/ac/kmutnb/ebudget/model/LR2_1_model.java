@@ -17,9 +17,9 @@ import javax.persistence.Entity;
 public class LR2_1_model extends BaseReport {
 
     @Column
-    Integer bgPlanId;
+    Integer planId;
     @Column
-    String bgPlanName;
+    String planName;
     @Column
     Integer bgProjectId;
     @Column
@@ -59,21 +59,31 @@ public class LR2_1_model extends BaseReport {
     @Column
     private BigDecimal otherCost = BigDecimal.ZERO;
 
-    public Integer getBgPlanId() {
-        return bgPlanId;
+    public Integer getPlanId() {
+        return planId;
     }
 
-    public void setBgPlanId(Integer bgPlanId) {
-        this.bgPlanId = bgPlanId;
+    public void setPlanId(Integer planId) {
+        this.planId = planId;
     }
 
-    public String getBgPlanName() {
-        return bgPlanName;
+    public String getPlanName() {
+        return planName;
     }
 
-    public void setBgPlanName(String bgPlanName) {
-        this.bgPlanName = bgPlanName;
+    public void setPlanName(String planName) {
+        this.planName = planName;
     }
+
+    public BigDecimal getSubSide() {
+        return subSide;
+    }
+
+    public void setSubSide(BigDecimal subSide) {
+        this.subSide = subSide;
+    }
+
+
 
     public Integer getBgProjectId() {
         return bgProjectId;

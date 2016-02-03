@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="0.7913786756005727"/>
+	<property name="ireport.zoom" value="1.274523270841479"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
@@ -85,6 +85,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 	</variable>
 	<variable name="CURRENT_DATE" class="java.util.Date">
 		<variableExpression><![CDATA[new Date()]]></variableExpression>
+		<initialValueExpression><![CDATA[new Date()]]></initialValueExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -320,6 +321,13 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA["พิมพ์โดย : "+$P{PUBLISHER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Auto">
+				<reportElement x="570" y="0" width="232" height="20" uuid="96b9d1a3-9434-478a-bd72-d95a48074327"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["หน้า " + $V{CURRENT_PAGE}+" / " +$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

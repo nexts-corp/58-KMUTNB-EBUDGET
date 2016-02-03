@@ -33,7 +33,7 @@ import th.co.bpg.cde.collection.CJMessage;
  */
 public class ReportService extends CServiceBase implements IReportService {
 
-    private final CDataContext dbcon;
+    private CDataContext dbcon;
 
     public ReportService() {
         System.setProperty("DEBUG", "false");
@@ -133,14 +133,13 @@ public class ReportService extends CServiceBase implements IReportService {
             Class reportClass = Class.forName("th.ac.kmutnb.ebudget.model." + reportCode.toUpperCase() + "_model");
             String reportSQL = this.readSQL(reportName, param);
             System.out.println("SQL : "+reportSQL);
-            List<BaseReport> datas = (List<BaseReport>) this.dbcon.nativeQuery(reportClass, reportSQL);
-            //this.dbcon.nativeQuery(reportClass, sparam, Parameters);
-//             System.out.println("class : "+reportClass.getName());
+   
+            List<BaseReport> datas = (List<BaseReport>) this.dbcon.nativeQuery(reportClass, reportSQL+"");
+          //this.dbcon.nativeQuery(reportClass, sparam, Parameters);
+//          System.out.println("class : "+reportClass.getName());
 //            for (BaseReport data : datas) {
 //                NG1_model model = (NG1_model)data;
 //                System.out.println("value : "+model.getFacultyName());
-//                System.out.println("value2 : "+model.getDeptName());
-//                System.out.println("budget : "+model.getGeneralFund());
 //            }
             
             CReportGenerater gen = this.newReportGenerater(reportName, exportType);
