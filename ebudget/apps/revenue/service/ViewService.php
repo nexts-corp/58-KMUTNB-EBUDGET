@@ -31,9 +31,13 @@ class ViewService extends CServiceBase implements IViewService {
         } elseif ($formId == "999") {
             $view = new CJView("operate/project", CJViewType::HTML_VIEW_ENGINE);
         }
+
+        $groupS = new ManageService();
+        $view->year = $groupS->getPeriod()->year;
         $view->formId = $formId;
         $view->budgetHeadId = $budgetHeadId;
         $view->deptId = $deptId;
+        $view->deptName = $groupS->getDept($deptId)->deptName;
 
         return $view;
     }

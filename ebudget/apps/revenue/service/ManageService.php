@@ -24,6 +24,12 @@ class ManageService extends CServiceBase implements IManageService {
         return $this->datacontext->getObject($year)[0];
     }
 
+    function getDept($deptId) {
+        $dept = new \apps\common\entity\L3D\Department();
+        $dept->id = $deptId;
+        return $this->datacontext->getObject($dept)[0];
+    }
+
     public function getAllBudgetRequest() {
         /*$sqlExt = "";
         if (isset($deptId) && $deptId != "") {
