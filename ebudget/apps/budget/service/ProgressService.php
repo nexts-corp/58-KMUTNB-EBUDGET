@@ -79,12 +79,14 @@ class ProgressService extends CServiceBase implements IProgressService {
                 $bg->setBgPlanQ2(str_replace(',', '', $value->planQ2));
                 $bg->setBgPlanQ3(str_replace(',', '', $value->planQ3));
                 $bg->setBgPlanQ4(str_replace(',', '', $value->planQ4));
-                $bg->setBgPlanSum(str_replace(',', '', $value->planSummary));
+                //$bg->setBgPlanSum(str_replace(',', '', $value->planSummary));
+                $bg->setBgUsedSum($bg->getBgPlanQ1() + $bg->getBgPlanQ2() + $bg->getBgPlanQ3() + $bg->getBgPlanQ4());
                 $bg->setBgUsedQ1(str_replace(',', '', $value->usedQ1));
                 $bg->setBgUsedQ2(str_replace(',', '', $value->usedQ2));
                 $bg->setBgUsedQ3(str_replace(',', '', $value->usedQ3));
                 $bg->setBgUsedQ4(str_replace(',', '', $value->usedQ4));
-                $bg->setBgUsedSum(str_replace(',', '', $value->usedSummary));
+                //$bg->setBgUsedSum(str_replace(',', '', $value->usedSummary));
+                $bg->setBgUsedSum($bg->getBgUsedQ1() + $bg->getBgUsedQ2() + $bg->getBgUsedQ3() + $bg->getBgUsedQ4());
 
                 if (!$this->datacontext->saveObject($bg)) {
                     return false;
@@ -95,12 +97,14 @@ class ProgressService extends CServiceBase implements IProgressService {
                 $bg->setBgPlanQ2(str_replace(',', '', $value->planQ2));
                 $bg->setBgPlanQ3(str_replace(',', '', $value->planQ3));
                 $bg->setBgPlanQ4(str_replace(',', '', $value->planQ4));
-                $bg->setBgPlanSum(str_replace(',', '', $value->planSummary));
+                //$bg->setBgPlanSum(str_replace(',', '', $value->planSummary));
+                $bg->setBgUsedSum($bg->getBgPlanQ1() + $bg->getBgPlanQ2() + $bg->getBgPlanQ3() + $bg->getBgPlanQ4());
                 $bg->setBgUsedQ1(str_replace(',', '', $value->usedQ1));
                 $bg->setBgUsedQ2(str_replace(',', '', $value->usedQ2));
                 $bg->setBgUsedQ3(str_replace(',', '', $value->usedQ3));
                 $bg->setBgUsedQ4(str_replace(',', '', $value->usedQ4));
-                $bg->setBgUsedSum(str_replace(',', '', $value->usedSummary));
+                //$bg->setBgUsedSum(str_replace(',', '', $value->usedSummary));
+                $bg->setBgUsedSum($bg->getBgUsedQ1() + $bg->getBgUsedQ2() + $bg->getBgUsedQ3() + $bg->getBgUsedQ4());
 
                 if (!$this->datacontext->updateObject($bg)) {
                     return false;
@@ -165,12 +169,72 @@ class ProgressService extends CServiceBase implements IProgressService {
                 $bg->setBgPlanQ2(str_replace(',', '', $value->planQ2));
                 $bg->setBgPlanQ3(str_replace(',', '', $value->planQ3));
                 $bg->setBgPlanQ4(str_replace(',', '', $value->planQ4));
-                $bg->setBgPlanSum(str_replace(',', '', $value->planSummary));
+                //$bg->setBgPlanSum(str_replace(',', '', $value->planSummary));
+                $bg->setBgUsedSum($bg->getBgPlanQ1() + $bg->getBgPlanQ2() + $bg->getBgPlanQ3() + $bg->getBgPlanQ4());
                 $bg->setBgUsedQ1(str_replace(',', '', $value->usedQ1));
                 $bg->setBgUsedQ2(str_replace(',', '', $value->usedQ2));
                 $bg->setBgUsedQ3(str_replace(',', '', $value->usedQ3));
                 $bg->setBgUsedQ4(str_replace(',', '', $value->usedQ4));
-                $bg->setBgUsedSum(str_replace(',', '', $value->usedSummary));
+                //$bg->setBgUsedSum(str_replace(',', '', $value->usedSummary));
+                $bg->setBgUsedSum($bg->getBgUsedQ1() + $bg->getBgUsedQ2() + $bg->getBgUsedQ3() + $bg->getBgUsedQ4());
+
+                if (!$this->datacontext->saveObject($bg)) {
+                    return false;
+                }
+            } else {
+                $bg->id = $dataBg[0]->id;
+                $bg->setBgPlanQ1(str_replace(',', '', $value->planQ1));
+                $bg->setBgPlanQ2(str_replace(',', '', $value->planQ2));
+                $bg->setBgPlanQ3(str_replace(',', '', $value->planQ3));
+                $bg->setBgPlanQ4(str_replace(',', '', $value->planQ4));
+                //$bg->setBgPlanSum(str_replace(',', '', $value->planSummary));
+                $bg->setBgUsedSum($bg->getBgPlanQ1() + $bg->getBgPlanQ2() + $bg->getBgPlanQ3() + $bg->getBgPlanQ4());
+                $bg->setBgUsedQ1(str_replace(',', '', $value->usedQ1));
+                $bg->setBgUsedQ2(str_replace(',', '', $value->usedQ2));
+                $bg->setBgUsedQ3(str_replace(',', '', $value->usedQ3));
+                $bg->setBgUsedQ4(str_replace(',', '', $value->usedQ4));
+                //$bg->setBgUsedSum(str_replace(',', '', $value->usedSummary));
+                $bg->setBgUsedSum($bg->getBgUsedQ1() + $bg->getBgUsedQ2() + $bg->getBgUsedQ3() + $bg->getBgUsedQ4());
+
+                if (!$this->datacontext->updateObject($bg)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public function updateBudgetPlan($budget) {
+        if (is_null($budget) || count($budget) <= 0)
+            return false;
+
+        foreach ($budget as $key => $value) {
+            $bg = new entity\BudgetScheme();
+
+            if ($value->bgLevel == "1") {
+                $bg->setBudgetTypeId($value->bgTypeMasterId);
+            } else if ($value->bgLevel == "2") {
+                $bg->setBudgetTypeId($value->bgTypeMainId);
+            } else if ($value->bgLevel == "3") {
+                $bg->setBudgetTypeId($value->bgTypeId);
+            }
+
+            $budgetPeriodId = $this->getPeriod()->year;
+
+            $bg->setBudgetPeriodId($budgetPeriodId);
+            $bg->setBudgetTypeCode("G");
+            $bg->setL3dPlanId($value->planId);
+            $bg->setDeptId($value->facultyId);
+            $bg->setFundgroupId($value->fundgroupId);
+
+            $dataBg = $this->datacontext->getObject($bg);
+            if (!isset($dataBg) || $dataBg == null || count($dataBg) <= 0) {
+                $bg->setBgPlanQ1(str_replace(',', '', $value->planQ1));
+                $bg->setBgPlanQ2(str_replace(',', '', $value->planQ2));
+                $bg->setBgPlanQ3(str_replace(',', '', $value->planQ3));
+                $bg->setBgPlanQ4(str_replace(',', '', $value->planQ4));
+                $bg->setBgPlanSum(str_replace(',', '', $value->planSummary));
 
                 if (!$this->datacontext->saveObject($bg)) {
                     return false;
@@ -182,11 +246,6 @@ class ProgressService extends CServiceBase implements IProgressService {
                 $bg->setBgPlanQ3(str_replace(',', '', $value->planQ3));
                 $bg->setBgPlanQ4(str_replace(',', '', $value->planQ4));
                 $bg->setBgPlanSum(str_replace(',', '', $value->planSummary));
-                $bg->setBgUsedQ1(str_replace(',', '', $value->usedQ1));
-                $bg->setBgUsedQ2(str_replace(',', '', $value->usedQ2));
-                $bg->setBgUsedQ3(str_replace(',', '', $value->usedQ3));
-                $bg->setBgUsedQ4(str_replace(',', '', $value->usedQ4));
-                $bg->setBgUsedSum(str_replace(',', '', $value->usedSummary));
 
                 if (!$this->datacontext->updateObject($bg)) {
                     return false;

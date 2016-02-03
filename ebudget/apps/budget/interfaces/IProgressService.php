@@ -56,8 +56,8 @@ interface IProgressService {
      * @description เรียกดูรายงานแผน/ผลการใช้เงินงบประมาณเงินรายได้
      */
     public function viewProgressRevenue($facultyId, $fundgroupId, $planId, $catId);
-    
-        /**
+
+    /**
      * @name updateRevenueScheme
      * @uri /updateRevenueScheme
      * @param apps\budget\model\BudgetSchemeResult[] budget
@@ -65,4 +65,13 @@ interface IProgressService {
      * @description ปรับปรุงข้อมูลแผน/ผลเงินงบประมาณเงินรายได้
      */
     public function updateRevenueScheme($budget);
+    
+    /**
+     * @name updateBudgetPlan
+     * @uri /updateBudgetPlan
+     * @param apps\budget\model\BudgetSchemePlan[] budget
+     * @return boolean result Description
+     * @description ปรับปรุงข้อมูลแผน/ผลเงินงบประมาณแผ่นดิน
+     */
+    public function updateBudgetPlan($budget);
 }

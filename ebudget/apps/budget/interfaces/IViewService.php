@@ -188,6 +188,24 @@ interface IViewService {
     public function buildMore($bg145Id, $budget);
 
     /**
+     * @name progressBudgetPlanAll
+     * @uri /progressBudgetPlanAll
+     * @description จัดทำรายงานแผน/ผลการใช้เงินงบประมาณแผ่นดิน
+     */
+    public function progressBudgetPlanAll();
+    
+    /**
+     * @name progressBudgetPlan
+     * @uri /progressBudgetPlan
+     * @param int facultyId หน่วยงานระดับคณะ
+     * @param int fundgroupId กองทุน
+     * @param int planId แผนงาน 3 มิติ
+     * @description แสดงรายงานแผนการใช้เงินงบประมาณแผ่นดิน
+     */
+    public function progressBudgetPlan($facultyId, $fundgroupId, $planId);
+    
+    
+    /**
      * @name progressBudgetAll
      * @uri /progressBudgetAll
      * @description จัดทำรายงานแผน/ผลการใช้เงินงบประมาณแผ่นดิน

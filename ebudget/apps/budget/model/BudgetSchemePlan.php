@@ -25,11 +25,6 @@ class BudgetSchemeResult {
     public $planQ3;
     public $planQ4;
     public $planSummary;
-    public $usedQ1;
-    public $usedQ2;
-    public $usedQ3;
-    public $usedQ4;
-    public $usedSummary;
 
     function getId() {
         return $this->id;
@@ -91,26 +86,6 @@ class BudgetSchemeResult {
         return $this->planSummary;
     }
 
-    function getUsedQ1() {
-        return $this->usedQ1;
-    }
-
-    function getUsedQ2() {
-        return $this->usedQ2;
-    }
-
-    function getUsedQ3() {
-        return $this->usedQ3;
-    }
-
-    function getUsedQ4() {
-        return $this->usedQ4;
-    }
-
-    function getUsedSummary() {
-        return $this->usedSummary;
-    }
-
     function setId($id) {
         $this->id = $id;
     }
@@ -169,26 +144,6 @@ class BudgetSchemeResult {
 
     function setPlanSummary($planSummary) {
         $this->planSummary = $planSummary;
-    }
-
-    function setUsedQ1($usedQ1) {
-        $this->usedQ1 = $usedQ1;
-    }
-
-    function setUsedQ2($usedQ2) {
-        $this->usedQ2 = $usedQ2;
-    }
-
-    function setUsedQ3($usedQ3) {
-        $this->usedQ3 = $usedQ3;
-    }
-
-    function setUsedQ4($usedQ4) {
-        $this->usedQ4 = $usedQ4;
-    }
-
-    function setUsedSummary($usedSummary) {
-        $this->usedSummary = $usedSummary;
     }
 
 }
