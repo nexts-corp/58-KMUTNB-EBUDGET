@@ -10,18 +10,27 @@ namespace apps\revenue\interfaces;
 interface IViewService {
 
     /**
-     * @name allocateAll
-     * @uri /allocateAll
-     * @description จัดสรรเงินรายได้
+     * @name planning
+     * @uri /planning
+     * @description จัดสรรงบประมาณเงินรายได้
      */    
-    public function allocateAll();
- 
+    public function planning();
+
     /**
-     * @name doRevenue
-     * @uri /doRevenue
-     * @param string budgetYear
+     * @name manageAll
+     * @uri /manageAll
+     * @description จัดสรรงบประมาณเงินรายได้
+     */
+    public function manageAll();
+
+    /**
+     * @name manage
+     * @uri /manage
+     * @param string formId
+     * @param string budgetHeadId
      * @param string deptId
-     * @description จัดทำรายละเอียดเงินรายได้
-     */ 
-    public function doRevenue($budgetYear, $deptId);
+     * @description จัดทำคำของบประมาณแผ่นดิน
+     */
+    public function manage($formId, $budgetHeadId, $deptId);
+
 }

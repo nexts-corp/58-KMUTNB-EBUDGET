@@ -1,0 +1,118 @@
+{{> header}}
+<div role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">ระบบจัดทำ/จัดสรรงบประมาณ</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">จัดทำคำชี้แจงงบประมาณเงินรายได้ ปี {{year}}</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="tall dashboard">
+
+    <div class="container">
+        <div class="row">
+            <table id="table" class="table table-bordered table-striped table-condensed mb-none">
+                <thead>
+                <tr>
+                    <th class="text-center col-lg-1">ลำดับ</th>
+                    <th class="text-center col-lg-4">รายละเอียดงบประมาณ</th>
+                    <th class="text-center col-lg-5">หน่วยงานที่รับผิดชอบ</th>
+                    <th class="text-center col-lg-2">เครื่องมือ</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td colspan="4" class="text-center">-</td>
+                </tr>
+                </tbody>
+            </table>
+        </div><!--  row  -->
+    </div><!--  container  -->
+</div><!-- main -->
+
+{{> footer}}
+
+<script>
+    var listsArr = {};
+    $(function(){
+        listsForm();
+    });
+
+    function listsForm() {
+        $("#table tbody").html('<tr><td colspan="4" class="text-center"><i class="fa fa-spin fa-cog"></i> Loading...</td>');
+
+        setTimeout(function() {
+            var datas = callAjax("{{_context_path}}/api/revenue/manage/getAllBudgetRequest", "post", {}, "json");
+            if (typeof datas !== "undefined" && datas !== null) {
+                var dataSet = [];
+                $.each(datas["lists"], function (key, value) {
+                    dataSet.push(value);
+
+                    if(!listsArr[value["BudgetHeadId"]]) listsArr[value["BudgetHeadId"]] = {};
+                    listsArr[value["BudgetHeadId"]][value["deptId"]] = value;
+                });
+
+                var t = $("#table").DataTable({
+                    "destroy": true,
+                    "data": dataSet,
+                    "order": [0, 'asc'],
+                    "iDisplayLength": 50,
+                    "columnDefs": [
+                        {
+                            "targets": 0,
+                            "searchable": false,
+                            "orderable": false,
+                            "data": "formId",
+                            "sClass": "text-center col-lg-1"
+                        },
+                        {
+                            "targets": 1,
+                            "data": "formName",
+                            "sClass": "col-lg-4"
+                        },
+                        {
+                            "targets": 2,
+                            "data": "deptName",
+                            "sClass": "col-lg-5"
+                        },
+                        {
+                            "targets": 3,
+                            "data": "BudgetHeadId",
+                            "sClass": "text-center col-lg-2",
+                            "render": function (data, key, full) {
+                                var content = '<button class="btn btn-primary edit" title="จัดทำ" data-hid="' + full["BudgetHeadId"] + '" data-dept="' + full["deptId"] + '"><i class="fa fa-pencil"></i> จัดทำ</button>'
+                                return content;
+                            }
+                        }
+                    ]
+                });
+                t.on('order.dt search.dt', function () {
+                    t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1;
+                    });
+                }).draw();
+
+                $("#table").on("click", "button.edit", function(){
+                    var hId = $(this).attr("data-hid");
+                    var dId = $(this).attr("data-dept");
+                    var data = listsArr[hId][dId];
+
+                    var formId = data["formId"];
+                    var headId = data["BudgetHeadId"];
+                    var deptId = data["deptId"];
+                    window.location = "{{_context_path}}/api/revenue/view/manage/"+formId+"/"+headId+"/"+deptId;
+                });
+            }
+        }, 0);
+    }
+</script>

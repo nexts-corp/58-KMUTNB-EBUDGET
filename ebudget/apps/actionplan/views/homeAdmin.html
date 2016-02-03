@@ -1,0 +1,151 @@
+{{>header}}
+<div role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <!--<div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">ตัวชี้วัดคำรับรองการปฏิบัติงาน</li>
+                    </ul>
+                </div>
+            </div>-->
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">ตัวชี้วัดคำรับรองการปฏิบัติงาน ปี {{year}}</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="tall dashboard">
+
+    <div class="sort-source-wrapper"><!-- button action on header -->
+        <div class="container">
+            <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+                <li class="active">
+                    <button class="btn btn-default back" style="display: none;"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
+                </li>
+            </ul>
+        </div>
+    </div><!-- end button action on header -->
+
+    <div class="container">
+        <div class="row">
+
+            <div id="homeDiv" class="col-md-12">
+                <div class="col-md-12"><!-- table shown bidder information list -->
+                    <table id="homeTable" class="table table-bordered table-striped table-condensed mb-none">
+                        <thead>
+                            <tr>
+                                <th class="text-center col-lg-1">ลำดับ</th>
+                                <th class="text-center col-lg-6">รายละเอียด</th>
+                                <th class="text-center col-lg-3">สถานะ</th>
+                                <th class="text-center col-lg-2">เครื่องมือ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="homeBody">
+                            <tr>
+                                <td colspan="4" class="text-center">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!-- end table shown bidder information list -->
+            </div>
+
+        </div><!--  row  -->
+    </div><!--  container  -->
+</div><!-- main -->
+
+{{>footer}}
+
+<script src="{{_context_path}}/apps/budget/views/bg140.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        listsCenter();
+    });
+
+    function listsCenter() {
+        var html = '<tr>'
+                + '<td class="text-center">1</td>'
+                + '<td>ตัวชี้วัดคำรับรองการปฏิบัติงานส่วนงานภายในมหาวิทยาลัย</td>'
+                + '<td class="text-center text-bold" id="centerStatus">-</td>'
+                + '<td class="text-center"><button id="center" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
+            + '</tr>'
+            + '<tr>'
+                + '<td class="text-center">2</td>'
+                + '<td>ร่างตัวชี้วัดคำรับรองการปฏิบัติงานของส่วนงาน</td>'
+                + '<td class="text-center text-bold" id="draftStatus">-</td>'
+                + '<td class="text-center"><button id="draft" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
+            + '</tr>'
+            + '<tr>'
+                + '<td class="text-center">3</td>'
+                + '<td>จัดทำตัวชี้วัดคำรับรองการปฏิบัติงานของส่วนงาน</td>'
+                + '<td class="text-center text-bold" id="finalStatus">-</td>'
+                + '<td class="text-center"><button id="final" class="btn btn-primary" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
+            + '</tr>'
+            + '<tr>'
+                + '<td class="text-center">4</td>'
+                + '<td>รายงานผลตัวชี้วัดคำรับรองการปฏิบัติงาน</td>'
+                + '<td class="text-center text-bold" id="resultStatus">-</td>'
+                + '<td class="text-center"><button id="result" class="btn btn-primary manage" title="จัดทำ"><i class="fa fa-pencil"></i> จัดทำ</button></td>'
+            + '</tr>';
+
+        $("#homeBody").html(html);
+
+        $("#center").click(function () {
+            window.location = "center";
+        });
+
+        $("#draft").click(function () {
+            window.location = "draftAll";
+        });
+
+        $("#final").click(function () {
+            window.location = "finalAll";
+        });
+
+        $("#result").click(function () {
+            window.location = "resultAll";
+        });
+
+        allStatus();
+    }
+
+    function allStatus(){
+        //center
+        var datas = callAjax("{{_context_path}}/api/actionplan/homeAdmin/centerStatus", "post", {}, "json");
+        if(typeof datas !== "undefined" && datas != null){
+            var data = datas["lists"];
+            if(data["status"] == "complete"){
+                $("#centerStatus").html('<span class="text-success">เสร็จสมบูรณ์</span>');
+            }
+            else{
+                $("#centerStatus").html('<span class="text-danger">ยังไม่เสร็จ</span>');
+            }
+        }
+
+        //draft
+        var datas = callAjax("{{_context_path}}/api/actionplan/homeAdmin/draftStatus", "post", {}, "json");
+        if(typeof datas !== "undefined" && datas != null){
+            var data = datas["lists"];
+            $("#draftStatus").html('<span class="text-success">'+data["deptComplete"]+'</span> / <span>'+data["deptAll"]+'</span>');
+        }
+
+        //final
+        var datas = callAjax("{{_context_path}}/api/actionplan/homeAdmin/finalStatus", "post", {}, "json");
+        if(typeof datas !== "undefined" && datas != null){
+            var data = datas["lists"];
+            $("#finalStatus").html('<span class="text-success">'+data["deptComplete"]+'</span> / <span>'+data["deptAll"]+'</span>');
+        }
+
+        //result
+        var datas = callAjax("{{_context_path}}/api/actionplan/homeAdmin/resultStatus", "post", {}, "json");
+        if(typeof datas !== "undefined" && datas != null){
+            var data = datas["lists"];
+            $("#resultStatus").html('<span class="text-success">'+data["deptComplete"]+'</span> / <span>'+data["deptAll"]+'</span>');
+        }
+    }
+
+
+</script>

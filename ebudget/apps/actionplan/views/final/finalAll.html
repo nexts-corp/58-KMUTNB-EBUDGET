@@ -1,0 +1,114 @@
+{{>header}}
+<div role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">ตัวชี้วัดคำรับรองการปฏิบัติงาน</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">ตัวชี้วัดคำรับรองของส่วนงาน</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="tall dashboard">
+
+    <div class="sort-source-wrapper"><!-- button action on header -->
+        <div class="container">
+            <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+                <li class="active">
+                    <button class="btn btn-default back" style="display: none;"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
+                </li>
+            </ul>
+        </div>
+    </div><!-- end button action on header -->
+
+    <div class="container">
+        <div class="row">
+
+            <div id="deptList">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-md-1">ลำดับ</th>
+                            <th class="text-center col-md-5">คณะ / หน่วยงาน</th>
+                            <th class="text-center col-sm-2">สถานะหน่วยงาน</th>
+                            <th class="text-center col-sm-2">สถานะกองแผน</th>
+                            <th class="text-center col-md-2">เครื่องมือ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div><!--  row  -->
+    </div><!--  container  -->
+</div><!-- main -->
+
+{{>footer}}
+
+<script type="text/javascript">
+    var findNode = {};
+    var listArr = {};
+
+    $(function () {
+        listsDepartment();
+
+        $("button.back").unbind("click").click(function () {
+            toggleShow("home");
+        })
+    });
+
+    function listsDepartment(){
+        $("#deptList table tbody").html('<tr><td colspan="5" class="text-center">Loading...</td></tr>');
+
+        setTimeout(function() {
+            var datas = callAjax("{{_context_path}}/api/actionplan/final/listsDept", "post", {}, "json");
+            if (typeof datas !== "undefined" && datas !== null) {
+                var html = '';
+                var count = 0;
+                $.each(datas["lists"], function (key, val) {
+                    html += '<tr>'
+                            + '<td class="bg-default"></td>'
+                            + '<td colspan="4" class="bg-default text-dark text-bold" style="vertical-align: middle;">' + val["actName"] + '</td>'
+                        + '</tr>';
+
+                    $.each(val["dept"], function (key2, val2) {
+                        html += '<tr>'
+                                + '<td  class="text-center">' + (++count) + '</td>'
+                                + '<td>' + val2["departmentName"] + '</td>'
+                                + '<td class="text-center">' + (val2["statusDept"] == "Y" ? "<span class='text-success'>อนุมัติแล้ว" : "<span class='text-danger'>ยังไม่อนุมัติ") + '</span></td>'
+                                + '<td class="text-center">' + (val2["statusFinal"] == "Y" ? "<span class='text-success'>อนุมัติแล้ว" : "<span class='text-danger'>ยังไม่อนุมัติ") + '</span></td>'
+                                + '<td class="text-center">'
+                                    + (val2["statusDept"] == "N" || val2["statusFinal"] == "Y" ? "" : '<button class="btn btn-primary btn-sm btnFinal" data-deptId="' + val2["departmentId"] + '"><i class="fa fa-pencil"></i> จัดทำ</button>')+'&nbsp;&nbsp;'
+                                    + '<button type="button" class="btn btn-success btn-sm excel" data-id="'+val2["departmentId"]+'"><i class="fa fa-file-excel-o"></i> เอกสาร</button>'
+                                + '</td>'
+                            + '</tr>';
+                    });
+                });
+
+                $("#deptList table tbody").html(html);
+
+                $("button.btnFinal").click(function () {
+                    var deptId = $(this).attr("data-deptId");
+                    window.location = "{{_context_path}}/api/actionplan/view/final/" + deptId;
+                });
+
+                $("button.excel").unbind().click(function(){
+                    var id = $(this).attr("data-id");
+
+                    window.open("{{_context_path}}/api/actionplan/final/export?departmentId="+id);
+                });
+            }
+        }, 0);
+    }
+
+</script>
