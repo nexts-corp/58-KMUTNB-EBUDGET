@@ -17,6 +17,9 @@ class BudgetType extends EntityBase {
     /** @Column(type="string",length=500, name="BudgetTypeName") */
     public $typeName;
 
+    /** @Column(type="integer",length=5, name="BudgetPeriodId") */
+    public $bgPeriodId;
+
     /** @Column(type="integer",length=11, name="MasterId") */
     public $masterId;
 
@@ -59,6 +62,10 @@ class BudgetType extends EntityBase {
 
     function getTypeName() {
         return $this->typeName;
+    }
+
+    function getBgPeriodId() {
+        return $this->bgPeriodId;
     }
 
     function getMasterId() {
@@ -117,6 +124,10 @@ class BudgetType extends EntityBase {
         $this->typeName = $typeName;
     }
 
+    function setBgPeriodId($bgPeriodId) {
+        $this->bgPeriodId = $bgPeriodId;
+    }
+
     function setMasterId($masterId) {
         $this->masterId = $masterId;
     }
@@ -164,6 +175,7 @@ class BudgetType extends EntityBase {
     function setFormExpense($formExpense) {
         $this->formExpense = $formExpense;
     }
+
 }
 
 ?>
