@@ -145,6 +145,24 @@
 
 {{>footer}}
 
+<style>
+    .lv1 {
+        background: #3fb0ac; color: #fff;
+    }
+    .lv2 {
+        background: #89bdd3; color: #fff;
+    }
+    .lv3 {
+        background: #b3c2bf; color: #fff;
+    }
+    .lv4 {
+        background: #e3e3e3; color: #fff;
+    }
+    .lv5 {
+        background: #c9c9c9; color: #fff;
+    }
+</style>
+
 <script type="text/javascript">
 
     var PERMISSION = "DEPARTMENT";
@@ -157,6 +175,7 @@
     var dataArr = [];
     var nameData = ["bgTypeMaster", "bgTypeMain", "bgType", "bgTypeSub"];
     var classData = ["active", "success", "warning", "info"];
+    var colorStyleData = ["lv1", "lv2", "lv3", "lv4", "lv5"];
     //var projectArr = {};
     //var listSTATUSTRACKING = [];
 
@@ -342,7 +361,7 @@
 
                                 }
                                 // sum[txtId] = {};
-                                html += '<tr id="' + txtId + '" parent-id="' + txtPId.substr(0, txtPId.length - 1) + '" class="' + classData[i] + '"><td style="padding-left: 4em ;vertical-align:middle">' + txtCount + v[nameData[i] + "Name"] + '</td>';
+                                html += '<tr id="' + txtId + '" parent-id="' + txtPId.substr(0, txtPId.length - 1) + '" class="' + colorStyleData[i] + '"><td style="padding-left: 4em ;vertical-align:middle">' + txtCount + v[nameData[i] + "Name"] + '</td>';
                                 html += '<td class="text-right planSummary"></td>';
                                 html += '<td class="text-right usedSummary"></td>';
                                 html += '<td class="text-right planQ1"></td>';
@@ -380,12 +399,12 @@
                         sum[txtId]["planQ4"] = parseFloat((v.planQ4 == null ? 0 : v.planQ4));
                         sum[txtId]["usedQ4"] = parseFloat((v.usedQ4 == null ? 0 : v.usedQ4));
                         sum[txtId]["percent"] = ((sum[txtId]["usedQ1"] + sum[txtId]["usedQ2"] + sum[txtId]["usedQ3"] + sum[txtId]["usedQ4"]) / sum[txtId]["planSummary"]) * 100;
-                        html += '<tr id="' + txtId + '" parent-id="' + txtPId.substr(0, txtPId.length - 1) + '"class="frmData ' + classData[level - 1] + '"><td style="padding-left: 4em ;vertical-align:middle">' + /*(++count[nameData[level - 1]])*/txtCount + v[nameData[level - 1] + "Name"] + '</td>';
+                        html += '<tr id="' + txtId + '" parent-id="' + txtPId.substr(0, txtPId.length - 1) + '"class="frmData ' + colorStyleData[level - 1] + '"><td style="padding-left: 4em ;vertical-align:middle">' + /*(++count[nameData[level - 1]])*/txtCount + v[nameData[level - 1] + "Name"] + '</td>';
                         html += '<td class="text-right planSummary">' + (v.planSummary == null ? 0 : v.planSummary) + '</td>';
                         html += '<td class="text-right usedSummary">' + (v.usedSummary == null ? 0 : v.usedSummary) + '</td>';
                         html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="planSummary" value="' + v.planSummary + '" />';
                         html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="usedSummary" value="' + v.usedSummary + '" />';
-                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ1" value="' + (v.planQ1 == null ? 0 : v.planQ1) + '" /></td>';
+                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ1" value="' + (v.planQ1 == null ? 0 : v.planQ1) + '" /></td>';                        
                         html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ1" value="' + (v.usedQ1 == null ? 0 : v.usedQ1) + '" /></td>';
                         html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ2" value="' + (v.planQ2 == null ? 0 : v.planQ2) + '" /></td>';
                         html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ2" value="' + (v.usedQ2 == null ? 0 : v.usedQ2) + '" /></td>';
