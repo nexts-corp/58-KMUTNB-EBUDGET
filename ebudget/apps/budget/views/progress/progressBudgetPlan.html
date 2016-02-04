@@ -213,9 +213,9 @@
         });
 
         $("#btnSave").click(function () {
-            savePlan();
-            
-            /*var datas = [];
+            //savePlan();
+
+            var datas = [];
             $(".frmData").each(function () {
                 var data = {};
                 var idArr = $(this).attr("id").split("-");
@@ -233,7 +233,23 @@
             var dataJSON = JSON.stringify({budget: datas});
             var dataJSONEN = encodeURIComponent(dataJSON);
             var result = callAjaxFile("{{_context_path}}/api/budget/progress/updateBudgetPlan", "post", dataJSON, "json");
-            console.log(result);*/
+            console.log(result);
+
+            if (result["result"] == true) {
+                swal({
+                    title: "บันทึกรายงานแผนงบประมาณสำเร็จ",
+                    text: "",
+                    type: "success",
+                    showCancelButton: false,
+                    confirmButtonColor: "#51b451",
+                    confirmButtonText: "OK",
+                    closeOnConfirm: true
+                });
+
+            } else {
+                swal("บันทึกไม่สำเร็จ", "", "error");
+            }
+
         });
 
 
@@ -411,7 +427,7 @@
                         //sum[txtId]["usedQ3"] = parseFloat((v.usedQ3 == null ? 0 : v.usedQ3));
                         sum[txtId]["planQ4"] = parseFloat((v.planQ4 == null ? 0 : v.planQ4));
                         //sum[txtId]["usedQ4"] = parseFloat((v.usedQ4 == null ? 0 : v.usedQ4));
-                        sum[txtId]["percent"] = ((sum[txtId]["usedQ1"] + sum[txtId]["usedQ2"] + sum[txtId]["usedQ3"] + sum[txtId]["usedQ4"]) / sum[txtId]["planSummary"]) * 100;
+                        //sum[txtId]["percent"] = ((sum[txtId]["usedQ1"] + sum[txtId]["usedQ2"] + sum[txtId]["usedQ3"] + sum[txtId]["usedQ4"]) / sum[txtId]["planSummary"]) * 100;
                         html += '<tr id="' + txtId + '" parent-id="' + txtPId.substr(0, txtPId.length - 1) + '"class="frmData ' + colorStyleData[level - 1] + '"><td style="padding-left: 4em ;vertical-align:middle">' + /*(++count[nameData[level - 1]])*/txtCount + v[nameData[level - 1] + "Name"] + '</td>';
                         //html += '<tr id="' + txtId + '" parent-id="' + txtPId.substr(0, txtPId.length - 1) + '"style="' + colorStyleData[level - 1] + '"><td style="padding-left: 4em ;vertical-align:middle">' + /*(++count[nameData[level - 1]])*/txtCount + v[nameData[level - 1] + "Name"] + '</td>';
 
@@ -1064,7 +1080,7 @@
 
     });
 
-    function saveApprove(year) {
+    function savePlan() {
 
         swal({
             title: "รายงานแผนการใช้เงินงบประมาณแผ่นดิน",
@@ -1075,9 +1091,27 @@
             confirmButtonText: "บันทึกแผนการใช้เงิน"
         },
         function () {
+            var datas = [];
+            $(".frmData").each(function () {
+                var data = {};
+                var idArr = $(this).attr("id").split("-");
+                for (var i = 0; i < idArr.length; i++) {
+                    var id = idArr[i].replace(nameData[i], "");
+                    data[nameData[i] + "Id"] = id;
+                }
+                $($(this).find(".frmReview")).each(function (k, v) {
+                    data[this.name] = this.value;
+                });
+                datas.push(data);
+            });
 
-            var datas = callAjax("{{_context_path}}/api/budget/approveSum/approveSumBg", "post", {budgetPeriodId: budgetPeriodId}, "json");
-            if (datas["result"] == true) {
+            //console.log(datas);
+            var dataJSON = JSON.stringify({budget: datas});
+            var dataJSONEN = encodeURIComponent(dataJSON);
+            var result = callAjaxFile("{{_context_path}}/api/budget/progress/updateBudgetPlan", "post", dataJSON, "json");
+            console.log(result);
+            //alert(result);          
+            if (result["result"] == true) {
 
                 swal({
                     title: "บันทึกสรุปยอดงบประมาณสำเร็จ",
@@ -1087,8 +1121,6 @@
                     confirmButtonColor: "#51b451",
                     confirmButtonText: "OK",
                     closeOnConfirm: true
-                }, function () {
-                    window.location = "{{_context_path}}/api/budget/approveSum/viewApproveSum/" + budgetPeriodId;
                 });
 
             } else {

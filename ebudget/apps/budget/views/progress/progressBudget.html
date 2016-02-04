@@ -224,6 +224,21 @@
             var dataJSONEN = encodeURIComponent(dataJSON);
             var result = callAjaxFile("{{_context_path}}/api/budget/progress/updateBudgetScheme", "post", dataJSON, "json");
             console.log(result);
+
+            if (result["result"] == true) {
+                swal({
+                    title: "บันทึกรายงานผลงบประมาณสำเร็จ",
+                    text: "",
+                    type: "success",
+                    showCancelButton: false,
+                    confirmButtonColor: "#51b451",
+                    confirmButtonText: "OK",
+                    closeOnConfirm: true
+                });
+
+            } else {
+                swal("บันทึกไม่สำเร็จ", "", "error");
+            }
         });
 
 
@@ -404,7 +419,7 @@
                         html += '<td class="text-right usedSummary">' + (v.usedSummary == null ? 0 : v.usedSummary) + '</td>';
                         html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="planSummary" value="' + v.planSummary + '" />';
                         html += '<input type="hidden" class="frmReview" row-index="' + k + '" name="usedSummary" value="' + v.usedSummary + '" />';
-                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ1" value="' + (v.planQ1 == null ? 0 : v.planQ1) + '" /></td>';                        
+                        html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ1" value="' + (v.planQ1 == null ? 0 : v.planQ1) + '" /></td>';
                         html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ1" value="' + (v.usedQ1 == null ? 0 : v.usedQ1) + '" /></td>';
                         html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="planQ2" value="' + (v.planQ2 == null ? 0 : v.planQ2) + '" /></td>';
                         html += '<td class="text-right"><input type="text" class="form-control frmReview" row-index="' + k + '" name="usedQ2" value="' + (v.usedQ2 == null ? 0 : v.usedQ2) + '" /></td>';

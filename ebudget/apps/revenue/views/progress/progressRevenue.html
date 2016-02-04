@@ -227,6 +227,21 @@
             var dataJSONEN = encodeURIComponent(dataJSON);
             var result = callAjaxFile("{{_context_path}}/api/revenue/progress/updateRevenueScheme", "post", dataJSON, "json");
             console.log(result);
+            
+            if (result["result"] == true) {
+                swal({
+                    title: "บันทึกรายงานผลงบประมาณสำเร็จ",
+                    text: "",
+                    type: "success",
+                    showCancelButton: false,
+                    confirmButtonColor: "#51b451",
+                    confirmButtonText: "OK",
+                    closeOnConfirm: true
+                });
+
+            } else {
+                swal("บันทึกไม่สำเร็จ", "", "error");
+            }
         });
 
 
