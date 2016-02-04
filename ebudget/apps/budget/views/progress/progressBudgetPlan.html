@@ -154,19 +154,19 @@
 
 <style>
     .lv1 {
-        background: #3fb0ac; color: #fff;
+        background: #A9B2B1; color: #000;
     }
     .lv2 {
-        background: #89bdd3; color: #fff;
+        background: #D8DEDD; color: #000;
     }
     .lv3 {
-        background: #b3c2bf; color: #fff;
+        background: #EAF7F6; color: #000;
     }
     .lv4 {
-        background: #e3e3e3; color: #fff;
+        background: #e3e3e3; color: #000;
     }
     .lv5 {
-        background: #c9c9c9; color: #fff;
+        background: #c9c9c9; color: #000;
     }
 </style>
 
@@ -213,7 +213,9 @@
         });
 
         $("#btnSave").click(function () {
-            var datas = [];
+            savePlan();
+            
+            /*var datas = [];
             $(".frmData").each(function () {
                 var data = {};
                 var idArr = $(this).attr("id").split("-");
@@ -231,7 +233,7 @@
             var dataJSON = JSON.stringify({budget: datas});
             var dataJSONEN = encodeURIComponent(dataJSON);
             var result = callAjaxFile("{{_context_path}}/api/budget/progress/updateBudgetPlan", "post", dataJSON, "json");
-            console.log(result);
+            console.log(result);*/
         });
 
 
@@ -1062,6 +1064,40 @@
 
     });
 
+    function saveApprove(year) {
+
+        swal({
+            title: "รายงานแผนการใช้เงินงบประมาณแผ่นดิน",
+            text: "กรุณากรอกแผนการใช้เงินให้ครบทุกไตรมาสภายในช่วงเวลาที่กำหนด",
+            type: "info",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            confirmButtonText: "บันทึกแผนการใช้เงิน"
+        },
+        function () {
+
+            var datas = callAjax("{{_context_path}}/api/budget/approveSum/approveSumBg", "post", {budgetPeriodId: budgetPeriodId}, "json");
+            if (datas["result"] == true) {
+
+                swal({
+                    title: "บันทึกสรุปยอดงบประมาณสำเร็จ",
+                    text: "",
+                    type: "success",
+                    showCancelButton: false,
+                    confirmButtonColor: "#51b451",
+                    confirmButtonText: "OK",
+                    closeOnConfirm: true
+                }, function () {
+                    window.location = "{{_context_path}}/api/budget/approveSum/viewApproveSum/" + budgetPeriodId;
+                });
+
+            } else {
+                swal("บันทึกไม่สำเร็จ", "", "error");
+            }
+
+        });
+
+    }
 
 </script>
 
