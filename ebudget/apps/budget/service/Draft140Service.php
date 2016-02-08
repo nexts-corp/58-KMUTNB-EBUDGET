@@ -11,36 +11,31 @@ use th\co\bpg\cde\data\CDataContext;
 use apps\budget\interfaces\IDraft140Service;
 use apps\common\entity;
 use apps\common\entity\BudgetHead;
-
 use th\co\bpg\cde\collection\impl\CJSONDecodeImpl;
 
-class Draft140Service extends CServiceBase implements IDraft140Service
-{
+class Draft140Service extends CServiceBase implements IDraft140Service {
 
     public $datacontext;
     public $ent = "apps\\common\\entity";
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->datacontext = new CDataContext();
     }
 
-    function getPeriod()
-    {
+    function getPeriod() {
         $year = new \apps\common\entity\Year();
         $year->yearStatus = 'Y';
         return $this->datacontext->getObject($year)[0];
     }
 
-    function getBudgetPlanAndProject($budgetPeriodId, $L3DPlanId, $fundgroupId)
-    {
+    function getBudgetPlanAndProject($budgetPeriodId, $L3DPlanId, $fundgroupId) {
         $project = new \apps\common\entity\MappingPlan();
 
         $project->setBudgetperiodId($budgetPeriodId);
         $project->setPlanId($L3DPlanId);
         $project->setFundgroupId($fundgroupId);
         $dataProject = $this->datacontext->getObject($project);
-        
+
         $result = array();
 
         if ($dataProject) {
@@ -62,39 +57,43 @@ class Draft140Service extends CServiceBase implements IDraft140Service
         return $result;
     }
 
-    public function view($param)
-    {
-        $param->budgetPeriodId = $this->getPeriod()->year;
+    public function view($param) {
+        $year = $this->getPeriod()->year;
+        $param->budgetPeriodId = $year;
         $param->budgetTypeCode = "G";
 
         $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
-            . " FROM " . $this->ent . "\\BudgetType typ "
-            . " WHERE typ.masterId = '10000000' and typ.typeCode = 'G' and typ.form140 = true ";
-        $list1 = $this->datacontext->getObject($sql1);
+                . " FROM " . $this->ent . "\\BudgetType typ "
+                . " WHERE typ.masterId in ('10000000','20000000') and typ.typeCode = 'G' and typ.form140 = true "
+                . " and typ.bgPeriodId = :bgPeriodId";
+        $param1 = array("bgPeriodId" => $year);
+        $list1 = $this->datacontext->getObject($sql1, $param1);
 
         foreach ($list1 as $key1 => $value1) {
             $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
-                . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = :masterId ";
+                    . " FROM " . $this->ent . "\\BudgetType typ "
+                    . " WHERE typ.masterId = :masterId "
+                    . " and typ.bgPeriodId = :bgPeriodId";
             $param2 = array(
-                "masterId" => $list1[$key1]["id"]
+                "masterId" => $list1[$key1]["id"],
+                "bgPeriodId" => $year
             );
             $list2 = $this->datacontext->getObject($sql2, $param2);
             $list1[$key1]["lv2"] = $list2;
 
             foreach ($list2 as $key2 => $value2) {
                 $sql3 = " select head.id AS budgetHeadId, bg.id, bg.positionName, bg.occupy, bg.vacancy, bg.rateNo, bg.salary, bg.salaryTotal, bg.remark,bg.comment,bg.attachmentId,att.desc,att.path,ts.id AS statusId,ts.desc AS statusDesc"
-                    . " from " . $this->ent . "\\Budget140 bg "
-                    . " left join " . $this->ent . "\\BudgetHead head with head.id = bg.budgetHeadId "
-                    . " left join " . $this->ent . "\\Attachment att with bg.attachmentId = att.id "
-                    . " left join " . $this->ent . "\\TrackingStatus ts with bg.statusId = ts.id "
-                    . " where head.formId = :formId "
-                    . " and bg.budgetTypeId = :budgetTypeId "
-                    . " and bg.budgetPeriodId = :budgetPeriodId "
-                    . " and bg.budgetTypeCode = :budgetTypeCode "
-                    . " and bg.l3dPlanId = :l3dPlanId "
-                    . " and bg.fundgroupId = :fundgroupId "
-                    . " and bg.deptId = :deptId";
+                        . " from " . $this->ent . "\\Budget140 bg "
+                        . " left join " . $this->ent . "\\BudgetHead head with head.id = bg.budgetHeadId "
+                        . " left join " . $this->ent . "\\Attachment att with bg.attachmentId = att.id "
+                        . " left join " . $this->ent . "\\TrackingStatus ts with bg.statusId = ts.id "
+                        . " where head.formId = :formId "
+                        . " and bg.budgetTypeId = :budgetTypeId "
+                        . " and bg.budgetPeriodId = :budgetPeriodId "
+                        . " and bg.budgetTypeCode = :budgetTypeCode "
+                        . " and bg.l3dPlanId = :l3dPlanId "
+                        . " and bg.fundgroupId = :fundgroupId "
+                        . " and bg.deptId = :deptId";
 
                 $param3 = array(
                     "formId" => "140",
@@ -144,8 +143,7 @@ class Draft140Service extends CServiceBase implements IDraft140Service
         return $list1;
     }
 
-    public function insert($budget, $file)
-    {
+    public function insert($budget, $file) {
 
         $conv = json_decode($budget);
 
@@ -228,15 +226,13 @@ class Draft140Service extends CServiceBase implements IDraft140Service
 
                         $return["path"] = $fileN;
                     }
-
                 }
             }
         }
         return $return;
     }
 
-    public function update($budget, $file, $fileUpload)
-    {
+    public function update($budget, $file, $fileUpload) {
         $return = array();
 
         $conv = json_decode($budget);
@@ -310,15 +306,13 @@ class Draft140Service extends CServiceBase implements IDraft140Service
 
                         $return["path"] = $fileN;
                     }
-
                 }
             }
         }
         return $return;
     }
 
-    public function delete($budgetId)
-    {
+    public function delete($budgetId) {
         $result = true;
 
         $repo = new \apps\common\entity\Budget140();
@@ -341,7 +335,6 @@ class Draft140Service extends CServiceBase implements IDraft140Service
                     $result = false;
                     $return = $this->datacontext->getLastMessage();
                 }
-
             }
         }
 
@@ -365,4 +358,5 @@ class Draft140Service extends CServiceBase implements IDraft140Service
 
         return $result;
     }
+
 }

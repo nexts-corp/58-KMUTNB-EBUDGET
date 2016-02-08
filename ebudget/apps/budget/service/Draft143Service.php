@@ -28,8 +28,7 @@ class Draft143Service extends CServiceBase implements IDraft143Service {
         return $this->datacontext->getObject($year)[0];
     }
 
-    function getBudgetPlanAndProject($budgetPeriodId, $L3DPlanId, $fundgroupId)
-    {
+    function getBudgetPlanAndProject($budgetPeriodId, $L3DPlanId, $fundgroupId) {
         $project = new \apps\common\entity\MappingPlan();
 
         $project->setBudgetperiodId($budgetPeriodId);
@@ -59,38 +58,43 @@ class Draft143Service extends CServiceBase implements IDraft143Service {
         return $result;
     }
 
-    public function view($param){
-        $param->budgetPeriodId = $this->getPeriod()->year;
+    public function view($param) {
+        $year = $this->getPeriod()->year;
+        $param->budgetPeriodId = $year;
         $param->budgetTypeCode = "G";
 
         $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
-            . " FROM " . $this->ent . "\\BudgetType typ "
-            . " WHERE typ.masterId = '20200000' and typ.typeCode = 'G' and typ.form143 = true ";
-        $list1 = $this->datacontext->getObject($sql1);
+                . " FROM " . $this->ent . "\\BudgetType typ "
+                . " WHERE typ.masterId = '20200000' and typ.typeCode = 'G' and typ.form143 = true "
+                . " and typ.bgPeriodId = :bgPeriodId";
+        $param1 = array("bgPeriodId" => $year);
+        $list1 = $this->datacontext->getObject($sql1, $param1);
 
         foreach ($list1 as $key1 => $value1) {
             $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
-                . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = :masterId ";
+                    . " FROM " . $this->ent . "\\BudgetType typ "
+                    . " WHERE typ.masterId = :masterId "
+                    . " and typ.bgPeriodId = :bgPeriodId";
             $param2 = array(
-                "masterId" => $list1[$key1]["id"]
+                "masterId" => $list1[$key1]["id"],
+                "bgPeriodId" => $year
             );
             $list2 = $this->datacontext->getObject($sql2, $param2);
             $list1[$key1]["lv2"] = $list2;
 
             foreach ($list2 as $key2 => $value2) {
                 $sql3 = " select head.id AS budgetHeadId,bg.id, bg.operName, bg.operDesc, bg.bgRequest, bg.bgReceive, bg.bgHistory, bg.remark , bg.remark,bg.comment,bg.attachmentId,att.desc,att.path,ts.id AS statusId,ts.desc AS statusDesc"
-                    . " from " . $this->ent . "\\Budget143 bg "
-                    . " left join " . $this->ent . "\\BudgetHead head with head.id = bg.budgetHeadId "
-                    . " left join " . $this->ent . "\\Attachment att with bg.attachmentId = att.id "
-                    . " left join " . $this->ent . "\\TrackingStatus ts with bg.statusId = ts.id "
-                    . " where head.formId = :formId and "
-                    . " bg.budgetTypeId = :budgetTypeId and "
-                    . " bg.budgetPeriodId = :budgetPeriodId and "
-                    . " bg.budgetTypeCode = :budgetTypeCode and "
-                    . " bg.l3dPlanId = :l3dPlanId and "
-                    . " bg.fundgroupId = :fundgroupId and "
-                    . " bg.deptId = :deptId";
+                        . " from " . $this->ent . "\\Budget143 bg "
+                        . " left join " . $this->ent . "\\BudgetHead head with head.id = bg.budgetHeadId "
+                        . " left join " . $this->ent . "\\Attachment att with bg.attachmentId = att.id "
+                        . " left join " . $this->ent . "\\TrackingStatus ts with bg.statusId = ts.id "
+                        . " where head.formId = :formId and "
+                        . " bg.budgetTypeId = :budgetTypeId and "
+                        . " bg.budgetPeriodId = :budgetPeriodId and "
+                        . " bg.budgetTypeCode = :budgetTypeCode and "
+                        . " bg.l3dPlanId = :l3dPlanId and "
+                        . " bg.fundgroupId = :fundgroupId and "
+                        . " bg.deptId = :deptId";
                 $param3 = array(
                     "formId" => "143",
                     "budgetTypeId" => $value2["id"],
@@ -139,14 +143,14 @@ class Draft143Service extends CServiceBase implements IDraft143Service {
         return $list1;
     }
 
-    public function insert($budget, $file){
+    public function insert($budget, $file) {
 
         $conv = json_decode($budget);
 
         $desc = $conv->desc;
 
         $json = new CJSONDecodeImpl();
-        $budget = $json->decode(new \apps\common\entity\Budget143(),$conv);
+        $budget = $json->decode(new \apps\common\entity\Budget143(), $conv);
         $budget->budgetTypeCode = "G";
         $budget->budgetPeriodId = $this->getPeriod()->year;
 
@@ -196,13 +200,13 @@ class Draft143Service extends CServiceBase implements IDraft143Service {
             $return["budgetHeadId"] = $bgHeadId;
         }
 
-        if($file != ''){
-            if($file != "undefined") {
+        if ($file != '') {
+            if ($file != "undefined") {
                 $time = date("YmdHis");
                 $target_dir = "apps\\budget\\views\\draft\\attachment\\";
 
-                $target_file = $target_dir ."BG143". $time . "-" . $file["name"];
-                $fileN = "BG143". $time . "-" . $file["name"];
+                $target_file = $target_dir . "BG143" . $time . "-" . $file["name"];
+                $fileN = "BG143" . $time . "-" . $file["name"];
 
                 if (move_uploaded_file($file["tmp_name"], $target_file)) {
 
@@ -212,8 +216,7 @@ class Draft143Service extends CServiceBase implements IDraft143Service {
 
                     if (!$this->datacontext->saveObject($update)) {
                         $return = $this->datacontext->getLastMessage();
-                    }
-                    else{
+                    } else {
                         $update2 = new \apps\common\entity\Budget143();
                         $update2->id = $budget->id;
                         $data = $this->datacontext->getObject($update2);
@@ -223,14 +226,13 @@ class Draft143Service extends CServiceBase implements IDraft143Service {
 
                         $return["path"] = $fileN;
                     }
-
                 }
             }
         }
         return $return;
     }
 
-    public function update($budget, $file, $fileUpload){
+    public function update($budget, $file, $fileUpload) {
         $return = array();
 
         $conv = json_decode($budget);
@@ -238,7 +240,7 @@ class Draft143Service extends CServiceBase implements IDraft143Service {
         $desc = $conv->desc;
 
         $json = new CJSONDecodeImpl();
-        $budget = $json->decode(new \apps\common\entity\Budget143(),$conv);
+        $budget = $json->decode(new \apps\common\entity\Budget143(), $conv);
 
         $budget->bgSummary = $budget->bgRequest;
         $budget->dateUpdated = date('Y-m-d H:i:s');
@@ -246,12 +248,11 @@ class Draft143Service extends CServiceBase implements IDraft143Service {
         if (!$this->datacontext->updateObject($budget)) {
             $return["result"] = false;
             $return["msg"] = $this->datacontext->getLastMessage();
-        }
-        else {
+        } else {
             $return["result"] = true;
         }
 
-        if($fileUpload == "1"){
+        if ($fileUpload == "1") {
             $time = date("YmdHis");
             $target_dir = "apps\\budget\\views\\draft\\attachment\\";
 
@@ -272,21 +273,20 @@ class Draft143Service extends CServiceBase implements IDraft143Service {
 
                     if (!$this->datacontext->updateObject($data[0])) {
                         $return = $this->datacontext->getLastMessage();
-                    }
-                    else{
-                        if (!$this->datacontext->removeObject($data2[0])){
+                    } else {
+                        if (!$this->datacontext->removeObject($data2[0])) {
                             $return = $this->datacontext->getLastMessage();
                         }
                     }
                 }
             }
 
-            if($file !== "undefined") {
+            if ($file !== "undefined") {
                 $time = date("YmdHis");
                 $target_dir = "apps\\budget\\views\\draft\\attachment\\";
 
-                $target_file = $target_dir ."BG143". $time . "-" . $file["name"];
-                $fileN = "BG143". $time . "-" . $file["name"];
+                $target_file = $target_dir . "BG143" . $time . "-" . $file["name"];
+                $fileN = "BG143" . $time . "-" . $file["name"];
 
                 if (move_uploaded_file($file["tmp_name"], $target_file)) {
 
@@ -296,8 +296,7 @@ class Draft143Service extends CServiceBase implements IDraft143Service {
 
                     if (!$this->datacontext->saveObject($update)) {
                         $return = $this->datacontext->getLastMessage();
-                    }
-                    else{
+                    } else {
                         $update2 = new \apps\common\entity\Budget143();
                         $update2->id = $budget->id;
                         $data = $this->datacontext->getObject($update2);
@@ -307,14 +306,13 @@ class Draft143Service extends CServiceBase implements IDraft143Service {
 
                         $return["path"] = $fileN;
                     }
-
                 }
             }
         }
         return $return;
     }
 
-    public function delete($budgetId){
+    public function delete($budgetId) {
         $result = true;
 
         $repo = new \apps\common\entity\Budget143();
@@ -338,11 +336,10 @@ class Draft143Service extends CServiceBase implements IDraft143Service {
                     $result = false;
                     $return = $this->datacontext->getLastMessage();
                 }
-
             }
         }
 
-        if($attachmentId != null && $attachmentId != ""){
+        if ($attachmentId != null && $attachmentId != "") {
             $target_dir = "apps\\budget\\views\\draft\\attachment\\";
 
             $update2 = new \apps\common\entity\Attachment();
@@ -354,7 +351,7 @@ class Draft143Service extends CServiceBase implements IDraft143Service {
 
                 $data[0]->attachmentId = null;
 
-                if (!$this->datacontext->removeObject($data2[0])){
+                if (!$this->datacontext->removeObject($data2[0])) {
                     $return = $this->datacontext->getLastMessage();
                 }
             }
@@ -362,4 +359,5 @@ class Draft143Service extends CServiceBase implements IDraft143Service {
 
         return $result;
     }
+
 }
