@@ -73,7 +73,7 @@ class Draft143Service extends CServiceBase implements IDraft143Service {
         foreach ($list1 as $key1 => $value1) {
             $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
                     . " FROM " . $this->ent . "\\BudgetType typ "
-                    . " WHERE typ.masterId = :masterId "
+                    . " WHERE typ.masterId = :masterId and typ.form143 = true "
                     . " and typ.bgPeriodId = :bgPeriodId";
             $param2 = array(
                 "masterId" => $list1[$key1]["id"],

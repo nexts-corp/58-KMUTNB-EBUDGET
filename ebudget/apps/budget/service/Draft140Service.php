@@ -64,7 +64,7 @@ class Draft140Service extends CServiceBase implements IDraft140Service {
 
         $sql1 = " SELECT typ.id, typ.typeName, typ.masterId "
                 . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId in ('10000000','20000000') and typ.typeCode = 'G' and typ.form140 = true "
+                . " WHERE typ.masterId in ('10000000','20100000') and typ.typeCode = 'G' and typ.form140 = true "
                 . " and typ.bgPeriodId = :bgPeriodId";
         $param1 = array("bgPeriodId" => $year);
         $list1 = $this->datacontext->getObject($sql1, $param1);
@@ -72,7 +72,7 @@ class Draft140Service extends CServiceBase implements IDraft140Service {
         foreach ($list1 as $key1 => $value1) {
             $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
                     . " FROM " . $this->ent . "\\BudgetType typ "
-                    . " WHERE typ.masterId = :masterId "
+                    . " WHERE typ.masterId = :masterId and typ.form140 = true "
                     . " and typ.bgPeriodId = :bgPeriodId";
             $param2 = array(
                 "masterId" => $list1[$key1]["id"],
