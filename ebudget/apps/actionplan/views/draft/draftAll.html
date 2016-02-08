@@ -31,6 +31,16 @@
 
     <div class="container">
         <div class="row">
+            <div class="col-sm-12">
+                <label class="control-label col-sm-2">แผนยุทธศาสตร์ : </label>
+                <div class="col-sm-6">
+                    <select class="form-control" id="selectType">
+
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding-top: 10px;">
             <div id="deptList">
                 <table class="table table-bordered table-striped">
                     <thead>
@@ -58,16 +68,26 @@
 
     $(function () {
         listsDepartment();
-
+        listsType();
         $("button.back").unbind("click").click(function () {
             toggleShow("home");
         })
     });
+    function listsType() {
+        var dataType = callAjax("{{_context_path}}/api/actionplan/draft/listsType", "get", {}, "json")["lists"];
+        if (typeof dataType !== "undefined" && dataType !== null) {
+            var htmlType = "";
+            $.each(dataType, function (k, v) {
+                htmlType += "<option value='" + v.typeId + "'>" + v.typeName + "</option>";
+            });
+            $("#selectType").html(htmlType);
+        }
+    }
 
-    function listsDepartment(){
+    function listsDepartment() {
         $("#deptList table tbody").html('<tr><td colspan="4" class="text-center">Loading...</td></tr>');
 
-        setTimeout(function() {
+        setTimeout(function () {
             var datas = callAjax("{{_context_path}}/api/actionplan/draft/listsDept", "post", {}, "json");
             if (typeof datas !== "undefined" && datas !== null) {
                 var html = '';
@@ -76,31 +96,32 @@
                     html += '<tr>'
                             + '<td class="bg-default"></td>'
                             + '<td colspan="3" class="bg-default text-dark text-bold" style="vertical-align: middle;">' + val["actName"] + '</td>'
-                        + '</tr>';
+                            + '</tr>';
                     $.each(val["dept"], function (key2, val2) {
                         html += '<tr>'
                                 + '<td class="text-center">' + (++count) + '</td>'
                                 + '<td>' + val2["departmentName"] + '</td>'
                                 + '<td class="text-center">' + (val2["status"] == "Y" ? "<span class='text-success'>อนุมัติแล้ว" : "<span class='text-danger'>ยังไม่อนุมัติ") + '</span></td>'
                                 + '<td class="text-center">'
-                                    + (val2["status"] == "Y" ? "" : '<button class="btn btn-primary btn-sm btnGroup" data-deptId="' + val2["departmentId"] + '"><i class="fa fa-pencil"></i> จัดทำ</button>')+'&nbsp;&nbsp;'
-                                    + '<button type="button" class="btn btn-success btn-sm excel" data-id="'+val2["departmentId"]+'"><i class="fa fa-file-excel-o"></i> เอกสาร</button>'
+                                + (val2["status"] == "Y" ? "" : '<button class="btn btn-primary btn-sm btnGroup" data-deptId="' + val2["departmentId"] + '"><i class="fa fa-pencil"></i> จัดทำ</button>') + '&nbsp;&nbsp;'
+                                + '<button type="button" class="btn btn-success btn-sm excel" data-id="' + val2["departmentId"] + '"><i class="fa fa-file-excel-o"></i> เอกสาร</button>'
                                 + '</td>'
-                            + '</tr>';
+                                + '</tr>';
                     });
                 });
 
                 $("#deptList table tbody").html(html);
 
-                $("button.excel").unbind().click(function(){
+                $("button.excel").unbind().click(function () {
                     var id = $(this).attr("data-id");
 
-                    window.open("{{_context_path}}/api/actionplan/draft/export?departmentId="+id);
+                    window.open("{{_context_path}}/api/actionplan/draft/export?departmentId=" + id);
                 });
 
                 $("button.btnGroup").click(function () {
                     var deptId = $(this).attr("data-deptId");
-                    window.location = "{{_context_path}}/api/actionplan/view/draft/" + deptId;
+                    var typeId = $("#selectType").val();
+                    window.location = "{{_context_path}}/api/actionplan/view/draft/" + deptId + "/" + typeId;
                 });
             }
         }, 0);

@@ -26,26 +26,8 @@ class ActionPlanDetail extends EntityBase {
      */
     public $draftId;
 
-    /** @Column(type="string",length=255, name="Value1") */
-    public $value1;
-
-    /** @Column(type="string",length=255, name="Value2") */
-    public $value2;
-
-    /** @Column(type="string",length=255, name="Value3") */
-    public $value3;
-
-    /** @Column(type="string",length=255, name="Value4") */
-    public $value4;
-
-    /** @Column(type="string",length=255, name="Value5") */
-    public $value5;
-
-    /** @Column(type="string",length=255, name="Value6") */
-    public $value6;
-
-    /** @Column(type="string",length=255, name="Value7") */
-    public $value7;
+    /** @Column(type="string",length=255, name="Unit") */
+    public $unit;
 
     /** @Column(type="string",length=255, name="Remark") */
     public $remark;
@@ -72,32 +54,8 @@ class ActionPlanDetail extends EntityBase {
         return $this->draftId;
     }
 
-    function getValue1() {
-        return $this->value1;
-    }
-
-    function getValue2() {
-        return $this->value2;
-    }
-
-    function getValue3() {
-        return $this->value3;
-    }
-
-    function getValue4() {
-        return $this->value4;
-    }
-
-    function getValue5() {
-        return $this->value5;
-    }
-
-    function getValue6() {
-        return $this->value6;
-    }
-
-    function getValue7() {
-        return $this->value7;
+    function getUnit() {
+        return $this->unit;
     }
 
     function getRemark() {
@@ -128,32 +86,8 @@ class ActionPlanDetail extends EntityBase {
         $this->draftId = $draftId;
     }
 
-    function setValue1($value1) {
-        $this->value1 = $value1;
-    }
-
-    function setValue2($value2) {
-        $this->value2 = $value2;
-    }
-
-    function setValue3($value3) {
-        $this->value3 = $value3;
-    }
-
-    function setValue4($value4) {
-        $this->value4 = $value4;
-    }
-
-    function setValue5($value5) {
-        $this->value5 = $value5;
-    }
-
-    function setValue6($value6) {
-        $this->value6 = $value6;
-    }
-
-    function setValue7($value7) {
-        $this->value7 = $value7;
+    function setUnit($unit) {
+        $this->unit = $unit;
     }
 
     function setRemark($remark) {

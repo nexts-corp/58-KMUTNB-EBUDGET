@@ -26,11 +26,19 @@ interface IDraftService {
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
     public function listsAll($departmentId,$typeId);
+    
+    /**
+     * @name listsType
+     * @uri /listsType
+     * @return String[] lists Description
+     * @description ลิสต์แผนยุทธศาสตร์
+     */
+    public function listsType();
 
     /**
      * @name insert
      * @uri /insert
-     * @param apps\common\entity\AffirmativeDraft draft
+     * @param string draft
      * @return String[] insert Description
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */

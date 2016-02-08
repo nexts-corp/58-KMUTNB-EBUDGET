@@ -27,14 +27,26 @@ class ActionPlanDraft extends EntityBase {
     /** @Column(type="integer",length=11, name="ActionPlanStrategyId") */
     public $strategyId;
 
-    /** @Column(type="integer",length=11, name="ActionPlanStrategySeq") */
-    public $strategySeq;
-
     /** @Column(type="integer",length=11, name="ActionPlanProjectSeq") */
     public $projectSeq;
 
     /** @Column(type="string",length=255, name="ActionPlanProjectName") */
     public $projectName;
+
+    /** @Column(type="string",length=255, name="TimeDuration") */
+    public $timeDuration;
+
+    /** @Column(type="string",length=255, name="Budget") */
+    public $budget;
+
+    /** @Column(type="string",length=255, name="Revenue") */
+    public $revenue;
+
+    /** @Column(type="string",length=255, name="Other") */
+    public $other;
+
+    /** @Column(type="string",length=255, name="NoBudget") */
+    public $noBudget;
     public $detail;
 
     /** @Column(type="string",length=255, name="Remark") */
@@ -66,16 +78,32 @@ class ActionPlanDraft extends EntityBase {
         return $this->strategyId;
     }
 
-    function getStrategySeq() {
-        return $this->strategySeq;
-    }
-
     function getProjectSeq() {
         return $this->projectSeq;
     }
 
     function getProjectName() {
         return $this->projectName;
+    }
+
+    function getTimeDuration() {
+        return $this->timeDuration;
+    }
+
+    function getBudget() {
+        return $this->budget;
+    }
+
+    function getRevenue() {
+        return $this->revenue;
+    }
+
+    function getOther() {
+        return $this->other;
+    }
+
+    function getNoBudget() {
+        return $this->noBudget;
     }
 
     function getDetail() {
@@ -114,16 +142,32 @@ class ActionPlanDraft extends EntityBase {
         $this->strategyId = $strategyId;
     }
 
-    function setStrategySeq($strategySeq) {
-        $this->strategySeq = $strategySeq;
-    }
-
     function setProjectSeq($projectSeq) {
         $this->projectSeq = $projectSeq;
     }
 
     function setProjectName($projectName) {
         $this->projectName = $projectName;
+    }
+
+    function setTimeDuration($timeDuration) {
+        $this->timeDuration = $timeDuration;
+    }
+
+    function setBudget($budget) {
+        $this->budget = $budget;
+    }
+
+    function setRevenue($revenue) {
+        $this->revenue = $revenue;
+    }
+
+    function setOther($other) {
+        $this->other = $other;
+    }
+
+    function setNoBudget($noBudget) {
+        $this->noBudget = $noBudget;
     }
 
     function setDetail($detail) {

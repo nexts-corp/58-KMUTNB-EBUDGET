@@ -48,77 +48,122 @@
                 </div>
             </div>
 
-            <div id="panelForm" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div id="dialogDraft" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form id="form" onsubmit="return false;">
+                        <form id="formDraft" onsubmit="return false;">
 
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title" id="myModalLabel">ตัวชี้วัดคำรับรองการปฏิบัติงาน</h4>
+                                <h4 class="modal-title" id="myModalLabel">โครงการ/กิจกรรม</h4>
                             </div>
                             <div class="modal-body">
+
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label text-right" for="strategyId">ตัวชี้วัด</label>
+                                    <label class="col-md-4 control-label text-right req" for="projectSeq">ลำดับที่</label>
                                     <div class="col-md-8">
-                                        <select class="form-control input-sm" name="strategyId" id="strategyId" data-lock="Y"></select>
+                                        <input type="text" class="form-control input-sm" name="projectSeq" id="projectSeq" data-lock="Y" required>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label text-right req" for="strategySeq">ลำดับที่</label>
+                                    <label class="col-md-4 control-label text-right req" for="projectName">โครงการ/กิจกรรม/ตัวชี้วัด</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control input-sm" name="strategySeq" id="strategySeq" data-lock="Y" required>
+                                        <textarea class="form-control input-sm" name="projectName" id="projectName" required></textarea>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label text-right req" for="strategyName">ตัวชี้วัดคำรับรอง</label>
+                                    <label class="col-md-4 control-label text-right req" for="timeDuration">ระยะเวลาดำเนินการ</label>
                                     <div class="col-md-8">
-                                        <textarea class="form-control input-sm" name="strategyName" id="strategyName" required></textarea>
+                                        <input type="text" class="form-control input-sm" name="timeDuration" id="timeDuration" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right" for="budget">งบประมาณแผ่นดิน</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-sm" name="budget" id="budget" >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right" for="revenue">งบประมาณเงินรายได้</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-sm" name="revenue" id="revenue" >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right" for="other">งบประมาณแหล่งอื่น</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-sm" name="other" id="other" >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right" for="noBudget">ไม่ใช้งบประมาณ</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-sm" name="noBudget" id="noBudget">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right" for="remark">หมายเหตุ</label>
+                                    <div class="col-md-8">
+                                        <textarea class="form-control input-sm" name="remark" id="remark"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right" for="isActive">สถานะ</label>
+                                    <div class="col-md-8">
+                                        <select class="form-control input-sm" name="isActive" id="isActive">
+                                            <option value="Y">ใช้งาน</option>
+                                            <option value="N">ไม่ใช้งาน</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="loadingForm" class="col-md-12 text-center"></div>
+                                <div class="modal-footer">
+                                    <ul class="nav nav-pills sort-source pull-right" data-option-key="filter">
+                                        <li data-option-value="*" class="">
+                                            <button class="btn btn-success saveDraft"><i class="fa fa-save"></i> บันทึก</button>
+                                        </li>
+                                        <li data-option-value="" class="padding-left">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="dialogDetail" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form id="formDetail" onsubmit="return false;">
+
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">รายละเอียดโครงการ/กิจกรรม <span id='titleDetail'></span></h4>
+                            </div>
+                            <div class="modal-body">
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label text-right req" for="detailSeq">ลำดับที่</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control input-sm" name="detailSeq" id="detailSeq" data-lock="Y" required>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label text-right req" for="unitId">หน่วยนับ</label>
+                                    <label class="col-md-4 control-label text-right req" for="detailName">โครงการ/กิจกรรม/ตัวชี้วัด</label>
                                     <div class="col-md-8">
-                                        <select  class="form-control input-sm" name="unitId" id="unitId" data-lock="Y" required></select>
+                                        <textarea class="form-control input-sm" name="detailName" id="detailName" required></textarea>
                                     </div>
                                 </div>
+
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label text-right req" for="strategyGoal">ค่าเป้าหมายตัวชี้วัด</label>
+                                    <label class="col-md-4 control-label text-right req" for="unit">ค่าเป้าหมายตามตัวชี้วัด</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control input-sm" name="strategyGoal" id="strategyGoal" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label text-right req" for="score1">คะแนน1</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control input-sm" name="score1" id="score1" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label text-right req" for="score2">คะแนน2</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control input-sm" name="score2" id="score2" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label text-right req" for="score3">คะแนน3</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control input-sm" name="score3" id="score3" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label text-right req" for="score4">คะแนน4</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control input-sm" name="score4" id="score4" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label text-right req" for="score5">คะแนน5</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control input-sm" name="score5" id="score5" required>
+                                        <input type="text" class="form-control input-sm" name="unit" id="unit" required>
                                     </div>
                                 </div>
 
@@ -141,7 +186,7 @@
                                 <div class="modal-footer">
                                     <ul class="nav nav-pills sort-source pull-right" data-option-key="filter">
                                         <li data-option-value="*" class="">
-                                            <button class="btn btn-success save"><i class="fa fa-save"></i> บันทึก</button>
+                                            <button class="btn btn-success saveDetail"><i class="fa fa-save"></i> บันทึก</button>
                                         </li>
                                         <li data-option-value="" class="padding-left">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
@@ -209,9 +254,11 @@
 <script type="text/javascript">
     var findNode = {};
     var listArr = {};
+    var listDetailArr = {};
     var unit = {};
     var deptId = '{{#department}}{{departmentId}}{{/department}}';
     var typeId = '{{typeId}}';
+    var periodCode = '{{year}}';
     $(function () {
         centerForm();
         $("#btnApprove").click(function () {
@@ -238,25 +285,26 @@
                     + '<table id="tableall" class="table table-hover table-bordered">'
                     + '<thead>'
                     + '<tr>'
-                    + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">ลำดับ</th>'
-                    + '<th class="text-center col-md-4" style="vertical-align: middle;" rowspan="2">ตัวชี้วัดคำรับรอง ปี {{year}}</th>'
-                    + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">หน่วยนับ</th>'
-                    + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">ค่าเป้าหมายตัวชี้วัด</th>'
-                    + '<th class="text-center col-md-3" style="vertical-align: middle;" colspan="5">เกณฑ์การให้คะแนนผลลัพธ์ของตัวชี้วัด (ระดับคะแนน)</th>'
-                    + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">หมายเหตุ</th>'
-                    + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">จัดการ</th>'
+                    + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="3">ลำดับ</th>'
+                    + '<th class="text-center col-md-4" style="vertical-align: middle;" rowspan="3">ประเด็นยุทธศาสตร์/เป้าประสงค์/กลยุทธ์/โครงการ/กิจกรรม/ตัวชี้วัด</th>'
+                    + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="3">ค่าเป้าหมายตามตัวชี้วัด โครงการ/กิจกรรม</th>'
+                    + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="3">ระยะเวลาดำเนินการ</th>'
+                    + '<th class="text-center col-md-4" style="vertical-align: middle;" colspan="4">แหล่งเงินงบประมาณ (บาท)</th>'
+                    + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="3">เครื่องมือ</th>'
                     + '</tr>'
                     + '<tr>'
-                    + '<th class="text-center" style="vertical-align: middle;">คะแนน 1</th>'
-                    + '<th class="text-center" style="vertical-align: middle;">คะแนน 2</th>'
-                    + '<th class="text-center" style="vertical-align: middle;">คะแนน 3</th>'
-                    + '<th class="text-center" style="vertical-align: middle;">คะแนน 4</th>'
-                    + '<th class="text-center" style="vertical-align: middle;">คะแนน 5</th>'
+                    + '<th class="text-center" style="vertical-align: middle;" colspan="2">มหาวิทยาลัยจัดสรร</th>'
+                    + '<th class="text-center" style="vertical-align: middle;" rowspan="2">งบประมาณแหล่งอื่น</th>'
+                    + '<th class="text-center" style="vertical-align: middle;" rowspan="2">ไม่ใช้งบประมาณ</th>'
+                    + '</tr>'
+                    + '<tr>'
+                    + '<th class="text-center" style="vertical-align: middle;">งปม.แผ่นดิน</th>'
+                    + '<th class="text-center" style="vertical-align: middle;">งปม.เงินรายได้</th>'
                     + '</tr>'
                     + '</thead>'
                     + '<tbody>'
                     + '<tr>'
-                    + '<td colspan="11" class="text-center">-</td>'
+                    + '<td colspan="9" class="text-center">-</td>'
                     + '</tr>'
                     + '</tbody>'
                     + '</table>'
@@ -267,63 +315,71 @@
 
                     contentArr[value1["typeSeq"]] += '<tr data-tt-id="issue' + value2["issueId"] + '" data-seq="' + value2["issueSeq"] + '">'
                             + '<td class="text-center"></td>'
-                            + '<td colspan="10">'
+                            + '<td colspan="8">'
                             + '<span class="text-bold" style="text-decoration: underline;">ประเด็นยุทธศาสตร์ที่ ' + value2['issueSeq'] + ' ' + value2["issueName"] + '</span>'
                             + '</td>'
                             + '</tr>';
                     $.each(value2["target"], function (key3, value3) {
                         contentArr[value1["typeSeq"]] += '<tr data-tt-id="target' + value3["targetId"] + '" data-tt-parent-id="issue' + value2["issueId"] + '" data-seq="' + value3["targetSeq"] + '" >'
                                 + '<td class="text-center"></td>'
-                                + '<td colspan="10">'
+                                + '<td colspan="8">'
                                 + '<span class="text-bold">เป้าประสงค์ที่ ' + value2["issueSeq"] + '.' + value3["targetSeq"] + ' ' + value3["targetName"] + '</span>'
                                 + '</td>'
                                 + '</tr>';
                         $.each(value3["strategy"], function (key4, value4) {
                             contentArr[value1["typeSeq"]] += '<tr data-tt-id="strategy' + value4["strategyId"] + '" data-tt-parent-id="target' + value3["targetId"] + '" data-seq="' + value4["strategySeq"] + '" >'
                                     + '<td class="text-center"></td>'
-                                    + '<td colspan="9">'
+                                    + '<td colspan="7">'
                                     + '<span class="text-bold">กลยุทธ์ที่ ' + value3["targetSeq"] + '.' + value4["strategySeq"] + ' ' + value4["strategyName"] + '</span>'
                                     + '</td>'
                                     + '<td class="text-center">'
-                                    + '<button class="btn btn-sm btn-success add" data-pid="' + value4["strategyId"] + '" data-pname="targetId"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
+                                    + '<button class="btn btn-sm btn-success add" data-pid="' + value4["strategyId"] + '" data-pname="strategyId"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
                                     + '</td>'
                                     + '</tr>';
                             if (typeof value4["draft"] !== "undefined" && value4["draft"] !== null) {
                                 $.each(value4["draft"], function (key5, value5) {
-
-                                    contentArr[value1["typeSeq"]] += '<tr data-tt-id="draft' + value5["draftId"] + '" data-tt-parent-id="target' + value4["strategyId"] + '"  data-seq="' + value5["kpiSeq"] + '">'
+                                    contentArr[value1["typeSeq"]] += '<tr data-tt-id="draft' + value5["draftId"] + '" data-tt-parent-id="strategy' + value4["strategyId"] + '" data-seq="' + value5["projectSeq"] + '" >'
                                             + '<td class="text-center"></td>'
-                                            + (value5["isActive"] == "Y" ? '<td>' : '<td class="text-primary">') + value3["issueSeq"] + '.' + value4["targetSeq"] + '.' + value5["kpiSeq"] + ' ' + text2html(value5["kpiName"]) + '</td>'
-                                            + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + value5["unitName"] + '</td>'
-                                            + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value5["kpiGoal"] ? value5["kpiGoal"] : "") + '</td>'
-                                            + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value5["score1"] ? value5["score1"] : "") + '</td>'
-                                            + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value5["score2"] ? value5["score2"] : "") + '</td>'
-                                            + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value5["score3"] ? value5["score3"] : "") + '</td>'
-                                            + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value5["score4"] ? value5["score4"] : "") + '</td>'
-                                            + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value5["score5"] ? value5["score5"] : "") + '</td>'
-                                            + '<td class="text-center">' + (value5["remark"] ? value5["remark"] : "") + '</td>'
+                                            + '<td>'
+                                            + '<span class="text-bold">' + value5["projectSeq"] + ". " + value5["projectName"] + '</span>'
+                                            + '</td>'
+                                            + '<td></td>'
+                                            + '<td class="text-center">' + (value5["timeDuration"] ? value5["timeDuration"] : "") + '</td>'
+                                            + '<td class="text-center">' + (value5["budget"] ? value5["budget"] : "") + '</td>'
+                                            + '<td class="text-center">' + (value5["revenue"] ? value5["revenue"] : "") + '</td>'
+                                            + '<td class="text-center">' + (value5["other"] ? value5["other"] : "") + '</td>'
+                                            + '<td class="text-center">' + (value5["noBudget"] ? value5["noBudget"] : "") + '</td>'
                                             + '<td class="text-center">'
-                                            + '<div class="btn-group">'
-                                            + (value5["isApprove"] == "N" ?
-                                                    (
-                                                            value5["isCenter"] == "Y" ?
-                                                            '<button type="button" class="btn btn-sm btn-warning edit" data-edit="N" data-pid="' + value4["targetId"] + '" data-id = "' + value5["draftId"] + '" > <i class="fa fa-pencil"></i>แก้ไข</button>'
-                                                            :
-                                                            '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + value4["targetId"] + '" data-id="' + value5["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                                            ) : ""
-                                                    )
-                                            + (value5["isApprove"] == "N" ?
-                                                    (
-                                                            value5["isCenter"] == "Y" ?
-                                                            ""
-                                                            :
-                                                            '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + value4["targetId"] + '" data-id="' + value5["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>'
-                                                            ) : ""
-                                                    )
-                                            + '</div>'
+                                            + '<button class="btn btn-sm btn-success add" data-pid="' + value5["draftId"] + '" data-pname="draftId"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
                                             + '</td>'
                                             + '</tr>';
-
+                                    if (typeof value5["detail"] !== "undefined" && value5["detail"] !== null) {
+                                        $.each(value5["detail"], function (key6, value6) {
+                                            contentArr[value1["typeSeq"]] += '<tr data-tt-id="detail' + value6["detailId"] + '" data-tt-parent-id="draft' + value5["draftId"] + '"  data-seq="' + value6["detailSeq"] + '">'
+                                                    + '<td class="text-center"></td>'
+                                                    + (value5["isActive"] == "Y" ? '<td>' : '<td class="text-primary">') + '- ' + text2html(value6["detailName"]) + '</td>'
+                                                    + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value6["unit"] ? value6["unit"] : "") + '</td>'
+                                                    + '<td class="text-center"></td>'
+                                                    + '<td class="text-center"></td>'
+                                                    + '<td class="text-center"></td>'
+                                                    + '<td class="text-center"></td>'
+                                                    + '<td class="text-center"></td>'
+                                                    + '<td>'
+                                                    + '<div class="btn-group">'
+                                                    + //(value6["isApprove"] == "N" ?
+                                                    '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + value5["draftId"] + '" data-id="' + value6["detailId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                                    //   : ""
+                                                    //    )
+                                                    + //(value5["isApprove"] == "N" ?
+                                                    '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + value5["draftId"] + '" data-id="' + value6["detailId"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                                                    //  : ""
+                                                    //   )
+                                                    + '</div>'
+                                                    + '</td>'
+                                                    + '</tr>';
+                                            listDetailArr[value6["detailId"]] = value6;
+                                        });
+                                    }
                                     listArr[value5["draftId"]] = value5;
                                 });
                             }
@@ -351,31 +407,38 @@
                 $("button.add").unbind().click(function () {
                     var pId = $(this).attr("data-pid");
                     var pName = $(this).attr("data-pname");
+                    var formName;
+                    if (pName == "strategyId") {
+                        formName = "Draft";
+                    } else {
+                        formName = "Detail";
+                    }
                     // reset form for new insert
+
                     $("#loadingForm").html('');
-                    $("#form").trigger('reset');
-                    $("#form [data-lock=Y]").each(function () {
+                    $("#form" + formName).trigger('reset');
+                    $("#form" + formName + " [data-lock=Y]").each(function () {
                         $(this).attr("disabled", false);
                     });
-                    $("#panelForm").modal("show");
-                    listsKpi(pId);
-                    $("button.save").unbind().click(function () {
+                    $("#dialog" + formName).modal("show");
+                    //  listsKpi(pId);
+                    $("button.save" + formName).unbind().click(function () {
                         var isValid = true;
-                        $('#form input[required]').each(function () {
+                        $('#form' + formName + ' input[required]').each(function () {
                             if ($(this).val() == "")
                                 isValid = false;
                         });
                         if (isValid) {
                             var fdata = dataObject(pId, pName, null);
                             //console.log(fdata);
-                            centerInsert(fdata);
+                            draftInsert(fdata);
 
                         } else {
                             alert("กรุณากรอกข้อมูลให้ครบ");
                         }
                     });
                 });
-//
+
                 centerAction();
             });
         } else {
@@ -393,7 +456,6 @@
             $("#loadingForm").html('');
             $("#form").trigger('reset');
             $("#panelForm").modal("show");
-            listsKpi(pId);
             //   console.log(listArr[draftId]);
             $("#form input[type=text], #form textarea, #form select").each(function () {
                 var fid = $(this).attr("id");
@@ -438,91 +500,94 @@
         });
     }
 
-    function centerInsert(fdata) {
+    function draftInsert(fdata) {
         $("#loadingForm").html("Loading...");
         setTimeout(function () {
             var dataJSON = JSON.stringify({draft: fdata});
             var dataJSONEN = encodeURIComponent(dataJSON);
             var datas = callAjax("{{_context_path}}/api/actionplan/draft/insert", "post", dataJSONEN, "json");
             var data = datas["insert"];
-
+            var type = datas["type"];
             if (typeof data !== "undefined" && data !== null) {
-                if (data != false) {
+                if (data != false && type == "draft") {
+
                     $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
                     listArr[data["draftId"]] = data;
-                    var mainSeq = data["mainSeq"];
+                    var typeSeq = data["typeSeq"];
                     var input = "";
                     var node, node2;
-                    if (data["targetId"] == 0) {
-                        input = '<tr data-tt-id="draft' + data["draftId"] + '" data-tt-parent-id="type' + data["typeId"] + '"  data-seq="' + data["strategySeq"] + '" >'
-                                + '<td class="text-center"></td>'
-                                + (data["isActive"] == "Y" ? '<td>' : '<td class="text-primary">') + data["strategySeq"] + '.' + data["strategyName"] + '</td>'
-                                + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + data["unitName"] + '</td>'
-                                + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["strategyGoal"] ? data["strategyGoal"] : "") + '</td>'
-                                + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["score1"] ? data["score1"] : "") + '</td>'
-                                + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["score2"] ? data["score2"] : "") + '</td>'
-                                + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["score3"] ? data["score3"] : "") + '</td>'
-                                + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["score4"] ? data["score4"] : "") + '</td>'
-                                + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["score5"] ? data["score5"] : "") + '</td>'
-                                + '<td class="text-center">' + (data["remark"] ? data["remark"] : "") + '</td>'
-                                + '<td class="text-center">'
-                                + '<div class="btn-group">'
-                                + (
-                                        data["isCenter"] == "Y" ?
-                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="N" data-pid="' + data["typeId"] + '" data-id = "' + data["draftId"] + '" > <i class="fa fa-pencil"></i>แก้ไข</button>'
-                                        :
-                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + data["typeId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                        )
-                                + (data["isCenter"] == "Y" ? "" : '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["typeId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>')
-                                + '</div>'
-                                + '</td>'
-                                + '</tr>';
-                        node = $("#tableall").treetable("node", "type" + data["typeId"]);
-                        node2 = $("#table" + mainSeq).treetable("node", "type" + data["typeId"]);
-                    } else {
-                        input = '<tr data-tt-id="draft' + data["draftId"] + '" data-tt-parent-id="target' + data["targetId"] + '"  data-seq="' + data["strategySeq"] + '">'
-                                + '<td class="text-center"></td>'
-                                + (data["isActive"] == "Y" ? '<td style="padding-left: 20px;">' : '<td style="padding-left: 20px;" class="text-primary">') + data["issueSeq"] + '.' + data["targetSeq"] + '.' + data["strategySeq"] + ' ' + data["strategyName"] + '</td>'
-                                + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + data["unitName"] + '</td>'
-                                + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["strategyGoal"] ? data["strategyGoal"] : "") + '</td>'
-                                + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["score1"] ? data["score1"] : "") + '</td>'
-                                + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["score2"] ? data["score2"] : "") + '</td>'
-                                + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["score3"] ? data["score3"] : "") + '</td>'
-                                + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["score4"] ? data["score4"] : "") + '</td>'
-                                + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["score5"] ? data["score5"] : "") + '</td>'
-                                + '<td class="text-center">' + (data["remark"] ? data["remark"] : "") + '</td>'
-                                + '<td class="text-center">'
-                                + '<div class="btn-group">'
-                                + (
-                                        data["isCenter"] == "Y" ?
-                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="N" data-pid="' + data["targetId"] + '" data-id = "' + data["draftId"] + '" > <i class="fa fa-pencil"></i>แก้ไข</button>'
-                                        :
-                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + data["targetId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                        )
-                                + (data["isCenter"] == "Y" ? "" : '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["targetId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>')
-                                + '</div>'
-                                + '</td>'
-                                + '</tr>';
-                        node = $("#tableall").treetable("node", "target" + data["targetId"]);
-                        node2 = $("#table" + mainSeq).treetable("node", "target" + data["targetId"]);
-                    }
+                    input += '<tr data-tt-id="draft' + data["draftId"] + '" data-tt-parent-id="strategy' + data["strategyId"] + '" data-seq="' + data["projectSeq"] + '" >'
+                            + '<td class="text-center"></td>'
+                            + '<td>'
+                            + '<span class="text-bold">' + data["projectSeq"] + ". " + data["projectName"] + '</span>'
+                            + '</td>'
+                            + '<td></td>'
+                            + '<td class="text-center">' + (data["timeDuration"] ? data["timeDuration"] : "") + '</td>'
+                            + '<td class="text-center">' + (data["budget"] ? data["budget"] : "") + '</td>'
+                            + '<td class="text-center">' + (data["revenue"] ? data["revenue"] : "") + '</td>'
+                            + '<td class="text-center">' + (data["other"] ? data["other"] : "") + '</td>'
+                            + '<td class="text-center">' + (data["noBudget"] ? data["noBudget"] : "") + '</td>'
+                            + '<td class="text-center">'
+                            + '<button class="btn btn-sm btn-success add" data-pid="' + data["draftId"] + '" data-pname="draftId"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
+                            + '</td>'
+                            + '</tr>';
+                    node = $("#tableall").treetable("node", "strategy" + data["strategyId"]);
+                    //     node2 = $("#table" + typeSeq).treetable("node", "type" + data["typeId"]);
+
                     $("#tableall").treetable("loadBranch", node, input);
-                    $("#table" + mainSeq).treetable("loadBranch", node2, input);
+                    // $("#table" + typeSeq).treetable("loadBranch", node2, input);
                     $("#tableall").treetable("sortBranch", node);
-                    $("#table" + mainSeq).treetable("sortBranch", node2);
-                    $("#panelForm").modal("hide");
-                    centerAction();
+                    // $("#table" + typeSeq).treetable("sortBranch", node2);
+                    $("#dialogDraft").modal("hide");
+                    // centerAction();
+                }
+                else if (data != false && type == "detail") {
+                    $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
+                    listArr[data["detailId"]] = data;
+                    var typeSeq = data["typeSeq"];
+                    var input = "";
+                    var node, node2;
+                    input += '<tr data-tt-id="detail' + data["detailId"] + '" data-tt-parent-id="draft' + data["draftId"] + '"  data-seq="' + data["detailSeq"] + '">'
+                            + '<td class="text-center"></td>'
+                            + (data["isActive"] == "Y" ? '<td>' : '<td class="text-primary">') + '- ' + text2html(data["detailName"]) + '</td>'
+                            + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["unit"] ? data["unit"] : "") + '</td>'
+                            + '<td class="text-center"></td>'
+                            + '<td class="text-center"></td>'
+                            + '<td class="text-center"></td>'
+                            + '<td class="text-center"></td>'
+                            + '<td class="text-center"></td>'
+                            + '<td>'
+                            + '<div class="btn-group">'
+                            + //(data["isApprove"] == "N" ?
+                            '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + data["draftId"] + '" data-id="' + data["detailId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                            //   : ""
+                            //    )
+                            + //(data["isApprove"] == "N" ?
+                            '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["draftId"] + '" data-id="' + data["detailId"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                            //  : ""
+                            //   )
+                            + '</div>'
+                            + '</td>'
+                            + '</tr>';
+                    node = $("#tableall").treetable("node", "draft" + data["draftId"]);
+                    //     node2 = $("#table" + typeSeq).treetable("node", "type" + data["typeId"]);
+
+                    $("#tableall").treetable("loadBranch", node, input);
+                    // $("#table" + typeSeq).treetable("loadBranch", node2, input);
+                    $("#tableall").treetable("sortBranch", node);
+                    // $("#table" + typeSeq).treetable("sortBranch", node2);
+                    $("#dialogDetail").modal("hide");
                 }
                 else {
                     $("#loadingForm").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
                 }
             }
-        }, 500);
+        }
+        , 500);
     }
 
     function centerEdit(fdata) {
         $("#loadingForm").html("Loading...");
-
         setTimeout(function () {
             var dataJSON = JSON.stringify({draft: fdata});
             var dataJSONEN = encodeURIComponent(dataJSON);
@@ -532,8 +597,8 @@
                 if (data != false) {
                     $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
                     listArr[data["draftId"]] = data;
-                    // var mainSeq = $("tr[data-tt-id=type" + data["typeId"] + "]").attr("data-tt-parent-id").substr(4);
-                    var mainSeq = data["mainSeq"];
+                    // var typeSeq = $("tr[data-tt-id=type" + data["typeId"] + "]").attr("data-tt-parent-id").substr(4);
+                    var typeSeq = data["typeSeq"];
                     var input = "";
                     var node, node2;
                     if (data["targetId"] == 0) {
@@ -561,7 +626,7 @@
                                 + '</td>'
                                 + '</tr>';
                         node = $("#tableall").treetable("node", "type" + data["typeId"]);
-                        node2 = $("#table" + mainSeq).treetable("node", "type" + data["typeId"]);
+                        node2 = $("#table" + typeSeq).treetable("node", "type" + data["typeId"]);
                     } else {
                         input = '<tr data-tt-id="draft' + data["draftId"] + '" data-tt-parent-id="target' + data["targetId"] + '"  data-seq="' + data["strategySeq"] + '">'
                                 + (data["isActive"] == "Y" ? '<td style="padding-left: 20px;">' : '<td style="padding-left: 20px;" class="text-primary">') + data["issueSeq"] + '.' + data["targetSeq"] + '.' + data["strategySeq"] + ' ' + data["strategyName"] + '</td>'
@@ -586,16 +651,15 @@
                                 + '</td>'
                                 + '</tr>';
                         node = $("#tableall").treetable("node", "target" + data["targetId"]);
-                        node2 = $("#table" + mainSeq).treetable("node", "target" + data["targetId"]);
+                        node2 = $("#table" + typeSeq).treetable("node", "target" + data["targetId"]);
                     }
 
                     $("#tableall").treetable("removeNode", "draft" + data["draftId"]);
-                    $("#table" + mainSeq).treetable("removeNode", "draft" + data["draftId"]);
+                    $("#table" + typeSeq).treetable("removeNode", "draft" + data["draftId"]);
                     $("#tableall").treetable("loadBranch", node, input);
-                    $("#table" + mainSeq).treetable("loadBranch", node2, input);
+                    $("#table" + typeSeq).treetable("loadBranch", node2, input);
                     $("#tableall").treetable("sortBranch", node);
-                    $("#table" + mainSeq).treetable("sortBranch", node2);
-
+                    $("#table" + typeSeq).treetable("sortBranch", node2);
                     $("#panelForm").modal("hide");
                     centerAction();
                 }
@@ -613,75 +677,33 @@
         if (typeof datas !== "undefined" && datas !== null) {
             if (datas["delete"] == true) {
                 $("#tableall").treetable("removeNode", "draft" + draftId);
-
-                var mainSeq = listArr[draftId]["mainSeq"];
-                $("#table" + mainSeq).treetable("removeNode", "draft" + draftId);
-
+                var typeSeq = listArr[draftId]["typeSeq"];
+                $("#table" + typeSeq).treetable("removeNode", "draft" + draftId);
                 $("#panelDeleteForm").modal("hide");
             }
         }
     }
 
-    function listsKpi(targetId) {
-        var datas = callAjax("{{_context_path}}/api/actionplan/center/listsKpi", "post", {targetId: targetId}, "json");
-        if (typeof datas !== "undefined" && datas !== null) {
-            var html = '<option value="0">เลือกตัวชี้วัด</option>';
-            $.each(datas["lists"], function (key, value) {
-                html += '<option value="' + value["strategyId"] + '">' + value["strategyName"] + '</option>'
-            });
-            $("#strategyId").html(html);
-            autoKpiName();
-            listsUnit();
-        }
-    }
-    function autoKpiName() {
-        $("#strategyId").change(function () {
-            if (this.value != 0) {
-                var text = $("#strategyId option:selected").text();
-                $("#strategyName").val(text);
-            } else {
-                $("#strategyName").val("");
-            }
-        });
-    }
-    function listsUnit() {
-        var datas = callAjax("{{_context_path}}/api/actionplan/center/listsUnit", "post", {}, "json");
-        if (typeof datas["lists"] !== "undefined" && datas["lists"] !== null) {
-            //unit = datas["lists"];
-            var html;
-            $.each(datas["lists"], function (key, value) {
-                html += '<option value="' + value["unitId"] + '">' + value["unitName"] + '</option>';
-                unit[value["unitId"]] = value;
-            });
-            $("#unitId").html(html);
-            $("#unitId").change(function () {
-                var unitId = this.value;
-                $.each(unit[unitId], function (k, v) {
-                    $("#" + k).val(v);
-                });
-            });
-        }
-    }
-
-    function dataObject(parentId, pName, id) {
+    function dataObject(pId, pName, id) {
         var fParam = {};
-        if (id != null || id == 0) {
-            fParam["strategyId"] = id;
-        }
-        fParam[pName] = parentId;
-        if (pName == "typeId") {
-            fParam["targetId"] = "0";
+        fParam[pName] = pId;
+        var formName;
+        console.log(pName);
+        if (pName == "strategyId") {
+            formName = "formDraft";
             fParam["departmentId"] = deptId;
-        } else if (pName == "targetId") {
-            fParam["typeId"] = "0";
-            fParam["departmentId"] = deptId;
+            fParam["typeId"] = typeId;
+            fParam["periodCode"] = periodCode;
+            console.log("draft");
+        } else {
+            formName = "formDetail";
+            console.log("detail");
         }
-        $("#form select, #form input[type=text], #form textarea").each(function () {
+        $("#" + formName + " select, #" + formName + " input[type=text], #" + formName + " textarea").each(function () {
             var name = $(this).attr("name");
             var val = $(this).val();
             fParam[name] = val;
         });
-
         var fdata = {};
         fdata = fParam;
         return fdata;

@@ -133,10 +133,14 @@ class DraftService extends CServiceBase implements IDraftService {
 
         foreach ($draftData as $keyDraft => $valueDraft) {
             if (empty($strategyArr[$valueDraft->strategyId][$valueDraft->draftId])) {
+                $detailSql = "select v from apps\\common\\entity\\ActionPlanDetail v where v.draftId = :draftId  order by v.detailSeq";
+                $detailParam = array("draftId" => $valueDraft->draftId);
+                $detailData = $this->datacontext->getObject($detailSql, $detailParam);
+                $valueDraft->detail = $detailData;
                 $strategyArr[$valueDraft->strategyId][$valueDraft->draftId] = $valueDraft;
             }
         }
-        $strategyArr = $this->sortBy("strategySeq", $strategyArr);
+        $strategyArr = $this->sortBy("projectSeq", $strategyArr);
         //--ข้อมูลใน draft
         // return $strategyArr;
 
@@ -166,8 +170,6 @@ class DraftService extends CServiceBase implements IDraftService {
             }
         }
 
-
-
         return $typeData;
     }
 
@@ -180,44 +182,23 @@ class DraftService extends CServiceBase implements IDraftService {
     }
 
     public function insert($draft) {
-        $dept = new \apps\actionplan\model\ViewActivityDepartment();
-        $dept->departmentId = $draft->departmentId;
-        $deptData = $this->datacontext->getObject($dept)[0];
-        if ($draft->typeId == 0) {
-            $target = new \apps\common\entity\AffirmativeTarget();
-            $target->targetId = $draft->targetId;
-            $targetData = $this->datacontext->getObject($target)[0];
-            $draft->targetSeq = $targetData->targetSeq;
-
-            $issue = new \apps\common\entity\AffirmativeIssue();
-            $issue->issueId = $targetData->issueId;
-            $issueData = $this->datacontext->getObject($issue)[0];
-            $draft->issueId = $issueData->issueId;
-            $draft->issueSeq = $issueData->issueSeq;
-
-            $draft->typeId = $issueData->typeId;
-            $draft->hasIssue = "Y";
-        } else {
-            $draft->hasIssue = "N";
-        }
-        $setting = new \apps\common\entity\AffirmativeSetting();
-        $setting->typeId = $draft->typeId;
-        $setting->groupCode = $deptData->activityCode;
-        $setting->periodCode = $this->getPeriod()->year;
-        $settingData = $this->datacontext->getObject($setting)[0];
-        $draft->mainId = $settingData->mainId;
-        $draft->mainSeq = $settingData->mainSeq;
-        $draft->typeId = $settingData->typeId;
-        $draft->typeSeq = $settingData->typeSeq;
-
-        $draft->periodCode = $this->getPeriod()->year;
+        //$draft->periodCode = $this->getPeriod()->year;
         $draft->isApprove = "N";
-        $draft->isCenter = 'N';
-        $draft->unitName = $this->getUnit($draft->unitId)["unitName"];
+        $json = new \th\co\bpg\cde\collection\impl\CJSONDecodeImpl();
+        $type = "";
+        if (isset($draft->draftId)) {
+            $draft = $json->decode(new \apps\common\entity\ActionPlanDetail(), $draft);
+            $type = "detail";
+        } else {
+            $draft = $json->decode(new \apps\common\entity\ActionPlanDraft(), $draft);
+            $type = "draft";
+        }
+        //  return $draft;
         if (!$this->datacontext->saveObject($draft)) {
             $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
             return false;
         } else {
+            $this->getResponse()->add("type", $type);
             return $draft;
         }
     }
@@ -527,6 +508,23 @@ class DraftService extends CServiceBase implements IDraftService {
 
         ob_end_flush();
         exit();
+    }
+
+    public function listsType() {
+        $thisYear = $this->getPeriod()->year;
+        $main = new \apps\common\entity\AffirmativeMain();
+        $main->periodCode = $thisYear;
+        $mainData = $this->datacontext->getObject($main);
+        $mainId = array();
+        foreach ($mainData as $key => $value) {
+            array_push($mainId, $value->mainId);
+        }
+        $type = "select t from apps\\common\\entity\\AffirmativeType t where t.mainId in ( :mainId )";
+        $param = array("mainId" => $mainId);
+        return $this->datacontext->getObject($type, $param);
+//        $type = new \apps\common\entity\AffirmativeType();
+//        
+//        return $this->datacontext->getObject($type,$mainData);
     }
 
 }
