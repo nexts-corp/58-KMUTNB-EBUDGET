@@ -11,8 +11,11 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-8">
                     <h1 class="none-padding">จัดทำคำของบประมาณแผ่นดิน ง.140</h1>
+                </div>
+                <div class="col-md-4 text-right">
+                    <button class="btn btn-default" onclick="goBack()"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
                 </div>
             </div>
         </div>
@@ -843,6 +846,10 @@
         $(".bodyComment").html(list140Arr[id]["comment"]);
         $("#panelShowComment").modal("show");
 
+    }
+
+    function goBack() {
+        window.history.back();
     }
 
 
