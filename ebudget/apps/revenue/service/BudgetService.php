@@ -238,4 +238,62 @@ class BudgetService extends CServiceBase implements IBudgetService {
 
         return $result;
     }
+
+    public function getSumRevenue($facultyId, $bgCategory) {
+        $budgetPeriodId = $this->getPeriod()->year;
+
+        if($bgCategory == "E"){
+            $sub = "SUM(bgrp.budgetEducation) AS value";
+        }
+        else{
+            $sub = "SUM(bgrp.budgetService) AS value";
+        }
+        //plan
+        $sql = "
+                SELECT
+                    ".$sub."
+                FROM " . $this->ent . "\\BudgetRevenuePlan bgrp
+                WHERE bgrp.budgetPeriodId = :year
+                    AND bgrp.deptId = :dept
+                    AND bgrp.budgetTypeCode = 'K'
+            ";
+        $param = array(
+            "year" => $budgetPeriodId,
+            "dept" => $facultyId
+        );
+        $list = $this->datacontext->getObject($sql, $param)[0];
+
+        //budget
+        $sql2 = "
+                SELECT
+                    SUM(bg.bgAmount) AS value
+                FROM " . $this->ent . "\\BudgetRevenue bg
+                LEFT JOIN ". $this->ent . "\\BudgetHead head WITH head.id = bg.budgetHeadId
+                LEFT JOIN " . $this->ent . "\\Attachment att with bg.attachmentId = att.id
+                LEFT JOIN " . $this->ent . "\\TrackingStatus ts with bg.statusId = ts.id
+                LEFT JOIN " . $this->ent . "\\L3D\\Department dept with bg.deptId = dept.id
+                WHERE head.formId = :formId
+                    AND bg.budgetPeriodId = :budgetPeriodId
+                    AND bg.budgetTypeCode = :budgetTypeCode
+                    AND dept.masterId = :masterId
+                    AND bg.bgCategory = :bgCategory
+            ";
+
+        $param2 = array(
+            "formId" => "500",
+            "budgetPeriodId" => $budgetPeriodId,
+            "budgetTypeCode" => "K",
+            "masterId" => $facultyId,
+            "bgCategory" => $bgCategory
+        );
+
+        $list2 = $this->datacontext->getObject($sql2, $param2)[0];
+
+        $result = array(
+            "plan" => $list["value"],
+            "budget" => $list2["value"]
+        );
+
+        return $result;
+    }
 }

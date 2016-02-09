@@ -215,7 +215,7 @@
                                     </div>
 
                                     <div class="col-md-offset-1 col-md-10">
-                                        <table class="table table-bordered">
+                                        <table id="tableKpi" class="table table-bordered">
                                             <thead>
                                                 <tr>
                                                     <th class="col-md-6 text-center">ตัวชี้วัดความสำเร็จ</th>
@@ -226,7 +226,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr style="background-color: #F1F1F1;">
-                                                    <td>-</td>
+                                                    <td colspan="4" class="text-center">-</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -262,17 +262,9 @@
                                                 <th class="col-md-2 text-center">จัดการ</th>
                                             </tr>
                                             <tr>
-                                                <td><input type="text" class="form-control input-sm"></td>
-                                                <td><input type="text" class="form-control input-sm" nk-date></td>
-                                                <td><input type="text" class="form-control input-sm" nk-date></td>
-                                                <td class="text-center">
-                                                    <button class="btn btn-default"><i class="fa fa-trash"></i> ลบ</button>
-                                                </td>
-                                            </tr>
-                                            <tr>
                                                 <td colspan="3"></td>
                                                 <td class="text-center">
-                                                    <button class="btn btn-primary"><i class="fa fa-plus"></i> เพิ่ม</button>
+                                                    <button class="btn btn-success"><i class="fa fa-plus-circle"></i> เพิ่ม</button>
                                                 </td>
                                             </tr>
                                         </table>
@@ -563,6 +555,8 @@
 
     $(function(){
         getLayouts();
+        getKpiType();
+        getProgress();
     });
 
     function getLayouts() {
@@ -654,6 +648,26 @@
             html += '<option value="'+key+'">'+value+'</option>';
         });
         return html;
+    }
+
+    function getKpiType(){
+        var list = {a: "เชิงปริมาณ", b: "เชิงเวลา", c: "เชิงคุณภาพ", d: "เชิงต้นทุน"};
+
+        var html = '';
+        $.each(list, function(key, value){
+            html += '<tr style="background-color: #F1F1F1;">'
+                    + '<td colspan="3">'+value+'</td>'
+                    + '<td>'
+                        + '<button class="btn btn-success"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
+                    + '</td>'
+                + '</tr>';
+
+            $("#tableKpi tbody").html(html);
+        });
+    }
+
+    function getProgress(){
+
     }
 
 </script>

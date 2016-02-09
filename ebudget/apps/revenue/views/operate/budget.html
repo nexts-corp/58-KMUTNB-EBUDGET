@@ -45,10 +45,10 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-6">
-                        <label class="col-md-12 control-label">เงินต้นทั้ง คณะ/สำนัก รวม<br>&nbsp;&nbsp;บาท</label>
+                        <label class="col-md-12 control-label">เงินต้นทั้ง คณะ/สำนัก รวม<br><span id="sumPlan"></span>&nbsp;&nbsp;บาท</label>
                     </div>
                     <div class="col-md-6">
-                        <label class="col-md-12 control-label">เงินที่ใช้ทั้ง คณะ/สำนัก รวม<br>&nbsp;&nbsp;บาท</label>
+                        <label class="col-md-12 control-label">เงินที่ใช้ทั้ง คณะ/สำนัก รวม<br><span id="sumBudget"></span>&nbsp;&nbsp;บาท</label>
                     </div>
                 </div>
             </div>
@@ -201,11 +201,30 @@
         listsDepartment();
 
         $("#bgCategory, #l3dPlanId, #fundgroupId, #deptId").change(function(){
-            if($("#l3dPlanId").val() != "" && $("#fundgroupId").val() != "" && $("#deptId").val() != ""){
+            if($("#bgCategory").val() != "" && $("#l3dPlanId").val() != "" && $("#fundgroupId").val() != "" && $("#deptId").val() != ""){
                 getRevenueItem();
             }
             else{
                 $("#table tbody").html('<tr><td colspan="4" style="text-align: center;"> กรุณาเลือกประเภทเงิน แผนงาน และกองทุน</td></tr>');
+            }
+        }).trigger("change");
+
+        $("#bgCategory").change(function(){
+            if($(this).val() != "") {
+                var datas = callAjax("{{_context_path}}/api/revenue/budget/getSumRevenue", "post", {
+                    facultyId: deptId,
+                    bgCategory: $(this).val()
+                }, "json");
+                if (typeof datas["lists"] !== "undefined" && datas["lists"] !== null) {
+                    var data = datas["lists"];
+
+                    $("#sumPlan").html(accounting.formatNumber(data["plan"], 2, ",", "."));
+                    $("#sumBudget").html(accounting.formatNumber(data["budget"], 2, ",", "."));
+                }
+            }
+            else{
+                $("#sumPlan").html('-');
+                $("#sumBudget").html('-');
             }
         }).trigger("change");
     });

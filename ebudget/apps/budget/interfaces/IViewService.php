@@ -123,9 +123,16 @@ interface IViewService {
     public function finalAll();
 
     /**
+     * @name preapproveAll
+     * @uri /preapproveAll
+     * @description คณะ - ตรวจสอบสถานะคำของบประมาณแผ่นดินทั้งหมด
+     */
+    public function preapproveAll();
+
+    /**
      * @name approveAll
      * @uri /approveAll
-     * @description ตรวจสอบสถานะคำของบประมาณแผ่นดินทั้งหมด
+     * @description กองแผน - ตรวจสอบสถานะคำของบประมาณแผ่นดินทั้งหมด
      */
     public function approveAll();
 
@@ -168,6 +175,17 @@ interface IViewService {
      * @description ตรวจสอบคำของบประมาณแผ่นดิน
      */
     public function approve($formId, $l3dPlanId, $fundgroupId, $deptId);
+
+    /**
+     * @name preapprove
+     * @uri /preapprove
+     * @param string formId
+     * @param string l3dPlanId
+     * @param string fundgroupId
+     * @param string deptId
+     * @description ตรวจสอบคำของบประมาณแผ่นดิน
+     */
+    public function preapprove($formId, $l3dPlanId, $fundgroupId, $deptId);
 
     /**
      * @name buildOne

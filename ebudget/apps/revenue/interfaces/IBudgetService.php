@@ -73,4 +73,14 @@ interface IBudgetService {
      * @description ลบรายการรายจ่ายจากเงินรายได้
      */
     public function deleteRevenueItem($budgetId);
+
+    /**
+     * @name getSumRevenue
+     * @uri /getSumRevenue
+     * @param int facultyId
+     * @param String bgCategory
+     * @return string[] lists Description
+     * @description ดึงเงินรวมของแจกแจง
+     */
+    public function getSumRevenue($facultyId,$bgCategory);
 }

@@ -240,4 +240,34 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
+    public function preapprove($formId, $l3dPlanId, $fundgroupId, $deptId) {
+        if ($formId == "140") {
+            $view = new CJView("preapprove/bg140", CJViewType::HTML_VIEW_ENGINE);
+        } elseif ($formId == "141") {
+            $view = new CJView("preapprove/bg141", CJViewType::HTML_VIEW_ENGINE);
+        } elseif ($formId == "142") {
+            $view = new CJView("preapprove/bg142", CJViewType::HTML_VIEW_ENGINE);
+        } elseif ($formId == "143") {
+            $view = new CJView("preapprove/bg143", CJViewType::HTML_VIEW_ENGINE);
+        } elseif ($formId == "144") {
+            $view = new CJView("preapprove/bg144", CJViewType::HTML_VIEW_ENGINE);
+        } elseif ($formId == "145") {
+            $view = new CJView("preapprove/bg145", CJViewType::HTML_VIEW_ENGINE);
+        } elseif ($formId == "146") {
+            $view = new CJView("preapprove/bg146", CJViewType::HTML_VIEW_ENGINE);
+        } else {
+            $view = new CJView("preapprove/project", CJViewType::HTML_VIEW_ENGINE);
+        }
+        $view->formId = $formId;
+        $view->l3dPlanId = $l3dPlanId;
+        $view->fundgroupId = $fundgroupId;
+        $view->deptId = $deptId;
+
+        return $view;
+    }
+
+    public function preapproveAll() {
+        $view = new CJView("preapprove/approveAll", CJViewType::HTML_VIEW_ENGINE);
+        return $view;
+    }
 }
