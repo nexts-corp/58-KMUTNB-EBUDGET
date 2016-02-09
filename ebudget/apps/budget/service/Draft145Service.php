@@ -72,7 +72,7 @@ class Draft145Service extends CServiceBase implements IDraft145Service {
 
         foreach ($list1 as $key1 => $value1) {
 
-            if ($list1[$key1]["id"] == "20400000") {
+            if ($list1[$key1]["id"] == "20300000") {
 
                 $sql2 = " SELECT typ.id, typ.typeName, typ.masterId "
                         . " FROM " . $this->ent . "\\BudgetType typ "
