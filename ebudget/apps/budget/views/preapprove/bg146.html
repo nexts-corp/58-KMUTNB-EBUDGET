@@ -428,7 +428,7 @@
         jdata['status'] = status;  
         //console.log(jdata);
         
-        var datas = callAjax("{{_context_path}}/api/budget/approve/updateStatus", "post", jsonEncode(jdata), "json");
+        var datas = callAjax("{{_context_path}}/api/budget/preapprove/updateStatus", "post", jsonEncode(jdata), "json");
         
     }
     function approveAll(){
@@ -454,7 +454,7 @@
         }, 
         function(){   
             
-            var datas = callAjax("{{_context_path}}/api/budget/approve/updateStatus", "post", jsonEncode(jdata), "json");
+            var datas = callAjax("{{_context_path}}/api/budget/preapprove/updateStatus", "post", jsonEncode(jdata), "json");
             if(datas.results.status==true){
                     //window.open('{{_context_path}}/api/budget/view/approveAll');
                 window.location.href = '{{_context_path}}/api/budget/view/approveAll';
@@ -494,7 +494,7 @@
         jdata['bgType'] = 'Budget146';
 
         //console.log(checkstatus);
-        var result=callAjax('{{_context_path}}/api/budget/approve/updateComment', 'post', jsonEncode(jdata),'json');
+        var result=callAjax('{{_context_path}}/api/budget/preapprove/updateComment', 'post', jsonEncode(jdata),'json');
         if(result.result==true){
             list146Arr[id]["comment"]=comment;
             

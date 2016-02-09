@@ -71,7 +71,7 @@ class ApproveService extends CServiceBase implements IApproveService {
             . "left outer join " . $this->ent . "\\L3D\\FundGroup fund with fund.id = bgh.fundgroupId "
             . "left outer join " . $this->ent . "\\TrackingStatus status with status.id = bgh.statusId "
             . "where bgh.budgetTypeCode = :budgetTypeCode "
-            . "and bgh.statusId in (2,3,4,5)"
+            . "and bgh.statusId in (2,3,4,5) "
             . "and bgh.budgetPeriodId = :budgetPeriodId "
             . "order by bgh.formId asc, faculty.id asc, dept.id asc, l3dPlan.id asc, fund.id asc ";
 
@@ -260,6 +260,7 @@ class ApproveService extends CServiceBase implements IApproveService {
                 $bgh = new BudgetHead();
                 $bgh->setId($id);
                 $bgh->setStatusId(5);
+                $bgh->setStatusPlanningId(2);
                 if (!$this->datacontext->updateObject($bgh)) {
                     $result = false;
                 }

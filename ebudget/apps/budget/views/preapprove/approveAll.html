@@ -250,7 +250,7 @@
         var planGroup = {}
         var fundGroup = {};
 
-        var datas = callAjax("{{_context_path}}/api/budget/approve/getAllBudgetRequest", "post", {deptId: 0}, "json");
+        var datas = callAjax("{{_context_path}}/api/budget/preapprove/getAllBudgetRequest", "post", {deptId: 0}, "json");
         var html = '';
         var search = '';
 
@@ -440,7 +440,7 @@
 
     function listsForm() {
         var html = '<option value="" selected="selected">เลือก</option>';
-        var datas = callAjax("{{_context_path}}/api/budget/approve/listForm", "post", {}, "json");
+        var datas = callAjax("{{_context_path}}/api/budget/preapprove/listForm", "post", {}, "json");
         if (typeof datas !== "undefined" && datas !== null) {
             $.each(datas["lists"], function (key, value) {
                 html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
@@ -453,7 +453,7 @@
 
     function listsPlan3D() {
         var html = '<option value="" selected="selected">เลือก</option>';
-        var datas = callAjax("{{_context_path}}/api/budget/approve/list3DPlan", "post", {}, "json");
+        var datas = callAjax("{{_context_path}}/api/budget/preapprove/list3DPlan", "post", {}, "json");
         if (typeof datas !== "undefined" && datas !== null) {
             $.each(datas["lists"], function (key, value) {
                 html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
@@ -473,7 +473,7 @@
             var param = {
                 l3dPlanId: l3dPlanId
             };
-            var datas = callAjax("{{_context_path}}/api/budget/approve/listFundgroupWithPlan", "post", param, "json");
+            var datas = callAjax("{{_context_path}}/api/budget/preapprove/listFundgroupWithPlan", "post", param, "json");
             if (typeof datas !== "undefined" && datas !== null) {
                 $.each(datas["lists"], function (key, value) {
                     html += '<option value="' + value["id"] + '">' + value["name"] + '</option>';
@@ -487,7 +487,7 @@
 
     function listsFaculty() {
         var html = '<option value="" selected="selected">เลือก</option>';
-        var datas = callAjax("{{_context_path}}/api/budget/approve/listFaculty", "post", {}, "json");
+        var datas = callAjax("{{_context_path}}/api/budget/preapprove/listFaculty", "post", {}, "json");
         if (typeof datas !== "undefined" && datas !== null) {
             $.each(datas["lists"], function (key, value) {
                 html += '<option value="' + value["id"] + '">' + value["name"] + '</option>';
@@ -503,7 +503,7 @@
         var html = '<option value="" selected="selected">เลือก</option>';
 
         if (facultyId != "") {
-            var datas = callAjax("{{_context_path}}/api/budget/approve/listDepartment", "post", {facultyId: facultyId}, "json");
+            var datas = callAjax("{{_context_path}}/api/budget/preapprove/listDepartment", "post", {facultyId: facultyId}, "json");
             if (typeof datas !== "undefined" && datas !== null) {
                 $.each(datas["lists"], function (key, value) {
                     html += '<option value="' + value["id"] + '">' + value["name"] + '</option>'
