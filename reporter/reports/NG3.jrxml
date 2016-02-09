@@ -243,7 +243,7 @@ inner join L3D_FUNDGROUP fundgroup on fundgroup.FUNDGROUPID = bgAll.fundgroupId]
 			<textField isStretchWithOverflow="true">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="555" height="20" uuid="f46aee95-03fb-4f8c-a89b-2612b52f7647"/>
 				<textElement textAlignment="Center">
-					<font size="16" isPdfEmbedded="true"/>
+					<font size="14" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{HEAD_RPT}]]></textFieldExpression>
 			</textField>

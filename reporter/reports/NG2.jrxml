@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="0.9090909090909105"/>
+	<property name="ireport.zoom" value="1.000000000000002"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
@@ -390,7 +390,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมเงินค่าจ้างประจำ}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมเงินค่าจ้างประจำ} != 0)? $V{รวมเงินค่าจ้างประจำ} : "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="125" height="40" uuid="de22191a-7c5a-46c8-9361-975917f5b570"/>
@@ -416,7 +416,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมเงินเดือน}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมเงินเดือน} != 0)? $V{รวมเงินเดือน} : "-"]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="227" y="20" width="51" height="20" uuid="ef4421f2-2fa9-4880-911c-844524a48c08"/>
@@ -429,7 +429,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมเงินค่าตอบแทนพนักงานราชการ}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมเงินค่าตอบแทนพนักงานราชการ} != 0)? $V{รวมเงินค่าตอบแทนพนักงานราชการ} : "-"]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="278" y="20" width="55" height="20" uuid="950d6617-3b49-4d6b-aa83-b95c82b15750"/>
@@ -455,7 +455,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมเงินค่าจ้างชั่วคราว}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมเงินค่าจ้างชั่วคราว} != 0)? $V{รวมเงินค่าจ้างชั่วคราว} : "-"]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="388" y="20" width="51" height="20" uuid="535a4605-27cf-4ec1-8c46-0d6441a874f0"/>
@@ -468,7 +468,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมเงินค่าตอบแทน}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมเงินค่าตอบแทน} != 0)? $V{รวมเงินค่าตอบแทน} : "-"]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="490" y="20" width="51" height="20" uuid="479dedc1-9736-4499-8ab0-c6198c29e2d9"/>
@@ -481,7 +481,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมเงินค่าวัสดุ}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมเงินค่าวัสดุ} != 0)? $V{รวมเงินค่าวัสดุ} : "-"]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="439" y="20" width="51" height="20" uuid="ba01549a-6159-486c-9cff-330a5a07ffed"/>
@@ -494,7 +494,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมเงินค่าใช้สอย}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมเงินค่าใช้สอย} != 0)? $V{รวมเงินค่าใช้สอย} : "-"]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="541" y="20" width="51" height="20" uuid="ec7baa19-1b3c-4914-bf81-6a112a4dda5e"/>
@@ -507,7 +507,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมเงินค่าสาธารณูปโภค}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมเงินค่าสาธารณูปโภค}!= 0)? $V{รวมเงินค่าสาธารณูปโภค} : "-"]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="592" y="0" width="51" height="40" uuid="f7b11f74-aa79-48d5-b49c-f0ce51e56b7c"/>
@@ -520,7 +520,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมเงินค่าครุภัณฑ์}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมเงินค่าครุภัณฑ์}!= 0)? $V{รวมเงินค่าครุภัณฑ์} : "-"]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="643" y="0" width="51" height="40" uuid="36080b6f-fd54-4813-8266-74b95ddbb9ca"/>
@@ -533,7 +533,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมเงินค่าที่ดินและสิ่งก่อสร้าง}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมเงินค่าที่ดินและสิ่งก่อสร้าง} != 0)? $V{รวมเงินค่าที่ดินและสิ่งก่อสร้าง} : "-"]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="694" y="0" width="51" height="40" uuid="b8e0d1c1-fba7-431c-bc9f-1620a41fd24d"/>
@@ -546,7 +546,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมเงินอุดหนุนอื่นๆ}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมเงินอุดหนุนอื่นๆ} != 0)? $V{รวมเงินอุดหนุนอื่นๆ} : "-"]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="125" y="0" width="153" height="20" uuid="2be375ed-e1fe-4e2d-afba-e1305689bc1e"/>
@@ -559,7 +559,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Center">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมงบบุคลากร}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมงบบุคลากร} != 0)? $V{รวมงบบุคลากร} : "-"]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="278" y="0" width="110" height="20" uuid="d26b1b56-9fa3-4a71-816f-9dd16d22c07e"/>
@@ -572,7 +572,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Center">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมเงินอุดหนุนเป็นค่าใช้จ่ายบุคลากร}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมเงินอุดหนุนเป็นค่าใช้จ่ายบุคลากร} != 0)? $V{รวมเงินอุดหนุนเป็นค่าใช้จ่ายบุคลากร} : "-"]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="388" y="0" width="204" height="20" uuid="7b4566cb-d480-49f2-b4b1-f2ad99944afa"/>
@@ -585,7 +585,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Center">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน}!= 0)? $V{รวมเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน} : "-"]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="745" y="0" width="57" height="40" uuid="0ccf6b9a-610a-4581-a0e6-bdefe883a37f"/>
@@ -620,7 +620,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{เงินเดือน}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{เงินเดือน} != 0)? $V{เงินเดือน}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="125" height="20" uuid="1a663398-8f88-41e9-b957-87f349e831e5"/>
@@ -646,7 +646,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ค่าจ้างประจำ}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{ค่าจ้างประจำ} != 0)? $V{ค่าจ้างประจำ}: "-"]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="227" y="0" width="51" height="20" uuid="0853f6bc-e692-45bf-bf21-f27e1231b1ca"/>
@@ -659,7 +659,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ค่าตอบแทนพนักงานราชการ}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{ค่าตอบแทนพนักงานราชการ} != 0)? $V{ค่าตอบแทนพนักงานราชการ}: "-"]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="278" y="0" width="55" height="20" uuid="1bf960b8-4cae-4197-90fe-f672bbf575a0"/>
@@ -672,7 +672,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{เงินอุดหนุนเงินเดือน}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{เงินอุดหนุนเงินเดือน} != 0)? $V{เงินอุดหนุนเงินเดือน}: "-"]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="333" y="0" width="55" height="20" uuid="d2b93d61-95fa-496c-959d-48cbe2961ed9"/>
@@ -685,7 +685,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ค่าจ้างชั่วคราว}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{ค่าจ้างชั่วคราว} != 0)? $V{ค่าจ้างชั่วคราว}: "-"]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="388" y="0" width="51" height="20" uuid="74e99799-6fe3-488d-8d05-34f065ca4a26"/>
@@ -698,7 +698,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ค่าตอบแทน}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{ค่าตอบแทน} != 0)? $V{ค่าตอบแทน}: "-"]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="439" y="0" width="51" height="20" uuid="69b962b2-3ab9-4e5f-a7ba-c37756ae99be"/>
@@ -711,7 +711,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ค่าใช้สอย}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{ค่าใช้สอย} != 0)? $V{ค่าใช้สอย}: "-"]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="490" y="0" width="51" height="20" uuid="36136e1c-3aac-4aa1-b1ee-675540103557"/>
@@ -724,7 +724,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ค่าวัสดุ}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{ค่าวัสดุ} != 0)? $V{ค่าวัสดุ}: "-"]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="541" y="0" width="51" height="20" uuid="c7d3263b-9132-451e-9caf-3bd4ce29e3e7"/>
@@ -737,7 +737,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ค่าสาธารณูปโภค}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{ค่าสาธารณูปโภค} != 0)? $V{ค่าสาธารณูปโภค}: "-"]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="592" y="0" width="51" height="20" uuid="806798a2-3e12-4b7d-8ae9-789404678c1e"/>
@@ -750,7 +750,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ค่าครุภัณฑ์}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{ค่าครุภัณฑ์} != 0)? $V{ค่าครุภัณฑ์} : "-"]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="643" y="0" width="51" height="20" uuid="92d61892-5576-44ea-9ae5-f22a73fa2c9c"/>
@@ -763,7 +763,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ค่าที่ดิน}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{ค่าที่ดิน} != 0)? $V{ค่าที่ดิน} : "-"]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="694" y="0" width="51" height="20" uuid="083ff0da-9b04-4b77-a4fd-6e6a4dbb5913"/>
@@ -776,7 +776,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{เงินอุดหนุนอื่นๆ}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{เงินอุดหนุนอื่นๆ} != 0)? $V{เงินอุดหนุนอื่นๆ} : "-"]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="745" y="0" width="57" height="20" uuid="7c8f623f-fd98-41b3-a4d1-342194d0258c"/>
@@ -789,7 +789,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมเงิน}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมเงิน} != 0)? $V{รวมเงิน} : "-"]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -1095,7 +1095,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<textElement textAlignment="Center">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมงบบุคลากรสุทธิ}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมงบบุคลากรสุทธิ} != 0)? $V{รวมงบบุคลากรสุทธิ} : "-"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="227" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="2436b120-90d0-4788-a5eb-d1a4608c55eb">
@@ -1185,7 +1185,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมเงินอุดหนุนเป็นค่าใช้จ่ายบุคลากรสุทธิ}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมเงินอุดหนุนเป็นค่าใช้จ่ายบุคลากรสุทธิ} != 0)? $V{รวมเงินอุดหนุนเป็นค่าใช้จ่ายบุคลากรสุทธิ} : "-"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="388" y="140" width="51" height="20" isRemoveLineWhenBlank="true" uuid="6913a90f-1a8e-469b-898c-5f3c901f8b6e">
@@ -1260,7 +1260,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<textElement textAlignment="Center">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงานสุทธิ}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงานสุทธิ} != 0)? $V{รวมเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงานสุทธิ} : "-"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="592" y="120" width="51" height="40" isRemoveLineWhenBlank="true" uuid="ee9fe610-17de-4b3f-b357-e97771f53b1e">
@@ -1275,7 +1275,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมเงินค่าครุภัณฑ์สุทธิ}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมเงินค่าครุภัณฑ์สุทธิ} != 0)? $V{รวมเงินค่าครุภัณฑ์สุทธิ} : "-"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="643" y="120" width="51" height="40" isRemoveLineWhenBlank="true" uuid="31798f97-c5ef-4ce3-95a0-dc882e866857">
@@ -1290,7 +1290,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมเงินค่าที่ดินและสิ่งก่อสร้างสุทธิ}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมเงินค่าที่ดินและสิ่งก่อสร้างสุทธิ} != 0)? $V{รวมเงินค่าที่ดินและสิ่งก่อสร้างสุทธิ} : "-"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="694" y="120" width="51" height="40" isRemoveLineWhenBlank="true" uuid="e775526d-6bff-4f76-a046-3e0d0fedbc96">
@@ -1305,7 +1305,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมเงินอุดหนุนอื่นๆสุทธิ}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมเงินอุดหนุนอื่นๆสุทธิ} != 0)? $V{รวมเงินอุดหนุนอื่นๆสุทธิ} : "-"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="745" y="120" width="57" height="40" isRemoveLineWhenBlank="true" uuid="79070182-d2f1-4a66-b6b2-9f38ef4702d0">
@@ -1342,7 +1342,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
-			<printWhenExpression><![CDATA[$F{facultyId} == null&&$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$F{facultyId} == null && $P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
 		</band>
 	</detail>
 	<columnFooter>
@@ -1375,6 +1375,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 	</pageFooter>
 	<summary>
 		<band height="30">
+			<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
 			<staticText>
 				<reportElement style="FBold" x="0" y="0" width="125" height="30" isRemoveLineWhenBlank="true" uuid="af733129-1735-43f1-a991-ba4752c65f0d"/>
 				<box>
@@ -1399,7 +1400,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมเงินค่าจ้างประจำสุทธิ}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมเงินค่าจ้างประจำสุทธิ} != 0)? $V{รวมเงินค่าจ้างประจำสุทธิ}: "-"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="FBold" x="227" y="0" width="51" height="30" isRemoveLineWhenBlank="true" uuid="946c654a-bace-4155-94a4-19ef4c0ec176"/>
@@ -1412,7 +1413,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมเงินค่าตอบแทนพนักงานราชการสุทธิ}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมเงินค่าตอบแทนพนักงานราชการสุทธิ} != 0)? $V{รวมเงินค่าตอบแทนพนักงานราชการสุทธิ}: "-"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="278" y="0" width="55" height="30" isRemoveLineWhenBlank="true" uuid="14a77207-8a8c-4d62-a6d6-13df1c597a84"/>
@@ -1425,7 +1426,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมเงินอุดหนุนเงินเดือนสุทธิ}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมเงินอุดหนุนเงินเดือนสุทธิ} != 0)? $V{รวมเงินอุดหนุนเงินเดือนสุทธิ}: "-"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="333" y="0" width="55" height="30" isRemoveLineWhenBlank="true" uuid="af351825-b295-4960-9967-6d136b078c4b"/>
@@ -1438,7 +1439,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{ค่าจ้างชั่วคราวสุทธิ}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{ค่าจ้างชั่วคราวสุทธิ} != 0)? $V{ค่าจ้างชั่วคราวสุทธิ}: "-"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="388" y="0" width="51" height="30" isRemoveLineWhenBlank="true" uuid="529ecb85-4646-4d94-9a71-39d44325f7c7"/>
@@ -1451,7 +1452,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{ค่าตอบแทนสุทธิ}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{ค่าตอบแทนสุทธิ} != 0)? $V{ค่าตอบแทนสุทธิ}: "-"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="439" y="0" width="51" height="30" isRemoveLineWhenBlank="true" uuid="ccd6c815-2e81-409e-99f8-027aff047d00"/>
@@ -1464,7 +1465,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{ค่าใช้สอยสุทธิ}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{ค่าใช้สอยสุทธิ} != 0)? $V{ค่าใช้สอยสุทธิ}: "-"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="490" y="0" width="51" height="30" isRemoveLineWhenBlank="true" uuid="9e0cddd3-02ae-4f82-b5dd-565f806ad3da"/>
@@ -1477,7 +1478,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{ค่าวัสดุสุทธิ}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{ค่าวัสดุสุทธิ} != 0)? $V{ค่าวัสดุสุทธิ}: "-"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="541" y="0" width="51" height="30" isRemoveLineWhenBlank="true" uuid="b4b6e5c2-1154-4e5f-97ea-85cb1fbfd0b7"/>
@@ -1490,7 +1491,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{ค่าสาธารณูปโภคสุทธิ}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{ค่าสาธารณูปโภคสุทธิ} != 0)? $V{ค่าสาธารณูปโภคสุทธิ}: "-"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="592" y="0" width="51" height="30" isRemoveLineWhenBlank="true" uuid="2f83c5bf-2322-463b-abb6-06e2b431217e"/>
@@ -1503,7 +1504,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมเงินค่าครุภัณฑ์สุทธิ}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมเงินค่าครุภัณฑ์สุทธิ} != 0)? $V{รวมเงินค่าครุภัณฑ์สุทธิ}: "-"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="643" y="0" width="51" height="30" isRemoveLineWhenBlank="true" uuid="152c4c23-464e-4eed-91d4-7f413877bd05"/>
@@ -1516,7 +1517,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมเงินค่าที่ดินและสิ่งก่อสร้างสุทธิ}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมเงินค่าที่ดินและสิ่งก่อสร้างสุทธิ} != 0)? $V{รวมเงินค่าที่ดินและสิ่งก่อสร้างสุทธิ}: "-"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="694" y="0" width="51" height="30" isRemoveLineWhenBlank="true" uuid="44909419-a25c-4876-9a5a-99f95389ae81"/>
@@ -1529,7 +1530,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมเงินอุดหนุนอื่นๆสุทธิ}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมเงินอุดหนุนอื่นๆสุทธิ} != 0)? $V{รวมเงินอุดหนุนอื่นๆสุทธิ}: "-"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="745" y="0" width="57" height="30" isRemoveLineWhenBlank="true" uuid="51c93b25-79d5-4a8f-b2d5-50a571b59334"/>
@@ -1556,7 +1557,7 @@ $V{ค่าใช้สอย}+$V{ค่าวัสดุ}+$V{ค่าสา�
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมเงินเดือนสุทธิ}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมเงินเดือนสุทธิ} != 0)? $V{รวมเงินเดือนสุทธิ}: "-"]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

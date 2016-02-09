@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="0.9575681974766931"/>
+	<property name="ireport.zoom" value="1.2745232708414787"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
@@ -13,7 +13,7 @@
 		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PERIOD_ID" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["0"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="PRODUCT_NAME" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA["-"]]></parameterDescription>
@@ -87,6 +87,10 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 	<variable name="CURRENT_DATE" class="java.util.Date">
 		<variableExpression><![CDATA[new Date()]]></variableExpression>
 		<initialValueExpression><![CDATA[new Date()]]></initialValueExpression>
+	</variable>
+	<variable name="YEAR" class="java.lang.Integer" resetType="None">
+		<variableExpression><![CDATA[Integer.parseInt($P{PERIOD_ID})]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -171,7 +175,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["งบประมาณที่ได้รับ \n การจัดสรรปีงบประมาณ \n ปัจจุบัน (2558)"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["งบประมาณที่ได้รับ \n การจัดสรรปีงบประมาณ \n ปัจจุบัน ("+$V{YEAR}+")"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="FBold" x="410" y="110" width="160" height="60" uuid="ebbce3e6-3e4b-4ead-b9ec-64b126f09655"/>
@@ -182,7 +186,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["คำของบประมาณ \n ปีงบประมาณที่ขอตั้ง \n งบประมาณ(2559)"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["คำของบประมาณ \n ปีงบประมาณที่ขอตั้ง \n งบประมาณ("+($V{YEAR}+1)+")"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="FBold" x="570" y="110" width="232" height="60" uuid="564d8bbd-1380-4d3b-9b61-ad9e9c773608"/>

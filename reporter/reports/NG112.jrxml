@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="0.9575681974767072"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.2745232708414975"/>
+	<property name="ireport.x" value="7"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
 	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -1300,7 +1300,7 @@ $V{tempWages_all}+$V{compensation_all}+$V{livingCost_all}+$V{matCost_all}
 			<textField isStretchWithOverflow="true">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="802" height="20" uuid="f46aee95-03fb-4f8c-a89b-2612b52f7647"/>
 				<textElement textAlignment="Center">
-					<font size="16"/>
+					<font size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{HEAD_RPT}]]></textFieldExpression>
 			</textField>
@@ -1787,11 +1787,13 @@ $V{tempWages_all}+$V{compensation_all}+$V{livingCost_all}+$V{matCost_all}
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
-			<printWhenExpression><![CDATA[$F{bgPlanId} == null&&$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$F{bgPlanId} == null&& $P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
 		</band>
 	</detail>
 	<columnFooter>
-		<band splitType="Stretch"/>
+		<band splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
+		</band>
 	</columnFooter>
 	<pageFooter>
 		<band height="32" splitType="Stretch">
@@ -1819,6 +1821,8 @@ $V{tempWages_all}+$V{compensation_all}+$V{livingCost_all}+$V{matCost_all}
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="30" splitType="Stretch"/>
+		<band height="30" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
+		</band>
 	</summary>
 </jasperReport>

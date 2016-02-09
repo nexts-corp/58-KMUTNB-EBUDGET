@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="1.4019755979256259"/>
+	<property name="ireport.zoom" value="0.8705165431606295"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
@@ -287,7 +287,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมเงินG1สุทธิ}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมเงินG1สุทธิ} != 0)? $V{รวมเงินG1สุทธิ}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="434" y="0" width="58" height="20" uuid="b6457894-dd96-4a9e-971b-c41631b93f8a"/>
@@ -300,7 +300,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมกองทุนสินทรัพย์ถาวรสูทธิ}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนสินทรัพย์ถาวรสูทธิ} != 0)? $V{รวมกองทุนสินทรัพย์ถาวรสูทธิ}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="260" y="0" width="58" height="20" uuid="43947017-a855-4b3f-995c-0b1e1ef2e45d"/>
@@ -313,7 +313,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมกองทุนวิจัยสุทธิ}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนวิจัยสุทธิ} != 0)? $V{รวมกองทุนวิจัยสุทธิ}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="144" y="0" width="58" height="20" uuid="70ef6fe0-534f-4671-978e-6dc26a26a838"/>
@@ -326,7 +326,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมกองทุนทั่วไปสุทธิ}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนทั่วไปสุทธิ} != 0)? $V{รวมกองทุนทั่วไปสุทธิ} : "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="552" y="0" width="60" height="20" uuid="6f58678d-8828-4521-ab89-14e62ae0d446"/>
@@ -339,7 +339,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมกองทุนสำรองสุทธิ}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนสำรองสุทธิ} != 0)? $V{รวมกองทุนสำรองสุทธิ}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="612" y="0" width="60" height="20" uuid="96bbe7b5-e6d7-4275-9dda-220b2bf3171c"/>
@@ -352,7 +352,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมกองทุุนทำนุบำรุงศิลปสุทธิ}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมกองทุุนทำนุบำรุงศิลปสุทธิ} != 0)? $V{รวมกองทุุนทำนุบำรุงศิลปสุทธิ}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="492" y="0" width="60" height="20" uuid="e8d5458d-0998-4944-89ef-5e7ab49da42e"/>
@@ -365,7 +365,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมกองทุนพัฒนาบุคลากรสุทธิ}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนพัฒนาบุคลากรสุทธิ} != 0)? $V{รวมกองทุนพัฒนาบุคลากรสุทธิ}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="202" y="0" width="58" height="20" uuid="3a1c8d79-8f43-4938-b293-5d292cf5028b"/>
@@ -378,7 +378,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมกองทุนเพื่อการศึกษาสุทธิ}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนเพื่อการศึกษาสุทธิ} != 0)? $V{รวมกองทุนเพื่อการศึกษาสุทธิ} : "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="318" y="0" width="58" height="20" uuid="920402c7-065f-4112-9f9d-03384e205a86"/>
@@ -391,7 +391,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมกองทุนบริการวิชาการสุทธิ}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนบริการวิชาการสุทธิ} != 0)? $V{รวมกองทุนบริการวิชาการสุทธิ}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="376" y="0" width="58" height="20" uuid="f5f0b255-0512-4794-8e42-db5832e8d1af"/>
@@ -404,7 +404,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมกองทุนกิจการนักศึกษาสุทธิ}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนกิจการนักศึกษาสุทธิ} != 0)? $V{รวมกองทุนกิจการนักศึกษาสุทธิ}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="672" y="0" width="60" height="20" uuid="6bbd54dd-b5fc-41ba-899d-083f17a9c531"/>
@@ -417,7 +417,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมกองทุนอื่นๆG1สุทธิ}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนอื่นๆG1สุทธิ} != 0)? $V{รวมกองทุนอื่นๆG1สุทธิ}: "-"]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -455,7 +455,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมกองทุนทั่วไป}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนทั่วไป} != 0)? $V{รวมกองทุนทั่วไป}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="672" y="0" width="60" height="20" isRemoveLineWhenBlank="true" uuid="6e7c9c70-a9c2-4fc6-ac94-1b3920508baf">
@@ -470,7 +470,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมกองทุนอื่นๆG2}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนอื่นๆG2} != 0)? $V{รวมกองทุนอื่นๆG2} : "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="260" y="0" width="58" height="20" isRemoveLineWhenBlank="true" uuid="639b806b-0b96-44dc-8090-34cc9528f2e3">
@@ -485,7 +485,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมกองทุนวิจัย}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนวิจัย} != 0)? $V{รวมกองทุนวิจัย} : "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="492" y="0" width="60" height="20" isRemoveLineWhenBlank="true" uuid="df744b10-b5ce-446d-8226-ca79a045d63f">
@@ -500,7 +500,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมกองทุนพัฒนาบุคลากร}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนพัฒนาบุคลากร} != 0)? $V{รวมกองทุนพัฒนาบุคลากร} : "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="202" y="0" width="58" height="20" isRemoveLineWhenBlank="true" uuid="0546366c-38ac-4d88-9a4f-35c04dd732e5">
@@ -515,7 +515,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมกองทุนเพื่อการศึกษา}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนเพื่อการศึกษา} != 0)? $V{รวมกองทุนเพื่อการศึกษา} : "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="318" y="0" width="58" height="20" isRemoveLineWhenBlank="true" uuid="c9f3aaa1-1ae4-446a-9b0b-c7fd150f74af">
@@ -530,7 +530,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมกองทุนบริการวิชาการ}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนบริการวิชาการ} != 0)? $V{รวมกองทุนบริการวิชาการ} : "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="434" y="0" width="58" height="20" isRemoveLineWhenBlank="true" uuid="b99c4737-00fa-44b4-ad35-ffdc3239ab1b">
@@ -545,7 +545,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมกองทุนสินทรัพย์ถาวร}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนสินทรัพย์ถาวร} != 0)? $V{รวมกองทุนสินทรัพย์ถาวร} : "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="376" y="0" width="58" height="20" isRemoveLineWhenBlank="true" uuid="f35b9dbf-815c-44bd-9af1-3ecb91a654f9">
@@ -560,7 +560,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมกองทุนกิจการนักศึกษา}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนกิจการนักศึกษา} != 0)? $V{รวมกองทุนกิจการนักศึกษา} : "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="552" y="0" width="60" height="20" isRemoveLineWhenBlank="true" uuid="71289a37-6c08-48cd-8ecd-7fab0a813eb7">
@@ -575,7 +575,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมกองทุนสำรอง}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนสำรอง} != 0)? $V{รวมกองทุนสำรอง} : "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="612" y="0" width="60" height="20" isRemoveLineWhenBlank="true" uuid="27d2d594-172e-4bb4-8fe4-0e643c973b56">
@@ -590,7 +590,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมกองทุุนทำนุบำรุงศิลป}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมกองทุุนทำนุบำรุงศิลป} != 0)? $V{รวมกองทุุนทำนุบำรุงศิลป} : "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="732" y="0" width="70" height="20" isRemoveLineWhenBlank="true" uuid="9582b91d-3e7b-44e9-9667-5e984cb8ec34">
@@ -605,7 +605,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมเงินG2}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมเงินG2} != 0)? $V{รวมเงินG2} : "-"]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -621,7 +621,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			<textField isStretchWithOverflow="true">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="802" height="20" uuid="f46aee95-03fb-4f8c-a89b-2612b52f7647"/>
 				<textElement textAlignment="Center">
-					<font size="16"/>
+					<font size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{HEAD_RPT}]]></textFieldExpression>
 			</textField>
@@ -846,7 +846,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมกองทุนกิจการนักศึกษาสุทธิ_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมกองทุนกิจการนักศึกษาสุทธิ_1} != 0)? $V{รวมกองทุนกิจการนักศึกษาสุทธิ_1} : "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="492" y="100" width="60" height="20" isRemoveLineWhenBlank="true" uuid="d7c3fa05-a6e7-40ec-bb32-1bed1735da8b">
@@ -861,7 +861,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมกองทุนพัฒนาบุคลากรสุทธิ_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมกองทุนพัฒนาบุคลากรสุทธิ_1} != 0)? $V{รวมกองทุนพัฒนาบุคลากรสุทธิ_1} : "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="260" y="100" width="58" height="20" isRemoveLineWhenBlank="true" uuid="e0a5952e-b147-4ddd-9213-6d8dab1de0cf">
@@ -876,7 +876,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมกองทุนวิจัยสุทธิ_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมกองทุนวิจัยสุทธิ_1} != 0)? $V{รวมกองทุนวิจัยสุทธิ_1} : "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="434" y="100" width="58" height="20" isRemoveLineWhenBlank="true" uuid="9fbe8b4a-208e-40b1-bbb8-f44689f20bb2">
@@ -891,7 +891,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมกองทุนสินทรัพย์ถาวรสูทธิ_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมกองทุนสินทรัพย์ถาวรสูทธิ_1} != 0)? $V{รวมกองทุนสินทรัพย์ถาวรสูทธิ_1} : "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="144" y="100" width="58" height="20" isRemoveLineWhenBlank="true" uuid="1dc00777-9774-4b08-bec7-4bb716adf79b">
@@ -906,7 +906,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมกองทุนทั่วไปสุทธิ_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมกองทุนทั่วไปสุทธิ_1} != 0)? $V{รวมกองทุนทั่วไปสุทธิ_1} : "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="612" y="100" width="60" height="20" isRemoveLineWhenBlank="true" uuid="54abcda2-5a20-4dd3-9902-ace973cec7b0">
@@ -921,7 +921,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมกองทุุนทำนุบำรุงศิลปสุทธิ_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมกองทุุนทำนุบำรุงศิลปสุทธิ_1} != 0)? $V{รวมกองทุุนทำนุบำรุงศิลปสุทธิ_1} : "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="318" y="100" width="58" height="20" isRemoveLineWhenBlank="true" uuid="7fc25632-ba14-414c-b9e1-3e52ad5bafd7">
@@ -936,7 +936,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมกองทุนบริการวิชาการสุทธิ_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมกองทุนบริการวิชาการสุทธิ_1} != 0)? $V{รวมกองทุนบริการวิชาการสุทธิ_1} : "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="732" y="100" width="70" height="20" isRemoveLineWhenBlank="true" uuid="0e138c72-f832-4c37-b3e2-511c56e94240">
@@ -951,7 +951,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมเงินG1สุทธิ_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมเงินG1สุทธิ_1} != 0)? $V{รวมเงินG1สุทธิ_1} : "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="672" y="100" width="60" height="20" isRemoveLineWhenBlank="true" uuid="448ab9aa-469a-444f-b521-e3b02f04e97d">
@@ -966,7 +966,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมกองทุนอื่นๆG1สุทธิ_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมกองทุนอื่นๆG1สุทธิ_1} != 0)? $V{รวมกองทุนอื่นๆG1สุทธิ_1} : "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="552" y="100" width="60" height="20" isRemoveLineWhenBlank="true" uuid="0856a367-dc45-4516-a2ae-7c15f65244e8">
@@ -981,7 +981,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมกองทุนสำรองสุทธิ_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมกองทุนสำรองสุทธิ_1} != 0)? $V{รวมกองทุนสำรองสุทธิ_1} : "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="202" y="100" width="58" height="20" isRemoveLineWhenBlank="true" uuid="8cbbbb13-8256-46fe-a8a8-2c8ed01b0523">
@@ -996,7 +996,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมกองทุนเพื่อการศึกษาสุทธิ_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมกองทุนเพื่อการศึกษาสุทธิ_1} != 0)? $V{รวมกองทุนเพื่อการศึกษาสุทธิ_1} : "-"]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>
@@ -1027,7 +1027,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{generalFund}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{generalFund} != 0)? $F{generalFund}: "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="672" y="0" width="60" height="20" uuid="19d2c1e6-eb41-4769-98fc-8c946137d95c"/>
@@ -1040,7 +1040,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมกองทุนอื่นๆ}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมกองทุนอื่นๆ} != 0)? $V{รวมกองทุนอื่นๆ}: "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="260" y="0" width="58" height="20" uuid="26a30080-af58-4656-82a1-e992aa0b1eeb"/>
@@ -1053,7 +1053,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{researchFunds}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{researchFunds} != 0)? $F{researchFunds}: "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="492" y="0" width="60" height="20" uuid="1cf5f7b6-1ec4-4281-bc46-7381d25136b1"/>
@@ -1066,7 +1066,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{devFund}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{devFund} != 0)? $F{devFund}: "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="202" y="0" width="58" height="20" uuid="5453c018-dcd7-4b8e-a14d-c19ff836c9ce"/>
@@ -1079,7 +1079,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{eduFund}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{eduFund} != 0)? $F{eduFund}: "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="318" y="0" width="58" height="20" uuid="4ba22b24-cbf8-4f50-b35c-0a83743469bd"/>
@@ -1092,7 +1092,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{outreachFund}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{outreachFund} != 0)? $F{outreachFund}: "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="434" y="0" width="58" height="20" uuid="29dca920-8f55-478f-b73a-e40b3d244af4"/>
@@ -1105,7 +1105,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{assetsFund}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{assetsFund} != 0)? $F{assetsFund}: "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="376" y="0" width="58" height="20" uuid="34c2b193-6912-4f19-961d-71284a55ef97"/>
@@ -1118,7 +1118,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{affairsFund}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{affairsFund} != 0)? $F{affairsFund}: "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="552" y="0" width="60" height="20" uuid="733f65e1-a3d2-47bd-9191-57bd44b11029"/>
@@ -1131,7 +1131,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{funds}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{funds} != 0)? $F{funds}: "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="612" y="0" width="60" height="20" uuid="da277583-62cf-4e53-9e63-a397e1c46805"/>
@@ -1144,7 +1144,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{culturalFund}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{culturalFund} != 0)? $F{culturalFund}: "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="732" y="0" width="70" height="20" uuid="5acdf40b-ba1f-46f8-b76d-577a23849326"/>
@@ -1157,7 +1157,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="11"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{รวมเงิน}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{รวมเงิน} != 0)? $V{รวมเงิน}: "-"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

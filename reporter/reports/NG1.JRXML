@@ -12,6 +12,11 @@
 	<parameter name="DATE_CURRENT" class="java.util.Date" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
 	</parameter>
+	<parameter name="FACULTY_ID" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="FACULTY_NAME" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA["-"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
 	<parameter name="PERIOD_ID" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
 	</parameter>
@@ -270,7 +275,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{outreachFundTotal}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{outreachFundTotal} != 0)? $V{outreachFundTotal} : "-"]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="492" y="0" width="60" height="20" uuid="e77618fc-d8f9-469a-988b-166f29bd78b3"/>
@@ -283,7 +288,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{devFundTotal}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{devFundTotal} != 0)? $V{devFundTotal} : "-"]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="192" y="0" width="60" height="20" uuid="fad6d8be-61af-4d90-97c0-5e9f0b3ab24d"/>
@@ -296,7 +301,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{eduFundTotal}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{eduFundTotal} != 0)? $V{eduFundTotal} : "-"]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="252" y="0" width="60" height="20" uuid="30886597-49c7-43e9-992d-82b7868d0ebe"/>
@@ -309,7 +314,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{researchFundTotal}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{researchFundTotal} != 0)? $V{researchFundTotal} : "-"]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="372" y="0" width="60" height="20" uuid="f5340a8b-926d-46b2-b39b-78ee95cd0842"/>
@@ -322,7 +327,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{affairsFundTotal}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{affairsFundTotal} != 0)? $V{affairsFundTotal} : "-"]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="132" y="0" width="60" height="20" uuid="b284e919-8e75-495d-aa73-340af7609f70"/>
@@ -335,7 +340,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="12" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{generalFundTotal}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{generalFundTotal} != 0)? $V{generalFundTotal} : "-"]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="432" y="0" width="60" height="20" uuid="ea448bb5-b88d-4b9a-bb9f-c3182033cf93"/>
@@ -348,7 +353,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{assetsFundTotal}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{assetsFundTotal} != 0)? $V{assetsFundTotal} : "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="132" height="20" uuid="4281046f-68c3-44d9-8a76-b1e4ddc50903"/>
@@ -374,7 +379,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{totalTotal}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{totalTotal} != 0)? $V{totalTotal} : "-"]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="612" y="0" width="60" height="20" uuid="ac51e0a4-10a3-48aa-b73c-1a7410fa2a78"/>
@@ -387,7 +392,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{culturalFundTotal}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{culturalFundTotal} != 0)? $V{culturalFundTotal} : "-"]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="552" y="0" width="60" height="20" uuid="9e4cccbf-7e15-43a0-bde0-ba10040e3bd1"/>
@@ -400,7 +405,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{fundsTotal}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{fundsTotal} != 0)? $V{fundsTotal} : "-"]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="672" y="0" width="60" height="20" uuid="988c0814-0887-4d30-b88a-a45fea61057f"/>
@@ -413,7 +418,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{totalFundTotal}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{totalFundTotal} != 0)? $V{totalFundTotal} : "-"]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -630,25 +635,9 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				</textElement>
 				<text><![CDATA[รวม]]></text>
 			</staticText>
-			<staticText>
-				<reportElement style="FBold" x="0" y="100" width="132" height="40" isRemoveLineWhenBlank="true" backcolor="#CCCCCC" uuid="cea96beb-4ec4-4aaf-912a-d13767e94650">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
-				</reportElement>
-				<box leftPadding="2">
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[มหาวิทยาลัยเทคโนโลยีพระจอมเกล้า
-พระนครเหนือ]]></text>
-			</staticText>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="252" y="100" width="60" height="40" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="a51c5ac3-e493-4a12-810b-adae82d64b01">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -659,11 +648,11 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{researchFundTotal_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{researchFundTotal_1} != 0)? $V{researchFundTotal_1} : "-"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="672" y="100" width="60" height="40" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="6b12649d-3cef-48e3-b195-50458e57fb03">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -674,11 +663,11 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{totalFundTotal_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{totalFundTotal_1} != 0)? $V{totalFundTotal_1} : "-"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="132" y="100" width="60" height="40" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="728a9a01-7164-4d17-859a-181e4a7ca934">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -689,11 +678,11 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{generalFundTotal_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{generalFundTotal_1} != 0)? $V{generalFundTotal_1} : "-"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="612" y="100" width="60" height="40" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="13cff6d6-1f08-4a05-a1b2-633c9e95ea90">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -704,11 +693,11 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{culturalFundTotal_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{culturalFundTotal_1} != 0)? $V{culturalFundTotal_1} : "-"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="492" y="100" width="60" height="40" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="569b8eb7-e636-4a12-8f1e-930e57b517aa">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -719,11 +708,11 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{devFundTotal_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{devFundTotal_1} != 0)? $V{devFundTotal_1} : "-"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="192" y="100" width="60" height="40" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="0afaa7b6-a42e-405c-af21-2a56773ca5d9">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -734,11 +723,11 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{eduFundTotal_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{eduFundTotal_1} != 0)? $V{eduFundTotal_1} : "-"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="552" y="100" width="60" height="40" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="510ab14d-cbb7-4932-b9e6-8c9a3e0a6c7b">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -749,11 +738,11 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{fundsTotal_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{fundsTotal_1} != 0)? $V{fundsTotal_1} : "-"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="732" y="100" width="70" height="40" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="552ddaaf-8e4b-4351-a0dd-39be464a9515">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -764,11 +753,11 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{totalTotal_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{totalTotal_1} != 0)? $V{totalTotal_1} : "-"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="312" y="100" width="60" height="40" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="804b0f93-badd-41fe-8f2f-02fc3ba2a318">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -779,11 +768,11 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{outreachFundTotal_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{outreachFundTotal_1} != 0)? $V{outreachFundTotal_1} : "-"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="432" y="100" width="60" height="40" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="f41edeac-b412-4a3e-b906-2a3408a929d6">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -794,11 +783,11 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{assetsFundTotal_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{assetsFundTotal_1} != 0)? $V{assetsFundTotal_1} : "-"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="372" y="100" width="60" height="40" isRemoveLineWhenBlank="true" backcolor="#FFFFFF" uuid="6895815a-4423-453b-8611-2f6fff9d0a38">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -809,7 +798,22 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{affairsFundTotal_1}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{affairsFundTotal_1} != 0)? $V{affairsFundTotal_1} : "-"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" x="0" y="100" width="132" height="40" isRemoveLineWhenBlank="true" uuid="366f221c-6a5c-47d7-84ff-c7fba3fb6b5c">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && ($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FACULTY_NAME}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>
@@ -827,7 +831,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{eduFund}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{eduFund} != 0)? $F{eduFund} : "-"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="372" y="0" width="60" height="20" uuid="ce1e77ee-f3ef-4816-a1d7-bcb06ca95d5e"/>
@@ -840,7 +844,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{affairsFund}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{affairsFund} != 0)? $F{affairsFund} : "-"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="252" y="0" width="60" height="20" uuid="0721846e-01ff-4cfb-ba00-97a16c573ec7"/>
@@ -853,7 +857,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{researchFunds}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{researchFunds} != 0)? $F{researchFunds} : "-"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="312" y="0" width="60" height="20" uuid="3895c4f6-42d7-4f8e-8018-daf8cda5ad01"/>
@@ -866,7 +870,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{outreachFund}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{outreachFund} != 0)? $F{outreachFund} : "-"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="552" y="0" width="60" height="20" uuid="f6cd466a-0f53-4723-af94-98ca317d3c99"/>
@@ -879,7 +883,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{funds}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{funds} != 0)? $F{funds} : "-"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="132" y="0" width="60" height="20" uuid="299a03f8-fb74-4baa-9b2c-43e90d9bcf7f"/>
@@ -892,7 +896,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{generalFund}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{generalFund} != 0)? $F{generalFund} : "-"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="492" y="0" width="60" height="20" uuid="2034fc14-6feb-434c-9b4e-b2612ad786aa"/>
@@ -905,7 +909,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{devFund}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{devFund} != 0)? $F{devFund} : "-"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="432" y="0" width="60" height="20" uuid="83a03e15-f876-43f1-b251-7201a5e948c6"/>
@@ -918,7 +922,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{assetsFund}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{assetsFund} != 0)? $F{assetsFund} : "-"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="672" y="0" width="60" height="20" uuid="d4308c72-9f53-4f55-8ebb-a359e1dd43bc"/>
@@ -931,7 +935,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{totalFund}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{totalFund} != 0)? $V{totalFund} : "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="132" height="20" uuid="682c8fc6-31ae-465d-aed3-8797d66f6407"/>
@@ -957,7 +961,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{total} != 0)? $V{total} : "-"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="612" y="0" width="60" height="20" uuid="7ba73d3c-1ed4-478a-80c5-7af2efa85c77"/>
@@ -970,7 +974,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{culturalFund}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{culturalFund} != 0)? $F{culturalFund} : "-"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
