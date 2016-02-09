@@ -48,6 +48,9 @@ class BudgetHead extends EntityBase {
     /** @Column(type="integer",length=11, name="TrackingStatusId") */
     public $statusId;
 
+    /** @Column(type="integer",length=11, name="DepartmentTrackingStatusId") */
+    public $statusDeptId;
+
     /** @Column(type="boolean", name="IsCoBudget") */
     public $isCoBudget;
 
@@ -97,6 +100,10 @@ class BudgetHead extends EntityBase {
 
     function getStatusId() {
         return $this->statusId;
+    }
+
+    function getStatusDeptId() {
+        return $this->statusDeptId;
     }
 
     function getIsCoBudget() {
@@ -151,9 +158,14 @@ class BudgetHead extends EntityBase {
         $this->statusId = $statusId;
     }
 
+    function setStatusDeptId($statusDeptId) {
+        $this->statusDeptId = $statusDeptId;
+    }
+
     function setIsCoBudget($isCoBudget) {
         $this->isCoBudget = $isCoBudget;
     }
+
 }
 
 ?>

@@ -75,6 +75,9 @@ class Budget143 extends EntityBase {
     /** @Column(type="integer",length=11, name="TrackingStatusId") */
     public $statusId;
 
+    /** @Column(type="integer",length=11, name="DepartmentTrackingStatusId") */
+    public $statusDeptId;
+
     /** @Column(type="text", name="Comment") */
     public $comment;
 
@@ -166,6 +169,10 @@ class Budget143 extends EntityBase {
 
     function getStatusId() {
         return $this->statusId;
+    }
+
+    function getStatusDeptId() {
+        return $this->statusDeptId;
     }
 
     function getComment() {
@@ -264,6 +271,10 @@ class Budget143 extends EntityBase {
         $this->statusId = $statusId;
     }
 
+    function setStatusDeptId($statusDeptId) {
+        $this->statusDeptId = $statusDeptId;
+    }
+
     function setComment($comment) {
         $this->comment = $comment;
     }
@@ -275,6 +286,7 @@ class Budget143 extends EntityBase {
     function setStatus($status) {
         $this->status = $status;
     }
+
 }
 
 ?>
