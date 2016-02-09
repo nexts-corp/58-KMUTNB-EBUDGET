@@ -84,8 +84,8 @@ class Budget144 extends EntityBase {
     /** @Column(type="integer",length=11, name="TrackingStatusId") */
     public $statusId;
 
-    /** @Column(type="integer",length=11, name="DepartmentTrackingStatusId") */
-    public $statusDeptId;
+    /** @Column(type="integer",length=11, name="PlanningTrackingStatusId") */
+    public $statusPlanningId;
 
     /** @Column(type="text", name="Comment") */
     public $comment;
@@ -192,8 +192,8 @@ class Budget144 extends EntityBase {
         return $this->statusId;
     }
 
-    function getStatusDeptId() {
-        return $this->statusDeptId;
+    function getStatusPlanningId() {
+        return $this->statusPlanningId;
     }
 
     function getComment() {
@@ -304,8 +304,8 @@ class Budget144 extends EntityBase {
         $this->statusId = $statusId;
     }
 
-    function setStatusDeptId($statusDeptId) {
-        $this->statusDeptId = $statusDeptId;
+    function setStatusPlanningId($statusPlanningId) {
+        $this->statusPlanningId = $statusPlanningId;
     }
 
     function setComment($comment) {

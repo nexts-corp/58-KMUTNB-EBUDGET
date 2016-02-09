@@ -87,6 +87,9 @@ class BudgetExpense extends EntityBase {
     /** @Column(type="text", name="Comment") */
     public $comment;
 
+    /** @Column(type="integer",length=11, name="PlanningTrackingStatusId") */
+    public $statusPlanningId;
+
     function getId() {
         return $this->id;
     }
@@ -187,6 +190,10 @@ class BudgetExpense extends EntityBase {
         return $this->comment;
     }
 
+    function getStatusPlanningId() {
+        return $this->statusPlanningId;
+    }
+
     function setId($id) {
         $this->id = $id;
     }
@@ -285,6 +292,10 @@ class BudgetExpense extends EntityBase {
 
     function setComment($comment) {
         $this->comment = $comment;
+    }
+
+    function setStatusPlanningId($statusPlanningId) {
+        $this->statusPlanningId = $statusPlanningId;
     }
 
 }
