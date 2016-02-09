@@ -253,14 +253,15 @@
 
 <script type="text/javascript">
     var findNode = {};
-    var listArr = {};
-    var listDetailArr = {};
+    var listDraft = {};
+    var listDetail = {};
     var unit = {};
     var deptId = '{{#department}}{{departmentId}}{{/department}}';
     var typeId = '{{typeId}}';
     var periodCode = '{{year}}';
     $(function () {
         centerForm();
+
         $("#btnApprove").click(function () {
             var result = callAjax("{{_context_path}}/api/actionplan/draft/approve", "post", {departmentId: deptId, status: "Y"}, "json");
             if (result["approve"] == true) {
@@ -285,12 +286,12 @@
                     + '<table id="tableall" class="table table-hover table-bordered">'
                     + '<thead>'
                     + '<tr>'
-                    + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="3">ลำดับ</th>'
-                    + '<th class="text-center col-md-4" style="vertical-align: middle;" rowspan="3">ประเด็นยุทธศาสตร์/เป้าประสงค์/กลยุทธ์/โครงการ/กิจกรรม/ตัวชี้วัด</th>'
+                    + '<th class="text-center" style="vertical-align: middle;" rowspan="3">ลำดับ</th>'
+                    + '<th class="text-center col-md-3" style="vertical-align: middle;" rowspan="3">ประเด็นยุทธศาสตร์/เป้าประสงค์/กลยุทธ์/โครงการ/กิจกรรม/ตัวชี้วัด</th>'
                     + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="3">ค่าเป้าหมายตามตัวชี้วัด โครงการ/กิจกรรม</th>'
                     + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="3">ระยะเวลาดำเนินการ</th>'
                     + '<th class="text-center col-md-4" style="vertical-align: middle;" colspan="4">แหล่งเงินงบประมาณ (บาท)</th>'
-                    + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="3">เครื่องมือ</th>'
+                    + '<th class="text-center col-md-2" style="vertical-align: middle;" rowspan="3">เครื่องมือ</th>'
                     + '</tr>'
                     + '<tr>'
                     + '<th class="text-center" style="vertical-align: middle;" colspan="2">มหาวิทยาลัยจัดสรร</th>'
@@ -312,22 +313,54 @@
 
             $.each(datas["lists"], function (key1, value1) {
                 $.each(value1["issue"], function (key2, value2) {
+                    menu += '<li>'
+                            + '<a href="#tab' + value2["issueSeq"] + '" data-toggle="tab">ประเด็นที่ ' + value2["issueSeq"] + ' ' + value2["issueName"] + '</a>'
+                            + '</li>';
 
-                    contentArr[value1["typeSeq"]] += '<tr data-tt-id="issue' + value2["issueId"] + '" data-seq="' + value2["issueSeq"] + '">'
+                    content += '<div id="tab' + value2["issueSeq"] + '" class="tab-pane">'
+                            + '<table id="table' + value2["issueSeq"] + '" class="table table-hover table-bordered">'
+                            + '<thead>'
+                            + '<tr>'
+                            + '<th class="text-center" style="vertical-align: middle;" rowspan="3">ลำดับ</th>'
+                            + '<th class="text-center col-md-3" style="vertical-align: middle;" rowspan="3">ประเด็นยุทธศาสตร์/เป้าประสงค์/กลยุทธ์/โครงการ/กิจกรรม/ตัวชี้วัด</th>'
+                            + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="3">ค่าเป้าหมายตามตัวชี้วัด โครงการ/กิจกรรม</th>'
+                            + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="3">ระยะเวลาดำเนินการ</th>'
+                            + '<th class="text-center col-md-4" style="vertical-align: middle;" colspan="4">แหล่งเงินงบประมาณ (บาท)</th>'
+                            + '<th class="text-center col-md-2" style="vertical-align: middle;" rowspan="3">เครื่องมือ</th>'
+                            + '</tr>'
+                            + '<tr>'
+                            + '<th class="text-center" style="vertical-align: middle;" colspan="2">มหาวิทยาลัยจัดสรร</th>'
+                            + '<th class="text-center" style="vertical-align: middle;" rowspan="2">งบประมาณแหล่งอื่น</th>'
+                            + '<th class="text-center" style="vertical-align: middle;" rowspan="2">ไม่ใช้งบประมาณ</th>'
+                            + '</tr>'
+                            + '<tr>'
+                            + '<th class="text-center" style="vertical-align: middle;">งปม.แผ่นดิน</th>'
+                            + '<th class="text-center" style="vertical-align: middle;">งปม.เงินรายได้</th>'
+                            + '</tr>'
+                            + '</thead>'
+                            + '<tbody>'
+                            + '<tr>'
+                            + '<td colspan="9" class="text-center">-</td>'
+                            + '</tr>'
+                            + '</tbody>'
+                            + '</table>'
+                            + '</div>';
+
+                    contentArr[value2["issueSeq"]] += '<tr data-tt-id="issue' + value2["issueId"] + '" data-seq="' + value2["issueSeq"] + '">'
                             + '<td class="text-center"></td>'
                             + '<td colspan="8">'
                             + '<span class="text-bold" style="text-decoration: underline;">ประเด็นยุทธศาสตร์ที่ ' + value2['issueSeq'] + ' ' + value2["issueName"] + '</span>'
                             + '</td>'
                             + '</tr>';
                     $.each(value2["target"], function (key3, value3) {
-                        contentArr[value1["typeSeq"]] += '<tr data-tt-id="target' + value3["targetId"] + '" data-tt-parent-id="issue' + value2["issueId"] + '" data-seq="' + value3["targetSeq"] + '" >'
+                        contentArr[value2["issueSeq"]] += '<tr data-tt-id="target' + value3["targetId"] + '" data-tt-parent-id="issue' + value2["issueId"] + '" data-seq="' + value3["targetSeq"] + '" >'
                                 + '<td class="text-center"></td>'
                                 + '<td colspan="8">'
                                 + '<span class="text-bold">เป้าประสงค์ที่ ' + value2["issueSeq"] + '.' + value3["targetSeq"] + ' ' + value3["targetName"] + '</span>'
                                 + '</td>'
                                 + '</tr>';
                         $.each(value3["strategy"], function (key4, value4) {
-                            contentArr[value1["typeSeq"]] += '<tr data-tt-id="strategy' + value4["strategyId"] + '" data-tt-parent-id="target' + value3["targetId"] + '" data-seq="' + value4["strategySeq"] + '" >'
+                            contentArr[value2["issueSeq"]] += '<tr data-tt-id="strategy' + value4["strategyId"] + '" data-tt-parent-id="target' + value3["targetId"] + '" data-seq="' + value4["strategySeq"] + '" >'
                                     + '<td class="text-center"></td>'
                                     + '<td colspan="7">'
                                     + '<span class="text-bold">กลยุทธ์ที่ ' + value3["targetSeq"] + '.' + value4["strategySeq"] + ' ' + value4["strategyName"] + '</span>'
@@ -338,7 +371,7 @@
                                     + '</tr>';
                             if (typeof value4["draft"] !== "undefined" && value4["draft"] !== null) {
                                 $.each(value4["draft"], function (key5, value5) {
-                                    contentArr[value1["typeSeq"]] += '<tr data-tt-id="draft' + value5["draftId"] + '" data-tt-parent-id="strategy' + value4["strategyId"] + '" data-seq="' + value5["projectSeq"] + '" >'
+                                    contentArr[value2["issueSeq"]] += '<tr data-tt-id="draft' + value5["draftId"] + '" data-tt-parent-id="strategy' + value4["strategyId"] + '" data-seq="' + value5["projectSeq"] + '" >'
                                             + '<td class="text-center"></td>'
                                             + '<td>'
                                             + '<span class="text-bold">' + value5["projectSeq"] + ". " + value5["projectName"] + '</span>'
@@ -351,14 +384,16 @@
                                             + '<td class="text-center">' + (value5["noBudget"] ? value5["noBudget"] : "") + '</td>'
                                             + '<td class="text-center">'
                                             + '<button class="btn btn-sm btn-success add" data-pid="' + value5["draftId"] + '" data-pname="draftId"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
+                                            + '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + value5["draftId"] + '" data-pname="draftId"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                            + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + value5["draftId"] + '" data-pname="draftId"><i class="fa fa-trash"></i> ลบ</button>'
                                             + '</td>'
                                             + '</tr>';
                                     if (typeof value5["detail"] !== "undefined" && value5["detail"] !== null) {
                                         $.each(value5["detail"], function (key6, value6) {
-                                            contentArr[value1["typeSeq"]] += '<tr data-tt-id="detail' + value6["detailId"] + '" data-tt-parent-id="draft' + value5["draftId"] + '"  data-seq="' + value6["detailSeq"] + '">'
+                                            contentArr[value2["issueSeq"]] += '<tr data-tt-id="detail' + value6["detailId"] + '" data-tt-parent-id="draft' + value5["draftId"] + '"  data-seq="' + value6["detailSeq"] + '">'
                                                     + '<td class="text-center"></td>'
                                                     + (value5["isActive"] == "Y" ? '<td>' : '<td class="text-primary">') + '- ' + text2html(value6["detailName"]) + '</td>'
-                                                    + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value6["unit"] ? value6["unit"] : "") + '</td>'
+                                                    + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + value6["unit"] + '</td>'
                                                     + '<td class="text-center"></td>'
                                                     + '<td class="text-center"></td>'
                                                     + '<td class="text-center"></td>'
@@ -377,10 +412,11 @@
                                                     + '</div>'
                                                     + '</td>'
                                                     + '</tr>';
-                                            listDetailArr[value6["detailId"]] = value6;
+                                            listDetail[value6["detailId"]] = value6;
                                         });
                                     }
-                                    listArr[value5["draftId"]] = value5;
+                                    listDraft[value5["draftId"]] = value5;
+                                    listDraft[value5["draftId"]]["issueSeq"] = value2["issueSeq"];
                                 });
                             }
                         });
@@ -388,6 +424,7 @@
 
                 });
                 //   });
+                //console.log(listDraft);
                 $("#tabMenu").html(menu);
                 $("#tabContent").html(content);
                 var contentAll = '';
@@ -404,40 +441,7 @@
                     expandable: true,
                     initialState: "expanded"
                 });
-                $("button.add").unbind().click(function () {
-                    var pId = $(this).attr("data-pid");
-                    var pName = $(this).attr("data-pname");
-                    var formName;
-                    if (pName == "strategyId") {
-                        formName = "Draft";
-                    } else {
-                        formName = "Detail";
-                    }
-                    // reset form for new insert
 
-                    $("#loadingForm").html('');
-                    $("#form" + formName).trigger('reset');
-                    $("#form" + formName + " [data-lock=Y]").each(function () {
-                        $(this).attr("disabled", false);
-                    });
-                    $("#dialog" + formName).modal("show");
-                    //  listsKpi(pId);
-                    $("button.save" + formName).unbind().click(function () {
-                        var isValid = true;
-                        $('#form' + formName + ' input[required]').each(function () {
-                            if ($(this).val() == "")
-                                isValid = false;
-                        });
-                        if (isValid) {
-                            var fdata = dataObject(pId, pName, null);
-                            //console.log(fdata);
-                            draftInsert(fdata);
-
-                        } else {
-                            alert("กรุณากรอกข้อมูลให้ครบ");
-                        }
-                    });
-                });
 
                 centerAction();
             });
@@ -448,24 +452,65 @@
     }
 
     function centerAction() {
+        $("button.add").unbind().click(function () {
+            var pId = $(this).attr("data-pid");
+            var pName = $(this).attr("data-pname");
+            var formName;
+            if (pName == "strategyId") {
+                formName = "Draft";
+            } else {
+                formName = "Detail";
+            }
+            // reset form for new insert
+
+            $("#loadingForm").html('');
+            $("#form" + formName).trigger('reset');
+            $("#form" + formName + " [data-lock=Y]").each(function () {
+                $(this).attr("disabled", false);
+            });
+            $("#dialog" + formName).modal("show");
+            //  listsKpi(pId);
+            $("button.save" + formName).unbind().click(function () {
+                var isValid = true;
+                $('#form' + formName + ' input[required]').each(function () {
+                    if ($(this).val() == "")
+                        isValid = false;
+                });
+                if (isValid) {
+                    var fdata = dataObject(pId, pName, null);
+
+                    //console.log(fdata);
+                    draftInsert(fdata);
+
+                } else {
+                    alert("กรุณากรอกข้อมูลให้ครบ");
+                }
+            });
+        });
         $("button.edit").unbind().click(function () {
             var pId = $(this).attr("data-pid");
-            var draftId = $(this).attr("data-id");
+            var pName = $(this).attr("data-pname");
+            var formName;
+            if (pName == "strategyId") {
+                formName = "Draft";
+            } else {
+                formName = "Detail";
+            }
             var edit = $(this).attr("data-edit");
             // reset form for new insert
             $("#loadingForm").html('');
-            $("#form").trigger('reset');
-            $("#panelForm").modal("show");
-            //   console.log(listArr[draftId]);
-            $("#form input[type=text], #form textarea, #form select").each(function () {
+            $("#form" + formName).trigger('reset');
+            $("#dialog" + formName).modal("show");
+            //   console.log(listDraft[draftId]);
+            $("#form" + formName + " input[type=text], #form" + formName + " textarea, #form" + formName + " select").each(function () {
                 var fid = $(this).attr("id");
-                var lock = $(this).attr("data-lock");
-                $("#" + fid).val(listArr[draftId][fid]);
-                if (edit == "N" && lock == "Y") {
-                    $("#" + fid).attr("disabled", true);
-                } else {
-                    $("#" + fid).attr("disabled", false);
-                }
+              //  var lock = $(this).attr("data-lock");
+                $("#" + fid).val(listDraft[draftId][fid]);
+//                if (edit == "N" && lock == "Y") {
+//                    $("#" + fid).attr("disabled", true);
+//                } else {
+//                    $("#" + fid).attr("disabled", false);
+//                }
             });
             $("button.save").unbind("click").click(function () {
                 var isValid = true;
@@ -490,7 +535,7 @@
                 if ($(this).attr("id")) {
                     var aId = $(this).attr("id");
                     var name = aId.replace('Del', '');
-                    $("#" + aId).html(getTag(listArr[draftId][name], "-"));
+                    $("#" + aId).html(getTag(listDraft[draftId][name], "-"));
                 }
             });
             $("button.save").unbind("click").click(function () {
@@ -498,6 +543,24 @@
                 centerDelete(draftId);
             });
         });
+    }
+    function findSeq(level, id) {
+        var i = 1;
+        var idName, seq = 0;
+        idName = $("tr[data-tt-id=" + level + id + "]").attr("data-tt-parent-id");
+        if (typeof idName !== "undefined") {
+            while (i == 1) {
+                var pName = $("tr[data-tt-id=" + idName + "]").attr("data-tt-parent-id");
+                if (typeof pName == "undefined") {
+                    seq = $("tr[data-tt-id=" + idName + "]").attr("data-seq");
+                    i = 0;
+                } else {
+                    idName = pName;
+                }
+            }
+        }
+        //console.log(seq);
+        return seq;
     }
 
     function draftInsert(fdata) {
@@ -508,12 +571,11 @@
             var datas = callAjax("{{_context_path}}/api/actionplan/draft/insert", "post", dataJSONEN, "json");
             var data = datas["insert"];
             var type = datas["type"];
+
             if (typeof data !== "undefined" && data !== null) {
                 if (data != false && type == "draft") {
-
                     $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
-                    listArr[data["draftId"]] = data;
-                    var typeSeq = data["typeSeq"];
+                    listDraft[data["draftId"]] = data;
                     var input = "";
                     var node, node2;
                     input += '<tr data-tt-id="draft' + data["draftId"] + '" data-tt-parent-id="strategy' + data["strategyId"] + '" data-seq="' + data["projectSeq"] + '" >'
@@ -529,28 +591,30 @@
                             + '<td class="text-center">' + (data["noBudget"] ? data["noBudget"] : "") + '</td>'
                             + '<td class="text-center">'
                             + '<button class="btn btn-sm btn-success add" data-pid="' + data["draftId"] + '" data-pname="draftId"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
+                            + '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + data["draftId"] + '" data-pname="draftId"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                            + '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["draftId"] + '" data-pname="draftId"><i class="fa fa-trash"></i> ลบ</button>'
                             + '</td>'
                             + '</tr>';
+                    var seq = findSeq("strategy", data["strategyId"]);
                     node = $("#tableall").treetable("node", "strategy" + data["strategyId"]);
-                    //     node2 = $("#table" + typeSeq).treetable("node", "type" + data["typeId"]);
+                    node2 = $("#table" + seq).treetable("node", "strategy" + data["strategyId"]);
 
                     $("#tableall").treetable("loadBranch", node, input);
-                    // $("#table" + typeSeq).treetable("loadBranch", node2, input);
+                    $("#table" + seq).treetable("loadBranch", node2, input);
                     $("#tableall").treetable("sortBranch", node);
-                    // $("#table" + typeSeq).treetable("sortBranch", node2);
+                    $("#table" + seq).treetable("sortBranch", node2);
                     $("#dialogDraft").modal("hide");
-                    // centerAction();
+                    centerAction();
                 }
                 else if (data != false && type == "detail") {
                     $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
-                    listArr[data["detailId"]] = data;
-                    var typeSeq = data["typeSeq"];
+                    listDraft[data["detailId"]] = data;
                     var input = "";
                     var node, node2;
                     input += '<tr data-tt-id="detail' + data["detailId"] + '" data-tt-parent-id="draft' + data["draftId"] + '"  data-seq="' + data["detailSeq"] + '">'
                             + '<td class="text-center"></td>'
                             + (data["isActive"] == "Y" ? '<td>' : '<td class="text-primary">') + '- ' + text2html(data["detailName"]) + '</td>'
-                            + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["unit"] ? data["unit"] : "") + '</td>'
+                            + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + data["unit"] + '</td>'
                             + '<td class="text-center"></td>'
                             + '<td class="text-center"></td>'
                             + '<td class="text-center"></td>'
@@ -569,13 +633,14 @@
                             + '</div>'
                             + '</td>'
                             + '</tr>';
+                    var seq = findSeq("draft", data["draftId"]);
                     node = $("#tableall").treetable("node", "draft" + data["draftId"]);
-                    //     node2 = $("#table" + typeSeq).treetable("node", "type" + data["typeId"]);
+                    node2 = $("#table" + seq).treetable("node", "draft" + data["draftId"]);
 
                     $("#tableall").treetable("loadBranch", node, input);
-                    // $("#table" + typeSeq).treetable("loadBranch", node2, input);
+                    $("#table" + seq).treetable("loadBranch", node2, input);
                     $("#tableall").treetable("sortBranch", node);
-                    // $("#table" + typeSeq).treetable("sortBranch", node2);
+                    $("#table" + seq).treetable("sortBranch", node2);
                     $("#dialogDetail").modal("hide");
                 }
                 else {
@@ -596,7 +661,7 @@
             if (typeof data !== "undefined" && data !== null) {
                 if (data != false) {
                     $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
-                    listArr[data["draftId"]] = data;
+                    listDraft[data["draftId"]] = data;
                     // var typeSeq = $("tr[data-tt-id=type" + data["typeId"] + "]").attr("data-tt-parent-id").substr(4);
                     var typeSeq = data["typeSeq"];
                     var input = "";
@@ -677,7 +742,7 @@
         if (typeof datas !== "undefined" && datas !== null) {
             if (datas["delete"] == true) {
                 $("#tableall").treetable("removeNode", "draft" + draftId);
-                var typeSeq = listArr[draftId]["typeSeq"];
+                var typeSeq = listDraft[draftId]["typeSeq"];
                 $("#table" + typeSeq).treetable("removeNode", "draft" + draftId);
                 $("#panelDeleteForm").modal("hide");
             }
@@ -688,16 +753,16 @@
         var fParam = {};
         fParam[pName] = pId;
         var formName;
-        console.log(pName);
+        // console.log(pName);
         if (pName == "strategyId") {
             formName = "formDraft";
             fParam["departmentId"] = deptId;
             fParam["typeId"] = typeId;
             fParam["periodCode"] = periodCode;
-            console.log("draft");
+            //   console.log("draft");
         } else {
             formName = "formDetail";
-            console.log("detail");
+            // console.log("detail");
         }
         $("#" + formName + " select, #" + formName + " input[type=text], #" + formName + " textarea").each(function () {
             var name = $(this).attr("name");
