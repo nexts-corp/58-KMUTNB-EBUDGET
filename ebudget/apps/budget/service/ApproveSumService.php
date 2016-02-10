@@ -37,9 +37,9 @@ class ApproveSumService extends CServiceBase implements IApproveSumService
     {
 
         $sql = 'exec SP_SUM_BG ' . $budgetPeriodId . ',"G"';
-        $status = $this->datacontext->pdoQuery($sql);
+        $status = $this->datacontext->pdoExecute($sql);
 
-        if ($status != -1 && $status != false) {
+        if ($status) {
             return true;
         } else {
             echo $this->datacontext->getLastMessage();
@@ -55,7 +55,7 @@ class ApproveSumService extends CServiceBase implements IApproveSumService
         //updateStatusSummarize
 
         $sql = "UPDATE Budget_Summarize SET BudgetStatus = 'N' WHERE BudgetPeriodId = " . $year;
-        $status = $this->datacontext->pdoQuery($sql);
+        $status = $this->datacontext->pdoUpdate($sql);
         if ($status != -1 && $status != false) {
             //copy to FinalBg
             $sqlDelete = '';//140 - 146
@@ -68,11 +68,11 @@ class ApproveSumService extends CServiceBase implements IApproveSumService
                 $sqlUpdate .= "UPDATE Final_14" . $i . " SET Status = 'Y' WHERE BudgetPeriodId = " . $year . "; "; //Update status =y
             }
 
-            $status = $this->datacontext->pdoQuery($sqlDelete);
+            $status = $this->datacontext->pdoDelete($sqlDelete);
             if ($status != -1) {
-                $status = $this->datacontext->pdoQuery($sqlInsert);
+                $status = $this->datacontext->pdoInsert($sqlInsert);
                 if ($status != -1) {
-                    $status = $this->datacontext->pdoQuery($sqlUpdate);
+                    $status = $this->datacontext->pdoUpdate($sqlUpdate);
                     if ($status != -1) {
                         return true;
                     } else {

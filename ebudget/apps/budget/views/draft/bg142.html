@@ -179,7 +179,7 @@
                                             <label class="control-label req" for="occupy">มีคนครอง :</label>
 
                                             <div>
-                                                <input type="text" id="occupy" name="occupy"
+                                                <input type="number" min="0" id="occupy" name="occupy"
                                                        class="form-control input-sm" required>
                                             </div>
                                         </div>
@@ -187,16 +187,15 @@
                                             <label class="control-label req" for="vacancy">อัตราว่าง :</label>
 
                                             <div>
-                                                <input type="text" id="vacancy" name="vacancy"
-                                                       class="form-control input-sm" required>
+                                                <input type="number" min="0" id="vacancy" name="vacancy" class="form-control input-sm" required>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label req" for="salaryTotal">จำนวนเงินทั้งปี :</label>
 
                                             <div>
-                                                <input type="text" min="0" id="salaryTotal" name="salaryTotal"
-                                                       class="form-control input-sm" required>
+                                                <input type="text" readonly="readonly" id="salaryTotal" name="salaryTotal"
+                                                       class="text-right col-md-12" required />
                                             </div>
                                         </div>
                                     </div>
@@ -445,7 +444,7 @@
                 $("button.addList").unbind("click").click(function () {
                     var headerId = $(this).attr("data-hid");
                     var parentId = $(this).attr("data-pid");
-
+                    eventKeyPress();
                     $('.summernote').code('');
 
                     // reset form for new insert
@@ -658,14 +657,14 @@
             var headerId = $(this).attr("data-hid");
             var parentId = $(this).attr("data-pid");
             var id = $(this).attr("data-id");
-
+            eventKeyPress();
             // reset form for new insert
             $("#modalHead").empty().html(typeName142Arr[parentId]);
             $("#loadingForm").html('');
             $("#form").trigger('reset');
             $("#panelForm").modal("show");
 
-            $("#form input[type='text']").each(function () {
+            $("#form input[type='text'],#form input[type='number']").each(function () {
                 var fid = $(this).attr("id");
                 $("#" + fid).val(list142Arr[id][fid]);
             });
@@ -857,6 +856,33 @@
 
     function goBack() {
         window.history.back();
+    }
+
+    function eventKeyPress() {
+
+        $('#salary').keyup(function () {
+            var occupy = parseFloat($("#occupy").val());
+            var salary = parseFloat($(this).val());
+            if (occupy == "" || occupy == undefined || isNaN(occupy)) {
+                occupy = 0;
+            }
+            if (salary == "" || salary == undefined || isNaN(salary)) {
+                salary = 0;
+            }
+            $("#salaryTotal").val((occupy * salary)*12);
+        });
+
+        $('#occupy').keyup(function () {
+            var salary = parseFloat($("#salary").val());
+            var occupy = parseFloat($(this).val());
+            if (salary == "" || salary == undefined || isNaN(salary)) {
+                salary = 0;
+            }
+            if (occupy == "" || occupy == undefined || isNaN(occupy)) {
+                occupy = 0;
+            }
+            $("#salaryTotal").val((salary * occupy)*12);
+        });
     }
 
 </script>
