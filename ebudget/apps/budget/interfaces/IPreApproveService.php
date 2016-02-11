@@ -4,8 +4,8 @@ namespace apps\budget\interfaces;
 
 /**
  * @name IPreapproveService
- * @uri /approve
- * @description ApproveService
+ * @uri /preapprove
+ * @description PreapproveService
  */
 interface IPreapproveService{
     /**

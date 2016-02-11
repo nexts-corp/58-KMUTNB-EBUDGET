@@ -191,6 +191,11 @@ class PreapproveService extends CServiceBase implements IPreapproveService {
 
                     $object->setId($value->id);
                     $object->setStatusId($status);
+
+                    if($status == 3){
+                        $object->setStatusPlanningId(2);
+                    }
+
                     if (isset($value->comment))
                         $object->setComment($value->comment);
                 }
@@ -260,6 +265,7 @@ class PreapproveService extends CServiceBase implements IPreapproveService {
                 $bgh = new BudgetHead();
                 $bgh->setId($id);
                 $bgh->setStatusId(5);
+                $bgh->setStatusPlanningId(2);
                 if (!$this->datacontext->updateObject($bgh)) {
                     $result = false;
                 }

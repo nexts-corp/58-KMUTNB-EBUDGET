@@ -510,8 +510,8 @@
             
             var datas = callAjax("{{_context_path}}/api/budget/preapprove/updateStatus", "post", jsonEncode(jdata), "json");
             if(datas.results.status==true){
-                    //window.open('{{_context_path}}/api/budget/view/approveAll');
-                window.location.href = '{{_context_path}}/api/budget/view/approveAll';
+                    //window.open('{{_context_path}}/api/budget/view/preapproveAll');
+                window.location.href = '{{_context_path}}/api/budget/view/preapproveAll';
             }else{
                 
                  swal("เกิดข้อผิดพลาด", "ไม่สามารถประเมินงบประมานผ่านทั้งหมดได้)", "error");
