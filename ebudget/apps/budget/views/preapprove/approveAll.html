@@ -204,7 +204,7 @@
                 var l3dPlanId = $("#l3dPlanId").val();
                 var fundgroupId = $("#fundgroupId").val();
                 var deptId = $("#deptId").val();
-                window.location = "{{_context_path}}/api/budget/view/approve/" + formId + "/" + l3dPlanId + "/" + fundgroupId + "/" + deptId;
+                window.location = "{{_context_path}}/api/budget/view/preapprove/" + formId + "/" + l3dPlanId + "/" + fundgroupId + "/" + deptId;
             });
         });
     });
@@ -409,7 +409,7 @@
                 var l3dPlanId = data["l3dPlanId"];
                 var fundgroupId = data["fundgroupId"];
                 var deptId = data["deptId"];
-                window.location = "{{_context_path}}/api/budget/view/approve/" + formId + "/" + l3dPlanId + "/" + fundgroupId + "/" + deptId;
+                window.location = "{{_context_path}}/api/budget/view/preapprove/" + formId + "/" + l3dPlanId + "/" + fundgroupId + "/" + deptId;
             });
 
             $("#table").on("click", "button.delete", function () {
@@ -420,7 +420,7 @@
                 var l3dPlanId = data["l3dPlanId"];
                 var fundgroupId = data["fundgroupId"];
                 var deptId = data["deptId"];
-                window.location = "{{_context_path}}/api/budget/view/approve/" + formId + "/" + l3dPlanId + "/" + fundgroupId + "/" + deptId;
+                window.location = "{{_context_path}}/api/budget/view/preapprove/" + formId + "/" + l3dPlanId + "/" + fundgroupId + "/" + deptId;
             });
         }
         BtnStatus = true;
