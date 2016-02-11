@@ -202,10 +202,10 @@
                         <div class="modal-body">
                             <table>
                                 <tbody>
-                                <tr>
-                                    <td class="col-md-5 text-right text-bold" style="vertical-align: top;">หน่วยงาน : </td>
-                                    <td class="col-md-7"><span id="deptNameDel"></span></td>
-                                </tr>
+                                    <tr>
+                                        <td class="col-md-5 text-right text-bold" style="vertical-align: top;">หน่วยงาน : </td>
+                                        <td class="col-md-7"><span id="deptNameDel"></span></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -234,10 +234,10 @@
                         <div class="modal-body">
                             <table>
                                 <tbody>
-                                <tr>
-                                    <td class="col-md-5 text-right text-bold" style="vertical-align: top;">โครงการ : </td>
-                                    <td class="col-md-7"><span id="projNameDel"></span></td>
-                                </tr>
+                                    <tr>
+                                        <td class="col-md-5 text-right text-bold" style="vertical-align: top;">โครงการ : </td>
+                                        <td class="col-md-7"><span id="projNameDel"></span></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -272,13 +272,13 @@
     var dataDept = '';
     var dataDeptAll = '';
 
-    $(function() {
+    $(function () {
         listsRevenue();
         listsProject();
 
         $('.numeric').numeric({
-            decimal : ".",
-            negative : false,
+            decimal: ".",
+            negative: false,
             scale: 3
         });
 
@@ -289,7 +289,7 @@
             $("#loadingAdd").html('');
             $("#budgetTotal").html('0.00');
 
-            if(callDept == 0){
+            if (callDept == 0) {
                 dataDept = listsDepartment();
                 callDept = 1;
             }
@@ -307,7 +307,7 @@
                 if (isValid) {
                     var fParam = {};
 
-                    $("#formRevenue select[required], #formRevenue input[required]").each(function(){
+                    $("#formRevenue select[required], #formRevenue input[required]").each(function () {
                         var name = $(this).attr("name");
                         var value = $(this).val();
                         fParam[name] = value;
@@ -328,7 +328,7 @@
             $("#formProject")[0].reset();
             $("#loadingAdd2").html('');
 
-            if(callDeptAll == 0){
+            if (callDeptAll == 0) {
                 dataDeptAll = listsDepartmentAll();
                 callDeptAll = 1;
             }
@@ -337,29 +337,29 @@
 
             $("#formDept").html('<div class="form-group">'
                     + '<div class="col-md-7">'
-                        + '<select class="form-control input-sm deptId" name="deptId" required>'
-                        + '</select>'
+                    + '<select class="form-control input-sm deptId" name="deptId" required>'
+                    + '</select>'
                     + '</div>'
                     + '<div class="col-md-4">'
-                        + '<input class="form-control input-sm text-right" name="deptValue" placeholder="จำนวนเงิน (บาท)" required>'
+                    + '<input class="form-control input-sm text-right" name="deptValue" placeholder="จำนวนเงิน (บาท)" required>'
                     + '</div>'
                     + '<button class="btn btn-success addDept"><i class="fa fa-plus-circle"></i></button>'
-                + '</div>');
-
-            $("button.addDept").unbind().click(function() {
-                $("#formDept").append('<div class="form-group">'
-                        + '<div class="col-md-7">'
-                            + '<select class="form-control input-sm" name="deptId" id="deptId" required>'
-                                + dataDeptAll
-                            + '</select>'
-                        + '</div>'
-                        + '<div class="col-md-4">'
-                            + '<input class="form-control input-sm text-right" name="deptValue" placeholder="จำนวนเงิน (บาท)" required>'
-                        + '</div>'
-                        + '<button class="btn btn-danger delDept"><i class="fa fa-trash"></i></button>'
                     + '</div>');
 
-                $('button.delDept').unbind().click(function() {
+            $("button.addDept").unbind().click(function () {
+                $("#formDept").append('<div class="form-group">'
+                        + '<div class="col-md-7">'
+                        + '<select class="form-control input-sm" name="deptId" id="deptId" required>'
+                        + dataDeptAll
+                        + '</select>'
+                        + '</div>'
+                        + '<div class="col-md-4">'
+                        + '<input class="form-control input-sm text-right" name="deptValue" placeholder="จำนวนเงิน (บาท)" required>'
+                        + '</div>'
+                        + '<button class="btn btn-danger delDept"><i class="fa fa-trash"></i></button>'
+                        + '</div>');
+
+                $('button.delDept').unbind().click(function () {
                     $(this).parent('div.form-group').remove();
                 });
             });
@@ -375,7 +375,7 @@
                     var deptValueArr = [];
                     var deptIdArr = [];
 
-                    $.each($("#formDept > div.form-group"), function(){
+                    $.each($("#formDept > div.form-group"), function () {
                         deptValueArr.push($(this).find("input[name=deptValue]").val());
                         deptIdArr.push($(this).find("select[name=deptId]").val())
                     });
@@ -389,12 +389,12 @@
 
     });
 
-    function listsRevenue(){
+    function listsRevenue() {
         $("#tab-budget table tbody").html('<tr><td colspan="6" class="text-center"><i class="fa fa-spin fa-cog"></i> Loading...</td>');
 
-        setTimeout(function(){
+        setTimeout(function () {
             var datas = callAjax("{{_context_path}}/api/revenue/planning/fetchRevenue", "post", {}, "json");
-            if(typeof datas !== "undefined" && datas !== null){
+            if (typeof datas !== "undefined" && datas !== null) {
                 var dataSet = [];
 
                 var sumEducation = 0;
@@ -404,7 +404,7 @@
                 listsArr = {};
                 deptArr = {};
 
-                $.each(datas["lists"], function(key, val){
+                $.each(datas["lists"], function (key, val) {
                     dataSet.push(val);
 
                     listsArr[val["id"]] = val;
@@ -437,7 +437,7 @@
                             "targets": 2,
                             "data": "budgetEducation",
                             "sClass": "text-right col-lg-2",
-                            "render": function(data){
+                            "render": function (data) {
                                 return accounting.formatNumber(data, 2, ",", ".");
                             }
                         },
@@ -445,7 +445,7 @@
                             "targets": 3,
                             "data": "budgetService",
                             "sClass": "text-right col-lg-2",
-                            "render": function(data){
+                            "render": function (data) {
                                 return accounting.formatNumber(data, 2, ",", ".");
                             }
                         },
@@ -453,7 +453,7 @@
                             "targets": 4,
                             "data": "budgetTotal",
                             "sClass": "text-right col-lg-2",
-                            "render": function(data){
+                            "render": function (data) {
                                 return accounting.formatNumber(data, 2, ",", ".");
                             }
                         },
@@ -461,9 +461,9 @@
                             "targets": 5,
                             "data": "id",
                             "sClass": "text-center col-lg-1",
-                            "render": function(data){
-                                var content = '<button class="btn btn-warning edit" title="แก้ไข" data-id="'+data+'"><i class="fa fa-pencil"></i></button>&nbsp'
-                                        + '<button class="btn btn-default delete" title="ลบ" data-id="'+data+'"><i class="fa fa-trash"></i></button>';
+                            "render": function (data) {
+                                var content = '<button class="btn btn-warning edit" title="แก้ไข" data-id="' + data + '"><i class="fa fa-pencil"></i></button>&nbsp'
+                                        + '<button class="btn btn-default delete" title="ลบ" data-id="' + data + '"><i class="fa fa-trash"></i></button>';
                                 return content;
                             }
                         }
@@ -481,7 +481,7 @@
                 $("#tab-budget table tfoot").find("th").eq(2).html(accounting.formatNumber(sumService, 2, ",", "."));
                 $("#tab-budget table tfoot").find("th").eq(3).html(accounting.formatNumber(sumTotal, 2, ",", "."));
 
-                $("#tab-budget table").off("click", "button.edit").on("click", "button.edit", function(){
+                $("#tab-budget table").off("click", "button.edit").on("click", "button.edit", function () {
                     var id = $(this).attr("data-id");
                     $("#revenuePanel").modal("show");
 
@@ -489,7 +489,7 @@
                     $("#loadingAdd").html('');
                     $("#budgetTotal").html('0.00');
 
-                    $("#deptId").html('<option value="'+listsArr[id]["deptId"]+'" selected="selected">'+listsArr[id]["deptName"]+'</option>').select2();
+                    $("#deptId").html('<option value="' + listsArr[id]["deptId"] + '" selected="selected">' + listsArr[id]["deptName"] + '</option>').select2();
 
                     calNumeric();
                     $("#budgetEducation").val(listsArr[id]["budgetEducation"]);
@@ -504,7 +504,7 @@
                         if (isValid) {
                             var fParam = {id: id};
 
-                            $("#formRevenue select[required], #formRevenue input[required]").each(function(){
+                            $("#formRevenue select[required], #formRevenue input[required]").each(function () {
                                 var name = $(this).attr("name");
                                 var value = $(this).val();
                                 fParam[name] = value;
@@ -519,7 +519,7 @@
                     });
                 });
 
-                $("#tab-budget table").off("click", "button.delete").on("click", "button.delete", function(){
+                $("#tab-budget table").off("click", "button.delete").on("click", "button.delete", function () {
                     $("#revenueDelete").modal("show");
 
                     var id = $(this).attr("data-id");
@@ -529,7 +529,7 @@
                     $("#loadingDel").html('');
                     $("#deptNameDel").html(data["deptName"]);
 
-                    $("button.save").unbind().click(function(){
+                    $("button.save").unbind().click(function () {
                         deleteRevenue(id);
                     });
                 });
@@ -537,72 +537,72 @@
         }, 0);
     }
 
-    function insertRevenue(dataJSONEN){
+    function insertRevenue(dataJSONEN) {
         $("#loadingAdd").html("กำลังบันทึกข้อมูล...");
 
-        setTimeout(function() {
+        setTimeout(function () {
             var datas = callAjax("{{_context_path}}/api/revenue/planning/addRevenue", "post", dataJSONEN, "json");
             if (typeof datas !== "undefined" && datas !== null) {
-                if(datas["add"] == true){
+                if (datas["add"] == true) {
                     $("#loadingAdd").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
-                    setTimeout(function(){
+                    setTimeout(function () {
                         $("#revenuePanel").modal("hide");
                         listsRevenue();
                     }, 200);
                 }
-                else{
+                else {
                     $("#loadingAdd").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
                 }
             }
         }, 0);
     }
 
-    function editRevenue(dataJSONEN){
+    function editRevenue(dataJSONEN) {
         $("#loadingAdd").html("กำลังบันทึกข้อมูล...");
 
-        setTimeout(function() {
+        setTimeout(function () {
             var datas = callAjax("{{_context_path}}/api/revenue/planning/updateRevenue", "post", dataJSONEN, "json");
             if (typeof datas !== "undefined" && datas !== null) {
-                if(datas["update"] == true){
+                if (datas["update"] == true) {
                     $("#loadingAdd").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
-                    setTimeout(function(){
+                    setTimeout(function () {
                         $("#revenuePanel").modal("hide");
                         listsRevenue();
                     }, 200);
                 }
-                else{
+                else {
                     $("#loadingAdd").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
                 }
             }
         }, 0);
     }
 
-    function deleteRevenue(id){
+    function deleteRevenue(id) {
         $("#loadingDel").html("กำลังบันทึกข้อมูล...");
 
-        setTimeout(function() {
+        setTimeout(function () {
             var datas = callAjax("{{_context_path}}/api/revenue/planning/deleteRevenue", "post", {id: id}, "json");
             if (typeof datas !== "undefined" && datas !== null) {
-                if(datas["delete"] == true){
+                if (datas["delete"] == true) {
                     $("#loadingDel").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
-                    setTimeout(function(){
+                    setTimeout(function () {
                         $("#deleteForm").modal("hide");
                         listsRevenue();
                     }, 200);
                 }
-                else{
+                else {
                     $("#loadingDel").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
                 }
             }
         }, 0);
     }
 
-    function listsProject(){
+    function listsProject() {
         $("#tab-project table tbody").html('<tr><td colspan="4" class="text-center"><i class="fa fa-spin fa-cog"></i> Loading...</td>');
 
-        setTimeout(function(){
+        setTimeout(function () {
             var datas = callAjax("{{_context_path}}/api/revenue/planning/fetchProject", "post", {}, "json");
-            if(typeof datas !== "undefined" && datas !== null){
+            if (typeof datas !== "undefined" && datas !== null) {
                 var dataSet = [];
 
                 var sumTotal = 0;
@@ -610,13 +610,15 @@
 
                 listsArrProj = {};
 
-                $.each(datas["lists"], function(key, val){
+                $.each(datas["lists"], function (key, val) {
                     dataSet.push(val);
 
-                    if (!listsArrProj[val["headId"]]) listsArrProj[val["headId"]] = [];
+                    if (!listsArrProj[val["headId"]])
+                        listsArrProj[val["headId"]] = [];
                     listsArrProj[val["headId"]].push(val);
 
-                    if (!sumGroup[val["projName"]]) sumGroup[val["projName"]] = 0;
+                    if (!sumGroup[val["projName"]])
+                        sumGroup[val["projName"]] = 0;
                     sumGroup[val["projName"]] += parseFloat(val["deptValue"]);
 
                     sumTotal += parseFloat(val["deptValue"]);
@@ -627,30 +629,30 @@
                 var t = $("#tab-project table").DataTable({
                     "destroy": true,
                     "bSort": false,
-                    "data" : dataSet,
-                    "drawCallback": function ( oSettings ) {
+                    "data": dataSet,
+                    "drawCallback": function (oSettings) {
                         var api = this.api();
-                        var rows = api.rows({page:'current'}).nodes();
+                        var rows = api.rows({page: 'current'}).nodes();
                         var lastProj = null;
 
                         var count = 0;
 
                         //Calculates the total of the column
-                        api.column(0, {page:'current'}).data().each(function(group, i) {
+                        api.column(0, {page: 'current'}).data().each(function (group, i) {
                             var proj = listsArrProj[group][0]["projName"];
                             var head = listsArrProj[group][0]["headId"];
 
                             if (lastProj !== proj) {
                                 $(rows).eq(i).before('<tr>'
-                                        + '<td class="text-bold text-center">'+(++count)+'</td>'
-                                        + '<td class="text-bold">'+proj+'</td>'
-                                        + '<td class="text-bold text-right">'+accounting.formatNumber(sumGroup[proj], 2, ",", ".")+'</td>'
+                                        + '<td class="text-bold text-center">' + (++count) + '</td>'
+                                        + '<td class="text-bold">' + proj + '</td>'
+                                        + '<td class="text-bold text-right">' + accounting.formatNumber(sumGroup[proj], 2, ",", ".") + '</td>'
                                         + '<td class="text-bold">'
-                                            + '<button class="btn btn-warning edit" title="แก้ไข" data-id="'+head+'"><i class="fa fa-pencil"></i></button>&nbsp'
-                                            + '<button class="btn btn-default delete" title="ลบ" data-id="'+head+'"><i class="fa fa-trash"></i></button>'
+                                        + '<button class="btn btn-warning edit" title="แก้ไข" data-id="' + head + '"><i class="fa fa-pencil"></i></button>&nbsp'
+                                        + '<button class="btn btn-default delete" title="ลบ" data-id="' + head + '"><i class="fa fa-trash"></i></button>'
                                         + '</td>'
-                                    + '</tr>'
-                                );
+                                        + '</tr>'
+                                        );
                             }
                             lastProj = proj;
                         });
@@ -662,7 +664,7 @@
                             "orderable": false,
                             "data": "headId",
                             "sClass": "text-center col-lg-1",
-                            "render": function(data){
+                            "render": function (data) {
                                 return "";
                             }
                         },
@@ -675,7 +677,7 @@
                             "targets": 2,
                             "data": "deptValue",
                             "sClass": "text-right col-lg-3",
-                            "render": function(data){
+                            "render": function (data) {
                                 return accounting.formatNumber(data, 2, ",", ".");
                             }
                         },
@@ -683,7 +685,7 @@
                             "targets": 3,
                             "data": "id",
                             "sClass": "text-center col-lg-1",
-                            "render": function(data){
+                            "render": function (data) {
                                 return "";
                             }
                         }
@@ -693,7 +695,7 @@
                 //sum footer
                 $("#tab-project table tfoot").find("th").eq(1).html(accounting.formatNumber(sumTotal, 2, ",", "."));
 
-                $("#tab-project table").off("click", "button.edit").on("click", "button.edit", function(){
+                $("#tab-project table").off("click", "button.edit").on("click", "button.edit", function () {
                     var id = $(this).attr("data-id");
                     var data = listsArrProj[id];
 
@@ -702,46 +704,47 @@
                     $("#formProject")[0].reset();
                     $("#loadingAdd2, #formDept").html('');
 
-                    if(callDeptAll == 0){
+                    if (callDeptAll == 0) {
                         dataDeptAll = listsDepartmentAll();
                         callDeptAll = 1;
                     }
 
                     $("#projName").val(data[0]["projName"]);
 
-                    $.each(data, function(key, value){
+                    $.each(data, function (key, value) {
                         var icon = '<button class="btn btn-danger delDept"><i class="fa fa-trash"></i></button>';
-                        if(key == 0) icon = '<button class="btn btn-success addDept"><i class="fa fa-trash"></i></button>';
+                        if (key == 0)
+                            icon = '<button class="btn btn-success addDept"><i class="fa fa-trash"></i></button>';
                         $("#formDept").append('<div class="form-group">'
                                 + '<div class="col-md-7">'
-                                    + '<select class="form-control input-sm" name="deptId" id="deptId'+key+'" required>'
-                                        + dataDeptAll
-                                    + '</select>'
+                                + '<select class="form-control input-sm" name="deptId" id="deptId' + key + '" required>'
+                                + dataDeptAll
+                                + '</select>'
                                 + '</div>'
                                 + '<div class="col-md-4">'
-                                    + '<input class="form-control input-sm text-right" name="deptValue" placeholder="จำนวนเงิน (บาท)" value="'+value["deptValue"]+'" required>'
+                                + '<input class="form-control input-sm text-right" name="deptValue" placeholder="จำนวนเงิน (บาท)" value="' + value["deptValue"] + '" required>'
                                 + '</div>'
                                 + '<button class="btn btn-danger delDept"><i class="fa fa-trash"></i></button>'
-                            + '</div>');
+                                + '</div>');
 
-                        $("#deptId"+key).val(data[key]["deptId"]);
+                        $("#deptId" + key).val(data[key]["deptId"]);
 
                     });
 
-                    $("button.addDept").unbind().click(function() {
+                    $("button.addDept").unbind().click(function () {
                         $("#formDept").append('<div class="form-group">'
                                 + '<div class="col-md-7">'
-                                    + '<select class="form-control input-sm" name="deptId" id="deptId" required>'
-                                        + dataDeptAll
-                                    + '</select>'
+                                + '<select class="form-control input-sm" name="deptId" id="deptId" required>'
+                                + dataDeptAll
+                                + '</select>'
                                 + '</div>'
                                 + '<div class="col-md-4">'
-                                    + '<input class="form-control input-sm text-right" name="deptValue" placeholder="จำนวนเงิน (บาท)" required>'
+                                + '<input class="form-control input-sm text-right" name="deptValue" placeholder="จำนวนเงิน (บาท)" required>'
                                 + '</div>'
                                 + '<button class="btn btn-danger delDept"><i class="fa fa-trash"></i></button>'
-                            + '</div>');
+                                + '</div>');
 
-                        $('button.delDept').unbind().click(function() {
+                        $('button.delDept').unbind().click(function () {
                             $(this).parent('div.form-group').remove();
                         });
                     });
@@ -757,7 +760,7 @@
                             var deptValueArr = [];
                             var deptIdArr = [];
 
-                            $.each($("#formDept > div.form-group"), function(){
+                            $.each($("#formDept > div.form-group"), function () {
                                 deptValueArr.push($(this).find("input[name=deptValue]").val());
                                 deptIdArr.push($(this).find("select[name=deptId]").val())
                             });
@@ -768,7 +771,7 @@
                     });
                 });
 
-                $("#tab-project table").off("click", "button.delete").on("click", "button.delete", function(){
+                $("#tab-project table").off("click", "button.delete").on("click", "button.delete", function () {
                     $("#projectDelete").modal("show");
 
                     var id = $(this).attr("data-id");
@@ -778,7 +781,7 @@
                     $("#loadingDel2").html('');
                     $("#projNameDel").html(data[0]["projName"]);
 
-                    $("button.save").unbind().click(function(){
+                    $("button.save").unbind().click(function () {
                         deleteProject(id);
                     });
                 });
@@ -786,34 +789,34 @@
         }, 0);
     }
 
-    function insertProject(projName, deptValue, deptId){
+    function insertProject(projName, deptValue, deptId) {
         $("#loadingAdd2").html("กำลังบันทึกข้อมูล...");
 
-        setTimeout(function() {
+        setTimeout(function () {
             var datas = callAjax("{{_context_path}}/api/revenue/planning/addProject", "post", {
                 projectName: projName,
                 budgetTotal: deptValue,
                 deptId: deptId
             }, "json");
             if (typeof datas !== "undefined" && datas !== null) {
-                if(datas["add"] == true){
+                if (datas["add"] == true) {
                     $("#loadingAdd2").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
-                    setTimeout(function(){
+                    setTimeout(function () {
                         $("#projectPanel").modal("hide");
                         listsProject();
                     }, 200);
                 }
-                else{
+                else {
                     $("#loadingAdd2").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
                 }
             }
         }, 0);
     }
 
-    function editProject(headId, projName, deptValue, deptId){
+    function editProject(headId, projName, deptValue, deptId) {
         $("#loadingAdd2").html("กำลังบันทึกข้อมูล...");
 
-        setTimeout(function() {
+        setTimeout(function () {
             var datas = callAjax("{{_context_path}}/api/revenue/planning/updateProject", "post", {
                 bgHeadId: headId,
                 projectName: projName,
@@ -821,72 +824,74 @@
                 deptId: deptId
             }, "json");
             if (typeof datas !== "undefined" && datas !== null) {
-                if(datas["update"] == true){
+                if (datas["update"] == true) {
                     $("#loadingAdd2").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
-                    setTimeout(function(){
+                    setTimeout(function () {
                         $("#projectPanel").modal("hide");
                         listsProject();
                     }, 200);
                 }
-                else{
+                else {
                     $("#loadingAdd2").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
                 }
             }
         }, 0);
     }
 
-    function deleteProject(id){
+    function deleteProject(id) {
         $("#loadingDel2").html("กำลังบันทึกข้อมูล...");
 
-        setTimeout(function() {
+        setTimeout(function () {
             var datas = callAjax("{{_context_path}}/api/revenue/planning/deleteProject", "post", {bgHeadId: id}, "json");
             if (typeof datas !== "undefined" && datas !== null) {
-                if(datas["delete"] == true){
+                if (datas["delete"] == true) {
                     $("#loadingDel2").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
-                    setTimeout(function(){
+                    setTimeout(function () {
                         $("#projectDelete").modal("hide");
                         listsProject();
                     }, 200);
                 }
-                else{
+                else {
                     $("#loadingDel2").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้</span>');
                 }
             }
         }, 0);
     }
 
-    function listsDepartment(){
+    function listsDepartment() {
         var html = '<option value="" selected="selected">- เลือกหน่วยงาน -</option>';
 
         var datas = callAjax("{{_context_path}}/api/revenue/planning/listsDepartment", "post", {}, "json");
         if (typeof datas !== "undefined" && datas !== null) {
-            $.each(datas["lists"], function(key, val){
+            $.each(datas["lists"], function (key, val) {
                 if (!deptArr[val["id"]]) {
-                    html += '<option value="'+val["id"]+'">'+val["name"]+'</option>';
+                    html += '<option value="' + val["id"] + '">' + val["name"] + '</option>';
                 }
             });
         }
         return html;
     }
 
-    function listsDepartmentAll(){
+    function listsDepartmentAll() {
         var html = '<option value="" selected="selected">- เลือกหน่วยงาน -</option>';
 
         var datas = callAjax("{{_context_path}}/api/revenue/planning/listsDepartment", "post", {}, "json");
         if (typeof datas !== "undefined" && datas !== null) {
-            $.each(datas["lists"], function(key, val){
-                html += '<option value="'+val["id"]+'">'+val["name"]+'</option>';
+            $.each(datas["lists"], function (key, val) {
+                html += '<option value="' + val["id"] + '">' + val["name"] + '</option>';
             });
         }
         return html;
     }
 
-    function calNumeric(){
-        $("#budgetEducation, #budgetService").keyup(function(){
+    function calNumeric() {
+        $("#budgetEducation, #budgetService").keyup(function () {
             var val1 = 0;
-            if($("#budgetEducation").val() != '') val1 = parseFloat($("#budgetEducation").val());
+            if ($("#budgetEducation").val() != '')
+                val1 = parseFloat($("#budgetEducation").val());
             var val2 = 0;
-            if($("#budgetService").val() != '') val2 = parseFloat($("#budgetService").val());
+            if ($("#budgetService").val() != '')
+                val2 = parseFloat($("#budgetService").val());
 
 
             $("#budgetTotal").html(accounting.formatNumber(val1 + val2, 2, ",", "."));

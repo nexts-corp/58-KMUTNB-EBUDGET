@@ -26,11 +26,11 @@ class PlaningService extends CServiceBase implements IPlaningService {
 
     public function listsDepartment() {
         $repo = "SELECT"
-                ." dp.id, dp.deptName AS name, dp.masterId"
-            ." FROM ".$this->ent."\\L3D\\Department dp"
-            ." WHERE dp.deptStatus = :status"
-                ." AND dp.id > :id"
-                ." AND dp.deptGroup = :group";
+                . " dp.id, dp.deptName AS name, dp.masterId"
+                . " FROM " . $this->ent . "\\L3D\\Department dp"
+                . " WHERE dp.deptStatus = :status"
+                . " AND dp.id > :id"
+                . " AND dp.deptGroup = :group";
         $param = array(
             "status" => "Y",
             "id" => 0,
@@ -43,10 +43,10 @@ class PlaningService extends CServiceBase implements IPlaningService {
 
     public function fetchRevenue() {
         $sql = "SELECT"
-                ." rp.id, rp.deptId, dp.deptName, rp.budgetEducation, rp.budgetService, rp.budgetTotal"
-            ." FROM ".$this->ent."\\BudgetRevenuePlan rp"
-            ." JOIN ".$this->ent."\\L3D\\Department dp WITH dp.id = rp.deptId"
-            ." WHERE rp.budgetPeriodId = :year";
+                . " rp.id, rp.deptId, dp.deptName, rp.budgetEducation, rp.budgetService, rp.budgetTotal"
+                . " FROM " . $this->ent . "\\BudgetRevenuePlan rp"
+                . " JOIN " . $this->ent . "\\L3D\\Department dp WITH dp.id = rp.deptId"
+                . " WHERE rp.budgetPeriodId = :year";
         $param = array(
             "year" => $this->getPeriod()->year
         );
@@ -57,10 +57,19 @@ class PlaningService extends CServiceBase implements IPlaningService {
     }
 
     public function addRevenue($revenuePlan) {
+        $year = $this->getPeriod()->year;
         $return = true;
 
-        $revenuePlan->budgetPeriodId = $this->getPeriod()->year;
-        $revenuePlan->budgetTypeCode = "K";
+        $bgHead = new \apps\common\entity\BudgetHead();
+        $bgHead->setFormId(500);
+        $bgHead->setBudgetPeriodId($year);
+        $bgHead->setBudgetTypeCode("K");
+        $bgHead->setDeptId($revenuePlan->deptId);
+        $dataHead = $this->datacontext->saveObject($bgHead);
+        //$headId = $bgHead->id;
+
+        $revenuePlan->budgetPeriodId = $year;
+        $revenuePlan->budgetTypeCode = 'K';
         $revenuePlan->budgetTotal = $revenuePlan->budgetEducation + $revenuePlan->budgetService;
 
         if (!$this->datacontext->saveObject($revenuePlan)) {
@@ -77,8 +86,8 @@ class PlaningService extends CServiceBase implements IPlaningService {
         $rp->id = $revenuePlan->id;
         $data = $this->datacontext->getObject($rp)[0];
 
-        $data->budgetEducation =  $revenuePlan->budgetEducation;
-        $data->budgetService =  $revenuePlan->budgetService;
+        $data->budgetEducation = $revenuePlan->budgetEducation;
+        $data->budgetService = $revenuePlan->budgetService;
         $data->budgetTotal = $revenuePlan->budgetEducation + $revenuePlan->budgetService;
 
         if (!$this->datacontext->updateObject($data)) {
@@ -102,19 +111,19 @@ class PlaningService extends CServiceBase implements IPlaningService {
 
     public function fetchProject() {
         $sql = "SELECT"
-                ." be.id,"
-                ." bh.id AS headId,"
-                ." be.name AS projName,"
-                ." be.deptId,"
-                ." dp.deptName,"
-                ." be.budgetEstAmount As deptValue"
-            ." FROM " . $this->ent . "\\BudgetHead bh"
-            ." JOIN " . $this->ent . "\\BudgetExpense be WITH bh.id = be.budgetHeadId"
-            ." JOIN " . $this->ent . "\\L3D\\Department dp WITH dp.id = be.deptId"
-            ." WHERE bh.formId = :form"
-                ." AND bh.budgetTypeCode = :type"
-                ." AND bh.budgetPeriodId = :year"
-            ." ORDER BY bh.id, be.id";
+                . " be.id,"
+                . " bh.id AS headId,"
+                . " be.name AS projName,"
+                . " be.deptId,"
+                . " dp.deptName,"
+                . " be.budgetEstAmount As deptValue"
+                . " FROM " . $this->ent . "\\BudgetHead bh"
+                . " JOIN " . $this->ent . "\\BudgetExpense be WITH bh.id = be.budgetHeadId"
+                . " JOIN " . $this->ent . "\\L3D\\Department dp WITH dp.id = be.deptId"
+                . " WHERE bh.formId = :form"
+                . " AND bh.budgetTypeCode = :type"
+                . " AND bh.budgetPeriodId = :year"
+                . " ORDER BY bh.id, be.id";
 
         $param = array(
             "form" => "999",
@@ -210,4 +219,5 @@ class PlaningService extends CServiceBase implements IPlaningService {
 
         return $return;
     }
+
 }
