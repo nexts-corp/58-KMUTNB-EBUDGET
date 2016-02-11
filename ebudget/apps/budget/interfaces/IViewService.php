@@ -205,6 +205,17 @@ interface IViewService {
      */
     public function buildMore($bg145Id, $budget);
 
+
+    /**
+     * @name buildMore2
+     * @uri /buildMore2
+     * @param string bg145Id
+     * @param string budget
+     * @description คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง ต่อเนื่อง
+     */
+    public function buildMore2($bg145Id, $budget);
+
+
     /**
      * @name progressBudgetPlanAll
      * @uri /progressBudgetPlanAll

@@ -476,10 +476,18 @@
                                     + '<div class="col-md-12 text-center">'
                                     + '<button class="btn btn-sm btn-warning col-md-6 editList" data-hid="-1" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
                                     //    + '<button class="btn btn-sm btn-default col-md-6 deleteList" data-hid="-1" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+//                                    + '</div>'
+                                    + '<br>'
+                                    + '<div class="dropdown">'
+                                    + ' <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-file-text-o"></i> คำชี้แจงสิ่งก่อสร้าง'
+                                    + '     <span class="caret"></span>'
+                                    + ' </button>'
+                                    + '     <ul class="dropdown-menu">'
+                                    + '           <li class="buildOneBtn" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><a href="#">1ปี</a></li>'
+                                    + '           <li class="buildMoreBtn" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><a href="#">ต่อเนื่องผูกพันเดิม</a></li>'
+                                    + '           <li class="buildMoreBtn2" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><a href="#">ต่อเนื่องผูกพันใหม่</a></li>'
+                                    + '      </ul>'
                                     + '</div>'
-                                    + '<div class="col-md-12">'
-                                    + '<button class="btn btn-sm btn-primary buildOneBtn col-md-6"  data-pid="' + value["id"] + '" data-id="' + value2["id"] + '" title="คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง 1 ปี"><i class="fa fa-file-text-o"></i> 1ปี</button>'
-                                    + '<button class="btn btn-sm btn-info buildMoreBtn col-md-6"  data-pid="' + value["id"] + '" data-id="' + value2["id"] + '" title="คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้างต่อเนื่อง"><i class="fa fa-file-text-o"></i> ต่อเนื่อง</button>'
                                     + '</div>'
                                     + '</td>'
                                     + '</tr>';
@@ -703,10 +711,17 @@
                         html += '<div class="col-md-12 none-padding">'
                                 + '<button class="btn btn-sm btn-warning col-md-6 editList" data-hid="-1" data-pid="' + parentId + '" data-id="' + data["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
                                 + '<button class="btn btn-sm btn-default col-md-6 deleteList" data-hid="-1" data-pid="' + parentId + '" data-id="' + data["id"] + '"><i class="fa fa-trash"></i> ลบ</button>'
-                                + '<div class="col-md-12"></div>'
-                                + '<button class="btn btn-sm btn-primary buildOneBtn col-md-6"  data-pid="' + parentId + '" data-id="' + data["id"] + '" title="คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง 1 ปี"><i class="fa fa-file-text-o"></i> 1ปี</button>'
-                                + '<button class="btn btn-sm btn-info buildMoreBtn col-md-6"  data-pid="' + parentId + '" data-id="' + data["id"] + '" title="คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้างต่อเนื่อง"><i class="fa fa-file-text-o"></i> ต่อเนื่อง</button>'
-                                + '</div>';
+                                + '<br>'
+                                + '<div class="dropdown">'
+                                + ' <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-file-text-o"></i> คำชี้แจงสิ่งก่อสร้าง'
+                                + '     <span class="caret"></span>'
+                                + ' </button>'
+                                + '     <ul class="dropdown-menu">'
+                                + '           <li class="buildOneBtn" data-pid="' + parentId + '" data-id="' + data["id"] + '"><a href="#">1ปี</a></li>'
+                                + '           <li class="buildMoreBtn" data-pid="' + parentId + '" data-id="' + data["id"] + '"><a href="#">ต่อเนื่องผูกพันเดิม</a></li>'
+                                + '           <li class="buildMoreBtn2" data-pid="' + parentId + '" data-id="' + data["id"] + '"><a href="#">ต่อเนื่องผูกพันใหม่</a></li>'
+                                + '      </ul>'
+                                + '</div>'
                     }
                     html += '</td>'
                             + '</tr>';
@@ -788,10 +803,17 @@
                         html += '<div class="col-md-12">'
                                 + '<button class="btn btn-sm btn-warning col-md-6 editList" data-hid="-1" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
                                 //  + '<button class="btn btn-sm btn-default col-md-6 deleteList" data-hid="-1" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-trash"></i> ลบ</button>'
-                                + '</div><div class="col-md-12">'
-                                + '<button class="btn btn-sm btn-primary buildOneBtn col-md-6"  data-pid="' + parentId + '" data-id="' + id + '" title="คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง 1 ปี"><i class="fa fa-file-text-o"></i> 1ปี</button>'
-                                + '<button class="btn btn-sm btn-info buildMoreBtn col-md-6"  data-pid="' + parentId + '" data-id="' + id + '" title="คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้างต่อเนื่อง"><i class="fa fa-file-text-o"></i> ต่อเนื่อง</button>'
-                                + '</div>';
+                                + '<br>'
+                                + '<div class="dropdown">'
+                                + ' <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-file-text-o"></i> คำชี้แจงสิ่งก่อสร้าง'
+                                + '     <span class="caret"></span>'
+                                + ' </button>'
+                                + '     <ul class="dropdown-menu">'
+                                + '           <li class="buildOneBtn" data-pid="' + parentId + '" data-id="' + id + '"><a href="#">1ปี</a></li>'
+                                + '           <li class="buildMoreBtn" data-pid="' + parentId + '" data-id="' + id + '"><a href="#">ต่อเนื่องผูกพันเดิม</a></li>'
+                                + '           <li class="buildMoreBtn2" data-pid="' + parentId + '" data-id="' + id + '"><a href="#">ต่อเนื่องผูกพันใหม่</a></li>'
+                                + '      </ul>'
+                                + '</div>'
                     }
                     html += '</td>'
                             + '</tr>';
@@ -1004,7 +1026,8 @@
             });
         });
 
-        $("button.buildOneBtn").unbind("click").click(function () {
+        $("li.buildOneBtn").unbind("click").click(function () {
+
             var id = $(this).attr("data-id");
             var bytes = utf8.encode(JSON.stringify(list145Arr[id]));
             var paramstr = base64.encode(bytes);
@@ -1013,11 +1036,22 @@
 
         });
 
-        $("button.buildMoreBtn").unbind("click").click(function () {
+        $("li.buildMoreBtn").unbind("click").click(function () {
+
             var id = $(this).attr("data-id");
             var bytes = utf8.encode(JSON.stringify(list145Arr[id]));
             var paramstr = base64.encode(bytes);
             var url = "{{_context_path}}/api/budget/view/buildMore/" + id + "/" + encodeURIComponent(paramstr);
+            window.open(url, '_blank');
+
+        });
+
+        $("li.buildMoreBtn2").unbind("click").click(function () {
+
+            var id = $(this).attr("data-id");
+            var bytes = utf8.encode(JSON.stringify(list145Arr[id]));
+            var paramstr = base64.encode(bytes);
+            var url = "{{_context_path}}/api/budget/view/buildMore2/" + id + "/" + encodeURIComponent(paramstr);
             window.open(url, '_blank');
 
         });
