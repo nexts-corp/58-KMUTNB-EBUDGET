@@ -69,9 +69,9 @@ class ApproveService extends CServiceBase implements IApproveService {
             . "left outer join " . $this->ent . "\\BudgetPlan bgPlan with bgPlan.id = bgh.planId "
             . "left outer join " . $this->ent . "\\BudgetProject bgProj with bgProj.id = bgh.projectId "
             . "left outer join " . $this->ent . "\\L3D\\FundGroup fund with fund.id = bgh.fundgroupId "
-            . "left outer join " . $this->ent . "\\TrackingStatus status with status.id = bgh.statusId "
+            . "left outer join " . $this->ent . "\\TrackingStatus status with status.id = bgh.statusPlanningId "
             . "where bgh.budgetTypeCode = :budgetTypeCode "
-            . "and bgh.statusId in (2,3,4,5) "
+            . "and bgh.statusPlanningId in (2,3,4,5) "
             . "and bgh.budgetPeriodId = :budgetPeriodId "
             . "order by bgh.formId asc, faculty.id asc, dept.id asc, l3dPlan.id asc, fund.id asc ";
 
@@ -180,7 +180,7 @@ class ApproveService extends CServiceBase implements IApproveService {
 
                     if ($value->statusId == 1 || $value->statusId == 4) {
                         $object->setId($value->id);
-                        $object->setStatusId($status);
+                        $object->setStatusPlanningId($status);
                         if (isset($value->comment))
                             $object->setComment($value->comment);
                     } else if ($value->statusId == 2) {
@@ -190,7 +190,7 @@ class ApproveService extends CServiceBase implements IApproveService {
                 } else if ($status == 3 || $status == 4) {
 
                     $object->setId($value->id);
-                    $object->setStatusId($status);
+                    $object->setStatusPlanningId($status);
                     if (isset($value->comment))
                         $object->setComment($value->comment);
                 }
@@ -244,14 +244,14 @@ class ApproveService extends CServiceBase implements IApproveService {
         if ($statusId == "2" || $statusId == "4") {
             $bgh = new BudgetHead();
             $bgh->setId($id);
-            $bgh->setStatusId($statusId);
+            $bgh->setStatusPlanningId($statusId);
             if (!$this->datacontext->updateObject($bgh)) {
                 $result = false;
             }
         } else if ($statusId == "3") {
             $sql = "select count(*) as num from " . $this->ent . "\\" . $formType . " bg "
                 . "where bg.budgetHeadId = :budgetHeadId "
-                . "and bg.statusId in (1,2,4) ";
+                . "and bg.statusPlanningId in (1,2,4) ";
             $param = array("budgetHeadId" => $id);
             $bg = $this->datacontext->getObject($sql, $param);
             
@@ -259,8 +259,7 @@ class ApproveService extends CServiceBase implements IApproveService {
                 //echo $id;
                 $bgh = new BudgetHead();
                 $bgh->setId($id);
-                $bgh->setStatusId(5);
-                $bgh->setStatusPlanningId(2);
+                $bgh->setStatusPlanningId(5);
                 if (!$this->datacontext->updateObject($bgh)) {
                     $result = false;
                 }
