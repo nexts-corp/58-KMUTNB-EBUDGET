@@ -255,6 +255,7 @@
     var findNode = {};
     var listDraft = {};
     var listDetail = {};
+    var listArr = {"Draft": {}, "Detail": {}};
     var unit = {};
     var deptId = '{{#department}}{{departmentId}}{{/department}}';
     var typeId = '{{typeId}}';
@@ -402,7 +403,7 @@
                                                     + '<td>'
                                                     + '<div class="btn-group">'
                                                     + //(value6["isApprove"] == "N" ?
-                                                    '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + value5["draftId"] + '" data-id="' + value6["detailId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                                    '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + value6["detailId"] + '" data-id="' + value6["detailId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
                                                     //   : ""
                                                     //    )
                                                     + //(value5["isApprove"] == "N" ?
@@ -412,11 +413,11 @@
                                                     + '</div>'
                                                     + '</td>'
                                                     + '</tr>';
-                                            listDetail[value6["detailId"]] = value6;
+                                            listArr["Detail"][value6["detailId"]] = value6;
                                         });
                                     }
-                                    listDraft[value5["draftId"]] = value5;
-                                    listDraft[value5["draftId"]]["issueSeq"] = value2["issueSeq"];
+                                    listArr["Draft"][value5["draftId"]] = value5;
+                                    listArr["Draft"][value5["draftId"]]["issueSeq"] = value2["issueSeq"];
                                 });
                             }
                         });
@@ -491,7 +492,7 @@
             var pId = $(this).attr("data-pid");
             var pName = $(this).attr("data-pname");
             var formName;
-            if (pName == "strategyId") {
+            if (pName == "draftId") {
                 formName = "Draft";
             } else {
                 formName = "Detail";
@@ -504,8 +505,8 @@
             //   console.log(listDraft[draftId]);
             $("#form" + formName + " input[type=text], #form" + formName + " textarea, #form" + formName + " select").each(function () {
                 var fid = $(this).attr("id");
-              //  var lock = $(this).attr("data-lock");
-                $("#" + fid).val(listDraft[draftId][fid]);
+                //  var lock = $(this).attr("data-lock");
+                $("#" + fid).val(listArr[formName][pId][fid]);
 //                if (edit == "N" && lock == "Y") {
 //                    $("#" + fid).attr("disabled", true);
 //                } else {
@@ -575,7 +576,7 @@
             if (typeof data !== "undefined" && data !== null) {
                 if (data != false && type == "draft") {
                     $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
-                    listDraft[data["draftId"]] = data;
+                    listArr["Draft"][data["draftId"]] = data;
                     var input = "";
                     var node, node2;
                     input += '<tr data-tt-id="draft' + data["draftId"] + '" data-tt-parent-id="strategy' + data["strategyId"] + '" data-seq="' + data["projectSeq"] + '" >'
@@ -608,7 +609,7 @@
                 }
                 else if (data != false && type == "detail") {
                     $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
-                    listDraft[data["detailId"]] = data;
+                    listArr["Detail"][data["detailId"]] = data;
                     var input = "";
                     var node, node2;
                     input += '<tr data-tt-id="detail' + data["detailId"] + '" data-tt-parent-id="draft' + data["draftId"] + '"  data-seq="' + data["detailSeq"] + '">'
