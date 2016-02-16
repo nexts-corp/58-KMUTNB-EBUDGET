@@ -1,165 +1,197 @@
 {{> header}}
-<div ng-app="Department" ng-controller="tableController" data-ng-init="init()" style="display:none;">
-    <div role="main" class="main">
-        <section class="page-top none-margin">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <ul class="breadcrumb">
-                            <li class="active">{{#i18n}}bgi.bginfo{{/i18n}}</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1 class="none-padding">{{#i18n}}bgi.departmentService{{/i18n}}</h1>
-                    </div>
+<div role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">{{#i18n}}bgi.bginfo{{/i18n}}</li>
+                    </ul>
                 </div>
             </div>
-        </section>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">{{#i18n}}bgi.departmentService{{/i18n}}</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<hr class="tall dashboard">
+<div class="sort-source-wrapper">
+    <!-- button action on header -->
+    <div class="container">
+        <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+            <li class="active">
+                <button class="btn btn-default" id="addCampus" get-form="main">
+                    <i class="fa fa-plus"></i> เพิ่มข้อมูลวิทยาเขต</i>
+                </button>
+                <button class="btn btn-default" id="back" style="display: none;" get-form="main">
+                    <i class="fa fa-angle-double-left"> ย้อนกลับ</i>
+                </button>
+            </li>
+        </ul>
     </div>
-    <hr class="tall dashboard">
-    <div class="sort-source-wrapper">
-        <!-- button action on header -->
-        <div class="container">
-            <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
-                <li class="active">
-                    <button class="btn btn-default back" style="display: none;" get-form="main">
-                        <i class="fa fa-angle-double-left">ย้อนกลับ</i>
-                    </button>
-                </li>
-            </ul>
+</div>
+<!-- end button action on header -->
+<div class="container">
+    <!--<div class="tabs">-->
+    <!--<ul id="tabMenu" class="nav nav-tabs">-->
+    <!--&lt;!&ndash; jqery inner html&ndash;&gt;-->
+    <!--</ul>-->
+    <!--<div id="tabContent" class="tab-content">-->
+    <!--&lt;!&ndash;end tab content&ndash;&gt;-->
+    <!--</div>-->
+    <!--</div>-->
+    <div id="showTable" class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="col-md-4 text-bold">
+                    วิทยาเขต :
+                </div>
+                <div class="col-md-8">
+                    <select id="campusSelect" class="form-control">
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6 text-right">
+                <button class="btn btn-success" onclick="addModal()"><i class="fa fa-plus"></i> เพิ่มข้อมูล</button>
+            </div>
+        </div>
+        <div class="col-md-12" style="margin-top: 15px;">
+            <table id="table" class="table table-bordered table-striped table-condensed mb-none">
+                <thead>
+                <tr>
+                    <th class="col-md-2 text-center">รหัสหน่วยงาน</th>
+                    <th class="col-md-4 text-center">หน่วยงาน</th>
+                    <th class="col-md-3 text-center">ประเภทส่วนงาน</th>
+                    <th class="col-md-1 text-center">สถานะ</th>
+                    <th class="col-md-2 text-center">เครื่องมือ</th>
+                </tr>
+                </thead>
+                <tbody id="table-body">
+                </tbody>
+            </table>
         </div>
     </div>
-    <!-- end button action on header -->
-    <div class="container" >
-        <div class="tabs">
-            <ul id="tabMenu" class="nav nav-tabs">
-                <li ng-repeat="item in listCampus" ng-class='{active:$first}'>
-                    <a href="{['tab'+item.id]}" data-toggle="tab" aria-expanded="false"  ng-click="fetchDept(item.id);
-                                        fetchDeptMain(item.id);
-                                        tabShow(false);">{[item.campusName]}</a>
-                </li>
-                <li>
-                    <a href="#addCampus" data-toggle="tab"  ng-click = "tabShow(true)"  aria-expanded="false">เพิ่มวิทยาเขต</a>
-                </li>
-            </ul>
-            <div class="tab-content" ng-repeat="item in listCampus" ng-show="tabShowStatus == false">
-                <div id="{['tab'+item.id]}" class="tab-pane" ng-class='{active:$first}'>
-                    <div class="row">
-                        <div class="col-md-5">
-                            <label class="col-md-5 control-label text-left" for="selectMainDept">หน่วยงานหลัก : </label>
-                            <div class="col-md-7">
-                                <select ng-model="selectMainDept" ng-options="(item.id+' '+item.deptName) for item in listDeptMain" ng-init="selectMainDept = ''" class="form-control input-sm">
-                                    <option value="">- มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ -</option>
+    <div id="showAddCampus" style="display: none;">
+        <div class="col-md-12">
+            <div class="col-md-12 text-right">
+                <button class="btn btn-success" onclick="addCampus()"><i class="fa fa-plus"></i> เพิ่มข้อมูล</button>
+            </div>
+        </div>
+        <div class="col-md-12" style="margin-top: 15px;">
+            <table id="tableCampus" class="table table-bordered table-striped table-condensed mb-none">
+                <thead>
+                <tr>
+                    <th class="col-md-4 text-center">ชื่อวิทยาเขต</th>
+                    <th class="col-md-3 text-center">สถานะ</th>
+                    <th class="col-md-2 text-center">เครื่องมือ</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">
+                        <i class="fa fa-plus-circle"></i>
+                        <span id="titleModal">เพิ่ม</span>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form id="formAddDept" onsubmit="return false;">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label text-right">วิทยาเขต: </label>
+
+                            <div class="col-md-9">
+                                <select id="modalCampus" class="form-control input-sm" required>
+                                    <option value="">- เลือกวิทยาเขต -</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-5">
-                            <label class="col-md-3">ค้นหา :</label>
-                            <div class="col-md-9"><input ng-model="searchDept" type="text" class="form-control input-sm" placeholder="ใส่คำค้นหา"></div>
-                        </div>
-                        <div class="col-md-2 form-group text-right">
-                            <!--add button-->
-                            <button ng-click="showModal('add', null, -1)" class="btn btn-success" type="button"><i class="fa fa-plus-circle" > เพิ่ม</i></button>
-                        </div>
-                    </div>
-                    &nbsp;
-                    <table class="table table-bordered mb-none">
-                        <thead>
-                            <tr>
-                                <th class="col-md-2 text-center">รหัสหน่วยงาน</th>
-                                <th class="col-md-4 text-center">หน่วยงาน</th>
-                                <th class="col-md-3 text-center">ประเภทส่วนงาน</th>
-                                <th class="col-md-1 text-center">สถานะ</th>
-                                <th class="col-md-2 text-center">เครื่องมือ</th>
-                            </tr>
-                        </thead>
-                        <tbody id="table-body" ng-hide="isLoding">
-                            <tr ng-repeat="item_tr in listDept| filter:{ masterId: selectMainDept.id||undefined} |filter:searchDept">
-                                <td class="text-center">{[item_tr.deptID]}</td>
-                                <td>{[item_tr.deptName]}</td>
-                                <td class="text-center">{[item_tr.actTypeName]}</td>
-                                <td class="text-center">{[item_tr.deptStatus]}</td>
-                                <td style="text-align: center">
-                                    <button class="btn btn-warning edit-btn" title="แก้ไข" ng-click="showModal('edit', item_tr, $index);"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-success on-background" title="เปิดการใช้งาน" ng-click="showModal('enable', item_tr, $index);"><i class="fa fa-angle-double-left"></i></button>
-                                    <button class="btn btn-default delete-btn" title="ปิดการใช้งาน" ng-click="showModal('delete', item_tr, $index);"><i class="fa fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="col-md-12 text-center text-bold" ng-show="isLoding"><i class="fa fa-spinner fa-spin"></i> กรุณารอสักครู่</div>
-                </div>
-                <!--end tab content-->
-            </div>
-            <div class="tab-content" ng-show="tabShowStatus == true">
-                <div id="addCampus" class="tab-pane">
-                    <label class="col-md-2">เพิ่มข้อมูลวิทยาเขต</label>
-                    <div class="col-md-8">
-                        <input ng-model="ModelCamName" type="text" class="input-sm form-control" placeholder="ใส่ชื่อวิทยาเขต">
-                    </div>
-                    <button class="btn btn-default btn-success" ng-click="saveCampus();" type="button"><i class="fa fa-plus-circle"></i> เพิ่ม</button>
-                </div>
-                <!--end tab content-->
-            </div>
-        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label text-right">หน่วยงานหลัก: </label>
 
-        <div id="modal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button data-dismiss="modal" class="close" type="button"></button>
-                        <h4 class="modal-title">
-                            <i class="fa fa-plus-circle"></i>
-                            <span>{[titleModal]}</span>
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        <form id="form1" onsubmit="return false;">
-                            <div class="form-group">
-                                <label class="col-md-3 control-label text-right">วิทยาเขต: </label>
-                                <div class="col-md-9">
-                                    <select  ng-model="ModelCampus" ng-options="item.campusName for item in listCampus" ng-disabled="action == 'edit'" class="form-control input-sm"  ng-change="fetchDeptMainModal(ModelCampus.id)" required>
-                                        <option value="">- เลือกวิทยาเขต -</option>
-                                    </select>
-                                </div>
+                            <div class="col-md-9">
+                                <select id="modalDeptMain" class="form-control input-sm" required>
+                                    <option value="0">- มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ -</option>
+                                </select>
                             </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label text-right">หน่วยงานหลัก: </label>
-                                <div class="col-md-9">
-                                    <select ng-model="ModelDeptMain" ng-options="(item.id+' '+item.deptName) for item in listDeptMainModal" class="form-control input-sm"  required>
-                                        <option value="">- มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ -</option>
-                                    </select>
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label text-right">ประเภทส่วนงาน: </label>
+
+                            <div class="col-md-9">
+                                <select id="modalActType" class="form-control input-sm" required>
+                                    <option value="">- ประเภทส่วนงาน -</option>
+                                </select>
                             </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label text-right">ประเภทส่วนงาน: </label>
-                                <div class="col-md-9">
-                                    <select  ng-model="ModelActType" ng-options="item.actTypeName for item in listActivity" class="form-control input-sm" required>
-                                        <option value="">- ประเภทส่วนงาน -</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label text-right">รหัสหน่วยงาน: </label>
-                                <div class="col-md-9"><input ng-model="ModeldeptId" type="number" class="form-control input-sm" ng-disabled="action == 'edit'" required="" placeholder="กรุณาใส่รหัสหน่วยงาน"></div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label text-right">ชื่อหน่วยงาน: </label>
-                                <div class="col-md-9"><input ng-model="ModeldeptName" class="form-control input-sm" required placeholder="กรุณาใส่ชื่อหน่วยงาน"></div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button data-dismiss="modal" class="btn btn-default" type="button">ยกเลิก</button>
-                        <button ng-click="saveData()" class="btn btn-success" type="button" >บันทึก</button>
-                    </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label text-right">รหัสหน่วยงาน: </label>
+
+                            <div class="col-md-9"><input type="number" class="form-control input-sm" id="deptId"
+                                                         required="" placeholder="กรุณาใส่รหัสหน่วยงาน"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label text-right">ชื่อหน่วยงาน: </label>
+
+                            <div class="col-md-9"><input id="deptName" class="form-control input-sm" required
+                                                         placeholder="กรุณาใส่ชื่อหน่วยงาน"></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div id="modalStatus" class="text-center"></div>
+                    <button data-dismiss="modal" class="btn btn-default" type="button">ยกเลิก</button>
+                    <button class="btn btn-success save" type="button">บันทึก</button>
                 </div>
             </div>
         </div>
     </div>
-    <!--  container  -->
+
+    <div id="modal2" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">
+                        <i class="fa fa-plus-circle"></i>
+                        <span id="titleModalCampus">เพิ่ม</span>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form id="formAddCampus" onsubmit="return false;">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label text-right">ชื่อวิทยาเขต: </label>
+
+                            <div class="col-md-9">
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control input-sm" id="campusName"
+                                           required="" placeholder="กรุณาใส่ชื่อวิทยาเขต">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div id="modal2Status" class="text-center"></div>
+                    <button data-dismiss="modal" class="btn btn-default" type="button">ยกเลิก</button>
+                    <button class="btn btn-success save" type="button">บันทึก</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<!--  container  -->
 {{> footer}}
 <script src="{{_context_path}}/apps/bginfo/views/Department/js/manage.js"></script>
