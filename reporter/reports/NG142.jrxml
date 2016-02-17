@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
 	<property name="ireport.zoom" value="1.1586575189467991"/>
-	<property name="ireport.x" value="148"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
 	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -332,7 +332,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{salaryTotal}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{salaryTotal} == 0 || $F{salaryTotal} == null)? "-":$F{salaryTotal}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="410" y="0" width="67" height="20" isPrintWhenDetailOverflows="true" uuid="2a78878c-1b3d-4455-83c0-6c4ba4bfc08b"/>
@@ -345,7 +345,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{salaryMonth}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{salaryMonth} == 0 || $F{salaryMonth} == null)? "-":$F{salaryMonth}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="477" y="0" width="68" height="20" isPrintWhenDetailOverflows="true" uuid="535dce46-fac6-48d8-97d4-8e13ba159d94"/>
@@ -358,7 +358,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{occupied}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{occupied} == 0 || $F{occupied} == null)? "-":$F{occupied}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="208" y="0" width="67" height="20" isPrintWhenDetailOverflows="true" uuid="a76804ee-a7fe-44bc-8635-a19a9d9e2f29"/>

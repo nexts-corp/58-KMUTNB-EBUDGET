@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="1.5421731577182016"/>
-	<property name="ireport.x" value="411"/>
-	<property name="ireport.y" value="160"/>
+	<property name="ireport.zoom" value="1.4019755979256379"/>
+	<property name="ireport.x" value="398"/>
+	<property name="ireport.y" value="46"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
 	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
 	<style name="Default" isDefault="true" fontName="TH SarabunPSK" fontSize="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -350,7 +350,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textElement textAlignment="Right" markup="html">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{bgQty}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{bgQty} == 0 || $F{bgQty} == null)? "-":$F{bgQty}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="288" y="0" width="65" height="20" uuid="3d825a91-d986-4198-b5b5-c16da00353d7"/>
@@ -363,7 +363,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textElement textAlignment="Right" markup="html">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{bgPrice}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{bgPrice} == 0 || $F{bgPrice} == null)? "-":$F{bgPrice}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="353" y="0" width="65" height="20" uuid="adb8b1b0-d591-4a9b-8ef1-523f7af49ebc"/>
@@ -376,7 +376,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textElement textAlignment="Right" markup="html">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{bgPriceTotal}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{bgPriceTotal} == 0 || $F{bgPriceTotal} == null)? "-":$F{bgPriceTotal}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="418" y="0" width="60" height="20" uuid="5514068e-c611-4da2-9a7f-8be1a514c2e0"/>
@@ -389,7 +389,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textElement markup="html">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{bgNeeded}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{bgNeeded} == 0 || $F{bgNeeded} == null)? "-":$F{bgNeeded}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="478" y="0" width="65" height="20" uuid="19488d04-ad4d-4269-b9f9-b44f11102e7a"/>
@@ -402,7 +402,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textElement textAlignment="Right" markup="html">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{bgNumWork}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{bgNumWork} == 0 || $F{bgNumWork} == null)? "-":$F{bgNumWork}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="543" y="0" width="65" height="20" uuid="23e344be-d62e-4ddb-ac7d-39234d63d86b"/>
@@ -415,7 +415,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textElement textAlignment="Right" markup="html">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{bgNumUnwork}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{bgNumUnwork} == 0 || $F{bgNumUnwork} == null)? "-":$F{bgNumUnwork}]]></textFieldExpression>
 			</textField>
 			<frame>
 				<reportElement stretchType="RelativeToBandHeight" x="608" y="0" width="194" height="20" uuid="e957bf8c-2173-4ad9-bd33-2a7f2b5567d5"/>

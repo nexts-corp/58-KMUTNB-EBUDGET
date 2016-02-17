@@ -20,88 +20,115 @@ myApp.controller('mainController', function ($scope, $http, $controller, $filter
 
         $scope.listReport = [
             {
-                name: 'แบบสรุปงบประมาณรายจ่ายเงินรายได้จากงบประมาณแผ่นดิน จำแนกตามหน่วยงาน/กองทุน (ง. 1)', type: 'G',
+                name: 'แบบสรุปงบประมาณรายจ่ายเงินรายได้จากงบประมาณแผ่นดิน จำแนกตามหน่วยงาน/กองทุน (ง. 1)',
+                type: 'G',
+                title: 'รายงาน ง.1',
                 id: 'NG1'
             },
             {
                 name: 'แบบสรุปงบประมาณรายจ่ายเงินรายได้จากงบประมาณแผ่นดิน จำแนกตามหน่วยงาน/แผนงาน/กองทุน/งบรายจ่าย (ง. 2)',
+                title: 'รายงาน ง.2',
                 type: 'G',
                 id: 'NG2'
             },
             {
                 name: 'แบบสรุปงบประมาณรายจ่ายเงินรายได้จากงบประมาณแผ่นดิน จำแนกตามหน่วยงาน/แผนงาน/สำนักงาน/ภาควิชา/สาขาวิชา/งบรายจ่าย (ง. 2-1)',
+                title: 'รายงาน ง.2-1',
                 type: 'G',
                 id: 'NG2_1'
             },
             {
                 name: 'แบบสรุปงบประมาณรายจ่ายเงินรายได้จากงบประมาณแผ่นดิน จำแนกตามแผนงาน/หน่วยงาน/ภาควิชา/กองทุน (ง. 2-2)',
+                title: 'รายงาน ง.2-2',
                 type: 'G',
                 id: 'NG2_2'
             },
             {
                 name: 'รายละเอียดงบประมาณรายจ่ายเงินรายได้จากงบประมาณแผ่นดิน จำแนกตามแผนงาน/กองทุน/งบรายจ่าย (ง. 3)',
+                title: 'รายงาน ง.3',
                 type: 'G',
                 id: 'NG3'
             },
             {
+                name: 'รายงานแผน/ผล การใช้งบประมาณรายจ่ายเงินรายได้จากงบประมาณแผ่นดิน (ง. 4)',
+                title: 'รายงาน ง.4',
+                type: 'G',
+                id: 'NG4'
+            },
+            {
                 name: 'แบบสรุปคำของบประมาณของส่วนราชการ (ง. 112)',
+                title: 'รายงาน ง.112',
                 type: 'G',
                 id: 'NG112'
             },
             {
                 name: 'แบบรายละเอียดคำของบประมาณเงินเดือน (ง. 140)',
+                title: 'รายงาน ง.140',
                 type: 'G',
                 id: 'NG140'
             },
             {
                 name: 'แบบรายละเอียดคำของบประมาณค่าจ้างประจำ (ง. 141)',
+                title: 'รายงาน ง.141',
                 type: 'G',
                 id: 'NG141'
             },
             {
                 name: 'แบบรายละเอียดคำของบประมาณค่าจ้างชั่วคราว (ง. 142)',
+                title: 'รายงาน ง.142',
                 type: 'G',
                 id: 'NG142'
             },
             {
                 name: 'แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน(ค่าตอบแทน ใช้สอบและวัสดุ) (ง. 143)',
+                title: 'รายงาน ง.143',
                 type: 'G',
                 id: 'NG143'
             },
             {
                 name: 'แบบรายละเอียดคำของบประมาณค่าสาธารณูปโภค (ง. 144)',
+                title: 'รายงาน ง.144',
                 type: 'G',
                 id: 'NG144'
             },
             {
                 name: 'แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าครุภัณฑ์ ค่าที่ดิน/สิ่งก่อสร้าง (ง. 145)',
+                title: 'รายงาน ง.145',
                 type: 'G',
                 id: 'NG145'
             },
             {
                 name: 'แบบรายละเอียดคำของบประมาณเงินอุดหนุนปีงบประมาณที่ขอตั้งงบประมาณ (ง. 146)',
+                title: 'รายงาน ง.146',
                 type: 'G',
                 id: 'NG146'
             },
             {
                 name: 'แบบงบประมาณรายจ่ายเงินรายได้  จำแนกตามหน่วยงาน-ภาควิชา-สาขาวิชา/หมวดรายจ่าย (ร. 2-1)', type: 'K',
+                title: 'รายงาน ร.2-1',
                 id: 'LR2_1'
             },
             {
                 name: 'แบบงบประมาณรายจ่ายเงินรายได้  จำแนกตามหน่วยงาน-ภาควิชา-สาขาวิชา/กองทุน (ร. 2-2)', type: 'K',
+                title: 'รายงาน ร.2-2',
                 id: 'LR2_2'
             },
             {
                 name: 'คำชี้แจงงบประมาณรายจ่ายเงินรายได้ จำแนกตาม แผนงาน/กองทุน/หมวดรายจ่าย (ร.3)', type: 'K',
+                title: 'รายงาน ร.3',
                 id: 'LR3'
             },
             {
-                name: 'แผน/ผล การใช้จ่ายงบประมาณรายจ่ายเงินรายได้ (รายรับจากค่าบำรุงการศึกษา ค่าลงทะเบียนเรียนและค่าธรรมเนียมประเภทต่างๆ) (ร.4)', type: 'K',
-                id: 'LR4',catId:'E'
+                name: 'แผน/ผล การใช้จ่ายงบประมาณรายจ่ายเงินรายได้ (รายรับจากค่าบำรุงการศึกษา ค่าลงทะเบียนเรียนและค่าธรรมเนียมประเภทต่างๆ) (ร.4)',
+                title: 'รายงาน ร.4',
+                type: 'K',
+                id: 'LR4',
+                catId: 'E'
             },
             {
                 name: 'แผน/ผล การใช้จ่ายงบประมาณรายจ่ายเงินรายได (รายรับจากงานบริการวิชาการ) (ร.4)', type: 'K',
-                id: 'LR4',catId:'S'
+                title: 'รายงาน ร.4',
+                id: 'LR4', catId: 'S'
             }
 
         ];
@@ -117,6 +144,7 @@ myApp.controller('mainController', function ($scope, $http, $controller, $filter
         $scope.l3dPlanIdLoading = true;
         $scope.l3dFundIdLoading = true;
         $scope.showTable = false;
+        $scope.validPlan = false;
 
         $scope.fetchPeriod();
         $scope.cmListYear();
@@ -218,70 +246,109 @@ myApp.controller('mainController', function ($scope, $http, $controller, $filter
 
     $scope.export = function (exportType, dataItem) {
 
-        //All Parameter
         var REPORT_CODE = dataItem["id"];
-        var BUDGET_TYPE = dataItem["type"];
-        var EXPORT_TYPE = exportType;
-        if(REPORT_CODE == "LR4")var CAT_ID = dataItem["catId"];
 
-        var PERIOD_ID = $scope.budgetPeriodId["year"];
-        var FACULTY_ID = $scope.facultyId["id"];
-        var FACULTY_NAME = $scope.facultyId["deptName"];
-        var DEPT_ID_START, DEPT_NAME_START, DEPT_ID_END, DEPT_NAME_END;
-        var PLAN_ID_START, PLAN_NAME_START, PLAN_ID_END, PLAN_NAME_END;
-        var FUND_ID_START, FUND_NAME_START, FUND_ID_END, FUND_NAME_END;
+        if (checkValidPlan(REPORT_CODE)) {
+            $scope.validPlan = false;
+            //All Parameter
+            var BUDGET_TYPE = dataItem["type"];
+            var EXPORT_TYPE = exportType;
+            if (REPORT_CODE == "LR4")var CAT_ID = dataItem["catId"];
 
-        if ($scope.deptId == null) {
-            //select between
-            DEPT_ID_START = $scope.resultFilterDept[0].id;
-            DEPT_NAME_START = $scope.resultFilterDept[0].deptName;
-            DEPT_ID_END = $scope.resultFilterDept[$scope.resultFilterDept.length - 1].id;
-            DEPT_NAME_END = $scope.resultFilterDept[$scope.resultFilterDept.length - 1].deptName;
+            var PERIOD_ID = $scope.budgetPeriodId["year"];
+            var FACULTY_ID = $scope.facultyId["id"];
+            var FACULTY_NAME = $scope.facultyId["deptName"];
+            var DEPT_ID_START, DEPT_NAME_START, DEPT_ID_END, DEPT_NAME_END;
+            var PLAN_ID_START, PLAN_NAME_START, PLAN_ID_END, PLAN_NAME_END;
+            var FUND_ID_START, FUND_NAME_START, FUND_ID_END, FUND_NAME_END;
 
-        } else {
+            if ($scope.deptId == null) {
+                //select between
+                DEPT_ID_START = $scope.resultFilterDept[0].id;
+                DEPT_NAME_START = $scope.resultFilterDept[0].deptName;
+                DEPT_ID_END = $scope.resultFilterDept[$scope.resultFilterDept.length - 1].id;
+                DEPT_NAME_END = $scope.resultFilterDept[$scope.resultFilterDept.length - 1].deptName;
 
-            DEPT_ID_START = $scope.deptId["id"];
-            DEPT_NAME_START = $scope.deptId["deptName"];
-            DEPT_ID_END = $scope.deptId["id"];
-            DEPT_NAME_END = $scope.deptId["deptName"];
-        }
+            } else {
 
-        if ($scope.l3dPlanId == null) {
-            //select between
-            PLAN_ID_START = $scope.listL3DPlan[0].id;
-            PLAN_NAME_START = $scope.listL3DPlan[0].planName;
-            PLAN_ID_END = $scope.listL3DPlan[$scope.listL3DPlan.length - 1].id;
-            PLAN_NAME_END = $scope.listL3DPlan[$scope.listL3DPlan.length - 1].planName;
+                DEPT_ID_START = $scope.deptId["id"];
+                DEPT_NAME_START = $scope.deptId["deptName"];
+                DEPT_ID_END = $scope.deptId["id"];
+                DEPT_NAME_END = $scope.deptId["deptName"];
+            }
 
-        } else {
+            if ($scope.l3dPlanId == null) {
+                //select between
+                PLAN_ID_START = $scope.listL3DPlan[0].id;
+                PLAN_NAME_START = $scope.listL3DPlan[0].planName;
+                PLAN_ID_END = $scope.listL3DPlan[$scope.listL3DPlan.length - 1].id;
+                PLAN_NAME_END = $scope.listL3DPlan[$scope.listL3DPlan.length - 1].planName;
 
-            PLAN_ID_START = $scope.l3dPlanId["id"];
-            PLAN_NAME_START = $scope.l3dPlanId["planName"];
-            PLAN_ID_END = $scope.l3dPlanId["id"];
-            PLAN_NAME_END = $scope.l3dPlanId["planName"];
-        }
+            } else {
 
-        if ($scope.l3dFundId == null) {
-            //select between
-            FUND_ID_START = $scope.listL3DFund[0].id;
-            FUND_NAME_START = $scope.listL3DFund[0].fundgroupName;
-            FUND_ID_END = $scope.listL3DFund[$scope.listL3DFund.length - 1].id;
-            FUND_NAME_END = $scope.listL3DFund[$scope.listL3DFund.length - 1].fundgroupName;
+                PLAN_ID_START = $scope.l3dPlanId["id"];
+                PLAN_NAME_START = $scope.l3dPlanId["planName"];
+                PLAN_ID_END = $scope.l3dPlanId["id"];
+                PLAN_NAME_END = $scope.l3dPlanId["planName"];
+            }
 
-        } else {
+            if ($scope.l3dFundId == null) {
+                //select between
+                FUND_ID_START = $scope.listL3DFund[0].id;
+                FUND_NAME_START = $scope.listL3DFund[0].fundgroupName;
+                FUND_ID_END = $scope.listL3DFund[$scope.listL3DFund.length - 1].id;
+                FUND_NAME_END = $scope.listL3DFund[$scope.listL3DFund.length - 1].fundgroupName;
 
-            FUND_ID_START = $scope.l3dFundId["id"];
-            FUND_NAME_START = $scope.l3dFundId["fundgroupName"];
-            FUND_ID_END = $scope.l3dFundId["id"];
-            FUND_NAME_END = $scope.l3dFundId["fundgroupName"];
-        }
+            } else {
 
-        var STATUS;
-        $http.get(ngContextPath + "/api/report/rptservice/bgsetting/" + PERIOD_ID).then(function (response) {
+                FUND_ID_START = $scope.l3dFundId["id"];
+                FUND_NAME_START = $scope.l3dFundId["fundgroupName"];
+                FUND_ID_END = $scope.l3dFundId["id"];
+                FUND_NAME_END = $scope.l3dFundId["fundgroupName"];
+            }
 
-            STATUS = response.data["status"];
+            var STATUS = $scope.status;
+            //$http.get(ngContextPath + "/api/report/rptservice/bgsetting/" + PERIOD_ID).then(function (response) {
+            //
+            //    STATUS = response.data["status"];
+            //
+            //}).finally(function () {
 
-        }).finally(function () {
+            //    var params = {
+            //
+            //        REPORT_CODE: String(dataItem["id"]),
+            //        BUDGET_TYPE: dataItem["type"],
+            //        EXPORT_TYPE: exportType,
+            //        PERIOD_ID: String($scope.budgetPeriodId["year"]),
+            //        FACULTY_ID: String($scope.facultyId["id"]),
+            //        FACULTY_NAME: $scope.facultyId["deptName"],
+            //        DEPT_ID_START: String(DEPT_ID_START),
+            //        DEPT_NAME_START: DEPT_NAME_START,
+            //        DEPT_ID_END: String(DEPT_ID_END),
+            //        DEPT_NAME_END: DEPT_NAME_END,
+            //        PLAN_ID_START: String(PLAN_ID_START),
+            //        PLAN_NAME_START: PLAN_NAME_START,
+            //        PLAN_ID_END: String(PLAN_ID_END),
+            //        PLAN_NAME_END: PLAN_NAME_END,
+            //        FUND_ID_START: String(FUND_ID_START),
+            //        FUND_NAME_START: FUND_NAME_START,
+            //        FUND_ID_END: String(FUND_ID_END),
+            //        FUND_NAME_END: FUND_NAME_END,
+            //        STATUS: STATUS,
+            //        CAT_ID: CAT_ID
+            //
+            //    };
+            //
+            //    console.log(params);
+            //
+            //    var paramstr = encodeURIComponent(JSON.stringify(params));
+            //    var bytes = utf8.encode(JSON.stringify(params));
+            //    var paramstr = base64.encode(bytes);
+            //
+            //    var url = pathJavaserver + "/ebudget/report/export?params=" + paramstr;
+            //    var w =  window.open(url, "_blank");
+            //    w.document.title = dataItem["title"];
+            //});
 
             var params = {
 
@@ -304,38 +371,39 @@ myApp.controller('mainController', function ($scope, $http, $controller, $filter
                 FUND_ID_END: String(FUND_ID_END),
                 FUND_NAME_END: FUND_NAME_END,
                 STATUS: STATUS,
-                CAT_ID:CAT_ID
+                CAT_ID: CAT_ID
 
             };
 
             console.log(params);
 
-            var paramstr = encodeURIComponent(JSON.stringify(params));
+            //var paramstr = encodeURIComponent(JSON.stringify(params));
             var bytes = utf8.encode(JSON.stringify(params));
             var paramstr = base64.encode(bytes);
 
             var url = pathJavaserver + "/ebudget/report/export?params=" + paramstr;
-            window.open(url, "_blank");
+            var w = window.open(url, "_blank");
+            w.document.title = dataItem["title"];
 
-        });
-
-        //var params = {
-        //
-        //    REPORT_CODE: String(dataItem["id"]),
-        //    BUDGET_TYPE: dataItem["type"],
-        //    EXPORT_TYPE: exportType,
-        //    PERIOD_ID: String($scope.budgetPeriodId["year"]),
-        //    FACULTY_ID: String($scope.facultyId["id"]),
-        //    FACULTY_NAME: $scope.facultyId["deptName"],
-        //    DEPT_ID: String($scope.deptId["id"]),
-        //    DEPT_NAME: $scope.deptId["deptName"],
-        //    PLAN_ID: String($scope.l3dPlanId["id"]),
-        //    PLAN_NAME: $scope.l3dPlanId["planName"],
-        //    FUND_ID: String($scope.l3dFundId["id"]),
-        //    FUND_NAME: $scope.l3dFundId["fundgroupName"]
-        //};
+        } else {
+            //end valid plan
+            $scope.validPlan = true;
+        }
 
     };
+
+    function checkValidPlan(reportId) {
+        var status = true;
+        var listReport = ["LR4"]; //list check require
+
+        for (var i = 0; i < listReport.length; i++) {
+            if (reportId == listReport[i] && $scope.l3dPlanId == null) {
+                status = false;
+            }
+        }
+
+        return status;
+    }
 
 
     $scope.checkShowTable = function () {
@@ -363,6 +431,6 @@ myApp.controller('mainController', function ($scope, $http, $controller, $filter
 // init jquery functions and plugins
 $(document).ready(function () {
 
-    $("#budgetPeriod,#faculty,#dept,#l3dplan,#l3dfund,#reportName,#reportType").select2().trigger("change");
+    $("#budgetPeriod,#faculty,#dept,#l3dplan,#l3dfund,#reportName,#reportType,#status").select2().trigger("change");
 
 });

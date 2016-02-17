@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="1.158657518946806"/>
-	<property name="ireport.x" value="171"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.5421731577181992"/>
+	<property name="ireport.x" value="502"/>
+	<property name="ireport.y" value="29"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
 	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
 	<style name="Default" isDefault="true" fontName="TH SarabunPSK" fontSize="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -952,7 +952,7 @@ $V{ค่าใช้สอย_1}+$V{ค่าวัสดุ_1}+$V{ค่าส
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ค่าจ้างชั่วคราว}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{ค่าจ้างชั่วคราว} != 0)? $V{ค่าจ้างชั่วคราว}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="388" y="0" width="51" height="20" uuid="74e99799-6fe3-488d-8d05-34f065ca4a26"/>
@@ -965,7 +965,7 @@ $V{ค่าใช้สอย_1}+$V{ค่าวัสดุ_1}+$V{ค่าส
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ค่าตอบแทน}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{ค่าตอบแทน} != 0)? $V{ค่าตอบแทน}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="439" y="0" width="51" height="20" uuid="69b962b2-3ab9-4e5f-a7ba-c37756ae99be"/>
@@ -978,7 +978,7 @@ $V{ค่าใช้สอย_1}+$V{ค่าวัสดุ_1}+$V{ค่าส
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ค่าใช้สอย}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{ค่าใช้สอย} != 0)? $V{ค่าใช้สอย}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="490" y="0" width="51" height="20" uuid="36136e1c-3aac-4aa1-b1ee-675540103557"/>
@@ -991,7 +991,7 @@ $V{ค่าใช้สอย_1}+$V{ค่าวัสดุ_1}+$V{ค่าส
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ค่าวัสดุ}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{ค่าวัสดุ} != 0)? $V{ค่าวัสดุ}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="541" y="0" width="51" height="20" uuid="c7d3263b-9132-451e-9caf-3bd4ce29e3e7"/>
@@ -1004,7 +1004,7 @@ $V{ค่าใช้สอย_1}+$V{ค่าวัสดุ_1}+$V{ค่าส
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ค่าสาธารณูปโภค}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{ค่าสาธารณูปโภค} != 0)? $V{ค่าสาธารณูปโภค}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="592" y="0" width="51" height="20" uuid="806798a2-3e12-4b7d-8ae9-789404678c1e"/>
@@ -1017,7 +1017,7 @@ $V{ค่าใช้สอย_1}+$V{ค่าวัสดุ_1}+$V{ค่าส
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ค่าครุภัณฑ์}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{ค่าครุภัณฑ์} != 0)? $V{ค่าครุภัณฑ์}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="643" y="0" width="51" height="20" uuid="92d61892-5576-44ea-9ae5-f22a73fa2c9c"/>
@@ -1030,7 +1030,7 @@ $V{ค่าใช้สอย_1}+$V{ค่าวัสดุ_1}+$V{ค่าส
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{ค่าที่ดิน}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{ค่าที่ดิน} != 0)? $V{ค่าที่ดิน}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="694" y="0" width="51" height="20" uuid="083ff0da-9b04-4b77-a4fd-6e6a4dbb5913"/>
@@ -1043,7 +1043,7 @@ $V{ค่าใช้สอย_1}+$V{ค่าวัสดุ_1}+$V{ค่าส
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{เงินอุดหนุนอื่นๆ}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{เงินอุดหนุนอื่นๆ} != 0)? $V{เงินอุดหนุนอื่นๆ}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
 					<reportElement stretchType="RelativeToBandHeight" x="745" y="0" width="57" height="20" uuid="7c8f623f-fd98-41b3-a4d1-342194d0258c"/>
@@ -1056,7 +1056,7 @@ $V{ค่าใช้สอย_1}+$V{ค่าวัสดุ_1}+$V{ค่าส
 					<textElement textAlignment="Right">
 						<font size="11"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{รวมเงิน}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{รวมเงิน} != 0)? $V{รวมเงิน}: "-"]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -1627,9 +1627,4 @@ $V{ค่าใช้สอย_1}+$V{ค่าวัสดุ_1}+$V{ค่าส
 			</textField>
 		</band>
 	</pageFooter>
-	<summary>
-		<band height="30" splitType="Stretch">
-			<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
-		</band>
-	</summary>
 </jasperReport>

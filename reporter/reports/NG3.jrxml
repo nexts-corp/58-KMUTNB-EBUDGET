@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="1.274523270841494"/>
+	<property name="ireport.zoom" value="1.401975597925658"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
@@ -138,7 +138,7 @@ inner join L3D_FUNDGROUP fundgroup on fundgroup.FUNDGROUPID = bgAll.fundgroupId]
 				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="405" height="20" uuid="833f28a4-9a47-41a4-80a6-7fa55b422f33"/>
-					<box>
+					<box leftPadding="2">
 						<topPen lineWidth="0.0"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -162,7 +162,7 @@ inner join L3D_FUNDGROUP fundgroup on fundgroup.FUNDGROUPID = bgAll.fundgroupId]
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="1">
+			<band height="1" splitType="Stretch">
 				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
 				<line>
 					<reportElement x="0" y="0" width="555" height="1" uuid="e27513c1-1a62-4251-acb9-6b1269301b45"/>
@@ -388,7 +388,4 @@ inner join L3D_FUNDGROUP fundgroup on fundgroup.FUNDGROUPID = bgAll.fundgroupId]
 			</textField>
 		</band>
 	</pageFooter>
-	<summary>
-		<band height="30" splitType="Stretch"/>
-	</summary>
 </jasperReport>

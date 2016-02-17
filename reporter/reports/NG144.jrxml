@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
 	<property name="ireport.zoom" value="1.4019755979256296"/>
-	<property name="ireport.x" value="366"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
 	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -417,7 +417,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{requestSummary}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{requestSummary} == 0 || $F{requestSummary} == null)? "-":$F{requestSummary}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement stretchType="RelativeToBandHeight" x="286" y="0" width="62" height="20" uuid="c4cf5151-d056-47d9-b890-4dd0f8220cd4"/>
@@ -440,7 +440,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{requestBudget}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{requestBudget} == 0 || $F{requestBudget} == null)? "-":$F{requestBudget}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement stretchType="RelativeToBandHeight" x="348" y="0" width="64" height="20" uuid="587fcfed-4f91-46c1-9801-79aa8a90f4e5"/>
@@ -483,7 +483,7 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{requestNonBudget}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{requestNonBudget} == 0 || $F{requestNonBudget} == null)? "-":$F{requestNonBudget}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="0" y="0" width="98" height="20" uuid="6b55f222-122d-42ed-ae9e-8555f5326ecb"/>

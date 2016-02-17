@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="1.0533250172243758"/>
+	<property name="ireport.zoom" value="1.2745232708414982"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
@@ -24,7 +24,7 @@
 		<parameterDescription><![CDATA["-"]]></parameterDescription>
 		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="FACULTY_NAME" class="java.lang.String">
+	<parameter name="FUND_NAME_START" class="java.lang.String">
 		<parameterDescription><![CDATA["-"]]></parameterDescription>
 		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
 	</parameter>
@@ -32,12 +32,12 @@
 		<parameterDescription><![CDATA["-"]]></parameterDescription>
 		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="FUND_NAME_START" class="java.lang.String">
+	<parameter name="FACULTY_NAME" class="java.lang.String">
 		<parameterDescription><![CDATA["-"]]></parameterDescription>
 		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="HEAD_RPT" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["แผน/ผล การใช้จ่ายงบประมาณรายจ่ายเงินรายได้ประจำปีงบประมาณ พ.ศ."+$P{PERIOD_ID}]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["รายงานแผน/ผล การใช้งบประมาณรายจ่ายเงินรายได้จากงบประมาณแผ่นดิน พ.ศ."+$P{PERIOD_ID}]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[-- รายงานแบบ ร.4
@@ -371,7 +371,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				<textElement textAlignment="Right">
 					<font size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA["แบบ ร.4"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["แบบ ง.4"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -488,6 +488,24 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				</textElement>
 				<text><![CDATA[รวม]]></text>
 			</staticText>
+			<textField>
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="20" width="390" height="20" uuid="c6059aca-7c03-4879-8d45-5bf5e2ff8b0a"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textFieldExpression><![CDATA[($P{PLAN_NAME_START} != $P{PLAN_NAME_END})? "":"แผนงาน : "+$P{PLAN_NAME_START}
+]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="40" width="390" height="20" uuid="c5c7af9c-7e4f-4156-9bb1-de4f343302f9"/>
+				<box leftPadding="2" rightPadding="2">
+					<leftPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textFieldExpression><![CDATA["หน่วยงาน : "+$P{FACULTY_NAME}]]></textFieldExpression>
+			</textField>
 			<staticText>
 				<reportElement style="FBold" x="0" y="80" width="802" height="20" uuid="2a68f8dc-2992-4191-a264-4866d0b727a2"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -656,25 +674,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<textField>
-				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="40" width="390" height="20" uuid="daf28e58-4a10-4952-941b-160deabf7f4e"/>
-				<box leftPadding="2" rightPadding="2">
-					<leftPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textFieldExpression><![CDATA["หน่วยงาน : "+$P{FACULTY_NAME}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="20" width="390" height="20" uuid="9ca7c3c1-97d7-404f-9082-ffc2bef3a37b"/>
-				<box leftPadding="2" rightPadding="2">
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textFieldExpression><![CDATA[($P{PLAN_NAME_START} != $P{PLAN_NAME_END})? "":"แผนงาน : "+$P{PLAN_NAME_START}
-]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="60" width="390" height="20" uuid="ba08eb1b-d53d-4ad1-beba-b79d27566438"/>
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="60" width="390" height="20" uuid="232227e2-6d12-40e3-a7d4-db945a88d540"/>
 				<box leftPadding="2" rightPadding="2">
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -877,7 +877,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 	<summary>
 		<band height="31" splitType="Stretch">
 			<staticText>
-				<reportElement style="FBold" x="0" y="0" width="132" height="20" uuid="fd0d381d-e1bf-4222-82fa-d27978caee9d"/>
+				<reportElement style="FBold" x="0" y="0" width="132" height="20" uuid="3fdf36fa-72a5-42a4-bba9-30d686c65d27"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -890,7 +890,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				<text><![CDATA[รวมเงินงบประมาณ]]></text>
 			</staticText>
 			<textField>
-				<reportElement style="FBold" x="132" y="0" width="60" height="20" uuid="9621d9fd-8b9f-4285-a4e8-4657448b8f1b"/>
+				<reportElement style="FBold" x="132" y="0" width="60" height="20" uuid="e59026bb-496f-4349-a657-4069c96e4637"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -903,7 +903,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				<textFieldExpression><![CDATA[($V{planSummaryTotal} == null || $V{planSummaryTotal} == 0)? "-":$V{planSummaryTotal}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="FBold" x="192" y="0" width="60" height="20" uuid="29416dc3-c6b4-4f93-9004-7a88f4508099"/>
+				<reportElement style="FBold" x="192" y="0" width="60" height="20" uuid="98550397-e840-4a91-930c-edc4b7c10867"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -916,7 +916,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				<textFieldExpression><![CDATA[($V{usedSummaryTotal} == null || $V{usedSummaryTotal} == 0)? "-":$V{usedSummaryTotal}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="FBold" x="252" y="0" width="60" height="20" uuid="0eaef104-e83c-4ccc-8941-56ac148a8162"/>
+				<reportElement style="FBold" x="252" y="0" width="60" height="20" uuid="64879bb4-f9eb-44f2-b0cb-bac37aafc3e5"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -929,7 +929,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				<textFieldExpression><![CDATA[($V{planQ1Total} == null || $V{planQ1Total} == 0)? "-":$V{planQ1Total}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="FBold" x="312" y="0" width="60" height="20" uuid="f21fc316-92f5-4756-8b46-0ff208bfdfb4"/>
+				<reportElement style="FBold" x="312" y="0" width="60" height="20" uuid="0803dbbf-fe95-4ebd-a67d-bdbb89d6de3e"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -942,7 +942,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				<textFieldExpression><![CDATA[($V{usedQ1Total} == null || $V{usedQ1Total} == 0)? "-":$V{usedQ1Total}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="FBold" x="372" y="0" width="60" height="20" uuid="33dad786-4b39-4da5-b0cf-c093101f385e"/>
+				<reportElement style="FBold" x="372" y="0" width="60" height="20" uuid="36f60b7d-57b2-4166-ab89-44de4e870078"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -955,7 +955,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				<textFieldExpression><![CDATA[($V{planQ2Total} == null || $V{planQ2Total} == 0)? "-":$V{planQ2Total}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="FBold" x="432" y="0" width="60" height="20" uuid="6514ec50-ea3c-4fb9-b0f6-d982b56f9763"/>
+				<reportElement style="FBold" x="432" y="0" width="60" height="20" uuid="03a20105-34da-45ce-b247-c9810cb9bb1e"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -968,7 +968,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				<textFieldExpression><![CDATA[($V{usedQ2Total} == null || $V{usedQ2Total} == 0)? "-":$V{usedQ2Total}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="FBold" x="492" y="0" width="60" height="20" uuid="05633b4c-8596-4a57-9e46-f9f9e08d0709"/>
+				<reportElement style="FBold" x="492" y="0" width="60" height="20" uuid="a59d581b-e4c2-4cb5-9431-98951173e4f6"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -981,7 +981,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				<textFieldExpression><![CDATA[($V{planQ3Total} == null || $V{planQ3Total} == 0)? "-":$V{planQ3Total}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="FBold" x="552" y="0" width="60" height="20" uuid="7ce0b1cd-0ae9-4042-b097-88d3267c547a"/>
+				<reportElement style="FBold" x="552" y="0" width="60" height="20" uuid="9db1777c-6626-4033-8d13-82efb5e37dda"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -994,7 +994,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				<textFieldExpression><![CDATA[($V{usedQ3Total} == null || $V{usedQ3Total} == 0)? "-":$V{usedQ3Total}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="FBold" x="612" y="0" width="60" height="20" uuid="66986161-55fc-4077-8190-25395f5a2068"/>
+				<reportElement style="FBold" x="612" y="0" width="60" height="20" uuid="7dfbadc8-cd3b-458c-a964-772a474db89f"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -1007,7 +1007,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				<textFieldExpression><![CDATA[($V{planQ4Total} == null || $V{planQ4Total} == 0)? "-":$V{planQ4Total}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="FBold" x="672" y="0" width="60" height="20" uuid="58c0ffe3-7815-48c8-a698-4d1038dd7d6a"/>
+				<reportElement style="FBold" x="672" y="0" width="60" height="20" uuid="f0dc23ad-ad6b-472d-943a-92fea506acea"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -1020,7 +1020,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				<textFieldExpression><![CDATA[($V{usedQ4Total} == null || $V{usedQ4Total} == 0)? "-":$V{usedQ4Total}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="FBold" x="732" y="0" width="70" height="20" uuid="612582dd-bf74-4642-b02d-de7d8d5b8822"/>
+				<reportElement style="FBold" x="732" y="0" width="70" height="20" uuid="a21a793a-6498-4b08-849b-6a39e98d9406"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
