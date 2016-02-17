@@ -21,14 +21,14 @@
 <div id="create"></div>
 {{> footer}}
 <script>
-    
-$( document ).ready(function() {
-  getHTML('create', '{{_context_path}}/api/member/Member/form', null);
-  
-});    
-function btsave() {
-    
-        
+
+    $(document).ready(function () {
+        getHTML('create', '{{_context_path}}/api/member/Member/form', null);
+
+    });
+    function btsave() {
+
+
         var data = {};
         data['username'] = $("#username").val();
 
@@ -37,64 +37,64 @@ function btsave() {
 
 
 
-        var result=callAjax(ngContextPath+'/api/member/Member/checkUsername', 'post', jsonEncode(jdata),'json');
+        var result = callAjax(ngContextPath + '/api/member/Member/checkUsername', 'post', jsonEncode(jdata), 'json');
         console.log(result);
         //return false;
-        if(result>0){
+        if (result > 0) {
 
-            swal({   
-                title: "เกิดข้อผิดพลาด!",   
-                text: "Username นี้มีผู้ใช้งานอยู่แล้ว กรุณาเปลี่ยน Username ใหม่อีกครั้ง",   
-                type: "error",   
-                confirmButtonText: "ตกลง" 
+            swal({
+                title: "เกิดข้อผิดพลาด!",
+                text: "Username นี้มีผู้ใช้งานอยู่แล้ว กรุณาเปลี่ยน Username ใหม่อีกครั้ง",
+                type: "error",
+                confirmButtonText: "ตกลง"
             });
             return false;
-        }else{
+        } else {
 
 
-                var data = {};
-                data['firstname'] = $("#firstname").val();
-                data['lastname'] = $("#lastname").val();
-                data['deptId'] = $("#deptId").val();
-                data['email'] = $("#email").val();
-                data['telephone'] = $("#tel").val();
-                data['username'] = $("#username").val();
-                data['password'] = $("#password").val();
-                data['roleId'] = $("#roleId").val();
+            var data = {};
+            data['firstname'] = $("#firstname").val();
+            data['lastname'] = $("#lastname").val();
+            data['deptId'] = $("#deptId").val();
+            data['email'] = $("#email").val();
+            data['telephone'] = $("#tel").val();
+            data['username'] = $("#username").val();
+            data['password'] = $("#password").val();
+            data['roleId'] = $("#roleId").val();
 
-                var jdata = {};
-                jdata['data'] = data;
-                //var result=callAjax(ngContextPath+'/api/member/Member/saveMember', 'post', jsonEncode(jdata),'json');
+            var jdata = {};
+            jdata['data'] = data;
+            //var result=callAjax(ngContextPath+'/api/member/Member/saveMember', 'post', jsonEncode(jdata),'json');
 
-                var result=callAjax('{{_context_path}}/api/member/Member/saveMember', 'post', jsonEncode(jdata),'json');
-                console.log(result.status);
-                if (result.status == true) {
-                    //swal("saved", "คุณได้ทำการเพิมข้อมูลผู้ใช้งานเรียบร้อยแล้ว", "success");
-                    window.location.assign("{{_context_path}}/api/member/Member/manage");
-                 } else {
-                    sweetAlert("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลได้", "error");
-                    
-                 }
-                /*
-                $.post("{{_context_path}}/api/member/Member/saveMember", {data: jsonEncode(jdata)}, function (data) {
-                     alert("OK");
-                     if (data.status == true) {
+            var result = callAjax('{{_context_path}}/api/member/Member/saveMember', 'post', jsonEncode(jdata), 'json');
+            console.log(result.status);
+            if (result.status == true) {
+                //swal("saved", "คุณได้ทำการเพิมข้อมูลผู้ใช้งานเรียบร้อยแล้ว", "success");
+                window.location.assign("{{_context_path}}/api/member/Member/manage");
+            } else {
+                sweetAlert("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกข้อมูลได้", "error");
 
-                        swal("Good job!", "You clicked the button!", "success");
-
-                     } else {
-                        sweetAlert("Oops...", "Something went wrong!", "error");
-
-
-                     }
-                 });
-                 */
+            }
+            /*
+             $.post("{{_context_path}}/api/member/Member/saveMember", {data: jsonEncode(jdata)}, function (data) {
+             alert("OK");
+             if (data.status == true) {
+             
+             swal("Good job!", "You clicked the button!", "success");
+             
+             } else {
+             sweetAlert("Oops...", "Something went wrong!", "error");
+             
+             
+             }
+             });
+             */
         }
-       
-        
+
+
         return false;
-   
-}
+
+    }
 
 
 
