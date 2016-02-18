@@ -104,6 +104,46 @@ myApp.controller('mainController', function ($scope, $http, $controller, $filter
                 id: 'NG146'
             },
             {
+                name: 'แบบงบประมาณรายจ่ายเงินรายได้  จำแนกตามแผนงาน/หมวดรายจ่าย (ร. 1)', type: 'K',
+                title: 'รายงาน ร.1',
+                id: 'LR1_1'
+            },
+            {
+                name: 'แบบงบประมาณรายจ่ายเงินรายได้  จำแนกตามแผนงาน/กองทุน/หมวดรายจ่าย (ร. 1)', type: 'K',
+                title: 'รายงาน ร.1',
+                id: 'LR1_2'
+            },
+            {
+                name: 'แบบงบประมาณรายจ่ายเงินรายได้  จำแนกตามหน่วยงาน/หมวดรายจ่าย (ร. 1)', type: 'K',
+                title: 'รายงาน ร.1',
+                id: 'LR1_3'
+            },
+            {
+                name: 'แบบงบประมาณรายจ่ายเงินรายได้  จำแนกตามแผนงาน/หน่วยงาน/หมวดรายจ่าย (ร. 1)', type: 'K',
+                title: 'รายงาน ร.1',
+                id: 'LR1_4'
+            },
+            {
+                name: 'แบบงบประมาณรายจ่ายเงินรายได้  จำแนกตามหน่วยงาน-ภาควิชา/หมวดรายจ่าย	 (ร. 1)', type: 'K',
+                title: 'รายงาน ร.1',
+                id: 'LR1_5'
+            },
+            {
+                name: 'แบบงบประมาณรายจ่ายเงินรายได้  จำแนกตามหน่วยงาน/แผนงาน/กองทุน (ร. 1)', type: 'K',
+                title: 'รายงาน ร.1',
+                id: 'LR1_6'
+            },
+            {
+                name: 'แบบงบประมาณรายจ่ายเงินรายได้  จำแนกตามหน่วยงาน-ภาควิชา/กองทุน (ร. 1)', type: 'K',
+                title: 'รายงาน ร.1',
+                id: 'LR1_7'
+            },
+            {
+                name: 'แบบสรุปงบประมาณรายจ่ายเงินรายได้  จำแนกตามแผนงาน/กองทุน/หมวดรายจ่าย (ร. 2)', type: 'K',
+                title: 'รายงาน ร.2',
+                id: 'LR2'
+            },
+            {
                 name: 'แบบงบประมาณรายจ่ายเงินรายได้  จำแนกตามหน่วยงาน-ภาควิชา-สาขาวิชา/หมวดรายจ่าย (ร. 2-1)', type: 'K',
                 title: 'รายงาน ร.2-1',
                 id: 'LR2_1'
@@ -394,7 +434,7 @@ myApp.controller('mainController', function ($scope, $http, $controller, $filter
 
     function checkValidPlan(reportId) {
         var status = true;
-        var listReport = ["LR4"]; //list check require
+        var listReport = ["LR4!"]; //list check require
 
         for (var i = 0; i < listReport.length; i++) {
             if (reportId == listReport[i] && $scope.l3dPlanId == null) {
