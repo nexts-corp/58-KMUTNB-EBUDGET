@@ -19,4 +19,9 @@ class ViewService extends CServiceBase implements IViewService {
         $view = new CJView("manageEduPlan", CJViewType::HTML_VIEW_ENGINE);
         return $view;
     }
+    
+    public function manageUnit() {
+        $view = new CJView("manageUnit", CJViewType::HTML_VIEW_ENGINE);
+        return $view;
+    }
 }

@@ -15,4 +15,11 @@ interface IViewService {
      * @description จัดการด้านแผนกลยุทธ์
      */
     public function manageEduPlan();
+    
+    /**
+     * @name manageUnit
+     * @uri /manageUnit
+     * @description จัดการหน่วยนับ
+     */
+    public function manageUnit();
 }
