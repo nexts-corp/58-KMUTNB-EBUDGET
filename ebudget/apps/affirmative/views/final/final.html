@@ -65,66 +65,66 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label text-right " for="kpiSeq">ลำดับที่</label>
+                                    <label class="col-md-4 control-label text-right active" for="kpiSeq">ลำดับที่</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control input-sm" name="kpiSeq" id="kpiSeq" data-lock="Y" required>
+                                        <input type="text" class="form-control input-sm active" name="kpiSeq" id="kpiSeq" data-lock="Y">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label text-right" for="kpiName">ตัวชี้วัดคำรับรอง</label>
+                                    <label class="col-md-4 control-label text-right active" for="kpiName">ตัวชี้วัดคำรับรอง</label>
                                     <div class="col-md-8">
-                                        <textarea class="form-control input-sm" name="kpiName" id="kpiName" required></textarea>
+                                        <textarea class="form-control input-sm active" name="kpiName" id="kpiName" required></textarea>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label text-right" for="unit">หน่วยนับ</label>
+                                    <label class="col-md-4 control-label text-right active" for="unit">หน่วยนับ</label>
                                     <div class="col-md-8">
-                                        <select  class="form-control input-sm" name="unitId" id="unitId" data-lock="Y"></select>
+                                        <select  class="form-control input-sm active" name="unitId" id="unitId" data-lock="Y"></select>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label text-right" for="kpiGoal">ค่าเป้าหมายตัวชี้วัด</label>
+                                    <label class="col-md-4 control-label text-right active" for="kpiGoal">ค่าเป้าหมายตัวชี้วัด</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control input-sm" name="kpiGoal" id="kpiGoal" required>
+                                        <input type="text" class="form-control input-sm active" name="kpiGoal" id="kpiGoal">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label text-right" for="score1">คะแนน1</label>
+                                    <label class="col-md-4 control-label text-right active" for="score1">คะแนน1</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control input-sm" name="score1" id="score1" required>
+                                        <input type="text" class="form-control input-sm active" name="score1" id="score1" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label text-right" for="score2">คะแนน2</label>
+                                    <label class="col-md-4 control-label text-right active" for="score2">คะแนน2</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control input-sm" name="score2" id="score2" required>
+                                        <input type="text" class="form-control input-sm active" name="score2" id="score2" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label text-right" for="score3">คะแนน3</label>
+                                    <label class="col-md-4 control-label text-right active" for="score3">คะแนน3</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control input-sm" name="score3" id="score3" required>
+                                        <input type="text" class="form-control input-sm active" name="score3" id="score3" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label text-right" for="score4">คะแนน4</label>
+                                    <label class="col-md-4 control-label text-right active" for="score4">คะแนน4</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control input-sm" name="score4" id="score4" required>
+                                        <input type="text" class="form-control input-sm active" name="score4" id="score4" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label text-right" for="score5">คะแนน5</label>
+                                    <label class="col-md-4 control-label text-right active" for="score5">คะแนน5</label>
                                     <div class="col-md-8">
                                         <input type="text" class="form-control input-sm" name="score5" id="score5" required>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label text-right" for="remark">หมายเหตุ</label>
+                                    <label class="col-md-4 control-label text-right inactive" for="remark">หมายเหตุ</label>
                                     <div class="col-md-8">
-                                        <textarea class="form-control input-sm" name="remark" id="remark"></textarea>
+                                        <textarea class="form-control input-sm inactive" name="remark" id="remark"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -426,6 +426,7 @@
                         $(this).attr("disabled", false);
                     });
                     $("#panelForm").modal("show");
+                    statusChange();
                     listsKpi(pId);
                     $("button.save").unbind().click(function () {
                         var isValid = true;
@@ -460,6 +461,7 @@
             $("#loadingForm").html('');
             $("#form").trigger('reset');
             $("#panelForm").modal("show");
+            statusChange();
             listsKpi(pId);
             //   console.log(listArr[finalId]);
             $("#form input[type=text], #form textarea, #form select").each(function () {
@@ -472,15 +474,15 @@
                     $("#" + fid).attr("disabled", false);
                 }
             });
+            
+            $("#isActive").trigger("change");
+            
             $("button.save").unbind("click").click(function () {
                 var isValid = true;
-                var status = $("#isActive").val();
-                if (status == "Y") {
-                    $('#form input[required]').each(function () {
-                        if ($(this).val() == "" && !$(this).prop("disabled"))
-                            isValid = false;
-                    });
-                }
+                $('#form input[required], #form textarea[required]').each(function () {
+                    if ($(this).val() == "")
+                        isValid = false;
+                });
                 if (isValid) {
                     var fdata = dataObject(finalId, "finalId", null);
                     //console.log(fdata);
@@ -755,5 +757,25 @@
         var fdata = {};
         fdata = fParam;
         return fdata;
+    }
+    
+    function statusChange(){
+        $("#isActive").change(function(){
+            var val = $(this).val();
+            if(val == "Y"){
+               $("#form :input.active").prop('required',true); 
+               $("label.active").addClass("req");
+
+               $("#form :input.inactive").prop('required',false); 
+               $("label.inactive").removeClass("req");
+            }
+            else{
+               $("#form :input.active").prop('required',false); 
+               $("label.active").removeClass("req");
+
+               $("#form :input.inactive").prop('required',true); 
+               $("label.inactive").addClass("req");
+            }
+        }).val("Y").trigger("change");
     }
 </script>
