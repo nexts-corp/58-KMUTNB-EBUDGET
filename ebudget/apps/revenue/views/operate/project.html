@@ -282,14 +282,7 @@
                                                 <div class="col-md-offset-1" style="font-weight: bold;">งบประมาณแผ่นดิน หมวดเงินอุดหนุนอื่นๆ</div>
                                             </div><br>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="row">
-                                                <div class="col-md-offset-2 col-md-10">
-                                                    <input type="radio" value="{[listSub.id]}">
-                                                    <label>{[listSub.typeName]}</label>
-                                                </div>
-                                            </div><br>
-                                        </div>
+                                        <div id="listSubsidies" class="col-md-12"></div>
                                     </div><br>
                                     <div class="row">
                                         <div class="col-md-12">
@@ -297,14 +290,7 @@
                                                 <div class="col-md-offset-1" style="font-weight: bold;">แผนงาน</div>
                                             </div><br>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="row">
-                                                <div class="col-md-offset-2 col-md-10">
-                                                    <input type="radio" value="{[listPlan.id]}">
-                                                    <label>{[listPlan.planName]}</label>
-                                                </div>
-                                            </div><br>
-                                        </div>
+                                        <div id="listPlan" class="col-md-12"></div>
                                     </div>
                                 </div>
 
@@ -785,6 +771,32 @@
                     });
                 });
             });
+            
+            var htmlSubsidies = '';
+            $.each(datas["layouts"]["subsidies"], function(key, val){
+                htmlSubsidies += '<div class="col-md-6">'
+                        + '<div class="row">'
+                            + '<div class="col-md-12">'
+                                + '<input type="radio" value="'+val["id"]+'">'
+                                + '<label style="padding-left: 5px;">'+val["typeName"]+'</label>'
+                            + '</div>'
+                        + '</div><br>'
+                    + '</div>';
+            });
+            $("#listSubsidies").html(htmlSubsidies);
+            
+            var htmlPlan = '';
+            $.each(datas["layouts"]["plan"], function(key, val){
+                htmlPlan += '<div class="col-md-6">'
+                        + '<div class="row">'
+                            + '<div class="col-md-12">'
+                                + '<input type="radio" value="'+val["id"]+'">'
+                                + '<label style="padding-left: 5px;">'+val["planName"]+'</label>'
+                            + '</div>'
+                        + '</div><br>'
+                    + '</div>';
+            });
+            $("#listPlan").html(htmlPlan);
         }
     }
 
