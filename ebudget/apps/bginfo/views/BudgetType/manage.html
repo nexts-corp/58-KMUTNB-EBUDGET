@@ -1,4 +1,209 @@
 {{> header}}
+<div role="main" class="main">
+    <section class="page-top none-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li class="active">ระบบจัดการข้อมูลเบื้องหลัง</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="none-padding">ระบบจัดการด้านประเภทหมวดรายจ่าย</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="tall dashboard">
+    <div class="container">
+        <div class="row">
+            <div id="panelBudget" class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="tabs">
+                            <ul id="tabMenu" class="nav nav-tabs">
+
+                            </ul>
+                            <div id="tabContent" class="tab-content">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+            $(function () {
+                listAllBudget("G");
+            });
+    $('.tabs').bind('click', function (e) {
+        var target = $(e.target).attr("href");
+        if (target == "#tabG") {
+            listAllBudget("G");
+            $("#tabK").removeClass('active');
+            $(target).addClass('active');
+        } else if (target == "#tabK") {
+            listAllBudget("K");
+            $("#tabG").removeClass('active');
+            $(target).addClass('active');
+        }
+    });
+    function listAllBudget(bgtype) {
+        var contentArr = {};
+        var datas = callAjax("{{_context_path}}/api/bginfo/BudgetType/listAllBudget", "post", {type: bgtype}, "json");
+        if (typeof datas["lists"] !== "undefined" && datas["lists"] !== null && datas["lists"] !== false) {
+
+            var menu = '<li class="active" id="tabG">'
+                    + '<a href="#tabG" data-toggle="tab"><i class="fa fa-star"></i> เงินงบประมาณแผ่นดิน</a>'
+                    + '</li>'
+                    + '<li id="tabK">'
+                    + '<a href="#tabK" data-toggle="tab"><i class="fa fa-star"></i> เงินรายได้</a>'
+                    + '</li>';
+            var content = '<div id="tab' + bgtype + '" class="tab-pane active">'
+                    + '<table id="tableall" class="table table-hover table-bordered">'
+                    + '<thead>'
+                    + '<tr>'
+                    + '<th class="text-center col-md-1" style="vertical-align: middle;">ลำดับ</th>'
+                    + '<th class="text-center col-md-8" style="vertical-align: middle;">หมวดรายจ่าย</th>'
+                    + '<th class="text-center col-md-3" style="vertical-align: middle;">จัดการ</th>'
+                    + '</tr>'
+                    + '</thead>'
+                    + '<tbody>'
+                    + '<tr>'
+                    + '<td colspan="3" class="text-center">-</td>'
+                    + '</tr>'
+                    + '</tbody>'
+                    + '</table>'
+                    + '</div>';
+            $.each(datas["lists"], function (key0, value0) {
+                contentArr[key0] += '<tr data-tt-id="type' + value0["BudgetTypeId"] + '" data-seq="' + key0 + '">'
+                        + '<td class="text-center"></td>'
+                        + '<td>'
+                        + '<span class="text-bold" style="text-decoration: underline;">' + value0["BudgetTypeId"] + ' : ' + value0["BudgetTypeName"] + '</span>'
+                        + '</td>'
+                        + '<td class="text-center">'
+                        + '<button class="btn btn-sm btn-success add" data-pid="' + '0' + '" data-pname="typeId"><i class="fa fa-plus-circle"></i> เพิ่ม</button>&nbsp;&nbsp;'
+                        + '<button class="btn btn-sm btn-warning edit" data-id="' + value0["BudgetTypeId"] + '" data-name="' + value0["BudgetTypeName"] + '"><i class="fa fa-pencil"></i> แก้ไข</button></td>'
+                        + '</tr>';
+                $.each(value0["lv1"], function (key1, value1) {
+                    contentArr[key0] += '<tr data-tt-id="type' + value1["BudgetTypeId"] + '" data-tt-parent-id="type' + value0["BudgetTypeId"] + '"  data-seq="' + value1["BudgetTypeId"] + '" >'
+                            + '<td class="text-center"></td>'
+                            + '<td>'
+                            + '<span class="text-bold" style="text-decoration: underline;">' + value1["BudgetTypeId"] + ' : ' + value1["BudgetTypeName"] + '</span>'
+                            + '</td>'
+                            + '<td class="text-center">'
+                            + '<button class="btn btn-sm btn-success add" data-pid="' + value0["BudgetTypeId"] + '" data-pname="typeId"><i class="fa fa-plus-circle"></i> เพิ่ม</button>&nbsp;&nbsp;'
+                            + '<button class="btn btn-sm btn-warning edit" data-id="' + value1["BudgetTypeId"] + '" data-name="' + value1["BudgetTypeName"] + '"><i class="fa fa-pencil"></i> แก้ไข</button></td>'
+                            + '</tr>';
+                    $.each(value1["lv2"], function (key2, value2) {
+                        if (typeof (value1["lv2"]) !== "undefined" && value1["lv2"] !== null) {
+                            contentArr[key0] += '<tr data-tt-id="type' + value2["BudgetTypeId"] + '" data-tt-parent-id="type' + value1["BudgetTypeId"] + '"  data-seq="' + value2["BudgetTypeId"] + '" >'
+                                    + '<td class="text-center"></td>'
+                                    + '<td>'
+                                    + '<span class="text-bold" style="text-decoration: underline;">' + value2["BudgetTypeId"] + ' : ' + value2["BudgetTypeName"] + '</span>'
+                                    + '</td>'
+                                    + '<td class="text-center">'
+                                    + '<button class="btn btn-sm btn-success add" data-pid="' + value1["BudgetTypeId"] + '" data-pname="typeId"><i class="fa fa-plus-circle"></i> เพิ่ม</button></td>&nbsp;&nbsp;'
+                                    + '<button class="btn btn-sm btn-warning edit" data-id="' + value2["BudgetTypeId"] + '" data-name="' + value2["BudgetTypeName"] + '"><i class="fa fa-pencil"></i> แก้ไข</button></td>'
+                                    + '</tr>';
+                        }
+
+                        $.each(value2["lv3"], function (key3, value3) {
+                            if (typeof (value2["lv3"]) !== "undefined" && value2["lv3"] !== null) {
+                                contentArr[key0] += '<tr data-tt-id="type' + value3["BudgetTypeId"] + '" data-tt-parent-id="type' + value2["BudgetTypeId"] + '"  data-seq="' + value3["BudgetTypeId"] + '" >'
+                                        + '<td class="text-center"></td>'
+                                        + '<td>'
+                                        + '<span class="text-bold" style="text-decoration: underline;">' + value3["BudgetTypeId"] + ' : ' + value3["BudgetTypeName"] + '</span>'
+                                        + '</td>'
+                                        + '<td class="text-center">'
+                                        + '<button class="btn btn-sm btn-warning edit" data-id="' + value3["BudgetTypeId"] + '" data-name="' + value3["BudgetTypeName"] + '"><i class="fa fa-pencil"></i> แก้ไข</button></td>'
+                                        + '</tr>';
+                            }
+                        });
+                    });
+                });
+            });
+            $("#tabMenu").html(menu);
+            $("#tabContent").html(content);
+            var contentAll = '';
+            $.each(contentArr, function (key, value) {
+                contentAll += value
+                $("#table" + key + " tbody").html(value);
+                $("#table" + key).treetable({
+                    expandable: true,
+                    initialState: "collapsed"
+                });
+            });
+            $("#tableall tbody").html(contentAll);
+            $("#tableall").treetable({
+                expandable: true,
+                initialState: "collapsed"
+            });
+        }
+
+        $("#tableall").off("click", "button.add").on("click", "button.add", function () {
+            var pid = $(this).attr("data-pid");
+            var pname = $(this).attr("data-pname");
+            $("#textId").val("");
+            $("#textName").val("");
+            $("#modal").modal("show");
+            $("button.save").unbind().click(function () {
+                var isValid = true;
+                $('#form input[required]').each(function () {
+                    if ($(this).val() == "" && !$(this).prop("disabled"))
+                        isValid = false;
+                });
+                if (isValid) {
+                    var pData = {};
+                    pData.typeName = $("#textName").val();
+                    pData.id = $("#textId").val();
+                    pData.masterId = pid;
+                    
+                    var dataJSON = JSON.stringify({pData: pData});
+                    var dataJSONEN = encodeURIComponent(dataJSON);
+                    addBudgetType(dataJSONEN);
+                }
+            });
+        });
+        $("#tableall").off("click", "button.edit").on("click", "button.edit", function () {
+            var id = $(this).attr("data-id");
+            var name = $(this).attr("data-name");
+            $("#textId").val(id);
+            $("#textName").val(name);
+            $("#modal").modal("show");
+        });
+    }
+
+    function addBudgetType(dataJSONEN) {
+        $("#loading").html("กำลังบันทึกข้อมูล...");
+        setTimeout(function () {
+            var datas = callAjax("{{_context_path}}/api/bginfo/BudgetType/addBudgetType", "post", dataJSONEN, "json");
+            if (typeof datas !== 'undefined' && datas !== null) {
+                if (datas["update"] == true) {
+                    $("#loading").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
+                    setTimeout(function () {
+                        $("#modal").modal("hide");
+                                listsUnit();
+                    }, 500);
+                }
+                else {
+                    $("#loading").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้<br>' + datas["update"] + '</span>');
+                }
+            }
+        }, 0);
+    }
+
+
+
+</script>
+
+
 <div ng-app="EduDevPlan" ng-controller="mainController" data-ng-init="init()" style="display:none;">
     <div role="main" class="main">
         <section class="page-top none-margin">
@@ -22,7 +227,7 @@
             <div class="container">
                 <ul data-option-key="filter" data-sort-id="portfolio" class="nav nav-pills sort-source menu-top pull-right">
                     <li class="active">
-                        <button ng-click="back()" ng-show="idLevel.length>=1" class="btn btn-default back"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
+                        <button ng-click="back()" ng-show="idLevel.length >= 1" class="btn btn-default back"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
                     </li>
                 </ul>
             </div>
@@ -35,11 +240,11 @@
                 <div class="form-group"> <br>
                     <label id="label-level" class="col-md-10 control-label">{[nametextLevel]}</label>   
                     <div class="col-md-2">         
-                        <button ng-click="modal('add')" ng-show="selectYear!='udf'" class="btn btn-success add pull-right control-label"><i class="fa fa-plus-circle"></i> ประเภทหมวดรายจ่าย</button>      
+                        <button ng-click="modal('add')" ng-show="selectYear != 'udf'" class="btn btn-success add pull-right control-label"><i class="fa fa-plus-circle"></i> ประเภทหมวดรายจ่าย</button>      
                     </div>  
                 </div>
             </div>
-            
+
         </div>
         <br>
         <div class="row">
@@ -57,28 +262,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
-                            
-                            <tr ng-repeat="list in dataBudgetType | orderBy:'id'">   
+
+
+                            <tr ng-repeat="list in dataBudgetType| orderBy:'id'">   
                                 <td class="text-center">{[$index+1]}</td> 
                                 <td class="text-center">{[list.id]}</td>
                                 <td>{[list.typeName]}</td>   
                                 <td class="text-center">
-                                    <button ng-click="fetchBudgetType(list.id,'next',list.typeName)" class="btn btn-primary""><i class="fa fa-cog"></i> จัดการ</button>
-                                    <button ng-click="modal('edit',list.id,list.typeName)" class="btn btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>    
+                                    <button ng-click="fetchBudgetType(list.id, 'next', list.typeName)" class="btn btn-primary""><i class="fa fa-cog"></i> จัดการ</button>
+                                    <button ng-click="modal('edit', list.id, list.typeName)" class="btn btn-warning"><i class="fa fa-pencil"></i> แก้ไข</button>    
                                     <button ng-click="delData(list.id)" class="btn btn-default"><i class="fa fa-trash-o "></i> ลบ</button> 
                                 </td>
                             </tr>
-                            
+
                             <tr ng-show="waitDataList">
                                 <td colspan="4" style="background-color: #F1F1F1;text-align: center;"><i class="fa fa-cog fa-spin"></i> กำลังโหลด</td>
                             </tr>
-                            
+
                             <tr ng-show="!waitDataList && dataBudgetType.length == 0">
                                 <td colspan="4" style="background-color: #F1F1F1;text-align: center;">ไม่มีข้อมูลประเภทหมวดรายจ่าย</td>
                             </tr>
-                                
-  
+
+
                         </tbody>
                     </table>
 
@@ -86,12 +291,12 @@
             </div>
         </div>
 
-        
-        
-        
+
+
+
     </div><!--  container  -->
-    
-    
+
+
     <div id="modal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -111,20 +316,21 @@
                         <div class="col-md-4">   
                             <div class="form-group"> 
                                 <label>รหัสหมวดรายจ่าย</label>
-                                <input ng-model="textId" class="form-control">
-                            </div>  
+                                <input ng-model="textId" id="textId" class="form-control">
+                            </div>
                         </div>
                         <div class="col-md-8">   
                             <div class="form-group">
                                 <label>ชื่อหมวดรายจ่าย</label>
-                                <input ng-model="textName" class="form-control">
+                                <input ng-model="textName" id="textName" class="form-control">
                             </div>  
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">  
-                    <button data-dismiss="modal" class="btn btn-default" type="button">ยกเลิก</button> 
-                    <button ng-click="saveData()" class="btn btn-success" type="button" >บันทึก</button>
+                    <button data-dismiss="modal" class="btn btn-default cancel" type="button">ยกเลิก</button> 
+                    <!--<button ng-click="saveData()" class="btn btn-success save" type="button" >บันทึก</button>-->
+                    <button class="btn btn-success save" type="button" >บันทึก</button>
                 </div>
             </div>
         </div>
