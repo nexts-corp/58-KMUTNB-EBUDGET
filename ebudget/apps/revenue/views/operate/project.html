@@ -33,9 +33,7 @@
             <div class="col-md-12">
                 <label class="col-md-1 control-label">โครงการ</label>
                 <div class="col-md-5">
-                    <select class="form-control input-sm">
-                        <option value="">- เลือกโครงการ -</option>
-                    </select>
+                    <select id="budgetHeadId" name="budgetHeadId" class="form-control input-sm"></select>
                 </div>
             </div>
         </div>
@@ -65,7 +63,7 @@
                             </li>
                         </ul>
                     </div>
-                    <form id="form" class="form-horizontal" novalidate="novalidate">
+                    <form id="form" class="form-horizontal" novalidate="novalidate" onsubmit="return false;">
                         <div id="tabContent" class="tab-content">
                             <div id="wizard-general" class="tab-pane active">
                                 <div class="form-group">
@@ -76,26 +74,26 @@
                                     <div class="col-md-12">
                                         <label class="col-md-2 control-label text-right">คณะ/สำนัก/วิทยาลัย</label>
                                         <div class="col-md-6">
-                                            <input id="facName" class="form-control input-sm" disabled>
+                                            <input type="text" id="facName" name="facName" class="form-control input-sm" value="{{deptName}}" readonly="readonly">
                                         </div>
                                     </div>
 
                                     <div class="col-md-12" style="margin: 5px 0;">
                                         <label class="col-md-2 control-label text-right">ภาควิชา/ศูนย์/ฝ่าย/กอง</label>
                                         <div class="col-md-6">
-                                            <input id="deptName" type="text" class="form-control input-sm" disabled>
+                                            <input type="text" id="deptName" name="deptName" class="form-control input-sm" readonly="readonly">
                                         </div>
                                     </div>
                                     <div class="col-md-12" style="margin: 5px 0;">
                                         <label class="col-md-2 control-label text-right">ผู้รับผิดชอบ</label>
                                         <div class="col-md-6">
-                                            <input id="responder" type="text" class="form-control input-sm">
+                                            <input type="text" id="responder" name="responder" class="form-control input-sm">
                                         </div>
                                     </div>
                                     <div class="col-md-12" style="margin: 5px 0;">
                                         <label class="col-md-2 control-label text-right">ผู้กำกับ</label>
                                         <div class="col-md-6">
-                                            <input id="director" type="text" class="form-control input-sm">
+                                            <input type="text" id="director" name="director" class="form-control input-sm">
                                         </div>
                                     </div>
                                 </div>
@@ -120,49 +118,16 @@
                                     </div>
                                     <div>
                                         <div class="row">
-                                            <div class="col-md-12">
-                                                <label class="col-md-2 control-label text-right">แผนกลยุทธ์</label>
-                                                <div class="col-md-6">
-                                                    <select id="typeId" class="form-control input-sm">
-                                                        <option value="">เลือก</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12" style="margin: 5px 0;">
-                                                <label class="col-md-3 control-label text-right">ประเด็นยุทธศาสตร์</label>
-                                                <div class="col-md-5">
-                                                    <select id="issueId" class="form-control input-sm">
-                                                        <option value="">เลือก</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-12" style="margin: 5px 0;">
-                                                <label class="col-md-3 control-label text-right">เป้าประสงค์</label>
-                                                <div class="col-md-5">
-                                                    <select id="targetId" class="form-control input-sm">
-                                                        <option value="">เลือก</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-12" style="margin: 5px 0;">
-                                                <label class="col-md-3 control-label text-right">กลยุทธ์</label>
-                                                <div class="col-md-5">
-                                                    <select id="strategyId" class="form-control input-sm">
-                                                        <option value="">เลือก</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+                                            <div id="strategyPlan"></div>
                                         </div>
                                         <br>
                                     </div>
 
-                                    <!--<div class="col-md-12" style="margin: 5px 0;">
-                                        <div class="col-md-offset-3 col-md-5" style="text-align: right;">
-                                            <button class="btn btn-primary"><i class="fa fa-plus"></i> เพิ่ม</button>
+                                    <div class="col-md-12">
+                                        <div class="text-right">
+                                            <button class="btn btn-success addStrategy"><i class="fa fa-plus-circle"></i> เพิ่ม</button>
                                         </div>
-                                    </div>-->
+                                    </div>
                                 </div>
 
                             </div>
@@ -173,10 +138,7 @@
                                     </div>
 
                                     <div class="col-md-12">
-                                        <div class="col-md-2"></div>
-                                        <div class="col-md-6">
-                                            <textarea type="text" class="form-control" rows="5"></textarea>
-                                        </div>
+                                        <textarea id="principle" name="principle" class="form-control" rows="5"></textarea>
                                     </div>
                                 </div>
 
@@ -186,10 +148,7 @@
                                     </div>
 
                                     <div class="col-md-12">
-                                        <div class="col-md-2"></div>
-                                        <div class="col-md-6">
-                                            <textarea type="text" class="form-control" rows="5"></textarea>
-                                        </div>
+                                        <textarea id="objective" name="objective" class="form-control" rows="5"></textarea>
                                     </div>
                                 </div>
 
@@ -199,10 +158,7 @@
                                     </div>
 
                                     <div class="col-md-12">
-                                        <div class="col-md-2"></div>
-                                        <div class="col-md-6">
-                                            <textarea type="text" class="form-control" rows="5"></textarea>
-                                        </div>
+                                        <textarea id="benefit" name="benefit" class="form-control" rows="5"></textarea>
                                     </div>
                                 </div>
 
@@ -214,7 +170,7 @@
                                         <h5>8. ตัวชี้วัดความสำเร็จระดับโครงการ (Output/Outcome) และค่าเป้าหมาย (ระบุหน่วยนับ)</h5>
                                     </div>
 
-                                    <div class="col-md-offset-1 col-md-10">
+                                    <div class="col-md-12">
                                         <table id="tableKpi" class="table table-bordered">
                                             <thead>
                                                 <tr>
@@ -238,10 +194,7 @@
                                     </div>
 
                                     <div class="col-md-12">
-                                        <div class="col-md-2"></div>
-                                        <div class="col-md-6">
-                                            <textarea type="text" class="form-control" rows="5"></textarea>
-                                        </div>
+                                        <textarea id="targetGroup" name="targetGroup" class="form-control" rows="5"></textarea>
                                     </div>
                                 </div>
 
@@ -253,20 +206,24 @@
                                         <h5>10. ขั้นตอนการดำเนินการ</h5>
                                     </div>
 
-                                    <div class="col-md-offset-1 col-md-10">
-                                        <table class="table table-bordered">
-                                            <tr>
-                                                <th class="col-md-6 text-center">ขั้นตอนการดำเนินการ/รายการกิจกรรม</th>
-                                                <th class="col-md-2 text-center">วันที่เริ่มต้น</th>
-                                                <th class="col-md-2 text-center">วันที่สิ้นสุด</th>
-                                                <th class="col-md-2 text-center">จัดการ</th>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3"></td>
-                                                <td class="text-center">
-                                                    <button class="btn btn-success"><i class="fa fa-plus-circle"></i> เพิ่ม</button>
-                                                </td>
-                                            </tr>
+                                    <div class="col-md-12">
+                                        <div class="col-md-12 text-right" style="margin-bottom: 10px;">
+                                            <button class="btn btn-success addDuration"><i class="fa fa-plus-circle"></i> เพิ่ม</button>
+                                        </div>
+                                        <table id="tableDuration" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-6 text-center">ขั้นตอนการดำเนินการ/รายการกิจกรรม</th>
+                                                    <th class="col-md-2 text-center">วันที่เริ่มต้น</th>
+                                                    <th class="col-md-2 text-center">วันที่สิ้นสุด</th>
+                                                    <th class="col-md-2 text-center">จัดการ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center" colspan="4">-</td>
+                                                </tr>
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -280,11 +237,11 @@
                                         <div style="margin: 5px 0;" class="col-md-12">
                                             <label class="col-md-2 control-label text-right">วันที่เริ่มต้น</label>
                                             <div class="col-md-3">
-                                                <input type="text" class="form-control input-sm">
+                                                <input type="text" id="projectStart" name="projectStart" class="form-control input-sm">
                                             </div>
-                                            <label class="col-md-1 control-label text-right">วันที่สิ้นสุด</label>
+                                            <label class="col-md-2 control-label text-right">วันที่สิ้นสุด</label>
                                             <div class="col-md-3">
-                                                <input type="text" class="form-control input-sm">
+                                                <input type="text" id="projectEnd" name="projectEnd" class="form-control input-sm">
                                             </div>
                                         </div>
                                     </div>
@@ -300,11 +257,11 @@
                                     <div class="col-md-12" style="margin: 5px 0;">
                                         <label class="col-md-2 control-label text-right">ตัวเลข</label>
                                         <div class="col-md-3">
-                                            <input type="text" class="form-control input-sm">
+                                            <input type="text" id="amountNum" name="amountNum" class="form-control input-sm">
                                         </div>
                                         <label class="col-md-1 control-label text-right">ตัวอักษร</label>
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control input-sm">
+                                        <div class="col-md-6">
+                                            <input type="text" id="amountWord" name="amountWord" class="form-control input-sm">
                                         </div>
                                     </div>
                                     <div class="col-md-12" style="margin: 5px 0;">
@@ -323,14 +280,7 @@
                                                 <div class="col-md-offset-1" style="font-weight: bold;">งบประมาณแผ่นดิน หมวดเงินอุดหนุนอื่นๆ</div>
                                             </div><br>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="row">
-                                                <div class="col-md-offset-2 col-md-10">
-                                                    <input type="radio" value="{[listSub.id]}">
-                                                    <label>{[listSub.typeName]}</label>
-                                                </div>
-                                            </div><br>
-                                        </div>
+                                        <div id="listSubsidies" class="col-md-12"></div>
                                     </div><br>
                                     <div class="row">
                                         <div class="col-md-12">
@@ -338,14 +288,7 @@
                                                 <div class="col-md-offset-1" style="font-weight: bold;">แผนงาน</div>
                                             </div><br>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="row">
-                                                <div class="col-md-offset-2 col-md-10">
-                                                    <input type="radio" value="{[listPlan.id]}">
-                                                    <label>{[listPlan.planName]}</label>
-                                                </div>
-                                            </div><br>
-                                        </div>
+                                        <div id="listPlan" class="col-md-12"></div>
                                     </div>
                                 </div>
 
@@ -355,32 +298,27 @@
                                     </div>
 
                                     <div class="col-md-12">
-                                        <table class="table table-bordered">
-                                            <tr>
-                                                <th rowspan="2" class="text-center" style="vertical-align: middle;">งบรายจ่าย</th>
-                                                <th class="text-center">ไตรมาส 1</th>
-                                                <th class="text-center">ไตรมาส 2</th>
-                                                <th class="text-center">ไตรมาส 3</th>
-                                                <th class="text-center">ไตรมาส 4</th>
-                                            </tr>
-                                            <tr>
-                                                <th class="text-center">แผนการใช้จ่าย</th>
-                                                <th class="text-center">แผนการใช้จ่าย</th>
-                                                <th class="text-center">แผนการใช้จ่าย</th>
-                                                <th class="text-center">แผนการใช้จ่าย</th>
-                                            </tr>
-                                            <tr style="background-color: #F1F1F1;">
-                                                <td>{[($index+1)+ '. ' + list.typeName]}</td>
-                                                <td colspan="4">&nbsp;</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="padding-left: 50px;">{[($parent.$index+1)+ '.' + ($index+1) + ' ' + listSub.typeName]}</td>
-                                                <td><input type="number" class="form-control input-sm"></td>
-                                                <td><input type="number" class="form-control input-sm"></td>
-                                                <td><input type="number" class="form-control input-sm"></td>
-                                                <td><input type="number" class="form-control input-sm"></td>
-                                            </tr>
-                                            <tr colspan="6"><td></td></tr>
+                                        <table id="tableBudget" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2" class="text-center" style="vertical-align: middle;">งบรายจ่าย</th>
+                                                    <th class="text-center">ไตรมาส 1</th>
+                                                    <th class="text-center">ไตรมาส 2</th>
+                                                    <th class="text-center">ไตรมาส 3</th>
+                                                    <th class="text-center">ไตรมาส 4</th>
+                                                </tr>
+                                                <tr>
+                                                    <th class="text-center">แผนการใช้จ่าย</th>
+                                                    <th class="text-center">แผนการใช้จ่าย</th>
+                                                    <th class="text-center">แผนการใช้จ่าย</th>
+                                                    <th class="text-center">แผนการใช้จ่าย</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="6" class="text-center">-</td>
+                                                </tr>
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -391,31 +329,23 @@
                                     </div>
 
                                     <div class="col-md-12">
-                                        <table class="table table-bordered">
-                                            <tr>
-                                                <th class="col-md-3 text-center">รายการ</th>
-                                                <th class="col-md-2 text-center">จำนวนหน่วย</th>
-                                                <th class="col-md-2 text-center">ราคาต่อหน่วย</th>
-                                                <th class="col-md-2 text-center">รวมเงิน</th>
-                                                <th class="col-md-2 text-center">หมายเหตุ</th>
-                                                <th class="col-md-1 text-center">จัดการ</th>
-                                            </tr>
-                                            <tr>
-                                                <td><input type="text" class="form-control input-sm"></td>
-                                                <td><input type="text" class="form-control input-sm"></td>
-                                                <td><input type="text" class="form-control input-sm"></td>
-                                                <td><input type="text" class="form-control input-sm"></td>
-                                                <td><input type="text" class="form-control input-sm"></td>
-                                                <td class="text-center">
-                                                    <button class="btn btn-default"><i class="fa fa-trash"></i> ลบ</button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="5"></td>
-                                                <td class="text-center">
-                                                    <button class="btn btn-primary"><i class="fa fa-plus"></i> เพิ่ม</button>
-                                                </td>
-                                            </tr>
+                                        <div class="col-md-12 text-right" style="margin-bottom: 10px;">
+                                            <button class="btn btn-success addDetail"><i class="fa fa-plus-circle"></i> เพิ่ม</button>
+                                        </div>
+                                        
+                                        <table id="tableDetail" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-3 text-center">รายการ</th>
+                                                    <th class="col-md-1 text-center">จำนวนหน่วย</th>
+                                                    <th class="col-md-2 text-center">ราคาต่อหน่วย</th>
+                                                    <th class="col-md-2 text-center">รวมเงิน</th>
+                                                    <th class="col-md-2 text-center">หมายเหตุ</th>
+                                                    <th class="col-md-2 text-center">จัดการ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -439,6 +369,183 @@
                 </div>
             </section>
         </div>
+        
+        <div id="strategyPlanModal" aria-labelledby="formLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"><!-- add strategy plan form -->
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">ข้อมูล : แผนกลยุทธ์</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label text-right">แผนกลยุทธ์</label>
+                            <div class="col-md-8">
+                                <select id="typeId" name="typeId" class="form-control input-sm">
+                                    <option value="">- เลือก -</option>
+                                </select>
+                            </div>
+                        </div>
+                            
+                        <div class="form-group">
+                            <label class="col-md-4 control-label text-right">ประเด็นยุทธศาสตร์</label>
+                            <div class="col-md-8">
+                                <select id="issueId" name="issueId" class="form-control input-sm">
+                                    <option value="">- เลือก -</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label text-right">เป้าประสงค์</label>
+                            <div class="col-md-8">
+                                <select id="targetId" name="targetId" class="form-control input-sm">
+                                    <option value="">- เลือก -</option>
+                                </select>
+                            </div>
+                        </div>
+                            
+                        <div class="form-group">
+                            <label class="col-md-4 control-label text-right">กลยุทธ์</label>
+                            <div class="col-md-8">
+                                <select id="strategyId" name="strategyId" class="form-control input-sm">
+                                    <option value="">- เลือก -</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success save" data-dismiss="modal"><i class="fa fa-save"></i> บันทึก</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end form -->
+        
+        <div id="kpiModal" aria-labelledby="formLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"><!-- add strategy plan form -->
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">ตัวชี้วัด : <span id="kpiTitle"></span></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label text-right">ตัวชี้วัด</label>
+                            <div class="col-md-8">
+                                <input id="kpi" name="kpi" type="text" class="form-control input-sm">
+                            </div>
+                        </div>
+                            
+                        <div class="form-group">
+                            <label class="col-md-4 control-label text-right">หน่วยนับ</label>
+                            <div class="col-md-8">
+                                <input id="unit" name="unit" type="text" class="form-control input-sm">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label text-right">ค่าเป้าหมาย</label>
+                            <div class="col-md-8">
+                                <input id="target" name="target" type="text" class="form-control input-sm">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success save" data-dismiss="modal"><i class="fa fa-save"></i> บันทึก</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end form -->
+        
+        <div id="durationModal" aria-labelledby="formLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"><!-- add strategy plan form -->
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">ขั้นตอนการดำเนินการ</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label text-right">ขั้นตอนการดำเนินการ/รายการกิจกรรม</label>
+                            <div class="col-md-8">
+                                <input id="duration" name="duration" type="text" class="form-control input-sm">
+                            </div>
+                        </div>
+                            
+                        <div class="form-group">
+                            <label class="col-md-4 control-label text-right">วันที่เริ่มต้น</label>
+                            <div class="col-md-8">
+                                <input id="dateStart" name="dateStart" type="text" class="form-control input-sm">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label text-right">วันที่สิ้นสุด</label>
+                            <div class="col-md-8">
+                                <input id="dateEnd" name="dateEnd" type="text" class="form-control input-sm">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success save" data-dismiss="modal"><i class="fa fa-save"></i> บันทึก</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end form -->
+        
+        <div id="detailModal" aria-labelledby="formLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"><!-- add strategy plan form -->
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">รายละเอียดการใช้งบประมาณ</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label text-right">รายการ</label>
+                            <div class="col-md-8">
+                                <input id="detailList" name="detailList" type="text" class="form-control input-sm">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label text-right">จำนวนหน่วย</label>
+                            <div class="col-md-8">
+                                <input id="detailUnit" name="detailUnit" type="text" class="form-control input-sm">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-4 control-label text-right">ราคาต่อหน่วย</label>
+                            <div class="col-md-8">
+                                <input id="detailPrice" name="detailPrice" type="text" class="form-control input-sm">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-4 control-label text-right">รวมเงิน</label>
+                            <div class="col-md-8">
+                                <input id="detailTotal" name="detailTotal" type="text" class="form-control input-sm">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-4 control-label text-right">หมายเหตุ</label>
+                            <div class="col-md-8">
+                                <input id="detailRemark" name="detailRemark" type="text" class="form-control input-sm">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success save" data-dismiss="modal"><i class="fa fa-save"></i> บันทึก</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end form -->
     </div><!--  container  -->
 </div><!-- main -->
 
@@ -465,6 +572,13 @@
         $w4finish.on('click', function(ev) {
             ev.preventDefault();
             var validated = $('#wizard form').valid();
+            if(validated){
+                var fdata = dataObject();
+                var dataJSON = JSON.stringify({project: fdata["project"]});
+                var dataJSONEN = encodeURIComponent(dataJSON);
+
+                saveProject(dataJSONEN);
+            }
             /*if (validated) {
                 if(action == "insert"){
                     var fdata = dataObject(null);
@@ -553,20 +667,52 @@
     var strategyArr = {};
 
 
+    var strategyPlan = [];
+    var kpi = {
+        a: [],
+        b: [],
+        c: [],
+        d: []
+    };
+    var duration = [];
+    var detail = [];
+    
     $(function(){
+        getAllProject();
+        
+        getData();
+        
         getLayouts();
         getKpiType();
         getProgress();
+        getDetail();
+        
+        $("#projectStart, #projectEnd").datepicker();
     });
+    
+    function getAllProject(){
+        var datas = callAjax("{{_context_path}}/api/revenue/project/getAllProject", "post", {facultyId: facultyId}, "json");
+        if(typeof datas !== "undefined" && datas !== null){
+            var html = '';
+            $.each(datas["lists"], function(key, val){
+                html += '<option value="'+val["BudgetHeadId"]+'">'+val["formName"]+'</option>';
+            });
+            $("#budgetHeadId").html(html);            
+        }
+    }
 
+    function getData(){
+        
+    }
+    
     function getLayouts() {
         var datas = callAjax("{{_context_path}}/api/revenue/project/getLayouts", "post", {facultyId: facultyId}, "json");
         if (typeof datas !== "undefined" && datas !== null) {
             var htmlType = '';
             $.each(datas["layouts"]["projectType"], function(key, val){
                 htmlType += '<div class="col-md-2">'
-                        + '<div class="col-md-offset-2 col-md-10 radio-custom radio-primary">'
-                            + '<input id="projectTypeId" type="radio" value="'+val["id"]+'">'
+                        + '<div class="col-md-offset-1 col-md-12 radio-custom radio-primary">'
+                            + '<input type="radio" id="projectTypeId" name="projectTypeId" value="'+val["id"]+'">'
                             + '<label style="padding-left: 10px;">'+val["name"]+'</label>'
                         + '</div>'
                     + '</div>';
@@ -578,17 +724,28 @@
             $.each(datas["layouts"]["integration"], function(key, val){
                 htmlIntegration += '<div class="row">'
                         + '<div class="col-md-offset-1 col-md-3 checkbox-custom checkbox-primary">'
-                            + '<input class="integration" type="checkbox" name="intId'+val["id"]+'" value="'+val["id"]+'">'
+                            + '<input class="integration" type="checkbox" id="intId'+val["id"]+'" name="intId'+val["id"]+'" value="'+val["id"]+'">'
                             + '<label style="padding-left: 10px;">'+val["name"]+'</label>'
                         + '</div>'
                         + '<div class="col-md-6">'
-                            + '<input type="text" name="intName'+val["id"]+'" class="form-control input-sm" disabled>'
+                            + '<input type="text" id="intName'+val["id"]+'" name="intName'+val["id"]+'" class="form-control input-sm" disabled>'
                         + '</div>'
                     + '</div>'
                     + '<br>';
             });
 
             $("#listInt").html(htmlIntegration);
+            
+            // when you select remark control
+            $("input.integration").click(function(){
+                var remarkId = $(this).attr("name").replace("intId", "");
+                if($(this).is(':checked')){
+                    $("#intName"+remarkId).prop("disabled", false).val("");
+                }
+                else{
+                    $("#intName"+remarkId).prop("disabled", true).val("");
+                }
+            });
 
             $.each(datas["layouts"]["affirmative"], function(key, val){
                 typeArr[val["typeId"]] = val["typeName"];
@@ -610,29 +767,121 @@
 
             });
 
-
-            $("#typeId").html(getAffirmative("type", null)).change(function(){
-                if($("#typeId").val() == ""){
-                    $("#issueId, #targetId, #strategyId").html('<option value="">- เลือก -</option>');
-                }
-                else {
-                    $("#issueId").html(getAffirmative("issue", $("#typeId").val())).change(function () {
-                        if($("#issueId").val() == ""){
-                            $("#targetId, #strategyId").html('<option value="">- เลือก -</option>');
-                        }
-                        else {
-                            $("#targetId").html(getAffirmative("target", $("#issueId").val())).change(function () {
-                                if($("#targetId").val() == ""){
-                                    $("#strategyId").html('<option value="">- เลือก -</option>');
-                                }
-                                else {
-                                    $("#strategyId").html(getAffirmative("strategy", $("#targetId").val()));
-                                }
-                            });
-                        }
+            $("button.addStrategy").unbind().click(function(){
+                $("#strategyPlanModal").modal("show");
+                
+                $("#typeId, #issueId, #targetId, #strategyId").val('');
+                
+                $("#typeId").html(getAffirmative("type", null)).change(function(){
+                    if($("#typeId").val() == ""){
+                        $("#issueId, #targetId, #strategyId").html('<option value="">- เลือก -</option>');
+                    }
+                    else {
+                        $("#issueId").html(getAffirmative("issue", $("#typeId").val())).change(function () {
+                            if($("#issueId").val() == ""){
+                                $("#targetId, #strategyId").html('<option value="">- เลือก -</option>');
+                            }
+                            else {
+                                $("#targetId").html(getAffirmative("target", $("#issueId").val())).change(function () {
+                                    if($("#targetId").val() == ""){
+                                        $("#strategyId").html('<option value="">- เลือก -</option>');
+                                    }
+                                    else {
+                                        $("#strategyId").html(getAffirmative("strategy", $("#targetId").val()));
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+                
+                $("button.save").unbind().click(function(){
+                    strategyPlan.push({
+                        typeId: $("#typeId").val(),
+                        issueId: $("#issueId").val(),
+                        targetId: $("#targetId").val(),
+                        strategyId: $("#strategyId").val()
                     });
-                }
+                    
+                    var html = '';
+                    $.each(strategyPlan, function(key, value){
+                        html += '<div class="panel-body">'
+                                + '<div class="col-md-12">'
+                                    + '<div class="col-md-2 text-right text-bold">แผนกลยุทธ์</div>'
+                                    + '<div class="col-md-8">'+typeArr[value["typeId"]]+'</div>'
+                                    + '<div class="col-md-2 text-right">'
+                                        + '<button class="btn btn-xs btn-danger delStrategyPlan" data-id="'+key+'"><i class="fa fa-times"></i></button>'
+                                    + '</div>'
+                                + '</div>'
+                                + '<div class="col-md-12">'
+                                    + '<div class="col-md-2 text-right text-bold">ประเด็นยุทธศาสตร์</div>'
+                                    + '<div class="col-md-8">'+issueArr[value["typeId"]][value["issueId"]]+'</div>'
+                                + '</div>'
+                                + '<div class="col-md-12">'
+                                    + '<div class="col-md-2 text-right text-bold">เป้าประสงค์</div>'
+                                    + '<div class="col-md-8">'+targetArr[value["issueId"]][value["targetId"]]+'</div>'
+                                + '</div>'
+                                + '<div class="col-md-12">'
+                                    + '<div class="col-md-2 text-right text-bold">กลยุทธ์</div>'
+                                    + '<div class="col-md-8">'+strategyArr[value["targetId"]][value["strategyId"]]+'</div>'
+                                + '</div>'
+                            + '</div>';
+                    });
+                    $("#strategyPlan").html(html);
+                    $("button.delStrategyPlan").unbind().click(function(){
+                        strategyPlan.splice($(this).attr("data-id"), 1);
+                        $(this).closest('.panel-body').hide();
+                        return false;
+                    });
+                });
             });
+            
+            var htmlSubsidies = '';
+            $.each(datas["layouts"]["subsidies"], function(key, val){
+                htmlSubsidies += '<div class="col-md-6">'
+                        + '<div class="row">'
+                            + '<div class="col-md-12">'
+                                + '<input type="radio" value="'+val["id"]+'">'
+                                + '<label style="padding-left: 5px;">'+val["typeName"]+'</label>'
+                            + '</div>'
+                        + '</div><br>'
+                    + '</div>';
+            });
+            $("#listSubsidies").html(htmlSubsidies);
+            
+            var htmlPlan = '';
+            $.each(datas["layouts"]["plan"], function(key, val){
+                htmlPlan += '<div class="col-md-6">'
+                        + '<div class="row">'
+                            + '<div class="col-md-12">'
+                                + '<input type="radio" value="'+val["id"]+'">'
+                                + '<label style="padding-left: 5px;">'+val["planName"]+'</label>'
+                            + '</div>'
+                        + '</div><br>'
+                    + '</div>';
+            });
+            $("#listPlan").html(htmlPlan);
+            
+            var htmlBudget = '';
+            var count = 0;
+            $.each(datas["layouts"]["budgetType"], function(key, val){
+                var sub = 0;
+                
+                htmlBudget += '<tr style="background-color: #F1F1F1;">'
+                        + '<td>'+(++count)+'. ' + val["typeName"]+'</td>'
+                        + '<td colspan="4">&nbsp;</td>'
+                    + '</tr>';
+                $.each(val["sub"], function(key2, val2){
+                    htmlBudget += '<tr>'
+                            + '<td style="padding-left: 50px;">'+count+ '.' + (++sub) + ' ' + val2["typeName"]+'</td>'
+                            + '<td><input type="number" id="budget'+val2["id"]+'-Q1" name="budget'+val2["id"]+'-Q1" class="form-control input-sm"></td>'
+                            + '<td><input type="number" id="budget'+val2["id"]+'-Q2" name="budget'+val2["id"]+'-Q2" class="form-control input-sm"></td>'
+                            + '<td><input type="number" id="budget'+val2["id"]+'-Q3" name="budget'+val2["id"]+'-Q3" class="form-control input-sm"></td>'
+                            + '<td><input type="number" id="budget'+val2["id"]+'-Q4" name="budget'+val2["id"]+'-Q4" class="form-control input-sm"></td>'
+                        + '</tr>';
+                });
+            });
+            $("#tableBudget tbody").html(htmlBudget);
         }
     }
 
@@ -657,17 +906,223 @@
         $.each(list, function(key, value){
             html += '<tr style="background-color: #F1F1F1;">'
                     + '<td colspan="3">'+value+'</td>'
-                    + '<td>'
-                        + '<button class="btn btn-success"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
+                    + '<td class="text-center">'
+                        + '<button class="btn btn-success addKpi" data-key="'+key+'"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
                     + '</td>'
                 + '</tr>';
+            
+            $.each(kpi[key], function(key2, value2){
+                html += '<tr>'
+                        + '<td>'+value2["kpi"]+'</td>'
+                        + '<td class="text-center">'+value2["unit"]+'</td>'
+                        + '<td class="text-center">'+value2["target"]+'</td>'
+                        + '<td class="text-center">'
+                            + '<div class="btn-group">'
+                                + '<button class="btn btn-warning editKpi" data-key="'+key+'" data-id="'+key2+'"><i class="fa fa-pencil"></i></button>'
+                                + '<button class="btn btn-default delKpi" data-key="'+key+'" data-id="'+key2+'"><i class="fa fa-trash"></i></button>'
+                            + '</div>'
+                        +'</td>'
+                    + '</tr>';
+            });
+        });
+        $("#tableKpi tbody").html(html);
+            
+        $("button.addKpi").unbind().click(function(){
+            var key = $(this).attr("data-key");
+            
+            $("#kpiModal").modal("show");
+            $("#kpiTitle").html(list[key]);
+            $("#kpi, #unit, #target").val('');
 
-            $("#tableKpi tbody").html(html);
+            $("button.save").unbind().click(function(){
+                kpi[key].push({
+                    kpi: $("#kpi").val(),
+                    unit: $("#unit").val(),
+                    target: $("#target").val()
+                });
+                getKpiType();
+            });
+        });
+        
+        $("button.editKpi").unbind().click(function(){
+            var key = $(this).attr("data-key");
+            var id = $(this).attr("data-id");
+            
+            $("#kpiModal").modal("show");
+            $("#kpiTitle").html(list[key]);
+           
+            $("#kpi").val(kpi[key][id]["kpi"]);
+            $("#unit").val(kpi[key][id]["unit"]);
+            $("#target").val(kpi[key][id]["target"]);
+
+            $("button.save").unbind().click(function(){
+                kpi[key][id] = {
+                    kpi: $("#kpi").val(),
+                    unit: $("#unit").val(),
+                    target: $("#target").val()
+                };
+                getKpiType();
+            });
+        });
+        
+        $("button.delKpi").unbind().click(function(){
+            var key = $(this).attr("data-key");
+            $(this).closest('tr').hide();
+            kpi[key].splice($(this).attr("data-id"), 1);
         });
     }
 
     function getProgress(){
+        var html = '';
+        var count = 0;
+        $.each(duration, function(key, value){
+            html += '<tr>'
+                    + '<td>'+(++count)+'. '+value["duration"]+'</td>'
+                    + '<td class="text-center">'+value["dateStart"]+'</td>'
+                    + '<td class="text-center">'+value["dateEnd"]+'</td>'
+                    + '<td class="text-center">'
+                        + '<div class="btn-group">'
+                            + '<button class="btn btn-warning editDuration" data-id="'+key+'"><i class="fa fa-pencil"></i></button>'
+                            + '<button class="btn btn-default delDuration" data-id="'+key+'"><i class="fa fa-trash"></i></button>'
+                        + '</div>'
+                    +'</td>'
+                + '</tr>';
+        });
+        $("#tableDuration tbody").html(html);
+        
+        $("button.addDuration").unbind().click(function(){
+            $("#durationModal").modal("show");
+            $("#duration, #dateStart, #dateEnd").val('');
+            $("#dateStart, #dateEnd").datepicker();
+            
+            $("button.save").unbind().click(function(){
+                duration.push({
+                    duration: $("#duration").val(),
+                    dateStart: $("#dateStart").val(),
+                    dateEnd: $("#dateEnd").val()
+                });
+                getProgress();                
+            });
+        });
+        
+        $("button.editDuration").unbind().click(function(){
+            var id = $(this).attr("data-id");
+            
+            $("#durationModal").modal("show");
+            $("#duration").val(duration[id]["duration"]);
+            $("#dateStart").val(duration[id]["dateStart"]);
+            $("#dateEnd").val(duration[id]["dateEnd"]);
+            
+            $("#dateStart, #dateEnd").datepicker();
 
+            $("button.save").unbind().click(function(){
+                duration[id] = {
+                    duration: $("#duration").val(),
+                    dateStart: $("#dateStart").val(),
+                    dateEnd: $("#dateEnd").val()
+                };
+                getProgress();                
+            });
+        });
+        
+        $("button.delDuration").unbind().click(function(){
+            $(this).closest('tr').hide();
+            duration.splice($(this).attr("data-id"), 1);
+        });
+    }
+    
+    function getDetail(){
+        var html = '';
+        var count = 0;
+        $.each(detail, function(key, val){
+            html += '<tr>'
+                    + '<td>'+(++count)+'. '+val["list"]+'</td>'
+                    + '<td class="text-center">'+val["unit"]+'</td>'
+                    + '<td class="text-right">'+val["price"]+'</td>'
+                    + '<td class="text-right">'+val["total"]+'</td>'
+                    + '<td>'+val["remark"]+'</td>'
+                    + '<td class="text-center">'
+                        + '<div class="btn-group">'
+                            + '<button class="btn btn-warning editDetail" data-id="'+key+'"><i class="fa fa-pencil"></i></button>'
+                            + '<button class="btn btn-default delDetail" data-id="'+key+'"><i class="fa fa-trash"></i></button>'
+                        + '</div>'
+                    + '</td>'
+                + '</tr>';
+        });
+        
+        $("#tableDetail tbody").html(html);
+        
+        $("button.addDetail").unbind().click(function(){
+            $("#detailModal").modal("show");
+            $("#detailList, #detailUnit, #detailPrice, #detailTotal, #detailRemark").val('');
+            
+            $("button.save").unbind().click(function(){
+                detail.push({
+                    list: $("#detailList").val(),
+                    unit: $("#detailUnit").val(),
+                    price: $("#detailPrice").val(),
+                    total: $("#detailTotal").val(),
+                    remark: $("#detailRemark").val()
+                });
+                getDetail();                
+            });
+        });
+        
+        $("button.editDetail").unbind().click(function(){
+            var id = $(this).attr("data-id");
+            $("#detailModal").modal("show");
+            
+            $("#detailList").val(detail[id]["list"]);
+            $("#detailUnit").val(detail[id]["unit"]);
+            $("#detailPrice").val(detail[id]["price"]);
+            $("#detailTotal").val(detail[id]["total"]);
+            $("#detailRemark").val(detail[id]["remark"]);
+            
+            $("button.save").unbind().click(function(){
+                detail[id] = {
+                    list: $("#detailList").val(),
+                    unit: $("#detailUnit").val(),
+                    price: $("#detailPrice").val(),
+                    total: $("#detailTotal").val(),
+                    remark: $("#detailRemark").val()
+                };
+                getDetail();                
+            });
+        });
+        
+        $("button.delDetail").unbind().click(function(){
+            $(this).closest('tr').hide();
+            detail.splice($(this).attr("data-id"), 1);
+        });
+    }
+    
+    function dataObject(){
+        var obj = {};
+        $("#form input[type=text], #form textarea, #form select, #form input[type=checkbook]:checked, #form input[type=radio]:checked").each(function(){
+            var fname = $(this).attr("name");
+            var fval = $(this).val();
+            
+            obj[fname] = fval;
+        });
+        
+        $("#form input[type=number]").each(function(){
+            var fname = $(this).attr("name");
+            var fval = $(this).val();
+            
+            obj[fname] = fval;
+        });
+        
+        var fdata = {};
+        fdata["project"] = obj;
+        
+        return fdata;
+    }
+    
+    function saveProject(dataJSONEN){
+        var datas = callAjax("{{_context_path}}/api/revenue/project/save", "post", dataJSONEN, "json");
+        if(typeof datas !== "undefined" && datas !== null){
+            
+        }
     }
 
 </script>

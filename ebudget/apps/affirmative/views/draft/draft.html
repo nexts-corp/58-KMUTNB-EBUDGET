@@ -232,75 +232,75 @@
             $("#btnApprove").show();
             var menu = '<li class="active">'
                     + '<a href="#taball" data-toggle="tab"><i class="fa fa-star"></i> ทั้งหมด</a>'
-                + '</li>';
+                    + '</li>';
             var content = '<div id="taball" class="tab-pane active">'
                     + '<table id="tableall" class="table table-hover table-bordered">'
-                        + '<thead>'
-                            + '<tr>'
-                                + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">ลำดับ</th>'
-                                + '<th class="text-center col-md-4" style="vertical-align: middle;" rowspan="2">ตัวชี้วัดคำรับรอง ปี {{year}}</th>'
-                                + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">หน่วยนับ</th>'
-                                + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">ค่าเป้าหมายตัวชี้วัด</th>'
-                                + '<th class="text-center col-md-3" style="vertical-align: middle;" colspan="5">เกณฑ์การให้คะแนนผลลัพธ์ของตัวชี้วัด (ระดับคะแนน)</th>'
-                                + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">หมายเหตุ</th>'
-                                + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">จัดการ</th>'
-                            + '</tr>'
-                            + '<tr>'
-                                + '<th class="text-center" style="vertical-align: middle;">คะแนน 1</th>'
-                                + '<th class="text-center" style="vertical-align: middle;">คะแนน 2</th>'
-                                + '<th class="text-center" style="vertical-align: middle;">คะแนน 3</th>'
-                                + '<th class="text-center" style="vertical-align: middle;">คะแนน 4</th>'
-                                + '<th class="text-center" style="vertical-align: middle;">คะแนน 5</th>'
-                            + '</tr>'
-                        + '</thead>'
-                        + '<tbody>'
-                            + '<tr>'
-                                + '<td colspan="11" class="text-center">-</td>'
-                            + '</tr>'
-                        + '</tbody>'
+                    + '<thead>'
+                    + '<tr>'
+                    + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">ลำดับ</th>'
+                    + '<th class="text-center col-md-4" style="vertical-align: middle;" rowspan="2">ตัวชี้วัดคำรับรอง ปี {{year}}</th>'
+                    + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">หน่วยนับ</th>'
+                    + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">ค่าเป้าหมายตัวชี้วัด</th>'
+                    + '<th class="text-center col-md-3" style="vertical-align: middle;" colspan="5">เกณฑ์การให้คะแนนผลลัพธ์ของตัวชี้วัด (ระดับคะแนน)</th>'
+                    + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">หมายเหตุ</th>'
+                    + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">จัดการ</th>'
+                    + '</tr>'
+                    + '<tr>'
+                    + '<th class="text-center" style="vertical-align: middle;">คะแนน 1</th>'
+                    + '<th class="text-center" style="vertical-align: middle;">คะแนน 2</th>'
+                    + '<th class="text-center" style="vertical-align: middle;">คะแนน 3</th>'
+                    + '<th class="text-center" style="vertical-align: middle;">คะแนน 4</th>'
+                    + '<th class="text-center" style="vertical-align: middle;">คะแนน 5</th>'
+                    + '</tr>'
+                    + '</thead>'
+                    + '<tbody>'
+                    + '<tr>'
+                    + '<td colspan="11" class="text-center">-</td>'
+                    + '</tr>'
+                    + '</tbody>'
                     + '</table>'
-                + '</div>';
+                    + '</div>';
 
             $.each(datas["lists"], function (key1, value1) {
                 //  console.log(value1);
                 menu += '<li>'
                         + '<a href="#tab' + value1["mainSeq"] + '" data-toggle="tab">ส่วนที่ ' + value1["mainSeq"] + ' ' + value1["mainName"] + '</a>'
-                    + '</li>';
+                        + '</li>';
 
                 content += '<div id="tab' + value1["mainSeq"] + '" class="tab-pane">'
                         + '<table id="table' + value1["mainSeq"] + '" class="table table-hover table-bordered">'
-                            + '<thead>'
-                                + '<tr>'
-                                    + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">ลำดับ</th>'
-                                    + '<th class="text-center col-md-4" style="vertical-align: middle;" rowspan="2">ตัวชี้วัดคำรับรอง ปี {{year}}</th>'
-                                    + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">หน่วยนับ</th>'
-                                    + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">ค่าเป้าหมายตัวชี้วัด</th>'
-                                    + '<th class="text-center col-md-3" style="vertical-align: middle;" colspan="5">เกณฑ์การให้คะแนนผลลัพธ์ของตัวชี้วัด (ระดับคะแนน)</th>'
-                                    + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">หมายเหตุ</th>'
-                                    + '<th class="text-center col-md-2" style="vertical-align: middle;" rowspan="2">จัดการ</th>'
-                                + '</tr>'
-                                + '<tr>'
-                                    + '<th class="text-center" style="vertical-align: middle;">คะแนน 1</th>'
-                                    + '<th class="text-center" style="vertical-align: middle;">คะแนน 2</th>'
-                                    + '<th class="text-center" style="vertical-align: middle;">คะแนน 3</th>'
-                                    + '<th class="text-center" style="vertical-align: middle;">คะแนน 4</th>'
-                                    + '<th class="text-center" style="vertical-align: middle;">คะแนน 5</th>'
-                                + '</tr>'
-                            + '</thead>'
-                            + '<tbody>'
-                                + '<tr>'
-                                    + '<td colspan="11" class="text-center">-</td>'
-                                + '</tr>'
-                            + '</tbody>'
+                        + '<thead>'
+                        + '<tr>'
+                        + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">ลำดับ</th>'
+                        + '<th class="text-center col-md-4" style="vertical-align: middle;" rowspan="2">ตัวชี้วัดคำรับรอง ปี {{year}}</th>'
+                        + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">หน่วยนับ</th>'
+                        + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">ค่าเป้าหมายตัวชี้วัด</th>'
+                        + '<th class="text-center col-md-3" style="vertical-align: middle;" colspan="5">เกณฑ์การให้คะแนนผลลัพธ์ของตัวชี้วัด (ระดับคะแนน)</th>'
+                        + '<th class="text-center col-md-1" style="vertical-align: middle;" rowspan="2">หมายเหตุ</th>'
+                        + '<th class="text-center col-md-2" style="vertical-align: middle;" rowspan="2">จัดการ</th>'
+                        + '</tr>'
+                        + '<tr>'
+                        + '<th class="text-center" style="vertical-align: middle;">คะแนน 1</th>'
+                        + '<th class="text-center" style="vertical-align: middle;">คะแนน 2</th>'
+                        + '<th class="text-center" style="vertical-align: middle;">คะแนน 3</th>'
+                        + '<th class="text-center" style="vertical-align: middle;">คะแนน 4</th>'
+                        + '<th class="text-center" style="vertical-align: middle;">คะแนน 5</th>'
+                        + '</tr>'
+                        + '</thead>'
+                        + '<tbody>'
+                        + '<tr>'
+                        + '<td colspan="11" class="text-center">-</td>'
+                        + '</tr>'
+                        + '</tbody>'
                         + '</table>'
-                    + '</div>';
+                        + '</div>';
 
                 contentArr[value1["mainSeq"]] += '<tr data-tt-id="main' + value1["mainSeq"] + '"  data-seq="' + value1["mainSeq"] + '">'
                         + '<td class="text-center"></td>'
                         + '<td colspan="10">'
-                            + '<span class="text-bold" style="text-decoration: underline;">ส่วนที่ ' + value1["mainSeq"] + ' ' + value1["mainName"] + '</span>'
+                        + '<span class="text-bold" style="text-decoration: underline;">ส่วนที่ ' + value1["mainSeq"] + ' ' + value1["mainName"] + '</span>'
                         + '</td>'
-                    + '</tr>';
+                        + '</tr>';
 
                 $.each(value1.type, function (key2, value2) {
 
@@ -308,28 +308,28 @@
                         contentArr[value1["mainSeq"]] += '<tr data-tt-id="type' + value2["typeId"] + '" data-tt-parent-id="main' + value1["mainSeq"] + '" data-seq="' + value2["typeSeq"] + '">'
                                 + '<td class="text-center"></td>'
                                 + '<td colspan="10">'
-                                    + '<span class="text-bold" style="text-decoration: underline;">ส่วนที่ ' + value1["mainSeq"] + '.' + value2['typeSeq'] + ' ' + value2["typeName"] + (value2["title"] != "" ? "<h3>" + value2["title"] + "</h3>" : "") + '</span>'
+                                + '<span class="text-bold" style="text-decoration: underline;">ส่วนที่ ' + value1["mainSeq"] + '.' + value2['typeSeq'] + ' ' + value2["typeName"] + (value2["title"] != "" ? "<h3>" + value2["title"] + "</h3>" : "") + '</span>'
                                 + '</td>'
-                            + '</tr>';
+                                + '</tr>';
 
                         $.each(value2["issue"], function (key3, value3) {
                             contentArr[value1["mainSeq"]] += '<tr data-tt-id="issue' + value3["issueId"] + '" data-tt-parent-id="type' + value2["typeId"] + '" data-seq="' + value3["issueSeq"] + '">'
                                     + '<td class="text-center"></td>'
                                     + '<td colspan="10">'
-                                        + '<span class="text-bold">ประเด็นยุทธศาสตร์ที่ ' + value3['issueSeq'] + ' ' + value3["issueName"] + '</span>'
+                                    + '<span class="text-bold">ประเด็นยุทธศาสตร์ที่ ' + value3['issueSeq'] + ' ' + value3["issueName"] + '</span>'
                                     + '</td>'
-                                + '</tr>';
+                                    + '</tr>';
 
                             $.each(value3["target"], function (key4, value4) {
                                 contentArr[value1["mainSeq"]] += '<tr data-tt-id="target' + value4["targetId"] + '" data-tt-parent-id="issue' + value3["issueId"] + '" data-seq="' + value4["targetSeq"] + '" >'
                                         + '<td class="text-center"></td>'
                                         + '<td colspan="9">'
-                                            + '<span class="text-bold">เป้าประสงค์ที่ ' + value3["issueSeq"] + '.' + value4["targetSeq"] + ' ' + value4["targetName"] + '</span>'
+                                        + '<span class="text-bold">เป้าประสงค์ที่ ' + value3["issueSeq"] + '.' + value4["targetSeq"] + ' ' + value4["targetName"] + '</span>'
                                         + '</td>'
                                         + '<td class="text-center">'
-                                            + '<button class="btn btn-sm btn-success add" data-pid="' + value4["targetId"] + '" data-pname="targetId"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
+                                        + '<button class="btn btn-sm btn-success add" data-pid="' + value4["targetId"] + '" data-pname="targetId"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
                                         + '</td>'
-                                    + '</tr>';
+                                        + '</tr>';
 
                                 if (typeof value4["kpi"] !== "undefined" && value4["kpi"] !== null) {
                                     $.each(value4["kpi"], function (key5, value5) {
@@ -346,26 +346,26 @@
                                                 + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value5["score5"] ? value5["score5"] : "") + '</td>'
                                                 + '<td class="text-center">' + (value5["remark"] ? value5["remark"] : "") + '</td>'
                                                 + '<td class="text-center">'
-                                                    + '<div class="btn-group">'
-                                                        + (value5["isApprove"] == "N" ?
-                                                                (
-                                                                    value5["isCenter"] == "Y" ?
-                                                                    '<button type="button" class="btn btn-sm btn-warning edit" data-edit="N" data-pid="' + value4["targetId"] + '" data-id = "' + value5["draftId"] + '" > <i class="fa fa-pencil"></i>แก้ไข</button>'
-                                                                    :
-                                                                    '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + value4["targetId"] + '" data-id="' + value5["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                                                ): ""
-                                                            )
-                                                        + (value5["isApprove"] == "N" ?
-                                                                (
-                                                                    value5["isCenter"] == "Y" ?
-                                                                    ""
-                                                                    :
-                                                                    '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + value4["targetId"] + '" data-id="' + value5["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>'
-                                                                ): ""
-                                                            )
-                                                    + '</div>'
+                                                + '<div class="btn-group">'
+                                                + (value5["isApprove"] == "N" ?
+                                                        (
+                                                                value5["isCenter"] == "Y" ?
+                                                                '<button type="button" class="btn btn-sm btn-warning edit" data-edit="N" data-pid="' + value4["targetId"] + '" data-id = "' + value5["draftId"] + '" > <i class="fa fa-pencil"></i>แก้ไข</button>'
+                                                                :
+                                                                '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + value4["targetId"] + '" data-id="' + value5["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                                                ) : ""
+                                                        )
+                                                + (value5["isApprove"] == "N" ?
+                                                        (
+                                                                value5["isCenter"] == "Y" ?
+                                                                ""
+                                                                :
+                                                                '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + value4["targetId"] + '" data-id="' + value5["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                                                                ) : ""
+                                                        )
+                                                + '</div>'
                                                 + '</td>'
-                                            + '</tr>';
+                                                + '</tr>';
 
                                         listArr[value5["draftId"]] = value5;
                                     });
@@ -377,11 +377,11 @@
                         contentArr[value1["mainSeq"]] += '<tr data-tt-id="type' + value2["typeId"] + '" data-tt-parent-id="main' + value1["mainSeq"] + '"  data-seq="' + value2["typeSeq"] + '" >'
                                 + '<td class="text-center"></td>'
                                 + '<td colspan="9">'
-                                    + '<span class="text-bold" style="text-decoration: underline;">ส่วนที่ ' + value1["mainSeq"] + '.' + value2['typeSeq'] + ' ' + value2["typeName"] + (value2["title"] != "" ? "<h3>" + value2["title"] + "</h3>" : "") + '</span>'
+                                + '<span class="text-bold" style="text-decoration: underline;">ส่วนที่ ' + value1["mainSeq"] + '.' + value2['typeSeq'] + ' ' + value2["typeName"] + (value2["title"] != "" ? "<h3>" + value2["title"] + "</h3>" : "") + '</span>'
                                 + '</td>'
                                 + '<td class="text-center">'
-                                    + '<button class="btn btn-sm btn-success add" data-pid="' + value2["typeId"] + '" data-pname="typeId"><i class="fa fa-plus-circle"></i> เพิ่ม</button></td>'
-                            + '</tr>';
+                                + '<button class="btn btn-sm btn-success add" data-pid="' + value2["typeId"] + '" data-pname="typeId"><i class="fa fa-plus-circle"></i> เพิ่ม</button></td>'
+                                + '</tr>';
 
                         if (typeof value2["kpi"] !== "undefined" && value2["kpi"] !== null) {
                             $.each(value2["kpi"], function (key5, value5) {
@@ -397,26 +397,26 @@
                                         + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value5["score5"] ? value5["score5"] : "") + '</td>'
                                         + '<td class="text-center">' + (value5["remark"] ? value5["remark"] : "") + '</td>'
                                         + '<td class="text-center">'
-                                            + '<div class="btn-group">'
-                                                + (value5["isApprove"] == "N" ?
-                                                        (
-                                                            value5["isCenter"] == "Y" ?
-                                                            '<button type="button" class="btn btn-sm btn-warning edit" data-edit="N" data-pid="' + value2["typeId"] + '" data-id = "' + value5["draftId"] + '" > <i class="fa fa-pencil"></i>แก้ไข</button>'
-                                                            :
-                                                            '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + value2["typeId"] + '" data-id="' + value5["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                        + '<div class="btn-group">'
+                                        + (value5["isApprove"] == "N" ?
+                                                (
+                                                        value5["isCenter"] == "Y" ?
+                                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="N" data-pid="' + value2["typeId"] + '" data-id = "' + value5["draftId"] + '" > <i class="fa fa-pencil"></i>แก้ไข</button>'
+                                                        :
+                                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + value2["typeId"] + '" data-id="' + value5["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
                                                         ) : ""
-                                                    )
-                                                + (value5["isApprove"] == "N" ?
-                                                        (
-                                                            value5["isCenter"] == "Y" ?
-                                                            ""
-                                                            :
-                                                            '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + value2["typeId"] + '" data-id="' + value5["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>'
-                                                        ): ""
-                                                    )
-                                            + '</div>'
+                                                )
+                                        + (value5["isApprove"] == "N" ?
+                                                (
+                                                        value5["isCenter"] == "Y" ?
+                                                        ""
+                                                        :
+                                                        '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + value2["typeId"] + '" data-id="' + value5["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                                                        ) : ""
+                                                )
+                                        + '</div>'
                                         + '</td>'
-                                    + '</tr>';
+                                        + '</tr>';
 
                                 listArr[value5["draftId"]] = value5;
                             });
@@ -499,16 +499,16 @@
                 }
             });
             $("#isActive").trigger("change");
-            
+
             $("button.save").unbind("click").click(function () {
                 var isValid = true;
                 var status = $("#isActive").val();
-                
+
                 $('#form input[required], #form textarea[required]').each(function () {
                     if ($(this).val() == "" && !$(this).prop("disabled"))
                         isValid = false;
                 });
-                
+
                 if (isValid) {
                     var fdata = dataObject(draftId, "draftId", null);
                     //console.log(fdata);
@@ -561,17 +561,17 @@
                                 + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["score5"] ? data["score5"] : "") + '</td>'
                                 + '<td class="text-center">' + (data["remark"] ? data["remark"] : "") + '</td>'
                                 + '<td class="text-center">'
-                                    + '<div class="btn-group">'
-                                        + (
-                                                data["isCenter"] == "Y" ?
-                                                '<button type="button" class="btn btn-sm btn-warning edit" data-edit="N" data-pid="' + data["typeId"] + '" data-id = "' + data["draftId"] + '" > <i class="fa fa-pencil"></i>แก้ไข</button>'
-                                                :
-                                                '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + data["typeId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                                )
-                                        + (data["isCenter"] == "Y" ? "" : '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["typeId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>')
-                                    + '</div>'
+                                + '<div class="btn-group">'
+                                + (
+                                        data["isCenter"] == "Y" ?
+                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="N" data-pid="' + data["typeId"] + '" data-id = "' + data["draftId"] + '" > <i class="fa fa-pencil"></i>แก้ไข</button>'
+                                        :
+                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + data["typeId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                        )
+                                + (data["isCenter"] == "Y" ? "" : '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["typeId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>')
+                                + '</div>'
                                 + '</td>'
-                            + '</tr>';
+                                + '</tr>';
                         node = $("#tableall").treetable("node", "type" + data["typeId"]);
                         node2 = $("#table" + mainSeq).treetable("node", "type" + data["typeId"]);
                     } else {
@@ -587,17 +587,17 @@
                                 + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["score5"] ? data["score5"] : "") + '</td>'
                                 + '<td class="text-center">' + (data["remark"] ? data["remark"] : "") + '</td>'
                                 + '<td class="text-center">'
-                                    + '<div class="btn-group">'
-                                        + (
-                                                data["isCenter"] == "Y" ?
-                                                '<button type="button" class="btn btn-sm btn-warning edit" data-edit="N" data-pid="' + data["targetId"] + '" data-id = "' + data["draftId"] + '" > <i class="fa fa-pencil"></i>แก้ไข</button>'
-                                                :
-                                                '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + data["targetId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                                )
-                                        + (data["isCenter"] == "Y" ? "" : '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["targetId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>')
-                                    + '</div>'
+                                + '<div class="btn-group">'
+                                + (
+                                        data["isCenter"] == "Y" ?
+                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="N" data-pid="' + data["targetId"] + '" data-id = "' + data["draftId"] + '" > <i class="fa fa-pencil"></i>แก้ไข</button>'
+                                        :
+                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + data["targetId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                        )
+                                + (data["isCenter"] == "Y" ? "" : '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["targetId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>')
+                                + '</div>'
                                 + '</td>'
-                            + '</tr>';
+                                + '</tr>';
                         node = $("#tableall").treetable("node", "target" + data["targetId"]);
                         node2 = $("#table" + mainSeq).treetable("node", "target" + data["targetId"]);
                     }
@@ -655,7 +655,7 @@
                                 + (data["isCenter"] == "Y" ? "" : '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["typeId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>')
                                 + '</div>'
                                 + '</td>'
-                            + '</tr>';
+                                + '</tr>';
                         node = $("#tableall").treetable("node", "type" + data["typeId"]);
                         node2 = $("#table" + mainSeq).treetable("node", "type" + data["typeId"]);
                     } else {
@@ -671,17 +671,17 @@
                                 + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["score5"] ? data["score5"] : "") + '</td>'
                                 + '<td class="text-center">' + (data["remark"] ? data["remark"] : "") + '</td>'
                                 + '<td class="text-center">'
-                                    + '<div class="btn-group">'
-                                        + (
-                                                data["isCenter"] == "Y" ?
-                                                '<button type="button" class="btn btn-sm btn-warning edit" data-edit="N" data-pid="' + data["targetId"] + '" data-id = "' + data["draftId"] + '" > <i class="fa fa-pencil"></i>แก้ไข</button>'
-                                                :
-                                                '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + data["targetId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                                )
-                                        + (data["isCenter"] == "Y" ? "" : '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["targetId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>')
-                                    + '</div>'
+                                + '<div class="btn-group">'
+                                + (
+                                        data["isCenter"] == "Y" ?
+                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="N" data-pid="' + data["targetId"] + '" data-id = "' + data["draftId"] + '" > <i class="fa fa-pencil"></i>แก้ไข</button>'
+                                        :
+                                        '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + data["targetId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                        )
+                                + (data["isCenter"] == "Y" ? "" : '<button type="button" class="btn btn-sm btn-default delete" data-pid="' + data["targetId"] + '" data-id="' + data["draftId"] + '"><i class="fa fa-trash"></i> ลบ</button>')
+                                + '</div>'
                                 + '</td>'
-                            + '</tr>';
+                                + '</tr>';
                         node = $("#tableall").treetable("node", "target" + data["targetId"]);
                         node2 = $("#table" + mainSeq).treetable("node", "target" + data["targetId"]);
                     }
@@ -783,23 +783,23 @@
         fdata = fParam;
         return fdata;
     }
-    
-    function statusChange(){
-        $("#isActive").change(function(){
+
+    function statusChange() {
+        $("#isActive").change(function () {
             var val = $(this).val();
-            if(val == "Y"){
-               $("#form :input.active").prop('required',true); 
-               $("label.active").addClass("req");
+            if (val == "Y") {
+                $("#form :input.active").prop('required', true);
+                $("label.active").addClass("req");
 
-               $("#form :input.inactive").prop('required',false); 
-               $("label.inactive").removeClass("req");
+                $("#form :input.inactive").prop('required', false);
+                $("label.inactive").removeClass("req");
             }
-            else{
-               $("#form :input.active").prop('required',false); 
-               $("label.active").removeClass("req");
+            else {
+                $("#form :input.active").prop('required', false);
+                $("label.active").removeClass("req");
 
-               $("#form :input.inactive").prop('required',true); 
-               $("label.inactive").addClass("req");
+                $("#form :input.inactive").prop('required', true);
+                $("label.inactive").addClass("req");
             }
         }).val("Y").trigger("change");
     }

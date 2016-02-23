@@ -24,6 +24,7 @@ class ProjectService extends CServiceBase implements IProjectService {
     function getPeriod() {
         $year = new \apps\common\entity\Year();
         $year->yearStatus = 'Y';
+        //$year->year = 2559;
         return $this->datacontext->getObject($year)[0];
     }
 
@@ -49,6 +50,7 @@ class ProjectService extends CServiceBase implements IProjectService {
     private function affirmativeLevel(){
 
         $modelAF = new ViewAffirmativeLevel();
+        $modelAF->budgetPeriodId = $this->getPeriod()->year; 
         $dataAF = $this->datacontext->getObject($modelAF);
 
         $treeAF = array();
@@ -317,5 +319,33 @@ class ProjectService extends CServiceBase implements IProjectService {
         }
 
         return $seriesData;
+    }
+    
+    public function getAllProject($facultyId) {
+        $sql = "select bgh.BudgetHeadId, bgh.budgetPeriodId, bgh.FormBudget as formId, "
+                . "exp.BudgetExpenseName as formName, bgh.budgetTypeCode, dept.DepartmentId as deptId, dept.DepartmentName as deptName "
+                . "from Budget_Head bgh "
+                . "inner join Budget_Expense exp on exp.budgetHeadId = bgh.budgetHeadId "
+                . "inner join L3D_Department dept on dept.DepartmentId = exp.DepartmentId "
+                . "where bgh.FormBudget = 999 "
+                . "and bgh.budgetTypeCode = :type "
+                . "and bgh.budgetPeriodId = :year "
+                . "and dept.DepartmentId = :dept "
+                . "order by bgh.budgetPeriodId asc, bgh.FormBudget asc, dept.DepartmentId asc ";
+
+        $param = array(
+            "type" => 'K',
+            "year" => $this->getPeriod()->year,
+            "dept" => $facultyId
+        );
+
+        $dataBgh = $this->datacontext->pdoQuery($sql, $param);
+        return $dataBgh;
+    }
+    
+    public function save($project){
+        $return = true;
+        
+        return $return;
     }
 }
