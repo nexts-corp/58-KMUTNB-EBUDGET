@@ -204,20 +204,51 @@ class DraftService extends CServiceBase implements IDraftService {
     }
 
     public function update($draft) {
-        if ($this->datacontext->updateObject($draft)) {
-            return $this->datacontext->getObject($draft)[0];
+        //$draft->isApprove = "N";
+        $json = new \th\co\bpg\cde\collection\impl\CJSONDecodeImpl();
+        $type = "";
+        if (isset($draft->detailId)) {
+            $draft = $json->decode(new \apps\common\entity\ActionPlanDetail(), $draft);
+            $type = "detail";
         } else {
+            $draft = $json->decode(new \apps\common\entity\ActionPlanDraft(), $draft);
+            $type = "draft";
+        }
+        //return $draft;
+        if (!$this->datacontext->updateObject($draft)) {
             $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
             return false;
+        } else {
+            $this->getResponse()->add("type", $type);
+//            if ($type == "draft") {
+//                $draft = $this->datacontext->getObject($draft)[0];
+//                $detail = new \apps\common\entity\ActionPlanDetail();
+//                $detail->draftId = $draft->draftId;
+//                $draft->detail = $this->datacontext->getObject($detail);
+//            } else {
+//                return $this->datacontext->getObject($draft)[0];
+//            }
+            return $this->datacontext->getObject($draft)[0];
         }
     }
 
     public function delete($draft) {
-        if ($this->datacontext->removeObject($draft)) {
-            return true;
+        $json = new \th\co\bpg\cde\collection\impl\CJSONDecodeImpl();
+        $type = "";
+        if (isset($draft->detailId)) {
+            $draft = $json->decode(new \apps\common\entity\ActionPlanDetail(), $draft);
+            $type = "detail";
         } else {
+            $draft = $json->decode(new \apps\common\entity\ActionPlanDraft(), $draft);
+            $type = "draft";
+        }
+        //return $draft;
+        if (!$this->datacontext->removeObject($draft)) {
             $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
             return false;
+        } else {
+            $this->getResponse()->add("type", $type);
+            return $draft;
         }
     }
 

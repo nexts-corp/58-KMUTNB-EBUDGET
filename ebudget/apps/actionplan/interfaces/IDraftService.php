@@ -25,8 +25,8 @@ interface IDraftService {
      * @return String[] lists Description
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
-    public function listsAll($departmentId,$typeId);
-    
+    public function listsAll($departmentId, $typeId);
+
     /**
      * @name listsType
      * @uri /listsType
@@ -47,7 +47,7 @@ interface IDraftService {
     /**
      * @name update
      * @uri /update
-     * @param apps\common\entity\AffirmativeDraft draft
+     * @param string draft
      * @return String[] update Description
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
@@ -56,8 +56,8 @@ interface IDraftService {
     /**
      * @name delete
      * @uri /delete
-     * @param apps\actionplan\entity\AffirmativeDraft draft
-     * @return boolean delete Description
+     * @param string draft
+     * @return String[] delete Description
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
     public function delete($draft);
