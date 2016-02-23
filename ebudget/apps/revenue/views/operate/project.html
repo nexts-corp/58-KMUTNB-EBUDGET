@@ -574,7 +574,7 @@
             var validated = $('#wizard form').valid();
             if(validated){
                 var fdata = dataObject();
-                var dataJSON = JSON.stringify({project: fdata["project"]);
+                var dataJSON = JSON.stringify({project: fdata["project"]});
                 var dataJSONEN = encodeURIComponent(dataJSON);
 
                 saveProject(dataJSONEN);
