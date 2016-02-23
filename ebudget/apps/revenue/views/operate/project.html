@@ -33,9 +33,7 @@
             <div class="col-md-12">
                 <label class="col-md-1 control-label">โครงการ</label>
                 <div class="col-md-5">
-                    <select class="form-control input-sm">
-                        <option value="">- เลือกโครงการ -</option>
-                    </select>
+                    <select id="budgetHeadId" name="budgetHeadId" class="form-control input-sm"></select>
                 </div>
             </div>
         </div>
@@ -76,7 +74,7 @@
                                     <div class="col-md-12">
                                         <label class="col-md-2 control-label text-right">คณะ/สำนัก/วิทยาลัย</label>
                                         <div class="col-md-6">
-                                            <input type="text" id="facName" name="facName" class="form-control input-sm" readonly="readonly">
+                                            <input type="text" id="facName" name="facName" class="form-control input-sm" value="{{deptName}}" readonly="readonly">
                                         </div>
                                     </div>
 
@@ -300,32 +298,27 @@
                                     </div>
 
                                     <div class="col-md-12">
-                                        <table class="table table-bordered">
-                                            <tr>
-                                                <th rowspan="2" class="text-center" style="vertical-align: middle;">งบรายจ่าย</th>
-                                                <th class="text-center">ไตรมาส 1</th>
-                                                <th class="text-center">ไตรมาส 2</th>
-                                                <th class="text-center">ไตรมาส 3</th>
-                                                <th class="text-center">ไตรมาส 4</th>
-                                            </tr>
-                                            <tr>
-                                                <th class="text-center">แผนการใช้จ่าย</th>
-                                                <th class="text-center">แผนการใช้จ่าย</th>
-                                                <th class="text-center">แผนการใช้จ่าย</th>
-                                                <th class="text-center">แผนการใช้จ่าย</th>
-                                            </tr>
-                                            <tr style="background-color: #F1F1F1;">
-                                                <td>{[($index+1)+ '. ' + list.typeName]}</td>
-                                                <td colspan="4">&nbsp;</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="padding-left: 50px;">{[($parent.$index+1)+ '.' + ($index+1) + ' ' + listSub.typeName]}</td>
-                                                <td><input type="number" class="form-control input-sm"></td>
-                                                <td><input type="number" class="form-control input-sm"></td>
-                                                <td><input type="number" class="form-control input-sm"></td>
-                                                <td><input type="number" class="form-control input-sm"></td>
-                                            </tr>
-                                            <tr colspan="6"><td></td></tr>
+                                        <table id="tableBudget" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2" class="text-center" style="vertical-align: middle;">งบรายจ่าย</th>
+                                                    <th class="text-center">ไตรมาส 1</th>
+                                                    <th class="text-center">ไตรมาส 2</th>
+                                                    <th class="text-center">ไตรมาส 3</th>
+                                                    <th class="text-center">ไตรมาส 4</th>
+                                                </tr>
+                                                <tr>
+                                                    <th class="text-center">แผนการใช้จ่าย</th>
+                                                    <th class="text-center">แผนการใช้จ่าย</th>
+                                                    <th class="text-center">แผนการใช้จ่าย</th>
+                                                    <th class="text-center">แผนการใช้จ่าย</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="6" class="text-center">-</td>
+                                                </tr>
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -336,31 +329,23 @@
                                     </div>
 
                                     <div class="col-md-12">
-                                        <table class="table table-bordered">
-                                            <tr>
-                                                <th class="col-md-3 text-center">รายการ</th>
-                                                <th class="col-md-2 text-center">จำนวนหน่วย</th>
-                                                <th class="col-md-2 text-center">ราคาต่อหน่วย</th>
-                                                <th class="col-md-2 text-center">รวมเงิน</th>
-                                                <th class="col-md-2 text-center">หมายเหตุ</th>
-                                                <th class="col-md-1 text-center">จัดการ</th>
-                                            </tr>
-                                            <tr>
-                                                <td><input type="text" class="form-control input-sm"></td>
-                                                <td><input type="text" class="form-control input-sm"></td>
-                                                <td><input type="text" class="form-control input-sm"></td>
-                                                <td><input type="text" class="form-control input-sm"></td>
-                                                <td><input type="text" class="form-control input-sm"></td>
-                                                <td class="text-center">
-                                                    <button class="btn btn-default"><i class="fa fa-trash"></i> ลบ</button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="5"></td>
-                                                <td class="text-center">
-                                                    <button class="btn btn-primary"><i class="fa fa-plus"></i> เพิ่ม</button>
-                                                </td>
-                                            </tr>
+                                        <div class="col-md-12 text-right" style="margin-bottom: 10px;">
+                                            <button class="btn btn-success addDetail"><i class="fa fa-plus-circle"></i> เพิ่ม</button>
+                                        </div>
+                                        
+                                        <table id="tableDetail" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-3 text-center">รายการ</th>
+                                                    <th class="col-md-1 text-center">จำนวนหน่วย</th>
+                                                    <th class="col-md-2 text-center">ราคาต่อหน่วย</th>
+                                                    <th class="col-md-2 text-center">รวมเงิน</th>
+                                                    <th class="col-md-2 text-center">หมายเหตุ</th>
+                                                    <th class="col-md-2 text-center">จัดการ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -510,6 +495,57 @@
                 </div>
             </div>
         </div><!-- end form -->
+        
+        <div id="detailModal" aria-labelledby="formLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"><!-- add strategy plan form -->
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">รายละเอียดการใช้งบประมาณ</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label text-right">รายการ</label>
+                            <div class="col-md-8">
+                                <input id="detailList" name="detailList" type="text" class="form-control input-sm">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label text-right">จำนวนหน่วย</label>
+                            <div class="col-md-8">
+                                <input id="detailUnit" name="detailUnit" type="text" class="form-control input-sm">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-4 control-label text-right">ราคาต่อหน่วย</label>
+                            <div class="col-md-8">
+                                <input id="detailPrice" name="detailPrice" type="text" class="form-control input-sm">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-4 control-label text-right">รวมเงิน</label>
+                            <div class="col-md-8">
+                                <input id="detailTotal" name="detailTotal" type="text" class="form-control input-sm">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-md-4 control-label text-right">หมายเหตุ</label>
+                            <div class="col-md-8">
+                                <input id="detailRemark" name="detailRemark" type="text" class="form-control input-sm">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success save" data-dismiss="modal"><i class="fa fa-save"></i> บันทึก</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end form -->
     </div><!--  container  -->
 </div><!-- main -->
 
@@ -536,6 +572,13 @@
         $w4finish.on('click', function(ev) {
             ev.preventDefault();
             var validated = $('#wizard form').valid();
+            if(validated){
+                var fdata = dataObject();
+                var dataJSON = JSON.stringify({project: fdata["project"]);
+                var dataJSONEN = encodeURIComponent(dataJSON);
+
+                saveProject(dataJSONEN);
+            }
             /*if (validated) {
                 if(action == "insert"){
                     var fdata = dataObject(null);
@@ -632,15 +675,36 @@
         d: []
     };
     var duration = [];
+    var detail = [];
     
     $(function(){
+        getAllProject();
+        
+        getData();
+        
         getLayouts();
         getKpiType();
         getProgress();
+        getDetail();
         
         $("#projectStart, #projectEnd").datepicker();
     });
+    
+    function getAllProject(){
+        var datas = callAjax("{{_context_path}}/api/revenue/project/getAllProject", "post", {facultyId: facultyId}, "json");
+        if(typeof datas !== "undefined" && datas !== null){
+            var html = '';
+            $.each(datas["lists"], function(key, val){
+                html += '<option value="'+val["BudgetHeadId"]+'">'+val["formName"]+'</option>';
+            });
+            $("#budgetHeadId").html(html);            
+        }
+    }
 
+    function getData(){
+        
+    }
+    
     function getLayouts() {
         var datas = callAjax("{{_context_path}}/api/revenue/project/getLayouts", "post", {facultyId: facultyId}, "json");
         if (typeof datas !== "undefined" && datas !== null) {
@@ -797,6 +861,27 @@
                     + '</div>';
             });
             $("#listPlan").html(htmlPlan);
+            
+            var htmlBudget = '';
+            var count = 0;
+            $.each(datas["layouts"]["budgetType"], function(key, val){
+                var sub = 0;
+                
+                htmlBudget += '<tr style="background-color: #F1F1F1;">'
+                        + '<td>'+(++count)+'. ' + val["typeName"]+'</td>'
+                        + '<td colspan="4">&nbsp;</td>'
+                    + '</tr>';
+                $.each(val["sub"], function(key2, val2){
+                    htmlBudget += '<tr>'
+                            + '<td style="padding-left: 50px;">'+count+ '.' + (++sub) + ' ' + val2["typeName"]+'</td>'
+                            + '<td><input type="number" id="budget'+val2["id"]+'-Q1" name="budget'+val2["id"]+'-Q1" class="form-control input-sm"></td>'
+                            + '<td><input type="number" id="budget'+val2["id"]+'-Q2" name="budget'+val2["id"]+'-Q2" class="form-control input-sm"></td>'
+                            + '<td><input type="number" id="budget'+val2["id"]+'-Q3" name="budget'+val2["id"]+'-Q3" class="form-control input-sm"></td>'
+                            + '<td><input type="number" id="budget'+val2["id"]+'-Q4" name="budget'+val2["id"]+'-Q4" class="form-control input-sm"></td>'
+                        + '</tr>';
+                });
+            });
+            $("#tableBudget tbody").html(htmlBudget);
         }
     }
 
@@ -944,6 +1029,100 @@
             $(this).closest('tr').hide();
             duration.splice($(this).attr("data-id"), 1);
         });
+    }
+    
+    function getDetail(){
+        var html = '';
+        var count = 0;
+        $.each(detail, function(key, val){
+            html += '<tr>'
+                    + '<td>'+(++count)+'. '+val["list"]+'</td>'
+                    + '<td class="text-center">'+val["unit"]+'</td>'
+                    + '<td class="text-right">'+val["price"]+'</td>'
+                    + '<td class="text-right">'+val["total"]+'</td>'
+                    + '<td>'+val["remark"]+'</td>'
+                    + '<td class="text-center">'
+                        + '<div class="btn-group">'
+                            + '<button class="btn btn-warning editDetail" data-id="'+key+'"><i class="fa fa-pencil"></i></button>'
+                            + '<button class="btn btn-default delDetail" data-id="'+key+'"><i class="fa fa-trash"></i></button>'
+                        + '</div>'
+                    + '</td>'
+                + '</tr>';
+        });
+        
+        $("#tableDetail tbody").html(html);
+        
+        $("button.addDetail").unbind().click(function(){
+            $("#detailModal").modal("show");
+            $("#detailList, #detailUnit, #detailPrice, #detailTotal, #detailRemark").val('');
+            
+            $("button.save").unbind().click(function(){
+                detail.push({
+                    list: $("#detailList").val(),
+                    unit: $("#detailUnit").val(),
+                    price: $("#detailPrice").val(),
+                    total: $("#detailTotal").val(),
+                    remark: $("#detailRemark").val()
+                });
+                getDetail();                
+            });
+        });
+        
+        $("button.editDetail").unbind().click(function(){
+            var id = $(this).attr("data-id");
+            $("#detailModal").modal("show");
+            
+            $("#detailList").val(detail[id]["list"]);
+            $("#detailUnit").val(detail[id]["unit"]);
+            $("#detailPrice").val(detail[id]["price"]);
+            $("#detailTotal").val(detail[id]["total"]);
+            $("#detailRemark").val(detail[id]["remark"]);
+            
+            $("button.save").unbind().click(function(){
+                detail[id] = {
+                    list: $("#detailList").val(),
+                    unit: $("#detailUnit").val(),
+                    price: $("#detailPrice").val(),
+                    total: $("#detailTotal").val(),
+                    remark: $("#detailRemark").val()
+                };
+                getDetail();                
+            });
+        });
+        
+        $("button.delDetail").unbind().click(function(){
+            $(this).closest('tr').hide();
+            detail.splice($(this).attr("data-id"), 1);
+        });
+    }
+    
+    function dataObject(){
+        var obj = {};
+        $("#form input[type=text], #form textarea, #form select, #form input[type=checkbook]:checked, #form input[type=radio]:checked").each(function(){
+            var fname = $(this).attr("name");
+            var fval = $(this).val();
+            
+            obj[fname] = fval;
+        });
+        
+        $("#form input[type=number]").each(function(){
+            var fname = $(this).attr("name");
+            var fval = $(this).val();
+            
+            obj[fname] = fval;
+        });
+        
+        var fdata = {};
+        fdata["project"] = obj;
+        
+        return fdata;
+    }
+    
+    function saveProject(dataJSONEN){
+        var datas = callAjax("{{_context_path}}/api/revenue/project/save", "post", dataJSONEN, "json");
+        if(typeof datas !== "undefined" && datas !== null){
+            
+        }
     }
 
 </script>

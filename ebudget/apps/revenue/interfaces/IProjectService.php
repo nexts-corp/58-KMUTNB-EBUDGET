@@ -16,5 +16,23 @@ interface IProjectService {
      * @return String[] layouts
      */
     public function getLayouts($facultyId);
+    
+    /**
+     * @name getAllProject
+     * @uri /getAllProject
+     * @description ดึงโครงสร้างโครงการ
+     * @param int facultyId รหัสหน่วยงาน
+     * @return String[] lists
+     */
+    public function getAllProject($facultyId);
+    
+    /**
+     * @name save
+     * @uri /save
+     * @description ดึงโครงสร้างโครงการ
+     * @param String[] project รหัสหน่วยงาน
+     * @return doolean save
+     */
+    public function save($project);
 
 }
