@@ -23,7 +23,8 @@ class ProjectService extends CServiceBase implements IProjectService {
 
     function getPeriod() {
         $year = new \apps\common\entity\Year();
-        $year->yearStatus = 'Y';
+        //$year->yearStatus = 'Y';
+        $year->year = 2559;
         return $this->datacontext->getObject($year)[0];
     }
 
@@ -49,6 +50,7 @@ class ProjectService extends CServiceBase implements IProjectService {
     private function affirmativeLevel(){
 
         $modelAF = new ViewAffirmativeLevel();
+        $modelAF->budgetPeriodId = $this->getPeriod()->year; 
         $dataAF = $this->datacontext->getObject($modelAF);
 
         $treeAF = array();
