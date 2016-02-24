@@ -220,14 +220,6 @@ class DraftService extends CServiceBase implements IDraftService {
             return false;
         } else {
             $this->getResponse()->add("type", $type);
-//            if ($type == "draft") {
-//                $draft = $this->datacontext->getObject($draft)[0];
-//                $detail = new \apps\common\entity\ActionPlanDetail();
-//                $detail->draftId = $draft->draftId;
-//                $draft->detail = $this->datacontext->getObject($detail);
-//            } else {
-//                return $this->datacontext->getObject($draft)[0];
-//            }
             return $this->datacontext->getObject($draft)[0];
         }
     }
@@ -235,6 +227,7 @@ class DraftService extends CServiceBase implements IDraftService {
     public function delete($draft) {
         $json = new \th\co\bpg\cde\collection\impl\CJSONDecodeImpl();
         $type = "";
+        $return = true;
         if (isset($draft->detailId)) {
             $draft = $json->decode(new \apps\common\entity\ActionPlanDetail(), $draft);
             $type = "detail";
@@ -244,11 +237,23 @@ class DraftService extends CServiceBase implements IDraftService {
         }
         //return $draft;
         if (!$this->datacontext->removeObject($draft)) {
-            $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
-            return false;
+            $return = false;
         } else {
+            if ($type == "draft") {
+                $detail = new \apps\common\entity\ActionPlanDetail();
+                $detail->draftId = $draft->draftId;
+                $detail = $this->datacontext->getObject($detail);
+                if (!$this->datacontext->removeObject($detail)) {
+                    $return = false;
+                }
+            }
+        }
+        if ($return == true) {
             $this->getResponse()->add("type", $type);
             return $draft;
+        } else {
+            $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+            return false;
         }
     }
 

@@ -489,15 +489,15 @@
                                 $.each(value4["draft"], function (key5, value5) {
                                     contentArr[value2["issueSeq"]] += '<tr data-tt-id="draft' + value5["draftId"] + '" data-tt-parent-id="strategy' + value4["strategyId"] + '" data-seq="' + value5["projectSeq"] + '" >'
                                             + '<td class="text-center"></td>'
-                                            + '<td>'
+                                            + (value5["isActive"] == "Y" ? '<td>' : '<td class="text-primary">')
                                             + '<span class="text-bold">' + value5["projectSeq"] + ". " + value5["projectName"] + '</span>'
                                             + '</td>'
                                             + '<td></td>'
-                                            + '<td class="text-center">' + (value5["timeDuration"] ? value5["timeDuration"] : "") + '</td>'
-                                            + '<td class="text-center">' + (value5["budget"] ? value5["budget"] : "") + '</td>'
-                                            + '<td class="text-center">' + (value5["revenue"] ? value5["revenue"] : "") + '</td>'
-                                            + '<td class="text-center">' + (value5["other"] ? value5["other"] : "") + '</td>'
-                                            + '<td class="text-center">' + (value5["noBudget"] ? value5["noBudget"] : "") + '</td>'
+                                            + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value5["timeDuration"] ? value5["timeDuration"] : "") + '</td>'
+                                            + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value5["budget"] ? value5["budget"] : "") + '</td>'
+                                            + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value5["revenue"] ? value5["revenue"] : "") + '</td>'
+                                            + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value5["other"] ? value5["other"] : "") + '</td>'
+                                            + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value5["noBudget"] ? value5["noBudget"] : "") + '</td>'
                                             + '<td class="text-center">'
                                             + '<button class="btn btn-sm btn-success add" data-id="' + value5["draftId"] + '" data-name="draftId" data-pid="' + value4["strategyId"] + '" data-pname="strategyId" ><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
                                             + '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-id="' + value5["draftId"] + '" data-name="draftId"><i class="fa fa-pencil"></i> แก้ไข</button>'
@@ -511,8 +511,8 @@
                                         $.each(value5["detail"], function (key6, value6) {
                                             contentArr[value2["issueSeq"]] += '<tr data-tt-id="detail' + value6["detailId"] + '" data-tt-parent-id="draft' + value5["draftId"] + '"  data-seq="' + value6["detailSeq"] + '">'
                                                     + '<td class="text-center"></td>'
-                                                    + (value5["isActive"] == "Y" ? '<td>' : '<td class="text-primary">') + '- ' + text2html(value6["detailName"]) + '</td>'
-                                                    + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + value6["unit"] + '</td>'
+                                                    + (value6["isActive"] == "Y" ? '<td>' : '<td class="text-primary">') + '- ' + text2html(value6["detailName"]) + '</td>'
+                                                    + (value6["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + value6["unit"] + '</td>'
                                                     + '<td class="text-center"></td>'
                                                     + '<td class="text-center"></td>'
                                                     + '<td class="text-center"></td>'
@@ -625,13 +625,12 @@
             $("#loadingForm").html('');
             $("#form" + formName).trigger('reset');
             $("#dialog" + formName).modal("show");
+
+            // console.log(listArr[formName][mId]);
+
             $("#form" + formName + " input[type=text],#form" + formName + " textarea,#form" + formName + " select").each(function () {
                 var fid = $(this).attr("id");
-                if (fid != "remark") {
-                    $("#" + fid).val(listArr[formName][mId][fid]);
-                } else {
-                    $("#form" + formName + " #" + fid).val(listArr[formName][mId][fid]);
-                }
+                $("#form" + formName + " #" + fid).val(listArr[formName][mId][fid]);
             });
             $("button.save" + formName).unbind().click(function () {
                 var isValid = true;
@@ -671,7 +670,7 @@
                 var fdata = {};
                 fdata[mName] = mId;
                 fdata[pName] = pId;
-               // console.log(fdata);
+                // console.log(fdata);
                 draftDelete(fdata);
             });
         });
@@ -713,15 +712,15 @@
                     var node, node2;
                     input += '<tr data-tt-id="draft' + data["draftId"] + '" data-tt-parent-id="strategy' + data["strategyId"] + '" data-seq="' + data["projectSeq"] + '" >'
                             + '<td class="text-center"></td>'
-                            + '<td>'
+                            + (data["isActive"] == "Y" ? '<td>' : '<td class="text-primary">')
                             + '<span class="text-bold">' + data["projectSeq"] + ". " + data["projectName"] + '</span>'
                             + '</td>'
                             + '<td></td>'
-                            + '<td class="text-center">' + (data["timeDuration"] ? data["timeDuration"] : "") + '</td>'
-                            + '<td class="text-center">' + (data["budget"] ? data["budget"] : "") + '</td>'
-                            + '<td class="text-center">' + (data["revenue"] ? data["revenue"] : "") + '</td>'
-                            + '<td class="text-center">' + (data["other"] ? data["other"] : "") + '</td>'
-                            + '<td class="text-center">' + (data["noBudget"] ? data["noBudget"] : "") + '</td>'
+                            + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["timeDuration"] ? data["timeDuration"] : "") + '</td>'
+                            + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["budget"] ? data["budget"] : "") + '</td>'
+                            + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["revenue"] ? data["revenue"] : "") + '</td>'
+                            + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["other"] ? data["other"] : "") + '</td>'
+                            + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["noBudget"] ? data["noBudget"] : "") + '</td>'
                             + '<td class="text-center">'
                             + '<button class="btn btn-sm btn-success add" data-id="' + data["draftId"] + '" data-name="draftId" data-pid="' + data["strategyId"] + '" data-pname="strategyId" ><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
                             + '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-id="' + data["draftId"] + '" data-name="draftId"><i class="fa fa-pencil"></i> แก้ไข</button>'
@@ -804,15 +803,15 @@
                     var node, node2;
                     input += '<tr data-tt-id="draft' + data["draftId"] + '" data-tt-parent-id="strategy' + data["strategyId"] + '" data-seq="' + data["projectSeq"] + '" >'
                             + '<td class="text-center"></td>'
-                            + '<td>'
+                            + (data["isActive"] == "Y" ? '<td>' : '<td class="text-primary">')
                             + '<span class="text-bold">' + data["projectSeq"] + ". " + data["projectName"] + '</span>'
                             + '</td>'
                             + '<td></td>'
-                            + '<td class="text-center">' + (data["timeDuration"] ? data["timeDuration"] : "") + '</td>'
-                            + '<td class="text-center">' + (data["budget"] ? data["budget"] : "") + '</td>'
-                            + '<td class="text-center">' + (data["revenue"] ? data["revenue"] : "") + '</td>'
-                            + '<td class="text-center">' + (data["other"] ? data["other"] : "") + '</td>'
-                            + '<td class="text-center">' + (data["noBudget"] ? data["noBudget"] : "") + '</td>'
+                            + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["timeDuration"] ? data["timeDuration"] : "") + '</td>'
+                            + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["budget"] ? data["budget"] : "") + '</td>'
+                            + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["revenue"] ? data["revenue"] : "") + '</td>'
+                            + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["other"] ? data["other"] : "") + '</td>'
+                            + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["noBudget"] ? data["noBudget"] : "") + '</td>'
                             + '<td class="text-center">'
                             + '<button class="btn btn-sm btn-success add" data-id="' + data["draftId"] + '" data-name="draftId" data-pid="' + data["strategyId"] + '" data-pname="strategyId" ><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
                             + '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-id="' + data["draftId"] + '" data-name="draftId"><i class="fa fa-pencil"></i> แก้ไข</button>'
