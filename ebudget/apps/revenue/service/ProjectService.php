@@ -43,7 +43,8 @@ class ProjectService extends CServiceBase implements IProjectService {
             "plan"=>$proUniSer->fetchPlan(),
             "budgetType"=>$proUniSer->fetchBudgetType(),
             "affirmative"=>$this->affirmativeLevel(),
-            "listProject"=>$this->datacontext->getObject($listProject)
+            "listProject"=>$this->datacontext->getObject($listProject),
+            "kpiType" => $this->fetchKpiType()
         );
     }
 
@@ -159,10 +160,6 @@ class ProjectService extends CServiceBase implements IProjectService {
             dataBEA=>$dataBEA,
             dataBEO=>$dataBEO
         );
-
-
-
-
     }
 
     public function fetchSubsidies() {
@@ -225,7 +222,10 @@ class ProjectService extends CServiceBase implements IProjectService {
 
     }
 
-
+    public function fetchKpiType(){
+        $list = new \apps\common\entity\KpiType();
+        return $this->datacontext->getObject($list);
+    }
 
     private function convertDate($date){
         $ep = explode('/',$date);
@@ -346,7 +346,7 @@ class ProjectService extends CServiceBase implements IProjectService {
     public function save($project){
         $return = true;
         
-        return $return;
+        return $project->facName;
     }
     
     public function getData($budgetHeadId, $facultyId) {
@@ -370,9 +370,13 @@ class ProjectService extends CServiceBase implements IProjectService {
         $opt->expenseId = $expData->id;
         $optData = $this->datacontext->getObject($opt);
 
-        $plan = new \apps\common\entity\BudgetExpensePlan();
-        $plan->expenseId = $expData->id;
-        $planData = $this->datacontext->getObject($plan);
+        $detail = new \apps\common\entity\BudgetExpenseDetail();
+        $detail->expenseId = $expData->id;
+        $detailData = $this->datacontext->getObject($detail);
+        
+        $kpi = new \apps\common\entity\BudgetExpenseKpi();
+        $kpi->expenseId = $expData->id;
+        $kpiData = $this->datacontext->getObject($kpi);
         
         $result = array(
             "id" => $expData->id,
@@ -384,7 +388,7 @@ class ProjectService extends CServiceBase implements IProjectService {
             "rationale" => $expData->rationale,
             "objective" => $expData->objective,
             "benefits" => $expData->benefits,
-            "kpi" => "",
+            "kpi" => $kpiData,
             "target" => $expData->target,
             "operating" => $optData,
             "timeStart" => $expData->timeStart,
@@ -393,8 +397,9 @@ class ProjectService extends CServiceBase implements IProjectService {
             "budgetEstText" => $expData->budgetEstText,
             "budgetTypeId" => $expData->budgetTypeId,
             "projectId" => $expData->projectId,
-            "plan" => $planData
+            "detail" => $detailData
         );
+        
         return $result;              
     }
 }

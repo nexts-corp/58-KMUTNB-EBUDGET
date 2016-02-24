@@ -118,14 +118,14 @@
                                     </div>
                                     <div>
                                         <div class="row">
-                                            <div id="strategyPlan"></div>
+                                            <div id="affirmative"></div>
                                         </div>
                                         <br>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="text-right">
-                                            <button class="btn btn-success addStrategy"><i class="fa fa-plus-circle"></i> เพิ่ม</button>
+                                            <button class="btn btn-success addAffirmative"><i class="fa fa-plus-circle"></i> เพิ่ม</button>
                                         </div>
                                     </div>
                                 </div>
@@ -208,7 +208,7 @@
 
                                     <div class="col-md-12">
                                         <div class="col-md-12 text-right" style="margin-bottom: 10px;">
-                                            <button class="btn btn-success addOperation"><i class="fa fa-plus-circle"></i> เพิ่ม</button>
+                                            <button class="btn btn-success addOperating"><i class="fa fa-plus-circle"></i> เพิ่ม</button>
                                         </div>
                                         <table id="tableOperating" class="table table-bordered">
                                             <thead>
@@ -370,7 +370,7 @@
             </section>
         </div>
         
-        <div id="strategyPlanModal" aria-labelledby="formLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"><!-- add strategy plan form -->
+        <div id="affirmativeModal" aria-labelledby="formLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"><!-- add strategy plan form -->
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -433,7 +433,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label text-right">ตัวชี้วัด</label>
                             <div class="col-md-8">
-                                <input id="kpi" name="kpi" type="text" class="form-control input-sm">
+                                <input id="budgetDesc" name="budgetDesc" type="text" class="form-control input-sm">
                             </div>
                         </div>
                             
@@ -447,7 +447,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label text-right">ค่าเป้าหมาย</label>
                             <div class="col-md-8">
-                                <input id="target" name="target" type="text" class="form-control input-sm">
+                                <input id="goal" name="goal" type="text" class="form-control input-sm">
                             </div>
                         </div>
                     </div>
@@ -470,21 +470,21 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label text-right">ขั้นตอนการดำเนินการ/รายการกิจกรรม</label>
                             <div class="col-md-8">
-                                <input id="duration" name="operatingName" type="text" class="form-control input-sm">
+                                <input id="operatingName" name="operatingName" type="text" class="form-control input-sm">
                             </div>
                         </div>
                             
                         <div class="form-group">
                             <label class="col-md-4 control-label text-right">วันที่เริ่มต้น</label>
                             <div class="col-md-8">
-                                <input id="dateStart" name="operatingStart" type="text" class="form-control input-sm">
+                                <input id="operatingStart" name="operatingStart" type="text" class="form-control input-sm">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-md-4 control-label text-right">วันที่สิ้นสุด</label>
                             <div class="col-md-8">
-                                <input id="dateEnd" name="operatingEnd" type="text" class="form-control input-sm">
+                                <input id="operatingEnd" name="operatingEnd" type="text" class="form-control input-sm">
                             </div>
                         </div>
                     </div>
@@ -507,35 +507,35 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label text-right">รายการ</label>
                             <div class="col-md-8">
-                                <input id="detailList" name="detailList" type="text" class="form-control input-sm">
+                                <input id="detailDesc" name="detailDesc" type="text" class="form-control input-sm">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-md-4 control-label text-right">จำนวนหน่วย</label>
                             <div class="col-md-8">
-                                <input id="detailUnit" name="detailUnit" type="text" class="form-control input-sm">
+                                <input id="numOfUnit" name="numOfUnit" type="text" class="form-control input-sm">
                             </div>
                         </div>
                         
                         <div class="form-group">
                             <label class="col-md-4 control-label text-right">ราคาต่อหน่วย</label>
                             <div class="col-md-8">
-                                <input id="detailPrice" name="detailPrice" type="text" class="form-control input-sm">
+                                <input id="pricePerUnit" name="pricePerUnit" type="text" class="form-control input-sm">
                             </div>
                         </div>
                         
                         <div class="form-group">
                             <label class="col-md-4 control-label text-right">รวมเงิน</label>
                             <div class="col-md-8">
-                                <input id="detailTotal" name="detailTotal" type="text" class="form-control input-sm">
+                                <input id="totalPrice" name="totalPrice" type="text" class="form-control input-sm">
                             </div>
                         </div>
                         
                         <div class="form-group">
                             <label class="col-md-4 control-label text-right">หมายเหตุ</label>
                             <div class="col-md-8">
-                                <input id="detailRemark" name="detailRemark" type="text" class="form-control input-sm">
+                                <input id="remark" name="remark" type="text" class="form-control input-sm">
                             </div>
                         </div>
                     </div>
@@ -660,20 +660,20 @@
     }).apply( this, [ jQuery ]);
 
     var facultyId = '{{deptId}}';
+    var budgetHeadId = '{{budgetHeadId}}';
 
     var typeArr = {};
     var issueArr = {};
     var targetArr = {};
     var strategyArr = {};
 
-
-    var strategyPlan = [];
-    var kpi = {
-        a: [],
-        b: [],
-        c: [],
-        d: []
-    };
+    var id;
+    var projectTypeId;
+    var budgetTypeId;
+    var projectId;
+    var integration = [];
+    var affirmative = [];
+    var kpi = {};
     var operating = [];
     var detail = [];
     
@@ -684,11 +684,10 @@
         getData();
         
         getLayouts();
-        getKpiType();
         getOperating();
         getDetail();
         
-        $("#projectStart, #projectEnd").datepicker();
+        $("#timeStart, #timeEnd").datepicker();
     });
     
     function getAllProject(){
@@ -703,7 +702,34 @@
     }
 
     function getData(){
-        
+        var datas = callAjax("{{_context_path}}/api/revenue/project/getData", "post", {budgetHeadId: budgetHeadId,facultyId: facultyId}, "json");
+        if (typeof datas !== "undefined" && datas !== null) {
+            var data = datas["lists"];
+            id = data["id"];
+            $("#responder").val(data["responder"]);
+            $("#director").val(data["director"]);
+            projectTypeId = data["projectTypeId"];
+            integration = data["integration"];
+            affirmative = data["affirmative"];
+            $("#rationale").val(data["rationale"]);
+            $("#objective").val(data["objective"]);
+            $("#benefits").val(data["benefits"]);
+            
+            $.each(data["kpi"], function(key, val){
+                if(!kpi[val["id"]]) kpi[val["id"]] = [];
+                kpi[val["id"]].push(val);
+            });
+            
+            $("#target").val(data["target"]);
+            operating = data["operating"];
+            $("#timeStart").val(data["timeStart"]);
+            $("#timeEnd").val(data["timeEnd"]);
+            $("#budgetEstAmount").val(data["budgetEstAmount"]);
+            $("#budgetEstText").val(data["budgetEstText"]);
+            budgetTypeId = data["budgetTypeId"];
+            projectId = data["projectId"];
+            detail = data["detail"];
+        }
     }
     
     function getLayouts() {
@@ -720,16 +746,27 @@
             });
 
             $("#listProjectType").html(htmlType);
+            $("input[name=projectTypeId][value="+projectTypeId+"]").prop('checked', true);
 
             var htmlIntegration = '';
             $.each(datas["layouts"]["integration"], function(key, val){
+                var isDisable = 'disabled';
+                var isCheck = '';
+                var value = '';
+                var index = integration.some(function (elem, i) { return elem.integrationId === val["id"] && ~(index = i); });
+                if(index !== false){
+                    isDisable = '';
+                    isCheck = 'checked';
+                    value = integration;
+                }
+
                 htmlIntegration += '<div class="row">'
                         + '<div class="col-md-offset-1 col-md-3 checkbox-custom checkbox-primary">'
-                            + '<input class="integration" type="checkbox" id="intId'+val["id"]+'" name="intId'+val["id"]+'" value="'+val["id"]+'">'
+                            + '<input class="integration" type="checkbox" id="intId'+val["id"]+'" name="intId'+val["id"]+'" value="'+val["id"]+'" '+isCheck+'>'
                             + '<label style="padding-left: 10px;">'+val["name"]+'</label>'
                         + '</div>'
                         + '<div class="col-md-6">'
-                            + '<input type="text" id="intName'+val["id"]+'" name="intName'+val["id"]+'" class="form-control input-sm" disabled>'
+                            + '<input type="text" id="intName'+val["id"]+'" name="intName'+val["id"]+'" value="'+value+'" class="form-control input-sm" '+isDisable+'>'
                         + '</div>'
                     + '</div>'
                     + '<br>';
@@ -748,6 +785,34 @@
                 }
             });
 
+            var htmlSubsidies = '';
+            $.each(datas["layouts"]["subsidies"], function(key, val){
+                htmlSubsidies += '<div class="col-md-6">'
+                        + '<div class="row">'
+                            + '<div class="col-md-12">'
+                                + '<input type="radio" name="budgetTypeId" value="'+val["id"]+'">'
+                                + '<label style="padding-left: 5px;">'+val["typeName"]+'</label>'
+                            + '</div>'
+                        + '</div><br>'
+                    + '</div>';
+            });
+            $("#listSubsidies").html(htmlSubsidies);
+            $("input[name=budgetTypeId][value="+budgetTypeId+"]").prop('checked', true);
+            
+            var htmlPlan = '';
+            $.each(datas["layouts"]["plan"], function(key, val){
+                htmlPlan += '<div class="col-md-6">'
+                        + '<div class="row">'
+                            + '<div class="col-md-12">'
+                                + '<input type="radio" name="projectId" value="'+val["id"]+'">'
+                                + '<label style="padding-left: 5px;">'+val["planName"]+'</label>'
+                            + '</div>'
+                        + '</div><br>'
+                    + '</div>';
+            });
+            $("#listPlan").html(htmlPlan);
+            $("input[name=projectId][value="+projectId+"]").prop('checked', true);
+            
             $.each(datas["layouts"]["affirmative"], function(key, val){
                 typeArr[val["typeId"]] = val["typeName"];
 
@@ -767,101 +832,8 @@
                 });
 
             });
-
-            $("button.addStrategy").unbind().click(function(){
-                $("#strategyPlanModal").modal("show");
-                
-                $("#typeId, #issueId, #targetId, #strategyId").val('');
-                
-                $("#typeId").html(getAffirmative("type", null)).change(function(){
-                    if($("#typeId").val() == ""){
-                        $("#issueId, #targetId, #strategyId").html('<option value="">- เลือก -</option>');
-                    }
-                    else {
-                        $("#issueId").html(getAffirmative("issue", $("#typeId").val())).change(function () {
-                            if($("#issueId").val() == ""){
-                                $("#targetId, #strategyId").html('<option value="">- เลือก -</option>');
-                            }
-                            else {
-                                $("#targetId").html(getAffirmative("target", $("#issueId").val())).change(function () {
-                                    if($("#targetId").val() == ""){
-                                        $("#strategyId").html('<option value="">- เลือก -</option>');
-                                    }
-                                    else {
-                                        $("#strategyId").html(getAffirmative("strategy", $("#targetId").val()));
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
-                
-                $("button.save").unbind().click(function(){
-                    strategyPlan.push({
-                        typeId: $("#typeId").val(),
-                        issueId: $("#issueId").val(),
-                        targetId: $("#targetId").val(),
-                        strategyId: $("#strategyId").val()
-                    });
-                    
-                    var html = '';
-                    $.each(strategyPlan, function(key, value){
-                        html += '<div class="panel-body">'
-                                + '<div class="col-md-12">'
-                                    + '<div class="col-md-2 text-right text-bold">แผนกลยุทธ์</div>'
-                                    + '<div class="col-md-8">'+typeArr[value["typeId"]]+'</div>'
-                                    + '<div class="col-md-2 text-right">'
-                                        + '<button class="btn btn-xs btn-danger delStrategyPlan" data-id="'+key+'"><i class="fa fa-times"></i></button>'
-                                    + '</div>'
-                                + '</div>'
-                                + '<div class="col-md-12">'
-                                    + '<div class="col-md-2 text-right text-bold">ประเด็นยุทธศาสตร์</div>'
-                                    + '<div class="col-md-8">'+issueArr[value["typeId"]][value["issueId"]]+'</div>'
-                                + '</div>'
-                                + '<div class="col-md-12">'
-                                    + '<div class="col-md-2 text-right text-bold">เป้าประสงค์</div>'
-                                    + '<div class="col-md-8">'+targetArr[value["issueId"]][value["targetId"]]+'</div>'
-                                + '</div>'
-                                + '<div class="col-md-12">'
-                                    + '<div class="col-md-2 text-right text-bold">กลยุทธ์</div>'
-                                    + '<div class="col-md-8">'+strategyArr[value["targetId"]][value["strategyId"]]+'</div>'
-                                + '</div>'
-                            + '</div>';
-                    });
-                    $("#strategyPlan").html(html);
-                    $("button.delStrategyPlan").unbind().click(function(){
-                        strategyPlan.splice($(this).attr("data-id"), 1);
-                        $(this).closest('.panel-body').hide();
-                        return false;
-                    });
-                });
-            });
-            
-            var htmlSubsidies = '';
-            $.each(datas["layouts"]["subsidies"], function(key, val){
-                htmlSubsidies += '<div class="col-md-6">'
-                        + '<div class="row">'
-                            + '<div class="col-md-12">'
-                                + '<input type="radio" name="budgetTypeId" value="'+val["id"]+'">'
-                                + '<label style="padding-left: 5px;">'+val["typeName"]+'</label>'
-                            + '</div>'
-                        + '</div><br>'
-                    + '</div>';
-            });
-            $("#listSubsidies").html(htmlSubsidies);
-            
-            var htmlPlan = '';
-            $.each(datas["layouts"]["plan"], function(key, val){
-                htmlPlan += '<div class="col-md-6">'
-                        + '<div class="row">'
-                            + '<div class="col-md-12">'
-                                + '<input type="radio" name="projectId" value="'+val["id"]+'">'
-                                + '<label style="padding-left: 5px;">'+val["planName"]+'</label>'
-                            + '</div>'
-                        + '</div><br>'
-                    + '</div>';
-            });
-            $("#listPlan").html(htmlPlan);
+            getAffirmative();
+            getKpiType(datas["layouts"]["kpiType"]);
             
             /*var htmlBudget = '';
             var count = 0;
@@ -886,7 +858,7 @@
         }
     }
 
-    function getAffirmative(type, pId){
+    function optionAffirmative(type, pId){
         var data;
         if(type == "type") data = typeArr;
         else if(type == "issue") data = issueArr[pId];
@@ -899,28 +871,101 @@
         });
         return html;
     }
-
-    function getKpiType(){
-        var list = {a: "เชิงปริมาณ", b: "เชิงเวลา", c: "เชิงคุณภาพ", d: "เชิงต้นทุน"};
-
+    
+    function getAffirmative(){
         var html = '';
-        $.each(list, function(key, value){
+        $.each(affirmative, function(key, value){
+            html += '<div class="panel-body">'
+                    + '<div class="col-md-12">'
+                        + '<div class="col-md-2 text-right text-bold">แผนกลยุทธ์</div>'
+                        + '<div class="col-md-8">'+typeArr[value["typeId"]]+'</div>'
+                        + '<div class="col-md-2 text-right">'
+                            + '<button class="btn btn-xs btn-danger delAffirmative" data-id="'+key+'"><i class="fa fa-times"></i></button>'
+                        + '</div>'
+                    + '</div>'
+                    + '<div class="col-md-12">'
+                        + '<div class="col-md-2 text-right text-bold">ประเด็นยุทธศาสตร์</div>'
+                        + '<div class="col-md-8">'+issueArr[value["typeId"]][value["issueId"]]+'</div>'
+                    + '</div>'
+                    + '<div class="col-md-12">'
+                        + '<div class="col-md-2 text-right text-bold">เป้าประสงค์</div>'
+                        + '<div class="col-md-8">'+targetArr[value["issueId"]][value["targetId"]]+'</div>'
+                    + '</div>'
+                    + '<div class="col-md-12">'
+                        + '<div class="col-md-2 text-right text-bold">กลยุทธ์</div>'
+                        + '<div class="col-md-8">'+strategyArr[value["targetId"]][value["strategyId"]]+'</div>'
+                    + '</div>'
+                + '</div>';
+        });
+        $("#affirmative").html(html);
+        
+        $("button.addAffirmative").unbind().click(function(){
+            $("#affirmativeModal").modal("show");
+            $("#typeId, #issueId, #targetId, #strategyId").val('');
+
+            $("#typeId").html(optionAffirmative("type", null)).change(function(){
+                if($("#typeId").val() == ""){
+                    $("#issueId, #targetId, #strategyId").html('<option value="">- เลือก -</option>');
+                }
+                else {
+                    $("#issueId").html(optionAffirmative("issue", $("#typeId").val())).change(function () {
+                        if($("#issueId").val() == ""){
+                            $("#targetId, #strategyId").html('<option value="">- เลือก -</option>');
+                        }
+                        else {
+                            $("#targetId").html(optionAffirmative("target", $("#issueId").val())).change(function () {
+                                if($("#targetId").val() == ""){
+                                    $("#strategyId").html('<option value="">- เลือก -</option>');
+                                }
+                                else {
+                                    $("#strategyId").html(optionAffirmative("strategy", $("#targetId").val()));
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+
+            $("button.save").unbind().click(function(){
+                affirmative.push({
+                    typeId: $("#typeId").val(),
+                    issueId: $("#issueId").val(),
+                    targetId: $("#targetId").val(),
+                    strategyId: $("#strategyId").val()
+                });
+                getAffirmative();
+                
+            });
+        });
+        
+        $("button.delAffirmative").unbind().click(function(){
+            affirmative.splice($(this).attr("data-id"), 1);
+            $(this).closest('.panel-body').hide();
+            return false;
+        });
+    }
+
+    function getKpiType(input){
+        var html = '';
+        $.each(input, function(key, value){
+            if(!kpi[value["id"]]) kpi[value["id"]] = [];
+            
             html += '<tr style="background-color: #F1F1F1;">'
-                    + '<td colspan="3">'+value+'</td>'
+                    + '<td colspan="3">'+value["name"]+'</td>'
                     + '<td class="text-center">'
-                        + '<button class="btn btn-success addKpi" data-key="'+key+'"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
+                        + '<button class="btn btn-success addKpi" data-key="'+value["id"]+'"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
                     + '</td>'
                 + '</tr>';
             
-            $.each(kpi[key], function(key2, value2){
+            $.each(kpi[value["id"]], function(key2, value2){
                 html += '<tr>'
-                        + '<td>'+value2["kpi"]+'</td>'
+                        + '<td>'+value2["budgetDesc"]+'</td>'
                         + '<td class="text-center">'+value2["unit"]+'</td>'
-                        + '<td class="text-center">'+value2["target"]+'</td>'
+                        + '<td class="text-center">'+value2["goal"]+'</td>'
                         + '<td class="text-center">'
                             + '<div class="btn-group">'
-                                + '<button class="btn btn-warning editKpi" data-key="'+key+'" data-id="'+key2+'"><i class="fa fa-pencil"></i></button>'
-                                + '<button class="btn btn-default delKpi" data-key="'+key+'" data-id="'+key2+'"><i class="fa fa-trash"></i></button>'
+                                + '<button class="btn btn-warning editKpi" data-key="'+value["id"]+'" data-id="'+key2+'"><i class="fa fa-pencil"></i></button>'
+                                + '<button class="btn btn-default delKpi" data-key="'+value["id"]+'" data-id="'+key2+'"><i class="fa fa-trash"></i></button>'
                             + '</div>'
                         +'</td>'
                     + '</tr>';
@@ -930,18 +975,18 @@
             
         $("button.addKpi").unbind().click(function(){
             var key = $(this).attr("data-key");
-            
             $("#kpiModal").modal("show");
-            $("#kpiTitle").html(list[key]);
-            $("#kpi, #unit, #target").val('');
+            $("#kpiTitle").html(input[key-1]["name"]);
+            $("#budgetDesc, #unit, #goal").val('');
 
             $("button.save").unbind().click(function(){
                 kpi[key].push({
-                    kpi: $("#kpi").val(),
+                    kpiTypeId: key,
+                    budgetDesc: $("#budgetDesc").val(),
                     unit: $("#unit").val(),
-                    target: $("#target").val()
+                    goal: $("#goal").val()
                 });
-                getKpiType();
+                getKpiType(input);
             });
         });
         
@@ -950,19 +995,20 @@
             var id = $(this).attr("data-id");
             
             $("#kpiModal").modal("show");
-            $("#kpiTitle").html(list[key]);
+            $("#kpiTitle").html(input[key-1]["name"]);
            
-            $("#kpi").val(kpi[key][id]["kpi"]);
+            $("#budgetDesc").val(kpi[key][id]["budgetDesc"]);
             $("#unit").val(kpi[key][id]["unit"]);
-            $("#target").val(kpi[key][id]["target"]);
+            $("#goal").val(kpi[key][id]["goal"]);
 
             $("button.save").unbind().click(function(){
                 kpi[key][id] = {
-                    kpi: $("#kpi").val(),
+                    kpiTypeId: key,
+                    budgetDesc: $("#budgetDesc").val(),
                     unit: $("#unit").val(),
-                    target: $("#target").val()
+                    goal: $("#goal").val()
                 };
-                getKpiType();
+                getKpiType(input);
             });
         });
         
@@ -994,13 +1040,13 @@
         $("button.addOperating").unbind().click(function(){
             $("#operatingModal").modal("show");
             $("#operatingName, #operatingStart, #operatingEnd").val('');
-            $("#dateStart, #dateEnd").datepicker();
+            $("#operatingStart, #operatingEnd").datepicker();
             
             $("button.save").unbind().click(function(){
                 operating.push({
                     operatingName: $("#operatingName").val(),
                     timeStart: $("#operatingStart").val(),
-                    timeEnd: $("#operatingStart").val()
+                    timeEnd: $("#operatingEnd").val()
                 });
                 getOperating();                
             });
@@ -1019,8 +1065,8 @@
             $("button.save").unbind().click(function(){
                 operating[id] = {
                     operatingName: $("#operatingName").val(),
-                    timeStart: $("#timeStart").val(),
-                    timeEnd: $("#timeEnd").val()
+                    timeStart: $("#operatingStart").val(),
+                    timeEnd: $("#operatingEnd").val()
                 };
                 getOperating();                
             });
@@ -1037,10 +1083,10 @@
         var count = 0;
         $.each(detail, function(key, val){
             html += '<tr>'
-                    + '<td>'+(++count)+'. '+val["list"]+'</td>'
-                    + '<td class="text-center">'+val["unit"]+'</td>'
-                    + '<td class="text-right">'+val["price"]+'</td>'
-                    + '<td class="text-right">'+val["total"]+'</td>'
+                    + '<td>'+(++count)+'. '+val["budgetDesc"]+'</td>'
+                    + '<td class="text-center">'+val["numOfUnit"]+'</td>'
+                    + '<td class="text-right">'+val["pricePerUnit"]+'</td>'
+                    + '<td class="text-right">'+val["totalPrice"]+'</td>'
                     + '<td>'+val["remark"]+'</td>'
                     + '<td class="text-center">'
                         + '<div class="btn-group">'
@@ -1055,15 +1101,15 @@
         
         $("button.addDetail").unbind().click(function(){
             $("#detailModal").modal("show");
-            $("#detailList, #detailUnit, #detailPrice, #detailTotal, #detailRemark").val('');
+            $("#detailDesc, #numOfUnit, #pricePerUnit, #totalPrice, #remark").val('');
             
             $("button.save").unbind().click(function(){
                 detail.push({
-                    list: $("#detailList").val(),
-                    unit: $("#detailUnit").val(),
-                    price: $("#detailPrice").val(),
-                    total: $("#detailTotal").val(),
-                    remark: $("#detailRemark").val()
+                    budgetDesc: $("#detailDesc").val(),
+                    numOfUnit: $("#numOfUnit").val(),
+                    pricePerUnit: $("#pricePerUnit").val(),
+                    totalPrice: $("#totalPrice").val(),
+                    remark: $("#remark").val()
                 });
                 getDetail();                
             });
@@ -1073,19 +1119,19 @@
             var id = $(this).attr("data-id");
             $("#detailModal").modal("show");
             
-            $("#detailList").val(detail[id]["list"]);
-            $("#detailUnit").val(detail[id]["unit"]);
-            $("#detailPrice").val(detail[id]["price"]);
-            $("#detailTotal").val(detail[id]["total"]);
-            $("#detailRemark").val(detail[id]["remark"]);
+            $("#detailDesc").val(detail[id]["budgetDesc"]);
+            $("#numOfUnit").val(detail[id]["numOfUnit"]);
+            $("#pricePerUnit").val(detail[id]["pricePerUnit"]);
+            $("#totalPrice").val(detail[id]["totalPrice"]);
+            $("#remark").val(detail[id]["remark"]);
             
             $("button.save").unbind().click(function(){
                 detail[id] = {
-                    list: $("#detailList").val(),
-                    unit: $("#detailUnit").val(),
-                    price: $("#detailPrice").val(),
-                    total: $("#detailTotal").val(),
-                    remark: $("#detailRemark").val()
+                    budgetDesc: $("#detailDesc").val(),
+                    numOfUnit: $("#numOfUnit").val(),
+                    pricePerUnit: $("#pricePerUnit").val(),
+                    totalPrice: $("#totalPrice").val(),
+                    remark: $("#remark").val()
                 };
                 getDetail();                
             });
@@ -1111,21 +1157,41 @@
     
     function dataObject(){
         var obj = {};
-        $("#form input[type=text], #form textarea, #form select, #form input[type=checkbook]:checked, #form input[type=radio]:checked").each(function(){
-            var fname = $(this).attr("name");
-            var fval = $(this).val();
-            
-            obj[fname] = fval;
+        obj["id"] = id;
+        $("#form input[type=text], #form textarea, #form input[type=radio]:checked").each(function(){
+            if($(this).attr("name").indexOf("intName") == -1){
+                var fname = $(this).attr("name");
+                var fval = $(this).val();
+
+                obj[fname] = fval;
+            }
         });
-        //obj["integration"] = 
-        obj["affirmative"] =;
-        obj["kpi"] = ;
-        obj["operating"] = ;
-        obj["plan"] = ;
+        
+        var integration = [];
+        $("#form input[type=checkbox]:checked").each(function(){
+            var remarkId = $(this).attr("name").replace("intId", "");
+            integration.push({
+                integrationId: remarkId,
+                desc: $("#intName"+remarkId).val()
+            });
+        });
+        
+        var newKpi = [];
+        $.each(kpi, function(key, val){
+            $.each(val, function(key2, val2){
+                newKpi.push(val2);
+            });
+        });
+        obj["integration"] = integration;
+        obj["affirmative"] = affirmative;
+        obj["kpi"] = newKpi;
+        obj["operating"] = operating;
+        obj["detail"] = detail;
         
         var fdata = {};
         fdata["project"] = obj;
         
+        console.log(fdata);
         return fdata;
     }
     

@@ -32,6 +32,9 @@ class BudgetExpenseDetail extends EntityBase {
 
     /** @Column(type="string",length=18, name="TotalPrice") */
     public $totalPrice;
+    
+    /** @Column(type="text", name="Remark") */
+    public $remark;
 
     function getId() {
         return $this->id;
@@ -60,6 +63,10 @@ class BudgetExpenseDetail extends EntityBase {
     function getTotalPrice() {
         return $this->totalPrice;
     }
+    
+    function getRemark() {
+        return $this->remark;
+    }
 
     function setId($id) {
         $this->id = $id;
@@ -87,6 +94,10 @@ class BudgetExpenseDetail extends EntityBase {
 
     function setTotalPrice($totalPrice) {
         $this->totalPrice = $totalPrice;
+    }
+    
+    function setRemark($remark) {
+        $this->remark = $remark;
     }
 
 }
