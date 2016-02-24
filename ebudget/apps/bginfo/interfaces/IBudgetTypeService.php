@@ -57,17 +57,26 @@ interface IBudgetTypeService {
      * @name addBudgetType
      * @uri /addBudgetType
      * @param apps\common\entity\BudgetType pData Description
-     * @description บันทึกข้อมูลประเภทหมวดรายจ่าย
-     * @return apps\common\entity\BudgetType dataList
+     * @description เพิ่มข้อมูลประเภทหมวดรายจ่าย
+     * @return apps\common\entity\BudgetType add
      */
     public function addBudgetType($pData);
-    
+
     /**
      * @name updateBudgetType
      * @uri /updateBudgetType
      * @param apps\common\entity\BudgetType pData Description
      * @description บันทึกข้อมูลประเภทหมวดรายจ่าย
-     * @return apps\common\entity\BudgetType dataList
+     * @return apps\common\entity\BudgetType update
      */
     public function updateBudgetType($pData);
+
+    /**
+     * @name deleteBudgetType
+     * @uri /deleteBudgetType
+     * @param apps\common\entity\BudgetType pData Description
+     * @description ลบข้อมูลประเภทหมวดรายจ่าย
+     * @return apps\common\entity\BudgetType delete
+     */
+    public function deleteBudgetType($pData);
 }

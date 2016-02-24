@@ -18,9 +18,15 @@
     </section>
 
     <hr class="tall dashboard">
+
     <div class="container">
         <div class="row">
             <div id="panelBudget" class="col-md-12">
+                <div class="row">
+                    <div class="text-right" style="margin-bottom: 10px;">
+                        <button class="btn btn-success addmaster"><i class="fa fa-plus-circle"></i> เพิ่มหมวดรายจ่ายหลัก</button>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="tabs">
@@ -44,12 +50,7 @@
             <div class="modal-header"> 
                 <button data-dismiss="modal" class="close" type="button"></button>  
                 <h4 class="modal-title">
-                    <i ng-show="action == 'add'" class="fa fa-plus-circle"></i>
-                    <span ng-show="action == 'add'">เพิ่ม</span>
-                    <i ng-show="action == 'edit'" class="fa fa-pencil"></i>
-                    <span ng-show="action == 'edit'">แก้ไข</span>
-                    <span>ประเภทหมวดรายจ่าย</span>
-
+                    <span>เพิ่ม/แก้ไข ประเภทหมวดรายจ่าย</span>
                 </h4>
             </div>
             <div class="modal-body">
@@ -68,6 +69,7 @@
                     </div>
                 </div>
             </div>
+            <div id="loading" class="col-md-12 text-center" style="margin: 20px;"></div>
             <div class="modal-footer">  
                 <button data-dismiss="modal" class="btn btn-default cancel" type="button">ยกเลิก</button> 
                 <!--<button ng-click="saveData()" class="btn btn-success save" type="button" >บันทึก</button>-->
@@ -77,28 +79,56 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    $(function () {
-        listAllBudget("G");
-    });
+<div id="deleteModal" aria-labelledby="deleteLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"><!-- delete bidder info form -->
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">ยืนยันการลบ : หมวดรายจ่าย</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table mb-none">
+                        <tbody>
+                            <tr class="no-border">
+                                <td class="col-md-4 text-right text-bold">หมวดรายจ่าย :</td>
+                                <td class="col-md-8 text-left"><div id="budgetTypeDel"></div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-    $('.tabs').bind('click', function (e) {
-        var target = $(e.target).attr("href");
-        if (target == "#tabG") {
+            <div id="loadingDel" class="col-md-12 text-center" style="margin: 20px;"></div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                <button type="button" id="confirmDelete" class="btn btn-danger"><i class="fa fa-trash"></i> ยืนยันการลบ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+            $(function () {
             listAllBudget("G");
+            });
+            $('.tabs').bind('click', function (e) {
+    var target = $(e.target).attr("href");
+            if (target == "#tabG") {
+    listAllBudget("G");
             $("#tabK").removeClass('active');
             $(target).addClass('active');
-        } else if (target == "#tabK") {
-            listAllBudget("K");
+    } else if (target == "#tabK") {
+    listAllBudget("K");
             $("#tabG").removeClass('active');
             $(target).addClass('active');
-        }
+    }
     });
-
-    function listAllBudget(bgtype) {
-        var contentArr = {};
-        var datas = callAjax("{{_context_path}}/api/bginfo/BudgetType/listAllBudget", "post", {type: bgtype}, "json");
-        if (typeof datas["lists"] !== "undefined" && datas["lists"] !== null && datas["lists"] !== false) {
+            function listAllBudget(bgtype) {
+            var contentArr = {};
+                    var datas = callAjax("{{_context_path}}/api/bginfo/BudgetType/listAllBudget", "post", {type: bgtype}, "json");
+                    if (typeof datas["lists"] !== "undefined" && datas["lists"] !== null && datas["lists"] !== false) {
 
             var menu = '<li class="active" id="tabG">'
                     + '<a href="#tabG" data-toggle="tab"><i class="fa fa-star"></i> เงินงบประมาณแผ่นดิน</a>'
@@ -106,7 +136,7 @@
                     + '<li id="tabK">'
                     + '<a href="#tabK" data-toggle="tab"><i class="fa fa-star"></i> เงินรายได้</a>'
                     + '</li>';
-            var content = '<div id="tab' + bgtype + '" class="tab-pane active">'
+                    var content = '<div id="tab' + bgtype + '" class="tab-pane active">'
                     + '<table id="tableall" class="table table-hover table-bordered">'
                     + '<thead>'
                     + '<tr>'
@@ -122,126 +152,245 @@
                     + '</tbody>'
                     + '</table>'
                     + '</div>';
-            $.each(datas["lists"], function (key0, value0) {
-                contentArr[key0] += '<tr data-tt-id="type' + value0["BudgetTypeId"] + '" data-seq="' + key0 + '">'
-                        + '<td class="text-center"></td>'
-                        + '<td>'
-                        + '<span class="text-bold" style="text-decoration: underline;">' + value0["BudgetTypeId"] + ' : ' + value0["BudgetTypeName"] + '</span>'
-                        + '</td>'
-                        + '<td class="text-center">'
-                        + '<button class="btn btn-sm btn-success add" data-pid="' + '0' + '" data-pname="typeId"><i class="fa fa-plus-circle"></i> เพิ่ม</button>&nbsp;&nbsp;'
-                        + '<button class="btn btn-sm btn-warning edit" data-id="' + value0["BudgetTypeId"] + '" data-name="' + value0["BudgetTypeName"] + '"><i class="fa fa-pencil"></i> แก้ไข</button></td>'
-                        + '</tr>';
-                $.each(value0["lv1"], function (key1, value1) {
-                    contentArr[key0] += '<tr data-tt-id="type' + value1["BudgetTypeId"] + '" data-tt-parent-id="type' + value0["BudgetTypeId"] + '"  data-seq="' + value1["BudgetTypeId"] + '" >'
+                    $.each(datas["lists"], function (key0, value0) {
+                    contentArr[key0] += '<tr data-tt-id="type' + value0["BudgetTypeId"] + '" data-seq="' + key0 + '">'
                             + '<td class="text-center"></td>'
                             + '<td>'
-                            + '<span class="text-bold" style="text-decoration: none;">' + value1["BudgetTypeId"] + ' : ' + value1["BudgetTypeName"] + '</span>'
+                            + '<span class="text-bold" style="text-decoration: underline double;">' + value0["BudgetTypeId"] + ' : ' + value0["BudgetTypeName"] + '</span>'
                             + '</td>'
                             + '<td class="text-center">'
                             + '<button class="btn btn-sm btn-success add" data-pid="' + value0["BudgetTypeId"] + '" data-pname="typeId"><i class="fa fa-plus-circle"></i> เพิ่ม</button>&nbsp;&nbsp;'
-                            + '<button class="btn btn-sm btn-warning edit" data-id="' + value1["BudgetTypeId"] + '" data-name="' + value1["BudgetTypeName"] + '"><i class="fa fa-pencil"></i> แก้ไข</button></td>'
+                            + '<button class="btn btn-sm btn-warning edit" data-id="' + value0["BudgetTypeId"] + '" data-name="' + value0["BudgetTypeName"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>&nbsp;&nbsp;'
+                            + '<button class="btn btn-sm btn-default delete" data-id="' + value0["BudgetTypeId"] + '" data-name="' + value0["BudgetTypeName"] + '"><i class="fa fa-trash"></i> ลบ</button></td>'
                             + '</tr>';
-                    $.each(value1["lv2"], function (key2, value2) {
-                        if (typeof (value1["lv2"]) !== "undefined" && value1["lv2"] !== null) {
-                            contentArr[key0] += '<tr data-tt-id="type' + value2["BudgetTypeId"] + '" data-tt-parent-id="type' + value1["BudgetTypeId"] + '"  data-seq="' + value2["BudgetTypeId"] + '" >'
+                            $.each(value0["lv1"], function (key1, value1) {
+                            contentArr[key0] += '<tr data-tt-id="type' + value1["BudgetTypeId"] + '" data-tt-parent-id="type' + value0["BudgetTypeId"] + '"  data-seq="' + value1["BudgetTypeId"] + '" >'
                                     + '<td class="text-center"></td>'
                                     + '<td>'
-                                    + '<span class="text-bold" style="text-decoration: underline;">' + value2["BudgetTypeId"] + ' : ' + value2["BudgetTypeName"] + '</span>'
+                                    + '<span class="text-bold" style="text-decoration: underline solid;">' + value1["BudgetTypeId"] + ' : ' + value1["BudgetTypeName"] + '</span>'
                                     + '</td>'
                                     + '<td class="text-center">'
-                                    + '<button class="btn btn-sm btn-success add" data-pid="' + value1["BudgetTypeId"] + '" data-pname="typeId"><i class="fa fa-plus-circle"></i> เพิ่ม</button></td>&nbsp;&nbsp;'
-                                    + '<button class="btn btn-sm btn-warning edit" data-id="' + value2["BudgetTypeId"] + '" data-name="' + value2["BudgetTypeName"] + '"><i class="fa fa-pencil"></i> แก้ไข</button></td>'
+                                    + '<button class="btn btn-sm btn-success add" data-pid="' + value1["BudgetTypeId"] + '" data-pname="typeId"><i class="fa fa-plus-circle"></i> เพิ่ม</button>&nbsp;&nbsp;'
+                                    + '<button class="btn btn-sm btn-warning edit" data-id="' + value1["BudgetTypeId"] + '" data-name="' + value1["BudgetTypeName"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>&nbsp;&nbsp;'
+                                    + '<button class="btn btn-sm btn-default delete" data-id="' + value1["BudgetTypeId"] + '" data-name="' + value1["BudgetTypeName"] + '"><i class="fa fa-trash"></i> ลบ</button></td>'
                                     + '</tr>';
-                        }
+                                    $.each(value1["lv2"], function (key2, value2) {
+                                    if (typeof (value1["lv2"]) !== "undefined" && value1["lv2"] !== null) {
+                                    contentArr[key0] += '<tr data-tt-id="type' + value2["BudgetTypeId"] + '" data-tt-parent-id="type' + value1["BudgetTypeId"] + '"  data-seq="' + value2["BudgetTypeId"] + '" >'
+                                            + '<td class="text-center"></td>'
+                                            + '<td>'
+                                            + '<span class="text-bold" style="text-decoration: underline dotted;">' + value2["BudgetTypeId"] + ' : ' + value2["BudgetTypeName"] + '</span>'
+                                            + '</td>'
+                                            + '<td class="text-center">'
+                                            + '<button class="btn btn-sm btn-success add" data-pid="' + value2["BudgetTypeId"] + '" data-pname="typeId"><i class="fa fa-plus-circle"></i> เพิ่ม</button>&nbsp;&nbsp;'
+                                            + '<button class="btn btn-sm btn-warning edit" data-id="' + value2["BudgetTypeId"] + '" data-name="' + value2["BudgetTypeName"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>&nbsp;&nbsp;'
+                                            + '<button class="btn btn-sm btn-default delete" data-id="' + value2["BudgetTypeId"] + '" data-name="' + value2["BudgetTypeName"] + '"><i class="fa fa-trash"></i> ลบ</button></td>'
+                                            + '</tr>';
+                                    }
 
-                        $.each(value2["lv3"], function (key3, value3) {
-                            if (typeof (value2["lv3"]) !== "undefined" && value2["lv3"] !== null) {
-                                contentArr[key0] += '<tr data-tt-id="type' + value3["BudgetTypeId"] + '" data-tt-parent-id="type' + value2["BudgetTypeId"] + '"  data-seq="' + value3["BudgetTypeId"] + '" >'
-                                        + '<td class="text-center"></td>'
-                                        + '<td>'
-                                        + '<span class="text-bold" style="text-decoration: none;">' + value3["BudgetTypeId"] + ' : ' + value3["BudgetTypeName"] + '</span>'
-                                        + '</td>'
-                                        + '<td class="text-center">'
-                                        + '<button class="btn btn-sm btn-warning edit" data-id="' + value3["BudgetTypeId"] + '" data-name="' + value3["BudgetTypeName"] + '"><i class="fa fa-pencil"></i> แก้ไข</button></td>'
-                                        + '</tr>';
-                            }
-                        });
+                                    $.each(value2["lv3"], function (key3, value3) {
+                                    if (typeof (value2["lv3"]) !== "undefined" && value2["lv3"] !== null) {
+                                    contentArr[key0] += '<tr data-tt-id="type' + value3["BudgetTypeId"] + '" data-tt-parent-id="type' + value2["BudgetTypeId"] + '"  data-seq="' + value3["BudgetTypeId"] + '" >'
+                                            + '<td class="text-center"></td>'
+                                            + '<td>'
+                                            + '<span class="text-bold" style="text-decoration: none;">' + value3["BudgetTypeId"] + ' : ' + value3["BudgetTypeName"] + '</span>'
+                                            + '</td>'
+                                            + '<td class="text-center">'
+                                            + '<button class="btn btn-sm btn-warning edit" data-id="' + value3["BudgetTypeId"] + '" data-name="' + value3["BudgetTypeName"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>&nbsp;&nbsp;'
+                                            + '<button class="btn btn-sm btn-default delete" data-id="' + value3["BudgetTypeId"] + '" data-name="' + value3["BudgetTypeName"] + '"><i class="fa fa-trash"></i> ลบ</button></td>'
+                                            + '</tr>';
+                                    }
+                                    });
+                                    });
+                            });
                     });
-                });
-            });
-            $("#tabMenu").html(menu);
-            $("#tabContent").html(content);
-            var contentAll = '';
-            $.each(contentArr, function (key, value) {
-                contentAll += value
-                $("#table" + key + " tbody").html(value);
-                $("#table" + key).treetable({
+                    $("#tabMenu").html(menu);
+                    $("#tabContent").html(content);
+                    var contentAll = '';
+                    $.each(contentArr, function (key, value) {
+                    contentAll += value
+                            $("#table" + key + " tbody").html(value);
+                            $("#table" + key).treetable({
                     expandable: true,
+                            initialState: "collapsed"
+                    });
+                    });
+                    $("#tableall tbody").html(contentAll);
+                    $("#tableall").treetable({
+            expandable: true,
                     initialState: "collapsed"
-                });
             });
-            $("#tableall tbody").html(contentAll);
-            $("#tableall").treetable({
-                expandable: true,
-                initialState: "collapsed"
-            });
-        }
+            }
 
-        $("#tableall").off("click", "button.add").on("click", "button.add", function () {
-            var pid = $(this).attr("data-pid");
-            var pname = $(this).attr("data-pname");
-            $("#textId").val("");
-            $("#textName").val("");
-            $("#modal").modal("show");
-            $("button.save").unbind().click(function () {
-                var isValid = true;
-                $('#form input[required]').each(function () {
-                    if ($(this).val() == "" && !$(this).prop("disabled"))
-                        isValid = false;
-                });
-                if (isValid) {
-                    var pData = {};
+            $("button.addmaster").on("click", function () {
+            var pid = 0;
+                    $("#textId").val("");
+                    $("#textName").val("");
+                    $("#loading").val("");
+                    $("#modal").modal("show");
+                    $("button.save").unbind().click(function () {
+            var isValid = true;
+                    $('#form input[required]').each(function () {
+            if ($(this).val() == "" && !$(this).prop("disabled"))
+                    isValid = false;
+            });
+                    if (isValid) {
+            var pData = {};
                     pData.typeName = $("#textName").val();
                     pData.id = $("#textId").val();
                     pData.masterId = pid;
                     pData.typeCode = bgtype;
+                    var dataJSON = JSON.stringify({pData: pData});
+                    var dataJSONEN = encodeURIComponent(dataJSON);
+                    addBudgetType(dataJSONEN, bgtype);
+            }
+            });
+            });
+                    $("#tableall").off("click", "button.add").on("click", "button.add", function () {
+            var pid = $(this).attr("data-pid");
+                    $("#textId").val("");
+                    $("#textName").val("");
+                    $("#loading").val("");
+                    $("#modal").modal("show");
+                    $("button.save").unbind().click(function () {
+            var isValid = true;
+                    $('#form input[required]').each(function () {
+            if ($(this).val() == "" && !$(this).prop("disabled"))
+                    isValid = false;
+            });
+                    if (isValid) {
+            var pData = {};
+                    pData.typeName = $("#textName").val();
+                    pData.id = $("#textId").val();
+                    pData.masterId = pid;
+                    pData.typeCode = bgtype;
+                    var dataJSON = JSON.stringify({pData: pData});
+                    var dataJSONEN = encodeURIComponent(dataJSON);
+                    addBudgetType(dataJSONEN, bgtype);
+            }
+            });
+            });
+                    $("#tableall").off("click", "button.edit").on("click", "button.edit", function () {
+            var id = $(this).attr("data-id");
+                    var name = $(this).attr("data-name");
+                    $("#textId").val(id);
+                    $("#textName").val(name);
+                    $("#loading").val("");
+                    $("#modal").modal("show");
+                    $("button.save").unbind().click(function () {
+            var isValid = true;
+                    $('#form input[required]').each(function () {
+            if ($(this).val() == "" && !$(this).prop("disabled"))
+                    isValid = false;
+            });
+                    if (isValid) {
+            var pData = {};
+                    pData.typeName = $("#textName").val();
+                    pData.id = $("#textId").val();
+                    //pData.masterId = pid;
+                    //pData.typeCode = bgtype;
 
                     var dataJSON = JSON.stringify({pData: pData});
                     var dataJSONEN = encodeURIComponent(dataJSON);
-                    addBudgetType(dataJSONEN);
-                }
-            });
-        });
-        $("#tableall").off("click", "button.edit").on("click", "button.edit", function () {
-            var id = $(this).attr("data-id");
-            var name = $(this).attr("data-name");
-            $("#textId").val(id);
-            $("#textName").val(name);
-            $("#modal").modal("show");
-        });
-    }
-
-    function addBudgetType(dataJSONEN) {
-        $("#loading").html("กำลังบันทึกข้อมูล...");
-        setTimeout(function () {
-            var datas = callAjax("{{_context_path}}/api/bginfo/BudgetType/addBudgetType", "post", dataJSONEN, "json");
-            if (typeof datas !== 'undefined' && datas !== null) {
-                if (datas["update"] == true) {
-                    $("#loading").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
-                    setTimeout(function () {
-                        $("#modal").modal("hide");
-                        listsUnit();
-                    }, 500);
-                }
-                else {
-                    $("#loading").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้<br>' + datas["update"] + '</span>');
-                }
+                    updateBudgetType(dataJSONEN, bgtype);
             }
-        }, 0);
+            });
+            });
+                    $("#tableall").off("click", "button.delete").on("click", "button.delete", function () {
+            var id = $(this).attr("data-id");
+                    var name = $(this).attr("data-name");
+                    $("#loadingDel").val("");
+                    $("#deleteModal").modal("show");
+                    $("#budgetTypeDel").html(id + " " + name);
+                    $("#confirmDelete").click(function () {
+            var pData = {};
+                    pData.id = id;
+                    pData.typeName = name;
+                    var dataJSON = JSON.stringify({pData: pData});
+                    var dataJSONEN = encodeURIComponent(dataJSON);
+                    deleteBudgetType(dataJSONEN, bgtype);
+            });
+            });
+            }
+
+    function addBudgetType(dataJSONEN, bgtype) {
+    $("#loading").html("กำลังบันทึกข้อมูล...");
+            setTimeout(function () {
+            var datas = callAjax("{{_context_path}}/api/bginfo/BudgetType/addBudgetType", "post", dataJSONEN, "json");
+                    if (typeof datas !== 'undefined' && datas !== null) {
+            if (datas["add"] == true) {
+            $("#loading").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
+                    setTimeout(function () {
+                    $("#modal").modal("hide");
+                            listAllBudget(bgtype);
+                            if (bgtype == "G") {
+                    $("#tabK").removeClass('active');
+                            $("#tabG").addClass('active');
+                    } else {
+                    $("#tabG").removeClass('active');
+                            $("#tabK").addClass('active');
+                    }
+
+                    }, 500);
+            }
+            else {
+            $("#loading").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้ <br> กรุณาตรวจสอบรหัสหมวดรายจ่ายต้องไม่เคยมีอยู่ในระบบ' + '</span>');
+            }
+            }
+            }, 0);
     }
 
+    function updateBudgetType(dataJSONEN, bgtype) {
+    $("#loading").html("กำลังบันทึกข้อมูล...");
+            setTimeout(function () {
+            var datas = callAjax("{{_context_path}}/api/bginfo/BudgetType/updateBudgetType", "post", dataJSONEN, "json");
+                    if (typeof datas !== 'undefined' && datas !== null) {
+            if (datas["update"] == true) {
+            $("#loading").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
+                    setTimeout(function () {
+                    $("#modal").modal("hide");
+                            listAllBudget(bgtype);
+                            if (bgtype == "G") {
+                    $("#tabK").removeClass('active');
+                            $("#tabG").addClass('active');
+                    } else {
+                    $("#tabG").removeClass('active');
+                            $("#tabK").addClass('active');
+                    }
+                    }, 500);
+            }
+            else {
+            $("#loading").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้ <br> กรุณาตรวจสอบรหัสหมวดรายจ่ายต้องไม่เคยมีอยู่ในระบบ' + '</span>');
+            }
+            }
+            }, 0);
+    }
 
+    function deleteBudgetType(dataJSONEN, bgtype) {
+    $("#loadingDel").html("กำลังลบข้อมูล...");
+            setTimeout(function () {
+            var datas = callAjax("{{_context_path}}/api/bginfo/BudgetType/deleteBudgetType", "post", dataJSONEN, "json");
+                    if (typeof datas !== 'undefined' && datas !== null) {
+            if (datas["delete"] == true) {
+            $("#loadingDel").html('<span class="text-success">ลบข้อมูลเรียบร้อย</span>');
+                    setTimeout(function () {
+                    $("#deleteModal").modal("hide");
+                            listAllBudget(bgtype);
+                            if (bgtype == "G") {
+                    $("#tabK").removeClass('active');
+                            $("#tabG").addClass('active');
+                    } else {
+                    $("#tabG").removeClass('active');
+                            $("#tabK").addClass('active');
+                    }
+                    }, 500);
+            }
+            else {
+            $("#loadingDel").html('<span class="text-danger">ไม่สามารถลบข้อมูลได้ เนื่องจากมีการอ้างอิงข้อมูลด้วยหมวดรายจ่ายนี้' + '</span>');
+            }
+            }
+            }, 0);
+    }
 
 </script>
 

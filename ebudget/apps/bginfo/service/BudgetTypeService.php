@@ -54,6 +54,8 @@ class BudgetTypeService extends CServiceBase implements IBudgetTypeService {
         return $this->datacontext->removeObject($query);
     }
 
+    /* new budgettype */
+
     public function listAllBudget($type) {
         $list = array();
         $year = $this->getPeriod()->year;
@@ -108,8 +110,25 @@ class BudgetTypeService extends CServiceBase implements IBudgetTypeService {
     }
 
     public function updateBudgetType($pData) {
-        $pData["bgPeriodId"] = $this->getPeriod()->year;
-        return $this->datacontext->updateObject($pData);
+        $bg = new BudgetType();
+        $bg->setBgPeriodId($this->getPeriod()->year);
+        $bg->setId($pData->id);
+        $data = $this->datacontext->getObject($bg);
+
+        $bg->setTypeName($bg->typeName);
+
+        return $this->datacontext->updateObject($bg);
+    }
+
+    public function deleteBudgetType($pData) {
+        $bg = new BudgetType();
+        $bg->setBgPeriodId($this->getPeriod()->year);
+        $bg->setId($pData->id);
+        $data = $this->datacontext->getObject($bg);
+
+        $bg->setTypeName($bg->typeName);
+
+        return $this->datacontext->removeObject($bg);
     }
 
 }
