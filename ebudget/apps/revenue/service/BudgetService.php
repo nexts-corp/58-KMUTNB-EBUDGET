@@ -74,6 +74,7 @@ class BudgetService extends CServiceBase implements IBudgetService {
         foreach ($data as $key => $value) {
             $result[$key]["id"] = $value->id;
             $result[$key]["name"] = $value->fundgroupName;
+            $result[$key]["master"] = $value->masterId;
         }
         return $result;
     }

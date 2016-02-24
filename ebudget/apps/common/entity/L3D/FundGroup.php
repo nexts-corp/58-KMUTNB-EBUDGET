@@ -1,6 +1,7 @@
 <?php
 
 namespace apps\common\entity\L3D;
+
 use apps\common\entity\EntityBase;
 
 /**
@@ -19,12 +20,19 @@ class FundGroup extends EntityBase {
     /** @Column(type="string",length=255, name="FundGroupName") */
     public $fundgroupName;
 
+    /** @Column(type="integer", name="MasterId") */
+    public $masterId;
+
     function getId() {
         return $this->id;
     }
 
     function getFundgroupName() {
         return $this->fundgroupName;
+    }
+
+    function getMasterId() {
+        return $this->masterId;
     }
 
     function setId($id) {
@@ -34,4 +42,9 @@ class FundGroup extends EntityBase {
     function setFundgroupName($fundgroupName) {
         $this->fundgroupName = $fundgroupName;
     }
+
+    function setMasterId($masterId) {
+        $this->masterId = $masterId;
+    }
+
 }
