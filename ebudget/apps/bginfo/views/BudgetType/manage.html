@@ -38,10 +38,50 @@
     </div>
 </div>
 
+<div id="modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header"> 
+                <button data-dismiss="modal" class="close" type="button"></button>  
+                <h4 class="modal-title">
+                    <i ng-show="action == 'add'" class="fa fa-plus-circle"></i>
+                    <span ng-show="action == 'add'">เพิ่ม</span>
+                    <i ng-show="action == 'edit'" class="fa fa-pencil"></i>
+                    <span ng-show="action == 'edit'">แก้ไข</span>
+                    <span>ประเภทหมวดรายจ่าย</span>
+
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">   
+                        <div class="form-group"> 
+                            <label>รหัสหมวดรายจ่าย</label>
+                            <input ng-model="textId" id="textId" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-8">   
+                        <div class="form-group">
+                            <label>ชื่อหมวดรายจ่าย</label>
+                            <input ng-model="textName" id="textName" class="form-control">
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">  
+                <button data-dismiss="modal" class="btn btn-default cancel" type="button">ยกเลิก</button> 
+                <!--<button ng-click="saveData()" class="btn btn-success save" type="button" >บันทึก</button>-->
+                <button class="btn btn-success save" type="button" >บันทึก</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
-            $(function () {
-                listAllBudget("G");
-            });
+    $(function () {
+        listAllBudget("G");
+    });
+
     $('.tabs').bind('click', function (e) {
         var target = $(e.target).attr("href");
         if (target == "#tabG") {
@@ -54,6 +94,7 @@
             $(target).addClass('active');
         }
     });
+
     function listAllBudget(bgtype) {
         var contentArr = {};
         var datas = callAjax("{{_context_path}}/api/bginfo/BudgetType/listAllBudget", "post", {type: bgtype}, "json");
@@ -70,8 +111,8 @@
                     + '<thead>'
                     + '<tr>'
                     + '<th class="text-center col-md-1" style="vertical-align: middle;">ลำดับ</th>'
-                    + '<th class="text-center col-md-8" style="vertical-align: middle;">หมวดรายจ่าย</th>'
-                    + '<th class="text-center col-md-3" style="vertical-align: middle;">จัดการ</th>'
+                    + '<th class="text-center col-md-7" style="vertical-align: middle;">หมวดรายจ่าย</th>'
+                    + '<th class="text-center col-md-4" style="vertical-align: middle;">จัดการ</th>'
                     + '</tr>'
                     + '</thead>'
                     + '<tbody>'
@@ -95,7 +136,7 @@
                     contentArr[key0] += '<tr data-tt-id="type' + value1["BudgetTypeId"] + '" data-tt-parent-id="type' + value0["BudgetTypeId"] + '"  data-seq="' + value1["BudgetTypeId"] + '" >'
                             + '<td class="text-center"></td>'
                             + '<td>'
-                            + '<span class="text-bold" style="text-decoration: underline;">' + value1["BudgetTypeId"] + ' : ' + value1["BudgetTypeName"] + '</span>'
+                            + '<span class="text-bold" style="text-decoration: none;">' + value1["BudgetTypeId"] + ' : ' + value1["BudgetTypeName"] + '</span>'
                             + '</td>'
                             + '<td class="text-center">'
                             + '<button class="btn btn-sm btn-success add" data-pid="' + value0["BudgetTypeId"] + '" data-pname="typeId"><i class="fa fa-plus-circle"></i> เพิ่ม</button>&nbsp;&nbsp;'
@@ -119,7 +160,7 @@
                                 contentArr[key0] += '<tr data-tt-id="type' + value3["BudgetTypeId"] + '" data-tt-parent-id="type' + value2["BudgetTypeId"] + '"  data-seq="' + value3["BudgetTypeId"] + '" >'
                                         + '<td class="text-center"></td>'
                                         + '<td>'
-                                        + '<span class="text-bold" style="text-decoration: underline;">' + value3["BudgetTypeId"] + ' : ' + value3["BudgetTypeName"] + '</span>'
+                                        + '<span class="text-bold" style="text-decoration: none;">' + value3["BudgetTypeId"] + ' : ' + value3["BudgetTypeName"] + '</span>'
                                         + '</td>'
                                         + '<td class="text-center">'
                                         + '<button class="btn btn-sm btn-warning edit" data-id="' + value3["BudgetTypeId"] + '" data-name="' + value3["BudgetTypeName"] + '"><i class="fa fa-pencil"></i> แก้ไข</button></td>'
@@ -164,7 +205,8 @@
                     pData.typeName = $("#textName").val();
                     pData.id = $("#textId").val();
                     pData.masterId = pid;
-                    
+                    pData.typeCode = bgtype;
+
                     var dataJSON = JSON.stringify({pData: pData});
                     var dataJSONEN = encodeURIComponent(dataJSON);
                     addBudgetType(dataJSONEN);
@@ -189,7 +231,7 @@
                     $("#loading").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
                     setTimeout(function () {
                         $("#modal").modal("hide");
-                                listsUnit();
+                        listsUnit();
                     }, 500);
                 }
                 else {
@@ -203,7 +245,7 @@
 
 </script>
 
-
+<!--
 <div ng-app="EduDevPlan" ng-controller="mainController" data-ng-init="init()" style="display:none;">
     <div role="main" class="main">
         <section class="page-top none-margin">
@@ -223,7 +265,7 @@
             </div>
         </section>
         <hr class="tall dashboard">
-        <div class="sort-source-wrapper"><!-- button action on header -->
+        <div class="sort-source-wrapper">
             <div class="container">
                 <ul data-option-key="filter" data-sort-id="portfolio" class="nav nav-pills sort-source menu-top pull-right">
                     <li class="active">
@@ -249,7 +291,7 @@
         <br>
         <div class="row">
             <div id="formHome" class="col-md-12">
-                <div id="bidderTable" class="col-md-12"><!-- table shown bidder information list -->
+                <div id="bidderTable" class="col-md-12">
 
 
                     <table class="table table-bordered table-condensed mb-none">
@@ -294,7 +336,7 @@
 
 
 
-    </div><!--  container  -->
+    </div>
 
 
     <div id="modal" class="modal fade" role="dialog">
@@ -329,16 +371,16 @@
                 </div>
                 <div class="modal-footer">  
                     <button data-dismiss="modal" class="btn btn-default cancel" type="button">ยกเลิก</button> 
-                    <!--<button ng-click="saveData()" class="btn btn-success save" type="button" >บันทึก</button>-->
-                    <button class="btn btn-success save" type="button" >บันทึก</button>
+                    <button ng-click="saveData()" class="btn btn-success save" type="button" >บันทึก</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
+-->
 
 
 
 {{> footer}}
-<script src="{{_context_path}}/apps/bginfo/views/BudgetType/js/manage.js"></script>
+
+<!--<script src="{{_context_path}}/apps/bginfo/views/BudgetType/js/manage.js"></script>-->
