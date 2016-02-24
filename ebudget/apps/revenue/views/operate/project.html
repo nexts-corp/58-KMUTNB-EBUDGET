@@ -78,12 +78,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-12" style="margin: 5px 0;">
+                                    <!--<div class="col-md-12" style="margin: 5px 0;">
                                         <label class="col-md-2 control-label text-right">ภาควิชา/ศูนย์/ฝ่าย/กอง</label>
                                         <div class="col-md-6">
-                                            <input type="text" id="deptName" name="deptName" class="form-control input-sm" readonly="readonly">
+                                            <select id="deptId" name="deptId" class="form-control input-sm"></select>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <div class="col-md-12" style="margin: 5px 0;">
                                         <label class="col-md-2 control-label text-right">ผู้รับผิดชอบ</label>
                                         <div class="col-md-6">
@@ -138,7 +138,7 @@
                                     </div>
 
                                     <div class="col-md-12">
-                                        <textarea id="principle" name="principle" class="form-control" rows="5"></textarea>
+                                        <textarea id="rationale" name="rationale" class="form-control" rows="5"></textarea>
                                     </div>
                                 </div>
 
@@ -158,7 +158,7 @@
                                     </div>
 
                                     <div class="col-md-12">
-                                        <textarea id="benefit" name="benefit" class="form-control" rows="5"></textarea>
+                                        <textarea id="benefits" name="benefits" class="form-control" rows="5"></textarea>
                                     </div>
                                 </div>
 
@@ -194,7 +194,7 @@
                                     </div>
 
                                     <div class="col-md-12">
-                                        <textarea id="targetGroup" name="targetGroup" class="form-control" rows="5"></textarea>
+                                        <textarea id="target" name="target" class="form-control" rows="5"></textarea>
                                     </div>
                                 </div>
 
@@ -208,9 +208,9 @@
 
                                     <div class="col-md-12">
                                         <div class="col-md-12 text-right" style="margin-bottom: 10px;">
-                                            <button class="btn btn-success addDuration"><i class="fa fa-plus-circle"></i> เพิ่ม</button>
+                                            <button class="btn btn-success addOperation"><i class="fa fa-plus-circle"></i> เพิ่ม</button>
                                         </div>
-                                        <table id="tableDuration" class="table table-bordered">
+                                        <table id="tableOperating" class="table table-bordered">
                                             <thead>
                                                 <tr>
                                                     <th class="col-md-6 text-center">ขั้นตอนการดำเนินการ/รายการกิจกรรม</th>
@@ -237,11 +237,11 @@
                                         <div style="margin: 5px 0;" class="col-md-12">
                                             <label class="col-md-2 control-label text-right">วันที่เริ่มต้น</label>
                                             <div class="col-md-3">
-                                                <input type="text" id="projectStart" name="projectStart" class="form-control input-sm">
+                                                <input type="text" id="timeStart" name="projectStart" class="form-control input-sm">
                                             </div>
                                             <label class="col-md-2 control-label text-right">วันที่สิ้นสุด</label>
                                             <div class="col-md-3">
-                                                <input type="text" id="projectEnd" name="projectEnd" class="form-control input-sm">
+                                                <input type="text" id="timeEnd" name="projectEnd" class="form-control input-sm">
                                             </div>
                                         </div>
                                     </div>
@@ -257,11 +257,11 @@
                                     <div class="col-md-12" style="margin: 5px 0;">
                                         <label class="col-md-2 control-label text-right">ตัวเลข</label>
                                         <div class="col-md-3">
-                                            <input type="text" id="amountNum" name="amountNum" class="form-control input-sm">
+                                            <input type="text" id="budgetEstAmount" name="amountNum" class="form-control input-sm">
                                         </div>
                                         <label class="col-md-1 control-label text-right">ตัวอักษร</label>
                                         <div class="col-md-6">
-                                            <input type="text" id="amountWord" name="amountWord" class="form-control input-sm">
+                                            <input type="text" id="budgetEstText" name="amountWord" class="form-control input-sm">
                                         </div>
                                     </div>
                                     <div class="col-md-12" style="margin: 5px 0;">
@@ -292,7 +292,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <!--<div class="form-group">
                                     <div class="col-md-12">
                                         <h5>14. งบประมาณและแผนการใช้จ่ายงบประมาณ</h5>
                                     </div>
@@ -321,11 +321,11 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+                                </div>-->
 
                                 <div class="form-group">
                                     <div class="col-md-12">
-                                        <h5>15. รายละเอียดการใช้งบประมาณ</h5>
+                                        <h5>14. รายละเอียดการใช้งบประมาณ</h5>
                                     </div>
 
                                     <div class="col-md-12">
@@ -459,7 +459,7 @@
             </div>
         </div><!-- end form -->
         
-        <div id="durationModal" aria-labelledby="formLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"><!-- add strategy plan form -->
+        <div id="operatingModal" aria-labelledby="formLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"><!-- add strategy plan form -->
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -470,21 +470,21 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label text-right">ขั้นตอนการดำเนินการ/รายการกิจกรรม</label>
                             <div class="col-md-8">
-                                <input id="duration" name="duration" type="text" class="form-control input-sm">
+                                <input id="duration" name="operatingName" type="text" class="form-control input-sm">
                             </div>
                         </div>
                             
                         <div class="form-group">
                             <label class="col-md-4 control-label text-right">วันที่เริ่มต้น</label>
                             <div class="col-md-8">
-                                <input id="dateStart" name="dateStart" type="text" class="form-control input-sm">
+                                <input id="dateStart" name="operatingStart" type="text" class="form-control input-sm">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-md-4 control-label text-right">วันที่สิ้นสุด</label>
                             <div class="col-md-8">
-                                <input id="dateEnd" name="dateEnd" type="text" class="form-control input-sm">
+                                <input id="dateEnd" name="operatingEnd" type="text" class="form-control input-sm">
                             </div>
                         </div>
                     </div>
@@ -674,17 +674,18 @@
         c: [],
         d: []
     };
-    var duration = [];
+    var operating = [];
     var detail = [];
     
     $(function(){
         getAllProject();
+        //getDept();
         
         getData();
         
         getLayouts();
         getKpiType();
-        getProgress();
+        getOperating();
         getDetail();
         
         $("#projectStart, #projectEnd").datepicker();
@@ -841,7 +842,7 @@
                 htmlSubsidies += '<div class="col-md-6">'
                         + '<div class="row">'
                             + '<div class="col-md-12">'
-                                + '<input type="radio" value="'+val["id"]+'">'
+                                + '<input type="radio" name="budgetTypeId" value="'+val["id"]+'">'
                                 + '<label style="padding-left: 5px;">'+val["typeName"]+'</label>'
                             + '</div>'
                         + '</div><br>'
@@ -854,7 +855,7 @@
                 htmlPlan += '<div class="col-md-6">'
                         + '<div class="row">'
                             + '<div class="col-md-12">'
-                                + '<input type="radio" value="'+val["id"]+'">'
+                                + '<input type="radio" name="projectId" value="'+val["id"]+'">'
                                 + '<label style="padding-left: 5px;">'+val["planName"]+'</label>'
                             + '</div>'
                         + '</div><br>'
@@ -862,7 +863,7 @@
             });
             $("#listPlan").html(htmlPlan);
             
-            var htmlBudget = '';
+            /*var htmlBudget = '';
             var count = 0;
             $.each(datas["layouts"]["budgetType"], function(key, val){
                 var sub = 0;
@@ -881,7 +882,7 @@
                         + '</tr>';
                 });
             });
-            $("#tableBudget tbody").html(htmlBudget);
+            $("#tableBudget tbody").html(htmlBudget);*/
         }
     }
 
@@ -972,62 +973,62 @@
         });
     }
 
-    function getProgress(){
+    function getOperating(){
         var html = '';
         var count = 0;
-        $.each(duration, function(key, value){
+        $.each(operating, function(key, value){
             html += '<tr>'
-                    + '<td>'+(++count)+'. '+value["duration"]+'</td>'
-                    + '<td class="text-center">'+value["dateStart"]+'</td>'
-                    + '<td class="text-center">'+value["dateEnd"]+'</td>'
+                    + '<td>'+(++count)+'. '+value["operatingName"]+'</td>'
+                    + '<td class="text-center">'+value["timeStart"]+'</td>'
+                    + '<td class="text-center">'+value["timeEnd"]+'</td>'
                     + '<td class="text-center">'
                         + '<div class="btn-group">'
-                            + '<button class="btn btn-warning editDuration" data-id="'+key+'"><i class="fa fa-pencil"></i></button>'
-                            + '<button class="btn btn-default delDuration" data-id="'+key+'"><i class="fa fa-trash"></i></button>'
+                            + '<button class="btn btn-warning editOperating" data-id="'+key+'"><i class="fa fa-pencil"></i></button>'
+                            + '<button class="btn btn-default delOperating" data-id="'+key+'"><i class="fa fa-trash"></i></button>'
                         + '</div>'
                     +'</td>'
                 + '</tr>';
         });
-        $("#tableDuration tbody").html(html);
+        $("#tableOperating tbody").html(html);
         
-        $("button.addDuration").unbind().click(function(){
-            $("#durationModal").modal("show");
-            $("#duration, #dateStart, #dateEnd").val('');
+        $("button.addOperating").unbind().click(function(){
+            $("#operatingModal").modal("show");
+            $("#operatingName, #operatingStart, #operatingEnd").val('');
             $("#dateStart, #dateEnd").datepicker();
             
             $("button.save").unbind().click(function(){
-                duration.push({
-                    duration: $("#duration").val(),
-                    dateStart: $("#dateStart").val(),
-                    dateEnd: $("#dateEnd").val()
+                operating.push({
+                    operatingName: $("#operatingName").val(),
+                    timeStart: $("#operatingStart").val(),
+                    timeEnd: $("#operatingStart").val()
                 });
-                getProgress();                
+                getOperating();                
             });
         });
         
-        $("button.editDuration").unbind().click(function(){
+        $("button.editOperating").unbind().click(function(){
             var id = $(this).attr("data-id");
             
-            $("#durationModal").modal("show");
-            $("#duration").val(duration[id]["duration"]);
-            $("#dateStart").val(duration[id]["dateStart"]);
-            $("#dateEnd").val(duration[id]["dateEnd"]);
+            $("#operatingModal").modal("show");
+            $("#operatingName").val(operating[id]["operatingName"]);
+            $("#operatingStart").val(operating[id]["timeStart"]);
+            $("#operatingEnd").val(operating[id]["timeEnd"]);
             
-            $("#dateStart, #dateEnd").datepicker();
+            $("#operatingStart, #operatingEnd").datepicker();
 
             $("button.save").unbind().click(function(){
-                duration[id] = {
-                    duration: $("#duration").val(),
-                    dateStart: $("#dateStart").val(),
-                    dateEnd: $("#dateEnd").val()
+                operating[id] = {
+                    operatingName: $("#operatingName").val(),
+                    timeStart: $("#timeStart").val(),
+                    timeEnd: $("#timeEnd").val()
                 };
-                getProgress();                
+                getOperating();                
             });
         });
         
-        $("button.delDuration").unbind().click(function(){
+        $("button.delOperating").unbind().click(function(){
             $(this).closest('tr').hide();
-            duration.splice($(this).attr("data-id"), 1);
+            operating.splice($(this).attr("data-id"), 1);
         });
     }
     
@@ -1096,6 +1097,18 @@
         });
     }
     
+    /*function getDept(){
+        var datas = callAjax("{{_context_path}}/api/revenue/project/getDept", "post", {facultyId: facultyId}, "json");
+        if(typeof datas !== "undefined" && datas !== null){
+            var html = '<option value="">- เลือก -</option>';
+            $.each(datas["lists"], function(key, val){
+                html += '<option value="'+val["id"]+'">'+val["name"]+'</option>';
+            });
+            
+            $("#deptId").html(html);
+        }
+    }*/
+    
     function dataObject(){
         var obj = {};
         $("#form input[type=text], #form textarea, #form select, #form input[type=checkbook]:checked, #form input[type=radio]:checked").each(function(){
@@ -1104,13 +1117,11 @@
             
             obj[fname] = fval;
         });
-        
-        $("#form input[type=number]").each(function(){
-            var fname = $(this).attr("name");
-            var fval = $(this).val();
-            
-            obj[fname] = fval;
-        });
+        //obj["integration"] = 
+        obj["affirmative"] =;
+        obj["kpi"] = ;
+        obj["operating"] = ;
+        obj["plan"] = ;
         
         var fdata = {};
         fdata["project"] = obj;

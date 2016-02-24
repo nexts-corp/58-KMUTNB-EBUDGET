@@ -34,5 +34,15 @@ interface IProjectService {
      * @return doolean save
      */
     public function save($project);
+    
+    /**
+     * @name getData
+     * @uri /getData
+     * @description ดึงโครงสร้างโครงการ
+     * @param int budgetHeadId รหัสหน่วยงาน
+     * @param int facultyId รหัสหน่วยงาน
+     * @return String[] lists
+     */
+    public function getData($budgetHeadId, $facultyId);
 
 }

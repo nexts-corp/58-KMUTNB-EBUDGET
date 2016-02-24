@@ -23,8 +23,8 @@ class ProjectService extends CServiceBase implements IProjectService {
 
     function getPeriod() {
         $year = new \apps\common\entity\Year();
-        $year->yearStatus = 'Y';
-        //$year->year = 2559;
+        //$year->yearStatus = 'Y';
+        $year->year = 2558;
         return $this->datacontext->getObject($year)[0];
     }
 
@@ -347,5 +347,54 @@ class ProjectService extends CServiceBase implements IProjectService {
         $return = true;
         
         return $return;
+    }
+    
+    public function getData($budgetHeadId, $facultyId) {
+        $expense = new \apps\common\entity\BudgetExpense();
+        $expense->budgetHeadId = $budgetHeadId;
+        $expense->budgetPeriodId = $this->getPeriod()->year;
+        $expense->budgetTypeCode = 'K';
+        $expense->deptId = $facultyId;
+        
+        $expData = $this->datacontext->getObject($expense)[0];
+        
+        $aff = new \apps\common\entity\BudgetExpenseAffirmative();
+        $aff->expenseId = $expData->id;
+        $affData = $this->datacontext->getObject($aff);
+
+        $int = new \apps\common\entity\BudgetExpenseIntegration();
+        $int->expenseId = $expData->id;
+        $intData = $this->datacontext->getObject($int);
+
+        $opt = new \apps\common\entity\BudgetExpenseOperating();
+        $opt->expenseId = $expData->id;
+        $optData = $this->datacontext->getObject($opt);
+
+        $plan = new \apps\common\entity\BudgetExpensePlan();
+        $plan->expenseId = $expData->id;
+        $planData = $this->datacontext->getObject($plan);
+        
+        $result = array(
+            "id" => $expData->id,
+            "responder" => $expData->responder,
+            "director" => $expData->director,
+            "projectTypeId" => $expData->projectTypeId,
+            "integration" => $intData,
+            "affirmative" => $affData,
+            "rationale" => $expData->rationale,
+            "objective" => $expData->objective,
+            "benefits" => $expData->benefits,
+            "kpi" => "",
+            "target" => $expData->target,
+            "operating" => $optData,
+            "timeStart" => $expData->timeStart,
+            "timeEnd" => $expData->timeEnd,
+            "budgetEstAmount" => $expData->budgetEstAmount,
+            "budgetEstText" => $expData->budgetEstText,
+            "budgetTypeId" => $expData->budgetTypeId,
+            "projectId" => $expData->projectId,
+            "plan" => $planData
+        );
+        return $result;              
     }
 }
