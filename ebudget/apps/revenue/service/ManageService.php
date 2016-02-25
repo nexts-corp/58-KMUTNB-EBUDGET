@@ -38,6 +38,7 @@ class ManageService extends CServiceBase implements IManageService {
                 . "from Budget_Head bgh "
                 . "inner join L3D_Department dept on dept.DepartmentId = bgh.DepartmentId "
                 . "where bgh.FormBudget = 500 "
+                . "and dept.DepartmentGroup = 'A' "
                 . "and bgh.budgetTypeCode = :type1 "
                 . "and bgh.budgetPeriodId = :year1 "
                 . "union "
