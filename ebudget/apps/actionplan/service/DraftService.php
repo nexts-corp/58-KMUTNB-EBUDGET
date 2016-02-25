@@ -53,7 +53,7 @@ class DraftService extends CServiceBase implements IDraftService {
         return $this->datacontext->getObject($sqlUnit, $paramUnit)[0];
     }
 
-    public function listsDept() {
+    public function listsDept($typeId) {
         $sql = "select r from apps\\affirmative\\model\\ViewActivityDepartment r order by r.activityCode";
         $dept = $this->datacontext->getObject($sql);
         $periodCode = $this->getPeriod()->year;
@@ -62,9 +62,10 @@ class DraftService extends CServiceBase implements IDraftService {
         $actKey = array();
 
         foreach ($dept as $keyDept => $valDept) {
-            $draft = new \apps\common\entity\AffirmativeDraft();
+            $draft = new \apps\common\entity\ActionPlanDraft();
             $draft->periodCode = $periodCode;
             $draft->departmentId = $valDept->departmentId;
+            $draft->typeId = $typeId;
             $draft->isActive = "Y";
             $get = $this->datacontext->getObject($draft);
             if (count($get) > 0) {
@@ -133,7 +134,7 @@ class DraftService extends CServiceBase implements IDraftService {
 
         foreach ($draftData as $keyDraft => $valueDraft) {
             if (empty($strategyArr[$valueDraft->strategyId][$valueDraft->draftId])) {
-                $detailSql = "select v from apps\\common\\entity\\ActionPlanDetail v where v.draftId = :draftId  order by v.detailSeq";
+                $detailSql = "select v from apps\\common\\entity\\ActionPlanDraftDetail v where v.draftId = :draftId  order by v.detailSeq";
                 $detailParam = array("draftId" => $valueDraft->draftId);
                 $detailData = $this->datacontext->getObject($detailSql, $detailParam);
                 $valueDraft->detail = $detailData;
@@ -187,7 +188,7 @@ class DraftService extends CServiceBase implements IDraftService {
         $json = new \th\co\bpg\cde\collection\impl\CJSONDecodeImpl();
         $type = "";
         if (isset($draft->draftId)) {
-            $draft = $json->decode(new \apps\common\entity\ActionPlanDetail(), $draft);
+            $draft = $json->decode(new \apps\common\entity\ActionPlanDraftDetail(), $draft);
             $type = "detail";
         } else {
             $draft = $json->decode(new \apps\common\entity\ActionPlanDraft(), $draft);
@@ -208,7 +209,7 @@ class DraftService extends CServiceBase implements IDraftService {
         $json = new \th\co\bpg\cde\collection\impl\CJSONDecodeImpl();
         $type = "";
         if (isset($draft->detailId)) {
-            $draft = $json->decode(new \apps\common\entity\ActionPlanDetail(), $draft);
+            $draft = $json->decode(new \apps\common\entity\ActionPlanDraftDetail(), $draft);
             $type = "detail";
         } else {
             $draft = $json->decode(new \apps\common\entity\ActionPlanDraft(), $draft);
@@ -229,7 +230,7 @@ class DraftService extends CServiceBase implements IDraftService {
         $type = "";
         $return = true;
         if (isset($draft->detailId)) {
-            $draft = $json->decode(new \apps\common\entity\ActionPlanDetail(), $draft);
+            $draft = $json->decode(new \apps\common\entity\ActionPlanDraftDetail(), $draft);
             $type = "detail";
         } else {
             $draft = $json->decode(new \apps\common\entity\ActionPlanDraft(), $draft);
@@ -240,7 +241,7 @@ class DraftService extends CServiceBase implements IDraftService {
             $return = false;
         } else {
             if ($type == "draft") {
-                $detail = new \apps\common\entity\ActionPlanDetail();
+                $detail = new \apps\common\entity\ActionPlanDraftDetail();
                 $detail->draftId = $draft->draftId;
                 $detail = $this->datacontext->getObject($detail);
                 if (!$this->datacontext->removeObject($detail)) {
@@ -257,17 +258,18 @@ class DraftService extends CServiceBase implements IDraftService {
         }
     }
 
-    public function approve($departmentId, $status) {
+    public function approve($departmentId, $status, $typeId) {
         $json = new CJSONDecodeImpl();
-        $draft = new \apps\common\entity\AffirmativeDraft();
+        $draft = new \apps\common\entity\ActionPlanDraft();
         $draft->periodCode = $this->getPeriod()->year;
         $draft->departmentId = $departmentId;
+        $draft->typeId = $typeId;
         $draft->isActive = "Y";
         $dataDraft = $this->datacontext->getObject($draft);
         if ($status == "Y") {
             $check = true;
             foreach ($dataDraft as $keyDraft => $valueDraft) {
-                if ($valueDraft->kpiGoal != NULL && $valueDraft->score1 != NULL && $valueDraft->score2 != NULL && $valueDraft->score3 != NULL && $valueDraft->score4 != NULL && $valueDraft->score5 != NULL && $valueDraft->isApprove != "Y") {
+                if ($valueDraft->projectName != NULL && $valueDraft->timeDuration != NULL && $valueDraft->isApprove != "Y") {
                     $dataDraft[$keyDraft]->isApprove = $status;
                 } else {
                     $check = false;
@@ -277,6 +279,8 @@ class DraftService extends CServiceBase implements IDraftService {
             }
             if ($check == true) {
                 if ($this->datacontext->updateObject($dataDraft)) {
+                    
+                    
                     $sql = "INSERT INTO Affirmative_Final(
                             PeriodCode, AffirmativeDraftId, DepartmentId,
                             AffirmativeMainId, AffirmativeMainSeq,

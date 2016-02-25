@@ -12,10 +12,11 @@ interface IDraftService {
     /**
      * @name listsDept
      * @uri /listsDept
+     * @param string typeId
      * @return String[] lists Description
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
-    public function listsDept();
+    public function listsDept($typeId);
 
     /**
      * @name listsAll
@@ -67,10 +68,11 @@ interface IDraftService {
      * @uri /approve
      * @param string departmentId
      * @param string status
+     * @param string typeId
      * @return boolean approve
      * @description ผู้เสนอราคาสูงสุดต่อคลัง
      */
-    public function approve($departmentId, $status);
+    public function approve($departmentId, $status, $typeId);
 
     /**
      * @name export

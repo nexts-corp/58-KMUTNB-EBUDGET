@@ -65,13 +65,17 @@
 <script type="text/javascript">
     var findNode = {};
     var listArr = {};
-
     $(function () {
-        listsDepartment();
         listsType();
+        var typeId = $("#selectType").val();
+        listsDepartment(typeId);
         $("button.back").unbind("click").click(function () {
             toggleShow("home");
-        })
+        });
+        $("#selectType").change(function () {
+            typeId = $("#selectType").val();
+            listsDepartment(typeId);
+        });
     });
     function listsType() {
         var dataType = callAjax("{{_context_path}}/api/actionplan/draft/listsType", "get", {}, "json")["lists"];
@@ -84,11 +88,11 @@
         }
     }
 
-    function listsDepartment() {
+    function listsDepartment(typeId) {
         $("#deptList table tbody").html('<tr><td colspan="4" class="text-center">Loading...</td></tr>');
 
         setTimeout(function () {
-            var datas = callAjax("{{_context_path}}/api/actionplan/draft/listsDept", "post", {}, "json");
+            var datas = callAjax("{{_context_path}}/api/actionplan/draft/listsDept", "post", {typeId: typeId}, "json");
             if (typeof datas !== "undefined" && datas !== null) {
                 var html = '';
                 var count = 0;

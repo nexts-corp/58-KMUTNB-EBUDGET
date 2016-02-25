@@ -380,7 +380,7 @@
             centerForm();
         });
         $("#btnApprove").click(function () {
-            var result = callAjax("{{_context_path}}/api/actionplan/draft/approve", "post", {departmentId: deptId, status: "Y"}, "json");
+            var result = callAjax("{{_context_path}}/api/actionplan/draft/approve", "post", {departmentId: deptId, status: "Y", typeId: typeId}, "json");
             if (result["approve"] == true) {
                 alert("อนุมัติสำเร็จ!");
                 window.location = "{{_context_path}}/api/actionplan/view/draftAll";

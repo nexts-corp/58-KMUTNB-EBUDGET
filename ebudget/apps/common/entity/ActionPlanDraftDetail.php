@@ -4,21 +4,21 @@ namespace apps\common\entity;
 
 /**
  * @Entity
- * @Table(name="ActionPlan_Detail")
+ * @Table(name="ActionPlan_Draft_Detail")
  */
-class ActionPlanDetail extends EntityBase {
+class ActionPlanDraftDetail extends EntityBase {
 
     /**
      * @Id 
-     * @Column(type="integer",length=11,name="ActionPlanDetailId")
+     * @Column(type="integer",length=11,name="ActionPlanDraftDetailId")
      * @GeneratedValue
      */
     public $detailId;
 
-    /** @Column(type="integer",length=11, name="ActionPlanDetailSeq") */
+    /** @Column(type="integer",length=11, name="ActionPlanDraftDetailSeq") */
     public $detailSeq;
 
-    /** @Column(type="text", name="ActionPlanDetailName") */
+    /** @Column(type="text", name="ActionPlanDraftDetailName") */
     public $detailName;
 
     /**
