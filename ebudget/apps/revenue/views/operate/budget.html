@@ -33,6 +33,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label class="col-md-4 control-label">ประเภทเงิน</label>
+
                     <div class="col-md-8">
                         <select id="bgCategory" class="form-control input-sm selChange">
                             <option value="">- เลือกประเภทเงิน -</option>
@@ -48,7 +49,8 @@
                         <label class="col-md-12 control-label">เงินต้นทั้ง คณะ/สำนัก รวม<br><span id="sumPlan"></span>&nbsp;&nbsp;บาท</label>
                     </div>
                     <div class="col-md-6">
-                        <label class="col-md-12 control-label">เงินที่ใช้ทั้ง คณะ/สำนัก รวม<br><span id="sumBudget"></span>&nbsp;&nbsp;บาท</label>
+                        <label class="col-md-12 control-label">เงินที่ใช้ทั้ง คณะ/สำนัก รวม<br><span
+                                id="sumBudget"></span>&nbsp;&nbsp;บาท</label>
                     </div>
                 </div>
             </div>
@@ -64,6 +66,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">แผนงาน</label>
+
                                     <div class="col-md-9">
                                         <select id="l3dPlanId" class="form-control input-sm"></select>
                                     </div>
@@ -72,6 +75,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">กองทุน</label>
+
                                     <div class="col-md-9">
                                         <select id="fundgroupId" class="form-control input-sm"></select>
                                     </div>
@@ -80,56 +84,70 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">ภาควิชา</label>
+
                                     <div class="col-md-9">
                                         <select id="deptId" class="form-control input-sm"></select>
-                                    </div>                                    
+                                    </div>
                                 </div>
                             </div>
-                        </div><br>
+                        </div>
+                        <br>
                         <table id="table" class="table table-bordered table-condensed">
                             <thead>
-                                <tr>
-                                    <th class="text-center col-md-1">ลำดับ</th>
-                                    <th class="text-center col-md-6">รายการ</th>
-                                    <th class="text-center col-md-3">จำนวนเงิน</th>
-                                    <th class="text-center col-md-2">เครื่องมือ</th>
-                                </tr>
+                            <tr>
+                                <th class="text-center col-md-1">ลำดับ</th>
+                                <th class="text-center col-md-6">รายการ</th>
+                                <th class="text-center col-md-3">จำนวนเงิน</th>
+                                <th class="text-center col-md-2">เครื่องมือ</th>
+                            </tr>
+                            <tr id="row-totalMoney">
+                                <th></th>
+                                <th class="text-center">จำนวนเงินทั้งหมด</th>
+                                <th class="text-right" id="totalMoney"></th>
+                                <th></th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td colspan="4" class="text-center">-</td>
-                                </tr>
+                            <tr>
+                                <td colspan="4" class="text-center">-</td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
-            <div id="budgetDetail" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div id="budgetDetail" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog"
+                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <form id="formBudget" onsubmit="return false;">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <button type="button" class="close" data-dismiss="modal"
+                                        aria-hidden="true">&times;</button>
                                 <h4 class="modal-title">ข้อมูล : เงินรายได้</h4>
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label class="col-md-12 control-label req" for="revenueName">รายการ : </label>
+
                                     <div class="col-md-12">
-                                        <input class="form-control input-sm" name="revenueName" id="revenueName" required>
+                                        <input class="form-control input-sm" name="revenueName" id="revenueName"
+                                               required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-12 control-label req" for="bgAmount">จำนวนเงิน (บาท) : </label>
+
                                     <div class="col-md-12">
-                                        <input class="form-control input-sm" name="bgAmount" id="bgAmount" required>
+                                        <input class="form-control input-sm" type="number" min="0" name="bgAmount" id="bgAmount" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-12 control-label req" for="revenueDesc">รายละเอียด : </label>
+                                    <label class="col-md-12 control-label" for="revenueDesc">รายละเอียด : </label>
+
                                     <div class="col-md-12">
-                                        <textarea class="form-control input-sm" name="revenueDesc" id="revenueDesc" required></textarea>
+                                        <textarea class="form-control input-sm summernote" name="revenueDesc" id="revenueDesc"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -140,7 +158,8 @@
                                         <button class="btn btn-success save"><i class="fa fa-save"></i> บันทึก</button>
                                     </li>
                                     <li data-option-value="" class="padding-left">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก
+                                        </button>
                                     </li>
                                 </ul>
                             </div>
@@ -149,7 +168,8 @@
                 </div>
             </div>
 
-            <div id="budgetDelete" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div id="budgetDelete" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog"
+                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -158,23 +178,24 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label class="col-md-5 control-label" for="revenueName">รายการ : </label>
-                                <span id="nameDel">-</span>
+                                <label class="col-md-4 control-label" for="revenueName">รายการ : </label>
+                                <div class="col-md-8"><span id="nameDel">-</span></div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-5 control-label" for="bgAmount">จำนวนเงิน (บาท) : </label>
-                                <span id="amountDel"></span>
+                                <label class="col-md-4 control-label" for="bgAmount">จำนวนเงิน (บาท) : </label>
+                                <div class="col-md-8"><span id="amountDel"></span></div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-5 control-label" for="revenueDesc">รายละเอียด : </label>
-                                <span id="descDel"></span>
+                                <label class="col-md-4 control-label" for="revenueDesc">รายละเอียด : </label>
+                                <div class="col-md-8"><span id="descDel"></span></div>
                             </div>
                         </div>
                         <div id="loadingDel" class="col-md-12 text-center" style="margin: 20px;"></div>
                         <div class="modal-footer">
                             <ul class="nav nav-pills sort-source pull-right" data-option-key="filter">
                                 <li data-option-value="*" class="">
-                                    <button class="btn btn-danger save"><i class="fa fa-trash"></i> ยืนยันบันทึก</button>
+                                    <button class="btn btn-danger save"><i class="fa fa-trash"></i> ยืนยันบันทึก
+                                    </button>
                                 </li>
                                 <li data-option-value="" class="padding-left">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
@@ -186,7 +207,8 @@
             </div>
 
         </div>
-    </div><!--  container  -->
+    </div>
+    <!--  container  -->
 </div><!-- main -->
 
 {{> footer}}
@@ -194,20 +216,22 @@
 <script>
     var deptId = '{{deptId}}';
     var listsArr = {};
-
+    var sumAll = 0;
     $(function () {
         lists3DPlan();
         listsFundgroup();
         listsDepartment();
-
+        $('.summernote').summernote({height: 120}); //initial summernote
         //$("#bgCategory").select2();
 
         $("#bgCategory, #l3dPlanId, #fundgroupId, #deptId").select2().change(function () {
             if ($("#bgCategory").val() != "" && $("#l3dPlanId").val() != "" && $("#fundgroupId").val() != "" && $("#deptId").val() != "") {
                 getRevenueItem();
+                $("#row-totalMoney").show();
             }
             else {
                 $("#table tbody").html('<tr><td colspan="4" style="text-align: center;"> กรุณาเลือกประเภทเงิน แผนงาน และกองทุน</td></tr>');
+                $("#row-totalMoney").hide();
             }
         }).trigger("change");
 
@@ -290,6 +314,7 @@
                 fundgroupId: $("#fundgroupId").val(),
                 l3dPlanId: $("#l3dPlanId").val()
             }, "json");
+            sumAll = 0;
             if (typeof datas["lists"] !== "undefined" && datas["lists"] !== null) {
                 var html = '';
                 var count1 = 0;
@@ -330,7 +355,7 @@
                                 + '</tr>'
                                 + data;
                     });
-
+                    sumAll += sum1;
                     html += '<tr class="text-bold" style="background-color:#F1F1F1;">'
                             + '<td class="text-center">' + count1 + '</td>'
                             + '<td>' + value["name"] + '</td>'
@@ -341,6 +366,7 @@
                 });
 
                 $("#table tbody").html(html);
+                $("#totalMoney").html(accounting.formatNumber(sumAll, 2, ",", "."));
 
                 $('#table').treetable({
                     expandable: true,
@@ -352,7 +378,7 @@
                     var budgetId = $(this).attr("data-id");
 
                     $("#budgetDetail").modal("show");
-
+                    $('#revenueDesc').code('');
                     $("#formBudget")[0].reset();
                     $("#loading").html('');
 
@@ -360,18 +386,22 @@
                         var fParam = {};
 
                         fParam["revenueName"] = $("#revenueName").val();
-                        fParam["revenueDesc"] = $("#revenueDesc").val();
+                        fParam["revenueDesc"] = $("#revenueDesc").code();
                         fParam["bgAmount"] = $("#bgAmount").val();
                         fParam["bgCategory"] = $("#bgCategory").val();
                         fParam["budgetTypeId"] = budgetId;
                         fParam["deptId"] = $("#deptId").val();
                         fParam["fundgroupId"] = $("#fundgroupId").val();
                         fParam["l3dPlanId"] = $("#l3dPlanId").val();
+                        if(validate(fParam)){
+                            var dataJSON = JSON.stringify({budget: fParam, facultyId: deptId});
+                            var dataJSONEN = encodeURIComponent(dataJSON);
+                            insertRevenueItem(dataJSONEN, fParam, headId);
 
-                        var dataJSON = JSON.stringify({budget: fParam, facultyId: deptId});
-                        var dataJSONEN = encodeURIComponent(dataJSON);
+                        }else{
+                            $("#loading").html('<span class="text-danger">กรุณากรอกข้อมูลให้ครบ</span>');
+                        }
 
-                        insertRevenueItem(dataJSONEN, fParam, headId);
                     });
                 });
 
@@ -415,7 +445,8 @@
                         var sOldVal = $("#sAmount-" + input["budgetTypeId"]).html();
                         var sNewVal = parseFloat(sOldVal.replace(/,/g, "")) + parseFloat(input["bgAmount"]);
                         $("#sAmount-" + input["budgetTypeId"]).html(accounting.formatNumber(sNewVal, 2, ",", "."));
-
+                        sumAll += parseFloat(input["bgAmount"]);
+                        $("#totalMoney").html(accounting.formatNumber(sumAll, 2, ",", "."));
                         var node = $("#table").treetable("node", input["budgetTypeId"]);
 
                         $("#table").treetable("loadBranch", node, html);
@@ -454,6 +485,13 @@
                         var sOldVal = $("#sAmount-" + input["budgetTypeId"]).html();
                         var sNewVal = parseFloat(sOldVal.replace(/,/g, "")) - parseFloat(listsArr[input["id"]]["value"]) + parseFloat(input["bgAmount"]);
                         $("#sAmount-" + input["budgetTypeId"]).html(accounting.formatNumber(sNewVal, 2, ",", "."));
+                        console.log("befor sumall - > "+sumAll);
+                        sumAll -= parseFloat(hOldVal.replace(/,/g, ""));
+                        sumAll += hNewVal;
+                        console.log("old - > "+hOldVal);
+                        console.log("new - > "+hNewVal);
+                        console.log("sumAll - > "+sumAll);
+                        $("#totalMoney").html(accounting.formatNumber(sumAll, 2, ",", "."));
 
                         listsArr[input["id"]] = {
                             id: input["id"],
@@ -496,6 +534,11 @@
                         var sOldVal = $("#sAmount-" + input["budgetTypeId"]).html();
                         var sNewVal = parseFloat(sOldVal.replace(/,/g, "")) - parseFloat(listsArr[id]["value"]);
                         $("#sAmount-" + input["budgetTypeId"]).html(accounting.formatNumber(sNewVal, 2, ",", "."));
+                        console.log(hOldVal);
+                        console.log(hNewVal);
+                        sumAll -= parseFloat(hOldVal.replace(/,/g, ""));
+                        sumAll += hNewVal;
+                        $("#totalMoney").html(accounting.formatNumber(sumAll, 2, ",", "."));
 
                         delete listsArr[id];
 
@@ -518,12 +561,12 @@
             var data = listsArr[id];
 
             $("#budgetDetail").modal("show");
-
+            $('#revenueDesc').code('');
             $("#formBudget")[0].reset();
             $("#loading").html('');
 
             $("#revenueName").val(data["name"]);
-            $("#revenueDesc").val(data["detail"]);
+            $("#revenueDesc").code(data["detail"]);
             $("#bgAmount").val(data["value"]);
 
             $("button.save").unbind().click(function () {
@@ -531,7 +574,7 @@
 
                 fParam["id"] = id;
                 fParam["revenueName"] = $("#revenueName").val();
-                fParam["revenueDesc"] = $("#revenueDesc").val();
+                fParam["revenueDesc"] = $("#revenueDesc").code();
                 fParam["bgAmount"] = $("#bgAmount").val();
                 fParam["bgCategory"] = $("#bgCategory").val();
                 fParam["budgetTypeId"] = pid;
@@ -539,10 +582,15 @@
                 fParam["fundgroupId"] = $("#fundgroupId").val();
                 fParam["l3dPlanId"] = $("#l3dPlanId").val();
 
-                var dataJSON = JSON.stringify({budget: fParam});
-                var dataJSONEN = encodeURIComponent(dataJSON);
+                if(validate(fParam)) {
+                    var dataJSON = JSON.stringify({budget: fParam});
+                    var dataJSONEN = encodeURIComponent(dataJSON);
 
-                editRevenueItem(dataJSONEN, fParam, hid);
+                    editRevenueItem(dataJSONEN, fParam, hid);
+                }else{
+                    $("#loading").html('<span class="text-danger">กรุณากรอกข้อมูลให้ครบ</span>');
+                }
+
             });
         });
 
@@ -568,5 +616,18 @@
                 deleteRevenueItem(id, fParam, hid);
             });
         });
+
+    }
+
+    function validate(param) {
+        var check = true;
+        $.each(param, function (key, value) {
+            if (key != "revenueDesc") {
+                if (value == "" || value == undefined) {
+                    check = false;
+                }
+            }
+        });
+        return check;
     }
 </script>

@@ -8,29 +8,31 @@ namespace apps\common\entity;
  */
 class BudgetExpenseAffirmative extends EntityBase {
 
-    /** 
-     * @Id
-     * @Column(type="integer",length=11, name="BudgetExpenseId") */
+    /**
+     * @Id 
+     * @Column(type="integer",length=11,name="BudgetExpenseAffirmativeId")
+     * @GeneratedValue
+     */
+    public $id;
+    
+    /** @Column(type="integer",length=11, name="BudgetExpenseId") */
     public $expenseId;
     
-    /**
-     * @Column(type="integer",length=11, name="AffirmativeTypeId") */
+    /** @Column(type="integer",length=11, name="AffirmativeTypeId") */
     public $typeId;
 
-    /**
-     * @Id
-     * @Column(type="integer",length=11, name="AffirmativeIssueId") */
+    /** @Column(type="integer",length=11, name="AffirmativeIssueId") */
     public $issueId;
 
-    /**
-     * @Id
-     * @Column(type="integer",length=11, name="AffirmativeTargetId") */
+    /** @Column(type="integer",length=11, name="AffirmativeTargetId") */
     public $targetId;
 
-    /** 
-     * @Id
-     * @Column(type="integer",length=11, name="AffirmativeStrategyId") */
+    /** @Column(type="integer",length=11, name="AffirmativeStrategyId") */
     public $strategyId;
+
+    function getId() {
+        return $this->id;
+    }
 
     function getExpenseId() {
         return $this->expenseId;
@@ -50,6 +52,10 @@ class BudgetExpenseAffirmative extends EntityBase {
 
     function getStrategyId() {
         return $this->strategyId;
+    }
+
+    function setId($id) {
+        $this->id = $id;
     }
 
     function setExpenseId($expenseId) {

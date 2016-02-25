@@ -72,19 +72,28 @@
     </div><!--  container  -->
 </div><!-- main -->
 
+<div id="modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">            
+            <div id="loading" class="col-md-12 text-center" style="margin: 20px;"></div>
+        </div>
+    </div>
+</div>
+
 {{>footer}}
 
 <script type="text/javascript">
-    $(document).ready(function () {        
+    $(document).ready(function () {
         var data = [];
 
         listsYear();
 
-    
+        $(".datepicker").datepicker({format: 'dd-mm-yyyy'});
+
         function listsYear() {
             var data = callAjax("{{_context_path}}/api/budget/setting/listsYear", "post", {}, "json")["year"];
 
-        $("#tbodyMain").html('<td colspan="4" class="text-center">-</td>');
+            $("#tbodyMain").html('<td colspan="4" class="text-center">-</td>');
             $("#tbodyType").html('<td colspan="5" class="text-center">-</td>');
 
             var html = "";
@@ -93,7 +102,7 @@
                         "<td>" + (km + 1) + "</td>" +
                         "<td>" + vm.year + "</td>" +
                         "<td>" +
-                        "<select class='sortYearStatus form-control'>";
+                        "<select class='sortYearStatus form-control' id='cbYearStatus" + vm.id + "'>";
 
                 if (vm.yearStatus == "Y") {
                     html += "<option value='Y' selected>ใช่</option>" +
@@ -106,7 +115,7 @@
                 html += "</select>" +
                         "</td>" +
                         "<td>" +
-                        "<select class='sortCloseStatus form-control'>";
+                        "<select class='sortCloseStatus form-control' id='cbCloseStatus" + vm.id + "'>";
 
                 if (vm.isClosed == "Y") {
                     html += "<option value='Y' selected>ใช่</option>" +
@@ -116,10 +125,14 @@
                             "<option value='N' selected>ไม่ใช่</option>";
                 }
 
+                /*var dateClose = vm.dateClose.date;
+                 dateClose = dateClose.getDate() + '/' + dateClose.getMonth() + '/' + dateClose.getFullYear();
+                 console.log(dateClose);*/
+
                 html += "</select>" +
                         "</td>" +
-                        "<td><input type='date' class='form-control input-sm' value='" + vm.dateClose.date + "' /></td>" +
-                        "<td><button class='btn btn-md btn-primary btnSave' value='" + vm.id + "'>บันทึก</button></td>" +
+                        "<td><input type='date' class='form-control datepicker' id='tbDateClose" + vm.id + "' value='" + vm.dateClose + "' /></td>" +
+                        "<td><button class='btn btn-md btn-primary btnSave' data-id='" + vm.id + "' data-year='" + vm.year + "'>บันทึก</button></td>" +
                         "</tr>";
             });
 
@@ -128,15 +141,35 @@
         }
 
         $(document).on("click", ".btnSave", function () {
-            var dataJSONEN = [];
+            var id = $(this).attr("data-id");
+            var year = $(this).attr("data-year");
+            var yearStatus = $("#cbYearStatus" + id).val();
+            var closeStatus = $("#cbCloseStatus" + id).val();
+            var dateClose = $("#tbDateClose" + id).val();
 
-            /*TO DO*/
+            $("#modal").modal("show");
 
-            var msg = callAjax("{{_context_path}}/api/budget/setting/save", "post", dataJSONEN, "json")["save"];
-            alert('Saved');
+            var dataJSON = JSON.stringify({
+                bgPeriodId: year,
+                activeYear: yearStatus,
+                setClose: closeStatus,
+                dateClose: dateClose
+            });
+            var dataJSONEN = encodeURIComponent(dataJSON);
 
-
-            /*TO DO*/
+            var datas = callAjax("{{_context_path}}/api/budget/setting/save", "post", dataJSONEN, "json")["save"];
+            if (typeof datas !== 'undefined' && datas !== null) {
+                if (datas["save"] == true) {
+                    $("#loading").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
+                    setTimeout(function () {
+                        $("#modal").modal("hide");
+                        listsUnit();
+                    }, 500);
+                }
+                else {
+                    $("#loading").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้<br>' + datas["add"] + '</span>');
+                }
+            }
 
 
         });

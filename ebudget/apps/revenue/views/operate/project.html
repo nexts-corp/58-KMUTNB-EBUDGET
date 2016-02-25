@@ -12,7 +12,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="none-padding">แบบเสนอโครงการที่ตอบสนองยุทธศาสตร์การพัฒนามหาวิทยาลัย ปี {{year}}</h1>
+                    <h2 class="none-padding">แบบเสนอโครงการที่ตอบสนองยุทธศาสตร์การพัฒนามหาวิทยาลัย ปี {{year}}</h2>
                 </div>
             </div>
         </div>
@@ -20,19 +20,30 @@
 
     <hr class="tall dashboard">
 
+    <div class="sort-source-wrapper">
+        <div class="container">
+            <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+                <li class="active">
+                    <button class="btn btn-default backHome"><i class="fa fa-angle-double-left">
+                            ย้อนกลับ</i></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label class="col-md-12 control-label">{{deptName}}</label>
+                    <label class="col-md-12 control-label"><h3>{{deptName}}</h3></label>
                 </div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
-                <label class="col-md-1 control-label">โครงการ</label>
-                <div class="col-md-5">
+                <label class="col-md-2 control-label">โครงการ : </label>
+                <div class="col-md-6">
                     <select id="budgetHeadId" name="budgetHeadId" class="form-control input-sm"></select>
                 </div>
             </div>
@@ -237,11 +248,11 @@
                                         <div style="margin: 5px 0;" class="col-md-12">
                                             <label class="col-md-2 control-label text-right">วันที่เริ่มต้น</label>
                                             <div class="col-md-3">
-                                                <input type="text" id="timeStart" name="projectStart" class="form-control input-sm">
+                                                <input type="text" id="timeStart" name="timeStart" class="form-control input-sm datetime">
                                             </div>
                                             <label class="col-md-2 control-label text-right">วันที่สิ้นสุด</label>
                                             <div class="col-md-3">
-                                                <input type="text" id="timeEnd" name="projectEnd" class="form-control input-sm">
+                                                <input type="text" id="timeEnd" name="timeEnd" class="form-control input-sm datetime">
                                             </div>
                                         </div>
                                     </div>
@@ -257,11 +268,11 @@
                                     <div class="col-md-12" style="margin: 5px 0;">
                                         <label class="col-md-2 control-label text-right">ตัวเลข</label>
                                         <div class="col-md-3">
-                                            <input type="text" id="budgetEstAmount" name="amountNum" class="form-control input-sm">
+                                            <input type="text" id="budgetEstAmount" name="budgetEstAmount" class="form-control input-sm">
                                         </div>
                                         <label class="col-md-1 control-label text-right">ตัวอักษร</label>
                                         <div class="col-md-6">
-                                            <input type="text" id="budgetEstText" name="amountWord" class="form-control input-sm">
+                                            <input type="text" id="budgetEstText" name="budgetEstText" class="form-control input-sm">
                                         </div>
                                     </div>
                                     <div class="col-md-12" style="margin: 5px 0;">
@@ -477,14 +488,14 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label text-right">วันที่เริ่มต้น</label>
                             <div class="col-md-8">
-                                <input id="operatingStart" name="operatingStart" type="text" class="form-control input-sm">
+                                <input id="operatingStart" name="operatingStart" type="text" class="form-control input-sm datetime">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-md-4 control-label text-right">วันที่สิ้นสุด</label>
                             <div class="col-md-8">
-                                <input id="operatingEnd" name="operatingEnd" type="text" class="form-control input-sm">
+                                <input id="operatingEnd" name="operatingEnd" type="text" class="form-control input-sm datetime">
                             </div>
                         </div>
                     </div>
@@ -546,6 +557,24 @@
                 </div>
             </div>
         </div><!-- end form -->
+        
+        <div id="saveModal" aria-labelledby="formLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="modal-wrapper">
+                            <div id="mIcon" class="modal-icon">
+                            </div>
+                            <div id="mText" class="modal-text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div><!--  container  -->
 </div><!-- main -->
 
@@ -554,6 +583,11 @@
 <script src="{{_context_path}}/asset/vendor/bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
 <script>
     (function( $ ) {
+        
+        $(".backHome").click(function () {
+            window.location = "{{_context_path}}/api/revenue/view/manageAll";
+        });
+        
         'use strict';
         var $w4finish = $('#wizard').find('ul.pager li.finish'),
                 $w4validator = $("#wizard form").validate({
@@ -659,6 +693,7 @@
 
     }).apply( this, [ jQuery ]);
 
+    var formId = '{{formId}}';
     var facultyId = '{{deptId}}';
     var budgetHeadId = '{{budgetHeadId}}';
 
@@ -687,7 +722,13 @@
         getOperating();
         getDetail();
         
-        $("#timeStart, #timeEnd").datepicker();
+        $('.datetime').datepicker({
+            format: 'dd-mm-yyyy'
+        });
+        
+        $("#budgetHeadId").change(function(){
+            window.location = "{{_context_path}}/api/revenue/view/manage/"+formId+"/"+$("#budgetHeadId").val()+"/"+facultyId;
+        });
     });
     
     function getAllProject(){
@@ -695,7 +736,9 @@
         if(typeof datas !== "undefined" && datas !== null){
             var html = '';
             $.each(datas["lists"], function(key, val){
-                html += '<option value="'+val["BudgetHeadId"]+'">'+val["formName"]+'</option>';
+                var check = '';
+                if(val["BudgetHeadId"] == budgetHeadId)  check = 'selected';
+                html += '<option value="'+val["BudgetHeadId"]+'" '+check+'>'+val["formName"]+'</option>';
             });
             $("#budgetHeadId").html(html);            
         }
@@ -716,10 +759,9 @@
             $("#benefits").val(data["benefits"]);
             
             $.each(data["kpi"], function(key, val){
-                if(!kpi[val["id"]]) kpi[val["id"]] = [];
-                kpi[val["id"]].push(val);
+                if(!kpi[val["kpiTypeId"]]) kpi[val["kpiTypeId"]] = [];
+                kpi[val["kpiTypeId"]].push(val);
             });
-            
             $("#target").val(data["target"]);
             operating = data["operating"];
             $("#timeStart").val(data["timeStart"]);
@@ -753,11 +795,11 @@
                 var isDisable = 'disabled';
                 var isCheck = '';
                 var value = '';
-                var index = integration.some(function (elem, i) { return elem.integrationId === val["id"] && ~(index = i); });
-                if(index !== false){
+                var result = $.grep(integration, function(e){ return e.integrationId === val["id"]; });//integration.some(function (elem, i) { return elem.integrationId === val["id"] && ~(index = i); });
+                if(result.length > 0){
                     isDisable = '';
                     isCheck = 'checked';
-                    value = integration;
+                    value = result[0]["desc"];
                 }
 
                 htmlIntegration += '<div class="row">'
@@ -1024,7 +1066,7 @@
         var count = 0;
         $.each(operating, function(key, value){
             html += '<tr>'
-                    + '<td>'+(++count)+'. '+value["operatingName"]+'</td>'
+                    + '<td>'+(++count)+'. '+value["operName"]+'</td>'
                     + '<td class="text-center">'+value["timeStart"]+'</td>'
                     + '<td class="text-center">'+value["timeEnd"]+'</td>'
                     + '<td class="text-center">'
@@ -1040,11 +1082,10 @@
         $("button.addOperating").unbind().click(function(){
             $("#operatingModal").modal("show");
             $("#operatingName, #operatingStart, #operatingEnd").val('');
-            $("#operatingStart, #operatingEnd").datepicker();
             
             $("button.save").unbind().click(function(){
                 operating.push({
-                    operatingName: $("#operatingName").val(),
+                    operName: $("#operatingName").val(),
                     timeStart: $("#operatingStart").val(),
                     timeEnd: $("#operatingEnd").val()
                 });
@@ -1054,17 +1095,14 @@
         
         $("button.editOperating").unbind().click(function(){
             var id = $(this).attr("data-id");
-            
             $("#operatingModal").modal("show");
-            $("#operatingName").val(operating[id]["operatingName"]);
+            $("#operatingName").val(operating[id]["operName"]);
             $("#operatingStart").val(operating[id]["timeStart"]);
             $("#operatingEnd").val(operating[id]["timeEnd"]);
-            
-            $("#operatingStart, #operatingEnd").datepicker();
 
             $("button.save").unbind().click(function(){
                 operating[id] = {
-                    operatingName: $("#operatingName").val(),
+                    operName: $("#operatingName").val(),
                     timeStart: $("#operatingStart").val(),
                     timeEnd: $("#operatingEnd").val()
                 };
@@ -1158,6 +1196,7 @@
     function dataObject(){
         var obj = {};
         obj["id"] = id;
+        obj["deptId"] = facultyId;
         $("#form input[type=text], #form textarea, #form input[type=radio]:checked").each(function(){
             if($(this).attr("name").indexOf("intName") == -1){
                 var fname = $(this).attr("name");
@@ -1191,15 +1230,28 @@
         var fdata = {};
         fdata["project"] = obj;
         
-        console.log(fdata);
         return fdata;
     }
     
     function saveProject(dataJSONEN){
-        var datas = callAjax("{{_context_path}}/api/revenue/project/save", "post", dataJSONEN, "json");
-        if(typeof datas !== "undefined" && datas !== null){
-            
-        }
+        $("#saveModal").modal("show");
+        
+        $("#mIcon").html('<i class="text-info fa fa-save"></i>');
+        $("#mText").html('กำลังบันทึกข้อมูล...');
+        
+        setTimeout(function(){
+            var datas = callAjax("{{_context_path}}/api/revenue/project/save", "post", dataJSONEN, "json");
+            if(typeof datas !== "undefined" && datas !== null){
+                if(datas["save"] == true){
+                    $("#mIcon").html('<i class="text-success fa fa-check"></i>');
+                    $("#mText").html('บันทึกข้อมูลเรียบร้อยแล้ว');
+                }
+                else{
+                    $("#mIcon").html('<i class="text-danger fa fa-times"></i>');
+                    $("#mText").html('ไม่สามารถบันทึกข้อมูลได้');
+                }
+            }
+        }, 500);
     }
 
 </script>

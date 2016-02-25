@@ -37,20 +37,17 @@ class AuthClient extends COAuthClient {
     }
 
     public function authenticate() {
-        //echo "xxxxxx";
         $key = $this->params["OAUTH2_ACCESS_KEY"];
         $code = null;
         if (!$code && isset($_GET[$key])) {
             $code = $_GET[$key];
         }
-        // echo $code;
         if ($code) {
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $this->params['OAUTH2_TOKEN_URI']);
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $this->params["OAUTH2_ACCESS_KEY"] . "=" . $code);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            //echo "xxxxxxxxxx";
             echo $this->params['OAUTH2_TOKEN_URI'];
             $server_output = curl_exec($ch);
             echo $server_output;
@@ -76,30 +73,25 @@ class AuthClient extends COAuthClient {
         $data = base64_encode($this->params["OAUTH2_CLIENT_ID"] . "|" . $data);
         $authUrl = $this->params["OAUTH2_AUTH_URL"] . "?" . $this->params["OAUTH2_ACCESS_KEY"] . "=" . $data;
         header('Location: ' . $authUrl);
-        if($this->params['WITH_AJAX_CALL']){
+        if ($this->params['WITH_AJAX_CALL']) {
             http_response_code("401");
         }
         exit();
     }
 
     public function getAccessToken() {
-        
+
         return $this->token;
     }
 
     public function getUserInfo() {
-       // $logger = \Logger::getLogger("root");
-       // $logger->info($this->token);
-       // $logger->info($this->params["OAUTH2_CLIENT_SECRET"]);
-       // $data = base64_decode($this->token);
-        //echo 
-          $data = base64_decode($this->token);
-        $acc= JWT::decode($data, $this->params["OAUTH2_CLIENT_SECRET"], array('HS256'));
-        //return $this->
-       // $acc = new \th\co\bpg\cde\collection\CJAccount();
-       // $acc->code = "xxx";
-    //    print_r($acc);
-          setcookie("userinfo",$acc->name, 0, "/");
+        return true;
+        
+        $data = base64_decode($this->token);
+        $acc = JWT::decode($data, $this->params["OAUTH2_CLIENT_SECRET"], array('HS256'));
+        //print_r($acc->resources);
+        setcookie("userinfo", $acc->name, 0, "/");
+        setcookie("usertype", $acc->usertype, 0, "/");
         return $acc;
     }
 
