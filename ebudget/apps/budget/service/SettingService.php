@@ -28,10 +28,21 @@ class SettingService extends CServiceBase implements ISettingService {
     public function listsYear() {
         $year = "select year.id, year.year, year.yearStatus, setting.dateClose, setting.isClosed "
                 . "from " . $this->ent . "\\Year year "
-                . "join " . $this->ent . "\\BudgetSetting setting with year.year = setting.budgetPeriodId";
+                . "left join " . $this->ent . "\\BudgetSetting setting with year.year = setting.budgetPeriodId";
 
         $dataYear = $this->datacontext->getObject($year);
-        return $dataYear;
+        $list = array();
+        foreach ($dataYear as $key => $value) {
+            $data = array(
+                "id" => $value["id"],
+                "year" => $value["year"],
+                "yearStatus" => $value["yearStatus"],
+                "dateClose" => $value["dateClose"]->format('d-m-Y'),
+                "isClosed" => $value["isClosed"]
+            );
+            $list[$key] = $data;
+        }
+        return $list;
     }
 
     public function saveSetting($bgPeriodId, $activeYear, $setClose, $dateClose) {
@@ -39,8 +50,10 @@ class SettingService extends CServiceBase implements ISettingService {
         $year->setYear($bgPeriodId);
         $dataYear = $this->datacontext->getObject($year);
 
-        $year->setYearStatus($activeYear);
-        if (!$this->datacontext->updateObject($year)) {
+        $dataYear[0]->setYearStatus($activeYear);
+        $dataYear[0]->setDateUpdated(date("Y-m-d H:i:s"));
+
+        if (!$this->datacontext->updateObject($dataYear[0])) {
             return false;
         }
 
@@ -48,9 +61,10 @@ class SettingService extends CServiceBase implements ISettingService {
         $setting->setBudgetPeriodId($bgPeriodId);
         $dataSetting = $this->datacontext->getObject($setting);
 
-        $setting->setIsClosed($setClose);
-        $setting->setDateClose($dateClose);
-        if (!$this->datacontext->updateObject($setting)) {
+        $dataSetting[0]->setIsClosed($setClose);
+        $dataSetting[0]->setDateClose(date_format($dateClose, 'd-m-Y'));
+        $dataSetting[0]->setDateUpdated(date("Y-m-d H:i:s"));
+        if (!$this->datacontext->updateObject($dataSetting[0])) {
             return false;
         }
 

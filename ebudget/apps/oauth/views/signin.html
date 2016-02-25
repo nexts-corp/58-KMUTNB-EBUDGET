@@ -10,14 +10,14 @@
                             <div class="col-sm-12">
                                 <div class="featured-box featured-box-secundary default info-content">
                                     <div class="box-content">
-                                        <h4>เข้าใช้งานระบบ</h4>
+                                        <h4>ระบบสารสนเทศเพื่อการจัดการงบประมาณ และประสิทธิภาพการดำเนินโครงการ</h4>
                                         <form id="form" method="post" action="{{_context_path}}/api/oauth/authen/authorization">
                                             <input type="hidden" name="code" value="{{code}}" />
                                             <div class="row">
                                                 <div class="form-group">
                                                     <div class="col-md-12">
                                                         <label>ชื่อผู้ใช้งาน</label>
-                                                        <input type="text" name="username"  value="{{username}}"  class="form-control input-lg req" placeholder="Username" required>
+                                                        <input type="text" name="username"  value="{{username}}"  class="form-control input-lg req" placeholder="ชื่อผู้ใช้งาน" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -26,7 +26,7 @@
                                                     <div class="col-md-12">
                                                         <!--<a class="pull-right" href="#">(Lost Password?)</a>-->
                                                         <label>รหัสผ่าน</label>
-                                                        <input type="password" name="password" value="{{password}}" class="form-control input-lg" placeholder="Password" required>
+                                                        <input type="password" name="password" value="{{password}}" class="form-control input-lg" placeholder="รหัสผ่าน" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -39,7 +39,7 @@
                                                     </span>
                                                 </div>-->
                                                 <div class="col-md-12 text-right">
-                                                    <input id="submit" type="submit" value="เข้าใช้งาน" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
+                                                    <input id="submit" type="submit" value="เข้าสู่ระบบ" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
                                                 </div>
                                             </div>
                                         </form>

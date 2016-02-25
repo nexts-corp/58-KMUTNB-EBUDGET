@@ -33,4 +33,5 @@ class Role extends EntityBase {
     function setRole($role) {
         $this->role = $role;
     }
+
 }

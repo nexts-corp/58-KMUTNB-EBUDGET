@@ -1,4 +1,5 @@
 <?php
+
 namespace apps\root\interfaces;
 
 /**
@@ -7,24 +8,19 @@ namespace apps\root\interfaces;
  * @description ViewService
  */
 interface IViewService {
-   
+
     /**
      * @name index
      * @uri /index
      * @description  index
-     */ 
+     */
     public function index();
-    
-    
-     /**
+
+    /**
      * @name logout
      * @uri /logout
      * @description  logout
      * @authen true
-     */ 
+     */
     public function logout();
-    
-    
-    
-
 }

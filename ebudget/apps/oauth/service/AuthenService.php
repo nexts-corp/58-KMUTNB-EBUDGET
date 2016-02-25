@@ -4,6 +4,7 @@ namespace apps\oauth\service;
 
 use apps\common\entity\Member;
 use apps\common\entity\Role;
+use apps\common\entity\MemberRole;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
@@ -30,14 +31,12 @@ class AuthenService extends CServiceBase implements IAuthenService {
             $username = $this->getRequest()->username;
             $password = $this->getRequest()->password;
 
-//          header('Location: /kmutnb-ebudget/api/budget/view/formBudget');
-
             $check = new Member();
             $check->username = $username;
             $check->password = md5($password);
-
             $user = $this->datacontext->getObject($check);
             //print_r($user);
+
             if (count($user) > 0) {
 
                 $data = base64_decode($code);
@@ -50,12 +49,12 @@ class AuthenService extends CServiceBase implements IAuthenService {
                 $euid = base64_encode($uid);
 
                 $authUrl = $cc['OAUTH2_CALLBACK_URL'] . "?code=" . $euid;
+
                 // echo $authUrl;
 
                 header('Location: ' . $authUrl);
                 header('Location: /kmutnb-ebudget/ebudget/api/root/view/index');
                 exit;
-                //        return false;
             } else {
 
                 $view = new CJView("signin", CJViewType::HTML_VIEW_ENGINE);
@@ -63,7 +62,6 @@ class AuthenService extends CServiceBase implements IAuthenService {
                 $view->username = $username;
                 $view->password = $password;
                 return $view;
-                // return "xxxx";
             }
         } else {
             $view = new CJView("signin", CJViewType::HTML_VIEW_ENGINE);
@@ -80,29 +78,36 @@ class AuthenService extends CServiceBase implements IAuthenService {
 
         $uidd = (array) JWT::decode($uid, "123456", array('HS256'));
 
-        $check = new Member();
-        $check->id = $uidd['uid'];
-        $user = $this->datacontext->getObject($check);
-        if (count($user) > 0) {
+        $member = new Member();
+        $member->id = $uidd['uid'];
+        $xmember = $this->datacontext->getObject($member);
 
-            $role = new Role();
-            $role->code = $user[0]->roleCode;
+        if (count($xmember) > 0) {
 
-            $xrole = $this->datacontext->getObject($role);
+            $member_role = new MemberRole();
+            $member_role->memberId = $xmember[0]->id;
+            $xmember_role = $this->datacontext->getObject($member_role);
 
-            $acc = new \th\co\bpg\cde\collection\CJAccount();
-            $acc->code = $user[0]->username;
-            $acc->name = $user[0]->name . " " . $user[0]->surname;
-            $acc->role = $user[0]->roleCode;
-            $acc->domain = $user[0]->roleCode;
-            $acc->resources = array();
-            $acc->resources[] = $xrole[0]->permission;
+            if (count($xmember_role) > 0) {
+                $role = new Role();
+                $role->id = $xmember_role[0]->roleId;
+                $xrole = $this->datacontext->getObject($role);
 
-            $uinfo = JWT::encode($acc, "123456");
-            $uinfo = base64_encode($uinfo);
-            // return $uinfo;
-            print $uinfo;
-            exit();
+                $acc = new \th\co\bpg\cde\collection\CJAccount();
+                $acc->code = $xmember[0]->id;
+                $acc->name = $xmember[0]->firstname . " " . $xmember[0]->lastname;
+                $acc->role = $xrole[0]->role;
+                $acc->usertype = $xrole[0]->roleId;
+                $acc->domain = $xrole[0]->role;
+                $acc->resources = array();
+                $acc->resources[] = $xrole[0]->id;
+
+                $uinfo = JWT::encode($acc, "123456");
+                $uinfo = base64_encode($uinfo);
+                // return $uinfo;
+                print $uinfo;
+                exit();
+            }
         }
     }
 

@@ -15,7 +15,6 @@ class MemberRole extends EntityBase {
     public $memberId;
 
     /** @Column(type="integer",length=11,name="RoleId") */
-    
     public $roleId;
 
     function getMemberId() {
@@ -33,4 +32,5 @@ class MemberRole extends EntityBase {
     function setRoleId($roleId) {
         $this->roleId = $roleId;
     }
+
 }
