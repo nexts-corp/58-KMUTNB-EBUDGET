@@ -23,8 +23,8 @@ class ProjectService extends CServiceBase implements IProjectService {
 
     function getPeriod() {
         $year = new \apps\common\entity\Year();
-        //$year->yearStatus = 'Y';
-        $year->year = 2558;
+        $year->yearStatus = 'Y';
+        //$year->year = 2558;
         return $this->datacontext->getObject($year)[0];
     }
 

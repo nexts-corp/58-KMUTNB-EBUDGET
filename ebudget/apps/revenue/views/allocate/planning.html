@@ -333,8 +333,6 @@
                 callDeptAll = 1;
             }
 
-            $("select.deptId").html(dataDeptAll);
-
             $("#formDept").html('<div class="form-group">'
                     + '<div class="col-md-7">'
                     + '<select class="form-control input-sm deptId" name="deptId" required>'
@@ -346,6 +344,8 @@
                     + '<button class="btn btn-success addDept"><i class="fa fa-plus-circle"></i></button>'
                     + '</div>');
 
+            $("select.deptId").select2().html(dataDeptAll);
+            
             $("button.addDept").unbind().click(function () {
                 $("#formDept").append('<div class="form-group">'
                         + '<div class="col-md-7">'
