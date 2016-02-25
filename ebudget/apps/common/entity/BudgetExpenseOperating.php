@@ -9,13 +9,16 @@ namespace apps\common\entity;
 class BudgetExpenseOperating extends EntityBase {
 
     /**
-     * @Id
-     * @Column(type="integer",length=11, name="BudgetExpenseId") */
+     * @Id 
+     * @Column(type="integer",length=11,name="BudgetExpenseOperatingId")
+     * @GeneratedValue
+     */
+    public $id;
+    
+    /** @Column(type="integer",length=11, name="BudgetExpenseId") */
     public $expenseId;
 
-    /** 
-     * @Id
-     * @Column(type="integer",length=11, name="Seq") */
+    /** @Column(type="integer",length=11, name="Seq") */
     public $seq;
 
     /** @Column(type="text", name="OperatingName") */
@@ -26,6 +29,10 @@ class BudgetExpenseOperating extends EntityBase {
 
     /** @Column(type="date", name="TimeEnd") */
     public $timeEnd;
+
+    function getId() {
+        return $this->id;
+    }
 
     function getExpenseId() {
         return $this->expenseId;
@@ -45,6 +52,10 @@ class BudgetExpenseOperating extends EntityBase {
 
     function getTimeEnd() {
         return $this->timeEnd;
+    }
+
+    function setId($id) {
+        $this->id = $id;
     }
 
     function setExpenseId($expenseId) {

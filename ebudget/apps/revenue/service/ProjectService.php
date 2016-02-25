@@ -363,6 +363,17 @@ class ProjectService extends CServiceBase implements IProjectService {
         $opt = new \apps\common\entity\BudgetExpenseOperating();
         $opt->expenseId = $expData->id;
         $optData = $this->datacontext->getObject($opt);
+        $optD = [];
+        foreach ($optData as $key => $val){
+            array_push($optD, array(
+                "id" => $val->id,
+                "expenseId" => $val->expenseId,
+                "seq" => $val->seq,
+                "operName" => $val->operName,
+                "timeStart" =>  ($val->timeStart != null) ? $val->timeStart->format("d-m-Y") : null,
+                "timeEnd" => ($val->timeEnd != null) ? $val->timeEnd->format("d-m-Y") : null,
+            ));
+        }
 
         $detail = new \apps\common\entity\BudgetExpenseDetail();
         $detail->expenseId = $expData->id;
@@ -384,9 +395,9 @@ class ProjectService extends CServiceBase implements IProjectService {
             "benefits" => $expData->benefits,
             "kpi" => $kpiData,
             "target" => $expData->target,
-            "operating" => $optData,
-            "timeStart" => $expData->timeStart,
-            "timeEnd" => $expData->timeEnd,
+            "operating" => $optD,
+            "timeStart" => ($expData->timeStart != null) ? $expData->timeStart->format("d-m-Y") : null,
+            "timeEnd" => ($expData->timeEnd != null) ? $expData->timeEnd->format("d-m-Y") : null,
             "budgetEstAmount" => $expData->budgetEstAmount,
             "budgetEstText" => $expData->budgetEstText,
             "budgetTypeId" => $expData->budgetTypeId,
@@ -398,11 +409,9 @@ class ProjectService extends CServiceBase implements IProjectService {
     }
     
     public function save($project){
-        $return = true;
-        
         $exp = new \apps\common\entity\BudgetExpense();
         $exp->id = $project->id;
-        $expD = $this->datacontext->getObject($exp);
+        $expD = $this->datacontext->getObject($exp)[0];
         
         $expD->budgetTypeId = $project->budgetTypeId;
         $expD->projectId = $project->projectId;
@@ -412,10 +421,117 @@ class ProjectService extends CServiceBase implements IProjectService {
         $expD->rationale = $project->rationale;
         $expD->objective = $project->objective;
         $expD->target = $project->target;
-        $expD->timeStart = $project->timeStart;
-        $expD->timeEnd = $project->timeEnd;
+        $expD->timeStart = new \DateTime(substr($project->timeStart, 6, 4)."-".substr($project->timeStart, 3, 2)."-".substr($project->timeStart, 0, 2));
+        $expD->timeEnd = new \DateTime(substr($project->timeEnd, 6, 4)."-".substr($project->timeEnd, 3, 2)."-".substr($project->timeEnd, 0, 2));
         $expD->budgetEstAmount = $project->budgetEstAmount;
         $expD->budgetEstText = $project->budgetEstText;
         $expD->benefits = $project->benefits;
+        
+        if(!$this->datacontext->updateObject($expD)){
+            return $this->datacontext->getLastMessage();
+        }
+        
+        $int = new \apps\common\entity\BudgetExpenseIntegration();
+        $int->expenseId = $project->id;
+        $intD = $this->datacontext->getObject($int);
+        //return $intD;
+        if($this->datacontext->removeObject($intD)){
+            foreach($project->integration as $key => $val){
+                $int = new \apps\common\entity\BudgetExpenseIntegration();
+                $int->expenseId = $project->id;
+                $int->integrationId = $val->integrationId;
+                $int->deptId = $project->deptId;
+                $int->desc = $val->desc;
+                if(!$this->datacontext->saveObject($int)){
+                    return $this->datacontext->getLastMessage();
+                }
+            }
+        }
+        else{
+            return $this->datacontext->getLastMessage();
+        }
+        
+        $aff = new \apps\common\entity\BudgetExpenseAffirmative();
+        $aff->expenseId = $project->id;
+        $affD = $this->datacontext->getObject($aff);
+        if($this->datacontext->removeObject($affD)){
+            foreach($project->affirmative as $key => $val){
+                $aff = new \apps\common\entity\BudgetExpenseAffirmative();
+                $aff->expenseId = $project->id;
+                $aff->typeId = $val->typeId;
+                $aff->issueId = $val->issueId;
+                $aff->targetId = $val->targetId;
+                $aff->strategyId = $val->strategyId;
+                if(!$this->datacontext->saveObject($aff)){
+                    return $this->datacontext->getLastMessage();
+                }
+            }
+        }
+        else{
+            return $this->datacontext->getLastMessage();
+        }
+        
+        $kpi = new \apps\common\entity\BudgetExpenseKpi();
+        $kpi->expenseId = $project->id;
+        $kpiD = $this->datacontext->getObject($kpi);
+        if($this->datacontext->removeObject($kpiD)){
+            foreach($project->kpi as $key => $val){
+                $kpi = new \apps\common\entity\BudgetExpenseKpi();
+                $kpi->expenseId = $project->id;
+                $kpi->budgetDesc = $val->budgetDesc;
+                $kpi->unit = $val->unit;
+                $kpi->goal = $val->goal;
+                $kpi->kpiTypeId = $val->kpiTypeId;
+                if(!$this->datacontext->saveObject($kpi)){
+                    return $this->datacontext->getLastMessage();
+                }
+            }
+        }
+        else{
+            return $this->datacontext->getLastMessage();
+        }
+        
+        $opt = new \apps\common\entity\BudgetExpenseOperating();
+        $opt->expenseId = $project->id;
+        $optD = $this->datacontext->getObject($opt);
+        if($this->datacontext->removeObject($optD)){
+            foreach($project->operating as $key => $val){
+                $opt = new \apps\common\entity\BudgetExpenseOperating();
+                $opt->expenseId = $project->id;
+                $opt->seq = $key+1;
+                $opt->operName = $val->operName;
+                $opt->timeStart = new \DateTime(substr($val->timeStart, 6, 4)."-".substr($val->timeStart, 3, 2)."-".substr($val->timeStart, 0, 2));
+                $opt->timeEnd = new \DateTime(substr($val->timeEnd, 6, 4)."-".substr($val->timeEnd, 3, 2)."-".substr($val->timeEnd, 0, 2));
+                if(!$this->datacontext->saveObject($opt)){
+                    return $this->datacontext->getLastMessage();
+                }
+            }
+        }
+        else{
+            return $this->datacontext->getLastMessage();
+        }
+        
+        $dtl = new \apps\common\entity\BudgetExpenseDetail();
+        $dtl->expenseId = $project->id;
+        $dtlD = $this->datacontext->getObject($dtl);
+        if($this->datacontext->removeObject($dtlD)){
+            foreach($project->detail as $key => $val){
+                $dtl = new \apps\common\entity\BudgetExpenseDetail();
+                $dtl->expenseId = $project->id;
+                $dtl->budgetDesc = $val->budgetDesc;
+                $dtl->numOfUnit = $val->numOfUnit;
+                $dtl->pricePerUnit = $val->pricePerUnit;
+                $dtl->totalPrice = $val->totalPrice;
+                $dtl->remark = $val->remark;
+                if(!$this->datacontext->saveObject($dtl)){
+                    return $this->datacontext->getLastMessage();
+                }
+            }
+        }
+        else{
+            return $this->datacontext->getLastMessage();
+        }
+        
+        return true;
     }
 }

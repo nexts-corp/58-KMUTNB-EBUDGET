@@ -24,7 +24,7 @@ class BudgetExpenseKpi extends EntityBase {
     /** @Column(type="string",length=100, name="KpiUnit") */
     public $unit;
 
-    /** @Column(type="integer",length=11, name="KpiGoal") */
+    /** @Column(type="string",length=100, name="KpiGoal") */
     public $goal;
 
     /** @Column(type="integer",length=11, name="KpiTypeId") */
