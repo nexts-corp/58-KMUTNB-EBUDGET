@@ -163,9 +163,15 @@ class ProjectService extends CServiceBase implements IProjectService {
     }
 
     public function fetchSubsidies() {
-        $list = new \apps\common\entity\BudgetType();
+        /*$list = new \apps\common\entity\BudgetType();
         $list->setMasterId(20500000);
         $list->setTypeCode("G");
+        $list->setBgPeriodId($this->getPeriod()->year);*/
+
+        $list = new \apps\common\entity\BudgetType();
+        $list->setMasterId(0);
+        $list->setTypeCode("K");
+        $list->setBgPeriodId($this->getPeriod()->year);
         return $this->datacontext->getObject($list);
     }
 

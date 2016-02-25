@@ -12,7 +12,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="none-padding">แบบเสนอโครงการที่ตอบสนองยุทธศาสตร์การพัฒนามหาวิทยาลัย ปี {{year}}</h1>
+                    <h2 class="none-padding">แบบเสนอโครงการที่ตอบสนองยุทธศาสตร์การพัฒนามหาวิทยาลัย ปี {{year}}</h2>
                 </div>
             </div>
         </div>
@@ -20,19 +20,30 @@
 
     <hr class="tall dashboard">
 
+    <div class="sort-source-wrapper">
+        <div class="container">
+            <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+                <li class="active">
+                    <button class="btn btn-default backHome"><i class="fa fa-angle-double-left">
+                            ย้อนกลับ</i></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label class="col-md-12 control-label">{{deptName}}</label>
+                    <label class="col-md-12 control-label"><h3>{{deptName}}</h3></label>
                 </div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-12">
-                <label class="col-md-1 control-label">โครงการ</label>
-                <div class="col-md-5">
+                <label class="col-md-2 control-label">โครงการ : </label>
+                <div class="col-md-6">
                     <select id="budgetHeadId" name="budgetHeadId" class="form-control input-sm"></select>
                 </div>
             </div>
@@ -572,6 +583,11 @@
 <script src="{{_context_path}}/asset/vendor/bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
 <script>
     (function( $ ) {
+        
+        $(".backHome").click(function () {
+            window.location = "{{_context_path}}/api/revenue/view/manageAll";
+        });
+        
         'use strict';
         var $w4finish = $('#wizard').find('ul.pager li.finish'),
                 $w4validator = $("#wizard form").validate({
