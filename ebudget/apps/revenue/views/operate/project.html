@@ -711,7 +711,7 @@
         });
         
         $("#budgetHeadId").change(function(){
-            window.location = "{{_context_path}}/api/revenue/view/manage/"+formId+"/"+budgetHeadId+"/"+facultyId;
+            window.location = "{{_context_path}}/api/revenue/view/manage/"+formId+"/"+$("#budgetHeadId").val()+"/"+facultyId;
         });
     });
     
@@ -721,7 +721,7 @@
             var html = '';
             $.each(datas["lists"], function(key, val){
                 var check = '';
-                if(val["BudgetHeadId"] == budgetHeadId)  check = 'checked';
+                if(val["BudgetHeadId"] == budgetHeadId)  check = 'selected';
                 html += '<option value="'+val["BudgetHeadId"]+'" '+check+'>'+val["formName"]+'</option>';
             });
             $("#budgetHeadId").html(html);            
