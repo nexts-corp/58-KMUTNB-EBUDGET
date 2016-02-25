@@ -27,15 +27,6 @@ interface IProjectService {
     public function getAllProject($facultyId);
     
     /**
-     * @name save
-     * @uri /save
-     * @description ดึงโครงสร้างโครงการ
-     * @param String[] project รหัสหน่วยงาน
-     * @return doolean save
-     */
-    public function save($project);
-    
-    /**
      * @name getData
      * @uri /getData
      * @description ดึงโครงสร้างโครงการ
@@ -45,4 +36,12 @@ interface IProjectService {
      */
     public function getData($budgetHeadId, $facultyId);
 
+    /**
+     * @name save
+     * @uri /save
+     * @description ดึงโครงสร้างโครงการ
+     * @param String[] project รหัสหน่วยงาน
+     * @return doolean save
+     */
+    public function save($project);
 }

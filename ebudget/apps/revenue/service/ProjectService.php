@@ -343,12 +343,6 @@ class ProjectService extends CServiceBase implements IProjectService {
         return $dataBgh;
     }
     
-    public function save($project){
-        $return = true;
-        
-        return $project->facName;
-    }
-    
     public function getData($budgetHeadId, $facultyId) {
         $expense = new \apps\common\entity\BudgetExpense();
         $expense->budgetHeadId = $budgetHeadId;
@@ -401,5 +395,27 @@ class ProjectService extends CServiceBase implements IProjectService {
         );
         
         return $result;              
+    }
+    
+    public function save($project){
+        $return = true;
+        
+        $exp = new \apps\common\entity\BudgetExpense();
+        $exp->id = $project->id;
+        $expD = $this->datacontext->getObject($exp);
+        
+        $expD->budgetTypeId = $project->budgetTypeId;
+        $expD->projectId = $project->projectId;
+        $expD->projectTypeId = $project->projectTypeId;
+        $expD->director = $project->director;
+        $expD->responder = $project->responder;
+        $expD->rationale = $project->rationale;
+        $expD->objective = $project->objective;
+        $expD->target = $project->target;
+        $expD->timeStart = $project->timeStart;
+        $expD->timeEnd = $project->timeEnd;
+        $expD->budgetEstAmount = $project->budgetEstAmount;
+        $expD->budgetEstText = $project->budgetEstText;
+        $expD->benefits = $project->benefits;
     }
 }
