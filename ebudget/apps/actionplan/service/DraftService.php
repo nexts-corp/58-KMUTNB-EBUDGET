@@ -266,11 +266,14 @@ class DraftService extends CServiceBase implements IDraftService {
         $draft->typeId = $typeId;
         $draft->isActive = "Y";
         $dataDraft = $this->datacontext->getObject($draft);
+
         if ($status == "Y") {
             $check = true;
+            $draftId = array();
             foreach ($dataDraft as $keyDraft => $valueDraft) {
-                if ($valueDraft->projectName != NULL && $valueDraft->timeDuration != NULL && $valueDraft->isApprove != "Y") {
+                if ($valueDraft->projectName != NULL && $valueDraft->timeDuration != NULL) { // && $valueDraft->isApprove != "Y") {
                     $dataDraft[$keyDraft]->isApprove = $status;
+                    array_push($draftId, (int) $valueDraft->draftId);
                 } else {
                     $check = false;
                     $this->getResponse()->add('msg', 'ข้อมูลตัวชี้วัดไม่ครบถ้วน');
@@ -278,36 +281,42 @@ class DraftService extends CServiceBase implements IDraftService {
                 }
             }
             if ($check == true) {
+                return $lists;
+                // return substr($draftId, 0, -1);
                 if ($this->datacontext->updateObject($dataDraft)) {
-                    
-                    
-                    $sql = "INSERT INTO Affirmative_Final(
-                            PeriodCode, AffirmativeDraftId, DepartmentId,
-                            AffirmativeMainId, AffirmativeMainSeq,
-                            AffirmativeTypeId, AffirmativeTypeSeq,
-                            HasIssue, AffirmativeIssueId, AffirmativeIssueSeq,
-                            AffirmativeTargetId, AffirmativeTargetSeq,
-                            AffirmativeKpiId, AffirmativeKpiSeq, AffirmativeKpiName,
-                            AffirmativeUnitId, AffirmativeUnitName,
-                            KpiGoal, Score1, Score2, Score3, Score4, Score5,
-                            Remark, IsApprove, IsActive
-                        )
-                        SELECT
-                            PeriodCode, AffirmativeDraftId, DepartmentId,
-                            AffirmativeMainId, AffirmativeMainSeq,
-                            AffirmativeTypeId, AffirmativeTypeSeq,
-                            HasIssue, AffirmativeIssueId, AffirmativeIssueSeq,
-                            AffirmativeTargetId, AffirmativeTargetSeq,
-                            AffirmativeKpiId, AffirmativeKpiSeq, AffirmativeKpiName,
-                            AffirmativeUnitId, AffirmativeUnitName,
-                            KpiGoal, Score1, Score2, Score3, Score4, Score5,
-                            Remark, 'N', IsActive
-                        FROM Affirmative_Draft WHERE PeriodCode = :year AND DepartmentId = :deptId";
-                    $param = array(
-                        "year" => $this->getPeriod()->year,
-                        "deptId" => $departmentId
-                    );
-                    $this->datacontext->pdoQuery($sql, $param);
+                    $sql = "UPDATE ActionPlan_Draft_Detail "
+                            . "SET IsApprove = 'Y' "
+                            . "WHERE ActionPlanDraftId in (" . implode(",", $draftId) . ") "
+                            . "AND IsActive = 'Y' ";
+                    //$param = array("draftId" => $draftId);
+                    return $this->datacontext->pdoExecute($sql);
+//                    $sql = "INSERT INTO Affirmative_Final(
+//                            PeriodCode, AffirmativeDraftId, DepartmentId,
+//                            AffirmativeMainId, AffirmativeMainSeq,
+//                            AffirmativeTypeId, AffirmativeTypeSeq,
+//                            HasIssue, AffirmativeIssueId, AffirmativeIssueSeq,
+//                            AffirmativeTargetId, AffirmativeTargetSeq,
+//                            AffirmativeKpiId, AffirmativeKpiSeq, AffirmativeKpiName,
+//                            AffirmativeUnitId, AffirmativeUnitName,
+//                            KpiGoal, Score1, Score2, Score3, Score4, Score5,
+//                            Remark, IsApprove, IsActive
+//                        )
+//                        SELECT
+//                            PeriodCode, AffirmativeDraftId, DepartmentId,
+//                            AffirmativeMainId, AffirmativeMainSeq,
+//                            AffirmativeTypeId, AffirmativeTypeSeq,
+//                            HasIssue, AffirmativeIssueId, AffirmativeIssueSeq,
+//                            AffirmativeTargetId, AffirmativeTargetSeq,
+//                            AffirmativeKpiId, AffirmativeKpiSeq, AffirmativeKpiName,
+//                            AffirmativeUnitId, AffirmativeUnitName,
+//                            KpiGoal, Score1, Score2, Score3, Score4, Score5,
+//                            Remark, 'N', IsActive
+//                        FROM Affirmative_Draft WHERE PeriodCode = :year AND DepartmentId = :deptId";
+//                    $param = array(
+//                        "year" => $this->getPeriod()->year,
+//                        "deptId" => $departmentId
+//                    );
+                    //   $this->datacontext->pdoQuery($sql, $param);
                     /* if (!$this->datacontext->pdoQuery($sql, $param)) {
                       $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
                       return false;
