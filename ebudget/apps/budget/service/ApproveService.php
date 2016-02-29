@@ -181,6 +181,7 @@ class ApproveService extends CServiceBase implements IApproveService {
                     if ($value->statusId == 1 || $value->statusId == 4) {
                         $object->setId($value->id);
                         $object->setStatusPlanningId($status);
+                        $object->setStatusId($status);
                         if (isset($value->comment))
                             $object->setComment($value->comment);
                     } else if ($value->statusId == 2) {
@@ -191,6 +192,7 @@ class ApproveService extends CServiceBase implements IApproveService {
 
                     $object->setId($value->id);
                     $object->setStatusPlanningId($status);
+                    $object->setStatusId($status);
                     if (isset($value->comment))
                         $object->setComment($value->comment);
                 }
@@ -245,6 +247,7 @@ class ApproveService extends CServiceBase implements IApproveService {
             $bgh = new BudgetHead();
             $bgh->setId($id);
             $bgh->setStatusPlanningId($statusId);
+            $bgh->setStatusId($statusId);
             if (!$this->datacontext->updateObject($bgh)) {
                 $result = false;
             }

@@ -29,7 +29,7 @@ class updateTrackingStatus extends CServiceBase implements IUpdateTrackingStatus
     public function updateTrackingBG($bgType, $listBg, $status)
     {
         $return = array();
-
+        
         foreach ($listBg as $key => $value) {
 
             if (isset($value)) {

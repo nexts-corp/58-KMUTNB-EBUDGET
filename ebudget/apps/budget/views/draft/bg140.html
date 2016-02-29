@@ -497,7 +497,7 @@
                 total += value2;
                 sum += value2;
 
-                total3percent = total + (total * 3 / 100);
+                /*total3percent = total + (total * 3 / 100);
                 total6percent = total3percent + (total3percent * 6 / 100);
                 
                 total5percent = total + (total * 5 / 100);
@@ -507,7 +507,7 @@
                     $("tr[data-tt-id='" + key2 + "']").find("td").eq(6).append("<br>" + "(6%) " + checkZero(total6percent));
                 } else if (key2 == "20101010") {
                     $("tr[data-tt-id='" + key2 + "']").find("td").eq(6).append("<br>" + "(5%) " + checkZero(total5percent));
-                }
+                }*/
             });
 
             $("tr[data-tt-id='" + key + "']").find("td").eq(6).html(checkZero(sum));

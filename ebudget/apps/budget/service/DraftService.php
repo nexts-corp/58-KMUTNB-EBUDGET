@@ -28,12 +28,17 @@ class DraftService extends CServiceBase implements IDraftService {
 
     public function getAllBudgetRequest($deptId)
     {
+        /*
+         * authen เสร็จเมื่อไหร่ ค่อยใช้โค้ดส่วนนี้ ไม่งั้นเทสไม่ได้
         if ($deptId > 0) {
             $sqlExt = "and bgh.statusId = 1 ";
         } else {
             $sqlExt = "and bgh.statusId <> 1 ";
         }
+         * 
+         */
 
+        
         $sql = "select bgh.id as bghId, bgh.budgetTypeCode, bgh.budgetPeriodId, "
             . "case when bgh.budgetTypeCode = 'G' then 'เงินงบประมาณแผ่นดิน' else 'เงินรายได้' end as budgetTypeName, "
             . "bgh.formId as formId, dept.id as deptId, dept.deptName as deptName, "
@@ -52,7 +57,7 @@ class DraftService extends CServiceBase implements IDraftService {
             . "left outer join " . $this->ent . "\\L3D\\FundGroup fund with fund.id = bgh.fundgroupId "
             . "left outer join " . $this->ent . "\\TrackingStatus status with status.id = bgh.statusId "
             . "where bgh.budgetTypeCode = :budgetTypeCode "
-            . $sqlExt
+            //. $sqlExt
             . "and bgh.budgetPeriodId = :budgetPeriodId "
             . "order by status.id, bgh.formId, dept.id, l3dPlan.id, fund.id asc ";
 

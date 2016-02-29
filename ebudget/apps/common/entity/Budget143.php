@@ -48,7 +48,7 @@ class Budget143 extends EntityBase {
     /** @Column(type="integer",length=11, name="ActivityId") */
     public $activityId;
 
-    /** @Column(type="integer",length=11, name="AtaachmentId") */
+    /** @Column(type="integer",length=11, name="AttachmentId") */
     public $attachmentId;
 
     /** @Column(type="string",length=300, name="OperatingName") */
