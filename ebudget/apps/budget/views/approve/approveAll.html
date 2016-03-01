@@ -221,6 +221,8 @@
                 function () {
 
                     var datas = callAjax("{{_context_path}}/api/budget/approveSum/approveSumBg", "post", {budgetPeriodId: budgetPeriodId}, "json");
+             
+                        
                     if (datas["result"] == true) {
 
                         swal({

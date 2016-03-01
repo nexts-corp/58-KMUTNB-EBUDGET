@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: KaowNeaw
@@ -7,7 +8,6 @@
  */
 
 namespace apps\budget\service;
-
 
 use apps\budget\interfaces\apps;
 use apps\budget\interfaces\IApproveSumService;
@@ -18,23 +18,19 @@ use th\co\bpg\cde\data\CDataContext;
 use th\co\bpg\cde\collection\CJView;
 use th\co\bpg\cde\collection\CJViewType;
 use apps\budget\interfaces\IViewService;
-
-
 use apps\common\service\LookupService;
 
-class ApproveSumService extends CServiceBase implements IApproveSumService
-{
+class ApproveSumService extends CServiceBase implements IApproveSumService {
+
     public $datacontext;
     public $ent = "apps\\common\\entity";
     public $md = "apps\\common\\model";
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->datacontext = new CDataContext();
     }
 
-    public function approveSumBudgetRequest($budgetPeriodId)
-    {
+    public function approveSumBudgetRequest($budgetPeriodId) {
 
         $sql = 'exec SP_SUM_BG ' . $budgetPeriodId . ',"G"';
         $status = $this->datacontext->pdoExecute($sql);
@@ -45,25 +41,23 @@ class ApproveSumService extends CServiceBase implements IApproveSumService
             echo $this->datacontext->getLastMessage();
             return false;
         }
-
     }
 
-
-    public function closeBudget($year)
-    {
+    public function closeBudget($year) {
 
         //updateStatusSummarize
 
         $sql = "UPDATE Budget_Summarize SET BudgetStatus = 'N' WHERE BudgetPeriodId = " . $year;
-        $status = $this->datacontext->pdoUpdate($sql);
+        //$status = $this->datacontext->pdoUpdate($sql);
+        $status = $this->datacontext->pdoQuery($sql);
         if ($status != -1 && $status != false) {
             //copy to FinalBg
-            $sqlDelete = '';//140 - 146
+            $sqlDelete = ''; //140 - 146
             $sqlInsert = '';
             $sqlUpdate = '';
             for ($i = 0; $i <= 6; $i++) {
 
-                $sqlDelete .= "DELETE  FROM Final_14" . $i . " WHERE BudgetPeriodId =" . $year . "; ";// clear data on table FINAL
+                $sqlDelete .= "DELETE  FROM Final_14" . $i . " WHERE BudgetPeriodId =" . $year . "; "; // clear data on table FINAL
                 $sqlInsert .= "INSERT INTO Final_14" . $i . " SELECT * FROM Budget_14" . $i . " WHERE BudgetPeriodId = " . $year . "; "; //Insert
                 $sqlUpdate .= "UPDATE Final_14" . $i . " SET Status = 'Y' WHERE BudgetPeriodId = " . $year . "; "; //Update status =y
             }
@@ -87,25 +81,20 @@ class ApproveSumService extends CServiceBase implements IApproveSumService
                 echo $this->datacontext->getLastMessage();
                 return false;
             }
-
         } else {
 
             echo $this->datacontext->getLastMessage();
             return false;
         }
-
-
     }
 
-    public function viewApproveSum($year)
-    {
+    public function viewApproveSum($year) {
         $view = new CJView("approve/approveSum", CJViewType::HTML_VIEW_ENGINE);
         $view->year = $year;
         return $view;
     }
 
-    public function LoadpproveSum($year)
-    {
+    public function LoadpproveSum($year) {
 
         $sql = "SELECT l.DEPARTMENTNAME,* FROM Budget_Summarize bs
                 INNER JOIN L3D_DEPARTMENT l ON bs.DepartmentId = l.DEPARTMENTID
@@ -115,9 +104,7 @@ class ApproveSumService extends CServiceBase implements IApproveSumService
         return $result;
     }
 
-
-    public function updateApproveSum($bgSumList, $type)
-    {
+    public function updateApproveSum($bgSumList, $type) {
 
         $sql = '';
         foreach ($bgSumList as $key => $value) {
@@ -130,12 +117,11 @@ class ApproveSumService extends CServiceBase implements IApproveSumService
 
                     //update 2 col BudgetAfterReview and BudgetFinal
                     $sql .= "UPDATE Budget_Summarize SET BudgetAfterReview = " . $budget . ",BudgetFinal = " . $budget . " WHERE " .
-                        "BudgetPeriodId = " . $value->bgPeriodId . " AND BudgetTypeId = " . $value->bgTypeId . " AND DepartmentId = " . $value->deptId . ";";
-
+                            "BudgetPeriodId = " . $value->bgPeriodId . " AND BudgetTypeId = " . $value->bgTypeId . " AND DepartmentId = " . $value->deptId . ";";
                 } else {
                     //update BudgetFinal 1 col
                     $sql .= "UPDATE Budget_Summarize SET " . $type . " = " . $budget . " WHERE " .
-                        "BudgetPeriodId = " . $value->bgPeriodId . " AND BudgetTypeId = " . $value->bgTypeId . " AND DepartmentId = " . $value->deptId . ";";
+                            "BudgetPeriodId = " . $value->bgPeriodId . " AND BudgetTypeId = " . $value->bgTypeId . " AND DepartmentId = " . $value->deptId . ";";
                 }
             }
         }
@@ -146,11 +132,9 @@ class ApproveSumService extends CServiceBase implements IApproveSumService
             echo $this->datacontext->getLastMessage();
             return false;
         }
-
     }
 
-    public function updateBudgetSetting($periodId)
-    {
+    public function updateBudgetSetting($periodId) {
         $sql = "UPDATE Budget_Setting SET IsClosed = 'Y' WHERE BudgetPeriodId = " . $periodId;
 
         if ($this->datacontext->pdoUpdate($sql)) {
@@ -158,6 +142,6 @@ class ApproveSumService extends CServiceBase implements IApproveSumService
         } else {
             return false;
         }
-
     }
+
 }
