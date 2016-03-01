@@ -462,7 +462,8 @@
                             //หมวดค่าที่ดินและสิ่งก่อสร้าง มี 2 lvl
                             html += '<tr data-tt-id="list' + value2["id"] + '" data-tt-parent-id="' + value["id"] + '" ' + (value2["status"] == "N" ? "class='text-primary'>" : ">")
                                     + '<td class="text-center"></td>'
-                                    + '<td>' + value2["durableName"] + '<br> &nbsp;' + value2["durableDesc"] + '</td>'
+                                    //+ '<td>' + value2["durableName"] + '<br> &nbsp;' + value2["durableDesc"] + '</td>'
+                                    + '<td>' + value2["durableName"] + '</td>'
                                     + '<td class="number text-right">' + value2["qty"] + '</td>'
                                     + '<td>' + value2["unit"] + '</td>'
                                     + '<td class="number text-right">' + value2["price"] + '</td>'
@@ -510,7 +511,8 @@
                             var total = parseFloat(value3["qty"]) * parseFloat(value3["price"]);
                             html += '<tr data-tt-id="list' + value3["id"] + '" data-tt-parent-id="' + value2["id"] + '" ' + (value3["status"] == "N" ? "class='text-primary'>" : ">")
                                     + '<td class="text-center"></td>'
-                                    + '<td>' + value3["durableName"] + '<br> &nbsp;' + value3["durableDesc"] + '</td>'
+                                    //+ '<td>' + value3["durableName"] + '<br> &nbsp;' + value3["durableDesc"] + '</td>'
+                                    + '<td>' + value3["durableName"] + '</td>'
                                     + '<td class="number text-right">' + value3["qty"] + '</td>'
                                     + '<td>' + value3["unit"] + '</td>'
                                     + '<td class="number text-right">' + value3["price"] + '</td>'
@@ -690,7 +692,8 @@
                     // insert node in branch
                     var html = '<tr data-tt-id="list' + data["id"] + '" data-tt-parent-id="' + parentId + '">'
                             + '<td></td>'
-                            + '<td>' + $("#durableName").val() + '</br> &nbsp;' + $("#durableDesc").val() + '</td>'
+                            //+ '<td>' + $("#durableName").val() + '</br> &nbsp;' + $("#durableDesc").val() + '</td>'
+                            + '<td>' + $("#durableName").val() + '</td>'
                             + '<td class="number text-right">' + $("#qty").val() + '</td>'
                             + '<td>' + $("#unit").val() + '</td>'
                             + '<td class="number text-right">' + $("#price").val() + '</td>'
@@ -782,7 +785,8 @@
 
                     // insert node in branch
                     var html = '<td class="text-center"></td>'
-                            + '<td>' + $("#durableName").val() + '</br> &nbsp;' + $("#durableDesc").val() + '</td>'
+                            //+ '<td>' + $("#durableName").val() + '</br> &nbsp;' + $("#durableDesc").val() + '</td>'
+                            + '<td>' + $("#durableName").val() + '</td>'
                             + '<td class="number text-right">' + $("#qty").val() + '</td>'
                             + '<td>' + $("#unit").val() + '</td>'
                             + '<td class="number text-right">' + $("#price").val() + '</td>'

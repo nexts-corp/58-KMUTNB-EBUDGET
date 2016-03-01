@@ -48,8 +48,8 @@ class ApproveSumService extends CServiceBase implements IApproveSumService {
         //updateStatusSummarize
 
         $sql = "UPDATE Budget_Summarize SET BudgetStatus = 'N' WHERE BudgetPeriodId = " . $year;
-        //$status = $this->datacontext->pdoUpdate($sql);
-        $status = $this->datacontext->pdoQuery($sql);
+        $status = $this->datacontext->pdoUpdate($sql);
+
         if ($status != -1 && $status != false) {
             //copy to FinalBg
             $sqlDelete = ''; //140 - 146
@@ -58,7 +58,7 @@ class ApproveSumService extends CServiceBase implements IApproveSumService {
             for ($i = 0; $i <= 6; $i++) {
 
                 $sqlDelete .= "DELETE  FROM Final_14" . $i . " WHERE BudgetPeriodId =" . $year . "; "; // clear data on table FINAL
-                $sqlInsert .= "INSERT INTO Final_14" . $i . " SELECT * FROM Budget_14" . $i . " WHERE BudgetPeriodId = " . $year . "; "; //Insert
+                $sqlInsert .= "INSERT INTO Final_14" . $i . " SELECT * FROM Budget_14" . $i . " WHERE PlanningTrackingStatusId in (5) AND BudgetPeriodId = " . $year . "; "; //Insert
                 $sqlUpdate .= "UPDATE Final_14" . $i . " SET Status = 'Y' WHERE BudgetPeriodId = " . $year . "; "; //Update status =y
             }
 
@@ -135,7 +135,7 @@ class ApproveSumService extends CServiceBase implements IApproveSumService {
     }
 
     public function updateBudgetSetting($periodId) {
-        $sql = "UPDATE Budget_Setting SET IsClosed = 'Y' WHERE BudgetPeriodId = " . $periodId;
+        $sql = "UPDATE Budget_Setting SET IsClosed = 'Y', LastUpdateDatetime = getdate() WHERE BudgetPeriodId = " . $periodId;
 
         if ($this->datacontext->pdoUpdate($sql)) {
             return true;

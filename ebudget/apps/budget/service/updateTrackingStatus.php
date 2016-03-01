@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: KaowNeaw
@@ -8,28 +9,24 @@
 
 namespace apps\budget\service;
 
-
 use apps\budget\interfaces\IUpdateTrackingStatus;
 use apps\common\entity\BudgetHead;
 use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
 
-class updateTrackingStatus extends CServiceBase implements IUpdateTrackingStatus
-{
+class updateTrackingStatus extends CServiceBase implements IUpdateTrackingStatus {
 
     public $datacontext;
     public $md = "apps\\common\\model";
     public $ent = "apps\\common\\entity";
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->datacontext = new CDataContext();
     }
 
-    public function updateTrackingBG($bgType, $listBg, $status)
-    {
+    public function updateTrackingBG($bgType, $listBg, $status) {
         $return = array();
-        
+
         foreach ($listBg as $key => $value) {
 
             if (isset($value)) {
@@ -38,25 +35,24 @@ class updateTrackingStatus extends CServiceBase implements IUpdateTrackingStatus
                 $object = new $class();
 
                 if ($status == 2) {
-
-                    if ($value->statusId == 1 || $value->statusId == 4) {
-
+                    if ($value->statusId == 1 || $value->statusId == 4) {                        
                         $object->setId($value->id);
                         $object->setStatusId($status);
-
+                        $object->setStatusPlanningId($status);
                     } else if ($value->statusId == 2) {
-
                         $return["status"] = true;
-                    }
-
+                    }                    
+                    
                 } else if ($status == 3 || $status == 4) {
-
                     $object->setId($value->id);
                     $object->setStatusId($status);
                 }
 
-                if ($object->getId() != null) {
 
+
+
+                if ($object->getId() != null) {
+                    $object->setDateUpdated(date("Y-m-d H:i:s"));
                     if ($this->datacontext->updateObject($object)) {
                         $return["status"] = true;
                         if (isset($value->budgetHeadId)) {
@@ -79,8 +75,7 @@ class updateTrackingStatus extends CServiceBase implements IUpdateTrackingStatus
         return $return;
     }
 
-    private function updateBudgetHead($id, $formType, $statusId)
-    {
+    private function updateBudgetHead($id, $formType, $statusId) {
         $result = true;
 
         if ($statusId == "2" || $statusId == "4") {
@@ -88,15 +83,15 @@ class updateTrackingStatus extends CServiceBase implements IUpdateTrackingStatus
             $bgh = new BudgetHead();
             $bgh->setId($id);
             $bgh->setStatusId($statusId);
+            $bgh->setStatusPlanningId($statusId);
             if (!$this->datacontext->updateObject($bgh)) {
                 $result = false;
             }
-
         } else if ($statusId == "3") {
 
             $sql = "select count(*) as num from " . $this->ent . "\\" . $formType . " bg "
-                . "where bg.budgetHeadId = :budgetHeadId "
-                . "and bg.statusId in (1,2,4) ";
+                    . "where bg.budgetHeadId = :budgetHeadId "
+                    . "and bg.statusId in (1,2,4) ";
             $param = array("budgetHeadId" => $id);
             $bg = $this->datacontext->getObject($sql, $param);
 
@@ -104,6 +99,7 @@ class updateTrackingStatus extends CServiceBase implements IUpdateTrackingStatus
                 $bgh = new BudgetHead();
                 $bgh->setId($id);
                 $bgh->setStatusId(5);
+                $bgh->setDateUpdated(date("Y-m-d H:i:s"));
                 if (!$this->datacontext->updateObject($bgh)) {
                     $result = false;
                 }
@@ -112,6 +108,5 @@ class updateTrackingStatus extends CServiceBase implements IUpdateTrackingStatus
 
         return $result;
     }
-
 
 }
