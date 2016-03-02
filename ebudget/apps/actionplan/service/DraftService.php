@@ -281,42 +281,41 @@ class DraftService extends CServiceBase implements IDraftService {
                 }
             }
             if ($check == true) {
-                return $lists;
                 // return substr($draftId, 0, -1);
                 if ($this->datacontext->updateObject($dataDraft)) {
                     $sql = "UPDATE ActionPlan_Draft_Detail "
                             . "SET IsApprove = 'Y' "
-                            . "WHERE ActionPlanDraftId in (" . implode(",", $draftId) . ") "
+                            . "WHERE ActionPlanDraftId IN (" . implode(",", $draftId) . ") "
                             . "AND IsActive = 'Y' ";
                     //$param = array("draftId" => $draftId);
-                    return $this->datacontext->pdoExecute($sql);
-//                    $sql = "INSERT INTO Affirmative_Final(
-//                            PeriodCode, AffirmativeDraftId, DepartmentId,
-//                            AffirmativeMainId, AffirmativeMainSeq,
-//                            AffirmativeTypeId, AffirmativeTypeSeq,
-//                            HasIssue, AffirmativeIssueId, AffirmativeIssueSeq,
-//                            AffirmativeTargetId, AffirmativeTargetSeq,
-//                            AffirmativeKpiId, AffirmativeKpiSeq, AffirmativeKpiName,
-//                            AffirmativeUnitId, AffirmativeUnitName,
-//                            KpiGoal, Score1, Score2, Score3, Score4, Score5,
-//                            Remark, IsApprove, IsActive
-//                        )
-//                        SELECT
-//                            PeriodCode, AffirmativeDraftId, DepartmentId,
-//                            AffirmativeMainId, AffirmativeMainSeq,
-//                            AffirmativeTypeId, AffirmativeTypeSeq,
-//                            HasIssue, AffirmativeIssueId, AffirmativeIssueSeq,
-//                            AffirmativeTargetId, AffirmativeTargetSeq,
-//                            AffirmativeKpiId, AffirmativeKpiSeq, AffirmativeKpiName,
-//                            AffirmativeUnitId, AffirmativeUnitName,
-//                            KpiGoal, Score1, Score2, Score3, Score4, Score5,
-//                            Remark, 'N', IsActive
-//                        FROM Affirmative_Draft WHERE PeriodCode = :year AND DepartmentId = :deptId";
-//                    $param = array(
-//                        "year" => $this->getPeriod()->year,
-//                        "deptId" => $departmentId
-//                    );
-                    //   $this->datacontext->pdoQuery($sql, $param);
+                    if (is_object($this->datacontext->pdoExecute($sql))) {
+                        $sql = "INSERT INTO ActionPlan_Final(
+                            PeriodCode, ActionPlanDraftId, DepartmentId, ActionPlanTypeId,
+                            ActionPlanStrategyId, ActionPlanProjectSeq, ActionPlanProjectName,
+                            TimeDuration, Budget, Revenue, Other, NoBudget,
+                            Remark, IsApprove, IsActive
+                        )
+                        SELECT
+                            PeriodCode, ActionPlanDraftId, DepartmentId, ActionPlanTypeId,
+                            ActionPlanStrategyId, ActionPlanProjectSeq, ActionPlanProjectName,
+                            TimeDuration, Budget, Revenue, Other, NoBudget,
+                            Remark, 'N', 'Y'
+                        FROM ActionPlan_Draft 
+                        WHERE PeriodCode = :year 
+                        AND DepartmentId = :deptId 
+                        AND ActionPlanTypeId = :typeId 
+                        AND IsActive = 'Y' ";
+                        $param = array(
+                            "year" => $this->getPeriod()->year,
+                            "deptId" => $departmentId,
+                            "typeId" => $typeId
+                        );
+                        return $this->datacontext->pdoQuery($sql, $param);
+                    } else {
+                        return false;
+                    }
+
+
                     /* if (!$this->datacontext->pdoQuery($sql, $param)) {
                       $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
                       return false;
@@ -339,9 +338,10 @@ class DraftService extends CServiceBase implements IDraftService {
                 $dataDraft[$keyDraft]->isApprove = $status;
             }
             if ($this->datacontext->updateObject($dataDraft)) {
-                $final = new \apps\common\entity\AffirmativeFinal();
+                $final = new \apps\common\entity\ActionPlanFinal();
                 $final->periodCode = $this->getPeriod()->year;
                 $final->departmentId = $departmentId;
+                $final->typeId = $typeId;
                 $del = $this->datacontext->getObject($final);
                 if (!$this->datacontext->removeObject($del)) {
                     $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
