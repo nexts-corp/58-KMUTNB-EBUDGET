@@ -48,7 +48,13 @@ class BudgetService extends CServiceBase implements IBudgetService {
 
                 $result["budgetPlanId"] = $planId;
                 $result["budgetProjectId"] = $projectId;
+            } else {
+                $result["budgetPlanId"] = 0;
+                $result["budgetProjectId"] = 0;
             }
+        } else {
+            $result["budgetPlanId"] = 0;
+            $result["budgetProjectId"] = 0;
         }
 
         return $result;
@@ -99,14 +105,14 @@ class BudgetService extends CServiceBase implements IBudgetService {
         $budgetPeriodId = $this->getPeriod()->year;
 
         $sql1 = " SELECT typ.id, typ.typeName as name "
-            . " FROM " . $this->ent . "\\BudgetType typ "
-            . " WHERE typ.masterId = '0' and typ.typeCode = 'K' and typ.formExpense = true ";
+                . " FROM " . $this->ent . "\\BudgetType typ "
+                . " WHERE typ.masterId = '0' and typ.typeCode = 'K' and typ.formExpense = true ";
         $list1 = $this->datacontext->getObject($sql1);
 
         foreach ($list1 as $key1 => $value1) {
             $sql2 = " SELECT typ.id, typ.typeName as name "
-                . " FROM " . $this->ent . "\\BudgetType typ "
-                . " WHERE typ.masterId = :masterId and typ.typeCode = 'K' and typ.formExpense = true ";
+                    . " FROM " . $this->ent . "\\BudgetType typ "
+                    . " WHERE typ.masterId = :masterId and typ.typeCode = 'K' and typ.formExpense = true ";
             $param2 = array(
                 "masterId" => $list1[$key1]["id"]
             );
@@ -116,20 +122,20 @@ class BudgetService extends CServiceBase implements IBudgetService {
 
             foreach ($list2 as $key2 => $value2) {
                 $sql3 = " select bg.id, bg.revenueName as name, "
-                    . "bg.bgAmount as value, "
-                    . "bg.revenueDesc as detail "
-                    . " from " . $this->ent . "\\BudgetRevenue bg "
-                    . " left join " . $this->ent . "\\BudgetHead head with head.id = bg.budgetHeadId "
-                    . " left join " . $this->ent . "\\Attachment att with bg.attachmentId = att.id "
-                    . " left join " . $this->ent . "\\TrackingStatus ts with bg.statusId = ts.id "
-                    . " where head.formId = :formId "
-                    . " and bg.budgetTypeId = :budgetTypeId "
-                    . " and bg.budgetPeriodId = :budgetPeriodId "
-                    . " and bg.budgetTypeCode = :budgetTypeCode "
-                    . " and bg.l3dPlanId = :l3dPlanId "
-                    . " and bg.fundgroupId = :fundgroupId "
-                    . " and bg.deptId = :deptId"
-                    . " and bg.bgCategory = :bgCategory";
+                        . "bg.bgAmount as value, "
+                        . "bg.revenueDesc as detail "
+                        . " from " . $this->ent . "\\BudgetRevenue bg "
+                        . " left join " . $this->ent . "\\BudgetHead head with head.id = bg.budgetHeadId "
+                        . " left join " . $this->ent . "\\Attachment att with bg.attachmentId = att.id "
+                        . " left join " . $this->ent . "\\TrackingStatus ts with bg.statusId = ts.id "
+                        . " where head.formId = :formId "
+                        . " and bg.budgetTypeId = :budgetTypeId "
+                        . " and bg.budgetPeriodId = :budgetPeriodId "
+                        . " and bg.budgetTypeCode = :budgetTypeCode "
+                        . " and bg.l3dPlanId = :l3dPlanId "
+                        . " and bg.fundgroupId = :fundgroupId "
+                        . " and bg.deptId = :deptId"
+                        . " and bg.bgCategory = :bgCategory";
 
                 $param3 = array(
                     "formId" => "500",
@@ -179,8 +185,8 @@ class BudgetService extends CServiceBase implements IBudgetService {
             $bgHead->setActivityId($budget->activityId);
 
             $bgPlanProject = $this->getBudgetPlanAndProject($budget->budgetPeriodId, $budget->l3dPlanId, $budget->fundgroupId);
-            $bgHead->setPlanId($bgPlanProject["budgetPlanId"]);
-            $bgHead->setProjectId($bgPlanProject["budgetProjectId"]);
+            $bgHead->setPlanId($bgPlanProject["budgetPlanId"] == "" ? 0 : $bgPlanProject["budgetPlanId"]);
+            $bgHead->setProjectId($bgPlanProject["budgetProjectId"] == "" ? 0 : $bgPlanProject["budgetProjectId"]);
 
             $bgHeadData = $this->datacontext->getObject($bgHead);
 
@@ -194,8 +200,8 @@ class BudgetService extends CServiceBase implements IBudgetService {
 
             $budget->budgetHeadId = $bgHeadId;
             $budget->revenuePlanId = $revenuePlanId;
-            $budget->planId = $bgPlanProject["budgetPlanId"];
-            $budget->projectId = $bgPlanProject["budgetProjectId"];
+            $budget->planId = $bgPlanProject["budgetPlanId"] == "" ? 0 : $bgPlanProject["budgetPlanId"];
+            $budget->projectId = $bgPlanProject["budgetProjectId"] == "" ? 0 : $bgPlanProject["budgetProjectId"];
 
             if ($budget->remark == "") {
                 $budget->remark = "-";
@@ -243,16 +249,15 @@ class BudgetService extends CServiceBase implements IBudgetService {
     public function getSumRevenue($facultyId, $bgCategory) {
         $budgetPeriodId = $this->getPeriod()->year;
 
-        if($bgCategory == "E"){
+        if ($bgCategory == "E") {
             $sub = "SUM(bgrp.budgetEducation) AS value";
-        }
-        else{
+        } else {
             $sub = "SUM(bgrp.budgetService) AS value";
         }
         //plan
         $sql = "
                 SELECT
-                    ".$sub."
+                    " . $sub . "
                 FROM " . $this->ent . "\\BudgetRevenuePlan bgrp
                 WHERE bgrp.budgetPeriodId = :year
                     AND bgrp.deptId = :dept
@@ -269,7 +274,7 @@ class BudgetService extends CServiceBase implements IBudgetService {
                 SELECT
                     SUM(bg.bgAmount) AS value
                 FROM " . $this->ent . "\\BudgetRevenue bg
-                LEFT JOIN ". $this->ent . "\\BudgetHead head WITH head.id = bg.budgetHeadId
+                LEFT JOIN " . $this->ent . "\\BudgetHead head WITH head.id = bg.budgetHeadId
                 LEFT JOIN " . $this->ent . "\\Attachment att with bg.attachmentId = att.id
                 LEFT JOIN " . $this->ent . "\\TrackingStatus ts with bg.statusId = ts.id
                 LEFT JOIN " . $this->ent . "\\L3D\\Department dept with bg.deptId = dept.id
@@ -297,4 +302,5 @@ class BudgetService extends CServiceBase implements IBudgetService {
 
         return $result;
     }
+
 }
