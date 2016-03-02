@@ -256,4 +256,15 @@ interface IViewService {
      * @description แสดงหน้าตั้งค่าการจัดทำ งปม.
      */
     public function setting();
+
+    /**
+     * @name proposed
+     * @uri /proposed
+     * @param string formId
+     * @param string budgetHeadId
+     * @param string deptId
+     * @param string budget
+     * @description แบบเสนอโครงการที่ตอบสนองยุทธศาสตร์การ view
+     */
+    public function proposed($formId, $budgetHeadId, $deptId,$budget);
 }

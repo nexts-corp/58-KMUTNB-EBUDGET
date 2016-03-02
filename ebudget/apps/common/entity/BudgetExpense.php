@@ -90,6 +90,22 @@ class BudgetExpense extends EntityBase {
     /** @Column(type="integer",length=11, name="PlanningTrackingStatusId") */
     public $statusPlanningId;
 
+    /** @Column(type="integer",length=11, name="Bg146Id") */
+    public $bg146Id;
+
+
+
+    public function getBg146Id()
+    {
+        return $this->bg146Id;
+    }
+
+    public function setBg146Id($bg146Id)
+    {
+        $this->bg146Id = $bg146Id;
+    }
+
+
     function getId() {
         return $this->id;
     }

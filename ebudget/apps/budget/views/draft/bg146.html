@@ -15,7 +15,8 @@
                     <h1 class="none-padding">จัดทำคำของบประมาณแผ่นดิน ง.146</h1>
                 </div>
                 <div class="col-md-4 text-right">
-                    <button class="btn btn-default" onclick="goBack()"><i class="fa fa-angle-double-left"> ย้อนกลับ</i></button>
+                    <button class="btn btn-default" onclick="goBack()"><i class="fa fa-angle-double-left"> ย้อนกลับ</i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -244,7 +245,8 @@
                 </div>
             </div>
         </div>
-        <div id="panelShowComment" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div id="panelShowComment" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog"
+             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -268,11 +270,12 @@
     var l3dPlanId = '{{l3dPlanId}}';
     var fundgroupId = '{{fundgroupId}}';
     var deptId = '{{deptId}}';
-
+    var facId;
     var typeName146Arr = [];
     var list146Arr = [];
     var sumArrbgHistory = {};
     var sumArrbgRequest = {};
+    var periodId;
 
     $(function () {
         var param = {
@@ -301,7 +304,8 @@
             if (typeof datas !== "undefined" && datas !== null) {
                 var html = '';
                 var pCount = 0;
-
+                facId = datas["facId"];
+                periodId = datas["budgetYear"];
                 $("#budgetYear").html(datas["budgetYear"]);
                 $("#budgetType").html(datas["budgetType"]);
                 $("#l3dPlan").html(datas["l3dPlan"]);
@@ -338,11 +342,12 @@
                                 + '<td class="number text-right">' + value2["bgHistory"] + '</td>'
                                 + '<td class="number text-right">' + value2["bgRequest"] + '</td>'
                                 + '<td class="text-center"><a href="#" data-html="true" data-toggle="tooltip" title="' + remark + '"><image src="{{_context_path}}/images/tooltips_ico.png" width="25px" height="25px"></a></td>'
-                                + '<td class="text-bold text-sm">' + value2["statusDesc"] + '<br>' + isShowComment(value2["statusId"],value2["id"]) + '</td>'
-                                + '<td>'
+                                + '<td class="text-bold text-sm">' + value2["statusDesc"] + '<br>' + isShowComment(value2["statusId"], value2["id"]) + '</td>'
+                                + '<td class="text-center" style="text-align:center;">'
                                 + isShowBtnGroup(value2["statusId"])
                                 + '<button class="btn btn-sm btn-warning editList" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
                                 + '<button class="btn btn-sm btn-default deleteList"  data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                                + '<button class="btn btn-sm btn-primary proposed"  data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-file-text-o"></i> แบบเสนอโครงการ</button>'
                                 + '</div>';
 
                         list146Arr[value2["id"]] = value2;
@@ -704,6 +709,22 @@
                 deleteBudget(id, headerId, parentId, dataJSONEN);
             });
         });
+
+        $(".proposed").unbind("click").click(function () {
+
+            var headerId = $(this).attr("data-hid");
+            var parentId = $(this).attr("data-pid");
+            var id = $(this).attr("data-id");
+            var budgetHeadId = list146Arr[id]["budgetHeadId"];
+            var objSend = list146Arr[id];
+            objSend.budgetPeriodId = periodId;
+            var bytes = utf8.encode(JSON.stringify(objSend));
+            var paramstr = base64.encode(bytes);
+            console.log(list146Arr[id]);
+            var url = "{{_context_path}}/api/budget/view/proposed/999/" + budgetHeadId + "/" + facId + "/" + encodeURIComponent(paramstr);
+            window.open(url, '_blank');
+
+        });
     }
 
     function checkZero(input) {
@@ -781,9 +802,9 @@
     function isShowBtnGroup(statusId) {
         var html = "";
         if (statusId != 3) {
-            html = '<div class="btn-group">';
+            html = '<div class="col-md-12 none-padding">';
         } else {
-            html = '<div class="btn-group" style="display: none;">';
+            html = '<div class="col-md-12 none-padding" style="display: none;">';
         }
         return html;
     }
@@ -794,7 +815,7 @@
         console.log(id);
         if (statusId == 4) {
 
-            html = '<a href="javascript:void(0);" onclick="showComment('+id+')"><u>แสดงหมายเหตุ</u></a>';
+            html = '<a href="javascript:void(0);" onclick="showComment(' + id + ')"><u>แสดงหมายเหตุ</u></a>';
         }
 
         return html;

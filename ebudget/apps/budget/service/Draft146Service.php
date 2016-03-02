@@ -71,7 +71,7 @@ class Draft146Service extends CServiceBase implements IDraft146Service {
         $list1 = $this->datacontext->getObject($sql1, $param1);
 
         foreach ($list1 as $key1 => $value1) {
-            $sql2 = " select head.id AS budgetHeadId,bg.id, bg.bursaryName, bg.bursaryDesc, bg.bgRequest, bg.bgHistory, bg.remark , bg.remark,bg.comment,bg.attachmentId,att.desc,att.path,ts.id AS statusId,ts.desc AS statusDesc"
+            $sql2 = " select head.id AS budgetHeadId,bg.id,bg.budgetTypeId,bg.projectId, bg.bursaryName, bg.bursaryDesc, bg.bgRequest, bg.bgHistory, bg.remark , bg.remark,bg.comment,bg.attachmentId,att.desc,att.path,ts.id AS statusId,ts.desc AS statusDesc"
                     . " from " . $this->ent . "\\Budget146 bg "
                     . " left join " . $this->ent . "\\BudgetHead head with head.id = bg.budgetHeadId "
                     . " left join " . $this->ent . "\\Attachment att with bg.attachmentId = att.id "
@@ -121,6 +121,7 @@ class Draft146Service extends CServiceBase implements IDraft146Service {
         $this->getResponse()->add("budgetType", "งบประมาณแผ่นดิน");
         $this->getResponse()->add("l3dPlan", $planData->planName);
         $this->getResponse()->add("fundgroup", $fundData->fundgroupName);
+        $this->getResponse()->add("facId", $facData->id);
         $this->getResponse()->add("facName", $facData->deptName);
         $this->getResponse()->add("deptName", $deptData->deptName);
 
