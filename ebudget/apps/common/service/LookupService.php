@@ -213,7 +213,7 @@ class LookupService extends CServiceBase implements ILookupService {
     }
 
     public function listYearOld() {
-        $sql = "select y from " . $this->ent . "\\Year y ORDER BY y.yearStatus DESC, y.year ";
+        $sql = "select y from " . $this->ent . "\\Year y ORDER BY y.year DESC ";
         
         $data = $this->datacontext->getObject($sql);
 

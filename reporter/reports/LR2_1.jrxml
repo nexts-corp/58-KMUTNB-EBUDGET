@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="0.8705165431606328"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.4019755979256314"/>
+	<property name="ireport.x" value="361"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
 	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -761,7 +761,7 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{tempWages}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{tempWages} != 0 && $F{tempWages} != null)?$F{tempWages}:"-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="199" y="0" width="67" height="20" uuid="74b12ffb-b4b3-4a18-9e0d-ff53734a8507"/>
@@ -774,7 +774,7 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{compensation}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{compensation} != 0 && $F{compensation} != null)?$F{compensation}:"-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="266" y="0" width="67" height="20" uuid="116d6e2d-3799-4a91-813e-dea74b2ec5bb"/>
@@ -787,7 +787,7 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{livingCost}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{livingCost} != 0 && $F{livingCost} != null)?$F{livingCost}:"-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="333" y="0" width="67" height="20" uuid="345eb771-225d-4859-a00e-e7ff5bc74615"/>
@@ -800,7 +800,7 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{matCost}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{matCost} != 0 && $F{matCost} != null)?$F{matCost}:"-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="400" y="0" width="67" height="20" uuid="9e93c409-96e8-4db7-86dd-583e9745d5fc"/>
@@ -813,7 +813,7 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{livingCost}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{livingCost} != 0 && $F{livingCost} != null)?$F{livingCost}:"-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="467" y="0" width="67" height="20" uuid="348ae1d8-258c-4be7-bafc-58cca073db0d"/>
@@ -826,7 +826,7 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{subSide}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{subSide} != 0 && $F{subSide} != null)?$F{subSide}:"-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="534" y="0" width="67" height="20" uuid="36a08e8e-bfd3-468f-9843-5ec68b2f8e96"/>
@@ -839,7 +839,7 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{otherCost}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{otherCost} != 0 && $F{otherCost} != null)?$F{otherCost}:"-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="601" y="0" width="67" height="20" uuid="b37769fd-7a1e-4c02-aba5-cf52b7eaf9a0"/>
@@ -852,7 +852,7 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{durableCost}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{durableCost} != 0 && $F{durableCost} != null)?$F{durableCost}:"-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="668" y="0" width="67" height="20" uuid="fb346654-b794-4ccd-80ed-3d26727dc797"/>
@@ -865,7 +865,7 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{buildingCost}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{buildingCost} != 0 && $F{buildingCost} != null)?$F{buildingCost}:"-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="735" y="0" width="67" height="20" uuid="9fbc0078-aa03-4d30-9fa5-b923541e8307"/>
@@ -878,7 +878,7 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{total} != 0 && $V{total} != null)?$V{total}:"-"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

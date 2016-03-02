@@ -20,11 +20,22 @@
 
     <hr class="tall dashboard">
 
+    <div class="sort-source-wrapper">
+        <div class="container">
+            <ul class="nav nav-pills sort-source menu-top pull-right" data-sort-id="portfolio" data-option-key="filter">
+                <li class="active">
+                    <button class="btn btn-default backHome"><i class="fa fa-angle-double-left">
+                            ย้อนกลับ</i></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label class="col-md-12 control-label">{{deptName}}</label>
+                    <label class="col-md-12 control-label"><h3>{{deptName}}</h3></label>
                 </div>
             </div>
         </div>
@@ -46,10 +57,10 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-6">
-                        <label class="col-md-12 control-label">เงินต้นทั้ง คณะ/สำนัก รวม<br><span id="sumPlan"></span>&nbsp;&nbsp;บาท</label>
+                        <label class="col-md-12 control-label">วงเงินที่ได้รับจัดสรรทั้งรวม<br><span id="sumPlan"></span>&nbsp;&nbsp;บาท</label>
                     </div>
                     <div class="col-md-6">
-                        <label class="col-md-12 control-label">เงินที่ใช้ทั้ง คณะ/สำนัก รวม<br><span
+                        <label class="col-md-12 control-label">จำนวนเงินที่ใช้ทั้งรวม<br><span
                                 id="sumBudget"></span>&nbsp;&nbsp;บาท</label>
                     </div>
                 </div>
@@ -94,23 +105,23 @@
                         <br>
                         <table id="table" class="table table-bordered table-condensed">
                             <thead>
-                            <tr>
-                                <th class="text-center col-md-1">ลำดับ</th>
-                                <th class="text-center col-md-6">รายการ</th>
-                                <th class="text-center col-md-3">จำนวนเงิน</th>
-                                <th class="text-center col-md-2">เครื่องมือ</th>
-                            </tr>
-                            <tr id="row-totalMoney">
-                                <th></th>
-                                <th class="text-center">จำนวนเงินทั้งหมด</th>
-                                <th class="text-right" id="totalMoney"></th>
-                                <th></th>
-                            </tr>
+                                <tr>
+                                    <th class="text-center col-md-1">ลำดับ</th>
+                                    <th class="text-center col-md-6">รายการ</th>
+                                    <th class="text-center col-md-3">จำนวนเงิน</th>
+                                    <th class="text-center col-md-2">เครื่องมือ</th>
+                                </tr>
+                                <tr id="row-totalMoney">
+                                    <th></th>
+                                    <th class="text-center">จำนวนเงินทั้งหมด</th>
+                                    <th class="text-right" id="totalMoney"></th>
+                                    <th></th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td colspan="4" class="text-center">-</td>
-                            </tr>
+                                <tr>
+                                    <td colspan="4" class="text-center">-</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -223,6 +234,10 @@
         listsDepartment();
         $('.summernote').summernote({height: 120}); //initial summernote
         //$("#bgCategory").select2();
+
+        $(".backHome").click(function () {
+            window.location = "{{_context_path}}/api/revenue/view/manageAll";
+        });
 
         $("#bgCategory, #l3dPlanId, #fundgroupId, #deptId").select2().change(function () {
             if ($("#bgCategory").val() != "" && $("#l3dPlanId").val() != "" && $("#fundgroupId").val() != "" && $("#deptId").val() != "") {
@@ -393,12 +408,12 @@
                         fParam["deptId"] = $("#deptId").val();
                         fParam["fundgroupId"] = $("#fundgroupId").val();
                         fParam["l3dPlanId"] = $("#l3dPlanId").val();
-                        if(validate(fParam)){
+                        if (validate(fParam)) {
                             var dataJSON = JSON.stringify({budget: fParam, facultyId: deptId});
                             var dataJSONEN = encodeURIComponent(dataJSON);
                             insertRevenueItem(dataJSONEN, fParam, headId);
 
-                        }else{
+                        } else {
                             $("#loading").html('<span class="text-danger">กรุณากรอกข้อมูลให้ครบ</span>');
                         }
 
@@ -485,12 +500,12 @@
                         var sOldVal = $("#sAmount-" + input["budgetTypeId"]).html();
                         var sNewVal = parseFloat(sOldVal.replace(/,/g, "")) - parseFloat(listsArr[input["id"]]["value"]) + parseFloat(input["bgAmount"]);
                         $("#sAmount-" + input["budgetTypeId"]).html(accounting.formatNumber(sNewVal, 2, ",", "."));
-                        console.log("befor sumall - > "+sumAll);
+                        console.log("befor sumall - > " + sumAll);
                         sumAll -= parseFloat(hOldVal.replace(/,/g, ""));
                         sumAll += hNewVal;
-                        console.log("old - > "+hOldVal);
-                        console.log("new - > "+hNewVal);
-                        console.log("sumAll - > "+sumAll);
+                        console.log("old - > " + hOldVal);
+                        console.log("new - > " + hNewVal);
+                        console.log("sumAll - > " + sumAll);
                         $("#totalMoney").html(accounting.formatNumber(sumAll, 2, ",", "."));
 
                         listsArr[input["id"]] = {
@@ -582,12 +597,12 @@
                 fParam["fundgroupId"] = $("#fundgroupId").val();
                 fParam["l3dPlanId"] = $("#l3dPlanId").val();
 
-                if(validate(fParam)) {
+                if (validate(fParam)) {
                     var dataJSON = JSON.stringify({budget: fParam});
                     var dataJSONEN = encodeURIComponent(dataJSON);
 
                     editRevenueItem(dataJSONEN, fParam, hid);
-                }else{
+                } else {
                     $("#loading").html('<span class="text-danger">กรุณากรอกข้อมูลให้ครบ</span>');
                 }
 

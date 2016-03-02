@@ -852,10 +852,13 @@
         var datas = callAjax("{{_context_path}}/api/budget/updateTrackingService/updateTracking", "post", dataJSONEN, "json");
         if (datas != undefined && datas !== null) {
             if (datas["results"]["status"] == true) {
-                alert("ส่งคำขอสำเร็จ");
-                location.reload();
+                //alert("ส่งคำขอสำเร็จ");
+                swal("สำเร็จ", "ส่งข้อมูลคำของบประมาณแล้ว", "success");
+                //location.reload();
+                window.location = "{{_context_path}}/api/budget/view/draftAll";
             } else {
-                alert("ส่งคำขอผิดพลาด");
+                //alert("ส่งคำขอผิดพลาด");
+                swal("ผิดพลาด", "ไม่สามารถส่งข้อมูลคำของบประมาณได้", "error");
             }
         }
     }

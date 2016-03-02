@@ -236,7 +236,7 @@
                     },
                     {
                         "targets": 5,
-                        "data": "statusId",
+                        "data": "statusPlanningId",
                         "sClass": "text-center col-md-1",
                         "render": function (data) {
 
@@ -269,7 +269,7 @@
                         "render": function (data, type, row) {
                             //console.log(row.bghId);
                             
-                            if (row.statusId != 2 && row.statusId != 3 && row.statusId != 5) {
+                            if (row.statusPlanningId != 2 && row.statusPlanningId != 3 && row.statusPlanningId != 5) {
                                 //alert(data2);
                                 BtnStatus = false;
                                 return '<button class="btn btn-sm btn-warning edit" title="แก้ไข" data-bgh="' + data + '"><i class="fa fa-pencil"></i> แก้ไข</button>&nbsp;&nbsp;'

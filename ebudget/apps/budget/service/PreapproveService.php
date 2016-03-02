@@ -10,7 +10,6 @@ use th\co\bpg\cde\core\CServiceBase;
 use th\co\bpg\cde\data\CDataContext;
 use apps\budget\interfaces\IPreapproveService;
 use apps\common\entity;
-
 use apps\common\entity\Attachment;
 use apps\common\entity\BuildingBOQ;
 use apps\common\entity\BuildingDetail;
@@ -25,7 +24,6 @@ use apps\common\entity\Budget143;
 use apps\common\entity\Budget144;
 use apps\common\entity\Budget145;
 use apps\common\entity\Budget146;
-
 
 class PreapproveService extends CServiceBase implements IPreapproveService {
 
@@ -43,37 +41,36 @@ class PreapproveService extends CServiceBase implements IPreapproveService {
         return $this->datacontext->getObject($year)[0];
     }
 
-    public function getAllBudgetRequest($deptId)
-    {
+    public function getAllBudgetRequest($deptId) {
         /*
-        if ($deptId > 0) {
-            $sqlExt = "and bgh.statusId = 1 ";
-        } else {
-            $sqlExt = "and bgh.statusId <> 1 ";
-        }
-        */
+          if ($deptId > 0) {
+          $sqlExt = "and bgh.statusId = 1 ";
+          } else {
+          $sqlExt = "and bgh.statusId <> 1 ";
+          }
+         */
 
         $sql = "select bgh.id as bghId, bgh.budgetTypeCode, bgh.budgetPeriodId, "
-            . "case when bgh.budgetTypeCode = 'G' then 'เงินงบประมาณแผ่นดิน' else 'เงินรายได้' end as budgetTypeName, "
-            . "bgh.formId as formId, dept.id as deptId, dept.deptName as deptName, "
-            . "faculty.id as facultyId, faculty.deptName as facultyName, "
-            . "l3dPlan.id as l3dPlanId, l3dPlan.planName as l3dPlanName, "
-            . "bgPlan.id as planId, bgPlan.planName as planName, "
-            . "bgProj.id as projectId, bgProj.projectName as projectName, "
-            . "fund.id as fundgroupId, fund.fundgroupName as fundName, "
-            . "status.id as statusId, status.desc as statusDesc "
-            . "from " . $this->ent . "\\BudgetHead bgh "
-            . "left outer join " . $this->ent . "\\L3D\\Department dept with dept.id = bgh.deptId "
-            . "left outer join " . $this->ent . "\\L3D\\Department faculty with faculty.id = dept.masterId "
-            . "left outer join " . $this->ent . "\\L3D\\Plan l3dPlan with l3dPlan.id = bgh.l3dPlanId "
-            . "left outer join " . $this->ent . "\\BudgetPlan bgPlan with bgPlan.id = bgh.planId "
-            . "left outer join " . $this->ent . "\\BudgetProject bgProj with bgProj.id = bgh.projectId "
-            . "left outer join " . $this->ent . "\\L3D\\FundGroup fund with fund.id = bgh.fundgroupId "
-            . "left outer join " . $this->ent . "\\TrackingStatus status with status.id = bgh.statusId "
-            . "where bgh.budgetTypeCode = :budgetTypeCode "
-            . "and bgh.statusId in (2,3,4,5)"
-            . "and bgh.budgetPeriodId = :budgetPeriodId "
-            . "order by bgh.formId asc, faculty.id asc, dept.id asc, l3dPlan.id asc, fund.id asc ";
+                . "case when bgh.budgetTypeCode = 'G' then 'เงินงบประมาณแผ่นดิน' else 'เงินรายได้' end as budgetTypeName, "
+                . "bgh.formId as formId, dept.id as deptId, dept.deptName as deptName, "
+                . "faculty.id as facultyId, faculty.deptName as facultyName, "
+                . "l3dPlan.id as l3dPlanId, l3dPlan.planName as l3dPlanName, "
+                . "bgPlan.id as planId, bgPlan.planName as planName, "
+                . "bgProj.id as projectId, bgProj.projectName as projectName, "
+                . "fund.id as fundgroupId, fund.fundgroupName as fundName, "
+                . "status.id as statusId, status.desc as statusDesc "
+                . "from " . $this->ent . "\\BudgetHead bgh "
+                . "left outer join " . $this->ent . "\\L3D\\Department dept with dept.id = bgh.deptId "
+                . "left outer join " . $this->ent . "\\L3D\\Department faculty with faculty.id = dept.masterId "
+                . "left outer join " . $this->ent . "\\L3D\\Plan l3dPlan with l3dPlan.id = bgh.l3dPlanId "
+                . "left outer join " . $this->ent . "\\BudgetPlan bgPlan with bgPlan.id = bgh.planId "
+                . "left outer join " . $this->ent . "\\BudgetProject bgProj with bgProj.id = bgh.projectId "
+                . "left outer join " . $this->ent . "\\L3D\\FundGroup fund with fund.id = bgh.fundgroupId "
+                . "left outer join " . $this->ent . "\\TrackingStatus status with status.id = bgh.statusId "
+                . "where bgh.budgetTypeCode = :budgetTypeCode "
+                . "and bgh.statusId in (2,3,4,5)"
+                . "and bgh.budgetPeriodId = :budgetPeriodId "
+                . "order by bgh.formId asc, faculty.id asc, dept.id asc, l3dPlan.id asc, fund.id asc ";
 
         $param = array(
             "budgetTypeCode" => "G",
@@ -84,7 +81,7 @@ class PreapproveService extends CServiceBase implements IPreapproveService {
         return $data;
     }
 
-    public function listForm(){
+    public function listForm() {
         $formArr = array(
             ["id" => 140, "name" => "ง.140 - คำของบประมาณเงินเดือน"],
             ["id" => 141, "name" => "ง.141 - คำของบประมาณค่าจ้างประจำ"],
@@ -93,7 +90,7 @@ class PreapproveService extends CServiceBase implements IPreapproveService {
             ["id" => 144, "name" => "ง.144 - คำของบประมาณเงินอุดหนุนเป็นค่าสาธารณูปโภค"],
             ["id" => 145, "name" => "ง.145 - คำของบประมาณเงินอุดหนุนเป็นค่าครุภัณฑ์ ค่าที่ดิน/สิ่งก่อสร้าง"],
             ["id" => 146, "name" => "ง.146 - คำของบประมาณเงินอุดหนุน"]
-            //["id" => 200, "name" => "โครงการที่ตอบสนองยุทธศาสตร์"]
+                //["id" => 200, "name" => "โครงการที่ตอบสนองยุทธศาสตร์"]
         );
 
         return $formArr;
@@ -113,10 +110,10 @@ class PreapproveService extends CServiceBase implements IPreapproveService {
 
     public function listFundgroupWithPlan($l3dPlanId) {
         $sql = "select DISTINCT(map.FUNDGROUPID) as id , fund.FUNDGROUPNAME as name "
-            ."from MAPPINGPLAN map "
-            ."inner join L3D_FUNDGROUP fund on fund.FUNDGROUPID = map.FUNDGROUPID "
-            ."where BUDGETPERIODID = :budgetPeriodId "
-            ."and PLANID = :l3dPlanId";
+                . "from MAPPINGPLAN map "
+                . "inner join L3D_FUNDGROUP fund on fund.FUNDGROUPID = map.FUNDGROUPID "
+                . "where BUDGETPERIODID = :budgetPeriodId "
+                . "and PLANID = :l3dPlanId";
 
         $param = array(
             "budgetPeriodId" => $this->getPeriod()->year,
@@ -164,9 +161,8 @@ class PreapproveService extends CServiceBase implements IPreapproveService {
         return $result;
     }
 
-    public function updateStatusBG($bgType, $listBg, $status)
-    {
-   
+    public function updateStatusBG($bgType, $listBg, $status) {
+
         $return = array();
 
         foreach ($listBg as $key => $value) {
@@ -192,16 +188,16 @@ class PreapproveService extends CServiceBase implements IPreapproveService {
                     $object->setId($value->id);
                     $object->setStatusId($status);
 
-                    if($status == 3){
+                    if ($status == 3) {
                         $object->setStatusPlanningId(2);
                     }
 
                     if (isset($value->comment))
                         $object->setComment($value->comment);
                 }
-                
-                if ($object->getId() != null) {
 
+                if ($object->getId() != null) {
+                    $object->setDateUpdated(date("Y-m-d H:i:s"));
                     if ($this->datacontext->updateObject($object)) {
                         $return["status"] = true;
                         if (isset($value->budgetHeadId)) {
@@ -223,10 +219,9 @@ class PreapproveService extends CServiceBase implements IPreapproveService {
         return $return;
     }
 
-    private function updateBudgetHead($id, $formType, $statusId)
-    {
+    private function updateBudgetHead($id, $formType, $statusId) {
         $result = true;
-        
+
         /*
           $formId = 0;
           if ($formType == "Budget140") {
@@ -250,22 +245,24 @@ class PreapproveService extends CServiceBase implements IPreapproveService {
             $bgh = new BudgetHead();
             $bgh->setId($id);
             $bgh->setStatusId($statusId);
+            $bgh->setDateUpdated(date("Y-m-d H:i:s"));
             if (!$this->datacontext->updateObject($bgh)) {
                 $result = false;
             }
         } else if ($statusId == "3") {
             $sql = "select count(*) as num from " . $this->ent . "\\" . $formType . " bg "
-                . "where bg.budgetHeadId = :budgetHeadId "
-                . "and bg.statusId in (1,2,4) ";
+                    . "where bg.budgetHeadId = :budgetHeadId "
+                    . "and bg.statusId in (1,2,4) ";
             $param = array("budgetHeadId" => $id);
             $bg = $this->datacontext->getObject($sql, $param);
-            
+
             if (count($bg) == 0) {
                 //echo $id;
                 $bgh = new BudgetHead();
                 $bgh->setId($id);
                 $bgh->setStatusId(5);
                 $bgh->setStatusPlanningId(2);
+                $bgh->setDateUpdated(date("Y-m-d H:i:s"));
                 if (!$this->datacontext->updateObject($bgh)) {
                     $result = false;
                 }
@@ -274,18 +271,18 @@ class PreapproveService extends CServiceBase implements IPreapproveService {
 
         return $result;
     }
-    public function updateComment($data,$bgType) {
-       
+
+    public function updateComment($data, $bgType) {
+
         $class = $this->ent . "\\" . $bgType;
         $object = new $class();
         $object->setId($data->id);
         $object->setComment($data->comment);
-        if($this->datacontext->updateObject($object)){
+        if ($this->datacontext->updateObject($object)) {
             return true;
-        }else{
+        } else {
             return false;
         }
-        
     }
 
 }
