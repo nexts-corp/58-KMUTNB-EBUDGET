@@ -310,7 +310,28 @@ class DraftService extends CServiceBase implements IDraftService {
                             "deptId" => $departmentId,
                             "typeId" => $typeId
                         );
-                        return $this->datacontext->pdoQuery($sql, $param);
+                        return $this->datacontext->pdoExecute($sql, $param);
+                        
+//                        $sql = "UPDATE ActionPlan_Draft_Detail "
+//                            . "SET IsApprove = 'Y' "
+//                            . "WHERE ActionPlanDraftId IN (" . implode(",", $draftId) . ") "
+//                            . "AND IsActive = 'Y' ";
+//                        
+//                        $sql = "INSERT INTO ActionPlan_Final_Detail(
+//                             ActionPlanFinalDetailSeq, ActionPlanFinalDetailName, ActionPlanFinalId,
+//                            ActionPlanStrategyId, ActionPlanProjectSeq, ActionPlanProjectName,
+//                            TimeDuration, Budget, Revenue, Other, NoBudget,
+//                            Remark, IsApprove, IsActive
+//                        )
+//                        SELECT
+//                            PeriodCode, ActionPlanDraftId, DepartmentId, ActionPlanTypeId,
+//                            ActionPlanStrategyId, ActionPlanProjectSeq, ActionPlanProjectName,
+//                            TimeDuration, Budget, Revenue, Other, NoBudget,
+//                            Remark, 'N', 'Y'
+//                        FROM ActionPlan_Draft 
+//                        WHERE ActionPlanDraftId IN (" . implode(",", $draftId) . ")
+//                        AND IsActive = 'Y' ";
+//                        $this->datacontext->pdoExecute($sql);
                     } else {
                         return false;
                     }
