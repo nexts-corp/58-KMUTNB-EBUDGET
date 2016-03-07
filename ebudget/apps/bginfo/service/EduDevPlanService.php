@@ -25,7 +25,8 @@ class EduDevPlanService extends CServiceBase implements IEduDevPlanService {
 
     function getPeriod() {
         $year = new \apps\common\entity\Year();
-        $year->year = 2559;
+        $year->setYearStatus("Y");
+        //$year->year = 2559;
         return $this->datacontext->getObject($year)[0];
     }
 
