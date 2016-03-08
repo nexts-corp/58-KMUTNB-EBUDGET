@@ -49,7 +49,7 @@ class LookupService extends CServiceBase implements ILookupService {
     public function listDepartment($facultyId) {
         $repo = new L3D\Department();
         $repo->setDeptStatus("Y");
-        if (isset($facultyId) && $facultyId!=null ) {
+        if (isset($facultyId) && $facultyId != null) {
             $repo->setMasterId($facultyId);
         }
         $data = $this->datacontext->getObject($repo);
@@ -196,15 +196,15 @@ class LookupService extends CServiceBase implements ILookupService {
 
     public function listFundgroupWithPlan($budgetPeriodId, $l3dPlanId) {
         $sql = "select DISTINCT(map.fundgroupId) as id , fund.FundGroupName as name "
-            ."from Mapping_Plan map "
-            ."inner join L3D_Fund_Group fund on fund.FundGroupId = map.FundGroupId "
-            ."where map.BudgetPeriodId = '".$budgetPeriodId."'"
-            ."and map.PlanId = '".$l3dPlanId."'";
+                . "from Mapping_Plan map "
+                . "inner join L3D_Fund_Group fund on fund.FundGroupId = map.FundGroupId "
+                . "where map.BudgetPeriodId = '" . $budgetPeriodId . "'"
+                . "and map.PlanId = '" . $l3dPlanId . "'";
 
         $data = $this->datacontext->pdoQuery($sql);
 
         $result = array();
-        
+
         foreach ($data as $key => $value) {
             $result[$key]["id"] = $value["id"];
             $result[$key]["name"] = $value["name"];
@@ -214,12 +214,120 @@ class LookupService extends CServiceBase implements ILookupService {
 
     public function listYearOld() {
         $sql = "select y from " . $this->ent . "\\Year y ORDER BY y.year DESC ";
-        
+
         $data = $this->datacontext->getObject($sql);
 
         return $data;
-         
-      
+    }
+
+    public function str2date($date, $format, $operation = "") {
+        if ($format == "Y-m-d") {
+            $date = explode("-", $date);
+            if ($operation == "+") {
+                $date[0] = (int) $date[0] + 543;
+            } elseif ($operation == "-") {
+                $date[0] = (int) $date[0] - 543;
+            }
+            $date = $date[0] . "-" . $date[1] . "-" . $date[2];
+        } elseif ($format == "d-m-Y") {
+            $date = explode("-", $date);
+            if ($operation == "+") {
+                $date[2] = (int) $date[2] + 543;
+            } elseif ($operation == "-") {
+                $date[2] = (int) $date[2] - 543;
+            }
+            $date = $date[2] . "-" . $date[1] . "-" . $date[0];
+        } elseif ($format == "Y-m-d H:i:s") {
+            $datetime = explode(" ", $date);
+            $date = explode("-", $datetime[0]);
+            if ($operation == "+") {
+                $date[0] = (int) $date[0] + 543;
+            } elseif ($operation == "-") {
+                $date[0] = (int) $date[0] - 543;
+            }
+            $date = $date[0] . "-" . $date[1] . "-" . $date[2] . " " . $datetime[1];
+        } elseif ($format == "d-m-Y H:i:s") {
+            $datetime = explode(" ", $date);
+            $date = explode("-", $datetime[0]);
+            if ($operation == "+") {
+                $date[2] = (int) $date[2] + 543;
+            } elseif ($operation == "-") {
+                $date[2] = (int) $date[2] - 543;
+            }
+            $date = $date[2] . "-" . $date[1] . "-" . $date[0] . " " . $datetime[1];
+        }
+        return new \DateTime($date);
+    }
+
+    public function date2str($date, $format, $operation = "") {
+        $date = $date->format($format);
+        if ($format == "Y-m-d") {
+            $date = explode("-", $date);
+            if ($operation == "+") {
+                $date[0] = (int) $date[0] + 543;
+            } elseif ($operation == "-") {
+                $date[0] = (int) $date[0] - 543;
+            }
+            $date = $date[0] . "-" . $date[1] . "-" . $date[2];
+        } elseif ($format == "d-m-Y") {
+            $date = explode("-", $date);
+            if ($operation == "+") {
+                $date[2] = (int) $date[2] + 543;
+            } elseif ($operation == "-") {
+                $date[2] = (int) $date[2] - 543;
+            }
+            $date = $date[0] . "-" . $date[1] . "-" . $date[2];
+        } elseif ($format == "Y-m-d H:i:s") {
+            $datetime = explode(" ", $date);
+            $date = explode("-", $datetime[0]);
+            if ($operation == "+") {
+                $date[0] = (int) $date[0] + 543;
+            } elseif ($operation == "-") {
+                $date[0] = (int) $date[0] - 543;
+            }
+            $date = $date[0] . "-" . $date[1] . "-" . $date[2] . " " . $datetime[1];
+        } elseif ($format == "d-m-Y H:i:s") {
+            $datetime = explode(" ", $date);
+            $date = explode("-", $datetime[0]);
+            if ($operation == "+") {
+                $date[2] = (int) $date[2] + 543;
+            } elseif ($operation == "-") {
+                $date[2] = (int) $date[2] - 543;
+            }
+            $date = $date[0] . "-" . $date[1] . "-" . $date[2] . " " . $datetime[1];
+        }
+        return $date;
+    }
+
+    public function afterGet($object, $remove = array()) {
+        $rowNo = 1;
+        if (count($object) > 1 || is_array($object)) {
+            foreach ($object as $key => $data) {
+                $object[$key]->rowNo = $rowNo++;
+                foreach ($data as $field => $value) {
+                    if (in_array($field, $remove)) {
+                        unset($object[$key]->$field);
+                    } else {
+                        if (is_a($value, "DateTime")) {
+                            $object[$key]->$field = $this->date2str($value, "d-m-Y", "+");
+                        }
+                    }
+                }
+            }
+        } else {
+            $object->rowNo = $rowNo++;
+            foreach ($object as $field => $value) {
+                if (in_array($field, $remove)) {
+                    //   if ($field == "dateCreated" || $field == "dateUpdated" || $field == "createBy" || $field == "updateBy") {
+                    unset($object->$field);
+                } else {
+                    if (is_a($value, "DateTime")) {
+                        $object->$field = $this->date2str($value, "d-m-Y", "+");
+                    }
+                }
+            }
+        }
+        return $object;
     }
 
 }

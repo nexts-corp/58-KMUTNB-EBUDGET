@@ -15,6 +15,11 @@ class ActionPlanFinalDetail extends EntityBase {
      */
     public $detailId;
 
+    /**
+     * @Column(type="integer",length=11,name="ActionPlanDraftDetailId")
+     */
+    public $draftDetailId;
+
     /** @Column(type="integer",length=11, name="ActionPlanFinalDetailSeq") */
     public $detailSeq;
 
@@ -38,6 +43,76 @@ class ActionPlanFinalDetail extends EntityBase {
     /** @Column(type="string",length=10, name="IsActive") */
     public $isActive;
 
-   
+    function getDetailId() {
+        return $this->detailId;
+    }
+
+    function getDraftDetailId() {
+        return $this->draftDetailId;
+    }
+
+    function getDetailSeq() {
+        return $this->detailSeq;
+    }
+
+    function getDetailName() {
+        return $this->detailName;
+    }
+
+    function getFinalId() {
+        return $this->finalId;
+    }
+
+    function getUnit() {
+        return $this->unit;
+    }
+
+    function getRemark() {
+        return $this->remark;
+    }
+
+    function getIsApprove() {
+        return $this->isApprove;
+    }
+
+    function getIsActive() {
+        return $this->isActive;
+    }
+
+    function setDetailId($detailId) {
+        $this->detailId = $detailId;
+    }
+
+    function setDraftDetailId($draftDetailId) {
+        $this->draftDetailId = $draftDetailId;
+    }
+
+    function setDetailSeq($detailSeq) {
+        $this->detailSeq = $detailSeq;
+    }
+
+    function setDetailName($detailName) {
+        $this->detailName = $detailName;
+    }
+
+    function setFinalId($finalId) {
+        $this->finalId = $finalId;
+    }
+
+    function setUnit($unit) {
+        $this->unit = $unit;
+    }
+
+    function setRemark($remark) {
+        $this->remark = $remark;
+    }
+
+    function setIsApprove($isApprove) {
+        $this->isApprove = $isApprove;
+    }
+
+    function setIsActive($isActive) {
+        $this->isActive = $isActive;
+    }
 
 }

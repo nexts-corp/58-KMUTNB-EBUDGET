@@ -64,4 +64,18 @@ class EntityBase {
     public function setDateUpdated($dateUpdated) {
         $this->dateUpdated = $dateUpdated;
     }
+    
+    public    function _clone() {
+        $refs=new \ReflectionClass($this);
+        $obj=$refs->newInstance();
+        $ppros=$refs->getProperties();
+        foreach ($ppros as $p){
+            $name=$p->getName();
+            $obj->{$name}=(Object)$this->{$name};
+        }
+        return $obj;
+    }
+    public function __clone() {
+        //$this->;
+    }
 }

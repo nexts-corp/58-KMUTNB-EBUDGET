@@ -265,31 +265,40 @@ class DraftService extends CServiceBase implements IDraftService {
         $draft->departmentId = $departmentId;
         $draft->typeId = $typeId;
         $draft->isActive = "Y";
+        $common = new \apps\common\service\LookupService();
         $dataDraft = $this->datacontext->getObject($draft);
-
+        //$dataDraft = $common->afterGet($this->datacontext->getObject($draft), array("dateCreated", "dateUpdated"));
+//        $newObjs = json_encode($dataDraft);
+//        $newObjs = json_decode($newObjs);
+//        $newObjs = $json->decode(new \apps\common\entity\ActionPlanDraft(), $newObjs);
         if ($status == "Y") {
             $check = true;
-            $draftId = array();
             foreach ($dataDraft as $keyDraft => $valueDraft) {
-                if ($valueDraft->projectName != NULL && $valueDraft->timeDuration != NULL) { // && $valueDraft->isApprove != "Y") {
-                    $dataDraft[$keyDraft]->isApprove = $status;
-                    array_push($draftId, (int) $valueDraft->draftId);
-                } else {
+                //  $newObjs[]=clone($valueDraft);//->_clone();
+                if ($valueDraft->projectName == NULL && $valueDraft->timeDuration == NULL) { // && $valueDraft->isApprove != "Y") {
                     $check = false;
                     $this->getResponse()->add('msg', 'ข้อมูลตัวชี้วัดไม่ครบถ้วน');
                     return false;
                 }
             }
             if ($check == true) {
-                // return substr($draftId, 0, -1);
-                if ($this->datacontext->updateObject($dataDraft)) {
-                    $sql = "UPDATE ActionPlan_Draft_Detail "
-                            . "SET IsApprove = 'Y' "
-                            . "WHERE ActionPlanDraftId IN (" . implode(",", $draftId) . ") "
-                            . "AND IsActive = 'Y' ";
-                    //$param = array("draftId" => $draftId);
-                    if (is_object($this->datacontext->pdoExecute($sql))) {
-                        $sql = "INSERT INTO ActionPlan_Final(
+                if ($this->statusNo($departmentId, $typeId, $dataDraft)) {
+                    $draftId = array();
+                    foreach ($dataDraft as $keyDraft => $valueDraft) {
+                        $dataDraft[$keyDraft]->isApprove = 'Y';
+                        array_push($draftId, (int) $valueDraft->draftId);
+                    }
+                    if ($this->datacontext->updateObject($dataDraft)) {
+                        if (count($draftId) > 0) {
+                            $sql = "UPDATE ActionPlan_Draft_Detail " //update Draft Detail ให้ Approve เป็น Y 
+                                    . "SET IsApprove = 'Y' "
+                                    . "WHERE ActionPlanDraftId IN (" . implode(",", $draftId) . ") "
+                                    . "AND IsActive = 'Y' ";
+                            $this->datacontext->pdoExecute($sql);
+                        }
+                        //$param = array("draftId" => $draftId);
+
+                        $sql = "INSERT INTO ActionPlan_Final( 
                             PeriodCode, ActionPlanDraftId, DepartmentId, ActionPlanTypeId,
                             ActionPlanStrategyId, ActionPlanProjectSeq, ActionPlanProjectName,
                             TimeDuration, Budget, Revenue, Other, NoBudget,
@@ -304,39 +313,45 @@ class DraftService extends CServiceBase implements IDraftService {
                         WHERE PeriodCode = :year 
                         AND DepartmentId = :deptId 
                         AND ActionPlanTypeId = :typeId 
-                        AND IsActive = 'Y' ";
+                        AND IsActive = 'Y' "; // ถ้า update สำเร็จ ก็ select Draft มา insert Final
                         $param = array(
                             "year" => $this->getPeriod()->year,
                             "deptId" => $departmentId,
                             "typeId" => $typeId
                         );
-                        return $this->datacontext->pdoExecute($sql, $param);
-                        
-//                        $sql = "UPDATE ActionPlan_Draft_Detail "
-//                            . "SET IsApprove = 'Y' "
-//                            . "WHERE ActionPlanDraftId IN (" . implode(",", $draftId) . ") "
-//                            . "AND IsActive = 'Y' ";
-//                        
-//                        $sql = "INSERT INTO ActionPlan_Final_Detail(
-//                             ActionPlanFinalDetailSeq, ActionPlanFinalDetailName, ActionPlanFinalId,
-//                            ActionPlanStrategyId, ActionPlanProjectSeq, ActionPlanProjectName,
-//                            TimeDuration, Budget, Revenue, Other, NoBudget,
-//                            Remark, IsApprove, IsActive
-//                        )
-//                        SELECT
-//                            PeriodCode, ActionPlanDraftId, DepartmentId, ActionPlanTypeId,
-//                            ActionPlanStrategyId, ActionPlanProjectSeq, ActionPlanProjectName,
-//                            TimeDuration, Budget, Revenue, Other, NoBudget,
-//                            Remark, 'N', 'Y'
-//                        FROM ActionPlan_Draft 
-//                        WHERE ActionPlanDraftId IN (" . implode(",", $draftId) . ")
-//                        AND IsActive = 'Y' ";
-//                        $this->datacontext->pdoExecute($sql);
-                    } else {
-                        return false;
+                        $this->datacontext->pdoExecute($sql, $param);
+
+                        $sql = "select c from apps\\common\\entity\\ActionPlanFinal c "
+                                . "where c.periodCode = :year "
+                                . "and c.departmentId = :deptId "
+                                . "and c.typeId = :typeId ";
+                        $dataFinal = $this->datacontext->getObject($sql, $param); // get data ที่เพิ่ง insert เมื่อกี้มาไว้รอใช้
+
+                        if (count($draftId) > 0) {
+                            $sql = "INSERT INTO ActionPlan_Final_Detail(
+                            ActionPlanDraftDetailId, ActionPlanFinalDetailSeq, ActionPlanFinalDetailName,
+                            ActionPlanFinalId, Unit, 
+                            Remark, IsApprove, IsActive
+                        )
+                        SELECT
+                            ActionPlanDraftDetailId, ActionPlanDraftDetailSeq, ActionPlanDraftDetailName,
+                            ActionPlanDraftId, Unit,
+                            Remark, 'N', 'Y'
+                        FROM ActionPlan_Draft_Detail  
+                        WHERE ActionPlanDraftId IN (" . implode(",", $draftId) . ")
+                        AND IsActive = 'Y' "; // insert final detail 
+                            $this->datacontext->pdoExecute($sql);
+                        }
+
+                        $finalSql = "";
+                        foreach ($dataFinal as $keyFinal => $valueFinal) {
+                            $finalSql .= " update ActionPlan_Final_Detail "
+                                    . " set ActionPlanFinalId = " . $valueFinal->finalId . " "
+                                    . " where ActionPlanFinalId = " . $valueFinal->draftId . "; ";
+                        }
+                        $this->datacontext->pdoExecute($finalSql);
+                        return true;
                     }
-
-
                     /* if (!$this->datacontext->pdoQuery($sql, $param)) {
                       $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
                       return false;
@@ -355,25 +370,50 @@ class DraftService extends CServiceBase implements IDraftService {
                 }
             }
         } elseif ($status == "N") {
-            foreach ($dataDraft as $keyDraft => $valueDraft) {
-                $dataDraft[$keyDraft]->isApprove = $status;
+            return $this->statusNo($departmentId, $typeId, $dataDraft);
+        }
+        //return true;
+    }
+
+    private function statusNo($departmentId, $typeId, $dataDraft) {
+        $draftId = array();
+        foreach ($dataDraft as $keyDraft => $valueDraft) {
+            $dataDraft[$keyDraft]->isApprove = "N";
+            array_push($draftId, (int) $valueDraft->draftId);
+        }
+
+        if ($this->datacontext->updateObject($dataDraft)) {
+            if (count($draftId) > 0) {
+                $sql = "UPDATE ActionPlan_Draft_Detail " //update Draft Detail ให้ Approve เป็น N
+                        . "SET IsApprove = 'N' "
+                        . "WHERE ActionPlanDraftId IN (" . implode(",", $draftId) . ") ";
+                $this->datacontext->pdoExecute($sql);
             }
-            if ($this->datacontext->updateObject($dataDraft)) {
-                $final = new \apps\common\entity\ActionPlanFinal();
-                $final->periodCode = $this->getPeriod()->year;
-                $final->departmentId = $departmentId;
-                $final->typeId = $typeId;
-                $del = $this->datacontext->getObject($final);
-                if (!$this->datacontext->removeObject($del)) {
-                    $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
-                    return false;
-                }
-            } else {
+            $final = new \apps\common\entity\ActionPlanFinal();
+            $final->periodCode = $this->getPeriod()->year;
+            $final->departmentId = $departmentId;
+            $final->typeId = $typeId;
+            $del = $this->datacontext->getObject($final);
+            $finalId = array();
+            foreach ($del as $keyDel => $valDel) {
+                array_push($finalId, (int) $valDel->finalId); // หา finalId เพื่อจะได้ where in ใน detail เพื่อ ลบ
+            }
+            if (!$this->datacontext->removeObject($del)) {
                 $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
                 return false;
+            } else {
+                if (count($finalId) > 0) {
+                    $sql = "DELETE FROM ActionPlan_Final_Detail " //delete final detail
+                            . "WHERE ActionPlanFinalId IN (" . implode(",", $finalId) . ") ";
+                    $this->datacontext->pdoExecute($sql);
+                }
+                return true;
             }
+        } else {
+            $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+            return false;
         }
-        return true;
+        // return true;
     }
 
     public function export($departmentId) {
