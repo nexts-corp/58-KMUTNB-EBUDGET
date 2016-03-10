@@ -55,7 +55,7 @@ class FinalService extends CServiceBase implements IFinalService {
     }
 
     public function listsDept() {
-        $sql = "select r from apps\\affirmative\\model\\ViewActivityDepartment r order by r.activityCode";
+        $sql = "select r from apps\\actionplan\\model\\ViewActivityDepartment r order by r.activityCode";
         $dept = $this->datacontext->getObject($sql);
         $periodCode = $this->getPeriod()->year;
 
@@ -106,7 +106,7 @@ class FinalService extends CServiceBase implements IFinalService {
 
         $result = array();
 
-        foreach($group as $key => $value){
+        foreach ($group as $key => $value) {
             $result[] = array(
                 "actId" => $key,
                 "actName" => $actKey[$key],
@@ -138,7 +138,7 @@ class FinalService extends CServiceBase implements IFinalService {
         return $return;
     }
 
-    function finalData($departmentId){
+    function finalData($departmentId) {
         $json = new CJSONDecodeImpl();
         $dept = new \apps\actionplan\model\ViewActivityDepartment();
         $dept->departmentId = $departmentId;
@@ -165,22 +165,22 @@ class FinalService extends CServiceBase implements IFinalService {
         $typeArr = $this->sortBy("kpiSeq", $typeArr);
 
         $sqlMain = "select s.mainId,s.mainSeq,m.mainName "
-            . "from apps\\common\\entity\\AffirmativeSetting s "
-            . "join apps\\common\\entity\\AffirmativeMain m with m.mainId = s.mainId "
-            . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
-            . "group by s.mainId,s.mainSeq,m.mainName "
-            . "order by s.mainSeq";
+                . "from apps\\common\\entity\\AffirmativeSetting s "
+                . "join apps\\common\\entity\\AffirmativeMain m with m.mainId = s.mainId "
+                . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
+                . "group by s.mainId,s.mainSeq,m.mainName "
+                . "order by s.mainSeq";
         $paramMain = array(
             "periodCode" => $this->getPeriod()->year,
             "groupCode" => $dataDept->activityCode
         );
         $mainData = $this->datacontext->getObject($sqlMain, $paramMain);
         $sqlType = "select s.mainId,s.mainSeq,s.typeId,s.typeSeq,m.typeName,m.hasIssue "
-            . "from apps\\common\\entity\\AffirmativeSetting s "
-            . "join apps\\common\\entity\\AffirmativeType m with m.typeId = s.typeId "
-            . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
-            . "group by s.mainId,s.mainSeq,s.typeId,s.typeSeq,m.typeName,m.hasIssue "
-            . "order by s.mainSeq,s.typeSeq";
+                . "from apps\\common\\entity\\AffirmativeSetting s "
+                . "join apps\\common\\entity\\AffirmativeType m with m.typeId = s.typeId "
+                . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
+                . "group by s.mainId,s.mainSeq,s.typeId,s.typeSeq,m.typeName,m.hasIssue "
+                . "order by s.mainSeq,s.typeSeq";
         $paramType = array(
             "periodCode" => $this->getPeriod()->year,
             "groupCode" => $dataDept->activityCode
@@ -233,99 +233,7 @@ class FinalService extends CServiceBase implements IFinalService {
         }
     }
 
-    public function insert($final) {
-        $dept = new \apps\actionplan\model\ViewActivityDepartment();
-        $dept->departmentId = $final->departmentId;
-        $deptData = $this->datacontext->getObject($dept)[0];
-        if ($final->typeId == 0) {
-            $target = new \apps\common\entity\AffirmativeTarget();
-            $target->targetId = $final->targetId;
-            $targetData = $this->datacontext->getObject($target)[0];
-            $final->targetSeq = $targetData->targetSeq;
-
-            $issue = new \apps\common\entity\AffirmativeIssue();
-            $issue->issueId = $targetData->issueId;
-            $issueData = $this->datacontext->getObject($issue)[0];
-            $final->issueId = $issueData->issueId;
-            $final->issueSeq = $issueData->issueSeq;
-
-            $final->typeId = $issueData->typeId;
-            $final->hasIssue = "Y";
-        } else {
-            $final->hasIssue = "N";
-        }
-        $setting = new \apps\common\entity\AffirmativeSetting();
-        $setting->typeId = $final->typeId;
-        $setting->groupCode = $deptData->activityCode;
-        $setting->periodCode = $this->getPeriod()->year;
-        $settingData = $this->datacontext->getObject($setting)[0];
-        $final->mainId = $settingData->mainId;
-        $final->mainSeq = $settingData->mainSeq;
-        $final->typeId = $settingData->typeId;
-        $final->typeSeq = $settingData->typeSeq;
-
-        $final->periodCode = $this->getPeriod()->year;
-        $final->isApprove = "N";
-        $final->draftId = 0;
-        $final->unitName = $this->getUnit($final->unitId)["unitName"];
-        if (!$this->datacontext->saveObject($final)) {
-            $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
-            return false;
-        } else {
-            return $final;
-        }
-    }
-
-    public function update($final) {
-        if ($this->datacontext->updateObject($final)) {
-            return $this->datacontext->getObject($final)[0];
-        } else {
-            $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
-            return false;
-        }
-    }
-
-    public function delete($final) {
-        $get = new \apps\common\entity\AffirmativeFinal();
-        $get->finalId = $final->finalId;
-        $data = $this->datacontext->getObject($get)[0];
-        if ($data->draftId != 0) {
-            $draft = new \apps\common\entity\AffirmativeDraft();
-            $draft->draftId = $data->draftId;
-            $data = $this->datacontext->getObject($draft)[0];
-            $data->isApprove = "N";
-            if (!$this->datacontext->updateObject($data)) {
-                $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
-                return false;
-            }
-        }
-        if ($this->datacontext->removeObject($final)) {
-            return true;
-        } else {
-            $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
-            return false;
-        }
-    }
-
-    public function approve($departmentId, $status) {
-        $json = new CJSONDecodeImpl();
-        $final = new \apps\common\entity\AffirmativeFinal();
-        $final->periodCode = $this->getPeriod()->year;
-        $final->departmentId = $departmentId;
-        $final->isActive = "Y";
-        $dataFinal = $this->datacontext->getObject($final);
-        foreach ($dataFinal as $keyFinal => $valFinal) {
-            $dataFinal[$keyFinal]->isApprove = $status;
-        }
-        if (!$this->datacontext->updateObject($dataFinal)) {
-            $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public function export($departmentId){
+    public function export($departmentId) {
         //style
         $center = array(
             'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
@@ -360,7 +268,7 @@ class FinalService extends CServiceBase implements IFinalService {
         $objWorkSheet = $objPHPExcel->getActiveSheet();
 
         $title = "Sheet 1";
-        $objWorkSheet -> setTitle($title);
+        $objWorkSheet->setTitle($title);
 
         $mp = new \apps\actionplan\model\ViewActivityDepartment();
         $mp->departmentId = $departmentId;
@@ -368,55 +276,55 @@ class FinalService extends CServiceBase implements IFinalService {
 
         //last year
         $sql = "SELECT"
-                ." yr.year"
-            ." FROM apps\\common\\entity\\Year yr"
-            ." WHERE yr.year < :year"
-            ." ORDER BY yr.year DESC";
+                . " yr.year"
+                . " FROM apps\\common\\entity\\Year yr"
+                . " WHERE yr.year < :year"
+                . " ORDER BY yr.year DESC";
         $param = array(
             "year" => $this->getPeriod()->year
         );
-        $lastYear =  $this->datacontext->getObject($sql, $param, 1)[0];
-       //return $lastYear;
+        $lastYear = $this->datacontext->getObject($sql, $param, 1)[0];
+        //return $lastYear;
 
         $row = 1;
         $objWorkSheet->mergeCells('A1:J2')
-            ->setCellValueByColumnAndRow(0, $row, "ตัวชี้วัดคำรับรองการปฏิบัติงาน ประจำปีงบประมาณ พ.ศ.".$this->getPeriod()->year."\n ประเภทส่วนงาน".$dept->activityName." : ".$dept->departmentName)
-            ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($center)->setWrapText(true);
+                ->setCellValueByColumnAndRow(0, $row, "ตัวชี้วัดคำรับรองการปฏิบัติงาน ประจำปีงบประมาณ พ.ศ." . $this->getPeriod()->year . "\n ประเภทส่วนงาน" . $dept->activityName . " : " . $dept->departmentName)
+                ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($center)->setWrapText(true);
 
-        $row =  3;
-        $objWorkSheet->mergeCells('A'.$row.':A'.($row+1))->setCellValueByColumnAndRow(0, $row, "ตัวชี้วัดคำรับรอง ปี ".$this->getPeriod()->year)
-            ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($center);
+        $row = 3;
+        $objWorkSheet->mergeCells('A' . $row . ':A' . ($row + 1))->setCellValueByColumnAndRow(0, $row, "ตัวชี้วัดคำรับรอง ปี " . $this->getPeriod()->year)
+                ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($center);
 
-        $objWorkSheet->mergeCells('B'.$row.':B'.($row+1))->setCellValueByColumnAndRow(1, $row, "หน่วยนับ")
-            ->getStyleByColumnAndRow(1, $row)->getAlignment()->applyFromArray($center);
+        $objWorkSheet->mergeCells('B' . $row . ':B' . ($row + 1))->setCellValueByColumnAndRow(1, $row, "หน่วยนับ")
+                ->getStyleByColumnAndRow(1, $row)->getAlignment()->applyFromArray($center);
 
-        $objWorkSheet->mergeCells('C'.$row.':C'.($row+1))->setCellValueByColumnAndRow(2, $row, "ผลลัพธ์\nปี ".$lastYear["year"])
-            ->getStyleByColumnAndRow(2, $row)->getAlignment()->applyFromArray($center)->setWrapText(true);
+        $objWorkSheet->mergeCells('C' . $row . ':C' . ($row + 1))->setCellValueByColumnAndRow(2, $row, "ผลลัพธ์\nปี " . $lastYear["year"])
+                ->getStyleByColumnAndRow(2, $row)->getAlignment()->applyFromArray($center)->setWrapText(true);
 
-        $objWorkSheet->mergeCells('D'.$row.':D'.($row+1))->setCellValueByColumnAndRow(3, $row, "ค่าเป้าหมาย\nตัวชี้วัด")
-            ->getStyleByColumnAndRow(3, $row)->getAlignment()->applyFromArray($center);
+        $objWorkSheet->mergeCells('D' . $row . ':D' . ($row + 1))->setCellValueByColumnAndRow(3, $row, "ค่าเป้าหมาย\nตัวชี้วัด")
+                ->getStyleByColumnAndRow(3, $row)->getAlignment()->applyFromArray($center);
 
-        $objWorkSheet->mergeCells('E'.$row.':I'.$row)->setCellValueByColumnAndRow(4, $row, "เกณฑ์การให้คะแนนผลลัพธ์ของตัวชี้วัด (ระดับคะแนน)")
-            ->getStyleByColumnAndRow(4, $row)->getAlignment()->applyFromArray($center);
+        $objWorkSheet->mergeCells('E' . $row . ':I' . $row)->setCellValueByColumnAndRow(4, $row, "เกณฑ์การให้คะแนนผลลัพธ์ของตัวชี้วัด (ระดับคะแนน)")
+                ->getStyleByColumnAndRow(4, $row)->getAlignment()->applyFromArray($center);
 
-        $objWorkSheet->mergeCells('J'.$row.':J'.($row+1))->setCellValueByColumnAndRow(9, $row, "หมายเหตุ")
-            ->getStyleByColumnAndRow(9, $row)->getAlignment()->applyFromArray($center);
+        $objWorkSheet->mergeCells('J' . $row . ':J' . ($row + 1))->setCellValueByColumnAndRow(9, $row, "หมายเหตุ")
+                ->getStyleByColumnAndRow(9, $row)->getAlignment()->applyFromArray($center);
 
         $row = 4;
         $objWorkSheet->setCellValueByColumnAndRow(4, $row, "คะแนน 1")
-            ->getStyleByColumnAndRow(4, $row)->getAlignment()->applyFromArray($center);
+                ->getStyleByColumnAndRow(4, $row)->getAlignment()->applyFromArray($center);
 
         $objWorkSheet->setCellValueByColumnAndRow(5, $row, "คะแนน 2")
-            ->getStyleByColumnAndRow(5, $row)->getAlignment()->applyFromArray($center);
+                ->getStyleByColumnAndRow(5, $row)->getAlignment()->applyFromArray($center);
 
         $objWorkSheet->setCellValueByColumnAndRow(6, $row, "คะแนน 3")
-            ->getStyleByColumnAndRow(6, $row)->getAlignment()->applyFromArray($center);
+                ->getStyleByColumnAndRow(6, $row)->getAlignment()->applyFromArray($center);
 
         $objWorkSheet->setCellValueByColumnAndRow(7, $row, "คะแนน 4")
-            ->getStyleByColumnAndRow(7, $row)->getAlignment()->applyFromArray($center);
+                ->getStyleByColumnAndRow(7, $row)->getAlignment()->applyFromArray($center);
 
         $objWorkSheet->setCellValueByColumnAndRow(8, $row, "คะแนน 5")
-            ->getStyleByColumnAndRow(8, $row)->getAlignment()->applyFromArray($center);
+                ->getStyleByColumnAndRow(8, $row)->getAlignment()->applyFromArray($center);
 
         $objWorkSheet->getColumnDimensionByColumn(0)->setWidth(50);
         $objWorkSheet->getColumnDimensionByColumn(1)->setWidth(20);
@@ -434,96 +342,95 @@ class FinalService extends CServiceBase implements IFinalService {
         //return $data;
 
         $row = 5;
-        foreach($data as $key => $value){
-            $objWorkSheet->mergeCells('A'.$row.':J'.$row)
-                ->setCellValueByColumnAndRow(0, $row, "ส่วนที่ ".$value["mainSeq"]." ".$value["mainName"])
-                ->getStyleByColumnAndRow(0, $row)->applyFromArray($underline)->getAlignment()->applyFromArray($center);
+        foreach ($data as $key => $value) {
+            $objWorkSheet->mergeCells('A' . $row . ':J' . $row)
+                    ->setCellValueByColumnAndRow(0, $row, "ส่วนที่ " . $value["mainSeq"] . " " . $value["mainName"])
+                    ->getStyleByColumnAndRow(0, $row)->applyFromArray($underline)->getAlignment()->applyFromArray($center);
 
             $row++;
-            foreach($value["type"] as $key2 => $value2){
-                $objWorkSheet->mergeCells('A'.$row.':J'.$row)
-                    ->setCellValueByColumnAndRow(0, $row, "ส่วนที่ ".$value["mainSeq"].".".$value2["typeSeq"]." ".$value2["typeName"])
-                    ->getStyleByColumnAndRow(0, $row)->applyFromArray($underline);
+            foreach ($value["type"] as $key2 => $value2) {
+                $objWorkSheet->mergeCells('A' . $row . ':J' . $row)
+                        ->setCellValueByColumnAndRow(0, $row, "ส่วนที่ " . $value["mainSeq"] . "." . $value2["typeSeq"] . " " . $value2["typeName"])
+                        ->getStyleByColumnAndRow(0, $row)->applyFromArray($underline);
 
                 $row++;
-                if($value2["hasIssue"] == "Y") {
+                if ($value2["hasIssue"] == "Y") {
                     foreach ($value2["issue"] as $key3 => $value3) {
                         $objWorkSheet->mergeCells('A' . $row . ':J' . $row)
-                            ->setCellValueByColumnAndRow(0, $row, "ประเด็นยุทธศาสตร์ที่ " . $value3->issueSeq . " " . $value3->issueName);
+                                ->setCellValueByColumnAndRow(0, $row, "ประเด็นยุทธศาสตร์ที่ " . $value3->issueSeq . " " . $value3->issueName);
 
                         $row++;
                         foreach ($value3->target as $key4 => $value4) {
                             $objWorkSheet->mergeCells('A' . $row . ':J' . $row)
-                                ->setCellValueByColumnAndRow(0, $row, "เป้าประสงค์ที่ " . $value3->issueSeq . "." . $value4->targetSeq . " " . $value4->targetName);
+                                    ->setCellValueByColumnAndRow(0, $row, "เป้าประสงค์ที่ " . $value3->issueSeq . "." . $value4->targetSeq . " " . $value4->targetName);
 
                             $row++;
                             if (is_array($value4->kpi) && count($value4->kpi) > 0) {
                                 foreach ($value4->kpi as $key5 => $value5) {
 
                                     $objWorkSheet->setCellValueByColumnAndRow(0, $row, $value3->issueSeq . "." . $value4->targetSeq . "." . $value5->kpiSeq . " " . $value5->kpiName)
-                                        ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+                                            ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
 
                                     $objWorkSheet->setCellValueByColumnAndRow(1, $row, $value5->unitName)
-                                        ->getStyleByColumnAndRow(1, $row)->getAlignment()->applyFromArray($topCenter);
+                                            ->getStyleByColumnAndRow(1, $row)->getAlignment()->applyFromArray($topCenter);
 
                                     $objWorkSheet->setCellValueByColumnAndRow(3, $row, $value5->kpiGoal)
-                                        ->getStyleByColumnAndRow(3, $row)->getAlignment()->applyFromArray($topCenter);
+                                            ->getStyleByColumnAndRow(3, $row)->getAlignment()->applyFromArray($topCenter);
 
                                     $objWorkSheet->setCellValueByColumnAndRow(4, $row, $value5->score1)
-                                        ->getStyleByColumnAndRow(4, $row)->getAlignment()->applyFromArray($topCenter);
+                                            ->getStyleByColumnAndRow(4, $row)->getAlignment()->applyFromArray($topCenter);
 
                                     $objWorkSheet->setCellValueByColumnAndRow(5, $row, $value5->score2)
-                                        ->getStyleByColumnAndRow(5, $row)->getAlignment()->applyFromArray($topCenter);
+                                            ->getStyleByColumnAndRow(5, $row)->getAlignment()->applyFromArray($topCenter);
 
                                     $objWorkSheet->setCellValueByColumnAndRow(6, $row, $value5->score3)
-                                        ->getStyleByColumnAndRow(6, $row)->getAlignment()->applyFromArray($topCenter);
+                                            ->getStyleByColumnAndRow(6, $row)->getAlignment()->applyFromArray($topCenter);
 
                                     $objWorkSheet->setCellValueByColumnAndRow(7, $row, $value5->score4)
-                                        ->getStyleByColumnAndRow(7, $row)->getAlignment()->applyFromArray($topCenter);
+                                            ->getStyleByColumnAndRow(7, $row)->getAlignment()->applyFromArray($topCenter);
 
                                     $objWorkSheet->setCellValueByColumnAndRow(8, $row, $value5->score5)
-                                        ->getStyleByColumnAndRow(8, $row)->getAlignment()->applyFromArray($topCenter);
+                                            ->getStyleByColumnAndRow(8, $row)->getAlignment()->applyFromArray($topCenter);
 
                                     $objWorkSheet->setCellValueByColumnAndRow(9, $row, $value5->remark)
-                                        ->getStyleByColumnAndRow(9, $row)->getAlignment()->applyFromArray($topLeft);
+                                            ->getStyleByColumnAndRow(9, $row)->getAlignment()->applyFromArray($topLeft);
 
                                     $row++;
                                 }
                             }
                         }
                     }
-                }
-                elseif($value2["hasIssue"] == "N") {
+                } elseif ($value2["hasIssue"] == "N") {
                     //return isset($value2["kpi"]);
-                    if(isset($value2["kpi"])) {
+                    if (isset($value2["kpi"])) {
                         foreach ($value2["kpi"] as $key5 => $value5) {
 
-                            $objWorkSheet->setCellValueByColumnAndRow(0, $row, $value5->kpiSeq. ". " . $value5->kpiName)
-                                ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
+                            $objWorkSheet->setCellValueByColumnAndRow(0, $row, $value5->kpiSeq . ". " . $value5->kpiName)
+                                    ->getStyleByColumnAndRow(0, $row)->getAlignment()->applyFromArray($topLeft)->setWrapText(true);
 
                             $objWorkSheet->setCellValueByColumnAndRow(1, $row, $value5->unitName)
-                                ->getStyleByColumnAndRow(1, $row)->getAlignment()->applyFromArray($topCenter);
+                                    ->getStyleByColumnAndRow(1, $row)->getAlignment()->applyFromArray($topCenter);
 
                             $objWorkSheet->setCellValueByColumnAndRow(3, $row, $value5->kpiGoal)
-                                ->getStyleByColumnAndRow(3, $row)->getAlignment()->applyFromArray($topCenter);
+                                    ->getStyleByColumnAndRow(3, $row)->getAlignment()->applyFromArray($topCenter);
 
                             $objWorkSheet->setCellValueByColumnAndRow(4, $row, $value5->score1)
-                                ->getStyleByColumnAndRow(4, $row)->getAlignment()->applyFromArray($topCenter);
+                                    ->getStyleByColumnAndRow(4, $row)->getAlignment()->applyFromArray($topCenter);
 
                             $objWorkSheet->setCellValueByColumnAndRow(5, $row, $value5->score2)
-                                ->getStyleByColumnAndRow(5, $row)->getAlignment()->applyFromArray($topCenter);
+                                    ->getStyleByColumnAndRow(5, $row)->getAlignment()->applyFromArray($topCenter);
 
                             $objWorkSheet->setCellValueByColumnAndRow(6, $row, $value5->score3)
-                                ->getStyleByColumnAndRow(6, $row)->getAlignment()->applyFromArray($topCenter);
+                                    ->getStyleByColumnAndRow(6, $row)->getAlignment()->applyFromArray($topCenter);
 
                             $objWorkSheet->setCellValueByColumnAndRow(7, $row, $value5->score4)
-                                ->getStyleByColumnAndRow(7, $row)->getAlignment()->applyFromArray($topCenter);
+                                    ->getStyleByColumnAndRow(7, $row)->getAlignment()->applyFromArray($topCenter);
 
                             $objWorkSheet->setCellValueByColumnAndRow(8, $row, $value5->score5)
-                                ->getStyleByColumnAndRow(8, $row)->getAlignment()->applyFromArray($topCenter);
+                                    ->getStyleByColumnAndRow(8, $row)->getAlignment()->applyFromArray($topCenter);
 
                             $objWorkSheet->setCellValueByColumnAndRow(9, $row, $value5->remark)
-                                ->getStyleByColumnAndRow(9, $row)->getAlignment()->applyFromArray($topLeft);
+                                    ->getStyleByColumnAndRow(9, $row)->getAlignment()->applyFromArray($topLeft);
 
                             $row++;
                         }
@@ -533,13 +440,13 @@ class FinalService extends CServiceBase implements IFinalService {
         }
 
         $objPHPExcel->getDefaultStyle()->getAlignment()->setWrapText(true);
-        $objWorkSheet->getStyle('A1:J'.($row-1))->applyFromArray($border);
+        $objWorkSheet->getStyle('A1:J' . ($row - 1))->applyFromArray($border);
 
         //create excel file
         ob_clean();
 
         header('Content-Type: application/vnd.ms-excel');
-        header("Content-Disposition: attachment;filename=ตัวชี้วัดคำรับรองการปฏิบัติงาน_".$dept->departmentName."_".$this->getPeriod()->year.".xls");
+        header("Content-Disposition: attachment;filename=ตัวชี้วัดคำรับรองการปฏิบัติงาน_" . $dept->departmentName . "_" . $this->getPeriod()->year . ".xls");
 
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save('php://output');
@@ -547,4 +454,5 @@ class FinalService extends CServiceBase implements IFinalService {
         ob_end_flush();
         exit();
     }
+
 }
