@@ -24,28 +24,13 @@ public class BaseParameter {
 
     private Locale REPORT_LOCALE;
     private String REPORT_TYPE;
-
     private int REPORT_MAX_COUNT;
     private String EXPORT_TYPE;
-
     private String PUBLISHER;
-
     private String PERIOD_ID;
-    private String PERIOD_NAME;
-//    private String FACULTY_ID;
-//    private String FACULTY_NAME;
-//    private String DEPT_ID;
-//    private String DEPT_NAME;
-//    private String PLAN_ID;
-//    private String PLAN_NAME;
-//    private String FUND_ID;
-//    private String FUND_NAME;
-//    private String PRODUCT_ID;
-//    private String PRODUCT_NAME;
-    
+    private String PERIOD_NAME;    
     private String BUDGET_TYPE;
     private String BUDGET_TYPE_NAME;
-
     private String FACULTY_ID;
     private String FACULTY_NAME;
     private String DEPT_ID_START;

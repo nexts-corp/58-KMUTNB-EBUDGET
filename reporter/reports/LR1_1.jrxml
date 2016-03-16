@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="1.0533250172243658"/>
-	<property name="ireport.x" value="80"/>
+	<property name="ireport.zoom" value="1.5421731577181947"/>
+	<property name="ireport.x" value="256"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
 	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -215,7 +215,7 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 					<textElement textAlignment="Right">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[($V{livingCostG1} != 0)? $V{livingCostG1}: "-"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{utilityCostG1} != 0)? $V{utilityCostG1}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="266" y="0" width="67" height="20" uuid="87ec40fc-4ad6-4460-a261-a7e199ba7530"/>
@@ -673,7 +673,7 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($V{livingCostTotal} != 0)? $V{livingCostTotal}: "-"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{utilityCostTotal} != 0)? $V{utilityCostTotal}: "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="132" y="100" width="67" height="40" isRemoveLineWhenBlank="true" uuid="a02eb077-0bee-4981-a717-138265a7cf4c">
@@ -736,7 +736,7 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				<textElement>
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{deptName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{facultyName}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="132" y="0" width="67" height="20" uuid="6fdcc5e6-c39f-490c-a575-8b736e4d34ec"/>
@@ -801,7 +801,7 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{livingCost} != 0 && $F{livingCost} != null)? $F{livingCost}:"-"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{utilityCost} != 0 && $F{utilityCost} != null)? $F{utilityCost}:"-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
 				<reportElement stretchType="RelativeToBandHeight" x="467" y="0" width="67" height="20" uuid="348ae1d8-258c-4be7-bafc-58cca073db0d"/>
@@ -962,7 +962,7 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($V{livingCostTotal} != 0)? $V{livingCostTotal}: "-"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{utilityCostTotal} != 0)? $V{utilityCostTotal}: "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="266" y="0" width="67" height="20" isRemoveLineWhenBlank="true" uuid="880f4641-4573-4833-bcdf-14160312f394">
