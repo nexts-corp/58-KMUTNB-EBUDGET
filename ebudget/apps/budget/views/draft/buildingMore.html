@@ -308,99 +308,99 @@
                             </div>
                             -->
 
-    <div id="installment" class="form-group" style="padding-left: 5%;padding-right: 5%">
-        <div class="col-md-9">
-            <div class="col-md-12" style="margin: 3px 0;">
-                <label class="col-md-4 control-label text-right"><b>การแบ่งตามงวดงาน</b></label>
+            <div id="installment" class="form-group" style="padding-left: 5%;padding-right: 5%">
+                <div class="col-md-9">
+                    <div class="col-md-12" style="margin: 3px 0;">
+                        <label class="col-md-4 control-label text-right"><b>การแบ่งตามงวดงาน</b></label>
+                    </div>
+                </div>
+                <div class="col-md-12 form-group">
+                    <label class="col-md-5 text-right req">จำนวนปีงบประมาณ</label>
+
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <input class="form-control input-sm" type="number" min="0" id="totalYear" name="totalYear"
+                                   required>
+
+                            <div class="input-group-addon">ปี</div>
+                        </div>
+                    </div>
+                    <button id="addPeriod" class="col-md-1 btn btn-success" type="button" onclick="addPeriodHTML({})">
+                        <i class="fa fa-plus-circle"></i> เพิ่ม
+                    </button>
+                </div>
+                <div class="inner-installment"></div>
             </div>
-        </div>
-        <div class="col-md-12 form-group">
-            <label class="col-md-5 text-right req">จำนวนปีงบประมาณ</label>
 
-            <div class="col-md-3">
-                <div class="input-group">
-                    <input class="form-control input-sm" type="number" min="0" id="totalYear" name="totalYear"
-                           required>
+            <div class="form-group">
+                <div class="col-md-9">
+                    <div class="col-md-12" style="margin: 3px 0;">
+                        <label class="col-md-4 control-label text-right"><b>แผนการดำเนินการ</b></label>
+                    </div>
+                </div>
+                <div class="col-md-12 text-right form-group"><label class="col-md-4 req">ประกวดราคา</label>
 
-                    <div class="input-group-addon">ปี</div>
+                    <div class="col-md-4"><input type="text" name="timeBid" class="form-control input-sm" required>
+                    </div>
+                </div>
+                <div class="col-md-12 text-right form-group"><label class="col-md-4 req">เซ็นสัญญา</label>
+
+                    <div class="col-md-4"><input type="text" name="timeContract" class="form-control input-sm" required>
+                    </div>
+                </div>
+                <div class="col-md-12 text-right form-group"><label class="col-md-4 req">ระยะเวลาดำเนินการ</label>
+
+                    <div class="col-md-4"><input type="text" name="timeOperate" class="form-control input-sm" required>
+                    </div>
                 </div>
             </div>
-            <button id="addPeriod" class="col-md-1 btn btn-success" type="button" onclick="addPeriodHTML({})">
-                <i class="fa fa-plus-circle"></i> เพิ่ม
-            </button>
-        </div>
-        <div class="inner-installment"></div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-9">
-            <div class="col-md-12" style="margin: 3px 0;">
-                <label class="col-md-4 control-label text-right"><b>แผนการดำเนินการ</b></label>
-            </div>
-        </div>
-        <div class="col-md-12 text-right form-group"><label class="col-md-4 req">ประกวดราคา</label>
-
-            <div class="col-md-4"><input type="text" name="timeBid" class="form-control input-sm" required>
-            </div>
-        </div>
-        <div class="col-md-12 text-right form-group"><label class="col-md-4 req">เซ็นสัญญา</label>
-
-            <div class="col-md-4"><input type="text" name="timeContract" class="form-control input-sm" required>
-            </div>
-        </div>
-        <div class="col-md-12 text-right form-group"><label class="col-md-4 req">ระยะเวลาดำเนินการ</label>
-
-            <div class="col-md-4"><input type="text" name="timeOperate" class="form-control input-sm" required>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-12 text-right">
-        <div id="showLoad" style="display: inline; visibility: hidden;"><i class="fa fa-spinner fa-spin"></i>
-            Saving...
-        </div>
-        &nbsp;&nbsp;
-        <button id="saveBuildMore" type="button" class="btn btn-success saveBuildMore"><i
-                class="fa fa-save"></i> บันทึกคำชี้แจง
-        </button>
-        &nbsp;
-        <button id="clearBuildMore" type="button" class="btn btn-default removeBuildMore"><i
-                class="fa fa-trash"></i> ลบคำชี้แจง
-        </button>
-    </div>
-    </form>
-</div>
-
-<!-- MODAL For Map -->
-<div id="modalMap" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-map-o"></i> แผนที่</h4>
-            </div>
-            <div class="modal-body">
-                <div class="btn-group" id="btnGroup">
-                    <button type="button" id="point" class="btn btn-default active">Point</button>
-                    <button type="button" id="line" class="btn btn-default">Line</button>
-                    <button type="button" id="poly" class="btn btn-default">Polygon</button>
-                    <button type="button" id="circle" class="btn btn-default">Circle</button>
+            <div class="col-md-12 text-right">
+                <div id="showLoad" style="display: inline; visibility: hidden;"><i class="fa fa-spinner fa-spin"></i>
+                    Saving...
                 </div>
-                <div id="showInfo" style="margin-top: 10px;"><i class="fa fa-map-marker"> พิกัดภูมิศาสตร์</i>
-                </div>
-                <div id="map" style="height: 450px; margin-top: 10px;"></div>
-                <div id="showInfoFootter" class="text-center" style="margin-top: 10px;"></div>
+                &nbsp;&nbsp;
+                <button id="saveBuildMore" type="button" class="btn btn-success saveBuildMore"><i
+                        class="fa fa-save"></i> บันทึกคำชี้แจง
+                </button>
+                &nbsp;
+                <button id="clearBuildMore" type="button" class="btn btn-default removeBuildMore"><i
+                        class="fa fa-trash"></i> ลบคำชี้แจง
+                </button>
             </div>
-            <div id="loadingModalMap" class="text-center"></div>
-            <div class="modal-footer" id="modalMapFooter" style="margin-top: 0px;">
-                <button type="button" class="btn btn-success saveMap"> บันทึก</button>
-                <button type="button" data-dismiss="modal" class="btn btn-default cancel"> ยกเลิก</button>
+        </form>
+    </div>
+
+    <!-- MODAL For Map -->
+    <div id="modalMap" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-map-o"></i> แผนที่</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="btn-group" id="btnGroup">
+                        <button type="button" id="point" class="btn btn-default active">Point</button>
+                        <button type="button" id="line" class="btn btn-default">Line</button>
+                        <button type="button" id="poly" class="btn btn-default">Polygon</button>
+                        <button type="button" id="circle" class="btn btn-default">Circle</button>
+                    </div>
+                    <div id="showInfo" style="margin-top: 10px;"><i class="fa fa-map-marker"> พิกัดภูมิศาสตร์</i>
+                    </div>
+                    <div id="map" style="height: 450px; margin-top: 10px;"></div>
+                    <div id="showInfoFootter" class="text-center" style="margin-top: 10px;"></div>
+                </div>
+                <div id="loadingModalMap" class="text-center"></div>
+                <div class="modal-footer" id="modalMapFooter" style="margin-top: 0px;">
+                    <button type="button" class="btn btn-success saveMap"> บันทึก</button>
+                    <button type="button" data-dismiss="modal" class="btn btn-default cancel"> ยกเลิก</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!--END MODAL For Map-->
+    <!--END MODAL For Map-->
 
 </div>
 </div>
@@ -436,6 +436,7 @@
         defer></script>
 <script type="text/javascript">
 
+    var isShow = '{{isShow}}';
     var listBOQMoreArr = [];
     var STATUSFORMMORE = "INSERT";
     var listIDRemoveBOQMore = [];
@@ -466,8 +467,7 @@
     hashMaptype["circle"] = "รูปแบบวงกลม";
     var positionCenter;
     var fileUpload = 0;
-
-
+    isShowView();
     $('#btnGroup button').addClass('active').not($("#point")).removeClass('active'); //active on button point
     $("#btn-map").unbind("click").click(function () {
         //click and show map
@@ -1523,6 +1523,14 @@
         link.download = path;
         link.href = '{{{{_context_path}}}}/apps/budget/views/draft/attachment/';
         link.click();
+    }
+
+    function isShowView() {
+        if (isShow == true || isShow == 'true') {
+            $("#btn-map,#addFloor,#addPeriod,#saveBuildMore").show();
+        } else {
+            $("#btn-map,#addFloor,#addPeriod,#saveBuildMore").hide();
+        }
     }
 
 

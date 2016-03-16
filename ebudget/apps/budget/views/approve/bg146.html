@@ -243,6 +243,8 @@
 {{> footer}}
 
 <script type="text/javascript">
+
+    var isShow = '{{isShow}}';
     var formId = '{{formId}}';
     var l3dPlanId = '{{l3dPlanId}}';
     var fundgroupId = '{{fundgroupId}}';
@@ -280,6 +282,8 @@
             if (typeof datas !== "undefined" && datas !== null) {
                 var html = '';
                 var pCount = 0;
+                facId = datas["facId"];
+                periodId = datas["budgetYear"];
 
                 $("#budgetYear").html(datas["budgetYear"]);
                 $("#budgetType").html(datas["budgetType"]);
@@ -299,6 +303,7 @@
                             + '<td class="text-center">'
                             //+ '<button class="btn btn-sm btn-success addList" data-pid="' + value["id"] + '"><i class="fa fa-plus"></i> เพิ่ม</button>'
                             + '</td>'
+                            + '<td></td>'
                             + '</tr>';
 
                     typeName146Arr[value["id"]] = value["typeName"];
@@ -340,6 +345,7 @@
                                             html+='<button id="bt'+value2["id"]+'" class="btn btn-default btn-sm" onclick="updataComment('+value2["id"]+',\'' + value2["comment"] + '\')">เพิ่มหมายเหตุ</button>';
                                         }
                                     html+='</td>'
+                                    + '<td><button class="btn btn-sm btn-primary proposed"  data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><i class="fa fa-file-text-o"></i> แบบเสนอโครงการ</button></td>'
                                 + '</tr>';
 
                         list146Arr[value2["id"]] = value2;
@@ -778,6 +784,22 @@
                 var dataJSONEN = encodeURIComponent(dataJSON);
                 deleteBudget(id, headerId, parentId, dataJSONEN);
             });
+        });
+
+        $(".proposed").unbind("click").click(function () {
+
+            var headerId = $(this).attr("data-hid");
+            var parentId = $(this).attr("data-pid");
+            var id = $(this).attr("data-id");
+            var budgetHeadId = list146Arr[id]["budgetHeadId"];
+            var objSend = list146Arr[id];
+            objSend.budgetPeriodId = periodId;
+            var bytes = utf8.encode(JSON.stringify(objSend));
+            var paramstr = base64.encode(bytes);
+            console.log(list146Arr[id]);
+            var url = "{{_context_path}}/api/budget/view/proposed/999/" + budgetHeadId + "/" + facId + "/" + encodeURIComponent(paramstr)+"/false";
+            window.open(url, '_blank');
+
         });
     }
 

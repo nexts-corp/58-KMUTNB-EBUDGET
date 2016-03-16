@@ -92,6 +92,9 @@
                                  <th class="text-center" colspan="3">คำชี้แจง</th><th class="text-center" rowspan="3" style="vertical-align: middle;">เหตุผลความจำเป็น</th>
                                  <th rowspan="3" width="150px" class="text-center" style="vertical-align: middle;">สถานะคำขอ</th>
                                  <th rowspan="3" class="text-center" style="vertical-align: middle; min-width: 130px;">หมายเหตุ</th>
+                                 <th rowspan="3" class="text-center" style="vertical-align: middle; min-width: 130px;">
+                                     เครื่องมือ
+                                 </th>
                              </tr>
                              <tr>
                                  <th class="text-center" rowspan="2" style="vertical-align: middle;">ความต้องการทั้งสิ้น</th>
@@ -104,6 +107,7 @@
                              <tr id="total">
                                  <th class="text-center"></th>
                                  <th class="text-center">รวมทั้งสิ้น</th>
+                                 <th class="text-center"></th>
                                  <th class="text-center"></th>
                                  <th class="text-center"></th>
                                  <th class="text-center"></th>
@@ -318,6 +322,8 @@
 {{> footer}}
 
 <script type="text/javascript">
+
+
     var formId = '{{formId}}';
     var l3dPlanId = '{{l3dPlanId}}';
     var fundgroupId = '{{fundgroupId}}';
@@ -384,6 +390,7 @@
                                 html += '</div>';
                             }
                     html += '</td>'
+                            + '<td></td>'
                             + '</tr>';
 
 //                    sumArrnonBgRequest[value["id"]] = {};
@@ -412,6 +419,7 @@
                                     //+ '<button class="btn btn-sm btn-success addList" data-pid="' + value2["id"] + '"><i class="fa fa-plus"></i> เพิ่ม</button>'
                                     + '</div>'
                                     + '</td>'
+                                    + '<td></td>'
                                     + '</tr>'
                         } else {
                             //หมวดค่าที่ดินและสิ่งก่อสร้าง มี 2 lvl
@@ -449,8 +457,19 @@
                                         }else{
                                             html+='<button id="bt'+value2["id"]+'" class="btn btn-default btn-sm" onclick="updataComment('+value2["id"]+',\'' + value2["comment"] + '\')">เพิ่มหมายเหตุ</button>';
                                         }
-                                    html+='</td>'
-                                + '</tr>';
+                                    html += '</td>';
+                                    html += '<td><div class="dropdown">'
+                                    + ' <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-file-text-o"></i> คำชี้แจงสิ่งก่อสร้าง'
+                                    + '     <span class="caret"></span>'
+                                    + ' </button>'
+                                    + '     <ul class="dropdown-menu">'
+                                    + '           <li class="buildOneBtn" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><a href="#">1ปี</a></li>'
+                                    + '           <li class="buildMoreBtn" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><a href="#">ต่อเนื่องผูกพันเดิม</a></li>'
+                                    + '           <li class="buildMoreBtn2" data-pid="' + value["id"] + '" data-id="' + value2["id"] + '"><a href="#">ต่อเนื่องผูกพันใหม่</a></li>'
+                                    + '      </ul>'
+                                    + '</div>'
+                                    + '</td>'
+                                    + '</tr>';
                             list145Arr[value2["id"]] = value2;
                         }
 
@@ -497,6 +516,7 @@
                                             html+='<button id="bt'+value3["id"]+'" class="btn btn-default btn-sm" onclick="updataComment('+value3["id"]+',\'' + value3["comment"] + '\')">เพิ่มหมายเหตุ</button>';
                                         }
                                     html+='</td>'
+                                    + '<td></td>'
                                 + '</tr>';
 
                             list145Arr[value3["id"]] = value3;
@@ -985,6 +1005,37 @@
                 var dataJSONEN = encodeURIComponent(dataJSON);
                 deleteBudget(id, headerId, parentId, dataJSONEN);
             });
+        });
+
+
+        $("li.buildOneBtn").unbind("click").click(function () {
+
+            var id = $(this).attr("data-id");
+            var bytes = utf8.encode(JSON.stringify(list145Arr[id]));
+            var paramstr = base64.encode(bytes);
+            var url = "{{_context_path}}/api/budget/view/buildOne/" + id + "/" + encodeURIComponent(paramstr)+"/false";
+            window.open(url, '_blank');
+
+        });
+
+        $("li.buildMoreBtn").unbind("click").click(function () {
+
+            var id = $(this).attr("data-id");
+            var bytes = utf8.encode(JSON.stringify(list145Arr[id]));
+            var paramstr = base64.encode(bytes);
+            var url = "{{_context_path}}/api/budget/view/buildMore/" + id + "/" + encodeURIComponent(paramstr)+"/false";
+            window.open(url, '_blank');
+
+        });
+
+        $("li.buildMoreBtn2").unbind("click").click(function () {
+
+            var id = $(this).attr("data-id");
+            var bytes = utf8.encode(JSON.stringify(list145Arr[id]));
+            var paramstr = base64.encode(bytes);
+            var url = "{{_context_path}}/api/budget/view/buildMore2/" + id + "/" + encodeURIComponent(paramstr)+"/false";
+            window.open(url, '_blank');
+
         });
     }
 

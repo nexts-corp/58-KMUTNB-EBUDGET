@@ -721,7 +721,7 @@
             var bytes = utf8.encode(JSON.stringify(objSend));
             var paramstr = base64.encode(bytes);
             console.log(list146Arr[id]);
-            var url = "{{_context_path}}/api/budget/view/proposed/999/" + budgetHeadId + "/" + facId + "/" + encodeURIComponent(paramstr);
+            var url = "{{_context_path}}/api/budget/view/proposed/999/" + budgetHeadId + "/" + facId + "/" + encodeURIComponent(paramstr)+"/true";
             window.open(url, '_blank');
 
         });

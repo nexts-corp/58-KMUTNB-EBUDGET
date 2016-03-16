@@ -192,18 +192,20 @@ interface IViewService {
      * @uri /buildOne
      * @param string bg145Id
      * @param string budget
+     * @param boolean isShow
      * @description คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง 1 ปี
      */
-    public function buildOne($bg145Id, $budget);
+    public function buildOne($bg145Id, $budget,$isShow);
 
     /**
      * @name buildMore
      * @uri /buildMore
      * @param string bg145Id
      * @param string budget
+     * @param boolean isShow
      * @description คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง ต่อเนื่อง
      */
-    public function buildMore($bg145Id, $budget);
+    public function buildMore($bg145Id, $budget,$isShow);
 
 
     /**
@@ -211,9 +213,10 @@ interface IViewService {
      * @uri /buildMore2
      * @param string bg145Id
      * @param string budget
+     * @param boolean isShow
      * @description คำชี้แจงรายละเอียดรายการก่อสร้าง และปรับปรุงสิ่งก่อสร้าง ต่อเนื่อง
      */
-    public function buildMore2($bg145Id, $budget);
+    public function buildMore2($bg145Id, $budget,$isShow);
 
 
     /**
@@ -264,7 +267,8 @@ interface IViewService {
      * @param string budgetHeadId
      * @param string deptId
      * @param string budget
+     * @param boolean isShow
      * @description แบบเสนอโครงการที่ตอบสนองยุทธศาสตร์การ view
      */
-    public function proposed($formId, $budgetHeadId, $deptId,$budget);
+    public function proposed($formId, $budgetHeadId, $deptId,$budget, $isShow);
 }
