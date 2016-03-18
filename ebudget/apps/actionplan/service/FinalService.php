@@ -54,7 +54,7 @@ class FinalService extends CServiceBase implements IFinalService {
         return $this->datacontext->getObject($sqlUnit, $paramUnit)[0];
     }
 
-    public function listsDept() {
+    public function listsDept($typeId) {
         $sql = "select r from apps\\actionplan\\model\\ViewActivityDepartment r order by r.activityCode";
         $dept = $this->datacontext->getObject($sql);
         $periodCode = $this->getPeriod()->year;
@@ -63,9 +63,10 @@ class FinalService extends CServiceBase implements IFinalService {
         $actKey = array();
 
         foreach ($dept as $keyDept => $valDept) {
-            $draft = new \apps\common\entity\AffirmativeDraft();
+            $draft = new \apps\common\entity\ActionPlanDraft();
             $draft->periodCode = $periodCode;
             $draft->departmentId = $valDept->departmentId;
+            $draft->typeId = $typeId;
             $draft->isActive = "Y";
             $get = $this->datacontext->getObject($draft);
 
@@ -82,9 +83,10 @@ class FinalService extends CServiceBase implements IFinalService {
 
             $dept[$keyDept]->statusDept = $status;
 
-            $final = new \apps\common\entity\AffirmativeFinal();
+            $final = new \apps\common\entity\ActionPlanFinal();
             $final->periodCode = $periodCode;
             $final->departmentId = $valDept->departmentId;
+            $final->typeId = $typeId;
             $final->isActive = "Y";
             $get = $this->datacontext->getObject($final);
             if (count($get) > 0) {
