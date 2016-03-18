@@ -303,6 +303,7 @@
         defer></script>
 <script type="text/javascript">
 
+    var isShow = '{{isShow}}';
     var listBOQ = [];
     var listBuilding = [];
     var STATUSFORM = "INSERT";
@@ -331,6 +332,7 @@
     hashMaptype["circle"] = "รูปแบบวงกลม";
     var positionCenter;
     var fileUpload = 0;
+
 
     $('#btnGroup button').addClass('active').not($("#point")).removeClass('active'); //active on button point
     $("#btn-map").unbind("click").click(function () {
@@ -855,6 +857,7 @@
             $("#loadAll").hide();
             $(".removeBuildOne").hide();
         }
+        isShowView();
     }
 
     function buildingOneAction() { // action table row
@@ -1350,5 +1353,14 @@
         $("#sumPrice").html('<b class="number">' + costTotal + '</b>');
         $('.number').number(true, 2);
     }
+
+    function isShowView() {
+        if (isShow == true || isShow == 'true') {
+            $("#btn-map,.saveBuildOne,.add-btn,button.removeBuildOne").show();
+        } else {
+            $("#btn-map,.saveBuildOne,.add-btn,button.removeBuildOne").hide();
+        }
+    }
+
 
 </script>

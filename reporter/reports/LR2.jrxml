@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="1.4019755979256345"/>
-	<property name="ireport.x" value="381"/>
+	<property name="ireport.zoom" value="1.4019755979256352"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
 	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -180,7 +180,7 @@
 			<band height="20">
 				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT} > 0]]></printWhenExpression>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1">
-					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="132" height="20" uuid="a98223dd-01d4-43ec-b9fb-0a85a9c52ad3"/>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="195" height="20" uuid="a98223dd-01d4-43ec-b9fb-0a85a9c52ad3"/>
 					<box>
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -193,7 +193,7 @@
 					<textFieldExpression><![CDATA[$F{planName}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="668" y="0" width="67" height="20" uuid="0091fc52-e11d-4606-ba25-d42ffd7fea9f"/>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="675" y="0" width="60" height="20" uuid="0091fc52-e11d-4606-ba25-d42ffd7fea9f"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -206,7 +206,20 @@
 					<textFieldExpression><![CDATA[($V{buildingCostG1} != 0)? $V{buildingCostG1}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="400" y="0" width="67" height="20" uuid="7a064665-d8bd-46c1-9894-4bc371537226"/>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="435" y="0" width="60" height="20" uuid="7a064665-d8bd-46c1-9894-4bc371537226"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{utilityCostG1} != 0)? $V{utilityCostG1}: "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="315" y="0" width="60" height="20" uuid="87ec40fc-4ad6-4460-a261-a7e199ba7530"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -219,20 +232,7 @@
 					<textFieldExpression><![CDATA[($V{livingCostG1} != 0)? $V{livingCostG1}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="266" y="0" width="67" height="20" uuid="87ec40fc-4ad6-4460-a261-a7e199ba7530"/>
-					<box rightPadding="2">
-						<topPen lineWidth="0.75"/>
-						<leftPen lineWidth="0.75"/>
-						<bottomPen lineWidth="0.75"/>
-						<rightPen lineWidth="0.75"/>
-					</box>
-					<textElement textAlignment="Right">
-						<font size="12"/>
-					</textElement>
-					<textFieldExpression><![CDATA[($V{livingCostG1} != 0)? $V{livingCostG1}: "-"]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="333" y="0" width="67" height="20" uuid="45f5dd33-5833-4d6d-8d5d-513e412f39c2"/>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="375" y="0" width="60" height="20" uuid="45f5dd33-5833-4d6d-8d5d-513e412f39c2"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -245,7 +245,7 @@
 					<textFieldExpression><![CDATA[($V{matCostG1} != 0)? $V{matCostG1}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="199" y="0" width="67" height="20" uuid="587c3e9f-7b9f-401e-b4f5-1d025c4a126d"/>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="255" y="0" width="60" height="20" uuid="587c3e9f-7b9f-401e-b4f5-1d025c4a126d"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -258,7 +258,7 @@
 					<textFieldExpression><![CDATA[($V{compensationG1} != 0)? $V{compensationG1}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="467" y="0" width="67" height="20" uuid="8e8a60b9-ff66-4c6c-b2f0-d4dae8427dfd"/>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="495" y="0" width="60" height="20" uuid="8e8a60b9-ff66-4c6c-b2f0-d4dae8427dfd"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -271,7 +271,7 @@
 					<textFieldExpression><![CDATA[($V{subSideG1} != 0)? $V{subSideG1}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="132" y="0" width="67" height="20" uuid="77f77d29-c324-41aa-b8d8-ec9758fc6a7c"/>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="195" y="0" width="60" height="20" uuid="77f77d29-c324-41aa-b8d8-ec9758fc6a7c"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -284,7 +284,7 @@
 					<textFieldExpression><![CDATA[($V{tempWagesG1} != 0)? $V{tempWagesG1}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="534" y="0" width="67" height="20" uuid="7d5d3196-86d7-46e5-b6ce-4e08c0046f71"/>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="555" y="0" width="60" height="20" uuid="7d5d3196-86d7-46e5-b6ce-4e08c0046f71"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -297,7 +297,7 @@
 					<textFieldExpression><![CDATA[($V{otherCostG1} != 0)? $V{otherCostG1}: "-"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="601" y="0" width="67" height="20" uuid="ad52fb33-9a83-4a0c-8f37-30a1d0cac896"/>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="615" y="0" width="60" height="20" uuid="ad52fb33-9a83-4a0c-8f37-30a1d0cac896"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
@@ -358,7 +358,7 @@
 				<text><![CDATA[รวม]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="FBold" x="199" y="40" width="268" height="20" uuid="ed3c56cc-5df6-4a9a-ad67-f960a727d23d"/>
+				<reportElement style="FBold" x="255" y="40" width="240" height="20" uuid="ed3c56cc-5df6-4a9a-ad67-f960a727d23d"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -371,7 +371,7 @@
 				<text><![CDATA[งบดำเนินงาน]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="FBold" x="601" y="40" width="134" height="20" uuid="84454550-2450-43f4-95cf-2918bcf8355d"/>
+				<reportElement style="FBold" x="615" y="40" width="120" height="20" uuid="84454550-2450-43f4-95cf-2918bcf8355d"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -384,7 +384,7 @@
 				<text><![CDATA[งบลงทุน]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="FBold" x="534" y="60" width="67" height="40" uuid="de237225-bb22-451b-80ba-430fba6cd262"/>
+				<reportElement style="FBold" x="555" y="60" width="60" height="40" uuid="de237225-bb22-451b-80ba-430fba6cd262"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -397,7 +397,7 @@
 				<text><![CDATA[รายจ่ายอื่น]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="FBold" x="467" y="60" width="67" height="40" uuid="3e5d786f-19de-47e1-b45e-a9d01ab0d703"/>
+				<reportElement style="FBold" x="495" y="60" width="60" height="40" uuid="3e5d786f-19de-47e1-b45e-a9d01ab0d703"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -410,7 +410,7 @@
 				<text><![CDATA[เงินอุดหนุน]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="FBold" x="400" y="60" width="67" height="40" uuid="7533075b-7789-4d68-8c5e-fb05794eb812"/>
+				<reportElement style="FBold" x="435" y="60" width="60" height="40" uuid="7533075b-7789-4d68-8c5e-fb05794eb812"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -423,7 +423,7 @@
 				<text><![CDATA[ค่าสาธารณูปโภค]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="FBold" x="333" y="60" width="67" height="40" uuid="b180976c-4b46-40fb-a320-1f90b518d90c"/>
+				<reportElement style="FBold" x="375" y="60" width="60" height="40" uuid="b180976c-4b46-40fb-a320-1f90b518d90c"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -436,7 +436,7 @@
 				<text><![CDATA[ค่าวัสดุ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="FBold" x="266" y="60" width="67" height="40" uuid="83399594-fb52-4dca-ba78-312a4acd96e5"/>
+				<reportElement style="FBold" x="315" y="60" width="60" height="40" uuid="83399594-fb52-4dca-ba78-312a4acd96e5"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -449,7 +449,7 @@
 				<text><![CDATA[ค่าใช้สอย]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="FBold" x="199" y="60" width="67" height="40" uuid="e51f71e0-8e2c-4e8b-9b0d-6b6575e968ee"/>
+				<reportElement style="FBold" x="255" y="60" width="60" height="40" uuid="e51f71e0-8e2c-4e8b-9b0d-6b6575e968ee"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -462,7 +462,7 @@
 				<text><![CDATA[ค่าตอบแทน]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="FBold" x="132" y="60" width="67" height="40" uuid="2e5c0dc7-62c5-48d5-92e0-94e0fbfe6a3e"/>
+				<reportElement style="FBold" x="195" y="60" width="60" height="40" uuid="2e5c0dc7-62c5-48d5-92e0-94e0fbfe6a3e"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -476,7 +476,7 @@
 ชั่วคราว]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="FBold" x="601" y="60" width="67" height="40" uuid="b0e05887-6b48-4aa3-93ca-5d488e266293"/>
+				<reportElement style="FBold" x="615" y="60" width="60" height="40" uuid="b0e05887-6b48-4aa3-93ca-5d488e266293"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -489,7 +489,7 @@
 				<text><![CDATA[ค่าครุภัณฑ์]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="FBold" x="668" y="60" width="67" height="40" uuid="1019d452-d01b-4c32-b86d-8d04b3a5d201"/>
+				<reportElement style="FBold" x="675" y="60" width="60" height="40" uuid="1019d452-d01b-4c32-b86d-8d04b3a5d201"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -517,7 +517,7 @@
 				<text><![CDATA[(หน่วย : บาท)]]></text>
 			</staticText>
 			<textField>
-				<reportElement style="FBold" x="0" y="40" width="132" height="60" uuid="b537e80b-bc0d-42c4-8b99-c53116dc1b10"/>
+				<reportElement style="FBold" x="0" y="40" width="195" height="60" uuid="b537e80b-bc0d-42c4-8b99-c53116dc1b10"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -530,7 +530,7 @@
 				<textFieldExpression><![CDATA["แผนงาน/กองทุน"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement style="FBold" x="132" y="40" width="67" height="20" uuid="0ab680c4-7544-4028-89e7-8aaa047bff64"/>
+				<reportElement style="FBold" x="195" y="40" width="60" height="20" uuid="0ab680c4-7544-4028-89e7-8aaa047bff64"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -543,7 +543,7 @@
 				<text><![CDATA[งบบุคลการ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="FBold" x="467" y="40" width="67" height="20" uuid="12d1ce30-386f-45da-9488-562f28fba5f3"/>
+				<reportElement style="FBold" x="495" y="40" width="60" height="20" uuid="12d1ce30-386f-45da-9488-562f28fba5f3"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -556,7 +556,7 @@
 				<text><![CDATA[งบเงินอุดหนุน]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="FBold" x="534" y="40" width="67" height="20" uuid="ae003d89-1757-4407-bbac-07649e769280"/>
+				<reportElement style="FBold" x="555" y="40" width="60" height="20" uuid="ae003d89-1757-4407-bbac-07649e769280"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -581,7 +581,7 @@
 		<band height="20" splitType="Stretch">
 			<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT} > 0]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" pattern="#,###">
-				<reportElement stretchType="RelativeToBandHeight" x="132" y="0" width="67" height="20" uuid="6fdcc5e6-c39f-490c-a575-8b736e4d34ec"/>
+				<reportElement stretchType="RelativeToBandHeight" x="195" y="0" width="60" height="20" uuid="6fdcc5e6-c39f-490c-a575-8b736e4d34ec"/>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -594,7 +594,7 @@
 				<textFieldExpression><![CDATA[($F{tempWages} != 0 && $F{tempWages} != null)? $F{tempWages} :"-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
-				<reportElement stretchType="RelativeToBandHeight" x="199" y="0" width="67" height="20" uuid="74b12ffb-b4b3-4a18-9e0d-ff53734a8507"/>
+				<reportElement stretchType="RelativeToBandHeight" x="255" y="0" width="60" height="20" uuid="74b12ffb-b4b3-4a18-9e0d-ff53734a8507"/>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -607,7 +607,7 @@
 				<textFieldExpression><![CDATA[($F{compensation} != 0 && $F{compensation} != null)? $F{compensation} :"-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
-				<reportElement stretchType="RelativeToBandHeight" x="266" y="0" width="67" height="20" uuid="116d6e2d-3799-4a91-813e-dea74b2ec5bb"/>
+				<reportElement stretchType="RelativeToBandHeight" x="315" y="0" width="60" height="20" uuid="116d6e2d-3799-4a91-813e-dea74b2ec5bb"/>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -620,7 +620,7 @@
 				<textFieldExpression><![CDATA[($F{livingCost} != 0 && $F{livingCost} != null)? $F{livingCost} :"-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
-				<reportElement stretchType="RelativeToBandHeight" x="333" y="0" width="67" height="20" uuid="345eb771-225d-4859-a00e-e7ff5bc74615"/>
+				<reportElement stretchType="RelativeToBandHeight" x="375" y="0" width="60" height="20" uuid="345eb771-225d-4859-a00e-e7ff5bc74615"/>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -633,7 +633,7 @@
 				<textFieldExpression><![CDATA[($F{matCost} != 0 && $F{matCost} != null)? $F{matCost} :"-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
-				<reportElement stretchType="RelativeToBandHeight" x="400" y="0" width="67" height="20" uuid="9e93c409-96e8-4db7-86dd-583e9745d5fc"/>
+				<reportElement stretchType="RelativeToBandHeight" x="435" y="0" width="60" height="20" uuid="9e93c409-96e8-4db7-86dd-583e9745d5fc"/>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -643,10 +643,10 @@
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{livingCost} != 0 && $F{livingCost} != null)? $F{livingCost} :"-"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{utilityCost} != 0 && $F{utilityCost} != null)? $F{utilityCost} :"-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
-				<reportElement stretchType="RelativeToBandHeight" x="467" y="0" width="67" height="20" uuid="348ae1d8-258c-4be7-bafc-58cca073db0d"/>
+				<reportElement stretchType="RelativeToBandHeight" x="495" y="0" width="60" height="20" uuid="348ae1d8-258c-4be7-bafc-58cca073db0d"/>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -659,7 +659,7 @@
 				<textFieldExpression><![CDATA[($F{subSide} != 0 && $F{subSide} != null)? $F{subSide} :"-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
-				<reportElement stretchType="RelativeToBandHeight" x="534" y="0" width="67" height="20" uuid="36a08e8e-bfd3-468f-9843-5ec68b2f8e96"/>
+				<reportElement stretchType="RelativeToBandHeight" x="555" y="0" width="60" height="20" uuid="36a08e8e-bfd3-468f-9843-5ec68b2f8e96"/>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -672,7 +672,7 @@
 				<textFieldExpression><![CDATA[($F{otherCost} != 0 && $F{otherCost} != null)? $F{otherCost} :"-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
-				<reportElement stretchType="RelativeToBandHeight" x="601" y="0" width="67" height="20" uuid="b37769fd-7a1e-4c02-aba5-cf52b7eaf9a0"/>
+				<reportElement stretchType="RelativeToBandHeight" x="615" y="0" width="60" height="20" uuid="b37769fd-7a1e-4c02-aba5-cf52b7eaf9a0"/>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -685,7 +685,7 @@
 				<textFieldExpression><![CDATA[($F{durableCost} != 0 && $F{durableCost} != null)? $F{durableCost} :"-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
-				<reportElement stretchType="RelativeToBandHeight" x="668" y="0" width="67" height="20" uuid="fb346654-b794-4ccd-80ed-3d26727dc797"/>
+				<reportElement stretchType="RelativeToBandHeight" x="675" y="0" width="60" height="20" uuid="fb346654-b794-4ccd-80ed-3d26727dc797"/>
 				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -711,7 +711,7 @@
 				<textFieldExpression><![CDATA[($V{total} != 0 && $V{total} != null)? $V{total} :"-"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Default" x="0" y="0" width="132" height="20" uuid="f65713d1-e335-4ca6-b9b8-8f5247158945"/>
+				<reportElement style="Default" x="0" y="0" width="195" height="20" uuid="f65713d1-e335-4ca6-b9b8-8f5247158945"/>
 				<box leftPadding="15">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -760,7 +760,7 @@
 		<band height="20" splitType="Stretch">
 			<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT} > 0]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="333" y="0" width="67" height="20" isRemoveLineWhenBlank="true" uuid="2dceaa00-5be0-4953-bdbb-13b7289d528f">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="375" y="0" width="60" height="20" isRemoveLineWhenBlank="true" uuid="2dceaa00-5be0-4953-bdbb-13b7289d528f">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
@@ -775,7 +775,7 @@
 				<textFieldExpression><![CDATA[($V{matCostTotal} != 0)? $V{matCostTotal}: "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="668" y="0" width="67" height="20" isRemoveLineWhenBlank="true" uuid="14bfea33-d60f-4c51-8888-327fb9ac2425">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="675" y="0" width="60" height="20" isRemoveLineWhenBlank="true" uuid="14bfea33-d60f-4c51-8888-327fb9ac2425">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
@@ -790,7 +790,7 @@
 				<textFieldExpression><![CDATA[($V{buildingCostTotal} != 0)? $V{buildingCostTotal}: "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="467" y="0" width="67" height="20" isRemoveLineWhenBlank="true" uuid="71fd6a91-8431-4079-ab43-26ce705ade48">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="495" y="0" width="60" height="20" isRemoveLineWhenBlank="true" uuid="71fd6a91-8431-4079-ab43-26ce705ade48">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
@@ -805,7 +805,22 @@
 				<textFieldExpression><![CDATA[($V{subSideTotal} != 0)? $V{subSideTotal}: "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="400" y="0" width="67" height="20" isRemoveLineWhenBlank="true" uuid="a0105715-fbae-42f1-b7c8-2a89e1452b0d">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="435" y="0" width="60" height="20" isRemoveLineWhenBlank="true" uuid="a0105715-fbae-42f1-b7c8-2a89e1452b0d">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{utilityCostTotal} != 0)? $V{utilityCostTotal}: "-"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="315" y="0" width="60" height="20" isRemoveLineWhenBlank="true" uuid="880f4641-4573-4833-bcdf-14160312f394">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
@@ -820,22 +835,7 @@
 				<textFieldExpression><![CDATA[($V{livingCostTotal} != 0)? $V{livingCostTotal}: "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="266" y="0" width="67" height="20" isRemoveLineWhenBlank="true" uuid="880f4641-4573-4833-bcdf-14160312f394">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
-				</reportElement>
-				<box rightPadding="2">
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
-				<textElement textAlignment="Right">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($V{livingCostTotal} != 0)? $V{livingCostTotal}: "-"]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="534" y="0" width="67" height="20" isRemoveLineWhenBlank="true" uuid="580ab18f-0070-4e2a-8710-f9ae02ea28bc">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="555" y="0" width="60" height="20" isRemoveLineWhenBlank="true" uuid="580ab18f-0070-4e2a-8710-f9ae02ea28bc">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
@@ -865,7 +865,7 @@
 				<textFieldExpression><![CDATA[($V{totalTotal} != 0)? $V{totalTotal}: "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="199" y="0" width="67" height="20" isRemoveLineWhenBlank="true" uuid="9da55061-2466-44ef-997c-7b96d60adf44">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="255" y="0" width="60" height="20" isRemoveLineWhenBlank="true" uuid="9da55061-2466-44ef-997c-7b96d60adf44">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
@@ -880,7 +880,7 @@
 				<textFieldExpression><![CDATA[($V{compensationTotal} != 0)? $V{compensationTotal}: "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="601" y="0" width="67" height="20" isRemoveLineWhenBlank="true" uuid="c6823732-ed01-4fed-bc99-ec4a888b64f7">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="615" y="0" width="60" height="20" isRemoveLineWhenBlank="true" uuid="c6823732-ed01-4fed-bc99-ec4a888b64f7">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
@@ -895,7 +895,7 @@
 				<textFieldExpression><![CDATA[($V{durableCostTotal} != 0)? $V{durableCostTotal}: "-"]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
-				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="132" y="0" width="67" height="20" isRemoveLineWhenBlank="true" uuid="9e681139-5534-4994-b0ee-43dbc405dddb">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="195" y="0" width="60" height="20" isRemoveLineWhenBlank="true" uuid="9e681139-5534-4994-b0ee-43dbc405dddb">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
@@ -910,7 +910,7 @@
 				<textFieldExpression><![CDATA[($V{tempWagesTotal} != 0)? $V{tempWagesTotal}: "-"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement style="FBold" x="0" y="0" width="132" height="20" uuid="85e2ca41-7432-4297-bbb8-90b92515a991"/>
+				<reportElement style="FBold" x="0" y="0" width="195" height="20" uuid="85e2ca41-7432-4297-bbb8-90b92515a991"/>
 				<box leftPadding="0">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>

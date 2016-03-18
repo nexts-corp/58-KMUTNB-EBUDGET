@@ -1041,7 +1041,7 @@
             var id = $(this).attr("data-id");
             var bytes = utf8.encode(JSON.stringify(list145Arr[id]));
             var paramstr = base64.encode(bytes);
-            var url = "{{_context_path}}/api/budget/view/buildOne/" + id + "/" + encodeURIComponent(paramstr);
+            var url = "{{_context_path}}/api/budget/view/buildOne/" + id + "/" + encodeURIComponent(paramstr)+"/true";
             window.open(url, '_blank');
 
         });
@@ -1051,7 +1051,7 @@
             var id = $(this).attr("data-id");
             var bytes = utf8.encode(JSON.stringify(list145Arr[id]));
             var paramstr = base64.encode(bytes);
-            var url = "{{_context_path}}/api/budget/view/buildMore/" + id + "/" + encodeURIComponent(paramstr);
+            var url = "{{_context_path}}/api/budget/view/buildMore/" + id + "/" + encodeURIComponent(paramstr)+"/true";
             window.open(url, '_blank');
 
         });
@@ -1061,7 +1061,7 @@
             var id = $(this).attr("data-id");
             var bytes = utf8.encode(JSON.stringify(list145Arr[id]));
             var paramstr = base64.encode(bytes);
-            var url = "{{_context_path}}/api/budget/view/buildMore2/" + id + "/" + encodeURIComponent(paramstr);
+            var url = "{{_context_path}}/api/budget/view/buildMore2/" + id + "/" + encodeURIComponent(paramstr)+"/true";
             window.open(url, '_blank');
 
         });

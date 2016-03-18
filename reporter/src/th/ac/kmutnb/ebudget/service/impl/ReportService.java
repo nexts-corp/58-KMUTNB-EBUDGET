@@ -135,12 +135,6 @@ public class ReportService extends CServiceBase implements IReportService {
             System.out.println("SQL : "+reportSQL);
    
             List<BaseReport> datas = (List<BaseReport>) this.dbcon.nativeQuery(reportClass, reportSQL+"");
-          //this.dbcon.nativeQuery(reportClass, sparam, Parameters);
-//          System.out.println("class : "+reportClass.getName());
-//            for (BaseReport data : datas) {
-//                NG1_model model = (NG1_model)data;
-//                System.out.println("value : "+model.getFacultyName());
-//            }
             
             CReportGenerater gen = this.newReportGenerater(reportName, exportType);
 

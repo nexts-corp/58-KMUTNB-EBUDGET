@@ -39,7 +39,8 @@ class CenterService extends CServiceBase implements ICenterService {
 
     function getPeriod() {
         $year = new \apps\common\entity\Year();
-        $year->year = 2559;
+        //$year->year = 2559;
+        $year->setYearStatus("Y");
         return $this->datacontext->getObject($year)[0];
     }
 

@@ -159,8 +159,11 @@
                     },
                     {
                         "targets": 4,
-                        "data": "BudgetCategoryDesc",
-                        "sClass": "col-md-2"
+                        "data": "BudgetCategory",
+                        "sClass": "col-md-2",
+                        "render": function(data,key,full){
+                            return full["BudgetCategoryDesc"];
+                        }
                     },
                     {
                         "targets": 5,
@@ -202,6 +205,13 @@
             });
             $("#searchFund").html(search).select2().change(function () {
                 t.columns(3).search(this.value).draw();
+            });
+            
+            search = '<option value="" selected="selected">ทั้งหมด</option>';
+            search += '<option value="E">ค่าธรรมเนียมการศึกษา</option>';
+            search += '<option value="S">งานบริการวิชาการ</option>';
+            $("#searchCategory").html(search).select2().change(function(){
+                t.columns(4).search(this.value).draw();
             });
 
             $("#table").on("click", "button.edit", function () {

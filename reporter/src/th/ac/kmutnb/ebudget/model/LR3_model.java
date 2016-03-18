@@ -42,6 +42,10 @@ public class LR3_model extends BaseReport {
     @Column
     private String fundgroupName;
     @Column
+    private String RevenueName;
+    @Column
+    private String RevenueDesc;
+    @Column
     private BigDecimal budgetSummary;
 
     public Integer getBgTypeMasterId() {

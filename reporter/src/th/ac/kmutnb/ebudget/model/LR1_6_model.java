@@ -41,23 +41,37 @@ public class LR1_6_model extends BaseReport {
     @Column
     String bgTypeName;
     @Column
-    BigDecimal subSide = BigDecimal.ZERO;
+    private BigDecimal generalFund;
     @Column
-    private BigDecimal tempWages = BigDecimal.ZERO;
+    private BigDecimal eduFund;
     @Column
-    private BigDecimal compensation = BigDecimal.ZERO;
+    private BigDecimal researchFunds;
     @Column
-    private BigDecimal livingCost = BigDecimal.ZERO;
+    private BigDecimal outreachFund;
     @Column
-    private BigDecimal matCost = BigDecimal.ZERO;
+    private BigDecimal affairsFund;
     @Column
-    private BigDecimal utilityCost = BigDecimal.ZERO;
+    private BigDecimal assetsFund;
     @Column
-    private BigDecimal durableCost = BigDecimal.ZERO;
+    private BigDecimal otherFund;
     @Column
-    private BigDecimal buildingCost = BigDecimal.ZERO;
+    private BigDecimal culturalFund;
     @Column
-    private BigDecimal otherCost = BigDecimal.ZERO;
+    private BigDecimal funds;
+    @Column
+    private BigDecimal welfareFund;
+    @Column
+    private BigDecimal devFund;
+    @Column
+    private BigDecimal boardFund;
+    @Column
+    private BigDecimal institutionsFund;
+    @Column
+    private BigDecimal purposeFund;
+    @Column
+    private BigDecimal inventoryFund;
+    @Column
+    private BigDecimal techKMUTNBFund;
 
     public Integer getPlanId() {
         return planId;
@@ -74,16 +88,6 @@ public class LR1_6_model extends BaseReport {
     public void setPlanName(String planName) {
         this.planName = planName;
     }
-
-    public BigDecimal getSubSide() {
-        return subSide;
-    }
-
-    public void setSubSide(BigDecimal subSide) {
-        this.subSide = subSide;
-    }
-
-
 
     public Integer getBgProjectId() {
         return bgProjectId;
@@ -165,68 +169,134 @@ public class LR1_6_model extends BaseReport {
         this.bgTypeName = bgTypeName;
     }
 
-    public BigDecimal getTempWages() {
-        return tempWages;
+    public BigDecimal getGeneralFund() {
+        return generalFund;
     }
 
-    public void setTempWages(BigDecimal tempWages) {
-        this.tempWages = tempWages;
+    public void setGeneralFund(BigDecimal generalFund) {
+        this.generalFund = generalFund;
     }
 
-    public BigDecimal getCompensation() {
-        return compensation;
+    public BigDecimal getEduFund() {
+        return eduFund;
     }
 
-    public void setCompensation(BigDecimal compensation) {
-        this.compensation = compensation;
+    public void setEduFund(BigDecimal eduFund) {
+        this.eduFund = eduFund;
     }
 
-    public BigDecimal getLivingCost() {
-        return livingCost;
+    public BigDecimal getResearchFunds() {
+        return researchFunds;
     }
 
-    public void setLivingCost(BigDecimal livingCost) {
-        this.livingCost = livingCost;
+    public void setResearchFunds(BigDecimal researchFunds) {
+        this.researchFunds = researchFunds;
     }
 
-    public BigDecimal getMatCost() {
-        return matCost;
+    public BigDecimal getOutreachFund() {
+        return outreachFund;
     }
 
-    public void setMatCost(BigDecimal matCost) {
-        this.matCost = matCost;
+    public void setOutreachFund(BigDecimal outreachFund) {
+        this.outreachFund = outreachFund;
     }
 
-    public BigDecimal getUtilityCost() {
-        return utilityCost;
+    public BigDecimal getAffairsFund() {
+        return affairsFund;
     }
 
-    public void setUtilityCost(BigDecimal utilityCost) {
-        this.utilityCost = utilityCost;
+    public void setAffairsFund(BigDecimal affairsFund) {
+        this.affairsFund = affairsFund;
     }
 
-    public BigDecimal getDurableCost() {
-        return durableCost;
+    public BigDecimal getAssetsFund() {
+        return assetsFund;
     }
 
-    public void setDurableCost(BigDecimal durableCost) {
-        this.durableCost = durableCost;
+    public void setAssetsFund(BigDecimal assetsFund) {
+        this.assetsFund = assetsFund;
     }
 
-    public BigDecimal getBuildingCost() {
-        return buildingCost;
+    public BigDecimal getOtherFund() {
+        return otherFund;
     }
 
-    public void setBuildingCost(BigDecimal buildingCost) {
-        this.buildingCost = buildingCost;
+    public void setOtherFund(BigDecimal otherFund) {
+        this.otherFund = otherFund;
     }
 
-    public BigDecimal getOtherCost() {
-        return otherCost;
+    public BigDecimal getCulturalFund() {
+        return culturalFund;
     }
 
-    public void setOtherCost(BigDecimal otherCost) {
-        this.otherCost = otherCost;
+    public void setCulturalFund(BigDecimal culturalFund) {
+        this.culturalFund = culturalFund;
     }
+
+    public BigDecimal getFunds() {
+        return funds;
+    }
+
+    public void setFunds(BigDecimal funds) {
+        this.funds = funds;
+    }
+
+    public BigDecimal getWelfareFund() {
+        return welfareFund;
+    }
+
+    public void setWelfareFund(BigDecimal welfareFund) {
+        this.welfareFund = welfareFund;
+    }
+
+    public BigDecimal getDevFund() {
+        return devFund;
+    }
+
+    public void setDevFund(BigDecimal devFund) {
+        this.devFund = devFund;
+    }
+
+    public BigDecimal getBoardFund() {
+        return boardFund;
+    }
+
+    public void setBoardFund(BigDecimal boardFund) {
+        this.boardFund = boardFund;
+    }
+
+    public BigDecimal getInstitutionsFund() {
+        return institutionsFund;
+    }
+
+    public void setInstitutionsFund(BigDecimal institutionsFund) {
+        this.institutionsFund = institutionsFund;
+    }
+
+    public BigDecimal getPurposeFund() {
+        return purposeFund;
+    }
+
+    public void setPurposeFund(BigDecimal purposeFund) {
+        this.purposeFund = purposeFund;
+    }
+
+    public BigDecimal getInventoryFund() {
+        return inventoryFund;
+    }
+
+    public void setInventoryFund(BigDecimal inventoryFund) {
+        this.inventoryFund = inventoryFund;
+    }
+
+    public BigDecimal getTechKMUTNBFund() {
+        return techKMUTNBFund;
+    }
+
+    public void setTechKMUTNBFund(BigDecimal techKMUTNBFund) {
+        this.techKMUTNBFund = techKMUTNBFund;
+    }
+
+    
 
 }

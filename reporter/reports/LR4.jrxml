@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="1.0533250172243758"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.053325017224376"/>
+	<property name="ireport.x" value="26"/>
 	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
 	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -670,8 +670,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 					<leftPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textFieldExpression><![CDATA[($P{PLAN_NAME_START} != $P{PLAN_NAME_END})? "":"แผนงาน : "+$P{PLAN_NAME_START}
-]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{PLAN_NAME_START} != $P{PLAN_NAME_END})? "":"แผนงาน : "+$P{PLAN_NAME_START}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="60" width="390" height="20" uuid="ba08eb1b-d53d-4ad1-beba-b79d27566438"/>
@@ -680,8 +679,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textFieldExpression><![CDATA[($P{FUND_NAME_START} != $P{FUND_NAME_END})? "":"กองทุน : "+$P{FUND_NAME_START}
-]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{FUND_NAME_START} != $P{FUND_NAME_END})? "":"กองทุน : "+$P{FUND_NAME_START}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>
@@ -889,9 +887,9 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				</textElement>
 				<text><![CDATA[รวมเงินงบประมาณ]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="#,###">
 				<reportElement style="FBold" x="132" y="0" width="60" height="20" uuid="9621d9fd-8b9f-4285-a4e8-4657448b8f1b"/>
-				<box>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -902,9 +900,9 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				</textElement>
 				<textFieldExpression><![CDATA[($V{planSummaryTotal} == null || $V{planSummaryTotal} == 0)? "-":$V{planSummaryTotal}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,###">
 				<reportElement style="FBold" x="192" y="0" width="60" height="20" uuid="29416dc3-c6b4-4f93-9004-7a88f4508099"/>
-				<box>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -915,9 +913,9 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				</textElement>
 				<textFieldExpression><![CDATA[($V{usedSummaryTotal} == null || $V{usedSummaryTotal} == 0)? "-":$V{usedSummaryTotal}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,###">
 				<reportElement style="FBold" x="252" y="0" width="60" height="20" uuid="0eaef104-e83c-4ccc-8941-56ac148a8162"/>
-				<box>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -928,9 +926,9 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				</textElement>
 				<textFieldExpression><![CDATA[($V{planQ1Total} == null || $V{planQ1Total} == 0)? "-":$V{planQ1Total}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,###">
 				<reportElement style="FBold" x="312" y="0" width="60" height="20" uuid="f21fc316-92f5-4756-8b46-0ff208bfdfb4"/>
-				<box>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -941,9 +939,9 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				</textElement>
 				<textFieldExpression><![CDATA[($V{usedQ1Total} == null || $V{usedQ1Total} == 0)? "-":$V{usedQ1Total}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,###">
 				<reportElement style="FBold" x="372" y="0" width="60" height="20" uuid="33dad786-4b39-4da5-b0cf-c093101f385e"/>
-				<box>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -954,9 +952,9 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				</textElement>
 				<textFieldExpression><![CDATA[($V{planQ2Total} == null || $V{planQ2Total} == 0)? "-":$V{planQ2Total}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,###">
 				<reportElement style="FBold" x="432" y="0" width="60" height="20" uuid="6514ec50-ea3c-4fb9-b0f6-d982b56f9763"/>
-				<box>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -967,9 +965,9 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				</textElement>
 				<textFieldExpression><![CDATA[($V{usedQ2Total} == null || $V{usedQ2Total} == 0)? "-":$V{usedQ2Total}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,###">
 				<reportElement style="FBold" x="492" y="0" width="60" height="20" uuid="05633b4c-8596-4a57-9e46-f9f9e08d0709"/>
-				<box>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -980,9 +978,9 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				</textElement>
 				<textFieldExpression><![CDATA[($V{planQ3Total} == null || $V{planQ3Total} == 0)? "-":$V{planQ3Total}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,###">
 				<reportElement style="FBold" x="552" y="0" width="60" height="20" uuid="7ce0b1cd-0ae9-4042-b097-88d3267c547a"/>
-				<box>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -993,9 +991,9 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				</textElement>
 				<textFieldExpression><![CDATA[($V{usedQ3Total} == null || $V{usedQ3Total} == 0)? "-":$V{usedQ3Total}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,###">
 				<reportElement style="FBold" x="612" y="0" width="60" height="20" uuid="66986161-55fc-4077-8190-25395f5a2068"/>
-				<box>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -1006,9 +1004,9 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				</textElement>
 				<textFieldExpression><![CDATA[($V{planQ4Total} == null || $V{planQ4Total} == 0)? "-":$V{planQ4Total}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,###">
 				<reportElement style="FBold" x="672" y="0" width="60" height="20" uuid="58c0ffe3-7815-48c8-a698-4d1038dd7d6a"/>
-				<box>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -1019,9 +1017,9 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				</textElement>
 				<textFieldExpression><![CDATA[($V{usedQ4Total} == null || $V{usedQ4Total} == 0)? "-":$V{usedQ4Total}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,###">
 				<reportElement style="FBold" x="732" y="0" width="70" height="20" uuid="612582dd-bf74-4642-b02d-de7d8d5b8822"/>
-				<box>
+				<box rightPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>

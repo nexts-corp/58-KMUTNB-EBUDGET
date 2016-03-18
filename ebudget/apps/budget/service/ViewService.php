@@ -202,7 +202,7 @@ class ViewService extends CServiceBase implements IViewService
         return $view;
     }
 
-    public function buildOne($bg145Id, $budget)
+    public function buildOne($bg145Id, $budget, $isShow)
     {
         $view = new CJView("draft/buildingOne", CJViewType::HTML_VIEW_ENGINE);
 
@@ -211,11 +211,11 @@ class ViewService extends CServiceBase implements IViewService
         $json = new CJSONDecodeImpl();
         $budgetDe = $json->decode(new Budget145(), $conv);
         $view->budget = $budgetDe;
-
+        $view->isShow = $isShow;
         return $view;
     }
 
-    public function buildMore($bg145Id, $budget)
+    public function buildMore($bg145Id, $budget, $isShow)
     {
         $view = new CJView("draft/buildingMore", CJViewType::HTML_VIEW_ENGINE);
         $view->bg145Id = $bg145Id;
@@ -223,12 +223,12 @@ class ViewService extends CServiceBase implements IViewService
         $json = new CJSONDecodeImpl();
         $budgetDe = $json->decode(new Budget145(), $conv);
         $view->budget = $budgetDe;
-
+        $view->isShow = $isShow;
         return $view;
     }
 
 
-    public function buildMore2($bg145Id, $budget)
+    public function buildMore2($bg145Id, $budget, $isShow)
     {
         $view = new CJView("draft/buildingMore2", CJViewType::HTML_VIEW_ENGINE);
         $view->bg145Id = $bg145Id;
@@ -236,7 +236,7 @@ class ViewService extends CServiceBase implements IViewService
         $json = new CJSONDecodeImpl();
         $budgetDe = $json->decode(new Budget145(), $conv);
         $view->budget = $budgetDe;
-
+        $view->isShow = $isShow;
         return $view;
     }
 
@@ -323,7 +323,7 @@ class ViewService extends CServiceBase implements IViewService
     }
 
 
-    public function proposed($formId, $budgetHeadId, $deptId, $budget)
+    public function proposed($formId, $budgetHeadId, $deptId, $budget,$isShow)
     {
         $view = new CJView("draft/proposed", CJViewType::HTML_VIEW_ENGINE);
 
@@ -338,6 +338,7 @@ class ViewService extends CServiceBase implements IViewService
         $view->budgetHeadId = $budgetHeadId;
         $view->deptId = $deptId;
         $view->deptName = $groupS->getDept($deptId)->deptName;
+        $view->isShow = $isShow;
 
         return $view;
     }

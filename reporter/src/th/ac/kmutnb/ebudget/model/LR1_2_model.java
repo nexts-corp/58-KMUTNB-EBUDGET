@@ -25,6 +25,10 @@ public class LR1_2_model extends BaseReport {
     @Column
     String bgProjectName;
     @Column
+    Integer fundgroupId;
+    @Column
+    String fundgroupName;
+    @Column
     Integer facultyId;
     @Column
     String facultyName;

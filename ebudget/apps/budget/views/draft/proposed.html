@@ -644,6 +644,8 @@
 <script src="{{_context_path}}/asset/vendor/bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
 <script>
 
+    var isShow = '{{isShow}}';
+
     (function ($) {
         'use strict';
         var $w4finish = $('#wizard').find('ul.pager li.finish'),
@@ -776,6 +778,7 @@
     var operating = [];
     var detail = [];
 
+
     $(function () {
         //getAllProject();
         //getDept();
@@ -784,7 +787,7 @@
         getLayouts();
         getOperating();
         getDetail();
-
+        isShowView();
         $('.datetime').datepicker({
             format: 'dd-mm-yyyy'
         });
@@ -1326,5 +1329,16 @@
 
         return true;
     }
+
+    function isShowView() {
+        if (isShow == true || isShow == 'true') {
+            $(".delAffirmative,.addAffirmative,.addKpi,.editKpi,.delKpi,.addOperating,.editOperating,.delOperating,.addDetail,.editDetail,.delDetail,.finish").show();
+            $("input,textarea").prop('disabled', false);
+        } else {
+            $(".delAffirmative,.addAffirmative,.addKpi,.editKpi,.delKpi,.addOperating,.editOperating,.delOperating,.addDetail,.editDetail,.delDetail,.finish").hide();
+            $("input,textarea").prop('disabled', true);
+        }
+    }
+
 
 </script>
