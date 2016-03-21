@@ -384,6 +384,7 @@
                 $("button.addList").unbind("click").click(function () {
                     var headerId = $(this).attr("data-hid");
                     var parentId = $(this).attr("data-pid");
+                    console.log(parentId);
 
                     $('.summernote').code('');
 
@@ -398,7 +399,7 @@
                             + '<a href="javascript: void(0);" onclick="$(\'#attachment\').val(\'\');">[Reset]</a>'
                     ).show();
                     $("#fileBak").hide();
-
+                    setDefaultValue(parentId);
                     $("#panelForm").modal("show");
 
                     $("button.save").unbind("click").click(function () {
@@ -478,9 +479,10 @@
                             + '<td class="text-center"><a href="#" data-html="true" data-toggle="tooltip" title="' + remark + '"><image src="{{_context_path}}/images/tooltips_ico.png" width="25px" height="25px"></a></td>'
                             + '<td class="text-bold text-sm">อยู่ระหว่างการดำเนินการ</td>'
                             + '<td>'
-                            + '<div class="btn-group">'
+                            + '<div class="col-md-12 none-padding">'
                             + '<button class="btn btn-sm btn-warning editList" data-pid="' + parentId + '" data-id="' + data["id"] + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
                             + '<button class="btn btn-sm btn-default deleteList" data-pid="' + parentId + '" data-id="' + data["id"] + '"><i class="fa fa-trash"></i> ลบ</button>'
+                            + '<button class="btn btn-sm btn-primary proposed"  data-pid="' + parentId + '" data-id="' + data["id"] + '"><i class="fa fa-file-text-o"></i> แบบเสนอโครงการ</button>'
                             + '</div>'
                             + '</td>'
                             + '</tr>';
@@ -540,9 +542,10 @@
                             + '<td class="text-center"><a href="#" data-html="true" data-toggle="tooltip" title="' + remark + '"><image src="{{_context_path}}/images/tooltips_ico.png" width="25px" height="25px"></a></td>'
                             + '<td class="status text-bold text-sm">' + list146Arr[id]["statusDesc"] + '<br>' + isShowComment(list146Arr[id]["statusId"], id) + '</td>'
                             + '<td>'
-                            + '<div class="btn-group">'
+                            + '<div class="col-md-12 none-padding">'
                             + '<button class="btn btn-sm btn-warning editList" data-hid="' + headerId + '" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-pencil"></i> แก้ไข</button>'
                             + '<button class="btn btn-sm btn-default deleteList"  data-hid="' + headerId + '" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-trash"></i> ลบ</button>'
+                            + '<button class="btn btn-sm btn-primary proposed"  data-hid="' + headerId + '" data-pid="' + parentId + '" data-id="' + id + '"><i class="fa fa-file-text-o"></i> แบบเสนอโครงการ</button>'
                             + '</div>'
                             + '</td>';
 
@@ -625,6 +628,8 @@
             });
 
             $('#remark').code(list146Arr[id]["remark"]);
+
+            setDefaultValue(parentId, id);
 
             var fileUpload = 0;
 
@@ -721,7 +726,7 @@
             var bytes = utf8.encode(JSON.stringify(objSend));
             var paramstr = base64.encode(bytes);
             console.log(list146Arr[id]);
-            var url = "{{_context_path}}/api/budget/view/proposed/999/" + budgetHeadId + "/" + facId + "/" + encodeURIComponent(paramstr)+"/true";
+            var url = "{{_context_path}}/api/budget/view/proposed/999/" + budgetHeadId + "/" + facId + "/" + encodeURIComponent(paramstr) + "/true";
             window.open(url, '_blank');
 
         });
@@ -826,8 +831,33 @@
         $(".bodyComment").html('');//reset
         $(".bodyComment").html(list146Arr[id]["comment"]);
         $("#panelShowComment").modal("show");
-
     }
+
+
+    function setDefaultValue(parentId, id) {
+
+        var arr = ["20504000", "20505000", "20502000"];
+        var check = false;
+        $.each(arr, function (key, value) {
+            if (parentId == value) {
+                console.log("is set default => " + value);
+
+                check = true;
+            }
+        });
+
+        if (check) {
+            $("#bursaryName").attr("disabled", true).val(typeName146Arr[parentId]);
+        } else {
+            if (list146Arr[id] != undefined) {
+                $("#bursaryName").attr("disabled", false).val(list146Arr[id]["bursaryName"]);
+            } else {
+                $("#bursaryName").attr("disabled", false).val("");
+            }
+
+        }
+    }
+
 
     function goBack() {
         window.history.back();

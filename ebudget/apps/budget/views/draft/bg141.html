@@ -99,7 +99,7 @@
                                 </th>
                             </tr>
                             <tr>
-                                <th rowspan="2" class="text-center" style="vertical-align: middle;">ระดับ</th>
+                                <th rowspan="2" class="text-center" style="vertical-align: middle;">เลขที่อัตรา</th>
                                 <th rowspan="2" class="text-center" style="vertical-align: middle;">อัตราเงินเดือน</th>
                                 <th colspan="2" class="text-center" style="vertical-align: middle;">จำนวนอัตรา</th>
                                 <th rowspan="2" class="text-center" style="vertical-align: middle;">จำนวนเงินทั้งปี</th>
@@ -152,7 +152,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-12 control-label text-bold req" for="rateNo">ระดับ :</label>
+                                    <label class="col-md-12 control-label text-bold req" for="rateNo">เลขที่อัตรา :</label>
 
                                     <div class="col-md-12">
                                         <input type="text" id="rateNo" name="rateNo" class="form-control input-sm"
@@ -854,7 +854,30 @@
 
     function eventKeyPress() {
 
-        $('#salary').keyup(function () {
+//        $('#salary').keyup(function () {
+//            var occupy = parseFloat($("#occupy").val());
+//            var salary = parseFloat($(this).val());
+//            if (occupy == "" || occupy == undefined || isNaN(occupy)) {
+//                occupy = 0;
+//            }
+//            if (salary == "" || salary == undefined || isNaN(salary)) {
+//                salary = 0;
+//            }
+//            $("#salaryTotal").val((occupy * salary)*12);
+//        });
+//
+//        $('#occupy').keyup(function () {
+//            var salary = parseFloat($("#salary").val());
+//            var occupy = parseFloat($(this).val());
+//            if (salary == "" || salary == undefined || isNaN(salary)) {
+//                salary = 0;
+//            }
+//            if (occupy == "" || occupy == undefined || isNaN(occupy)) {
+//                occupy = 0;
+//            }
+//            $("#salaryTotal").val((salary * occupy)*12);
+//        });
+        $('#salary').bind('input', function() {
             var occupy = parseFloat($("#occupy").val());
             var salary = parseFloat($(this).val());
             if (occupy == "" || occupy == undefined || isNaN(occupy)) {
@@ -865,8 +888,7 @@
             }
             $("#salaryTotal").val((occupy * salary)*12);
         });
-
-        $('#occupy').keyup(function () {
+        $('#occupy').bind('input', function() {
             var salary = parseFloat($("#salary").val());
             var occupy = parseFloat($(this).val());
             if (salary == "" || salary == undefined || isNaN(salary)) {

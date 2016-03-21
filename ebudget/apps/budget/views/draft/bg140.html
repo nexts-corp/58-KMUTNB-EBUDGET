@@ -878,7 +878,20 @@
 
     function eventKeyPress() {
 
-        $('#salary').keyup(function () {
+//        $('#salary').keyup(function () {
+//            var occupy = parseFloat($("#occupy").val());
+//            var salary = parseFloat($(this).val());
+//            if (occupy == "" || occupy == undefined || isNaN(occupy)) {
+//                occupy = 0;
+//            }
+//            if (salary == "" || salary == undefined || isNaN(salary)) {
+//                salary = 0;
+//            }
+//            $("#salaryTotal").val((occupy * salary)*12);
+//        });
+
+
+        $('#salary').bind('input', function() {
             var occupy = parseFloat($("#occupy").val());
             var salary = parseFloat($(this).val());
             if (occupy == "" || occupy == undefined || isNaN(occupy)) {
@@ -889,8 +902,7 @@
             }
             $("#salaryTotal").val((occupy * salary)*12);
         });
-
-        $('#occupy').keyup(function () {
+        $('#occupy').bind('input', function() {
             var salary = parseFloat($("#salary").val());
             var occupy = parseFloat($(this).val());
             if (salary == "" || salary == undefined || isNaN(salary)) {
@@ -901,6 +913,18 @@
             }
             $("#salaryTotal").val((salary * occupy)*12);
         });
+
+//        $('#occupy').keyup(function () {
+//            var salary = parseFloat($("#salary").val());
+//            var occupy = parseFloat($(this).val());
+//            if (salary == "" || salary == undefined || isNaN(salary)) {
+//                salary = 0;
+//            }
+//            if (occupy == "" || occupy == undefined || isNaN(occupy)) {
+//                occupy = 0;
+//            }
+//            $("#salaryTotal").val((salary * occupy)*12);
+//        });
     }
 
 
