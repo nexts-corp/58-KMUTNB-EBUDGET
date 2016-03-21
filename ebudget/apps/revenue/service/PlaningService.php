@@ -46,7 +46,10 @@ class PlaningService extends CServiceBase implements IPlaningService {
                 . " rp.id, rp.deptId, dp.deptName, rp.budgetEducation, rp.budgetService, rp.budgetTotal"
                 . " FROM " . $this->ent . "\\BudgetRevenuePlan rp"
                 . " JOIN " . $this->ent . "\\L3D\\Department dp WITH dp.id = rp.deptId"
-                . " WHERE rp.budgetPeriodId = :year";
+                . " JOIN " . $this->ent . "\\MappingDepartmentType mt WITH mt.deptId = dp.id"
+                . " JOIN " . $this->ent . "\\ActivityType act WITH act.id = mt.actId"
+                . " WHERE rp.budgetPeriodId = :year"
+                . " ORDER BY dp.campusId, act.id, dp.deptGroup";
         $param = array(
             "year" => $this->getPeriod()->year
         );
@@ -111,11 +114,11 @@ class PlaningService extends CServiceBase implements IPlaningService {
 
     public function fetchProject() {
         $sql = "SELECT"
-                . " be.id,"
                 . " bh.id AS headId,"
-                . " be.name AS projName,"
                 . " be.deptId,"
                 . " dp.deptName,"
+                . " be.id,"
+                . " be.name AS projName,"
                 . " be.budgetEstAmount As deptValue"
                 . " FROM " . $this->ent . "\\BudgetHead bh"
                 . " JOIN " . $this->ent . "\\BudgetExpense be WITH bh.id = be.budgetHeadId"
@@ -132,7 +135,6 @@ class PlaningService extends CServiceBase implements IPlaningService {
         );
 
         $dataIAT = $this->datacontext->getObject($sql, $param);
-
         return $dataIAT;
     }
 

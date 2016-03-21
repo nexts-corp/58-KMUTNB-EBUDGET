@@ -83,7 +83,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-center col-lg-1">ลำดับ</th>
-                                    <th class="text-center col-lg-7">โครงการ / หน่วยงานที่รับผิดชอบ</th>
+                                    <th class="text-center col-lg-7">หน่วยงานที่รับผิดชอบ / โครงการ</th>
                                     <th class="text-center col-lg-3">งบประมาณที่จัดสรร (บาท)</th>
                                     <th class="text-center col-lg-1">จัดการ</th>
                                 </tr>
@@ -618,11 +618,17 @@
                         listsArrProj[val["headId"]] = [];
                     listsArrProj[val["headId"]].push(val);
 
-                    if (!sumGroup[val["projName"]])
+                    /*if (!sumGroup[val["projName"]])
                         sumGroup[val["projName"]] = 0;
                     sumGroup[val["projName"]] += parseFloat(val["deptValue"]);
 
-                    sumTotal += parseFloat(val["deptValue"]);
+                    sumTotal += parseFloat(val["deptValue"]);*/
+        
+                    if (!sumGroup[val["deptName"]])
+                        sumGroup[val["deptName"]] = 0;
+                    sumGroup[val["deptName"]] += parseFloat(val["projName"]);
+
+                    sumTotal += parseFloat(val["projName"]);
                 });
 
 
@@ -641,13 +647,16 @@
                         //Calculates the total of the column
                         api.column(0, {page: 'current'}).data().each(function (group, i) {
                             var proj = listsArrProj[group][0]["projName"];
+                            var dept = listsArrProj[group][0]["deptName"];
                             var head = listsArrProj[group][0]["headId"];
 
-                            if (lastProj !== proj) {
+                            if (lastProj !== dept) {
                                 $(rows).eq(i).before('<tr>'
                                         + '<td class="text-bold text-center">' + (++count) + '</td>'
-                                        + '<td class="text-bold">' + proj + '</td>'
-                                        + '<td class="text-bold text-right">' + accounting.formatNumber(sumGroup[proj], 2, ",", ".") + '</td>'
+                                        //+ '<td class="text-bold">' + proj + '</td>'
+                                        + '<td class="text-bold">' + dept + '</td>'
+                                        //+ '<td class="text-bold text-right">' + accounting.formatNumber(sumGroup[proj], 2, ",", ".") + '</td>'
+                                        + '<td class="text-bold text-right">' + accounting.formatNumber(sumGroup[dept], 2, ",", ".") + '</td>'
                                         + '<td class="text-bold">'
                                         + '<button class="btn btn-warning edit" title="แก้ไข" data-id="' + head + '"><i class="fa fa-pencil"></i></button>&nbsp'
                                         + '<button class="btn btn-default delete" title="ลบ" data-id="' + head + '"><i class="fa fa-trash"></i></button>'
@@ -655,7 +664,7 @@
                                         + '</tr>'
                                         );
                             }
-                            lastProj = proj;
+                            lastProj = dept;
                         });
                     },
                     "columnDefs": [
@@ -671,7 +680,7 @@
                         },
                         {
                             "targets": 1,
-                            "data": "deptName",
+                            "data": "projName",
                             "sClass": "col-lg-7"
                         },
                         {
