@@ -133,23 +133,23 @@
                         </div>
                         <div class="modal-body">
                             <form id="form" onsubmit="return false;">
-                                <!--<div class="form-group">
-                                    <label class="col-md-12 control-label text-bold req" for="operName">หมวดรายจ่ายรายการ
-                                        :</label>
+                                <!--<div class="form-group">-->
+                                    <!--<label class="col-md-12 control-label text-bold req" style="display: none;" for="operName">หมวดรายจ่ายรายการ-->
+                                        <!--:</label>-->
 
-                                    <div class="col-md-12">
-                                        <input type="text" id="operName" name="operName" class="form-control input-sm" 
-                                    </div>
-                                </div>-->
+                                    <!--<div class="col-md-12">-->
+                                        <!--<input type="text" id="operName" name="operName" style="display: none;" class="form-control input-sm"-->
+                                    <!--</div>-->
+                                <!--</div>-->
 
-                                <div class="form-group">
-                                    <label class="col-md-12 control-label text-bold req" for="operDesc">คำอธิบาย
-                                        :</label>
+                                <!--<div class="form-group">-->
+                                    <!--<label class="col-md-12 control-label text-bold req" for="operDesc">คำอธิบาย-->
+                                        <!--:</label>-->
 
-                                    <div class="col-md-12">
-                                        <textarea type="text" id="operDesc" name="operDesc" rows="4" class="form-control input-sm" required> </textarea>
-                                    </div>
-                                </div>
+                                    <!--<div class="col-md-12">-->
+                                        <!--<textarea type="text" id="operDesc" name="operDesc" rows="4" class="form-control input-sm" required> </textarea>-->
+                                    <!--</div>-->
+                                <!--</div>-->
 
                                 <div class="form-group">
                                     <label class="col-md-12 control-label text-bold req" for="bgHistory">งบประมาณที่ได้รับการจัดสรรปีปัจจุบัน
@@ -347,8 +347,9 @@
                             var remark = value3["remark"].replace(/"/g, "'");
                             html += '<tr data-tt-id="list' + value3["id"] + '" data-tt-parent-id="' + value2["id"] + '">'
                                     + '<td class="text-center"></td>'
+                                    + '<td>' + value3["operName"] + '</td>'
                                     //+ '<td>' + value3["operName"] + '</br> &nbsp;' + value3["operDesc"] + '</td>'
-                                    + '<td>' + value3["operDesc"] + '</td>'
+                                    //+ '<td>' + value3["operDesc"] + '</td>'
                                     + '<td class="number text-right">' + checkZero(value3["bgHistory"]) + '</td>'
                                     + '<td class="number text-right">' + checkZero(value3["bgRequest"]) + '</td>'
                                     + '<td class="text-center"><a href="#" data-html="true" data-toggle="tooltip" title="' + remark + '"><image src="{{_context_path}}/images/tooltips_ico.png" width="25px" height="25px"></a></td>'
@@ -413,6 +414,7 @@
 
                     $("button.save").unbind("click").click(function () {
                         $("#loadingForm").html('<i class="fa fa-spinner fa-spin"></i> Loading...');
+                        $("#opername").val(typeName143Arr[parentId]);
                         var isValid = true;
                         $('#form input[required]').each(function () {
                             if ($(this).val() == "" && !$(this).prop("disabled"))
@@ -421,7 +423,7 @@
 
                         if (isValid) {
                             var fdata = dataObject(parentId, param, null);
-
+                            console.log(fdata);
                             var formData = new FormData();
 
                             formData.append('budget', JSON.stringify(fdata["Budget"]));
@@ -429,7 +431,7 @@
                             if ($('#attachment').length) formData.append('file', $('#attachment')[0].files[0]);
                             else formData.append('file', '');
 
-                            insertBudget(headerId, parentId, formData, param)
+                            insertBudget(headerId, parentId, formData, param);
                         } else {
                             $("#loadingForm").html('<label class="text-danger">กรุณากรอกข้อมูลให้ครบ</label>');
                         }
@@ -479,7 +481,8 @@
                     // insert node in branch
                     var input = '<tr data-tt-id="list' + data["id"] + '" data-tt-parent-id="' + parentId + '">'
                             + '<td class="text-center"></td>'
-                            + '<td>' + $("#operName").val() + '</br> &nbsp;' + $("#operDesc").val() + '</td>'
+                            + '<td>'+typeName143Arr[parentId]+'</td>'
+                           // + '<td>' + $("#operName").val() + '</br> &nbsp;' + $("#operDesc").val() + '</td>'
                             + '<td class="number text-right">' + checkZero($("#bgHistory").val()) + '</td>'
                             + '<td class="number text-right">' + checkZero($("#bgRequest").val()) + '</td>'
                             + '<td class="text-center"><a href="#" data-html="true" data-toggle="tooltip" title="' + remark + '"><image src="{{_context_path}}/images/tooltips_ico.png" width="25px" height="25px"></a></td>'
@@ -541,7 +544,8 @@
                     // insert node in branch
                     var input = ''
                             + '<td class="text-center"></td>'
-                            + '<td>' + $("#operName").val() + '</br> &nbsp;' + $("#operDesc").val() + '</td>'
+                           // + '<td>' + $("#operName").val() + '</br> &nbsp;' + $("#operDesc").val() + '</td>'
+                            + '<td>'+typeName143Arr[parentId]+'</td>'
                             + '<td class="number text-right">' + checkZero($("#bgHistory").val()) + '</td>'
                             + '<td class="number text-right">' + checkZero($("#bgRequest").val()) + '</td>'
                             + '<td class="text-center"><a href="#" data-html="true" data-toggle="tooltip" title="' +remark + '"><image src="{{_context_path}}/images/tooltips_ico.png" width="25px" height="25px"></a></td>'
@@ -743,7 +747,8 @@
             var fvalue = $(this).val();
             data[fname] = fvalue;
         });
-
+        console.log(typeName143Arr[parentId]);
+        data["operName"] = typeName143Arr[parentId];
         data["remark"] = $("#remark").code();
 
         var fdata = {};
