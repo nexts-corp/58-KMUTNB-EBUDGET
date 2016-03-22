@@ -30,6 +30,12 @@
     <class>th.ac.kmutnb.ebudget.model.LR1_7_model</class>
     <class>th.ac.kmutnb.ebudget.model.LR2_model</class>
     <class>th.ac.kmutnb.ebudget.model.NG1_1_model</class>
+    <class>th.ac.kmutnb.ebudget.model.NG4_1_model</class>
+    <class>th.ac.kmutnb.ebudget.model.NG4_2_model</class>
+    <class>th.ac.kmutnb.ebudget.model.NG4_3_model</class>
+    <class>th.ac.kmutnb.ebudget.model.LR4_1_model</class>
+    <class>th.ac.kmutnb.ebudget.model.LR4_2_model</class>
+    <class>th.ac.kmutnb.ebudget.model.LR4_3_model</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://202.44.34.86:1433;databaseName=Ebudget"/>
       <property name="javax.persistence.jdbc.user" value="ebudget"/>
