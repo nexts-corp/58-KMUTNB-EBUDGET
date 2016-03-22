@@ -157,16 +157,16 @@
         background: rgba(170,170,170,0.7); color: #000;
     }
     .lv2 {
-        background: rgba(105,145,172,1); color: #000;
+        background: rgba(105,145,172,0.7); color: #000;
     }
     .lv3 {
-        background: rgba(195,215,223,1); color: #000;
+        background: rgba(195,215,223,0.7); color: #000;
     }
     .lv4 {
-        background: rgba(245,245,245,1); color: #000;
+        background: rgba(245,245,245,0.7); color: #000;
     }
     .lv5 {
-        background: rgba(103,114,122,1); color: #000;
+        background: rgba(103,114,122,0.7); color: #000;
     }
 </style>
 
@@ -333,9 +333,18 @@
 
                 if (typeof datas !== "undefined" && datas !== null) {
                     datas = datas.result;
+                    
+                    var catDesc = '';
+                    if(datas[0]["BudgetCategory"] == 'E') {
+                        catDesc = 'ค่าธรรมเนียมการศึกษา';
+                    } else if (datas[0]["BudgetCategory"] == 'S') {
+                        catDesc = 'งานบริการวิชาการ';
+                    } else {
+                        catDesc = '-';
+                    }
 
                     $("#budgetYear").html(datas[0]["bgPeriodId"]);
-                    $("#budgetType").html('งบประมาณแผ่นดิน');
+                    $("#budgetType").html(catDesc);
                     $("#l3dPlan").html(datas[0]["planName"]);
                     $("#fundgroup").html(datas[0]["fundgroupName"]);
                     $("#facName").html(datas[0]["facultyName"]);
@@ -568,18 +577,18 @@
                     var plan = parseFloat(obj.planSummary) - parseFloat(sumPlan);
                     var used = parseFloat(obj.usedSummary) - parseFloat(sumUsed);
                     if (plan > 0)
-                        $("#" + id + " > td.planSummary").html("<p style='color:white'>" + toNumberFormat(obj.planSummary) + "</p><p style='color:white'>(+" + toNumberFormat(plan) + ")</p>");
+                        $("#" + id + " > td.planSummary").html("<p style='color:black'>" + toNumberFormat(obj.planSummary) + "</p><p style='color:black'>(+" + toNumberFormat(plan) + ")</p>");
                     else if (plan < 0)
-                        $("#" + id + " > td.planSummary").html("<p style='color:white'>" + toNumberFormat(obj.planSummary) + "</p><p style='color:white'>(" + toNumberFormat(plan) + ")</p>");
+                        $("#" + id + " > td.planSummary").html("<p style='color:black'>" + toNumberFormat(obj.planSummary) + "</p><p style='color:black'>(" + toNumberFormat(plan) + ")</p>");
                     else
-                        $("#" + id + " > td.planSummary").html("<p style='color:white'>" + toNumberFormat(obj.planSummary) + "</p><p style='color:white'>(" + 0 + ")</p>");
+                        $("#" + id + " > td.planSummary").html("<p style='color:black'>" + toNumberFormat(obj.planSummary) + "</p><p style='color:black'>(" + 0 + ")</p>");
 
                     if (used > 0)
-                        $("#" + id + " > td.usedSummary").html("<p style='color:white'>" + toNumberFormat(obj.usedSummary) + "</p><p style='color:white'>(+" + toNumberFormat(used) + ")</p>");
+                        $("#" + id + " > td.usedSummary").html("<p style='color:black'>" + toNumberFormat(obj.usedSummary) + "</p><p style='color:black'>(+" + toNumberFormat(used) + ")</p>");
                     else if (used < 0)
-                        $("#" + id + " > td.usedSummary").html("<p style='color:white'>" + toNumberFormat(obj.usedSummary) + "</p><p style='color:white'>(" + toNumberFormat(used) + ")</p>");
+                        $("#" + id + " > td.usedSummary").html("<p style='color:black'>" + toNumberFormat(obj.usedSummary) + "</p><p style='color:black'>(" + toNumberFormat(used) + ")</p>");
                     else
-                        $("#" + id + " > td.usedSummary").html("<p style='color:white'>" + toNumberFormat(obj.usedSummary) + "</p><p style='color:white'>(" + 0 + ")</p>");
+                        $("#" + id + " > td.usedSummary").html("<p style='color:black'>" + toNumberFormat(obj.usedSummary) + "</p><p style='color:black'>(" + 0 + ")</p>");
 
                 }
                 $.each(obj, function (index, value) {
@@ -610,18 +619,18 @@
             var plan = parseFloat(sum[trId].planSummary) - parseFloat(sumPlan);
             var used = parseFloat(sum[trId].usedSummary) - parseFloat(sumUsed);
             if (plan > 0)
-                $("#" + trId + " > td.planSummary").html("<p style='color:white'>" + toNumberFormat(sum[trId].planSummary) + "</p><p style='color:white'>(+" + toNumberFormat(plan) + ")</p>");
+                $("#" + trId + " > td.planSummary").html("<p style='color:black'>" + toNumberFormat(sum[trId].planSummary) + "</p><p style='color:black'>(+" + toNumberFormat(plan) + ")</p>");
             else if (plan < 0)
-                $("#" + trId + " > td.planSummary").html("<p style='color:white'>" + toNumberFormat(sum[trId].planSummary) + "</p><p style='color:white'>(" + toNumberFormat(plan) + ")</p>");
+                $("#" + trId + " > td.planSummary").html("<p style='color:black'>" + toNumberFormat(sum[trId].planSummary) + "</p><p style='color:black'>(" + toNumberFormat(plan) + ")</p>");
             else
-                $("#" + trId + " > td.planSummary").html("<p style='color:white'>" + toNumberFormat(sum[trId].planSummary) + "</p><p style='color:white'>(" + 0 + ")</p>");
+                $("#" + trId + " > td.planSummary").html("<p style='color:black'>" + toNumberFormat(sum[trId].planSummary) + "</p><p style='color:black'>(" + 0 + ")</p>");
 
             if (used > 0)
-                $("#" + trId + " > td.usedSummary").html("<p style='color:white'>" + toNumberFormat(sum[trId].usedSummary) + "</p><p style='color:white'>(+" + toNumberFormat(used) + ")</p>");
+                $("#" + trId + " > td.usedSummary").html("<p style='color:black'>" + toNumberFormat(sum[trId].usedSummary) + "</p><p style='color:black'>(+" + toNumberFormat(used) + ")</p>");
             else if (used < 0)
-                $("#" + trId + " > td.usedSummary").html("<p style='color:white'>" + toNumberFormat(sum[trId].usedSummary) + "</p><p style='color:white'>(" + toNumberFormat(used) + ")</p>");
+                $("#" + trId + " > td.usedSummary").html("<p style='color:black'>" + toNumberFormat(sum[trId].usedSummary) + "</p><p style='color:black'>(" + toNumberFormat(used) + ")</p>");
             else
-                $("#" + trId + " > td.usedSummary").html("<p style='color:white'>" + toNumberFormat(sum[trId].usedSummary) + "</p><p style='color:white'>(" + 0 + ")</p>");
+                $("#" + trId + " > td.usedSummary").html("<p style='color:black'>" + toNumberFormat(sum[trId].usedSummary) + "</p><p style='color:black'>(" + 0 + ")</p>");
 
             $("#" + trId + " > td.percent").html("<b>" + toNumberFormat(sum[trId]["percent"]) + " (%)</b>");
 

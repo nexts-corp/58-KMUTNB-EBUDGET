@@ -153,6 +153,32 @@ class BudgetService extends CServiceBase implements IBudgetService {
                 $list1[$key1]["sub"][$key2]["data"] = $list3;
             }
         }
+        
+        /*---- All Dept -----*/
+        $sqlSum = "
+                SELECT
+                    SUM(bg.bgAmount) AS value
+                FROM " . $this->ent . "\\BudgetRevenue bg
+                LEFT JOIN " . $this->ent . "\\BudgetHead head WITH head.id = bg.budgetHeadId
+                LEFT JOIN " . $this->ent . "\\TrackingStatus ts with bg.statusId = ts.id
+                LEFT JOIN " . $this->ent . "\\L3D\\Department dept with bg.deptId = dept.id
+                WHERE head.formId = :formId
+                    AND bg.budgetPeriodId = :budgetPeriodId
+                    AND bg.budgetTypeCode = :budgetTypeCode
+                    AND dept.id = :deptId
+                    AND bg.bgCategory = :bgCategory
+            ";
+
+        $paramSum = array(
+            "formId" => "500",
+            "budgetPeriodId" => $budgetPeriodId,
+            "budgetTypeCode" => "K",
+            "deptId" => $deptId,
+            "bgCategory" => $bgCategory
+        );
+
+        $listSum = $this->datacontext->getObject($sqlSum, $paramSum)[0];
+        $this->getResponse()->add("sumDept",$listSum);
 
         return $list1;
     }
@@ -295,6 +321,7 @@ class BudgetService extends CServiceBase implements IBudgetService {
 
         $list2 = $this->datacontext->getObject($sql2, $param2)[0];
 
+                
         $result = array(
             "plan" => $list["value"],
             "budget" => $list2["value"]

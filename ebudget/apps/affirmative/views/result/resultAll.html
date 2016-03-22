@@ -94,13 +94,15 @@
                                 + '<td>' + val2["deptName"] + '</td>'
                                 + '<td class="text-center text-bold"><span class="text-success">'+cResult+'</span> / '+cFinal+'</td>'
                                 + '<td class="text-center">'
-                                    + '<button class="btn btn-primary btn-sm tracking" data-id="' + val2["deptId"] + '"><i class="fa fa-pencil"></i> รายงานผล</button>'+'&nbsp;&nbsp;'
-                                    + '<div class="btn-group">'
+                                    + '<button class="btn btn-primary btn-sm tracking" data-id="' + val2["deptId"] + '"><i class="fa fa-pencil"></i> รายงานผล</button>'+'<br>'
+                            + '<button class="btn btn-success btn-sm excel" data-id="' + val2["deptId"] + '" data-round="'+ val2["round"][0].roundId +'"><i class="fa fa-file-excel-o"></i> 9 เดือน</button>'+'&nbsp;&nbsp;'
+                            + '<button class="btn btn-success btn-sm excel" data-id="' + val2["deptId"] + '" data-round="'+ val2["round"][1].roundId +'"><i class="fa fa-file-excel-o"></i> 12 เดือน</button>'+'&nbsp;&nbsp;'
+                                    /*+ '<div class="btn-group">'
                                         + '<button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">'
                                             + '<i class="fa fa-file-excel-o"></i> เอกสาร <span class="caret"></span>'
                                         + '</button>'
-                                        + '<ul class="dropdown-menu" role="menu">'+round+'</ul>'
-                                    + '</div>'
+                                       + '<ul class="dropdown-menu" role="menu">'+round+'</ul>'
+                                    + '</div>'*/
                                 + '</td>'
                             + '</tr>';
                     });
@@ -113,7 +115,14 @@
                     window.location = "{{_context_path}}/api/affirmative/view/result/" + deptId;
                 });
 
-                $("a.excel").unbind().click(function(){
+                /*$("a.excel").unbind().click(function(){
+                    var id = $(this).attr("data-id");
+                    var round = $(this).attr("data-round");
+
+                    window.open("{{_context_path}}/api/affirmative/result/export?departmentId="+id+"&roundId="+round);
+                });*/
+                
+                $("button.excel").unbind().click(function(){
                     var id = $(this).attr("data-id");
                     var round = $(this).attr("data-round");
 
