@@ -367,7 +367,7 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="100" width="195" height="40" isRemoveLineWhenBlank="true" uuid="6469f2ef-c002-47dc-9ed0-7649716a1eb5">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && $P{REPORT_MAX_COUNT} > 0]]></printWhenExpression>
 				</reportElement>
-				<box>
+				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -665,7 +665,7 @@ dept.DEPARTMENTID, dept.DEPARTMENTNAME]]>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="0" y="0" width="195" height="20" uuid="a98223dd-01d4-43ec-b9fb-0a85a9c52ad3"/>
-				<box leftPadding="0">
+				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>

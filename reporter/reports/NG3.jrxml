@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="2.4836852922368466"/>
+	<property name="ireport.zoom" value="0.9575681974767416"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="293"/>
+	<property name="ireport.y" value="0"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
 	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
 	<style name="Default" isDefault="true" fontName="TH SarabunPSK" fontSize="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -213,25 +213,25 @@
 	<group name="G1">
 		<groupExpression><![CDATA[$F{planId}]]></groupExpression>
 		<groupHeader>
-			<band height="20">
+			<band height="25">
 				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT} > 0]]></printWhenExpression>
 				<textField>
-					<reportElement style="FBold" x="0" y="0" width="405" height="20" uuid="9f456b10-4d02-4d82-a08b-34d40f8e9675"/>
+					<reportElement style="FBold" x="0" y="0" width="405" height="25" uuid="9f456b10-4d02-4d82-a08b-34d40f8e9675"/>
 					<box leftPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textElement verticalAlignment="Top"/>
+					<textElement verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA["แผนงาน : "+$F{planName}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" x="405" y="0" width="150" height="20" uuid="e25e437b-7eba-4d47-ab8f-748e2f499d73"/>
+					<reportElement style="FBold" x="405" y="0" width="150" height="25" uuid="e25e437b-7eba-4d47-ab8f-748e2f499d73"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Right" verticalAlignment="Top"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$V{sumBgPlan}]]></textFieldExpression>
 				</textField>
 			</band>
@@ -240,28 +240,28 @@
 	<group name="G2">
 		<groupExpression><![CDATA[$F{fundgroupId}]]></groupExpression>
 		<groupHeader>
-			<band height="20" splitType="Stretch">
+			<band height="25" splitType="Stretch">
 				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
 				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
-					<reportElement style="FBold" x="405" y="0" width="150" height="20" uuid="5fc0628e-9ebd-47dd-a60a-d7aa372bb2bb"/>
+					<reportElement style="FBold" x="405" y="0" width="150" height="25" uuid="5fc0628e-9ebd-47dd-a60a-d7aa372bb2bb"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.0"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Right" verticalAlignment="Top"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$V{รวมเงินตามกลุ่ม}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="FBold" x="0" y="0" width="405" height="20" uuid="a3887912-e0bf-4e58-bf98-1914fa260350"/>
+					<reportElement style="FBold" x="0" y="0" width="405" height="25" uuid="a3887912-e0bf-4e58-bf98-1914fa260350"/>
 					<box leftPadding="2">
 						<topPen lineWidth="0.0"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textElement verticalAlignment="Top"/>
+					<textElement verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA["กองทุน : "+$F{fundgroupName}]]></textFieldExpression>
 				</textField>
 			</band>
@@ -278,27 +278,28 @@
 	<group name="G3">
 		<groupExpression><![CDATA[$F{masterBgId}]]></groupExpression>
 		<groupHeader>
-			<band height="20">
+			<band height="25">
 				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
 				<textField evaluationTime="Group" evaluationGroup="G3">
-					<reportElement style="FBold" x="0" y="0" width="405" height="20" uuid="e1fb7c40-560a-4924-9658-a3a48ea0dba8"/>
+					<reportElement style="FBold" x="0" y="0" width="405" height="25" uuid="e1fb7c40-560a-4924-9658-a3a48ea0dba8"/>
 					<box leftPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
+					<textElement verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$V{ContLV1}+". "+$F{masterBgName}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
-					<reportElement style="FBold" x="405" y="0" width="150" height="20" uuid="e27935e3-6f46-4833-9622-75cdb658119e"/>
+					<reportElement style="FBold" x="405" y="0" width="150" height="25" uuid="e27935e3-6f46-4833-9622-75cdb658119e"/>
 					<box rightPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Right"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$V{sumMasterBg}]]></textFieldExpression>
 				</textField>
 			</band>
@@ -314,6 +315,7 @@
 					<box leftPadding="15">
 						<leftPen lineWidth="0.75"/>
 					</box>
+					<textElement verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$V{ContLV1}+"."+$V{ContLV2}+" "+$F{mainBgName}]]></textFieldExpression>
 				</textField>
 			</band>
@@ -332,7 +334,7 @@
 						<bottomPen lineWidth="0.0"/>
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textElement>
+					<textElement verticalAlignment="Middle">
 						<font isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ContLV1}+"."+$V{ContLV2}+"."+$V{ContLV3}+"  "+$F{bgName}]]></textFieldExpression>
@@ -342,7 +344,7 @@
 					<box rightPadding="2">
 						<rightPen lineWidth="0.75"/>
 					</box>
-					<textElement textAlignment="Right"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$V{sumBg}]]></textFieldExpression>
 				</textField>
 			</band>
@@ -426,7 +428,7 @@
 			</staticText>
 			<staticText>
 				<reportElement style="FBold" x="0" y="80" width="405" height="20" isRemoveLineWhenBlank="true" uuid="eb04cf45-f4b1-4c90-b872-43852163ebbc">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && $P{FACULTY_ID}=="0"]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="2">
 					<topPen lineWidth="0.75"/>
@@ -441,7 +443,7 @@
 			</staticText>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="405" y="80" width="150" height="20" isRemoveLineWhenBlank="true" uuid="a1ca5c74-2c40-4055-b30b-a167cb7ac747">
-					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 && $P{FACULTY_ID}=="0"]]></printWhenExpression>
 				</reportElement>
 				<box rightPadding="2">
 					<bottomPen lineWidth="0.75"/>

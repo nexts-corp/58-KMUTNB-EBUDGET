@@ -258,6 +258,10 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 +$V{รวมกองทุนกิจการนักศึกษาสุทธิ_1}+$V{รวมกองทุนสินทรัพย์ถาวรสูทธิ_1}+$V{รวมกองทุนอื่นๆG1สุทธิ_1}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
+	<variable name="Count1" class="java.lang.Integer" incrementType="Group" incrementGroup="G1" calculation="Count">
+		<variableExpression><![CDATA[$F{planId}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
 	<group name="G1">
 		<groupExpression><![CDATA[$F{planId}]]></groupExpression>
 		<groupHeader>
@@ -265,7 +269,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="182" height="20" uuid="fcd95e66-c28b-4eaf-a05c-2f0a21971d97"/>
-					<box>
+					<box leftPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -274,7 +278,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<textElement textAlignment="Left">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{planName}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{Count1}+1)+". "+$F{planName}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="732" y="0" width="70" height="20" uuid="863af8f4-2624-4770-8949-c52ae1ad34c9"/>
@@ -431,7 +435,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="182" height="20" isRemoveLineWhenBlank="true" uuid="43f81259-a01b-43c0-bc29-f436cc87b85b">
 						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
 					</reportElement>
-					<box leftPadding="10">
+					<box leftPadding="2">
 						<topPen lineWidth="0.75"/>
 						<leftPen lineWidth="0.75"/>
 						<bottomPen lineWidth="0.75"/>
@@ -1005,7 +1009,7 @@ $F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
 			<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
 			<textField isStretchWithOverflow="true">
 				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="182" height="20" uuid="5c7a55b2-18ab-4a14-bc6a-0e9fab814370"/>
-				<box leftPadding="20" rightPadding="1">
+				<box leftPadding="10" rightPadding="0">
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
