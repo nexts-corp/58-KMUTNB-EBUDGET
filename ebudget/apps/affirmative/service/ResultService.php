@@ -492,15 +492,17 @@ class ResultService extends CServiceBase implements IResultService {
                                 ->setCellValueByColumnAndRow(0, $row, "เป้าประสงค์ที่ " . $value3->issueSeq . "." . $value4->targetSeq . " " . $value4->targetName);
 
                             $row++;
-                            if (is_array($value4->kpi) && count($value4->kpi) > 0) {
+                            if (isset($value4->kpi) && is_array($value4->kpi) && count($value4->kpi) > 0) {
                                 foreach ($value4->kpi as $key5 => $value5) {
 
                                     $rowIn = 0;
                                     if($value5["divisor"] != "") $rowIn = 1;
 
                                     $isSuccess = '';
-                                    if($value5["isSuccess"] == "1") $isSuccess = "✔";
-                                    elseif($value["isSuccess"] == "0") $isSuccess = "✘ = ไม่บรรลุ";
+                                    if(isset($value5["isSuccess"]) && $value5["isSuccess"] != "") {
+                                        if($value5["isSuccess"] == "1") $isSuccess = "✔";
+                                        elseif($value["isSuccess"] == "0") $isSuccess = "✘ = ไม่บรรลุ";
+                                    }
 
                                     $objWorkSheet->mergeCells('A'.$row.':A'.($row+$rowIn))
                                         ->setCellValueByColumnAndRow(0, $row, $value3->issueSeq . "." . $value4->targetSeq . "." . $value5["kpiSeq"] . " " . $value5["kpiName"])
@@ -578,8 +580,10 @@ class ResultService extends CServiceBase implements IResultService {
                             if($value5["divisor"] != "") $rowIn = 1;
 
                             $isSuccess = '';
-                            if($value5["isSuccess"] == "1") $isSuccess = "✔";
-                            elseif($value["isSuccess"] == "0") $isSuccess = "✘ = ไม่บรรลุ";
+                            if(isset($value5["isSuccess"]) && $value5["isSuccess"] != "") {
+                                if($value5["isSuccess"] == "1") $isSuccess = "✔";
+                                elseif($value["isSuccess"] == "0") $isSuccess = "✘ = ไม่บรรลุ";
+                            }
 
                             $objWorkSheet->mergeCells('A'.$row.':A'.($row+$rowIn))
                                 ->setCellValueByColumnAndRow(0, $row, $value5["kpiSeq"]. ". " . $value5["kpiName"])
