@@ -1,6 +1,5 @@
 <?php
 
-error_reporting(0);
 namespace apps\affirmative\service;
 
 use apps\affirmative\interfaces\IResultService;
