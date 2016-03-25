@@ -1,5 +1,6 @@
 <?php
 
+error_reporting(0);
 namespace apps\affirmative\service;
 
 use apps\affirmative\interfaces\IResultService;
@@ -22,6 +23,7 @@ class ResultService extends CServiceBase implements IResultService {
     function getPeriod() {
         $year = new \apps\common\entity\Year();
         $year->year = 2559;
+        //$year->yearStatus = 'Y';
         return $this->datacontext->getObject($year)[0];
     }
 

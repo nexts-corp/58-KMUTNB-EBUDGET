@@ -37,9 +37,9 @@
                     <thead>
                         <tr>
                             <th class="text-center col-md-1" style="vertical-align: middle;">ลำดับ</th>
-                            <th class="text-center col-md-6" style="vertical-align: middle;">คณะ / หน่วยงาน</th>
+                            <th class="text-center col-md-4" style="vertical-align: middle;">คณะ / หน่วยงาน</th>
                             <th class="text-center col-md-3" style="vertical-align: middle;">สถานะ<br>(ตัวชี้วัดที่รายงานผลแล้ว / ตัวชี้วัดทั้งหมด)</th>
-                            <th class="text-center col-md-2" style="vertical-align: middle;">เครื่องมือ</th>
+                            <th class="text-center col-md-4" style="vertical-align: middle;">เครื่องมือ</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -94,7 +94,7 @@
                                 + '<td>' + val2["deptName"] + '</td>'
                                 + '<td class="text-center text-bold"><span class="text-success">'+cResult+'</span> / '+cFinal+'</td>'
                                 + '<td class="text-center">'
-                                    + '<button class="btn btn-primary btn-sm tracking" data-id="' + val2["deptId"] + '"><i class="fa fa-pencil"></i> รายงานผล</button>'+'<br>'
+                                    + '<button class="btn btn-primary btn-sm tracking" data-id="' + val2["deptId"] + '"><i class="fa fa-pencil"></i> รายงานผล</button>'+'&nbsp;&nbsp;'
                             + '<button class="btn btn-success btn-sm excel" data-id="' + val2["deptId"] + '" data-round="'+ val2["round"][0].roundId +'"><i class="fa fa-file-excel-o"></i> 9 เดือน</button>'+'&nbsp;&nbsp;'
                             + '<button class="btn btn-success btn-sm excel" data-id="' + val2["deptId"] + '" data-round="'+ val2["round"][1].roundId +'"><i class="fa fa-file-excel-o"></i> 12 เดือน</button>'+'&nbsp;&nbsp;'
                                     /*+ '<div class="btn-group">'

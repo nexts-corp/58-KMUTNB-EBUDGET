@@ -33,6 +33,7 @@ class FinalService extends CServiceBase implements IFinalService {
     function getPeriod() {
         $year = new \apps\common\entity\Year();
         $year->year = 2559;
+        //$year->yearStatus = 'Y';
         return $this->datacontext->getObject($year)[0];
     }
 
