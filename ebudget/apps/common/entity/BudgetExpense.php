@@ -93,18 +93,8 @@ class BudgetExpense extends EntityBase {
     /** @Column(type="integer",length=11, name="Bg146Id") */
     public $bg146Id;
 
-
-
-    public function getBg146Id()
-    {
-        return $this->bg146Id;
-    }
-
-    public function setBg146Id($bg146Id)
-    {
-        $this->bg146Id = $bg146Id;
-    }
-
+    /** @Column(type="integer",length=11, name="BudgetProjectTypeId") */
+    public $budgetProjectTypeId;
 
     function getId() {
         return $this->id;
@@ -210,6 +200,14 @@ class BudgetExpense extends EntityBase {
         return $this->statusPlanningId;
     }
 
+    function getBg146Id() {
+        return $this->bg146Id;
+    }
+
+    function getBudgetProjectTypeId() {
+        return $this->BudgetProjectTypeId;
+    }
+
     function setId($id) {
         $this->id = $id;
     }
@@ -312,6 +310,14 @@ class BudgetExpense extends EntityBase {
 
     function setStatusPlanningId($statusPlanningId) {
         $this->statusPlanningId = $statusPlanningId;
+    }
+
+    function setBg146Id($bg146Id) {
+        $this->bg146Id = $bg146Id;
+    }
+
+    function setBudgetProjectTypeId($BudgetProjectTypeId) {
+        $this->BudgetProjectTypeId = $BudgetProjectTypeId;
     }
 
 }

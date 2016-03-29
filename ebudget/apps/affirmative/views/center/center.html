@@ -696,7 +696,7 @@
             $.each(datas["lists"], function (key, value) {
                 html += '<option value="' + value["kpiId"] + '">' + value["kpiName"] + '</option>'
             });
-            $("#kpiId").html(html);
+            $("#kpiId").select2().html(html);
             autoKpiName();
             listsUnit();
         }
@@ -732,7 +732,7 @@
             $.each(datas["lists"], function (key, value) {
                 html += '<option value="' + value["unitId"] + '">' + value["unitName"] + '</option>'
             });
-            $("#unitId").html(html);
+            $("#unitId").select2().html(html);
         }
     }
 

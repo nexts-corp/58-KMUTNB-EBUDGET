@@ -346,7 +346,7 @@
                     + '</div>');
 
             $("select.deptId").select2().html(dataDeptAll);
-            
+
             $("button.addDept").unbind().click(function () {
                 $("#formDept").append('<div class="form-group">'
                         + '<div class="col-md-7">'
@@ -619,16 +619,19 @@
                     listsArrProj[val["headId"]].push(val);
 
                     /*if (!sumGroup[val["projName"]])
-                        sumGroup[val["projName"]] = 0;
-                    sumGroup[val["projName"]] += parseFloat(val["deptValue"]);
+                     sumGroup[val["projName"]] = 0;
+                     sumGroup[val["projName"]] += parseFloat(val["deptValue"]);
+                     
+                     sumTotal += parseFloat(val["deptValue"]);*/
 
-                    sumTotal += parseFloat(val["deptValue"]);*/
-        
                     if (!sumGroup[val["deptName"]])
                         sumGroup[val["deptName"]] = 0;
-                    sumGroup[val["deptName"]] += parseFloat(val["projName"]);
+                    sumGroup[val["deptName"]] += parseFloat(val["deptValue"]);
 
-                    sumTotal += parseFloat(val["projName"]);
+                    sumTotal += parseFloat(val["deptValue"]);
+                    
+                    console.log(sumGroup);
+                    console.log(sumTotal);
                 });
 
 
@@ -658,8 +661,8 @@
                                         //+ '<td class="text-bold text-right">' + accounting.formatNumber(sumGroup[proj], 2, ",", ".") + '</td>'
                                         + '<td class="text-bold text-right">' + accounting.formatNumber(sumGroup[dept], 2, ",", ".") + '</td>'
                                         + '<td class="text-bold">'
-                                        + '<button class="btn btn-warning edit" title="แก้ไข" data-id="' + head + '"><i class="fa fa-pencil"></i></button>&nbsp'
-                                        + '<button class="btn btn-default delete" title="ลบ" data-id="' + head + '"><i class="fa fa-trash"></i></button>'
+                                        //+ '<button class="btn btn-warning edit" title="แก้ไข" data-id="' + head + '"><i class="fa fa-pencil"></i></button>&nbsp'
+                                        //+ '<button class="btn btn-default delete" title="ลบ" data-id="' + head + '"><i class="fa fa-trash"></i></button>'
                                         + '</td>'
                                         + '</tr>'
                                         );
@@ -693,10 +696,11 @@
                         },
                         {
                             "targets": 3,
-                            "data": "id",
+                            "data": "headId",
                             "sClass": "text-center col-lg-1",
                             "render": function (data) {
-                                return "";
+                                return '<button class="btn btn-warning edit" title="แก้ไข" data-id="' + data + '"><i class="fa fa-pencil"></i></button>&nbsp'
+                                    + '<button class="btn btn-default delete" title="ลบ" data-id="' + data + '"><i class="fa fa-trash"></i></button>'
                             }
                         }
                     ]
