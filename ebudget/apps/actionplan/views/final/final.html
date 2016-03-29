@@ -51,10 +51,10 @@
                 </div>
             </div>
 
-            <div id="dialogDraft" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div id="dialogFinal" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form id="formDraft" onsubmit="return false;">
+                        <form id="formFinal" onsubmit="return false;">
 
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -125,7 +125,7 @@
                                 <div class="modal-footer">
                                     <ul class="nav nav-pills sort-source pull-right" data-option-key="filter">
                                         <li data-option-value="*" class="">
-                                            <button class="btn btn-success saveDraft"><i class="fa fa-save"></i> บันทึก</button>
+                                            <button class="btn btn-success saveFinal"><i class="fa fa-save"></i> บันทึก</button>
                                         </li>
                                         <li data-option-value="" class="padding-left">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
@@ -202,10 +202,10 @@
                 </div>
             </div>
 
-            <div id="dialogDeleteDraft" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div id="dialogDeleteFinal" aria-labelledby="bidderLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form id="deleteDraft" onsubmit="return false;">
+                        <form id="deleteFinal" onsubmit="return false;">
 
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -285,7 +285,7 @@
                                 <div class="modal-footer">
                                     <ul class="nav nav-pills sort-source pull-right" data-option-key="filter">
                                         <li data-option-value="*" class="">
-                                            <button class="btn btn-danger delDraft"><i class="fa fa-trash"></i> ลบ</button>
+                                            <button class="btn btn-danger delFinal"><i class="fa fa-trash"></i> ลบ</button>
                                         </li>
                                         <li data-option-value="" class="padding-left">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
@@ -367,9 +367,9 @@
 
 <script type="text/javascript">
     var findNode = {};
-    var listDraft = {};
+    var listFinal = {};
     var listDetail = {};
-    var listArr = {"Draft": {}, "Detail": {}};
+    var listArr = {"Final": {}, "Detail": {}};
     var unit = {};
     var deptId = '{{#department}}{{departmentId}}{{/department}}';
     var typeId = '{{typeId}}';
@@ -380,10 +380,10 @@
             centerForm();
         });
         $("#btnApprove").click(function () {
-            var result = callAjax("{{_context_path}}/api/actionplan/draft/approve", "post", {departmentId: deptId, status: "Y", typeId: typeId}, "json");
+            var result = callAjax("{{_context_path}}/api/actionplan/final/approve", "post", {departmentId: deptId, status: "Y", typeId: typeId}, "json");
             if (result["approve"] == true) {
                 alert("อนุมัติสำเร็จ!");
-                window.location = "{{_context_path}}/api/actionplan/view/draftAll";
+                window.location = "{{_context_path}}/api/actionplan/view/finalAll";
             } else {
                 alert("อนุมัติไม่สำเร็จ! (" + result["msg"] + ")");
             }
@@ -391,7 +391,7 @@
     });
     function centerForm() {
         var contentArr = {};
-        var datas = callAjax("{{_context_path}}/api/actionplan/draft/listsAll", "post", {departmentId: deptId, typeId: typeId}, "json");
+        var datas = callAjax("{{_context_path}}/api/actionplan/final/listsAll", "post", {departmentId: deptId, typeId: typeId}, "json");
         //  console.log(datas);
         if (typeof datas["lists"] !== "undefined" && datas["lists"] !== null && datas["lists"] !== false) {
             $("#btnApprove").show();
@@ -485,9 +485,9 @@
                                     + '<button class="btn btn-sm btn-success add" data-id="' + value4["strategyId"] + '" data-name="strategyId"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
                                     + '</td>'
                                     + '</tr>';
-                            if (typeof value4["draft"] !== "undefined" && value4["draft"] !== null) {
-                                $.each(value4["draft"], function (key5, value5) {
-                                    contentArr[value2["issueSeq"]] += '<tr data-tt-id="draft' + value5["draftId"] + '" data-tt-parent-id="strategy' + value4["strategyId"] + '" data-seq="' + value5["projectSeq"] + '" >'
+                            if (typeof value4["final"] !== "undefined" && value4["final"] !== null) {
+                                $.each(value4["final"], function (key5, value5) {
+                                    contentArr[value2["issueSeq"]] += '<tr data-tt-id="final' + value5["finalId"] + '" data-tt-parent-id="strategy' + value4["strategyId"] + '" data-seq="' + value5["projectSeq"] + '" >'
                                             + '<td class="text-center"></td>'
                                             + (value5["isActive"] == "Y" ? '<td>' : '<td class="text-primary">')
                                             + '<span class="text-bold">' + value5["projectSeq"] + ". " + value5["projectName"] + '</span>'
@@ -499,17 +499,17 @@
                                             + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value5["other"] ? value5["other"] : "") + '</td>'
                                             + (value5["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (value5["noBudget"] ? value5["noBudget"] : "") + '</td>'
                                             + '<td class="text-center">'
-                                            + '<button class="btn btn-sm btn-success add" data-id="' + value5["draftId"] + '" data-name="draftId" data-pid="' + value4["strategyId"] + '" data-pname="strategyId" ><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
-                                            + '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-id="' + value5["draftId"] + '" data-name="draftId"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                                            + '<button type="button" class="btn btn-sm btn-default delete" data-id="' + value5["draftId"] + '" data-name="draftId" data-pid="' + value4["strategyId"] + '" data-pname="strategyId" ><i class="fa fa-trash"></i> ลบ</button>'
+                                            + '<button class="btn btn-sm btn-success add" data-id="' + value5["finalId"] + '" data-name="finalId" data-pid="' + value4["strategyId"] + '" data-pname="strategyId" ><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
+                                            + '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-id="' + value5["finalId"] + '" data-name="finalId"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                            + '<button type="button" class="btn btn-sm btn-default delete" data-id="' + value5["finalId"] + '" data-name="finalId" data-pid="' + value4["strategyId"] + '" data-pname="strategyId" ><i class="fa fa-trash"></i> ลบ</button>'
                                             + '</td>'
                                             + '</tr>';
-                                    listArr["Draft"][value5["draftId"]] = value5;
-                                    listArr["Draft"][value5["draftId"]]["issueSeq"] = value2["issueSeq"];
-                                    listArr["Draft"][value5["draftId"]]["Detail"] = {};
+                                    listArr["Final"][value5["finalId"]] = value5;
+                                    listArr["Final"][value5["finalId"]]["issueSeq"] = value2["issueSeq"];
+                                    listArr["Final"][value5["finalId"]]["Detail"] = {};
                                     if (typeof value5["detail"] !== "undefined" && value5["detail"] !== null) {
                                         $.each(value5["detail"], function (key6, value6) {
-                                            contentArr[value2["issueSeq"]] += '<tr data-tt-id="detail' + value6["detailId"] + '" data-tt-parent-id="draft' + value5["draftId"] + '"  data-seq="' + value6["detailSeq"] + '">'
+                                            contentArr[value2["issueSeq"]] += '<tr data-tt-id="detail' + value6["detailId"] + '" data-tt-parent-id="final' + value5["finalId"] + '"  data-seq="' + value6["detailSeq"] + '">'
                                                     + '<td class="text-center"></td>'
                                                     + (value6["isActive"] == "Y" ? '<td>' : '<td class="text-primary">') + '- ' + text2html(value6["detailName"]) + '</td>'
                                                     + (value6["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + value6["unit"] + '</td>'
@@ -521,18 +521,18 @@
                                                     + '<td>'
                                                     + '<div class="btn-group">'
                                                     + //(value6["isApprove"] == "N" ?
-                                                    '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + value5["draftId"] + '" data-pname="draftId" data-id="' + value6["detailId"] + '" data-name="detailId"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                                                    '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-pid="' + value5["finalId"] + '" data-pname="finalId" data-id="' + value6["detailId"] + '" data-name="detailId"><i class="fa fa-pencil"></i> แก้ไข</button>'
                                                     //   : ""
                                                     //    )
                                                     + //(value5["isApprove"] == "N" ?
-                                                    '<button type="button" class="btn btn-sm btn-default delete" data-pname="draftId" data-pid="' + value5["draftId"] + '" data-id="' + value6["detailId"] + '" data-name="detailId"><i class="fa fa-trash"></i> ลบ</button>'
+                                                    '<button type="button" class="btn btn-sm btn-default delete" data-pname="finalId" data-pid="' + value5["finalId"] + '" data-id="' + value6["detailId"] + '" data-name="detailId"><i class="fa fa-trash"></i> ลบ</button>'
                                                     //  : ""
                                                     //   )
                                                     + '</div>'
                                                     + '</td>'
                                                     + '</tr>';
                                             listArr["Detail"][value6["detailId"]] = value6;
-                                            listArr["Draft"][value5["draftId"]]["Detail"][value6["detailId"]] = value6;
+                                            listArr["Final"][value5["finalId"]]["Detail"][value6["detailId"]] = value6;
                                         });
                                     }
 
@@ -543,7 +543,7 @@
 
                 });
                 //   });
-                //console.log(listArr["Draft"][5]["Detail"]);
+                //console.log(listArr["Final"][5]["Detail"]);
                 $("#tabMenu").html(menu);
                 $("#tabContent").html(content);
                 var contentAll = '';
@@ -578,7 +578,7 @@
             var mName = $(this).attr("data-name");
             var formName;
             if (mName == "strategyId") {
-                formName = "Draft";
+                formName = "Final";
             } else {
                 formName = "Detail";
             }
@@ -601,7 +601,7 @@
                     var fdata = dataObject(mId, mName, pName);
 
                     //console.log(fdata);
-                    draftInsert(fdata);
+                    finalInsert(fdata);
 
                 } else {
                     alert("กรุณากรอกข้อมูลให้ครบ");
@@ -615,8 +615,8 @@
             var mId = $(this).attr("data-id");
             var mName = $(this).attr("data-name");
             var formName;
-            if (mName == "draftId") {
-                formName = "Draft";
+            if (mName == "finalId") {
+                formName = "Final";
             } else {
                 formName = "Detail";
             }
@@ -642,7 +642,7 @@
                     var fdata = dataObject(mId, mName, pName);
 
                     //console.log(fdata);
-                    draftEdit(fdata);
+                    finalEdit(fdata);
 
                 } else {
                     alert("กรุณากรอกข้อมูลให้ครบ");
@@ -655,8 +655,8 @@
             var mId = $(this).attr("data-id");
             var mName = $(this).attr("data-name");
             var formName;
-            if (mName == "draftId") {
-                formName = "Draft";
+            if (mName == "finalId") {
+                formName = "Final";
             } else {
                 formName = "Detail";
             }
@@ -671,7 +671,7 @@
                 fdata[mName] = mId;
                 fdata[pName] = pId;
                 // console.log(fdata);
-                draftDelete(fdata);
+                finalDelete(fdata);
             });
         });
     }
@@ -694,23 +694,23 @@
         return seq;
     }
 
-    function draftInsert(fdata) {
+    function finalInsert(fdata) {
         $("#loadingForm").html("Loading...");
         setTimeout(function () {
-            var dataJSON = JSON.stringify({draft: fdata});
+            var dataJSON = JSON.stringify({final: fdata});
             var dataJSONEN = encodeURIComponent(dataJSON);
-            var datas = callAjax("{{_context_path}}/api/actionplan/draft/insert", "post", dataJSONEN, "json");
+            var datas = callAjax("{{_context_path}}/api/actionplan/final/insert", "post", dataJSONEN, "json");
             var data = datas["insert"];
             var type = datas["type"];
 
             if (typeof data !== "undefined" && data !== null) {
-                if (data != false && type == "draft") {
+                if (data != false && type == "final") {
                     $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
-                    listArr["Draft"][data["draftId"]] = data;
-                    listArr["Draft"][data["draftId"]]["Detail"] = {};
+                    listArr["Final"][data["finalId"]] = data;
+                    listArr["Final"][data["finalId"]]["Detail"] = {};
                     var input = "";
                     var node, node2;
-                    input += '<tr data-tt-id="draft' + data["draftId"] + '" data-tt-parent-id="strategy' + data["strategyId"] + '" data-seq="' + data["projectSeq"] + '" >'
+                    input += '<tr data-tt-id="final' + data["finalId"] + '" data-tt-parent-id="strategy' + data["strategyId"] + '" data-seq="' + data["projectSeq"] + '" >'
                             + '<td class="text-center"></td>'
                             + (data["isActive"] == "Y" ? '<td>' : '<td class="text-primary">')
                             + '<span class="text-bold">' + data["projectSeq"] + ". " + data["projectName"] + '</span>'
@@ -722,9 +722,9 @@
                             + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["other"] ? data["other"] : "") + '</td>'
                             + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["noBudget"] ? data["noBudget"] : "") + '</td>'
                             + '<td class="text-center">'
-                            + '<button class="btn btn-sm btn-success add" data-id="' + data["draftId"] + '" data-name="draftId" data-pid="' + data["strategyId"] + '" data-pname="strategyId" ><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
-                            + '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-id="' + data["draftId"] + '" data-name="draftId"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                            + '<button type="button" class="btn btn-sm btn-default delete" data-id="' + data["draftId"] + '" data-name="draftId" data-pid="' + data["strategyId"] + '" data-pname="strategyId"><i class="fa fa-trash"></i> ลบ</button>' + '</td>'
+                            + '<button class="btn btn-sm btn-success add" data-id="' + data["finalId"] + '" data-name="finalId" data-pid="' + data["strategyId"] + '" data-pname="strategyId" ><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
+                            + '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-id="' + data["finalId"] + '" data-name="finalId"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                            + '<button type="button" class="btn btn-sm btn-default delete" data-id="' + data["finalId"] + '" data-name="finalId" data-pid="' + data["strategyId"] + '" data-pname="strategyId"><i class="fa fa-trash"></i> ลบ</button>' + '</td>'
                             + '</tr>';
                     var seq = findSeq("strategy", data["strategyId"]);
                     node = $("#tableall").treetable("node", "strategy" + data["strategyId"]);
@@ -734,16 +734,16 @@
                     $("#table" + seq).treetable("loadBranch", node2, input);
                     $("#tableall").treetable("sortBranch", node);
                     $("#table" + seq).treetable("sortBranch", node2);
-                    $("#dialogDraft").modal("hide");
+                    $("#dialogFinal").modal("hide");
                     centerAction();
                 }
                 else if (data != false && type == "detail") {
                     $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
                     listArr["Detail"][data["detailId"]] = data;
-                    listArr["Draft"][data["draftId"]]["Detail"][data["detailId"]] = data;
+                    listArr["Final"][data["finalId"]]["Detail"][data["detailId"]] = data;
                     var input = "";
                     var node, node2;
-                    input += '<tr data-tt-id="detail' + data["detailId"] + '" data-tt-parent-id="draft' + data["draftId"] + '"  data-seq="' + data["detailSeq"] + '">'
+                    input += '<tr data-tt-id="detail' + data["detailId"] + '" data-tt-parent-id="final' + data["finalId"] + '"  data-seq="' + data["detailSeq"] + '">'
                             + '<td class="text-center"></td>'
                             + (data["isActive"] == "Y" ? '<td>' : '<td class="text-primary">') + '- ' + text2html(data["detailName"]) + '</td>'
                             + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + data["unit"] + '</td>'
@@ -759,15 +759,15 @@
                             //   : ""
                             //    )
                             + //(data["isApprove"] == "N" ?
-                            '<button type="button" class="btn btn-sm btn-default delete" data-name="detailId" data-id="' + data["detailId"] + '" data-pid="' + data["draftId"] + '" data-pname="draftId" ><i class="fa fa-trash"></i> ลบ</button>'
+                            '<button type="button" class="btn btn-sm btn-default delete" data-name="detailId" data-id="' + data["detailId"] + '" data-pid="' + data["finalId"] + '" data-pname="finalId" ><i class="fa fa-trash"></i> ลบ</button>'
                             //  : ""
                             //   )
                             + '</div>'
                             + '</td>'
                             + '</tr>';
-                    var seq = findSeq("draft", data["draftId"]);
-                    node = $("#tableall").treetable("node", "draft" + data["draftId"]);
-                    node2 = $("#table" + seq).treetable("node", "draft" + data["draftId"]);
+                    var seq = findSeq("final", data["finalId"]);
+                    node = $("#tableall").treetable("node", "final" + data["finalId"]);
+                    node2 = $("#table" + seq).treetable("node", "final" + data["finalId"]);
 
                     $("#tableall").treetable("loadBranch", node, input);
                     $("#table" + seq).treetable("loadBranch", node2, input);
@@ -784,24 +784,24 @@
         , 500);
     }
 
-    function draftEdit(fdata) {
+    function finalEdit(fdata) {
         $("#loadingForm").html("Loading...");
         setTimeout(function () {
-            var dataJSON = JSON.stringify({draft: fdata});
+            var dataJSON = JSON.stringify({final: fdata});
             var dataJSONEN = encodeURIComponent(dataJSON);
-            var datas = callAjax("{{_context_path}}/api/actionplan/draft/update", "post", dataJSONEN, "json");
+            var datas = callAjax("{{_context_path}}/api/actionplan/final/update", "post", dataJSONEN, "json");
             var data = datas["update"];
             var type = datas["type"];
 
             if (typeof data !== "undefined" && data !== null) {
-                if (data != false && type == "draft") {
+                if (data != false && type == "final") {
                     $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
-                    var tempDetail = listArr["Draft"][data["draftId"]]["Detail"];
-                    listArr["Draft"][data["draftId"]] = data;
-                    listArr["Draft"][data["draftId"]]["Detail"] = tempDetail;
+                    var tempDetail = listArr["Final"][data["finalId"]]["Detail"];
+                    listArr["Final"][data["finalId"]] = data;
+                    listArr["Final"][data["finalId"]]["Detail"] = tempDetail;
                     var input = "";
                     var node, node2;
-                    input += '<tr data-tt-id="draft' + data["draftId"] + '" data-tt-parent-id="strategy' + data["strategyId"] + '" data-seq="' + data["projectSeq"] + '" >'
+                    input += '<tr data-tt-id="final' + data["finalId"] + '" data-tt-parent-id="strategy' + data["strategyId"] + '" data-seq="' + data["projectSeq"] + '" >'
                             + '<td class="text-center"></td>'
                             + (data["isActive"] == "Y" ? '<td>' : '<td class="text-primary">')
                             + '<span class="text-bold">' + data["projectSeq"] + ". " + data["projectName"] + '</span>'
@@ -813,13 +813,13 @@
                             + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["other"] ? data["other"] : "") + '</td>'
                             + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + (data["noBudget"] ? data["noBudget"] : "") + '</td>'
                             + '<td class="text-center">'
-                            + '<button class="btn btn-sm btn-success add" data-id="' + data["draftId"] + '" data-name="draftId" data-pid="' + data["strategyId"] + '" data-pname="strategyId" ><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
-                            + '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-id="' + data["draftId"] + '" data-name="draftId"><i class="fa fa-pencil"></i> แก้ไข</button>'
-                            + '<button type="button" class="btn btn-sm btn-default delete" data-id="' + data["draftId"] + '" data-name="draftId" ><i class="fa fa-trash"></i> ลบ</button>' + '</td>'
+                            + '<button class="btn btn-sm btn-success add" data-id="' + data["finalId"] + '" data-name="finalId" data-pid="' + data["strategyId"] + '" data-pname="strategyId" ><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
+                            + '<button type="button" class="btn btn-sm btn-warning edit" data-edit="Y" data-id="' + data["finalId"] + '" data-name="finalId"><i class="fa fa-pencil"></i> แก้ไข</button>'
+                            + '<button type="button" class="btn btn-sm btn-default delete" data-id="' + data["finalId"] + '" data-name="finalId" ><i class="fa fa-trash"></i> ลบ</button>' + '</td>'
                             + '</tr>';
                     var seq = findSeq("strategy", data["strategyId"]);
                     $.each(tempDetail, function (k, v) {
-                        input += '<tr data-tt-id="detail' + v["detailId"] + '" data-tt-parent-id="draft' + v["draftId"] + '"  data-seq="' + v["detailSeq"] + '">'
+                        input += '<tr data-tt-id="detail' + v["detailId"] + '" data-tt-parent-id="final' + v["finalId"] + '"  data-seq="' + v["detailSeq"] + '">'
                                 + '<td class="text-center"></td>'
                                 + (v["isActive"] == "Y" ? '<td>' : '<td class="text-primary">') + '- ' + text2html(v["detailName"]) + '</td>'
                                 + (v["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + v["unit"] + '</td>'
@@ -844,22 +844,22 @@
                     });
                     node = $("#tableall").treetable("node", "strategy" + data["strategyId"]);
                     node2 = $("#table" + seq).treetable("node", "strategy" + data["strategyId"]);
-                    $("#tableall").treetable("removeNode", "draft" + data["draftId"]);
-                    $("#table" + seq).treetable("removeNode", "draft" + data["draftId"]);
+                    $("#tableall").treetable("removeNode", "final" + data["finalId"]);
+                    $("#table" + seq).treetable("removeNode", "final" + data["finalId"]);
                     $("#tableall").treetable("loadBranch", node, input);
                     $("#table" + seq).treetable("loadBranch", node2, input);
                     $("#tableall").treetable("sortBranch", node);
                     $("#table" + seq).treetable("sortBranch", node2);
-                    $("#dialogDraft").modal("hide");
+                    $("#dialogFinal").modal("hide");
                     centerAction();
                 }
                 else if (data != false && type == "detail") {
                     $("#loadingForm").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
                     listArr["Detail"][data["detailId"]] = data;
-                    listArr["Draft"][data["draftId"]]["Detail"][data["detailId"]] = data;
+                    listArr["Final"][data["finalId"]]["Detail"][data["detailId"]] = data;
                     var input = "";
                     var node, node2;
-                    input += '<tr data-tt-id="detail' + data["detailId"] + '" data-tt-parent-id="draft' + data["draftId"] + '"  data-seq="' + data["detailSeq"] + '">'
+                    input += '<tr data-tt-id="detail' + data["detailId"] + '" data-tt-parent-id="final' + data["finalId"] + '"  data-seq="' + data["detailSeq"] + '">'
                             + '<td class="text-center"></td>'
                             + (data["isActive"] == "Y" ? '<td>' : '<td class="text-primary">') + '- ' + text2html(data["detailName"]) + '</td>'
                             + (data["isActive"] == "Y" ? '<td class="center">' : '<td class="text-primary center">') + data["unit"] + '</td>'
@@ -881,9 +881,9 @@
                             + '</div>'
                             + '</td>'
                             + '</tr>';
-                    var seq = findSeq("draft", data["draftId"]);
-                    node = $("#tableall").treetable("node", "draft" + data["draftId"]);
-                    node2 = $("#table" + seq).treetable("node", "draft" + data["draftId"]);
+                    var seq = findSeq("final", data["finalId"]);
+                    node = $("#tableall").treetable("node", "final" + data["finalId"]);
+                    node2 = $("#table" + seq).treetable("node", "final" + data["finalId"]);
 
                     $("#tableall").treetable("removeNode", "detail" + data["detailId"]);
                     $("#table" + seq).treetable("removeNode", "detail" + data["detailId"]);
@@ -902,25 +902,25 @@
         , 500);
     }
 
-    function draftDelete(fdata) {
-        var dataJSON = JSON.stringify({draft: fdata});
+    function finalDelete(fdata) {
+        var dataJSON = JSON.stringify({final: fdata});
         var dataJSONEN = encodeURIComponent(dataJSON);
-        var datas = callAjax("{{_context_path}}/api/actionplan/draft/delete", "post", dataJSONEN, "json");
+        var datas = callAjax("{{_context_path}}/api/actionplan/final/delete", "post", dataJSONEN, "json");
         var data = datas["delete"];
         var type = datas["type"];
         if (typeof datas !== "undefined" && datas !== null) {
-            var seq = findSeq("draft", data["draftId"]);
+            var seq = findSeq("final", data["finalId"]);
             $("#tableall").treetable("removeNode", type + data[type + "Id"]);
             $("#table" + seq).treetable("removeNode", type + data[type + "Id"]);
 
-            if (type == "draft") {
-                $.each(listArr["Draft"][fdata["draftId"]]["Detail"], function (k, v) {
+            if (type == "final") {
+                $.each(listArr["Final"][fdata["finalId"]]["Detail"], function (k, v) {
                     listArr["Detail"][k] = [];
                 });
-                listArr["Draft"][fdata["draftId"]] = [];
-                $("#dialogDeleteDraft").modal("hide");
+                listArr["Final"][fdata["finalId"]] = [];
+                $("#dialogDeleteFinal").modal("hide");
             } else if (type == "detail") {
-                listArr["Draft"][fdata["draftId"]]["Detail"][fdata["detailId"]] = [];
+                listArr["Final"][fdata["finalId"]]["Detail"][fdata["detailId"]] = [];
                 listArr["Detail"][fdata["detailId"]] = [];
                 $("#dialogDeleteDetail").modal("hide");
             }
@@ -935,13 +935,13 @@
         fParam[mName] = mId;
         var formName;
         // console.log(pName);
-        if ((mName == "strategyId" && typeof pName === "undefined") || (mName == "draftId" && typeof pName === "undefined")) {
-            formName = "formDraft";
+        if ((mName == "strategyId" && typeof pName === "undefined") || (mName == "finalId" && typeof pName === "undefined")) {
+            formName = "formFinal";
             fParam["departmentId"] = deptId;
             fParam["typeId"] = typeId;
             fParam["periodCode"] = periodCode;
-            //   console.log("draft");
-        } else if ((mName == "draftId" && pName == "strategyId") || (mName == "detailId")) {
+            //   console.log("final");
+        } else if ((mName == "finalId" && pName == "strategyId") || (mName == "detailId")) {
             formName = "formDetail";
             // console.log("detail");
         }

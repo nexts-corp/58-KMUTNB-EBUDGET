@@ -17,10 +17,11 @@ class FinalService extends CServiceBase implements IFinalService {
         $this->datacontext = new CDataContext(NULL);
     }
 
-    function checkApprove($departmentId) {
-        $final = new \apps\common\entity\AffirmativeFinal();
+    function checkApprove($departmentId, $typeId) {
+        $final = new \apps\common\entity\ActionPlanFinal();
         $final->periodCode = $this->getPeriod()->year;
         $final->departmentId = $departmentId;
+        $final->typeId = $typeId;
         $final->isApprove = 'Y';
         $data = $this->datacontext->getObject($final);
         if (count($data) > 0) {
@@ -140,7 +141,7 @@ class FinalService extends CServiceBase implements IFinalService {
         return $return;
     }
 
-    function finalData($departmentId) {
+    function finalData($departmentId, $typeId) {
         $json = new CJSONDecodeImpl();
         $dept = new \apps\actionplan\model\ViewActivityDepartment();
         $dept->departmentId = $departmentId;
@@ -148,88 +149,57 @@ class FinalService extends CServiceBase implements IFinalService {
 
         $typeArr = array();
         $targetArr = array();
-        $final = new \apps\common\entity\AffirmativeFinal();
+        $final = new \apps\common\entity\ActionPlanFinal();
         $final->periodCode = $this->getPeriod()->year;
         $final->departmentId = $departmentId;
+        $final->typeId = $typeId;
         $finalData = $this->datacontext->getObject($final);
+
         foreach ($finalData as $keyFinal => $valueFinal) {
-            if ($valueFinal->hasIssue == "Y") {
-                if (empty($targetArr[$valueFinal->targetId][$valueFinal->finalId])) {
-                    $targetArr[$valueFinal->targetId][$valueFinal->finalId] = $valueFinal;
-                }
-            } elseif ($valueFinal->hasIssue == "N") {
-                if (empty($typeArr[$valueFinal->typeId][$valueFinal->finalId])) {
-                    $typeArr[$valueFinal->typeId][$valueFinal->finalId] = $valueFinal;
-                }
+            if (empty($strategyArr[$valueFinal->strategyId][$valueFinal->finalId])) {
+                $detailSql = "select v from apps\\common\\entity\\ActionPlanFinalDetail v where v.finalId = :finalId  order by v.detailSeq";
+                $detailParam = array("finalId" => $valueFinal->finalId);
+                $detailData = $this->datacontext->getObject($detailSql, $detailParam);
+                $valueFinal->detail = $detailData;
+                $strategyArr[$valueFinal->strategyId][$valueFinal->finalId] = $valueFinal;
             }
         }
-        $targetArr = $this->sortBy("kpiSeq", $targetArr);
-        $typeArr = $this->sortBy("kpiSeq", $typeArr);
+        $strategyArr = $this->sortBy("projectSeq", $strategyArr);
+        //--ข้อมูลใน draft
+        // return $strategyArr;
 
-        $sqlMain = "select s.mainId,s.mainSeq,m.mainName "
-                . "from apps\\common\\entity\\AffirmativeSetting s "
-                . "join apps\\common\\entity\\AffirmativeMain m with m.mainId = s.mainId "
-                . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
-                . "group by s.mainId,s.mainSeq,m.mainName "
-                . "order by s.mainSeq";
-        $paramMain = array(
-            "periodCode" => $this->getPeriod()->year,
-            "groupCode" => $dataDept->activityCode
-        );
-        $mainData = $this->datacontext->getObject($sqlMain, $paramMain);
-        $sqlType = "select s.mainId,s.mainSeq,s.typeId,s.typeSeq,m.typeName,m.hasIssue "
-                . "from apps\\common\\entity\\AffirmativeSetting s "
-                . "join apps\\common\\entity\\AffirmativeType m with m.typeId = s.typeId "
-                . "where s.periodCode = :periodCode and s.groupCode = :groupCode "
-                . "group by s.mainId,s.mainSeq,s.typeId,s.typeSeq,m.typeName,m.hasIssue "
-                . "order by s.mainSeq,s.typeSeq";
-        $paramType = array(
-            "periodCode" => $this->getPeriod()->year,
-            "groupCode" => $dataDept->activityCode
-        );
-        $typeData = $this->datacontext->getObject($sqlType, $paramType);
-        foreach ($mainData as $keyMain => $valMain) {
-            foreach ($typeData as $keyType => $valueType) {
-                if ($valMain["mainSeq"] == $valueType["mainSeq"]) {
-                    $mainData[$keyMain]["type"][$valueType["typeSeq"]] = $valueType;
-                    $issueSql = "select v from apps\\common\\entity\\AffirmativeIssue v where v.typeId = :typeId  order by v.issueSeq";
-                    $issueParam = array("typeId" => $valueType["typeId"]);
-                    $issueData = $this->datacontext->getObject($issueSql, $issueParam);
-                    $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"] = $issueData;
+        $type = new \apps\common\entity\AffirmativeType();
+        $type->typeId = $typeId;
+        $typeData = $this->datacontext->getObject($type);
 
-                    if (array_key_exists($valueType["typeId"], $typeArr)) {
-                        $mainData[$keyMain]["type"][$valueType["typeSeq"]]["kpi"] = $typeArr[$valueType["typeId"]];
-                    }
-                    $title = new \apps\common\entity\AffirmativeSetting();
-                    $title->typeId = $valueType["typeId"];
-                    $title->periodCode = $this->getPeriod()->year;
-                    $title->mainId = $valMain["mainId"];
-                    $title->groupCode = $dataDept->activityCode;
-                    $title = $this->datacontext->getObject($title);
-                    if (count($title) > 0) {
-                        $mainData[$keyMain]["type"][$valueType["typeSeq"]]["title"] = $title[0]->title;
-                    }
-                    foreach ($issueData as $keyIssue => $valueIssue) {
-                        $targetSql = "select v from apps\\common\\entity\\AffirmativeTarget v where v.issueId = :issueId  order by v.targetSeq";
-                        $targetParam = array("issueId" => $valueIssue->issueId);
-                        $targetData = $this->datacontext->getObject($targetSql, $targetParam);
-                        $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"][$keyIssue]->target = $targetData;
-                        foreach ($targetData as $keyTarget => $valueTarget) {
-                            if (array_key_exists($valueTarget->targetId, $targetArr)) {
-                                $mainData[$keyMain]["type"][$valueType["typeSeq"]]["issue"][$keyIssue]->target[$keyTarget]->kpi = $targetArr[$valueTarget->targetId];
-                            }
-                        }
+        $issueSql = "select v from apps\\common\\entity\\AffirmativeIssue v where v.typeId = :typeId  order by v.issueSeq";
+        $issueParam = array("typeId" => $typeId);
+        $typeData[0]->issue = $this->datacontext->getObject($issueSql, $issueParam);
+        foreach ($typeData[0]->issue as $keyIssue => $valueIssue) {
+            $targetSql = "select v from apps\\common\\entity\\AffirmativeTarget v where v.issueId = :issueId  order by v.targetSeq";
+            $targetParam = array("issueId" => $valueIssue->issueId);
+            $targetData = $this->datacontext->getObject($targetSql, $targetParam);
+            $typeData[0]->issue[$keyIssue]->target = $targetData;
+            foreach ($typeData[0]->issue[$keyIssue]->target as $keyTarget => $valueTarget) {
+                $strategySql = "select v from apps\\common\\entity\\AffirmativeStrategy v where v.targetId = :targetId  order by v.strategySeq";
+                $strategyParam = array("targetId" => $valueTarget->targetId);
+                $strategyData = $this->datacontext->getObject($strategySql, $strategyParam);
+                $typeData[0]->issue[$keyIssue]->target[$keyTarget]->strategy = $strategyData;
+                foreach ($typeData[0]->issue[$keyIssue]->target[$keyTarget]->strategy as $keyStrategy => $valueStrategy) {
+                    if (array_key_exists($valueStrategy->strategyId, $strategyArr)) {
+                        $typeData[0]->issue[$keyIssue]->target[$keyTarget]->strategy[$keyStrategy]->final = $strategyArr[$valueStrategy->strategyId];
                     }
                 }
+//                
             }
         }
 
-        return $mainData;
+        return $typeData;
     }
 
-    public function listsAll($departmentId) {
-        if ($this->checkApprove($departmentId)) {
-            return $this->finalData($departmentId);
+    public function listsAll($departmentId, $typeId) {
+        if ($this->checkApprove($departmentId, $typeId)) {
+            return $this->finalData($departmentId, $typeId);
         } else {
             return false;
         }
@@ -455,6 +425,82 @@ class FinalService extends CServiceBase implements IFinalService {
 
         ob_end_flush();
         exit();
+    }
+
+    public function insert($final) {
+        //$draft->periodCode = $this->getPeriod()->year;
+        $final->isApprove = "N";
+        $json = new \th\co\bpg\cde\collection\impl\CJSONDecodeImpl();
+        $type = "";
+        if (isset($final->finalId)) {
+            $final = $json->decode(new \apps\common\entity\ActionPlanFinalDetail(), $final);
+            $type = "detail";
+        } else {
+            $final = $json->decode(new \apps\common\entity\ActionPlanFinal(), $final);
+            $type = "final";
+        }
+        //  return $final;
+        if (!$this->datacontext->saveObject($final)) {
+            $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+            return false;
+        } else {
+            $this->getResponse()->add("type", $type);
+            return $final;
+        }
+    }
+
+    public function update($final) {
+        //$final->isApprove = "N";
+        $json = new \th\co\bpg\cde\collection\impl\CJSONDecodeImpl();
+        $type = "";
+        if (isset($final->detailId)) {
+            $final = $json->decode(new \apps\common\entity\ActionPlanFinalDetail(), $final);
+            $type = "detail";
+        } else {
+            $final = $json->decode(new \apps\common\entity\ActionPlanFinal(), $final);
+            $type = "final";
+        }
+        //return $final;
+        if (!$this->datacontext->updateObject($final)) {
+            $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+            return false;
+        } else {
+            $this->getResponse()->add("type", $type);
+            return $this->datacontext->getObject($final)[0];
+        }
+    }
+
+    public function delete($final) {
+        $json = new \th\co\bpg\cde\collection\impl\CJSONDecodeImpl();
+        $type = "";
+        $return = true;
+        if (isset($final->detailId)) {
+            $final = $json->decode(new \apps\common\entity\ActionPlanFinalDetail(), $final);
+            $type = "detail";
+        } else {
+            $final = $json->decode(new \apps\common\entity\ActionPlanFinal(), $final);
+            $type = "final";
+        }
+        //return $final;
+        if (!$this->datacontext->removeObject($final)) {
+            $return = false;
+        } else {
+            if ($type == "final") {
+                $detail = new \apps\common\entity\ActionPlanDraftDetail();
+                $detail->finalId = $final->finalId;
+                $detail = $this->datacontext->getObject($detail);
+                if (!$this->datacontext->removeObject($detail)) {
+                    $return = false;
+                }
+            }
+        }
+        if ($return == true) {
+            $this->getResponse()->add("type", $type);
+            return $final;
+        } else {
+            $this->getResponse()->add("msg", $this->datacontext->getLastMessage());
+            return false;
+        }
     }
 
 }

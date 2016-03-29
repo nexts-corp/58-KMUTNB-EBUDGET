@@ -22,7 +22,7 @@ interface IViewService {
      * @description ยื่นคำของบประมาณ
      */
     public function homeAdmin();
-    
+
     /**
      * @name setting
      * @uri /setting
@@ -51,7 +51,7 @@ interface IViewService {
      * @param string typeId
      * @description ยื่นคำของบประมาณ
      */
-    public function draft($deptId,$typeId);
+    public function draft($deptId, $typeId);
 
     /**
      * @name finalAll
@@ -64,9 +64,10 @@ interface IViewService {
      * @name final
      * @uri /final
      * @param string deptId
+     * @param string typeId
      * @description ยื่นคำของบประมาณ
      */
-    public function finalz($deptId);
+    public function finalz($deptId, $typeId);
 
     /**
      * @name resultAll

@@ -17,13 +17,24 @@ class DraftService extends CServiceBase implements IDraftService {
         $this->datacontext = new CDataContext(NULL);
     }
 
-    function checkApprove($departmentId) {
-        $final = new \apps\common\entity\AffirmativeFinal();
+    function checkApprove($departmentId, $typeId) {
+        $final = new \apps\common\entity\ActionPlanFinal();
         $final->periodCode = $this->getPeriod()->year;
         $final->departmentId = $departmentId;
+        $final->typeId = $typeId;
         $data = $this->datacontext->getObject($final);
         if (count($data) > 0) {
-            return false;
+            $draft = new \apps\common\entity\ActionPlanDraft();
+            $draft->periodCode = $this->getPeriod()->year;
+            $draft->departmentId = $departmentId;
+            $draft->typeId = $typeId;
+            $data_draft = $this->datacontext->getObject($draft);
+
+            if (count($data) == count($data_draft)) {
+                return false;
+            } else {
+                return true;
+            }
         } else {
             return true;
         }
@@ -175,11 +186,11 @@ class DraftService extends CServiceBase implements IDraftService {
     }
 
     public function listsAll($departmentId, $typeId) {
-        // if ($this->checkApprove($departmentId)) {
-        return $this->draftData($departmentId, $typeId);
-//        } else {
-//            return false;
-//        }
+        if ($this->checkApprove($departmentId, $typeId)) {
+            return $this->draftData($departmentId, $typeId);
+        } else {
+            return false;
+        }
     }
 
     public function insert($draft) {

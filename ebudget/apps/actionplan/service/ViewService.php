@@ -48,7 +48,7 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
-    public function draft($deptId,$typeId) {
+    public function draft($deptId, $typeId) {
         $viewDept = new \apps\actionplan\model\ViewActivityDepartment();
         $viewDept->departmentId = $deptId;
         $data = $this->datacontext->getObject($viewDept)[0];
@@ -65,7 +65,7 @@ class ViewService extends CServiceBase implements IViewService {
         return $view;
     }
 
-    public function finalz($deptId) {
+    public function finalz($deptId, $typeId) {
         $viewDept = new \apps\actionplan\model\ViewActivityDepartment();
         $viewDept->departmentId = $deptId;
         $data = $this->datacontext->getObject($viewDept)[0];
@@ -73,6 +73,7 @@ class ViewService extends CServiceBase implements IViewService {
         $view->department = $data;
         $groupS = new DraftService();
         $view->year = $groupS->getPeriod()->year;
+        $view->typeId = $typeId;
         return $view;
     }
 
