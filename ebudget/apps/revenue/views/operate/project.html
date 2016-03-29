@@ -30,7 +30,7 @@
             </ul>
         </div>
     </div>
-    
+
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -283,7 +283,7 @@
 
                                 <div class="form-group">
                                     <div class="col-md-12">
-                                        <h5>13. แหล่งเงิน/ประเภทงบประมาณที่ใช้/แผนงาน</h5>
+                                        <h5>13. แหล่งเงิน/ประเภทงบประมาณที่ใช้/แผนงาน/กองทุน</h5>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
@@ -301,7 +301,15 @@
                                         </div>
                                         <div id="listPlan" class="col-md-12"></div>
                                     </div>
-                                </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-offset-1" style="font-weight: bold;">กองทุน</div>
+                                            </div><br>
+                                        </div>
+                                        <div id="listFund" class="col-md-12"></div>
+                                    </div>
+                                </div>                                                                
 
                                 <!--<div class="form-group">
                                     <div class="col-md-12">
@@ -343,7 +351,7 @@
                                         <div class="col-md-12 text-right" style="margin-bottom: 10px;">
                                             <button class="btn btn-success addDetail"><i class="fa fa-plus-circle"></i> เพิ่ม</button>
                                         </div>
-                                        
+
                                         <table id="tableDetail" class="table table-bordered">
                                             <thead>
                                                 <tr>
@@ -380,7 +388,7 @@
                 </div>
             </section>
         </div>
-        
+
         <div id="affirmativeModal" aria-labelledby="formLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"><!-- add strategy plan form -->
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -397,7 +405,7 @@
                                 </select>
                             </div>
                         </div>
-                            
+
                         <div class="form-group">
                             <label class="col-md-4 control-label text-right">ประเด็นยุทธศาสตร์</label>
                             <div class="col-md-8">
@@ -415,7 +423,7 @@
                                 </select>
                             </div>
                         </div>
-                            
+
                         <div class="form-group">
                             <label class="col-md-4 control-label text-right">กลยุทธ์</label>
                             <div class="col-md-8">
@@ -432,7 +440,7 @@
                 </div>
             </div>
         </div><!-- end form -->
-        
+
         <div id="kpiModal" aria-labelledby="formLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"><!-- add strategy plan form -->
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -447,7 +455,7 @@
                                 <input id="budgetDesc" name="budgetDesc" type="text" class="form-control input-sm">
                             </div>
                         </div>
-                            
+
                         <div class="form-group">
                             <label class="col-md-4 control-label text-right">หน่วยนับ</label>
                             <div class="col-md-8">
@@ -469,7 +477,7 @@
                 </div>
             </div>
         </div><!-- end form -->
-        
+
         <div id="operatingModal" aria-labelledby="formLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"><!-- add strategy plan form -->
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -484,7 +492,7 @@
                                 <input id="operatingName" name="operatingName" type="text" class="form-control input-sm">
                             </div>
                         </div>
-                            
+
                         <div class="form-group">
                             <label class="col-md-4 control-label text-right">วันที่เริ่มต้น</label>
                             <div class="col-md-8">
@@ -506,7 +514,7 @@
                 </div>
             </div>
         </div><!-- end form -->
-        
+
         <div id="detailModal" aria-labelledby="formLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"><!-- add strategy plan form -->
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -528,21 +536,21 @@
                                 <input id="numOfUnit" name="numOfUnit" type="text" class="form-control input-sm">
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <label class="col-md-4 control-label text-right">ราคาต่อหน่วย</label>
                             <div class="col-md-8">
                                 <input id="pricePerUnit" name="pricePerUnit" type="text" class="form-control input-sm">
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <label class="col-md-4 control-label text-right">รวมเงิน</label>
                             <div class="col-md-8">
                                 <input id="totalPrice" name="totalPrice" type="text" class="form-control input-sm">
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <label class="col-md-4 control-label text-right">หมายเหตุ</label>
                             <div class="col-md-8">
@@ -557,7 +565,7 @@
                 </div>
             </div>
         </div><!-- end form -->
-        
+
         <div id="saveModal" aria-labelledby="formLabel" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -582,676 +590,713 @@
 
 <script src="{{_context_path}}/asset/vendor/bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
 <script>
-    (function( $ ) {
-        
-        $(".backHome").click(function () {
-            window.location = "{{_context_path}}/api/revenue/view/manageAll";
-        });
-        
-        'use strict';
-        var $w4finish = $('#wizard').find('ul.pager li.finish'),
-                $w4validator = $("#wizard form").validate({
-                    highlight: function(element) {
-                        $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
-                    },
-                    success: function(element) {
-                        $(element).closest('.form-group').removeClass('has-error');
-                        $(element).remove();
-                    },
-                    errorPlacement: function( error, element ) {
-                        element.parent().append( error );
-                    }
-                });
+                        (function ($) {
 
-        $w4finish.on('click', function(ev) {
-            ev.preventDefault();
-            var validated = $('#wizard form').valid();
-            if(validated){
-                var fdata = dataObject();
-                var dataJSON = JSON.stringify({project: fdata["project"]});
-                var dataJSONEN = encodeURIComponent(dataJSON);
+                            $(".backHome").click(function () {
+                                window.location = "{{_context_path}}/api/revenue/view/manageAll";
+                            });
 
-                saveProject(dataJSONEN);
-            }
-            /*if (validated) {
-                if(action == "insert"){
-                    var fdata = dataObject(null);
-                    var dataJSON = JSON.stringify({reserveList: fdata["ReserveList"], riceReserve: fdata["RiceReserve"]});
-                    var dataJSONEN = encodeURIComponent(dataJSON);
-
-                    insertReserve(dataJSONEN);
-                }
-                else if(action == "edit"){
-                    var fdata = dataObject(listArr[selectedId]["id"]);
-                    var dataJSON = JSON.stringify({reserveList: fdata["ReserveList"], riceReserve: fdata["RiceReserve"]});
-                    var dataJSONEN = encodeURIComponent(dataJSON);
-
-                    editReserve(dataJSONEN);
-                }
-            }*/
-        });
-
-        $('#wizard').bootstrapWizard({
-            tabClass: 'wizard-steps',
-            nextSelector: 'ul.pager li.next',
-            previousSelector: 'ul.pager li.previous',
-            firstSelector: null,
-            lastSelector: null,
-            onNext: function( tab, navigation, index, newindex ) {
-                var validated = $('#wizard form').valid();
-                if( !validated ) {
-                    $w4validator.focusInvalid();
-                    return false;
-                }
-                /*$(".reserveDisplay").html($("#reserveCode option:selected").text()+" - "+$("#detail").val());
-                $(".targetDisplay").html($("#target").val());
-
-                if(index == 1){
-                    $("select.lookup").each(function(){
-                        var id = $(this).attr("id");
-                        var call = $(this).attr("data-call");
-
-                        var result = listsObject(call);
-                        $("#"+id).html(result).select2();
-                    });
-
-                    listsRice();
-                }
-                else if(index == 2) {
-                    if (Object.keys(selectedArr).length == 0) {
-                        alert("กรุณาเลือกคลัง");
-                        return false;
-                    }
-                    else {
-                        summarySelected();
-                    }
-                }*/
-            },
-            onTabClick: function( tab, navigation, index, newindex ) {
-                if ( newindex == index + 1 ) {
-                    return this.onNext( tab, navigation, index, newindex);
-                } else if ( newindex > index + 1 ) {
-                    return false;
-                } else {
-                    return true;
-                }
-            },
-            onTabChange: function( tab, navigation, index, newindex ) {
-                var $total = navigation.find('li').size() - 1;
-                $w4finish[ newindex != $total ? 'addClass' : 'removeClass' ]( 'hidden' );
-                $('#wizard').find(this.nextSelector)[ newindex == $total ? 'addClass' : 'removeClass' ]( 'hidden' );
-            },
-            onTabShow: function( tab, navigation, index ) {
-                var $total = navigation.find('li').length - 1;
-                var $current = index;
-                var $percent = Math.floor(( $current / $total ) * 100);
-                $('#wizard').find('.progress-indicator').css({ 'width': $percent + '%' });
-                tab.prevAll().addClass('completed');
-                tab.nextAll().removeClass('completed');
-            }
-        });
-
-    }).apply( this, [ jQuery ]);
-
-    var formId = '{{formId}}';
-    var facultyId = '{{deptId}}';
-    var budgetHeadId = '{{budgetHeadId}}';
-
-    var typeArr = {};
-    var issueArr = {};
-    var targetArr = {};
-    var strategyArr = {};
-
-    var id;
-    var projectTypeId;
-    var budgetTypeId;
-    var projectId;
-    var integration = [];
-    var affirmative = [];
-    var kpi = {};
-    var operating = [];
-    var detail = [];
-    
-    $(function(){
-        getAllProject();
-        //getDept();
-        
-        getData();
-        
-        getLayouts();
-        getOperating();
-        getDetail();
-        
-        $('.datetime').datepicker({
-            format: 'dd-mm-yyyy'
-        });
-        
-        $("#budgetHeadId").change(function(){
-            window.location = "{{_context_path}}/api/revenue/view/manage/"+formId+"/"+$("#budgetHeadId").val()+"/"+facultyId;
-        });
-    });
-    
-    function getAllProject(){
-        var datas = callAjax("{{_context_path}}/api/revenue/project/getAllProject", "post", {facultyId: facultyId}, "json");
-        if(typeof datas !== "undefined" && datas !== null){
-            var html = '';
-            $.each(datas["lists"], function(key, val){
-                var check = '';
-                if(val["BudgetHeadId"] == budgetHeadId)  check = 'selected';
-                html += '<option value="'+val["BudgetHeadId"]+'" '+check+'>'+val["formName"]+'</option>';
-            });
-            $("#budgetHeadId").html(html);            
-        }
-    }
-
-    function getData(){
-        var datas = callAjax("{{_context_path}}/api/revenue/project/getData", "post", {budgetHeadId: budgetHeadId,facultyId: facultyId}, "json");
-        if (typeof datas !== "undefined" && datas !== null) {
-            var data = datas["lists"];
-            id = data["id"];
-            $("#responder").val(data["responder"]);
-            $("#director").val(data["director"]);
-            projectTypeId = data["projectTypeId"];
-            integration = data["integration"];
-            affirmative = data["affirmative"];
-            $("#rationale").val(data["rationale"]);
-            $("#objective").val(data["objective"]);
-            $("#benefits").val(data["benefits"]);
-            
-            $.each(data["kpi"], function(key, val){
-                if(!kpi[val["kpiTypeId"]]) kpi[val["kpiTypeId"]] = [];
-                kpi[val["kpiTypeId"]].push(val);
-            });
-            $("#target").val(data["target"]);
-            operating = data["operating"];
-            $("#timeStart").val(data["timeStart"]);
-            $("#timeEnd").val(data["timeEnd"]);
-            $("#budgetEstAmount").val(data["budgetEstAmount"]);
-            $("#budgetEstText").val(data["budgetEstText"]);
-            budgetTypeId = data["budgetTypeId"];
-            projectId = data["projectId"];
-            detail = data["detail"];
-        }
-    }
-    
-    function getLayouts() {
-        var datas = callAjax("{{_context_path}}/api/revenue/project/getLayouts", "post", {facultyId: facultyId}, "json");
-        if (typeof datas !== "undefined" && datas !== null) {
-            var htmlType = '';
-            $.each(datas["layouts"]["projectType"], function(key, val){
-                htmlType += '<div class="col-md-2">'
-                        + '<div class="col-md-offset-1 col-md-12 radio-custom radio-primary">'
-                            + '<input type="radio" id="projectTypeId" name="projectTypeId" value="'+val["id"]+'">'
-                            + '<label style="padding-left: 10px;">'+val["name"]+'</label>'
-                        + '</div>'
-                    + '</div>';
-            });
-
-            $("#listProjectType").html(htmlType);
-            $("input[name=projectTypeId][value="+projectTypeId+"]").prop('checked', true);
-
-            var htmlIntegration = '';
-            $.each(datas["layouts"]["integration"], function(key, val){
-                var isDisable = 'disabled';
-                var isCheck = '';
-                var value = '';
-                var result = $.grep(integration, function(e){ return e.integrationId === val["id"]; });//integration.some(function (elem, i) { return elem.integrationId === val["id"] && ~(index = i); });
-                if(result.length > 0){
-                    isDisable = '';
-                    isCheck = 'checked';
-                    value = result[0]["desc"];
-                }
-
-                htmlIntegration += '<div class="row">'
-                        + '<div class="col-md-offset-1 col-md-3 checkbox-custom checkbox-primary">'
-                            + '<input class="integration" type="checkbox" id="intId'+val["id"]+'" name="intId'+val["id"]+'" value="'+val["id"]+'" '+isCheck+'>'
-                            + '<label style="padding-left: 10px;">'+val["name"]+'</label>'
-                        + '</div>'
-                        + '<div class="col-md-6">'
-                            + '<input type="text" id="intName'+val["id"]+'" name="intName'+val["id"]+'" value="'+value+'" class="form-control input-sm" '+isDisable+'>'
-                        + '</div>'
-                    + '</div>'
-                    + '<br>';
-            });
-
-            $("#listInt").html(htmlIntegration);
-            
-            // when you select remark control
-            $("input.integration").click(function(){
-                var remarkId = $(this).attr("name").replace("intId", "");
-                if($(this).is(':checked')){
-                    $("#intName"+remarkId).prop("disabled", false).val("");
-                }
-                else{
-                    $("#intName"+remarkId).prop("disabled", true).val("");
-                }
-            });
-
-            var htmlSubsidies = '';
-            $.each(datas["layouts"]["subsidies"], function(key, val){
-                htmlSubsidies += '<div class="col-md-6">'
-                        + '<div class="row">'
-                            + '<div class="col-md-12">'
-                                + '<input type="radio" name="budgetTypeId" value="'+val["id"]+'">'
-                                + '<label style="padding-left: 5px;">'+val["typeName"]+'</label>'
-                            + '</div>'
-                        + '</div><br>'
-                    + '</div>';
-            });
-            $("#listSubsidies").html(htmlSubsidies);
-            $("input[name=budgetTypeId][value="+budgetTypeId+"]").prop('checked', true);
-            
-            var htmlPlan = '';
-            $.each(datas["layouts"]["plan"], function(key, val){
-                htmlPlan += '<div class="col-md-6">'
-                        + '<div class="row">'
-                            + '<div class="col-md-12">'
-                                + '<input type="radio" name="projectId" value="'+val["id"]+'">'
-                                + '<label style="padding-left: 5px;">'+val["planName"]+'</label>'
-                            + '</div>'
-                        + '</div><br>'
-                    + '</div>';
-            });
-            $("#listPlan").html(htmlPlan);
-            $("input[name=projectId][value="+projectId+"]").prop('checked', true);
-            
-            $.each(datas["layouts"]["affirmative"], function(key, val){
-                typeArr[val["typeId"]] = val["typeName"];
-
-                issueArr[val["typeId"]] = {};
-                $.each(val["issue"], function(key2, val2) {
-                    issueArr[val["typeId"]][val2["issueId"]] = val2["issueName"];
-
-                    targetArr[val2["issueId"]] = {};
-                    $.each(val2["target"], function(key3, val3) {
-                        targetArr[val2["issueId"]][val3["targetId"]] = val3["targetName"];
-
-                        strategyArr[val3["targetId"]] = {};
-                        $.each(val3["strategy"], function(key4, val4) {
-                            strategyArr[val3["targetId"]][val4["strategyId"]] = val4["strategyName"];
-                        });
-                    });
-                });
-
-            });
-            getAffirmative();
-            getKpiType(datas["layouts"]["kpiType"]);
-            
-            /*var htmlBudget = '';
-            var count = 0;
-            $.each(datas["layouts"]["budgetType"], function(key, val){
-                var sub = 0;
-                
-                htmlBudget += '<tr style="background-color: #F1F1F1;">'
-                        + '<td>'+(++count)+'. ' + val["typeName"]+'</td>'
-                        + '<td colspan="4">&nbsp;</td>'
-                    + '</tr>';
-                $.each(val["sub"], function(key2, val2){
-                    htmlBudget += '<tr>'
-                            + '<td style="padding-left: 50px;">'+count+ '.' + (++sub) + ' ' + val2["typeName"]+'</td>'
-                            + '<td><input type="number" id="budget'+val2["id"]+'-Q1" name="budget'+val2["id"]+'-Q1" class="form-control input-sm"></td>'
-                            + '<td><input type="number" id="budget'+val2["id"]+'-Q2" name="budget'+val2["id"]+'-Q2" class="form-control input-sm"></td>'
-                            + '<td><input type="number" id="budget'+val2["id"]+'-Q3" name="budget'+val2["id"]+'-Q3" class="form-control input-sm"></td>'
-                            + '<td><input type="number" id="budget'+val2["id"]+'-Q4" name="budget'+val2["id"]+'-Q4" class="form-control input-sm"></td>'
-                        + '</tr>';
-                });
-            });
-            $("#tableBudget tbody").html(htmlBudget);*/
-        }
-    }
-
-    function optionAffirmative(type, pId){
-        var data;
-        if(type == "type") data = typeArr;
-        else if(type == "issue") data = issueArr[pId];
-        else if(type == "target") data = targetArr[pId];
-        else if(type == "strategy") data = strategyArr[pId];
-
-        var html = '<option value="">- เลือก -</option>';
-        $.each(data, function(key, value){
-            html += '<option value="'+key+'">'+value+'</option>';
-        });
-        return html;
-    }
-    
-    function getAffirmative(){
-        var html = '';
-        $.each(affirmative, function(key, value){
-            html += '<div class="panel-body">'
-                    + '<div class="col-md-12">'
-                        + '<div class="col-md-2 text-right text-bold">แผนกลยุทธ์</div>'
-                        + '<div class="col-md-8">'+typeArr[value["typeId"]]+'</div>'
-                        + '<div class="col-md-2 text-right">'
-                            + '<button class="btn btn-xs btn-danger delAffirmative" data-id="'+key+'"><i class="fa fa-times"></i></button>'
-                        + '</div>'
-                    + '</div>'
-                    + '<div class="col-md-12">'
-                        + '<div class="col-md-2 text-right text-bold">ประเด็นยุทธศาสตร์</div>'
-                        + '<div class="col-md-8">'+issueArr[value["typeId"]][value["issueId"]]+'</div>'
-                    + '</div>'
-                    + '<div class="col-md-12">'
-                        + '<div class="col-md-2 text-right text-bold">เป้าประสงค์</div>'
-                        + '<div class="col-md-8">'+targetArr[value["issueId"]][value["targetId"]]+'</div>'
-                    + '</div>'
-                    + '<div class="col-md-12">'
-                        + '<div class="col-md-2 text-right text-bold">กลยุทธ์</div>'
-                        + '<div class="col-md-8">'+strategyArr[value["targetId"]][value["strategyId"]]+'</div>'
-                    + '</div>'
-                + '</div>';
-        });
-        $("#affirmative").html(html);
-        
-        $("button.addAffirmative").unbind().click(function(){
-            $("#affirmativeModal").modal("show");
-            $("#typeId, #issueId, #targetId, #strategyId").val('');
-
-            $("#typeId").html(optionAffirmative("type", null)).change(function(){
-                if($("#typeId").val() == ""){
-                    $("#issueId, #targetId, #strategyId").html('<option value="">- เลือก -</option>');
-                }
-                else {
-                    $("#issueId").html(optionAffirmative("issue", $("#typeId").val())).change(function () {
-                        if($("#issueId").val() == ""){
-                            $("#targetId, #strategyId").html('<option value="">- เลือก -</option>');
-                        }
-                        else {
-                            $("#targetId").html(optionAffirmative("target", $("#issueId").val())).change(function () {
-                                if($("#targetId").val() == ""){
-                                    $("#strategyId").html('<option value="">- เลือก -</option>');
-                                }
-                                else {
-                                    $("#strategyId").html(optionAffirmative("strategy", $("#targetId").val()));
+                            'use strict';
+                            var $w4finish = $('#wizard').find('ul.pager li.finish'),
+                                    $w4validator = $("#wizard form").validate({
+                                highlight: function (element) {
+                                    $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                                },
+                                success: function (element) {
+                                    $(element).closest('.form-group').removeClass('has-error');
+                                    $(element).remove();
+                                },
+                                errorPlacement: function (error, element) {
+                                    element.parent().append(error);
                                 }
                             });
+
+                            $w4finish.on('click', function (ev) {
+                                ev.preventDefault();
+                                var validated = $('#wizard form').valid();
+                                if (validated) {
+                                    var fdata = dataObject();
+                                    var dataJSON = JSON.stringify({project: fdata["project"]});
+                                    var dataJSONEN = encodeURIComponent(dataJSON);
+
+                                    saveProject(dataJSONEN);
+                                }
+                                /*if (validated) {
+                                 if(action == "insert"){
+                                 var fdata = dataObject(null);
+                                 var dataJSON = JSON.stringify({reserveList: fdata["ReserveList"], riceReserve: fdata["RiceReserve"]});
+                                 var dataJSONEN = encodeURIComponent(dataJSON);
+                                 
+                                 insertReserve(dataJSONEN);
+                                 }
+                                 else if(action == "edit"){
+                                 var fdata = dataObject(listArr[selectedId]["id"]);
+                                 var dataJSON = JSON.stringify({reserveList: fdata["ReserveList"], riceReserve: fdata["RiceReserve"]});
+                                 var dataJSONEN = encodeURIComponent(dataJSON);
+                                 
+                                 editReserve(dataJSONEN);
+                                 }
+                                 }*/
+                            });
+
+                            $('#wizard').bootstrapWizard({
+                                tabClass: 'wizard-steps',
+                                nextSelector: 'ul.pager li.next',
+                                previousSelector: 'ul.pager li.previous',
+                                firstSelector: null,
+                                lastSelector: null,
+                                onNext: function (tab, navigation, index, newindex) {
+                                    var validated = $('#wizard form').valid();
+                                    if (!validated) {
+                                        $w4validator.focusInvalid();
+                                        return false;
+                                    }
+                                    /*$(".reserveDisplay").html($("#reserveCode option:selected").text()+" - "+$("#detail").val());
+                                     $(".targetDisplay").html($("#target").val());
+                                     
+                                     if(index == 1){
+                                     $("select.lookup").each(function(){
+                                     var id = $(this).attr("id");
+                                     var call = $(this).attr("data-call");
+                                     
+                                     var result = listsObject(call);
+                                     $("#"+id).html(result).select2();
+                                     });
+                                     
+                                     listsRice();
+                                     }
+                                     else if(index == 2) {
+                                     if (Object.keys(selectedArr).length == 0) {
+                                     alert("กรุณาเลือกคลัง");
+                                     return false;
+                                     }
+                                     else {
+                                     summarySelected();
+                                     }
+                                     }*/
+                                },
+                                onTabClick: function (tab, navigation, index, newindex) {
+                                    if (newindex == index + 1) {
+                                        return this.onNext(tab, navigation, index, newindex);
+                                    } else if (newindex > index + 1) {
+                                        return false;
+                                    } else {
+                                        return true;
+                                    }
+                                },
+                                onTabChange: function (tab, navigation, index, newindex) {
+                                    var $total = navigation.find('li').size() - 1;
+                                    $w4finish[ newindex != $total ? 'addClass' : 'removeClass' ]('hidden');
+                                    $('#wizard').find(this.nextSelector)[ newindex == $total ? 'addClass' : 'removeClass' ]('hidden');
+                                },
+                                onTabShow: function (tab, navigation, index) {
+                                    var $total = navigation.find('li').length - 1;
+                                    var $current = index;
+                                    var $percent = Math.floor(($current / $total) * 100);
+                                    $('#wizard').find('.progress-indicator').css({'width': $percent + '%'});
+                                    tab.prevAll().addClass('completed');
+                                    tab.nextAll().removeClass('completed');
+                                }
+                            });
+
+                        }).apply(this, [jQuery]);
+
+                        var formId = '{{formId}}';
+                        var facultyId = '{{deptId}}';
+                        var budgetHeadId = '{{budgetHeadId}}';
+
+                        var typeArr = {};
+                        var issueArr = {};
+                        var targetArr = {};
+                        var strategyArr = {};
+
+                        var id;
+                        var projectTypeId;
+                        var budgetTypeId;
+                        var planId;
+                        var fundgroupId;
+                        var integration = [];
+                        var affirmative = [];
+                        var kpi = {};
+                        var operating = [];
+                        var detail = [];
+
+                        $(function () {
+                            getAllProject();
+                            //getDept();
+
+                            getData();
+
+                            getLayouts();
+                            getOperating();
+                            getDetail();
+
+                            $('.datetime').datepicker({
+                                format: 'dd-mm-yyyy'
+                            });
+
+                            $("#budgetHeadId").change(function () {
+                                window.location = "{{_context_path}}/api/revenue/view/manage/" + formId + "/" + $("#budgetHeadId").val() + "/" + facultyId;
+                            });
+                        });
+
+                        function getAllProject() {
+                            var datas = callAjax("{{_context_path}}/api/revenue/project/getAllProject", "post", {facultyId: facultyId}, "json");
+                            if (typeof datas !== "undefined" && datas !== null) {
+                                var html = '';
+                                $.each(datas["lists"], function (key, val) {
+                                    var check = '';
+                                    if (val["BudgetHeadId"] == budgetHeadId)
+                                        check = 'selected';
+                                    html += '<option value="' + val["BudgetHeadId"] + '" ' + check + '>' + val["formName"] + '</option>';
+                                });
+                                $("#budgetHeadId").html(html);
+                            }
                         }
-                    });
-                }
-            });
 
-            $("button.save").unbind().click(function(){
-                affirmative.push({
-                    typeId: $("#typeId").val(),
-                    issueId: $("#issueId").val(),
-                    targetId: $("#targetId").val(),
-                    strategyId: $("#strategyId").val()
-                });
-                getAffirmative();
-                
-            });
-        });
-        
-        $("button.delAffirmative").unbind().click(function(){
-            affirmative.splice($(this).attr("data-id"), 1);
-            $(this).closest('.panel-body').hide();
-            return false;
-        });
-    }
+                        function getData() {
+                            var datas = callAjax("{{_context_path}}/api/revenue/project/getData", "post", {budgetHeadId: budgetHeadId, facultyId: facultyId}, "json");
+                            if (typeof datas !== "undefined" && datas !== null) {
+                                var data = datas["lists"];
+                                id = data["id"];
+                                $("#responder").val(data["responder"]);
+                                $("#director").val(data["director"]);
+                                projectTypeId = data["projectTypeId"];
+                                integration = data["integration"];
+                                affirmative = data["affirmative"];
+                                $("#rationale").val(data["rationale"]);
+                                $("#objective").val(data["objective"]);
+                                $("#benefits").val(data["benefits"]);
 
-    function getKpiType(input){
-        var html = '';
-        $.each(input, function(key, value){
-            if(!kpi[value["id"]]) kpi[value["id"]] = [];
-            
-            html += '<tr style="background-color: #F1F1F1;">'
-                    + '<td colspan="3">'+value["name"]+'</td>'
-                    + '<td class="text-center">'
-                        + '<button class="btn btn-success addKpi" data-key="'+value["id"]+'"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
-                    + '</td>'
-                + '</tr>';
-            
-            $.each(kpi[value["id"]], function(key2, value2){
-                html += '<tr>'
-                        + '<td>'+value2["budgetDesc"]+'</td>'
-                        + '<td class="text-center">'+value2["unit"]+'</td>'
-                        + '<td class="text-center">'+value2["goal"]+'</td>'
-                        + '<td class="text-center">'
-                            + '<div class="btn-group">'
-                                + '<button class="btn btn-warning editKpi" data-key="'+value["id"]+'" data-id="'+key2+'"><i class="fa fa-pencil"></i></button>'
-                                + '<button class="btn btn-default delKpi" data-key="'+value["id"]+'" data-id="'+key2+'"><i class="fa fa-trash"></i></button>'
-                            + '</div>'
-                        +'</td>'
-                    + '</tr>';
-            });
-        });
-        $("#tableKpi tbody").html(html);
-            
-        $("button.addKpi").unbind().click(function(){
-            var key = $(this).attr("data-key");
-            $("#kpiModal").modal("show");
-            $("#kpiTitle").html(input[key-1]["name"]);
-            $("#budgetDesc, #unit, #goal").val('');
+                                $.each(data["kpi"], function (key, val) {
+                                    if (!kpi[val["kpiTypeId"]])
+                                        kpi[val["kpiTypeId"]] = [];
+                                    kpi[val["kpiTypeId"]].push(val);
+                                });
+                                $("#target").val(data["target"]);
+                                operating = data["operating"];
+                                $("#timeStart").val(data["timeStart"]);
+                                $("#timeEnd").val(data["timeEnd"]);
+                                $("#budgetEstAmount").val(data["budgetEstAmount"]);
+                                $("#budgetEstText").val(data["budgetEstText"]);
+                                budgetTypeId = data["budgetTypeId"];
+                                planId = data["planId"];
+                                fundgroupId = data["fundgroupId"];
+                                detail = data["detail"];
+                            }
+                        }
 
-            $("button.save").unbind().click(function(){
-                kpi[key].push({
-                    kpiTypeId: key,
-                    budgetDesc: $("#budgetDesc").val(),
-                    unit: $("#unit").val(),
-                    goal: $("#goal").val()
-                });
-                getKpiType(input);
-            });
-        });
-        
-        $("button.editKpi").unbind().click(function(){
-            var key = $(this).attr("data-key");
-            var id = $(this).attr("data-id");
-            
-            $("#kpiModal").modal("show");
-            $("#kpiTitle").html(input[key-1]["name"]);
-           
-            $("#budgetDesc").val(kpi[key][id]["budgetDesc"]);
-            $("#unit").val(kpi[key][id]["unit"]);
-            $("#goal").val(kpi[key][id]["goal"]);
+                        function getLayouts() {
+                            var datas = callAjax("{{_context_path}}/api/revenue/project/getLayouts", "post", {facultyId: facultyId}, "json");
+                            if (typeof datas !== "undefined" && datas !== null) {
+                                var htmlType = '';
+                                $.each(datas["layouts"]["projectType"], function (key, val) {
+                                    htmlType += '<div class="col-md-2">'
+                                            + '<div class="col-md-offset-1 col-md-12 radio-custom radio-primary">'
+                                            + '<input type="radio" id="projectTypeId" name="projectTypeId" value="' + val["id"] + '">'
+                                            + '<label style="padding-left: 10px;">' + val["name"] + '</label>'
+                                            + '</div>'
+                                            + '</div>';
+                                });
 
-            $("button.save").unbind().click(function(){
-                kpi[key][id] = {
-                    kpiTypeId: key,
-                    budgetDesc: $("#budgetDesc").val(),
-                    unit: $("#unit").val(),
-                    goal: $("#goal").val()
-                };
-                getKpiType(input);
-            });
-        });
-        
-        $("button.delKpi").unbind().click(function(){
-            var key = $(this).attr("data-key");
-            $(this).closest('tr').hide();
-            kpi[key].splice($(this).attr("data-id"), 1);
-        });
-    }
+                                $("#listProjectType").html(htmlType);
+                                $("input[name=projectTypeId][value=" + projectTypeId + "]").prop('checked', true);
 
-    function getOperating(){
-        var html = '';
-        var count = 0;
-        $.each(operating, function(key, value){
-            html += '<tr>'
-                    + '<td>'+(++count)+'. '+value["operName"]+'</td>'
-                    + '<td class="text-center">'+value["timeStart"]+'</td>'
-                    + '<td class="text-center">'+value["timeEnd"]+'</td>'
-                    + '<td class="text-center">'
-                        + '<div class="btn-group">'
-                            + '<button class="btn btn-warning editOperating" data-id="'+key+'"><i class="fa fa-pencil"></i></button>'
-                            + '<button class="btn btn-default delOperating" data-id="'+key+'"><i class="fa fa-trash"></i></button>'
-                        + '</div>'
-                    +'</td>'
-                + '</tr>';
-        });
-        $("#tableOperating tbody").html(html);
-        
-        $("button.addOperating").unbind().click(function(){
-            $("#operatingModal").modal("show");
-            $("#operatingName, #operatingStart, #operatingEnd").val('');
-            
-            $("button.save").unbind().click(function(){
-                operating.push({
-                    operName: $("#operatingName").val(),
-                    timeStart: $("#operatingStart").val(),
-                    timeEnd: $("#operatingEnd").val()
-                });
-                getOperating();                
-            });
-        });
-        
-        $("button.editOperating").unbind().click(function(){
-            var id = $(this).attr("data-id");
-            $("#operatingModal").modal("show");
-            $("#operatingName").val(operating[id]["operName"]);
-            $("#operatingStart").val(operating[id]["timeStart"]);
-            $("#operatingEnd").val(operating[id]["timeEnd"]);
+                                var htmlIntegration = '';
+                                $.each(datas["layouts"]["integration"], function (key, val) {
+                                    var isDisable = 'disabled';
+                                    var isCheck = '';
+                                    var value = '';
+                                    var result = $.grep(integration, function (e) {
+                                        return e.integrationId === val["id"];
+                                    });//integration.some(function (elem, i) { return elem.integrationId === val["id"] && ~(index = i); });
+                                    if (result.length > 0) {
+                                        isDisable = '';
+                                        isCheck = 'checked';
+                                        value = result[0]["desc"];
+                                    }
 
-            $("button.save").unbind().click(function(){
-                operating[id] = {
-                    operName: $("#operatingName").val(),
-                    timeStart: $("#operatingStart").val(),
-                    timeEnd: $("#operatingEnd").val()
-                };
-                getOperating();                
-            });
-        });
-        
-        $("button.delOperating").unbind().click(function(){
-            $(this).closest('tr').hide();
-            operating.splice($(this).attr("data-id"), 1);
-        });
-    }
-    
-    function getDetail(){
-        var html = '';
-        var count = 0;
-        $.each(detail, function(key, val){
-            html += '<tr>'
-                    + '<td>'+(++count)+'. '+val["budgetDesc"]+'</td>'
-                    + '<td class="text-center">'+val["numOfUnit"]+'</td>'
-                    + '<td class="text-right">'+val["pricePerUnit"]+'</td>'
-                    + '<td class="text-right">'+val["totalPrice"]+'</td>'
-                    + '<td>'+val["remark"]+'</td>'
-                    + '<td class="text-center">'
-                        + '<div class="btn-group">'
-                            + '<button class="btn btn-warning editDetail" data-id="'+key+'"><i class="fa fa-pencil"></i></button>'
-                            + '<button class="btn btn-default delDetail" data-id="'+key+'"><i class="fa fa-trash"></i></button>'
-                        + '</div>'
-                    + '</td>'
-                + '</tr>';
-        });
-        
-        $("#tableDetail tbody").html(html);
-        
-        $("button.addDetail").unbind().click(function(){
-            $("#detailModal").modal("show");
-            $("#detailDesc, #numOfUnit, #pricePerUnit, #totalPrice, #remark").val('');
-            
-            $("button.save").unbind().click(function(){
-                detail.push({
-                    budgetDesc: $("#detailDesc").val(),
-                    numOfUnit: $("#numOfUnit").val(),
-                    pricePerUnit: $("#pricePerUnit").val(),
-                    totalPrice: $("#totalPrice").val(),
-                    remark: $("#remark").val()
-                });
-                getDetail();                
-            });
-        });
-        
-        $("button.editDetail").unbind().click(function(){
-            var id = $(this).attr("data-id");
-            $("#detailModal").modal("show");
-            
-            $("#detailDesc").val(detail[id]["budgetDesc"]);
-            $("#numOfUnit").val(detail[id]["numOfUnit"]);
-            $("#pricePerUnit").val(detail[id]["pricePerUnit"]);
-            $("#totalPrice").val(detail[id]["totalPrice"]);
-            $("#remark").val(detail[id]["remark"]);
-            
-            $("button.save").unbind().click(function(){
-                detail[id] = {
-                    budgetDesc: $("#detailDesc").val(),
-                    numOfUnit: $("#numOfUnit").val(),
-                    pricePerUnit: $("#pricePerUnit").val(),
-                    totalPrice: $("#totalPrice").val(),
-                    remark: $("#remark").val()
-                };
-                getDetail();                
-            });
-        });
-        
-        $("button.delDetail").unbind().click(function(){
-            $(this).closest('tr').hide();
-            detail.splice($(this).attr("data-id"), 1);
-        });
-    }
-    
-    /*function getDept(){
-        var datas = callAjax("{{_context_path}}/api/revenue/project/getDept", "post", {facultyId: facultyId}, "json");
-        if(typeof datas !== "undefined" && datas !== null){
-            var html = '<option value="">- เลือก -</option>';
-            $.each(datas["lists"], function(key, val){
-                html += '<option value="'+val["id"]+'">'+val["name"]+'</option>';
-            });
-            
-            $("#deptId").html(html);
-        }
-    }*/
-    
-    function dataObject(){
-        var obj = {};
-        obj["id"] = id;
-        obj["deptId"] = facultyId;
-        $("#form input[type=text], #form textarea, #form input[type=radio]:checked").each(function(){
-            if($(this).attr("name").indexOf("intName") == -1){
-                var fname = $(this).attr("name");
-                var fval = $(this).val();
+                                    htmlIntegration += '<div class="row">'
+                                            + '<div class="col-md-offset-1 col-md-3 checkbox-custom checkbox-primary">'
+                                            + '<input class="integration" type="checkbox" id="intId' + val["id"] + '" name="intId' + val["id"] + '" value="' + val["id"] + '" ' + isCheck + '>'
+                                            + '<label style="padding-left: 10px;">' + val["name"] + '</label>'
+                                            + '</div>'
+                                            + '<div class="col-md-6">'
+                                            + '<input type="text" id="intName' + val["id"] + '" name="intName' + val["id"] + '" value="' + value + '" class="form-control input-sm" ' + isDisable + '>'
+                                            + '</div>'
+                                            + '</div>'
+                                            + '<br>';
+                                });
 
-                obj[fname] = fval;
-            }
-        });
-        
-        var integration = [];
-        $("#form input[type=checkbox]:checked").each(function(){
-            var remarkId = $(this).attr("name").replace("intId", "");
-            integration.push({
-                integrationId: remarkId,
-                desc: $("#intName"+remarkId).val()
-            });
-        });
-        
-        var newKpi = [];
-        $.each(kpi, function(key, val){
-            $.each(val, function(key2, val2){
-                newKpi.push(val2);
-            });
-        });
-        obj["integration"] = integration;
-        obj["affirmative"] = affirmative;
-        obj["kpi"] = newKpi;
-        obj["operating"] = operating;
-        obj["detail"] = detail;
-        
-        var fdata = {};
-        fdata["project"] = obj;
-        
-        return fdata;
-    }
-    
-    function saveProject(dataJSONEN){
-        $("#saveModal").modal("show");
-        
-        $("#mIcon").html('<i class="text-info fa fa-save"></i>');
-        $("#mText").html('กำลังบันทึกข้อมูล...');
-        
-        setTimeout(function(){
-            var datas = callAjax("{{_context_path}}/api/revenue/project/save", "post", dataJSONEN, "json");
-            if(typeof datas !== "undefined" && datas !== null){
-                if(datas["save"] == true){
-                    $("#mIcon").html('<i class="text-success fa fa-check"></i>');
-                    $("#mText").html('บันทึกข้อมูลเรียบร้อยแล้ว');
-                }
-                else{
-                    $("#mIcon").html('<i class="text-danger fa fa-times"></i>');
-                    $("#mText").html('ไม่สามารถบันทึกข้อมูลได้');
-                }
-            }
-        }, 500);
-    }
+                                $("#listInt").html(htmlIntegration);
+
+                                // when you select remark control
+                                $("input.integration").click(function () {
+                                    var remarkId = $(this).attr("name").replace("intId", "");
+                                    if ($(this).is(':checked')) {
+                                        $("#intName" + remarkId).prop("disabled", false).val("");
+                                    }
+                                    else {
+                                        $("#intName" + remarkId).prop("disabled", true).val("");
+                                    }
+                                });
+
+                                var htmlSubsidies = '';
+                                $.each(datas["layouts"]["subsidies"], function (key, val) {
+                                    htmlSubsidies += '<div class="col-md-6">'
+                                            + '<div class="row">'
+                                            + '<div class="col-md-12">'
+                                            + '<input type="radio" name="budgetTypeId" value="' + val["id"] + '">'
+                                            + '<label style="padding-left: 5px;">' + val["typeName"] + '</label>'
+                                            + '</div>'
+                                            + '</div><br>'
+                                            + '</div>';
+                                });
+                                $("#listSubsidies").html(htmlSubsidies);
+                                $("input[name=budgetTypeId][value=" + budgetTypeId + "]").prop('checked', true);
+
+                                var htmlPlan = '';
+                                $.each(datas["layouts"]["plan"], function (key, val) {
+                                    htmlPlan += '<div class="col-md-6">'
+                                            + '<div class="row">'
+                                            + '<div class="col-md-12">'
+                                            + '<input type="radio" name="planId" value="' + val["id"] + '">'
+                                            + '<label style="padding-left: 5px;">' + val["planName"] + '</label>'
+                                            + '</div>'
+                                            + '</div><br>'
+                                            + '</div>';
+                                });
+                                $("#listPlan").html(htmlPlan);
+                                $("input[name=planId][value=" + planId + "]").prop('checked', true);
+                                
+                                //listFund
+                                var htmlFund = '';
+                                $.each(datas["layouts"]["fundgroup"], function (key, val) {
+                                    if(val["id"] != "900") {
+                                        htmlFund += '<div class="col-md-6">'
+                                                + '<div class="row">'
+                                                + '<div class="col-md-12">'
+                                                + '<input type="radio" name="fundgroupId" value="' + val["id"] + '">'
+                                                + '<label style="padding-left: 5px;">' + val["name"] + '</label>'
+                                                + '</div>'
+                                                + '</div><br>'
+                                                + '</div>';
+                                    } else {
+                                        htmlFund += '<div class="col-md-6">'
+                                                + '<div class="row">'
+                                                + '<div class="col-md-12">'                                                
+                                                + '<label style="padding-left: 5px;">- ' + val["name"] + ' -</label>'
+                                                + '</div>'
+                                                + '</div><br>'
+                                                + '</div>';
+                                    }
+                                });
+                                $("#listFund").html(htmlFund);
+                                $("input[name=fundgroupId][value=" + fundgroupId + "]").prop('checked', true);
+                                
+
+                                $.each(datas["layouts"]["affirmative"], function (key, val) {
+                                    typeArr[val["typeId"]] = val["typeName"];
+
+                                    issueArr[val["typeId"]] = {};
+                                    $.each(val["issue"], function (key2, val2) {
+                                        issueArr[val["typeId"]][val2["issueId"]] = val2["issueName"];
+
+                                        targetArr[val2["issueId"]] = {};
+                                        $.each(val2["target"], function (key3, val3) {
+                                            targetArr[val2["issueId"]][val3["targetId"]] = val3["targetName"];
+
+                                            strategyArr[val3["targetId"]] = {};
+                                            $.each(val3["strategy"], function (key4, val4) {
+                                                strategyArr[val3["targetId"]][val4["strategyId"]] = val4["strategyName"];
+                                            });
+                                        });
+                                    });
+
+                                });
+                                getAffirmative();
+                                getKpiType(datas["layouts"]["kpiType"]);
+
+                                /*var htmlBudget = '';
+                                 var count = 0;
+                                 $.each(datas["layouts"]["budgetType"], function(key, val){
+                                 var sub = 0;
+                                 
+                                 htmlBudget += '<tr style="background-color: #F1F1F1;">'
+                                 + '<td>'+(++count)+'. ' + val["typeName"]+'</td>'
+                                 + '<td colspan="4">&nbsp;</td>'
+                                 + '</tr>';
+                                 $.each(val["sub"], function(key2, val2){
+                                 htmlBudget += '<tr>'
+                                 + '<td style="padding-left: 50px;">'+count+ '.' + (++sub) + ' ' + val2["typeName"]+'</td>'
+                                 + '<td><input type="number" id="budget'+val2["id"]+'-Q1" name="budget'+val2["id"]+'-Q1" class="form-control input-sm"></td>'
+                                 + '<td><input type="number" id="budget'+val2["id"]+'-Q2" name="budget'+val2["id"]+'-Q2" class="form-control input-sm"></td>'
+                                 + '<td><input type="number" id="budget'+val2["id"]+'-Q3" name="budget'+val2["id"]+'-Q3" class="form-control input-sm"></td>'
+                                 + '<td><input type="number" id="budget'+val2["id"]+'-Q4" name="budget'+val2["id"]+'-Q4" class="form-control input-sm"></td>'
+                                 + '</tr>';
+                                 });
+                                 });
+                                 $("#tableBudget tbody").html(htmlBudget);*/
+                            }
+                        }
+
+                        function optionAffirmative(type, pId) {
+                            var data;
+                            if (type == "type")
+                                data = typeArr;
+                            else if (type == "issue")
+                                data = issueArr[pId];
+                            else if (type == "target")
+                                data = targetArr[pId];
+                            else if (type == "strategy")
+                                data = strategyArr[pId];
+
+                            var html = '<option value="">- เลือก -</option>';
+                            $.each(data, function (key, value) {
+                                html += '<option value="' + key + '">' + value + '</option>';
+                            });
+                            return html;
+                        }
+
+                        function getAffirmative() {
+                            var html = '';
+                            $.each(affirmative, function (key, value) {
+                                html += '<div class="panel-body">'
+                                        + '<div class="col-md-12">'
+                                        + '<div class="col-md-2 text-right text-bold">แผนกลยุทธ์</div>'
+                                        + '<div class="col-md-8">' + typeArr[value["typeId"]] + '</div>'
+                                        + '<div class="col-md-2 text-right">'
+                                        + '<button class="btn btn-xs btn-danger delAffirmative" data-id="' + key + '"><i class="fa fa-times"></i></button>'
+                                        + '</div>'
+                                        + '</div>'
+                                        + '<div class="col-md-12">'
+                                        + '<div class="col-md-2 text-right text-bold">ประเด็นยุทธศาสตร์</div>'
+                                        + '<div class="col-md-8">' + issueArr[value["typeId"]][value["issueId"]] + '</div>'
+                                        + '</div>'
+                                        + '<div class="col-md-12">'
+                                        + '<div class="col-md-2 text-right text-bold">เป้าประสงค์</div>'
+                                        + '<div class="col-md-8">' + targetArr[value["issueId"]][value["targetId"]] + '</div>'
+                                        + '</div>'
+                                        + '<div class="col-md-12">'
+                                        + '<div class="col-md-2 text-right text-bold">กลยุทธ์</div>'
+                                        + '<div class="col-md-8">' + strategyArr[value["targetId"]][value["strategyId"]] + '</div>'
+                                        + '</div>'
+                                        + '</div>';
+                            });
+                            $("#affirmative").html(html);
+
+                            $("button.addAffirmative").unbind().click(function () {
+                                $("#affirmativeModal").modal("show");
+                                $("#typeId, #issueId, #targetId, #strategyId").val('');
+
+                                $("#typeId").html(optionAffirmative("type", null)).change(function () {
+                                    if ($("#typeId").val() == "") {
+                                        $("#issueId, #targetId, #strategyId").html('<option value="">- เลือก -</option>');
+                                    }
+                                    else {
+                                        $("#issueId").html(optionAffirmative("issue", $("#typeId").val())).change(function () {
+                                            if ($("#issueId").val() == "") {
+                                                $("#targetId, #strategyId").html('<option value="">- เลือก -</option>');
+                                            }
+                                            else {
+                                                $("#targetId").html(optionAffirmative("target", $("#issueId").val())).change(function () {
+                                                    if ($("#targetId").val() == "") {
+                                                        $("#strategyId").html('<option value="">- เลือก -</option>');
+                                                    }
+                                                    else {
+                                                        $("#strategyId").html(optionAffirmative("strategy", $("#targetId").val()));
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+
+                                $("button.save").unbind().click(function () {
+                                    affirmative.push({
+                                        typeId: $("#typeId").val(),
+                                        issueId: $("#issueId").val(),
+                                        targetId: $("#targetId").val(),
+                                        strategyId: $("#strategyId").val()
+                                    });
+                                    getAffirmative();
+
+                                });
+                            });
+
+                            $("button.delAffirmative").unbind().click(function () {
+                                affirmative.splice($(this).attr("data-id"), 1);
+                                $(this).closest('.panel-body').hide();
+                                return false;
+                            });
+                        }
+
+                        function getKpiType(input) {
+                            var html = '';
+                            $.each(input, function (key, value) {
+                                if (!kpi[value["id"]])
+                                    kpi[value["id"]] = [];
+
+                                html += '<tr style="background-color: #F1F1F1;">'
+                                        + '<td colspan="3">' + value["name"] + '</td>'
+                                        + '<td class="text-center">'
+                                        + '<button class="btn btn-success addKpi" data-key="' + value["id"] + '"><i class="fa fa-plus-circle"></i> เพิ่ม</button>'
+                                        + '</td>'
+                                        + '</tr>';
+
+                                $.each(kpi[value["id"]], function (key2, value2) {
+                                    html += '<tr>'
+                                            + '<td>' + value2["budgetDesc"] + '</td>'
+                                            + '<td class="text-center">' + value2["unit"] + '</td>'
+                                            + '<td class="text-center">' + value2["goal"] + '</td>'
+                                            + '<td class="text-center">'
+                                            + '<div class="btn-group">'
+                                            + '<button class="btn btn-warning editKpi" data-key="' + value["id"] + '" data-id="' + key2 + '"><i class="fa fa-pencil"></i></button>'
+                                            + '<button class="btn btn-default delKpi" data-key="' + value["id"] + '" data-id="' + key2 + '"><i class="fa fa-trash"></i></button>'
+                                            + '</div>'
+                                            + '</td>'
+                                            + '</tr>';
+                                });
+                            });
+                            $("#tableKpi tbody").html(html);
+
+                            $("button.addKpi").unbind().click(function () {
+                                var key = $(this).attr("data-key");
+                                $("#kpiModal").modal("show");
+                                $("#kpiTitle").html(input[key - 1]["name"]);
+                                $("#budgetDesc, #unit, #goal").val('');
+
+                                $("button.save").unbind().click(function () {
+                                    kpi[key].push({
+                                        kpiTypeId: key,
+                                        budgetDesc: $("#budgetDesc").val(),
+                                        unit: $("#unit").val(),
+                                        goal: $("#goal").val()
+                                    });
+                                    getKpiType(input);
+                                });
+                            });
+
+                            $("button.editKpi").unbind().click(function () {
+                                var key = $(this).attr("data-key");
+                                var id = $(this).attr("data-id");
+
+                                $("#kpiModal").modal("show");
+                                $("#kpiTitle").html(input[key - 1]["name"]);
+
+                                $("#budgetDesc").val(kpi[key][id]["budgetDesc"]);
+                                $("#unit").val(kpi[key][id]["unit"]);
+                                $("#goal").val(kpi[key][id]["goal"]);
+
+                                $("button.save").unbind().click(function () {
+                                    kpi[key][id] = {
+                                        kpiTypeId: key,
+                                        budgetDesc: $("#budgetDesc").val(),
+                                        unit: $("#unit").val(),
+                                        goal: $("#goal").val()
+                                    };
+                                    getKpiType(input);
+                                });
+                            });
+
+                            $("button.delKpi").unbind().click(function () {
+                                var key = $(this).attr("data-key");
+                                $(this).closest('tr').hide();
+                                kpi[key].splice($(this).attr("data-id"), 1);
+                            });
+                        }
+
+                        function getOperating() {
+                            var html = '';
+                            var count = 0;
+                            $.each(operating, function (key, value) {
+                                html += '<tr>'
+                                        + '<td>' + (++count) + '. ' + value["operName"] + '</td>'
+                                        + '<td class="text-center">' + value["timeStart"] + '</td>'
+                                        + '<td class="text-center">' + value["timeEnd"] + '</td>'
+                                        + '<td class="text-center">'
+                                        + '<div class="btn-group">'
+                                        + '<button class="btn btn-warning editOperating" data-id="' + key + '"><i class="fa fa-pencil"></i></button>'
+                                        + '<button class="btn btn-default delOperating" data-id="' + key + '"><i class="fa fa-trash"></i></button>'
+                                        + '</div>'
+                                        + '</td>'
+                                        + '</tr>';
+                            });
+                            $("#tableOperating tbody").html(html);
+
+                            $("button.addOperating").unbind().click(function () {
+                                $("#operatingModal").modal("show");
+                                $("#operatingName, #operatingStart, #operatingEnd").val('');
+
+                                $("button.save").unbind().click(function () {
+                                    operating.push({
+                                        operName: $("#operatingName").val(),
+                                        timeStart: $("#operatingStart").val(),
+                                        timeEnd: $("#operatingEnd").val()
+                                    });
+                                    getOperating();
+                                });
+                            });
+
+                            $("button.editOperating").unbind().click(function () {
+                                var id = $(this).attr("data-id");
+                                $("#operatingModal").modal("show");
+                                $("#operatingName").val(operating[id]["operName"]);
+                                $("#operatingStart").val(operating[id]["timeStart"]);
+                                $("#operatingEnd").val(operating[id]["timeEnd"]);
+
+                                $("button.save").unbind().click(function () {
+                                    operating[id] = {
+                                        operName: $("#operatingName").val(),
+                                        timeStart: $("#operatingStart").val(),
+                                        timeEnd: $("#operatingEnd").val()
+                                    };
+                                    getOperating();
+                                });
+                            });
+
+                            $("button.delOperating").unbind().click(function () {
+                                $(this).closest('tr').hide();
+                                operating.splice($(this).attr("data-id"), 1);
+                            });
+                        }
+
+                        function getDetail() {
+                            var html = '';
+                            var count = 0;
+                            $.each(detail, function (key, val) {
+                                html += '<tr>'
+                                        + '<td>' + (++count) + '. ' + val["budgetDesc"] + '</td>'
+                                        + '<td class="text-center">' + val["numOfUnit"] + '</td>'
+                                        + '<td class="text-right">' + val["pricePerUnit"] + '</td>'
+                                        + '<td class="text-right">' + val["totalPrice"] + '</td>'
+                                        + '<td>' + val["remark"] + '</td>'
+                                        + '<td class="text-center">'
+                                        + '<div class="btn-group">'
+                                        + '<button class="btn btn-warning editDetail" data-id="' + key + '"><i class="fa fa-pencil"></i></button>'
+                                        + '<button class="btn btn-default delDetail" data-id="' + key + '"><i class="fa fa-trash"></i></button>'
+                                        + '</div>'
+                                        + '</td>'
+                                        + '</tr>';
+                            });
+
+                            $("#tableDetail tbody").html(html);
+
+                            $("button.addDetail").unbind().click(function () {
+                                $("#detailModal").modal("show");
+                                $("#detailDesc, #numOfUnit, #pricePerUnit, #totalPrice, #remark").val('');
+
+                                $("button.save").unbind().click(function () {
+                                    detail.push({
+                                        budgetDesc: $("#detailDesc").val(),
+                                        numOfUnit: $("#numOfUnit").val(),
+                                        pricePerUnit: $("#pricePerUnit").val(),
+                                        totalPrice: $("#totalPrice").val(),
+                                        remark: $("#remark").val()
+                                    });
+                                    getDetail();
+                                });
+                            });
+
+                            $("button.editDetail").unbind().click(function () {
+                                var id = $(this).attr("data-id");
+                                $("#detailModal").modal("show");
+
+                                $("#detailDesc").val(detail[id]["budgetDesc"]);
+                                $("#numOfUnit").val(detail[id]["numOfUnit"]);
+                                $("#pricePerUnit").val(detail[id]["pricePerUnit"]);
+                                $("#totalPrice").val(detail[id]["totalPrice"]);
+                                $("#remark").val(detail[id]["remark"]);
+
+                                $("button.save").unbind().click(function () {
+                                    detail[id] = {
+                                        budgetDesc: $("#detailDesc").val(),
+                                        numOfUnit: $("#numOfUnit").val(),
+                                        pricePerUnit: $("#pricePerUnit").val(),
+                                        totalPrice: $("#totalPrice").val(),
+                                        remark: $("#remark").val()
+                                    };
+                                    getDetail();
+                                });
+                            });
+
+                            $("button.delDetail").unbind().click(function () {
+                                $(this).closest('tr').hide();
+                                detail.splice($(this).attr("data-id"), 1);
+                            });
+                        }
+
+                        /*function getDept(){
+                         var datas = callAjax("{{_context_path}}/api/revenue/project/getDept", "post", {facultyId: facultyId}, "json");
+                         if(typeof datas !== "undefined" && datas !== null){
+                         var html = '<option value="">- เลือก -</option>';
+                         $.each(datas["lists"], function(key, val){
+                         html += '<option value="'+val["id"]+'">'+val["name"]+'</option>';
+                         });
+                         
+                         $("#deptId").html(html);
+                         }
+                         }*/
+
+                        function dataObject() {
+                            var obj = {};
+                            obj["id"] = id;
+                            obj["deptId"] = facultyId;
+                            $("#form input[type=text], #form textarea, #form input[type=radio]:checked").each(function () {
+                                if ($(this).attr("name").indexOf("intName") == -1) {
+                                    var fname = $(this).attr("name");
+                                    var fval = $(this).val();
+
+                                    obj[fname] = fval;
+                                }
+                            });
+
+                            var integration = [];
+                            $("#form input[type=checkbox]:checked").each(function () {
+                                var remarkId = $(this).attr("name").replace("intId", "");
+                                integration.push({
+                                    integrationId: remarkId,
+                                    desc: $("#intName" + remarkId).val()
+                                });
+                            });
+
+                            var newKpi = [];
+                            $.each(kpi, function (key, val) {
+                                $.each(val, function (key2, val2) {
+                                    newKpi.push(val2);
+                                });
+                            });
+                            obj["integration"] = integration;
+                            obj["affirmative"] = affirmative;
+                            obj["kpi"] = newKpi;
+                            obj["operating"] = operating;
+                            obj["detail"] = detail;
+
+                            var fdata = {};
+                            fdata["project"] = obj;
+
+                            return fdata;
+                        }
+
+                        function saveProject(dataJSONEN) {
+                            $("#saveModal").modal("show");
+
+                            $("#mIcon").html('<i class="text-info fa fa-save"></i>');
+                            $("#mText").html('กำลังบันทึกข้อมูล...');
+
+                            setTimeout(function () {
+                                var datas = callAjax("{{_context_path}}/api/revenue/project/save", "post", dataJSONEN, "json");
+                                if (typeof datas !== "undefined" && datas !== null) {
+                                    if (datas["save"] == true) {
+                                        $("#mIcon").html('<i class="text-success fa fa-check"></i>');
+                                        $("#mText").html('บันทึกข้อมูลเรียบร้อยแล้ว');
+                                    }
+                                    else {
+                                        $("#mIcon").html('<i class="text-danger fa fa-times"></i>');
+                                        $("#mText").html('ไม่สามารถบันทึกข้อมูลได้');
+                                    }
+                                }
+                            }, 500);
+                        }
 
 </script>

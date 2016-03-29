@@ -41,6 +41,7 @@ class ProjectService extends CServiceBase implements IProjectService {
             "projectType"=>$lookUpSer->listProjectType(),
             "subsidies"=>$proUniSer->fetchSubsidies(),
             "plan"=>$proUniSer->fetchPlan(),
+            "fundgroup"=>$lookUpSer->listFundgroup(),
             "budgetType"=>$proUniSer->fetchBudgetType(),
             "affirmative"=>$this->affirmativeLevel(),
             "listProject"=>$this->datacontext->getObject($listProject),
@@ -264,6 +265,7 @@ class ProjectService extends CServiceBase implements IProjectService {
             $modelBE->setTimeEnd(new \DateTime(str_replace("/","-",$seriesData->timeEnd)));
             $modelBE->setBudgetTypeId($seriesData->budgetTypeId);
             $modelBE->setPlanId($seriesData->planId);
+            $modelBE->setFundgroupId($seriesData->fundgroupId);
             //$modelBE->setTimeEnd($this->convertDate($seriesData->timeEnd));
 
             $this->datacontext->updateObject($modelBE);
@@ -408,6 +410,8 @@ class ProjectService extends CServiceBase implements IProjectService {
             "budgetEstText" => $expData->budgetEstText,
             "budgetTypeId" => $expData->budgetTypeId,
             "projectId" => $expData->projectId,
+            "planId" => $expData->planId,
+            "fundgroupId" => $expData->fundgroupId,
             "detail" => $detailData
         );
         
@@ -420,8 +424,9 @@ class ProjectService extends CServiceBase implements IProjectService {
         $expD = $this->datacontext->getObject($exp)[0];
         
         $expD->budgetTypeId = $project->budgetTypeId;
-        $expD->projectId = $project->projectId;
+        $expD->planId = $project->planId;
         $expD->projectTypeId = $project->projectTypeId;
+        $expD->fundgroupId = $project->fundgroupId;
         $expD->director = $project->director;
         $expD->responder = $project->responder;
         $expD->rationale = $project->rationale;
