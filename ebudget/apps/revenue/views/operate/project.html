@@ -779,9 +779,11 @@
                                 $("#timeEnd").val(data["timeEnd"]);
                                 $("#budgetEstAmount").val(data["budgetEstAmount"]);
                                 $("#budgetEstText").val(data["budgetEstText"]);
+                                
                                 budgetTypeId = data["budgetTypeId"];
                                 planId = data["planId"];
                                 fundgroupId = data["fundgroupId"];
+                                budgetProjectTypeId = data["budgetProjectTypeId"];
                                 detail = data["detail"];
                             }
                         }
@@ -846,14 +848,14 @@
                                     htmlSubsidies += '<div class="col-md-6">'
                                             + '<div class="row">'
                                             + '<div class="col-md-12">'
-                                            + '<input type="radio" name="budgetTypeId" value="' + val["id"] + '">'
+                                            + '<input type="radio" name="budgetProjectTypeId" value="' + val["id"] + '">'
                                             + '<label style="padding-left: 5px;">' + val["typeName"] + '</label>'
                                             + '</div>'
                                             + '</div><br>'
                                             + '</div>';
                                 });
                                 $("#listSubsidies").html(htmlSubsidies);
-                                $("input[name=budgetTypeId][value=" + budgetTypeId + "]").prop('checked', true);
+                                $("input[name=budgetProjectTypeId][value=" + budgetProjectTypeId + "]").prop('checked', true);
 
                                 var htmlPlan = '';
                                 $.each(datas["layouts"]["plan"], function (key, val) {
