@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="1.053325017224382"/>
-	<property name="ireport.x" value="54"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.1586575189468202"/>
+	<property name="ireport.x" value="45"/>
+	<property name="ireport.y" value="10"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
 	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
 	<style name="Default" isDefault="true" fontName="TH SarabunPSK" fontSize="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -208,12 +208,20 @@ ORDER BY
 		<variableExpression><![CDATA[$F{planQ1}+$F{usedQ1}+$F{planQ2}+$F{usedQ2}+$F{planQ3}+$F{usedQ3}+$F{planQ4}+$F{usedQ4}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
+	<variable name="Total_plan" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$F{planQ1}+$F{planQ2}+$F{planQ3}+$F{planQ4}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="Total_used" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$F{usedQ1}+$F{usedQ2}+$F{usedQ3}+$F{usedQ4}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
 	<variable name="planSummaryTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
-		<variableExpression><![CDATA[$F{planSummary}]]></variableExpression>
+		<variableExpression><![CDATA[$V{Total_plan}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
 	<variable name="usedSummaryTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
-		<variableExpression><![CDATA[$F{usedSummary}]]></variableExpression>
+		<variableExpression><![CDATA[$V{Total_used}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
 	<variable name="planQ1Total" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
@@ -249,8 +257,7 @@ ORDER BY
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
 	<variable name="Total_Total" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
-		<variableExpression><![CDATA[($F{planSummary} == null && $F{usedSummary} == null)? 0:($F{planSummary} == null)?
-$F{usedSummary}:$F{planSummary}]]></variableExpression>
+		<variableExpression><![CDATA[$V{Total}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
 	<group name="G1" isStartNewPage="true">
@@ -1340,7 +1347,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{usedSummary}==null || $F{usedSummary}==0)?"-":$F{usedSummary}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{Total_used} == null || $V{Total_used} == 0)? "-":$V{Total_used}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="132" y="0" width="60" height="20" uuid="282edef9-4ae8-49e6-9e53-cffcc3c112c6"/>
@@ -1353,7 +1360,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{planSummary} == null || $F{planSummary} == 0)? "-":$F{planSummary}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{Total_plan} == null || $V{Total_plan} == 0)? "-":$V{Total_plan}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="732" y="0" width="70" height="20" uuid="0bbc1c45-ab22-40bd-ab0a-5a66cb427c1e"/>

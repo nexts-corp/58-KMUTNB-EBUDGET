@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="1.866029520839034"/>
-	<property name="ireport.x" value="69"/>
-	<property name="ireport.y" value="178"/>
+	<property name="ireport.zoom" value="1.1586575189468202"/>
+	<property name="ireport.x" value="164"/>
+	<property name="ireport.y" value="22"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
 	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
 	<style name="Default" isDefault="true" fontName="TH SarabunPSK" fontSize="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -187,7 +187,7 @@
 		<variableExpression><![CDATA[$F{bgTypeMainId}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<variable name="Count2" class="java.lang.Integer" resetType="Group" resetGroup="G2" calculation="DistinctCount">
+	<variable name="Count2" class="java.lang.Integer" resetType="Group" resetGroup="G1" calculation="DistinctCount">
 		<variableExpression><![CDATA[$F{bgTypeId}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
@@ -204,7 +204,7 @@
 		<groupExpression><![CDATA[$F{facultyId}]]></groupExpression>
 		<groupHeader>
 			<band height="20">
-				<printWhenExpression><![CDATA[$P{FACULTY_ID} == "0"]]></printWhenExpression>
+				<printWhenExpression><![CDATA[$P{FACULTY_ID} == "0" && $P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="322" y="0" width="70" height="20" isRemoveLineWhenBlank="true" uuid="3090d02e-0a23-40fa-ad71-2df119d9f5ad">
 						<printWhenExpression><![CDATA[$P{FACULTY_ID} == "0"]]></printWhenExpression>
@@ -218,7 +218,7 @@
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{salaryMonthG1}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{salaryMonthG1} == 0)? "-":$V{salaryMonthG1}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="392" y="0" width="70" height="20" isRemoveLineWhenBlank="true" uuid="c77b7cd8-4f48-4bea-911a-176e5b744d2c">
@@ -233,7 +233,7 @@
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{occupiedG1}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{occupiedG1} == 0)? "-":$V{occupiedG1}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="462" y="0" width="70" height="20" isRemoveLineWhenBlank="true" uuid="d3f81575-aaf3-4ea4-b397-dcc760c484fc">
@@ -248,7 +248,7 @@
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{vacancyG1}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{vacancyG1} == 0)? "-":$V{vacancyG1}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="532" y="0" width="90" height="20" isRemoveLineWhenBlank="true" uuid="2957b8c8-3f53-45a0-9bac-5a83e05a3b82">
@@ -263,7 +263,7 @@
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{salaryTotalG1}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{salaryTotalG1} == 0)? "-":$V{salaryTotalG1}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="622" y="0" width="180" height="20" isRemoveLineWhenBlank="true" uuid="98c906b6-a230-4dff-a872-91e7eb8ede30">
@@ -332,6 +332,7 @@
 		<groupExpression><![CDATA[$F{bgTypeMainId}]]></groupExpression>
 		<groupHeader>
 			<band height="20">
+				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="322" y="0" width="70" height="20" uuid="0ef458ec-a905-4cf3-b5d4-ac50e9d25aac"/>
 					<box leftPadding="2" rightPadding="2">
@@ -341,7 +342,7 @@
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{salaryMonthG2}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{salaryMonthG2} == 0)? "-":$V{salaryMonthG2}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="392" y="0" width="70" height="20" uuid="3f9f45a7-eeeb-4bc6-9479-6f18845cd2a6"/>
@@ -352,7 +353,7 @@
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{occupiedG2}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{occupiedG2} == 0)? "-":$V{occupiedG2}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="462" y="0" width="70" height="20" uuid="15813618-4410-459c-bd42-1ec7b7a55f31"/>
@@ -363,7 +364,7 @@
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{vacancyG2}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{vacancyG2} == 0)? "-":$V{vacancyG2}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="532" y="0" width="90" height="20" uuid="53c0772f-2cdb-48c4-bb47-3633052e2c89"/>
@@ -374,7 +375,7 @@
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{salaryTotalG2}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{salaryTotalG2} == 0)? "-":$V{salaryTotalG2}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="622" y="0" width="180" height="20" uuid="65cccb16-c152-4e32-8345-9cb21fc89c43"/>
@@ -424,6 +425,7 @@
 		<groupExpression><![CDATA[$F{deptId}]]></groupExpression>
 		<groupHeader>
 			<band height="20">
+				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
 				<textField isStretchWithOverflow="true" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="30" height="20" uuid="12a0dcee-effc-4ce8-afc0-f2fab4f1d807"/>
 					<box leftPadding="2" rightPadding="2">
@@ -463,7 +465,7 @@
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{salaryTotalG3}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{salaryTotalG3} == 0)? "-":$V{salaryTotalG3}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="392" y="0" width="70" height="20" uuid="e4f5c6b6-04fa-4483-82c8-56a526022a72"/>
@@ -474,7 +476,7 @@
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{occupiedG3}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{occupiedG3} == 0)? "-":$V{occupiedG3}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="322" y="0" width="70" height="20" uuid="db67f129-2446-431b-ac58-24c4b5efd710"/>
@@ -485,7 +487,7 @@
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{salaryMonthG3}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{salaryMonthG3} == 0)? "-":$V{salaryMonthG3}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="622" y="0" width="180" height="20" uuid="b48f35ed-2926-4819-a40d-5c2b5581d139"/>
@@ -507,7 +509,7 @@
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{vacancyG3}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{vacancyG3} == 0)? "-":$V{vacancyG3}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -516,13 +518,14 @@
 		<groupExpression><![CDATA[$F{bgTypeId}]]></groupExpression>
 		<groupHeader>
 			<band height="20">
+				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
 				<textField>
 					<reportElement style="FBold" x="30" y="0" width="222" height="20" uuid="0fa42dfa-afe0-4f8d-b923-4ae35450b8ab"/>
 					<box leftPadding="2"/>
 					<textElement verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{bgTypeName}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["- "+$F{bgTypeName}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="30" height="20" uuid="ab3be045-aeb1-4b3c-a2d0-109296cef7be"/>
@@ -566,7 +569,7 @@
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{vacancyG4}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{vacancyG4} == 0)? "-":$V{vacancyG4}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G4" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="532" y="0" width="90" height="20" uuid="58b10352-bb27-4fce-87f1-308fab21f01a"/>
@@ -577,7 +580,7 @@
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{salaryTotalG4}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{salaryTotalG4} == 0)? "-":$V{salaryTotalG4}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G4" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="392" y="0" width="70" height="20" uuid="19141365-e2fa-4fa7-965e-ff79eac93711"/>
@@ -588,7 +591,7 @@
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{occupiedG4}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{occupiedG4} == 0)? "-":$V{occupiedG4}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G4" pattern="#,###">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="322" y="0" width="70" height="20" uuid="d6f57a5d-afb0-41a5-a342-e03bdf97f82d"/>
@@ -599,15 +602,15 @@
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$V{salaryMonthG4}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[($V{salaryMonthG4} == 0)? "-":$V{salaryMonthG4}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="90">
-				<printWhenExpression><![CDATA[$F{bgTypeMainId} == 10100000]]></printWhenExpression>
+			<band height="70">
+				<printWhenExpression><![CDATA[$F{bgTypeMainId} == 10100000 && $P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
 				<textField isStretchWithOverflow="true" pattern="#,###">
-					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="30" height="90" uuid="d591dd4d-15e6-45e1-974c-3a36b521d1ea"/>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="30" height="70" uuid="d591dd4d-15e6-45e1-974c-3a36b521d1ea"/>
 					<box leftPadding="2" rightPadding="2">
 						<leftPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
@@ -618,7 +621,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="322" y="0" width="70" height="90" uuid="c48654cb-15d7-45bb-92f2-e0388e6ecb82"/>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="322" y="0" width="70" height="70" uuid="c48654cb-15d7-45bb-92f2-e0388e6ecb82"/>
 					<box leftPadding="2" rightPadding="2">
 						<leftPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
@@ -629,7 +632,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="392" y="0" width="70" height="90" uuid="c63f0b2a-0886-4072-8482-5bb9bb1a26b3"/>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="392" y="0" width="70" height="70" uuid="c63f0b2a-0886-4072-8482-5bb9bb1a26b3"/>
 					<box leftPadding="2" rightPadding="2">
 						<leftPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
@@ -640,7 +643,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="462" y="0" width="70" height="90" uuid="52d77a95-281c-4573-a009-039e1a4d0efd"/>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="462" y="0" width="70" height="70" uuid="52d77a95-281c-4573-a009-039e1a4d0efd"/>
 					<box leftPadding="2" rightPadding="2">
 						<leftPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
@@ -651,7 +654,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,###">
-					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="532" y="0" width="90" height="20" uuid="5373d978-d76e-4938-ae6f-34cc3057ff0a"/>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="532" y="0" width="90" height="14" uuid="5373d978-d76e-4938-ae6f-34cc3057ff0a"/>
 					<box leftPadding="2" rightPadding="2">
 						<leftPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
@@ -662,7 +665,7 @@
 					<textFieldExpression><![CDATA[$V{salaryTotalG4}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="622" y="0" width="180" height="90" uuid="bbb9f091-e255-44e4-b9bb-cc6786332a73"/>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="622" y="0" width="180" height="70" uuid="bbb9f091-e255-44e4-b9bb-cc6786332a73"/>
 					<box leftPadding="2" rightPadding="2">
 						<leftPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
@@ -673,35 +676,35 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement style="FBold" x="30" y="0" width="222" height="20" uuid="74aa8e3a-57da-4d8c-a22f-476e1ecc6213"/>
-					<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<reportElement style="FBold" x="30" y="0" width="222" height="14" uuid="74aa8e3a-57da-4d8c-a22f-476e1ecc6213"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
 					<text><![CDATA[รวมเงิน]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="Default" x="30" y="20" width="222" height="15" uuid="db355dd2-4134-4be3-af47-67beb3822591"/>
-					<textElement textAlignment="Center" verticalAlignment="Top">
+					<reportElement style="Default" x="30" y="14" width="222" height="14" uuid="db355dd2-4134-4be3-af47-67beb3822591"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
 					<text><![CDATA[เงินเลื่อนขั้น 3%]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="FBold" x="30" y="35" width="222" height="15" uuid="31316c67-a388-402f-813b-67904fae3af6"/>
-					<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<reportElement style="FBold" x="30" y="28" width="222" height="14" uuid="31316c67-a388-402f-813b-67904fae3af6"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
 					<text><![CDATA[รวมเงิน]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="Default" x="30" y="50" width="222" height="20" uuid="9d28d9ad-f138-4a7f-b1f3-363976237f82"/>
-					<textElement textAlignment="Center" verticalAlignment="Top">
+					<reportElement style="Default" x="30" y="42" width="222" height="14" uuid="9d28d9ad-f138-4a7f-b1f3-363976237f82"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
 					<text><![CDATA[เงินเลื่อนขั้น 6%]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
-					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="252" y="0" width="70" height="90" uuid="0f49083e-3968-47b6-b308-491f87817e28"/>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="252" y="0" width="70" height="70" uuid="0f49083e-3968-47b6-b308-491f87817e28"/>
 					<box leftPadding="2" rightPadding="2">
 						<leftPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
@@ -712,7 +715,7 @@
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,###">
-					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="532" y="35" width="90" height="15" uuid="082f5f91-cb02-4c40-be14-cb5d6802266b"/>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="532" y="28" width="90" height="14" uuid="082f5f91-cb02-4c40-be14-cb5d6802266b"/>
 					<box leftPadding="2" rightPadding="2">
 						<leftPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
@@ -723,7 +726,7 @@
 					<textFieldExpression><![CDATA[$V{salaryTotalG4}+Math.abs($V{salaryTotalG4}*0.03)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,###">
-					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="532" y="50" width="90" height="20" uuid="bb69df6c-3709-4127-9cf5-d1529f4edd4a"/>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="532" y="42" width="90" height="14" uuid="bb69df6c-3709-4127-9cf5-d1529f4edd4a"/>
 					<box leftPadding="2" rightPadding="2">
 						<leftPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
@@ -734,14 +737,14 @@
 					<textFieldExpression><![CDATA[Math.abs(($V{salaryTotalG4}+Math.abs($V{salaryTotalG4}*0.03))*0.06)]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement style="FBold" x="30" y="70" width="222" height="20" uuid="ff8f355b-ee86-4167-b71b-1c03924bd590"/>
+					<reportElement style="FBold" x="30" y="56" width="222" height="14" uuid="ff8f355b-ee86-4167-b71b-1c03924bd590"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
 					<text><![CDATA[รวมเงิน]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" pattern="#,###">
-					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="532" y="20" width="90" height="15" uuid="2d7974bd-5f78-43e4-82ec-869e674a3fb7"/>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="532" y="14" width="90" height="14" uuid="2d7974bd-5f78-43e4-82ec-869e674a3fb7"/>
 					<box leftPadding="2" rightPadding="2">
 						<leftPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
@@ -752,7 +755,7 @@
 					<textFieldExpression><![CDATA[Math.abs($V{salaryTotalG4}*0.03)]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="#,###">
-					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="532" y="70" width="90" height="20" uuid="e519b5d9-742a-49c4-9c37-90aff8ee40e7"/>
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="532" y="56" width="90" height="14" uuid="e519b5d9-742a-49c4-9c37-90aff8ee40e7"/>
 					<box leftPadding="2" rightPadding="2">
 						<leftPen lineWidth="0.75"/>
 						<rightPen lineWidth="0.75"/>
@@ -932,7 +935,7 @@
 				<box>
 					<bottomPen lineWidth="1.25" lineStyle="Dotted"/>
 				</box>
-				<textFieldExpression><![CDATA[$P{PLAN_NAME_START}+" - "+$P{PLAN_NAME_END}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($P{PLAN_NAME_START} == $P{PLAN_NAME_END})? $P{PLAN_NAME_START}:$P{PLAN_NAME_START}+" - "+$P{PLAN_NAME_END}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Default" x="62" y="40" width="278" height="20" uuid="9628745f-3384-4943-a9df-dd81f3402690"/>
@@ -1088,12 +1091,13 @@
 				</reportElement>
 				<box leftPadding="2" rightPadding="2">
 					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{salaryMonthSum}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{salaryMonthSum} == 0)? "-":$V{salaryMonthSum}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="392" y="150" width="70" height="40" uuid="48d6f174-46cd-49a8-afd4-7043bf50b40b">
@@ -1101,12 +1105,13 @@
 				</reportElement>
 				<box leftPadding="2" rightPadding="2">
 					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{occupiedSum}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{occupiedSum} == 0)? "-":$V{occupiedSum}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="462" y="150" width="70" height="40" uuid="89fb9164-5863-45c0-ac58-eee508562fd2">
@@ -1114,12 +1119,13 @@
 				</reportElement>
 				<box leftPadding="2" rightPadding="2">
 					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{vacancySum}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{vacancySum} == 0)? "-":$V{vacancySum}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" x="532" y="150" width="90" height="40" uuid="a1f2b2cd-7097-4c99-b81e-618e44a13d13">
@@ -1127,12 +1133,13 @@
 				</reportElement>
 				<box leftPadding="2" rightPadding="2">
 					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{salaryTotalSum}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{salaryTotalSum} == 0)? "-":$V{salaryTotalSum}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="252" y="150" width="70" height="40" uuid="c93ce780-7373-466a-a590-72bb94742332">

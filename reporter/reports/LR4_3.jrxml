@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="0.9575681974767111"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.6963904734900404"/>
+	<property name="ireport.x" value="163"/>
+	<property name="ireport.y" value="269"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
 	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
 	<style name="Default" isDefault="true" fontName="TH SarabunPSK" fontSize="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -209,59 +209,67 @@ ORDER BY
 		<initialValueExpression><![CDATA[new Date()]]></initialValueExpression>
 	</variable>
 	<variable name="Total" class="java.math.BigDecimal" resetType="None">
-		<variableExpression><![CDATA[($F{planSummary} == null && $F{usedSummary} == null)? 0:($F{planSummary} == null)?
-$F{usedSummary}:$F{planSummary}]]></variableExpression>
+		<variableExpression><![CDATA[$F{planQ1}+$F{usedQ1}+$F{planQ2}+$F{usedQ2}+$F{planQ3}+$F{usedQ3}+$F{planQ4}+$F{usedQ4}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="Total_used" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$F{usedQ1}+$F{usedQ2}+$F{usedQ3}+$F{usedQ4}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="Total_plan" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$F{planQ1}+$F{planQ2}+$F{planQ3}+$F{planQ4}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
 	<variable name="planSummaryTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
-		<variableExpression><![CDATA[$F{planSummary}]]></variableExpression>
+		<variableExpression><![CDATA[$V{Total_plan}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
 	<variable name="usedSummaryTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
-		<variableExpression><![CDATA[$F{usedSummary}]]></variableExpression>
+		<variableExpression><![CDATA[$V{Total_used}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
-	<variable name="planQ1Total" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+	<variable name="planQ1Total" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
 		<variableExpression><![CDATA[$F{planQ1}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
-	<variable name="usedQ1Total" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+	<variable name="usedQ1Total" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
 		<variableExpression><![CDATA[$F{usedQ1}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
-	<variable name="planQ2Total" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+	<variable name="planQ2Total" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
 		<variableExpression><![CDATA[$F{planQ2}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
-	<variable name="usedQ2Total" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+	<variable name="usedQ2Total" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
 		<variableExpression><![CDATA[$F{usedQ2}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
-	<variable name="planQ3Total" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+	<variable name="planQ3Total" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
 		<variableExpression><![CDATA[$F{planQ3}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
-	<variable name="usedQ3Total" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+	<variable name="usedQ3Total" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
 		<variableExpression><![CDATA[$F{usedQ3}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
-	<variable name="planQ4Total" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+	<variable name="planQ4Total" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
 		<variableExpression><![CDATA[$F{planQ4}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
-	<variable name="usedQ4Total" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+	<variable name="usedQ4Total" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
 		<variableExpression><![CDATA[$F{usedQ4}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
 	<variable name="Total_Total" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
-		<variableExpression><![CDATA[($F{planSummary} == null && $F{usedSummary} == null)? 0:($F{planSummary} == null)?
-$F{usedSummary}:$F{planSummary}]]></variableExpression>
+		<variableExpression><![CDATA[$V{Total}]]></variableExpression>
 		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
 	</variable>
 	<group name="G1" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{planId}]]></groupExpression>
 		<groupHeader>
-			<band/>
+			<band>
+				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
+			</band>
 		</groupHeader>
 	</group>
 	<group name="G2" isStartNewPage="true">
@@ -577,6 +585,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 		</groupHeader>
 		<groupFooter>
 			<band height="20">
+				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
 				<staticText>
 					<reportElement style="FBold" x="0" y="0" width="132" height="20" uuid="fd0d381d-e1bf-4222-82fa-d27978caee9d"/>
 					<box>
@@ -740,6 +749,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 		<groupExpression><![CDATA[$F{bgTypeMasterId}]]></groupExpression>
 		<groupHeader>
 			<band height="20">
+				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="132" height="20" uuid="a4cf1751-aa0c-4f6d-9ac6-eee9ff7575e9"/>
 					<box leftPadding="2" rightPadding="0">
@@ -1052,7 +1062,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{fundgroupName} == null)? "กองทุน    : -":"กองทุน    : "+$F{fundgroupName}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement style="FBold" x="432" y="120" width="60" height="20" uuid="a3b9afec-80be-4541-afc8-f9292f72d7a9"/>
@@ -1215,7 +1225,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 					<leftPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
-				<textFieldExpression><![CDATA["แผนงาน   : -"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{planName} == null)? "แผนงาน   : -":"แผนงาน   : "+$F{planName}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement style="FBold" x="372" y="120" width="60" height="20" uuid="07c9e317-7088-4f81-b0e0-93095849e9de"/>
@@ -1350,7 +1360,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{usedSummary}==null || $F{usedSummary}==0)?"-":$F{usedSummary}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{Total_used}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
 				<reportElement style="Default" stretchType="RelativeToBandHeight" x="132" y="0" width="60" height="20" uuid="282edef9-4ae8-49e6-9e53-cffcc3c112c6"/>
@@ -1363,7 +1373,7 @@ $F{usedSummary}:$F{planSummary}]]></variableExpression>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{planSummary} == null || $F{planSummary} == 0)? "-":$F{planSummary}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{Total_plan}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###" isBlankWhenNull="true">
 				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="732" y="0" width="70" height="20" uuid="0bbc1c45-ab22-40bd-ab0a-5a66cb427c1e"/>

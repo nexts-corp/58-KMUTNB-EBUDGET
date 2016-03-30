@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
-	<property name="ireport.zoom" value="1.2745232708414787"/>
-	<property name="ireport.x" value="131"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="0.957568197476695"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="11"/>
 	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
 	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
 	<style name="Default" isDefault="true" fontName="TH SarabunPSK" fontSize="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
@@ -22,15 +22,15 @@
 	<parameter name="HEAD_RPT" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["แบบรายละเอียดคำของบประมาณเงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน (ค่าตอบแทน ใช้สอยวัสดุ) \n ปีงบประมาณที่ขอตั้งงบประมาณ ( "+$P{PERIOD_ID}+" )"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="PLAN_NAME_END" class="java.lang.String">
+	<parameter name="PLAN_NAME_END" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA["-"]]></parameterDescription>
 		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="PLAN_NAME_START" class="java.lang.String">
+	<parameter name="PLAN_NAME_START" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA["-"]]></parameterDescription>
 		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="FACULTY_NAME" class="java.lang.String">
+	<parameter name="FACULTY_NAME" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA["-"]]></parameterDescription>
 		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
 	</parameter>
@@ -92,8 +92,53 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 		<variableExpression><![CDATA[Integer.parseInt($P{PERIOD_ID})]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
+	<variable name="count" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{bgName}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
 	<background>
-		<band splitType="Stretch"/>
+		<band height="555" splitType="Stretch">
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="156" width="250" height="352" uuid="00b56c9b-9932-4c90-926c-0344cd6ee4b6"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="250" y="156" width="160" height="352" uuid="6658f482-1f71-43b0-b8a3-a0dafd98ff37"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="410" y="156" width="160" height="352" uuid="682e13ed-5f85-454d-9834-9d43d8f2a422"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="570" y="156" width="232" height="352" uuid="9047c2c1-f4d7-4357-8062-f768d71a7f21"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.75" lineStyle="Solid"/>
+					<leftPen lineWidth="0.75" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.75" lineStyle="Solid"/>
+					<rightPen lineWidth="0.75" lineStyle="Solid"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
 	</background>
 	<title>
 		<band splitType="Stretch"/>
@@ -243,63 +288,40 @@ bgTypeMain.BUDGETTYPEID, bgType.BUDGETTYPEID]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Prevent">
+		<band height="30" splitType="Prevent">
 			<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
 			<textField isStretchWithOverflow="true">
-				<reportElement style="Default" stretchType="RelativeToBandHeight" x="0" y="0" width="250" height="20" uuid="34eafadc-5c70-4699-8aa9-8a7188ece241"/>
-				<box leftPadding="2" rightPadding="2">
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="0" y="0" width="250" height="30" uuid="34eafadc-5c70-4699-8aa9-8a7188ece241"/>
+				<box leftPadding="2" bottomPadding="5" rightPadding="2"/>
 				<textElement markup="html">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""+$F{bgName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{count}+". "+$F{bgName}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
-				<reportElement style="Default" stretchType="RelativeToBandHeight" x="410" y="0" width="160" height="20" uuid="773d4788-8967-4f72-a246-ac2bc87b08c0"/>
-				<box leftPadding="2" rightPadding="2">
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="410" y="0" width="160" height="30" uuid="773d4788-8967-4f72-a246-ac2bc87b08c0"/>
+				<box leftPadding="2" bottomPadding="5" rightPadding="2"/>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{bgRequest} == 0 || $F{bgRequest} == null)? "-":$F{bgRequest}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,###">
-				<reportElement style="Default" stretchType="RelativeToBandHeight" x="250" y="0" width="160" height="20" uuid="6ff42964-7454-49c2-a518-06f3f908eee0"/>
-				<box leftPadding="2" rightPadding="2">
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
-				</box>
+				<reportElement style="Default" stretchType="RelativeToBandHeight" x="250" y="0" width="160" height="30" uuid="6ff42964-7454-49c2-a518-06f3f908eee0"/>
+				<box leftPadding="2" bottomPadding="5" rightPadding="2"/>
 				<textElement textAlignment="Right">
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{bgHistory} == 0 || $F{bgHistory} == null)? "-":$F{bgHistory}]]></textFieldExpression>
 			</textField>
-			<frame>
-				<reportElement stretchType="RelativeToBandHeight" x="570" y="0" width="232" height="20" uuid="824c31b1-1f52-47bd-b9a0-c8e5f9d468fd"/>
-				<textField isStretchWithOverflow="true" pattern="##,##">
-					<reportElement style="Default" stretchType="RelativeToBandHeight" x="0" y="0" width="232" height="20" uuid="8edf98a3-6bd6-45e4-93aa-34b879b2604f"/>
-					<box leftPadding="2" rightPadding="2">
-						<topPen lineWidth="0.75"/>
-						<leftPen lineWidth="0.75"/>
-						<bottomPen lineWidth="0.75"/>
-						<rightPen lineWidth="0.75"/>
-					</box>
-					<textElement markup="html">
-						<font size="12"/>
-					</textElement>
-					<textFieldExpression><![CDATA[""+$F{remark}]]></textFieldExpression>
-				</textField>
-			</frame>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="570" y="0" width="232" height="30" uuid="3e934514-5d9b-43dc-9b95-7fdbc8f689c9"/>
+				<box leftPadding="2" bottomPadding="5" rightPadding="2"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{remark}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
