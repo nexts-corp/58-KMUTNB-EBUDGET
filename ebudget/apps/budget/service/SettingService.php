@@ -61,8 +61,8 @@ class SettingService extends CServiceBase implements ISettingService {
         $setting->setBudgetPeriodId($bgPeriodId);
         $dataSetting = $this->datacontext->getObject($setting);
 
-        $dataSetting[0]->setIsClosed($setClose);
-        $dataSetting[0]->setDateClose(date_format($dateClose, 'd-m-Y'));
+        $dataSetting[0]->setIsClosed($setClose);     
+        //$dataSetting[0]->setDateClose(date_format($dateClose, 'd-m-Y'));
         $dataSetting[0]->setDateUpdated(date("Y-m-d H:i:s"));
         if (!$this->datacontext->updateObject($dataSetting[0])) {
             return false;

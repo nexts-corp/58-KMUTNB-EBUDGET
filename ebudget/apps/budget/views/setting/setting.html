@@ -131,7 +131,7 @@
 
                 html += "</select>" +
                         "</td>" +
-                        "<td><input type='date' class='form-control datepicker' id='tbDateClose" + vm.id + "' value='" + vm.dateClose + "' /></td>" +
+                        "<td><input type='text' class='form-control datepicker' readonly id='tbDateClose" + vm.id + "' value='" + vm.dateClose + "' /></td>" +
                         "<td><button class='btn btn-md btn-primary btnSave' data-id='" + vm.id + "' data-year='" + vm.year + "'>บันทึก</button></td>" +
                         "</tr>";
             });
@@ -157,17 +157,20 @@
             });
             var dataJSONEN = encodeURIComponent(dataJSON);
 
-            var datas = callAjax("{{_context_path}}/api/budget/setting/save", "post", dataJSONEN, "json")["save"];
+            var datas = callAjax("{{_context_path}}/api/budget/setting/save", "post", dataJSONEN, "json");
             if (typeof datas !== 'undefined' && datas !== null) {
+                //console.log(datas);
                 if (datas["save"] == true) {
-                    $("#loading").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
+                    //$("#loading").html('<span class="text-success">บันทึกข้อมูลเรียบร้อย</span>');
+                    alert("บันทึกข้อมูลเรียบร้อย");
                     setTimeout(function () {
                         $("#modal").modal("hide");
-                        listsUnit();
+                        listsYear();
                     }, 500);
                 }
                 else {
-                    $("#loading").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้<br>' + datas["add"] + '</span>');
+                    //$("#loading").html('<span class="text-danger">ไม่สามารถบันทึกข้อมูลได้<br>' + datas["add"] + '</span>');
+                    alert("ไม่สามารถบันทึกข้อมูลได้");
                 }
             }
 
