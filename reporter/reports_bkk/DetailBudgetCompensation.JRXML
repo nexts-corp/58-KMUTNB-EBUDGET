@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
+	<property name="ireport.zoom" value="2.0526324729229244"/>
+	<property name="ireport.x" value="83"/>
+	<property name="ireport.y" value="0"/>
+	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
+	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
+	<style name="Default" isDefault="true" fontName="TH SarabunPSK" fontSize="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
+	<parameter name="PUBLISHER" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["พงศ์ปณต ทัศนียาชุมพาลี"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATE_CURRENT" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PERIOD_ID" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="HEAD_RPT" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["แบบสรุปงบประมาณรายจ่ายเงินรายได้จากงบประมาณแผ่นดิน  ประจำปีงบประมาณ พ.ศ."+$P{PERIOD_ID}+" จำแนกตามหน่วยงาน/กองทุน \nมหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[-- รายงานแบบ ง.1
+select
+	bg.facultyId, faculty.DEPARTMENTNAME as facultyName, bg.deptId, dept.DEPARTMENTNAME as deptName,
+	sum(case when bg.fundgroupId = 100 then bg.budgetSummary else 0 end) as 'generalFund',
+	sum(case when bg.fundgroupId = 200 then bg.budgetSummary else 0 end) as 'eduFund',
+	sum(case when bg.fundgroupId = 300 then bg.budgetSummary else 0 end) as 'researchFunds',
+	sum(case when bg.fundgroupId = 400 then bg.budgetSummary else 0 end) as 'outreachFund',
+	sum(case when bg.fundgroupId = 500 then bg.budgetSummary else 0 end) as 'affairsFund',
+	sum(case when bg.fundgroupId = 600 then bg.budgetSummary else 0 end) as 'assetsFund',
+	sum(case when bg.fundgroupId = 700 then bg.budgetSummary else 0 end) as 'otherFund',
+	sum(case when bg.fundgroupId = 701 then bg.budgetSummary else 0 end) as 'culturalFund',
+	sum(case when bg.fundgroupId = 702 then bg.budgetSummary else 0 end) as 'funds',
+	sum(case when bg.fundgroupId = 703 then bg.budgetSummary else 0 end) as 'welfareFund',
+	sum(case when bg.fundgroupId = 704 then bg.budgetSummary else 0 end) as 'devFund',
+	sum(case when bg.fundgroupId = 705 then bg.budgetSummary else 0 end) as 'boardFund',
+	sum(case when bg.fundgroupId = 706 then bg.budgetSummary else 0 end) as 'institutionsFund',
+	sum(case when bg.fundgroupId = 707 then bg.budgetSummary else 0 end) as 'purposeFund',
+	sum(case when bg.fundgroupId = 708 then bg.budgetSummary else 0 end) as 'inventoryFund',
+	sum(case when bg.fundgroupId = 709 then bg.budgetSummary else 0 end) as 'techKMUTNBFund'
+from (
+	select
+	faculty.DEPARTMENTID as facultyId, dept.DEPARTMENTID as deptId,
+	fund.FUNDGROUPID as fundgroupId,
+	coalesce(sum(bg140.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg141.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg142.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg143.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg144.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg145.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg146.BUDGETSUMMARY), 0) as budgetSummary
+	from L3D_DEPARTMENT faculty
+	left outer join L3D_DEPARTMENT dept on dept.MASTERID = faculty.DEPARTMENTID
+	inner join BUDGETHEAD bgh on bgh.DEPARTMENTID = dept.DEPARTMENTID
+	inner join L3D_FUNDGROUP fund on fund.FUNDGROUPID = bgh.FUNDGROUPID
+	left outer join BUDGET140 bg140 on bgh.BUDGETHEADID = bg140.BUDGETHEADID
+	left outer join BUDGET141 bg141 on bgh.BUDGETHEADID = bg141.BUDGETHEADID
+	left outer join BUDGET142 bg142 on bgh.BUDGETHEADID = bg142.BUDGETHEADID
+	left outer join BUDGET143 bg143 on bgh.BUDGETHEADID = bg143.BUDGETHEADID
+	left outer join BUDGET144 bg144 on bgh.BUDGETHEADID = bg144.BUDGETHEADID
+	left outer join BUDGET145 bg145 on bgh.BUDGETHEADID = bg145.BUDGETHEADID
+	left outer join BUDGET146 bg146 on bgh.BUDGETHEADID = bg146.BUDGETHEADID
+	where faculty.DEPARTMENTID <> 0
+	and faculty.DEPARTMENTGROUP = 'A'
+	and faculty.DEPARTMENTSTATUS = 'Y'
+	and dept.DEPARTMENTSTATUS = 'Y'
+	and bgh.BUDGETTYPECODE = 'G'
+	and bgh.BUDGETPERIODID = 2558
+	--and faculty.DEPARTMENTID = 30100
+	group by faculty.DEPARTMENTID, dept.DEPARTMENTID, fund.FUNDGROUPID
+) as bg
+inner join L3D_DEPARTMENT faculty on faculty.DEPARTMENTID = bg.facultyId
+inner join L3D_DEPARTMENT dept on dept.DEPARTMENTID = bg.deptId
+group by bg.facultyId, faculty.DEPARTMENTNAME, bg.deptId, dept.DEPARTMENTNAME]]>
+	</queryString>
+	<field name="facultyId" class="java.lang.Integer"/>
+	<field name="facultyName" class="java.lang.String"/>
+	<field name="deptId" class="java.lang.Integer"/>
+	<field name="deptName" class="java.lang.String"/>
+	<field name="generalFund" class="java.math.BigDecimal"/>
+	<field name="eduFund" class="java.math.BigDecimal"/>
+	<field name="researchFunds" class="java.math.BigDecimal"/>
+	<field name="outreachFund" class="java.math.BigDecimal"/>
+	<field name="affairsFund" class="java.math.BigDecimal"/>
+	<field name="assetsFund" class="java.math.BigDecimal"/>
+	<field name="otherFund" class="java.math.BigDecimal"/>
+	<field name="culturalFund" class="java.math.BigDecimal"/>
+	<field name="funds" class="java.math.BigDecimal"/>
+	<field name="welfareFund" class="java.math.BigDecimal"/>
+	<field name="devFund" class="java.math.BigDecimal"/>
+	<field name="boardFund" class="java.math.BigDecimal"/>
+	<field name="institutionsFund" class="java.math.BigDecimal"/>
+	<field name="purposeFund" class="java.math.BigDecimal"/>
+	<field name="inventoryFund" class="java.math.BigDecimal"/>
+	<field name="techKMUTNBFund" class="java.math.BigDecimal"/>
+	<variable name="CURRENT_PAGE" class="java.lang.Integer" resetType="None" calculation="DistinctCount">
+		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer(1)]]></initialValueExpression>
+	</variable>
+	<variable name="CURRENT_DATE" class="java.util.Date">
+		<variableExpression><![CDATA[new Date()]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<columnHeader>
+		<band height="135" splitType="Stretch">
+			<staticText>
+				<reportElement style="FBold" x="675" y="40" width="57" height="40" uuid="9fc5fbc2-c19a-48cb-8ef9-3e4583e0054d"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[รวม]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="400" y="40" width="55" height="40" uuid="3e5d786f-19de-47e1-b45e-a9d01ab0d703"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[เงินสมนาคุณ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="345" y="20" width="55" height="60" uuid="7533075b-7789-4d68-8c5e-fb05794eb812"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[ค่าเช่าบ้าน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="290" y="20" width="55" height="60" uuid="b180976c-4b46-40fb-a320-1f90b518d90c"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[ค่าตอบแทน
+พิเศษพน.ม.
+เงินเดือนเต็มขั้น]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="235" y="20" width="55" height="60" uuid="83399594-fb52-4dca-ba78-312a4acd96e5"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[ค่าตอบแทน
+พิเศษข้าราชการ
+เงินเดือนเต็มขั้น]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="180" y="20" width="55" height="60" uuid="e51f71e0-8e2c-4e8b-9b0d-6b6575e968ee"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[ค่าอาหาร
+ทำการ
+นอกเวลา]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="110" y="20" width="70" height="60" uuid="2e5c0dc7-62c5-48d5-92e0-94e0fbfe6a3e"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[ปี
+ง.ป.ม.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="455" y="40" width="55" height="40" uuid="b0e05887-6b48-4aa3-93ca-5d488e266293"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[งปจ ผู้บริหาร
+มีวาระ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="510" y="40" width="55" height="40" uuid="1019d452-d01b-4c32-b86d-8d04b3a5d201"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[ค่าสอนพิเศษ
+โยกงบมาเพิ่ม]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="FBold" x="0" y="20" width="110" height="60" uuid="60dc77fe-04b3-4e47-a838-04e7b2a4b57a"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["แผนงาน/งาน"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FBold" x="620" y="40" width="55" height="40" uuid="6c15662d-ef7f-4931-8e68-2e7bdd5475d7"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[ค่าตอบแทน
+วิทยาการ]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="FBold" x="0" y="0" width="802" height="20" uuid="ce0de5ce-8f33-414b-982d-e844ab1bfe5a"/>
+				<textFieldExpression><![CDATA["รายละเอียดจัดสรรงบประมาณให้หน่วยงาน ปีพ.ศ."+$P{PERIOD_ID}+" และ พ.ศ."+$P{PERIOD_ID}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FBold" x="565" y="40" width="55" height="40" uuid="f45c53ef-ef33-46f9-8c09-790c1bfbb1c9"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[ค่าตรวจ/
+ออกข้อสอบ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="732" y="20" width="70" height="60" uuid="26dc32ef-75ab-444d-9ecc-c74fec8e2921"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[รวม]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="400" y="20" width="332" height="20" uuid="262a07f2-9f72-4f59-87c9-68d73a6fb580"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[ค่าตอบแทนผู้ปฏิบัติงานให้ราชการ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="0" y="80" width="110" height="55" uuid="ebd84c1b-395e-4ac2-921b-bcf88490ba7c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[รวมทั้งมหาวิทยาลัย]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="FBold" x="110" y="80" width="70" height="20" uuid="7d162ea0-756a-422e-94e6-2467583f9cc4"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ปี 2558 งบที่จัดสรร"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="FBold" x="110" y="100" width="70" height="20" uuid="27423995-69d2-4769-988c-c806a8f377c5"/>
+				<textElement textAlignment="Center">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["เพิ่ม/ลด"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Prevent"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="32" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH:mm:ss">
+				<reportElement x="0" y="20" width="432" height="12" uuid="6c13bc20-06bd-4a29-b6b1-b74bcef75220"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["วันที่พิมพ์ : "+$V{CURRENT_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="432" y="20" width="370" height="12" uuid="e7deb48a-67cf-40ac-ad18-7f829ff5855c"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["พิมพ์โดย : "+$P{PUBLISHER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="30" splitType="Stretch"/>
+	</summary>
+</jasperReport>

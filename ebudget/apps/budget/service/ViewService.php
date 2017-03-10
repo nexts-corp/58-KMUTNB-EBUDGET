@@ -18,7 +18,10 @@ use th\co\bpg\cde\collection\impl\CJSONDecodeImpl;
 
 class ViewService extends CServiceBase implements IViewService
 {
-
+    public function hello(){
+	echo "Hello";
+	exit();
+    }
     public function formBudget()
     {
         $view = new CJView("formBudget", CJViewType::HTML_VIEW_ENGINE);

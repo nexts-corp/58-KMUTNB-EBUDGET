@@ -1,4 +1,4 @@
-var myApp = angular.module('report3D', ['commonApp']);
+﻿var myApp = angular.module('report3D', ['commonApp']);
 
 myApp.controller('mainController', function ($scope, $http, $controller, $filter) {
 
@@ -7,8 +7,8 @@ myApp.controller('mainController', function ($scope, $http, $controller, $filter
     var listDeptGroupB = []; //Global Variable
     var listL3DPlan = []; //Global Variable
     var listL3DFund = []; //Global Variable
-    //var pathJavaserver = "http://202.44.34.67/reporter2/api";
-    var pathJavaserver = "http://localhost:8888/api";
+    var pathJavaserver = "http://e.planning.kmutnb.ac.th/reporter/api";
+    //var pathJavaserver = "http://localhost:8888/api";
     $controller('cmListController', {$scope: $scope});
 
     $scope.init = function () {

@@ -1,0 +1,1828 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
+	<property name="ireport.zoom" value="1.2745232708414975"/>
+	<property name="ireport.x" value="7"/>
+	<property name="ireport.y" value="0"/>
+	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
+	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
+	<style name="Default" isDefault="true" fontName="TH SarabunPSK" fontSize="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
+	<parameter name="PUBLISHER" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["พงศ์ปณต ทัศนียาชุมพาลี"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATE_CURRENT" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FACULTY_NAME" class="java.lang.String">
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PERIOD_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="HEAD_RPT" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["แบบสรุปคำของบประมาณของส่วนราชการ \n ประจำปีงบประมาณ "+$P{PERIOD_ID}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+bgAll.bgPlanId, bgAll.bgPlanName,
+bgAll.bgProjectId, bgAll.bgProjectName,
+bgAll.facultyId, bgAll.facultyName,
+bgAll.deptId, bgAll.deptName,
+bgAll.budgetTypeMasterId, bgAll.budgetTypeMasterName,
+bgAll.budgetTypeMainId, bgAll.budgetTypeMainName,
+sum(case when bgAll.budgetTypeMainId = 10100000 then bgAll.budgetSummary else 0 end) as 'salary',
+sum(case when bgAll.budgetTypeMainId = 10200000 then bgAll.budgetSummary else 0 end) as 'wages',
+sum(case when bgAll.budgetTypeMainId = 10300000 then bgAll.budgetSummary else 0 end) as 'compensationEmp',
+sum(case when bgAll.budgetTypeMainId = 20101000 then bgAll.budgetSummary else 0 end) as 'staffSalary',
+sum(case when bgAll.budgetTypeMainId = 20102000 then bgAll.budgetSummary else 0 end) as 'tempWages',
+sum(case when bgAll.budgetTypeMainId = 20201000 then bgAll.budgetSummary else 0 end) as 'compensation',
+sum(case when bgAll.budgetTypeMainId = 20202000 then bgAll.budgetSummary else 0 end) as 'livingCost',
+sum(case when bgAll.budgetTypeMainId = 20203000 then bgAll.budgetSummary else 0 end) as 'matCost',
+sum(case when bgAll.budgetTypeMainId = 20204000 then bgAll.budgetSummary else 0 end) as 'utilityCost',
+sum(case when bgAll.budgetTypeMainId = 20300000 then bgAll.budgetSummary else 0 end) as 'durableCost',
+sum(case when bgAll.budgetTypeMainId = 20400000 then bgAll.budgetSummary else 0 end) as 'buildingCost',
+sum(case when bgAll.budgetTypeMainId = 20500000 then bgAll.budgetSummary else 0 end) as 'otherCost'
+from
+(
+select
+	faculty.DEPARTMENTID as facultyId, faculty.DEPARTMENTNAME as facultyName,
+	dept.DEPARTMENTID as deptId, dept.DEPARTMENTNAME as deptName,
+	bg.bgPlanId, bg.bgPlanName,
+	bg.bgProjectId, bg.bgProjectName,
+	bgTypeMaster.BUDGETTYPEID as budgetTypeMasterId, bgTypeMaster.BUDGETTYPENAME as budgetTypeMasterName,
+	bgTypeMain.BUDGETTYPEID as budgetTypeMainId, bgTypeMain.BUDGETTYPENAME as budgetTypeMainName,
+	coalesce(sum(bg.budgetSummary), 0) as budgetSummary
+from (
+	select
+	bgh.DEPARTMENTID as deptId,
+	bgPlan.BUDGETPLANID as bgPlanId, bgPlan.BUDGETPLANNAME as bgPlanName,
+	bgProject.BUDGETPROJECTID as bgProjectId, bgProject.BUDGETPROJECTNAME as bgProjectName,
+	(case
+		when bgh.FORMBUDGET = 140 then bg140.BUDGETTYPEID
+		when bgh.FORMBUDGET = 141 then bg141.BUDGETTYPEID
+		when bgh.FORMBUDGET = 142 then bg142.BUDGETTYPEID
+		when bgh.FORMBUDGET = 143 then bg143.BUDGETTYPEID
+		when bgh.FORMBUDGET = 144 then bg144.BUDGETTYPEID
+		when bgh.FORMBUDGET = 145 then bg145.BUDGETTYPEID
+		when bgh.FORMBUDGET = 146 then bg146.BUDGETTYPEID
+	else 0 end) as budgetTypeId,
+	coalesce(sum(bg140.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg141.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg142.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg143.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg144.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg145.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg146.BUDGETSUMMARY), 0) as budgetSummary
+	from BUDGETHEAD bgh
+	left outer join BUDGET140 bg140 on bgh.BUDGETHEADID = bg140.BUDGETHEADID
+	left outer join BUDGET141 bg141 on bgh.BUDGETHEADID = bg141.BUDGETHEADID
+	left outer join BUDGET142 bg142 on bgh.BUDGETHEADID = bg142.BUDGETHEADID
+	left outer join BUDGET143 bg143 on bgh.BUDGETHEADID = bg143.BUDGETHEADID
+	left outer join BUDGET144 bg144 on bgh.BUDGETHEADID = bg144.BUDGETHEADID
+	left outer join BUDGET145 bg145 on bgh.BUDGETHEADID = bg145.BUDGETHEADID
+	left outer join BUDGET146 bg146 on bgh.BUDGETHEADID = bg146.BUDGETHEADID
+	inner join MAPPINGPLAN mapplan on mapplan.PLANID = bgh.L3D_PLANID
+	inner join BUDGETPROJECT bgProject on bgProject.BUDGETPROJECTID = mapplan.BUDGETPROJECTID
+	inner join BUDGETPLAN bgPlan on bgPlan.BUDGETPLANID = bgProject.BUDGETPLANID
+	where bgh.BUDGETTYPECODE = 'G'
+	and bgh.BUDGETPERIODID = 2558
+	and mapplan.BUDGETPERIODID = bgh.BUDGETPERIODID
+	and mapplan.FUNDGROUPID = bgh.FUNDGROUPID
+	group by bgh.DEPARTMENTID, bgPlan.BUDGETPLANID, bgPlan.BUDGETPLANNAME, bgProject.BUDGETPROJECTID, bgProject.BUDGETPROJECTNAME, bgh.FORMBUDGET,
+	bg140.BUDGETTYPEID, bg141.BUDGETTYPEID, bg142.BUDGETTYPEID, bg143.BUDGETTYPEID, bg144.BUDGETTYPEID, bg145.BUDGETTYPEID, bg146.BUDGETTYPEID
+) as bg
+inner join L3D_DEPARTMENT dept on dept.DEPARTMENTID = bg.deptId
+inner join L3D_DEPARTMENT faculty on faculty.DEPARTMENTID = dept.MASTERID
+inner join BUDGETTYPE bgType on bgType.BUDGETTYPEID = bg.budgetTypeId
+inner join BUDGETTYPE bgTypeMain on bgTypeMain.BUDGETTYPEID = bgType.MASTERID
+inner join BUDGETTYPE bgTypeMaster on bgTypeMaster.BUDGETTYPEID = bgTypeMain.MASTERID
+where bgTypeMaster.BUDGETTYPEID not in (20100000, 20200000)
+group by faculty.DEPARTMENTID, faculty.DEPARTMENTNAME, dept.DEPARTMENTID, dept.DEPARTMENTNAME,
+bg.bgPlanId, bg.bgPlanName, bg.bgProjectId, bg.bgProjectName,
+bgTypeMaster.BUDGETTYPEID, bgTypeMaster.BUDGETTYPENAME,
+bgTypeMain.BUDGETTYPEID, bgTypeMain.BUDGETTYPENAME
+
+union all
+
+select
+	faculty.DEPARTMENTID as facultyId, faculty.DEPARTMENTNAME as facultyName,
+	dept.DEPARTMENTID as deptId, dept.DEPARTMENTNAME as deptName,
+	bg.bgPlanId, bg.bgPlanName,
+	bg.bgProjectId, bg.bgProjectName,
+	bgTypeMaster.BUDGETTYPEID as budgetTypeMasterId, bgTypeMaster.BUDGETTYPENAME as budgetTypeMasterName,
+	bgTypeMain.BUDGETTYPEID as budgetTypeMainId, bgTypeMain.BUDGETTYPENAME as budgetTypeMainName,
+	coalesce(sum(bg.budgetSummary), 0) as budgetSummary
+from (
+	select
+	bgh.DEPARTMENTID as deptId,
+	bgPlan.BUDGETPLANID as bgPlanId, bgPlan.BUDGETPLANNAME as bgPlanName,
+	bgProject.BUDGETPROJECTID as bgProjectId, bgProject.BUDGETPROJECTNAME as bgProjectName,
+	(case
+		when bgh.FORMBUDGET = 140 then bg140.BUDGETTYPEID
+		when bgh.FORMBUDGET = 141 then bg141.BUDGETTYPEID
+		when bgh.FORMBUDGET = 142 then bg142.BUDGETTYPEID
+		when bgh.FORMBUDGET = 143 then bg143.BUDGETTYPEID
+		when bgh.FORMBUDGET = 144 then bg144.BUDGETTYPEID
+		when bgh.FORMBUDGET = 145 then bg145.BUDGETTYPEID
+		when bgh.FORMBUDGET = 146 then bg146.BUDGETTYPEID
+	else 0 end) as budgetTypeId,
+	coalesce(sum(bg140.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg141.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg142.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg143.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg144.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg145.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg146.BUDGETSUMMARY), 0) as budgetSummary
+	from BUDGETHEAD bgh
+	left outer join BUDGET140 bg140 on bgh.BUDGETHEADID = bg140.BUDGETHEADID
+	left outer join BUDGET141 bg141 on bgh.BUDGETHEADID = bg141.BUDGETHEADID
+	left outer join BUDGET142 bg142 on bgh.BUDGETHEADID = bg142.BUDGETHEADID
+	left outer join BUDGET143 bg143 on bgh.BUDGETHEADID = bg143.BUDGETHEADID
+	left outer join BUDGET144 bg144 on bgh.BUDGETHEADID = bg144.BUDGETHEADID
+	left outer join BUDGET145 bg145 on bgh.BUDGETHEADID = bg145.BUDGETHEADID
+	left outer join BUDGET146 bg146 on bgh.BUDGETHEADID = bg146.BUDGETHEADID
+	inner join MAPPINGPLAN mapplan on mapplan.PLANID = bgh.L3D_PLANID
+	inner join BUDGETPROJECT bgProject on bgProject.BUDGETPROJECTID = mapplan.BUDGETPROJECTID
+	inner join BUDGETPLAN bgPlan on bgPlan.BUDGETPLANID = bgProject.BUDGETPLANID
+	where bgh.BUDGETTYPECODE = 'G'
+	and bgh.BUDGETPERIODID = 2558
+	group by bgh.DEPARTMENTID, bgPlan.BUDGETPLANID, bgPlan.BUDGETPLANNAME, bgProject.BUDGETPROJECTID, bgProject.BUDGETPROJECTNAME, bgh.FORMBUDGET,
+	bg140.BUDGETTYPEID, bg141.BUDGETTYPEID, bg142.BUDGETTYPEID, bg143.BUDGETTYPEID, bg144.BUDGETTYPEID, bg145.BUDGETTYPEID, bg146.BUDGETTYPEID
+) as bg
+inner join L3D_DEPARTMENT dept on dept.DEPARTMENTID = bg.deptId
+inner join L3D_DEPARTMENT faculty on faculty.DEPARTMENTID = dept.MASTERID
+inner join BUDGETTYPE bgType on bgType.BUDGETTYPEID = bg.budgetTypeId
+inner join BUDGETTYPE bgTypeMain on bgTypeMain.BUDGETTYPEID = bgType.MASTERID
+inner join BUDGETTYPE bgTypeMaster on bgTypeMaster.BUDGETTYPEID = bgTypeMain.MASTERID
+where bgTypeMaster.BUDGETTYPEID in (20100000, 20200000)
+group by faculty.DEPARTMENTID, faculty.DEPARTMENTNAME, dept.DEPARTMENTID, dept.DEPARTMENTNAME,
+bg.bgPlanId, bg.bgPlanName, bg.bgProjectId, bg.bgProjectName, bgTypeMaster.BUDGETTYPEID, bgTypeMaster.BUDGETTYPENAME,
+bgTypeMain.BUDGETTYPEID, bgTypeMain.BUDGETTYPENAME, bgType.BUDGETTYPEID, bgType.BUDGETTYPENAME
+) bgAll
+--where bgAll.facultyId = 10100
+--and bgAll.bgPlanId = 000
+--and bgAll.bgProjectId = 111
+group by
+bgAll.bgPlanId, bgAll.bgPlanName,
+bgAll.bgProjectId, bgAll.bgProjectName,
+bgAll.facultyId, bgAll.facultyName,
+bgAll.deptId, bgAll.deptName,
+bgAll.budgetTypeMasterId, bgAll.budgetTypeMasterName,
+bgAll.budgetTypeMainId, bgAll.budgetTypeMainName]]>
+	</queryString>
+	<field name="bgPlanId" class="java.lang.Integer"/>
+	<field name="bgPlanName" class="java.lang.String"/>
+	<field name="bgProjectId" class="java.lang.Integer"/>
+	<field name="bgProjectName" class="java.lang.String"/>
+	<field name="facultyId" class="java.lang.Integer"/>
+	<field name="facultyName" class="java.lang.String"/>
+	<field name="deptId" class="java.lang.Integer"/>
+	<field name="deptName" class="java.lang.String"/>
+	<field name="budgetTypeMasterId" class="java.lang.Integer"/>
+	<field name="budgetTypeMasterName" class="java.lang.String"/>
+	<field name="budgetTypeMainId" class="java.lang.Integer"/>
+	<field name="budgetTypeMainName" class="java.lang.String"/>
+	<field name="salary" class="java.math.BigDecimal"/>
+	<field name="wages" class="java.math.BigDecimal"/>
+	<field name="compensationEmp" class="java.math.BigDecimal"/>
+	<field name="staffSalary" class="java.math.BigDecimal"/>
+	<field name="tempWages" class="java.math.BigDecimal"/>
+	<field name="compensation" class="java.math.BigDecimal"/>
+	<field name="livingCost" class="java.math.BigDecimal"/>
+	<field name="matCost" class="java.math.BigDecimal"/>
+	<field name="utilityCost" class="java.math.BigDecimal"/>
+	<field name="durableCost" class="java.math.BigDecimal"/>
+	<field name="buildingCost" class="java.math.BigDecimal"/>
+	<field name="otherCost" class="java.math.BigDecimal"/>
+	<variable name="CURRENT_PAGE" class="java.lang.Integer" resetType="None" calculation="DistinctCount">
+		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer(1)]]></initialValueExpression>
+	</variable>
+	<variable name="CURRENT_DATE" class="java.util.Date">
+		<variableExpression><![CDATA[new Date()]]></variableExpression>
+	</variable>
+	<variable name="salary" class="java.math.BigDecimal" resetType="Group" resetGroup="G4" calculation="Sum">
+		<variableExpression><![CDATA[$F{salary}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="wages" class="java.math.BigDecimal" resetType="Group" resetGroup="G4" calculation="Sum">
+		<variableExpression><![CDATA[$F{wages}]]></variableExpression>
+	</variable>
+	<variable name="compensationEmp" class="java.math.BigDecimal" resetType="Group" resetGroup="G4" calculation="Sum">
+		<variableExpression><![CDATA[$F{compensationEmp}]]></variableExpression>
+	</variable>
+	<variable name="staffSalary" class="java.math.BigDecimal" resetType="Group" resetGroup="G4" calculation="Sum">
+		<variableExpression><![CDATA[$F{staffSalary}]]></variableExpression>
+	</variable>
+	<variable name="tempWages" class="java.math.BigDecimal" resetType="Group" resetGroup="G4" calculation="Sum">
+		<variableExpression><![CDATA[$F{tempWages}]]></variableExpression>
+	</variable>
+	<variable name="compensation" class="java.math.BigDecimal" resetType="Group" resetGroup="G4" calculation="Sum">
+		<variableExpression><![CDATA[$F{compensation}]]></variableExpression>
+	</variable>
+	<variable name="livingCost" class="java.math.BigDecimal" resetType="Group" resetGroup="G4" calculation="Sum">
+		<variableExpression><![CDATA[$F{livingCost}]]></variableExpression>
+	</variable>
+	<variable name="matCost" class="java.math.BigDecimal" resetType="Group" resetGroup="G4" calculation="Sum">
+		<variableExpression><![CDATA[$F{matCost}]]></variableExpression>
+	</variable>
+	<variable name="utilityCost" class="java.math.BigDecimal" resetType="Group" resetGroup="G4" calculation="Sum">
+		<variableExpression><![CDATA[$F{utilityCost}]]></variableExpression>
+	</variable>
+	<variable name="durableCost" class="java.math.BigDecimal" resetType="Group" resetGroup="G4" calculation="Sum">
+		<variableExpression><![CDATA[$F{durableCost}]]></variableExpression>
+	</variable>
+	<variable name="buildingCost" class="java.math.BigDecimal" resetType="Group" resetGroup="G4" calculation="Sum">
+		<variableExpression><![CDATA[$F{buildingCost}]]></variableExpression>
+	</variable>
+	<variable name="otherCost" class="java.math.BigDecimal" resetType="Group" resetGroup="G4" calculation="Sum">
+		<variableExpression><![CDATA[$F{otherCost}]]></variableExpression>
+	</variable>
+	<variable name="total" class="java.math.BigDecimal" resetType="Group" resetGroup="G4">
+		<variableExpression><![CDATA[$V{salary}+$V{wages}+$V{compensationEmp}+$V{staffSalary}+$V{tempWages}
++$V{compensation}+$V{livingCost}+$V{matCost}+$V{utilityCost}+$V{durableCost}+
+$V{buildingCost}+$V{otherCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="totalSalary" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$V{salary}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="totalWages" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{wages}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="totalCompensationEmp" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$V{compensation}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="totalStaffSalary" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$V{staffSalary}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="salary_fac" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
+		<variableExpression><![CDATA[$F{salary}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="wages_fac" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
+		<variableExpression><![CDATA[$F{wages}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="compensationEmp_fac" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
+		<variableExpression><![CDATA[$F{compensationEmp}]]></variableExpression>
+	</variable>
+	<variable name="staffSalary_fac" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
+		<variableExpression><![CDATA[$F{staffSalary}]]></variableExpression>
+	</variable>
+	<variable name="tempWages_fac" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
+		<variableExpression><![CDATA[$F{tempWages}]]></variableExpression>
+	</variable>
+	<variable name="compensation_fac" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
+		<variableExpression><![CDATA[$F{compensation}]]></variableExpression>
+	</variable>
+	<variable name="livingCost_fac" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
+		<variableExpression><![CDATA[$F{livingCost}]]></variableExpression>
+	</variable>
+	<variable name="matCost_fac" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
+		<variableExpression><![CDATA[$F{matCost}]]></variableExpression>
+	</variable>
+	<variable name="utilityCost_fac" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
+		<variableExpression><![CDATA[$F{utilityCost}]]></variableExpression>
+	</variable>
+	<variable name="durableCost_fac" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
+		<variableExpression><![CDATA[$F{durableCost}]]></variableExpression>
+	</variable>
+	<variable name="buildingCost_fac" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
+		<variableExpression><![CDATA[$F{buildingCost}]]></variableExpression>
+	</variable>
+	<variable name="otherCost_fac" class="java.math.BigDecimal" resetType="Group" resetGroup="G3" calculation="Sum">
+		<variableExpression><![CDATA[$F{otherCost}]]></variableExpression>
+	</variable>
+	<variable name="total_fac" class="java.math.BigDecimal" resetType="Group" resetGroup="G3">
+		<variableExpression><![CDATA[$V{salary_fac}+$V{wages_fac}+$V{compensationEmp_fac}+$V{staffSalary_fac}+
+$V{tempWages_fac}+$V{compensation_fac}+$V{livingCost_fac}+$V{matCost_fac}
++$V{utilityCost_fac}+$V{durableCost_fac}+$V{buildingCost_fac}+$V{otherCost_fac}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="totalSalary_fac" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$V{salary}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="totalWages_fac" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{wages}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="totalCompensationEmp_fac" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$V{compensation}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="totalStaffSalary_fac" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$V{staffSalary}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.00]]></initialValueExpression>
+	</variable>
+	<variable name="salary_all" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{salary}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="wages_all" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{wages}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="compensationEmp_all" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{compensationEmp}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="staffSalary_all" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{staffSalary}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="tempWages_all" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{tempWages}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="compensation_all" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{compensation}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="livingCost_all" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{livingCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="matCost_all" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{matCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="utilityCost_all" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{utilityCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="durableCost_all" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{durableCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="buildingCost_all" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{buildingCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="otherCost_all" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{otherCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="total_all" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$V{salary_all}+$V{wages_all}+$V{compensationEmp_all}+$V{staffSalary_all}+
+$V{tempWages_all}+$V{compensation_all}+$V{livingCost_all}+$V{matCost_all}
++$V{utilityCost_all}+$V{durableCost_all}+$V{buildingCost_all}+$V{otherCost_all}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="totalSalary_all" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{salary}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="totalWages_all" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{wages}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="totalCompensationEmp_all" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{compensation}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="totalStaffSalary_all" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{staffSalary}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="salary_project" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{salary}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="wages_project" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{wages}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="compensationEmp_project" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{compensationEmp}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="staffSalary_project" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{staffSalary}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="tempWages_project" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{tempWages}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="compensation_project" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{compensation}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="livingCost_project" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{livingCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="matCost_project" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{matCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="utilityCost_project" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{utilityCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="durableCost_project" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{durableCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="buildingCost_project" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{buildingCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="otherCost_project" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{otherCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="total_project" class="java.math.BigDecimal" resetType="Group" resetGroup="G2">
+		<variableExpression><![CDATA[$V{salary_all}+$V{wages_all}+$V{compensationEmp_all}+$V{staffSalary_all}+
+$V{tempWages_all}+$V{compensation_all}+$V{livingCost_all}+$V{matCost_all}
++$V{utilityCost_all}+$V{durableCost_all}+$V{buildingCost_all}+$V{otherCost_all}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="totalSalary_project" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$V{salary}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="totalWages_project" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{wages}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="totalCompensationEmp_project" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$V{compensation}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="totalStaffSalary_project" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$V{staffSalary}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="salary_plan" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$F{salary}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="wages_plan" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$F{wages}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="compensationEmp_plan" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$F{compensationEmp}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="staffSalary_plan" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$F{staffSalary}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="tempWages_plan" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$F{tempWages}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="compensation_plan" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$F{compensation}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="livingCost_plan" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$F{livingCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="matCost_plan" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$F{matCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="utilityCost_plan" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$F{utilityCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="durableCost_plan" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$F{durableCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="buildingCost_plan" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$F{buildingCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="otherCost_plan" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$F{otherCost}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="total_plan" class="java.math.BigDecimal" resetType="Group" resetGroup="G1">
+		<variableExpression><![CDATA[$V{salary_all}+$V{wages_all}+$V{compensationEmp_all}+$V{staffSalary_all}+
+$V{tempWages_all}+$V{compensation_all}+$V{livingCost_all}+$V{matCost_all}
++$V{utilityCost_all}+$V{durableCost_all}+$V{buildingCost_all}+$V{otherCost_all}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="totalSalary_plan" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$V{salary}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="totalWages_plan" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$F{wages}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="totalCompensationEmp_plan" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$V{compensation}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="totalStaffSalary_plan" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$V{staffSalary}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<group name="G1">
+		<groupExpression><![CDATA[$F{bgPlanId}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="190" height="20" uuid="f8021a8a-c1e9-4464-8f5e-7d87f9c80d3f"/>
+					<box leftPadding="1" bottomPadding="10">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement>
+						<font size="11" isUnderline="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["แผนงาน : "+$F{bgPlanName}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="704" y="0" width="45" height="20" uuid="a65bc694-caf3-4536-baec-8285c6a8d799"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{otherCost_plan} != 0)? $V{otherCost_plan} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="614" y="0" width="45" height="20" uuid="6f049452-8d83-4607-9b43-e7d913475345"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{durableCost_plan} != 0)? $V{durableCost_plan} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="434" y="0" width="45" height="20" uuid="2534da93-4bab-45d1-b9e6-d358c22bf53b"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{compensation_plan} != 0)? $V{compensation_plan} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="235" y="0" width="45" height="20" uuid="a43604cd-7769-4819-99cf-73755aa50d4b"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{wages_plan} != 0)? $V{wages_plan} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="749" y="0" width="53" height="20" uuid="49ff01df-3232-4934-927a-315f635938ed"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{total_plan} != 0)? $V{total_plan} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="479" y="0" width="45" height="20" uuid="11ca66b8-b143-4db4-bf12-fb9fc5a679d4"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{livingCost_plan} != 0)? $V{livingCost_plan} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="325" y="0" width="55" height="20" uuid="7ebc839b-92cb-4b85-b051-ae2ad0821912"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{staffSalary_plan} != 0)? $V{staffSalary_plan} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="524" y="0" width="45" height="20" uuid="2d3cb91e-6499-4dc5-9368-e04a44f002bb"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{matCost_plan} != 0)? $V{matCost_plan} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="280" y="0" width="45" height="20" uuid="e97c8b9d-831b-4307-a8b8-149c9e3c1f16"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{compensationEmp_plan} != 0)? $V{compensationEmp_plan} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="190" y="0" width="45" height="20" uuid="1df9386e-1631-4dd6-9e3f-a8e70608b73a"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{salary_plan} != 0)? $V{salary_plan} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="569" y="0" width="45" height="20" uuid="c48cf213-33e5-4479-a7b1-b725e8bfa2b6"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{utilityCost_plan} != 0)? $V{utilityCost_plan} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="380" y="0" width="54" height="20" uuid="b61bcba1-b33d-4c66-a2fd-fa5e799de7db"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{tempWages_plan} != 0)? $V{tempWages_plan} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="659" y="0" width="45" height="20" uuid="9531dcea-4ecb-4181-8211-fdef7d31b475"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{buildingCost_plan} != 0)? $V{buildingCost_plan} : "-"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="G2">
+		<groupExpression><![CDATA[$F{bgProjectId}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="190" height="20" uuid="a9b89d3e-e210-476b-bd8e-71bf81772261"/>
+					<box leftPadding="1">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement>
+						<font size="11" isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["ผลผลิต : "+$F{bgProjectName}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="190" y="0" width="45" height="20" uuid="af685e8a-8c1a-426f-872d-09e8aae6b2d2"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{salary_project} != 0)? $V{salary_project} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="434" y="0" width="45" height="20" uuid="964e9883-b8fd-4406-95a9-51c3e8fb343f"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{compensation_project} != 0)? $V{compensation_project} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="380" y="0" width="54" height="20" uuid="cdba455d-4867-44d3-8826-186ed612f5e0"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{tempWages_project} != 0)? $V{tempWages_project} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="749" y="0" width="53" height="20" uuid="4e1759d9-9e5b-46c9-9689-0cba5509193c"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{total_project} != 0)? $V{total_project} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="659" y="0" width="45" height="20" uuid="94d337a2-898f-4ad4-947b-b13bd3825717"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{buildingCost_project} != 0)? $V{buildingCost_project} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="325" y="0" width="55" height="20" uuid="e75ee288-5112-42b0-9c86-af62492c21b8"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{staffSalary_project} != 0)? $V{staffSalary_project} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="479" y="0" width="45" height="20" uuid="f7baee9a-c712-466a-a52b-c5e6793e937e"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{livingCost_project} != 0)? $V{livingCost_project} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="524" y="0" width="45" height="20" uuid="e7963872-fafd-4fcd-b115-8c6a694b7b2e"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{matCost_project} != 0)? $V{matCost_project} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="704" y="0" width="45" height="20" uuid="08aa5e54-f024-4b92-9e06-e0a145660119"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{otherCost_project} != 0)? $V{otherCost_project} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="614" y="0" width="45" height="20" uuid="9ebd889a-a134-4e79-ae23-5eba65dc93b6"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{durableCost_project} != 0)? $V{durableCost_project} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="569" y="0" width="45" height="20" uuid="a1398dcf-3823-4a90-85db-ef55fe49f1d4"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{utilityCost_project} != 0)? $V{utilityCost_project} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="280" y="0" width="45" height="20" uuid="c4044a3e-09af-461c-a157-e34400588d3b"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{compensationEmp_project} != 0)? $V{compensationEmp_project} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="235" y="0" width="45" height="20" uuid="e9fea3f7-26c1-4e3c-b0e9-7129df81960e"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{wages_project} != 0)? $V{wages_project} : "-"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="G3">
+		<groupExpression><![CDATA[$F{facultyId}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="FBold" x="0" y="0" width="190" height="20" uuid="17ad9f34-a76f-48da-9a8e-83e1cc3152d3"/>
+					<box leftPadding="1">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement>
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{facultyName}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
+					<reportElement style="FBold" x="190" y="0" width="45" height="20" uuid="b9af30c8-3d81-40ea-a5cc-a33055b82af3"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{salary_fac} != 0)? $V{salary_fac} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
+					<reportElement style="FBold" x="235" y="0" width="45" height="20" uuid="9eeca111-110d-4f5b-98f2-a8dc4c18df80"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{wages_fac} != 0)? $V{wages_fac} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
+					<reportElement style="FBold" x="280" y="0" width="45" height="20" uuid="376830d5-0144-479e-a3e2-000383c65382"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{compensationEmp_fac} != 0)? $V{compensationEmp_fac} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
+					<reportElement style="FBold" x="325" y="0" width="55" height="20" uuid="8ce9d42d-2481-4eab-82c3-8960ae0f8bc4"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{staffSalary_fac} != 0)? $V{staffSalary_fac} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
+					<reportElement style="FBold" x="380" y="0" width="54" height="20" uuid="e6b5fca0-856a-4b1a-a78d-5fae149992ee"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{tempWages_fac} != 0)? $V{tempWages_fac} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
+					<reportElement style="FBold" x="434" y="0" width="45" height="20" uuid="50130200-02e2-4a2f-84f4-a5bd7f33a237"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{compensation_fac} != 0)? $V{compensation_fac} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
+					<reportElement style="FBold" x="479" y="0" width="45" height="20" uuid="b0776fa9-bd1f-4a0f-beaa-6d00fc1517fe"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{livingCost_fac} != 0)? $V{livingCost_fac} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
+					<reportElement style="FBold" x="524" y="0" width="45" height="20" uuid="c682d4ac-8754-4856-a278-9cc723f7ef81"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{matCost_fac} != 0)? $V{matCost_fac} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
+					<reportElement style="FBold" x="569" y="0" width="45" height="20" uuid="69731974-57fc-4436-8792-9d572350acf1"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{utilityCost_fac} != 0)? $V{utilityCost_fac} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
+					<reportElement style="FBold" x="614" y="0" width="45" height="20" uuid="fcf0f181-c69b-48a4-9e2a-a150874f7e87"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{durableCost_fac} != 0)? $V{durableCost_fac} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
+					<reportElement style="FBold" x="659" y="0" width="45" height="20" uuid="817701f1-b86c-4d92-a900-544364e6a669"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{buildingCost_fac} != 0)? $V{buildingCost_fac} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
+					<reportElement style="FBold" x="704" y="0" width="45" height="20" uuid="7e606301-d8a1-434b-b35c-0b6af519d0de"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{otherCost_fac} != 0)? $V{otherCost_fac} : "-"]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="G3" pattern="#,###">
+					<reportElement style="FBold" x="749" y="0" width="53" height="20" uuid="830523ee-eb78-4ddd-bb92-210266c38da1"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{total_fac} != 0)? $V{total_fac} : "-"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="G4">
+		<groupExpression><![CDATA[$F{deptId}]]></groupExpression>
+		<groupFooter>
+			<band height="20">
+				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
+				<textField isStretchWithOverflow="true">
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="190" height="20" uuid="6e42ab35-5334-4c1d-9e77-3d49353d9311"/>
+					<box leftPadding="10">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement>
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{deptName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###">
+					<reportElement stretchType="RelativeToBandHeight" x="190" y="0" width="45" height="20" uuid="8d193afb-598a-4777-85a8-c3344d496e19"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{salary} != 0)? $V{salary} : "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###">
+					<reportElement stretchType="RelativeToBandHeight" x="235" y="0" width="45" height="20" uuid="526291df-8942-4986-acb3-b98e5c969760"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{wages} != 0)? $V{wages} : "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###">
+					<reportElement stretchType="RelativeToBandHeight" x="280" y="0" width="45" height="20" uuid="848f2b96-cbe3-4472-8ffd-474928a37351"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{compensationEmp} != 0)? $V{compensationEmp} : "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###">
+					<reportElement stretchType="RelativeToBandHeight" x="325" y="0" width="55" height="20" uuid="49b03b15-6996-47df-a8b6-bf502670c0f8"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{staffSalary} != 0)? $V{staffSalary} : "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###">
+					<reportElement stretchType="RelativeToBandHeight" x="380" y="0" width="54" height="20" uuid="3dff6e03-314e-41c4-8809-dc1f5cf61159"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{tempWages} != 0)? $V{tempWages} : "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###">
+					<reportElement stretchType="RelativeToBandHeight" x="434" y="0" width="45" height="20" uuid="f6baa291-d653-4cea-8a51-772b46d0d5a1"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{compensation} != 0)? $V{compensation} : "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###">
+					<reportElement stretchType="RelativeToBandHeight" x="479" y="0" width="45" height="20" uuid="10c0b3a6-5eeb-410d-9eb4-93e11e4a0105"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{livingCost} != 0)? $V{livingCost} : "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###">
+					<reportElement stretchType="RelativeToBandHeight" x="524" y="0" width="45" height="20" uuid="fcfa62c0-91da-433b-859b-dd003eb2130a"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{matCost} != 0)? $V{matCost} : "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###">
+					<reportElement stretchType="RelativeToBandHeight" x="569" y="0" width="45" height="20" uuid="f965ee05-80b3-443f-81eb-b624eb268af5"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{utilityCost} != 0)? $V{utilityCost} : "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###">
+					<reportElement stretchType="RelativeToBandHeight" x="614" y="0" width="45" height="20" uuid="2b787578-4c4d-46f9-b7ec-f9300d184e83"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{durableCost} != 0)? $V{durableCost} : "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###">
+					<reportElement stretchType="RelativeToBandHeight" x="659" y="0" width="45" height="20" uuid="36a36008-4162-4b11-9310-25771464c756"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{buildingCost} != 0)? $V{buildingCost} : "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###">
+					<reportElement stretchType="RelativeToBandHeight" x="704" y="0" width="45" height="20" uuid="78806aa0-80a2-4515-9ce3-7f167c9a5f50"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{otherCost} != 0)? $V{otherCost} : "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="749" y="0" width="53" height="20" uuid="1716f59c-d249-4b54-b086-53fbcfadeaf8"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{total} != 0)? $V{total} : "-"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="802" height="20" uuid="f46aee95-03fb-4f8c-a89b-2612b52f7647"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{HEAD_RPT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="160" splitType="Stretch">
+			<staticText>
+				<reportElement style="FBold" x="749" y="40" width="53" height="80" uuid="9fc5fbc2-c19a-48cb-8ef9-3e4583e0054d"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[รวมเงิน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="704" y="60" width="45" height="60" uuid="82ac10fa-49ac-4ed6-afd2-5da09a288597"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[เงินอุดหนุน
+อื่นๆ]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="FBold" x="0" y="40" width="190" height="80" uuid="b537e80b-bc0d-42c4-8b99-c53116dc1b10"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["แผนงาน/ผลผลิต"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FBold" x="400" y="20" width="402" height="20" uuid="a587d0f2-5341-40f5-86b8-e732df0d62c9"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[(หน่วย : บาท)]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="FBold" x="1" y="0" width="801" height="20" uuid="13d9ce8e-0feb-4f4f-ae27-047292e22b62"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["แบบ ง.112"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FBold" x="524" y="80" width="45" height="40" uuid="2bba7d99-8c60-4b59-b8f9-8ecd293850a8"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ค่าวัสดุ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="42" y="20" width="358" height="20" uuid="9fe339c1-732c-49fb-a552-75e8b9d08947"/>
+				<textFieldExpression><![CDATA[$P{FACULTY_NAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FBold" x="235" y="60" width="45" height="60" uuid="e51f71e0-8e2c-4e8b-9b0d-6b6575e968ee"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ค่าจ้างประจำ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="434" y="60" width="180" height="20" uuid="dbf33208-e938-4c4b-960b-f8a6c3c54398"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[เงินอุดหนุนเป็นค่าใช้จ่ายดำเนินงาน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="-1" y="20" width="43" height="20" uuid="87ae77f8-2658-48db-a4c9-6437bce3b533"/>
+				<text><![CDATA[หน่วยงาน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="325" y="60" width="109" height="20" uuid="3f02bdba-45d8-4520-b7a9-04dafb44373f"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[เงินอุดหนุนเป็นค่าใช้จ่ายบุคลากร]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="569" y="80" width="45" height="40" uuid="b0e05887-6b48-4aa3-93ca-5d488e266293"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ค่าสาธารณู
+ปโภค]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="280" y="60" width="45" height="60" uuid="83399594-fb52-4dca-ba78-312a4acd96e5"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ค่าตอบแทน
+พนักงาน
+ราชการ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="190" y="40" width="135" height="20" uuid="ed3c56cc-5df6-4a9a-ad67-f960a727d23d"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[(1) งบบุคลากร]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="659" y="60" width="45" height="60" uuid="dd2363db-1888-41f2-9eea-83112633249a"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[เงินอุดหนุน
+เป็นค่าที่ดิน/
+สิ่งก่อสร้าง]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="614" y="60" width="45" height="60" uuid="f80a21a8-b775-4d67-ae86-cb6da35c1d32"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[เงินอุดหนุน
+เป็นค่า
+ครุภัณฑ์]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="325" y="40" width="424" height="20" uuid="163a3bea-36c9-4d5c-8ee0-2a99939e704a"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[(2) งบเงินอุดหนุน : เงินอุดหนุนทั่วไป]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="479" y="80" width="45" height="40" uuid="de237225-bb22-451b-80ba-430fba6cd262"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ค่าใช้สอย]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="325" y="80" width="55" height="40" uuid="b180976c-4b46-40fb-a320-1f90b518d90c"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[เงินเดือน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="190" y="60" width="45" height="60" uuid="2e5c0dc7-62c5-48d5-92e0-94e0fbfe6a3e"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[เงินเดือน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="380" y="80" width="54" height="40" uuid="7533075b-7789-4d68-8c5e-fb05794eb812"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ค่าจ้าง
+ชั่วคราว]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="434" y="80" width="45" height="40" uuid="3e5d786f-19de-47e1-b45e-a9d01ab0d703"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ค่าตอบแทน]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="FBold" x="0" y="120" width="190" height="40" isRemoveLineWhenBlank="true" uuid="fd3a8a8b-be63-4813-adcb-8f44c07a8bc6">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FACULTY_NAME}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" x="190" y="120" width="45" height="40" isRemoveLineWhenBlank="true" uuid="a0e15d1c-fc42-47a8-aa26-5e6eb65eafda">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{salary_all} != 0)? $V{salary_all} : "-"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" x="434" y="120" width="45" height="40" isRemoveLineWhenBlank="true" uuid="d44fd1e9-86ef-4c81-aa0f-49cddb890c8d">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{compensation_all} != 0)? $V{compensation_all} : "-"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" x="380" y="120" width="54" height="40" isRemoveLineWhenBlank="true" uuid="65399031-fd53-4d8a-b31a-d890ab70774c">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{tempWages_all} != 0)? $V{tempWages_all} : "-"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" x="749" y="120" width="53" height="40" isRemoveLineWhenBlank="true" uuid="13fbf0f3-b86f-4938-b31d-6db80bfb4d92">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{total_all} != 0)? $V{total_all} : "-"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" x="659" y="120" width="45" height="40" isRemoveLineWhenBlank="true" uuid="edfde3b0-7421-4010-a676-35ab16caed75">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{buildingCost_all} != 0)? $V{buildingCost_all} : "-"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" x="325" y="120" width="55" height="40" isRemoveLineWhenBlank="true" uuid="7f94da8b-bf95-4694-9f89-230df149e138">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{staffSalary_all} != 0)? $V{staffSalary_all} : "-"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" x="479" y="120" width="45" height="40" isRemoveLineWhenBlank="true" uuid="3996f642-df8a-4db7-859d-bb825d0f78fe">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{livingCost_all} != 0)? $V{livingCost_all} : "-"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" x="524" y="120" width="45" height="40" isRemoveLineWhenBlank="true" uuid="8f5665f2-dab6-40ef-95d5-9443ce911255">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{matCost_all} != 0)? $V{matCost_all} : "-"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" x="704" y="120" width="45" height="40" isRemoveLineWhenBlank="true" uuid="235dd4b3-9511-4b70-8917-e1ad00eb5125">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{otherCost_all} != 0)? $V{otherCost_all} : "-"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" x="614" y="120" width="45" height="40" isRemoveLineWhenBlank="true" uuid="c448542e-bf05-46d2-b2bd-7503385d9ede">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{durableCost_all} != 0)? $V{durableCost_all} : "-"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" x="569" y="120" width="45" height="40" isRemoveLineWhenBlank="true" uuid="8b0d3c20-ed98-47cf-a66b-2ac510503cd8">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{utilityCost_all} != 0)? $V{utilityCost_all} : "-"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" x="280" y="120" width="45" height="40" isRemoveLineWhenBlank="true" uuid="4129376f-345c-4b8e-a37b-3bc4f2ce96ff">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{compensationEmp_all} != 0)? $V{compensationEmp_all} : "-"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" x="235" y="120" width="45" height="40" isRemoveLineWhenBlank="true" uuid="1036f094-3c41-4318-a0b7-09c6b008113e">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{wages_all} != 0)? $V{wages_all} : "-"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{bgPlanId} == null&& $P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="32" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH:mm:ss">
+				<reportElement x="0" y="20" width="442" height="12" uuid="6c13bc20-06bd-4a29-b6b1-b74bcef75220"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["วันที่พิมพ์ : "+$V{CURRENT_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="442" y="20" width="360" height="12" uuid="a4d12bf6-631d-49be-8c6b-5af65977994d"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["พิมพ์โดย : "+$P{PUBLISHER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Auto">
+				<reportElement x="659" y="0" width="143" height="20" uuid="a40d39b8-64b2-48e4-905a-6a6271740c25"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["หน้า " + $V{CURRENT_PAGE}+" / " +$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="30" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
+		</band>
+	</summary>
+</jasperReport>

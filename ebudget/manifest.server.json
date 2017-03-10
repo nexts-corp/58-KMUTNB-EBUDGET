@@ -1,15 +1,15 @@
 {
-    "context_path":"/ebudget",
+    "context_path":"",
     "test" : "test",
-    "welcome_page":"/ebudget/api/root/view/index",
+    "welcome_page":"/api/root/view/index",
     "locale":"th-TH",
     "context": [
         {
             "contextName": "default",
             "contextType": "data",
             "propertys": [
-                {"name": "driver","value": "pdo_sqlsrv"}, 
-                {"name": "host","value": "127.0.0.1"},
+                {"name": "driver","value": "pdo_dblib"}, 
+                {"name": "host","value": "202.44.34.86"},
                 {"name": "port","value": "1433"},
                 {"name": "dbname","value": "EBudget"},
                 {"name": "user","value": "ebudget"},
@@ -24,8 +24,8 @@
                 {"name": "OAUTH2_CLIENT_ID","value": "123456"},
                 {"name": "OAUTH2_CLIENT_SECRET","value": "123456"},
                 {"name": "OAUTH2_ACCESS_KEY","value": "code"},
-                {"name": "OAUTH2_AUTH_URL","value": "/ebudget/api/oauth/authen/authorization"},
-                {"name": "OAUTH2_TOKEN_URI","value":"http://localhost:8081/ebudget/api/oauth/authen/authenticate"}
+                {"name": "OAUTH2_AUTH_URL","value": "/kmutnb-ebudget/ebudget/api/oauth/authen/authorization"},
+                {"name": "OAUTH2_TOKEN_URI","value":"http://localhost:8081/kmutnb-ebudget/ebudget/api/oauth/authen/authenticate"}
        ]
     }
 }

@@ -1,0 +1,1199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f33557b4-8855-4bf5-b73c-6a798e382634">
+	<property name="ireport.zoom" value="1.158657518946798"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="FBold" fill="Solid" hAlign="Left" vAlign="Top" fontName="TH SarabunPSK" fontSize="14" isBold="true" pdfFontName="THSarabun Bold.ttf" pdfEncoding="Identity-H"/>
+	<style name="Rpt" fontName="TH SarabunPSK" fontSize="10" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
+	<style name="Default" isDefault="true" fontName="TH SarabunPSK" fontSize="14" pdfFontName="THSarabun.ttf" pdfEncoding="Identity-H"/>
+	<parameter name="PUBLISHER" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["พงศ์ปณต ทัศนียาชุมพาลี"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATE_CURRENT" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FACULTY_NAME" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA["-"]]></parameterDescription>
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FACULTY_ID" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="PERIOD_ID" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["-"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="HEAD_RPT" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["แบบสรุปงบประมาณรายจ่ายเงินรายได้จากงบประมาณแผ่นดิน  จำแนกตามแผนงาน/หน่วยงาน/ภาควิชา/กองทุน \n ประจำปีงบประมาณ พ.ศ."+$P{PERIOD_ID}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[-- รายงานแบบ ง.2-2
+
+select
+	bg.planId, l3dPlan.PLANNAME as planName,
+	bg.facultyId, faculty.DEPARTMENTNAME as facultyName, bg.deptId, dept.DEPARTMENTNAME as deptName,
+	sum(case when bg.fundgroupId = 100 then bg.budgetSummary else 0 end) as 'generalFund',
+	sum(case when bg.fundgroupId = 200 then bg.budgetSummary else 0 end) as 'eduFund',
+	sum(case when bg.fundgroupId = 300 then bg.budgetSummary else 0 end) as 'researchFunds',
+	sum(case when bg.fundgroupId = 400 then bg.budgetSummary else 0 end) as 'outreachFund',
+	sum(case when bg.fundgroupId = 500 then bg.budgetSummary else 0 end) as 'affairsFund',
+	sum(case when bg.fundgroupId = 600 then bg.budgetSummary else 0 end) as 'assetsFund',
+	sum(case when bg.fundgroupId = 700 then bg.budgetSummary else 0 end) as 'otherFund',
+	sum(case when bg.fundgroupId = 701 then bg.budgetSummary else 0 end) as 'culturalFund',
+	sum(case when bg.fundgroupId = 702 then bg.budgetSummary else 0 end) as 'funds',
+	sum(case when bg.fundgroupId = 703 then bg.budgetSummary else 0 end) as 'welfareFund',
+	sum(case when bg.fundgroupId = 704 then bg.budgetSummary else 0 end) as 'devFund',
+	sum(case when bg.fundgroupId = 705 then bg.budgetSummary else 0 end) as 'boardFund',
+	sum(case when bg.fundgroupId = 706 then bg.budgetSummary else 0 end) as 'institutionsFund',
+	sum(case when bg.fundgroupId = 707 then bg.budgetSummary else 0 end) as 'purposeFund',
+	sum(case when bg.fundgroupId = 708 then bg.budgetSummary else 0 end) as 'inventoryFund',
+	sum(case when bg.fundgroupId = 709 then bg.budgetSummary else 0 end) as 'techKMUTNBFund'
+from (
+	select
+	l3dPlan.PLANID as planId,
+	faculty.DEPARTMENTID as facultyId, dept.DEPARTMENTID as deptId,
+	fund.FUNDGROUPID as fundgroupId,
+	coalesce(sum(bg140.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg141.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg142.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg143.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg144.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg145.BUDGETSUMMARY), 0) +
+	coalesce(sum(bg146.BUDGETSUMMARY), 0) as budgetSummary
+	from L3D_DEPARTMENT faculty
+	left outer join L3D_DEPARTMENT dept on dept.MASTERID = faculty.DEPARTMENTID
+	inner join BUDGETHEAD bgh on bgh.DEPARTMENTID = dept.DEPARTMENTID
+	inner join L3D_PLAN l3dPlan on l3dPlan.PLANID = bgh.L3D_PLANID
+	inner join L3D_FUNDGROUP fund on fund.FUNDGROUPID = bgh.FUNDGROUPID
+	left outer join BUDGET140 bg140 on bgh.BUDGETHEADID = bg140.BUDGETHEADID
+	left outer join BUDGET141 bg141 on bgh.BUDGETHEADID = bg141.BUDGETHEADID
+	left outer join BUDGET142 bg142 on bgh.BUDGETHEADID = bg142.BUDGETHEADID
+	left outer join BUDGET143 bg143 on bgh.BUDGETHEADID = bg143.BUDGETHEADID
+	left outer join BUDGET144 bg144 on bgh.BUDGETHEADID = bg144.BUDGETHEADID
+	left outer join BUDGET145 bg145 on bgh.BUDGETHEADID = bg145.BUDGETHEADID
+	left outer join BUDGET146 bg146 on bgh.BUDGETHEADID = bg146.BUDGETHEADID
+	where faculty.DEPARTMENTID <> 0
+	and faculty.DEPARTMENTGROUP = 'A'
+	and faculty.DEPARTMENTSTATUS = 'Y'
+	and dept.DEPARTMENTSTATUS = 'Y'
+	and bgh.BUDGETTYPECODE = 'G'
+	and bgh.BUDGETPERIODID = 2558
+	--and faculty.DEPARTMENTID = 30100
+	group by l3dPlan.PLANID, faculty.DEPARTMENTID, dept.DEPARTMENTID, fund.FUNDGROUPID
+) as bg
+inner join L3D_PLAN l3dPlan on l3dPlan.PLANID = bg.planId
+inner join L3D_DEPARTMENT faculty on faculty.DEPARTMENTID = bg.facultyId
+inner join L3D_DEPARTMENT dept on dept.DEPARTMENTID = bg.deptId
+group by bg.planId, l3dPlan.PLANNAME, bg.facultyId, faculty.DEPARTMENTNAME, bg.deptId, dept.DEPARTMENTNAME]]>
+	</queryString>
+	<field name="planId" class="java.lang.Integer"/>
+	<field name="planName" class="java.lang.String"/>
+	<field name="facultyId" class="java.lang.Integer"/>
+	<field name="facultyName" class="java.lang.String"/>
+	<field name="deptId" class="java.lang.Integer"/>
+	<field name="deptName" class="java.lang.String"/>
+	<field name="generalFund" class="java.math.BigDecimal"/>
+	<field name="eduFund" class="java.math.BigDecimal"/>
+	<field name="researchFunds" class="java.math.BigDecimal"/>
+	<field name="outreachFund" class="java.math.BigDecimal"/>
+	<field name="affairsFund" class="java.math.BigDecimal"/>
+	<field name="assetsFund" class="java.math.BigDecimal"/>
+	<field name="otherFund" class="java.math.BigDecimal"/>
+	<field name="culturalFund" class="java.math.BigDecimal"/>
+	<field name="funds" class="java.math.BigDecimal"/>
+	<field name="welfareFund" class="java.math.BigDecimal"/>
+	<field name="devFund" class="java.math.BigDecimal"/>
+	<field name="boardFund" class="java.math.BigDecimal"/>
+	<field name="institutionsFund" class="java.math.BigDecimal"/>
+	<field name="purposeFund" class="java.math.BigDecimal"/>
+	<field name="inventoryFund" class="java.math.BigDecimal"/>
+	<field name="techKMUTNBFund" class="java.math.BigDecimal"/>
+	<variable name="CURRENT_PAGE" class="java.lang.Integer" resetType="None" calculation="DistinctCount">
+		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer(1)]]></initialValueExpression>
+	</variable>
+	<variable name="CURRENT_DATE" class="java.util.Date">
+		<variableExpression><![CDATA[new Date()]]></variableExpression>
+		<initialValueExpression><![CDATA[new Date()]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนอื่นๆ" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$F{devFund}+$F{funds}+$F{culturalFund}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมเงิน" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$F{generalFund}+$F{eduFund}+$F{researchFunds}+$F{outreachFund}
++$F{affairsFund}+$F{assetsFund}+
+$F{culturalFund}+$F{funds}+$F{devFund}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนทั่วไป" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{generalFund}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนเพื่อการศึกษา" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{eduFund}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนวิจัย" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{researchFunds}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนบริการวิชาการ" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{outreachFund}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนกิจการนักศึกษา" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{affairsFund}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนสินทรัพย์ถาวร" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{assetsFund}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนพัฒนาบุคลากร" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{devFund}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนสำรอง" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{funds}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุุนทำนุบำรุงศิลป" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$F{culturalFund}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนอื่นๆG2" class="java.math.BigDecimal" resetType="Group" resetGroup="G2" calculation="Sum">
+		<variableExpression><![CDATA[$V{รวมกองทุนพัฒนาบุคลากร}+$V{รวมกองทุนสำรอง}+$V{รวมกองทุุนทำนุบำรุงศิลป}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมเงินG2" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[$V{รวมกองทุนทั่วไป}+$V{รวมกองทุนเพื่อการศึกษา}+$V{รวมกองทุนวิจัย}+$V{รวมกองทุนบริการวิชาการ}
++$V{รวมกองทุนกิจการนักศึกษา}+$V{รวมกองทุนสินทรัพย์ถาวร}+$V{รวมกองทุนอื่นๆG2}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนทั่วไปสุทธิ" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$F{generalFund}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนเพื่อการศึกษาสุทธิ" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$F{eduFund}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนวิจัยสุทธิ" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$F{researchFunds}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนบริการวิชาการสุทธิ" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$F{outreachFund}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนกิจการนักศึกษาสุทธิ" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$F{affairsFund}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนสินทรัพย์ถาวรสูทธิ" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$F{assetsFund}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนพัฒนาบุคลากรสุทธิ" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$F{devFund}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนสำรองสุทธิ" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$F{funds}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุุนทำนุบำรุงศิลปสุทธิ" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$F{culturalFund}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนอื่นๆG1สุทธิ" class="java.math.BigDecimal" resetType="Group" resetGroup="G1" calculation="Sum">
+		<variableExpression><![CDATA[$V{รวมกองทุนพัฒนาบุคลากรสุทธิ}+$V{รวมกองทุนสำรองสุทธิ}+$V{รวมกองทุุนทำนุบำรุงศิลปสุทธิ}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมเงินG1สุทธิ" class="java.math.BigDecimal" resetType="Group" resetGroup="G1">
+		<variableExpression><![CDATA[$V{รวมกองทุนทั่วไปสุทธิ}+$V{รวมกองทุนเพื่อการศึกษาสุทธิ}+$V{รวมกองทุนวิจัยสุทธิ}+$V{รวมกองทุนบริการวิชาการสุทธิ}
++$V{รวมกองทุนกิจการนักศึกษาสุทธิ}+$V{รวมกองทุนสินทรัพย์ถาวรสูทธิ}+$V{รวมกองทุนอื่นๆG1สุทธิ}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนทั่วไปสุทธิ_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{generalFund}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนเพื่อการศึกษาสุทธิ_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{eduFund}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนวิจัยสุทธิ_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{researchFunds}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนบริการวิชาการสุทธิ_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{outreachFund}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนกิจการนักศึกษาสุทธิ_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{affairsFund}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนสินทรัพย์ถาวรสูทธิ_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{assetsFund}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนพัฒนาบุคลากรสุทธิ_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{devFund}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนสำรองสุทธิ_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{funds}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุุนทำนุบำรุงศิลปสุทธิ_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{culturalFund}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมกองทุนอื่นๆG1สุทธิ_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{รวมกองทุนพัฒนาบุคลากรสุทธิ}+$V{รวมกองทุนสำรองสุทธิ}+$V{รวมกองทุุนทำนุบำรุงศิลปสุทธิ}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="รวมเงินG1สุทธิ_1" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$V{รวมกองทุนทั่วไปสุทธิ_1}+$V{รวมกองทุนเพื่อการศึกษาสุทธิ_1}+$V{รวมกองทุนวิจัยสุทธิ_1}+$V{รวมกองทุนบริการวิชาการสุทธิ_1}
++$V{รวมกองทุนกิจการนักศึกษาสุทธิ_1}+$V{รวมกองทุนสินทรัพย์ถาวรสูทธิ_1}+$V{รวมกองทุนอื่นๆG1สุทธิ_1}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="Count1" class="java.lang.Integer" incrementType="Group" incrementGroup="G1" calculation="Count">
+		<variableExpression><![CDATA[$F{planId}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<group name="G1">
+		<groupExpression><![CDATA[$F{planId}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="182" height="20" uuid="fcd95e66-c28b-4eaf-a05c-2f0a21971d97"/>
+					<box leftPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Left">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{Count1}+1)+". "+$F{planName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="732" y="0" width="70" height="20" uuid="863af8f4-2624-4770-8949-c52ae1ad34c9"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{รวมเงินG1สุทธิ} != 0)? $V{รวมเงินG1สุทธิ}: "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="457" y="0" width="55" height="20" uuid="b6457894-dd96-4a9e-971b-c41631b93f8a"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนสินทรัพย์ถาวรสูทธิ} != 0)? $V{รวมกองทุนสินทรัพย์ถาวรสูทธิ}: "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="292" y="0" width="55" height="20" uuid="43947017-a855-4b3f-995c-0b1e1ef2e45d"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนวิจัยสุทธิ} != 0)? $V{รวมกองทุนวิจัยสุทธิ}: "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="182" y="0" width="55" height="20" uuid="70ef6fe0-534f-4671-978e-6dc26a26a838"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนทั่วไปสุทธิ} != 0)? $V{รวมกองทุนทั่วไปสุทธิ} : "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="567" y="0" width="55" height="20" uuid="6f58678d-8828-4521-ab89-14e62ae0d446"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนสำรองสุทธิ} != 0)? $V{รวมกองทุนสำรองสุทธิ}: "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="622" y="0" width="55" height="20" uuid="96bbe7b5-e6d7-4275-9dda-220b2bf3171c"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{รวมกองทุุนทำนุบำรุงศิลปสุทธิ} != 0)? $V{รวมกองทุุนทำนุบำรุงศิลปสุทธิ}: "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="512" y="0" width="55" height="20" uuid="e8d5458d-0998-4944-89ef-5e7ab49da42e"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนพัฒนาบุคลากรสุทธิ} != 0)? $V{รวมกองทุนพัฒนาบุคลากรสุทธิ}: "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="237" y="0" width="55" height="20" uuid="3a1c8d79-8f43-4938-b293-5d292cf5028b"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนเพื่อการศึกษาสุทธิ} != 0)? $V{รวมกองทุนเพื่อการศึกษาสุทธิ} : "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="347" y="0" width="55" height="20" uuid="920402c7-065f-4112-9f9d-03384e205a86"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนบริการวิชาการสุทธิ} != 0)? $V{รวมกองทุนบริการวิชาการสุทธิ}: "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="402" y="0" width="55" height="20" uuid="f5f0b255-0512-4794-8e42-db5832e8d1af"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนกิจการนักศึกษาสุทธิ} != 0)? $V{รวมกองทุนกิจการนักศึกษาสุทธิ}: "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G1" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="677" y="0" width="55" height="20" uuid="6bbd54dd-b5fc-41ba-899d-083f17a9c531"/>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนอื่นๆG1สุทธิ} != 0)? $V{รวมกองทุนอื่นๆG1สุทธิ}: "-"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="G2">
+		<groupExpression><![CDATA[$F{facultyId}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="182" height="20" isRemoveLineWhenBlank="true" uuid="43f81259-a01b-43c0-bc29-f436cc87b85b">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box leftPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{facultyName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="182" y="0" width="55" height="20" isRemoveLineWhenBlank="true" uuid="8d349fdf-a5b2-4fdf-a514-0cabbf733ffb">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนทั่วไป} != 0)? $V{รวมกองทุนทั่วไป}: "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="677" y="0" width="55" height="20" isRemoveLineWhenBlank="true" uuid="6e7c9c70-a9c2-4fc6-ac94-1b3920508baf">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนอื่นๆG2} != 0)? $V{รวมกองทุนอื่นๆG2} : "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="292" y="0" width="55" height="20" isRemoveLineWhenBlank="true" uuid="639b806b-0b96-44dc-8090-34cc9528f2e3">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนวิจัย} != 0)? $V{รวมกองทุนวิจัย} : "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="512" y="0" width="55" height="20" isRemoveLineWhenBlank="true" uuid="df744b10-b5ce-446d-8226-ca79a045d63f">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนพัฒนาบุคลากร} != 0)? $V{รวมกองทุนพัฒนาบุคลากร} : "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="237" y="0" width="55" height="20" isRemoveLineWhenBlank="true" uuid="0546366c-38ac-4d88-9a4f-35c04dd732e5">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนเพื่อการศึกษา} != 0)? $V{รวมกองทุนเพื่อการศึกษา} : "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="347" y="0" width="55" height="20" isRemoveLineWhenBlank="true" uuid="c9f3aaa1-1ae4-446a-9b0b-c7fd150f74af">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนบริการวิชาการ} != 0)? $V{รวมกองทุนบริการวิชาการ} : "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="457" y="0" width="55" height="20" isRemoveLineWhenBlank="true" uuid="b99c4737-00fa-44b4-ad35-ffdc3239ab1b">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนสินทรัพย์ถาวร} != 0)? $V{รวมกองทุนสินทรัพย์ถาวร} : "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="402" y="0" width="55" height="20" isRemoveLineWhenBlank="true" uuid="f35b9dbf-815c-44bd-9af1-3ecb91a654f9">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนกิจการนักศึกษา} != 0)? $V{รวมกองทุนกิจการนักศึกษา} : "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="567" y="0" width="55" height="20" isRemoveLineWhenBlank="true" uuid="71289a37-6c08-48cd-8ecd-7fab0a813eb7">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{รวมกองทุนสำรอง} != 0)? $V{รวมกองทุนสำรอง} : "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="622" y="0" width="55" height="20" isRemoveLineWhenBlank="true" uuid="27d2d594-172e-4bb4-8fe4-0e643c973b56">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{รวมกองทุุนทำนุบำรุงศิลป} != 0)? $V{รวมกองทุุนทำนุบำรุงศิลป} : "-"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" evaluationTime="Group" evaluationGroup="G2" pattern="#,###">
+					<reportElement style="FBold" stretchType="RelativeToBandHeight" x="732" y="0" width="70" height="20" isRemoveLineWhenBlank="true" uuid="9582b91d-3e7b-44e9-9667-5e984cb8ec34">
+						<printWhenExpression><![CDATA[($P{FACULTY_ID}.equals("0"))]]></printWhenExpression>
+					</reportElement>
+					<box rightPadding="2">
+						<topPen lineWidth="0.75"/>
+						<leftPen lineWidth="0.75"/>
+						<bottomPen lineWidth="0.75"/>
+						<rightPen lineWidth="0.75"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{รวมเงินG2} != 0)? $V{รวมเงินG2} : "-"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="0" width="802" height="20" uuid="f46aee95-03fb-4f8c-a89b-2612b52f7647"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{HEAD_RPT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="120" splitType="Stretch">
+			<staticText>
+				<reportElement style="FBold" x="732" y="40" width="70" height="60" uuid="9fc5fbc2-c19a-48cb-8ef9-3e4583e0054d"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[รวมเงิน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="512" y="40" width="220" height="20" uuid="84454550-2450-43f4-95cf-2918bcf8355d"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[กองทุนอื่นๆ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="512" y="60" width="55" height="40" uuid="de237225-bb22-451b-80ba-430fba6cd262"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[พัฒนา
+บุคลากร]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="457" y="40" width="55" height="60" uuid="3e5d786f-19de-47e1-b45e-a9d01ab0d703"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[กองทุน
+สินทรัพย์ถาวร]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="0" y="100" width="182" height="20" isRemoveLineWhenBlank="true" uuid="9e39b4e0-c8cf-4677-980e-d83ac84bdd19">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FACULTY_NAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FBold" x="402" y="40" width="55" height="60" uuid="7533075b-7789-4d68-8c5e-fb05794eb812"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[กองทุนกิจการ
+นิสิต/นักศึกษา]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="347" y="40" width="55" height="60" uuid="b180976c-4b46-40fb-a320-1f90b518d90c"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[กองทุนบริการ
+วิชาการ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="622" y="60" width="55" height="40" uuid="1019d452-d01b-4c32-b86d-8d04b3a5d201"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ทำนุบำรุง
+ศิลปวัฒนธรรม]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="FBold" x="1" y="0" width="801" height="20" uuid="13d9ce8e-0feb-4f4f-ae27-047292e22b62"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["แบบ ง.2-2"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FBold" x="292" y="40" width="55" height="60" uuid="83399594-fb52-4dca-ba78-312a4acd96e5"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[กองทุนวิจัย]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="182" y="40" width="55" height="60" uuid="2e5c0dc7-62c5-48d5-92e0-94e0fbfe6a3e"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[กองทุนทั่วไป]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="677" y="60" width="55" height="40" uuid="7450aa30-4f1e-4b25-8e51-4aa92c7b8ca4"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[รวม]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="567" y="60" width="55" height="40" uuid="b0e05887-6b48-4aa3-93ca-5d488e266293"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[สำรอง]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="FBold" x="237" y="40" width="55" height="60" uuid="e51f71e0-8e2c-4e8b-9b0d-6b6575e968ee"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[กองทุนเพื่อ
+การศึกษา]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="FBold" x="0" y="40" width="182" height="60" uuid="60dc77fe-04b3-4e47-a838-04e7b2a4b57a"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["หน่วยงาน"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="FBold" x="1" y="20" width="801" height="20" uuid="a587d0f2-5341-40f5-86b8-e732df0d62c9"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[(หน่วย : บาท)]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="402" y="100" width="55" height="20" isRemoveLineWhenBlank="true" uuid="a0a2ef62-ffb2-43d3-8e1d-fb887bc3c759">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{รวมกองทุนกิจการนักศึกษาสุทธิ_1} != 0)? $V{รวมกองทุนกิจการนักศึกษาสุทธิ_1} : "-"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="512" y="100" width="55" height="20" isRemoveLineWhenBlank="true" uuid="d7c3fa05-a6e7-40ec-bb32-1bed1735da8b">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{รวมกองทุนพัฒนาบุคลากรสุทธิ_1} != 0)? $V{รวมกองทุนพัฒนาบุคลากรสุทธิ_1} : "-"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="292" y="100" width="55" height="20" isRemoveLineWhenBlank="true" uuid="e0a5952e-b147-4ddd-9213-6d8dab1de0cf">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{รวมกองทุนวิจัยสุทธิ_1} != 0)? $V{รวมกองทุนวิจัยสุทธิ_1} : "-"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="457" y="100" width="55" height="20" isRemoveLineWhenBlank="true" uuid="9fbe8b4a-208e-40b1-bbb8-f44689f20bb2">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{รวมกองทุนสินทรัพย์ถาวรสูทธิ_1} != 0)? $V{รวมกองทุนสินทรัพย์ถาวรสูทธิ_1} : "-"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="182" y="100" width="55" height="20" isRemoveLineWhenBlank="true" uuid="1dc00777-9774-4b08-bec7-4bb716adf79b">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{รวมกองทุนทั่วไปสุทธิ_1} != 0)? $V{รวมกองทุนทั่วไปสุทธิ_1} : "-"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="622" y="100" width="55" height="20" isRemoveLineWhenBlank="true" uuid="54abcda2-5a20-4dd3-9902-ace973cec7b0">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{รวมกองทุุนทำนุบำรุงศิลปสุทธิ_1} != 0)? $V{รวมกองทุุนทำนุบำรุงศิลปสุทธิ_1} : "-"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="347" y="100" width="55" height="20" isRemoveLineWhenBlank="true" uuid="7fc25632-ba14-414c-b9e1-3e52ad5bafd7">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{รวมกองทุนบริการวิชาการสุทธิ_1} != 0)? $V{รวมกองทุนบริการวิชาการสุทธิ_1} : "-"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="732" y="100" width="70" height="20" isRemoveLineWhenBlank="true" uuid="0e138c72-f832-4c37-b3e2-511c56e94240">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{รวมเงินG1สุทธิ_1} != 0)? $V{รวมเงินG1สุทธิ_1} : "-"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="677" y="100" width="55" height="20" isRemoveLineWhenBlank="true" uuid="448ab9aa-469a-444f-b521-e3b02f04e97d">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{รวมกองทุนอื่นๆG1สุทธิ_1} != 0)? $V{รวมกองทุนอื่นๆG1สุทธิ_1} : "-"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="567" y="100" width="55" height="20" isRemoveLineWhenBlank="true" uuid="0856a367-dc45-4516-a2ae-7c15f65244e8">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{รวมกองทุนสำรองสุทธิ_1} != 0)? $V{รวมกองทุนสำรองสุทธิ_1} : "-"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="237" y="100" width="55" height="20" isRemoveLineWhenBlank="true" uuid="8cbbbb13-8256-46fe-a8a8-2c8ed01b0523">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{รวมกองทุนเพื่อการศึกษาสุทธิ_1} != 0)? $V{รวมกองทุนเพื่อการศึกษาสุทธิ_1} : "-"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{REPORT_MAX_COUNT}>0]]></printWhenExpression>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="182" height="20" uuid="5c7a55b2-18ab-4a14-bc6a-0e9fab814370"/>
+				<box leftPadding="10" rightPadding="0">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deptName}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="182" y="0" width="55" height="20" uuid="375aa38e-73ee-468f-9cbc-5cd5b878f8b2"/>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{generalFund} != 0)? $F{generalFund}: "-"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="677" y="0" width="55" height="20" uuid="19d2c1e6-eb41-4769-98fc-8c946137d95c"/>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{รวมกองทุนอื่นๆ} != 0)? $V{รวมกองทุนอื่นๆ}: "-"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="292" y="0" width="55" height="20" uuid="26a30080-af58-4656-82a1-e992aa0b1eeb"/>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{researchFunds} != 0)? $F{researchFunds}: "-"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="512" y="0" width="55" height="20" uuid="1cf5f7b6-1ec4-4281-bc46-7381d25136b1"/>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{devFund} != 0)? $F{devFund}: "-"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="237" y="0" width="55" height="20" uuid="5453c018-dcd7-4b8e-a14d-c19ff836c9ce"/>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{eduFund} != 0)? $F{eduFund}: "-"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="347" y="0" width="55" height="20" uuid="4ba22b24-cbf8-4f50-b35c-0a83743469bd"/>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{outreachFund} != 0)? $F{outreachFund}: "-"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="457" y="0" width="55" height="20" uuid="29dca920-8f55-478f-b73a-e40b3d244af4"/>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{assetsFund} != 0)? $F{assetsFund}: "-"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="402" y="0" width="55" height="20" uuid="34c2b193-6912-4f19-961d-71284a55ef97"/>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{affairsFund} != 0)? $F{affairsFund}: "-"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="567" y="0" width="55" height="20" uuid="733f65e1-a3d2-47bd-9191-57bd44b11029"/>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{funds} != 0)? $F{funds}: "-"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement stretchType="RelativeToBandHeight" x="622" y="0" width="55" height="20" uuid="da277583-62cf-4e53-9e63-a397e1c46805"/>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{culturalFund} != 0)? $F{culturalFund}: "-"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement style="FBold" stretchType="RelativeToBandHeight" x="732" y="0" width="70" height="20" uuid="5acdf40b-ba1f-46f8-b76d-577a23849326"/>
+				<box rightPadding="2">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{รวมเงิน} != 0)? $V{รวมเงิน}: "-"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="32" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH:mm:ss">
+				<reportElement x="0" y="20" width="364" height="12" uuid="6c13bc20-06bd-4a29-b6b1-b74bcef75220"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["วันที่พิมพ์ : "+$V{CURRENT_DATE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="364" y="20" width="438" height="12" uuid="3c9b23f3-10cf-4437-9a1f-1d70fad5cccb"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["พิมพ์โดย : "+$P{PUBLISHER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Auto">
+				<reportElement x="552" y="0" width="250" height="20" uuid="59951d8c-bffc-49fa-8c57-198ba2153bbf"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["หน้า " + $V{CURRENT_PAGE}+" / " +$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="30" splitType="Stretch"/>
+	</summary>
+</jasperReport>
